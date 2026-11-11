@@ -47,6 +47,11 @@ registerHooks({
 });
 (globalThis as any).window ??= Object.assign(new EventTarget(), { localStorage: undefined });
 const { default: DataPanel } = await import('../components/DataPanel.tsx');
+// The REAL dictionaries: the component reads `t` from useLanguage() (lib/i18n-context.ts `Ctx`), so each
+// render is wrapped in Ctx.Provider with t = the real translate(lang, key) from lib/i18n.tsx.
+const { Ctx } = await import('../lib/i18n-context.ts');
+const { loadLocale, translate } = await import('../lib/i18n.tsx');
+await loadLocale('zu');
 
 const RAIN = [127, 81, 73, 43, 16, 7, 3, 7, 16, 57, 89, 122];
 const JHB = [20, 20, 19, 16, 13, 10, 10, 13, 17, 18, 19, 20];
@@ -78,16 +83,17 @@ function textOf(node: any): string {
   // Adjacent text nodes (JSX `a {b}° (c)`) join directly; element boundaries become a space.
   return (node.children ?? []).map((c: any) => (typeof c === 'string' ? c : ` ${textOf(c)} `)).join('');
 }
-function renderTab(data: any, tab?: string): string {
+function renderTab(data: any, tab?: string, lang = 'en'): string {
   const props: any = { data, loading: false, coords: { lat: data.lat, lon: data.lon }, forcedTab: tab, onTabChange() {}, onOpenReport() {}, onJumpTo() {}, surveyViewport: 'mobile' };
   let r: any;
-  act(() => { r = create(React.createElement(DataPanel as any, props)); });
+  const value = { lang, setLang() {}, t: (key: string) => translate(lang, key), onboarded: true, completeOnboarding() {} };
+  act(() => { r = create(React.createElement(Ctx.Provider, { value }, React.createElement(DataPanel as any, props))); });
   const out = textOf(r.toJSON() && { children: [].concat(r.toJSON()) }).replace(/\s+/g, ' ');
   act(() => r.unmount());
   return out;
 }
-const overview = (d: any) => renderTab(d);
-const climate = (d: any) => renderTab(d, 'Climate');
+const overview = (d: any, lang = 'en') => renderTab(d, undefined, lang);
+const climate = (d: any, lang = 'en') => renderTab(d, 'Climate', lang);
 
 const FROST_WORDS = /Frost-free|frost-free|Frost expected|Light frost|Frost likely|Likely|Occasional|Rare\b|frost-free season|mild winters|Mild winters|mild, dry winter/;
 const DAY_WORDS = /≈ \d+ days|Plant tender|mid-Aug|\(Jun–Jul\)|Windiest Aug|Aug–Sep/;
@@ -103,7 +109,13 @@ const fixtures: Record<string, any> = {
   g: place({ monthlyTempCoverage: undefined }),
   h: place({ monthlyTemp: JHB.slice(0, 11) }),
   i: place({ monthlyTemp: NORTH, koppen: 'Cfb', koppenDesc: 'Temperate oceanic', minTemp: -15 }, 48.2),
+  j: place({ monthlyTemp: NORTH, koppen: 'Cfb', koppenDesc: 'Temperate oceanic', windSpeed: 4, windFromSummer: 'W', windFromWinter: 'SW', solarRadiation: 3.1 }, 48.2),
+  k: place({ monthlyTemp: UNDERBERG, minTemp: -6.2, windSpeed: 3, windFromSummer: 'N', windFromWinter: 'S' }),
+  l: place({ solarRadiation: 0, windSpeed: 0, windFromSummer: '—', windFromWinter: '—' }),
+  m: place({ solarRadiation: -999, windSpeed: NaN, windFromSummer: '—', windFromWinter: 'S' }),
+  n: place({ monthlyTemp: JHB, koppen: 'Cfb', koppenDesc: 'Temperate oceanic' }),
 };
+const WITHHELD = ['f', 'g', 'h']; // Climate interpretation withheld for these
 
 for (const [name, data] of Object.entries(fixtures)) {
   test(`fixture ${name}: no frost class, mildness or fixed-month claim; rainfall kept`, () => {
@@ -164,23 +176,25 @@ test('a: footer, wind advice and the frost-card body are neutral', () => {
   const c = climate(fixtures.a);
   assert.match(c, /Coldest month mean ≈ 10° \(Jun\)/);
   assert.match(c, /Hottest month mean ≈ 20° \(Jan\)/);
-  assert.match(c, /Prevailing wind is from the N — site a windbreak along that edge\./);
+  // Changed for CP-117: the windbreak advice and "Prevailing" wording are removed; the card now states only the recorded Dec–Feb direction.
+  assert.match(c, /December to February: from the N\./);
+  assert.doesNotMatch(c, /Prevailing wind is from the N|site a windbreak/);
   assert.match(c, /Frost months are not shown\. Monthly averages cannot show frost/);
   assert.doesNotMatch(c, /bananas|sugar cane|tropical fruit/);
 });
 
-test('site summary: the frost-protection sentence needs a validated record low below 2 °C', () => {
-  // The Lima site-summary paragraph is the only place the sentence appears; take its text.
-  const frostSentence = /frost/i;
+test('site summary: no frost sentence, whatever the record low', () => {
+  // Until the CP-117 change this asserted "Protect against frost in winter." for a validated record
+  // low below 2 °C and its absence otherwise. The sentence turned one modelled number into advice
+  // and named a season the record does not carry, so it is removed for every case. The record low
+  // itself is still on the Overview row and insight line, asserted in the fixture tests above.
+  const lima = (seen: string) => seen.slice(seen.indexOf('Lima ·'));
   assert.match(overview(fixtures.a), /Lima/, 'the summary renders');
-  const withSentence = overview(fixtures.a);
-  const lima = (seen: string) => seen.slice(seen.indexOf('Lima ·')).split('plantingCalendarHeader')[0];
-  assert.match(lima(withSentence), frostSentence, 'a (-4.8 tagged): site summary has the frost-protection sentence');
-  for (const key of ['d', 'e', 'c']) {
-    // c is a real 0 (< 2) so it DOES get the sentence; d (untagged 8) and e (-999) must not.
-    const seen = lima(overview(fixtures[key]));
-    if (key === 'c') assert.match(seen, frostSentence); else assert.doesNotMatch(seen, frostSentence, `${key}: no frost-protection sentence`);
+  for (const key of ['a', 'b', 'c', 'd', 'e', 'i']) {
+    assert.doesNotMatch(lima(overview(fixtures[key])), /frost|winter/i, `${key}: no frost or season sentence in the summary`);
   }
+  const source = readFileSync(new URL('../components/DataPanel.tsx', import.meta.url), 'utf8');
+  assert.doesNotMatch(source, /siteSummaryFrostProtection/);
 });
 
 test('source: the removed identifiers and strings are gone from DataPanel.tsx', () => {
@@ -199,9 +213,101 @@ test('the Overview calendar strip no longer marks "Frost" months from monthly me
   // coldest mean of 10 °C and frosts on record showed no frost month at all. The class and
   // its legend entry are gone; a month that cold reads "Rest" like any other cool month.
   for (const name of ['a', 'b', 'i']) assert.doesNotMatch(overview(fixtures[name]), /\bFrost\b/, `fixture ${name}`);
-  assert.match(overview(fixtures.i), /Rest/);
+  // Changed for CP-117: the whole strip (Grow/Dry/Rest) is removed, so "Rest" no longer appears at all.
+  assert.doesNotMatch(overview(fixtures.i), /\bRest\b/);
   const source = readFileSync(new URL('../components/DataPanel.tsx', import.meta.url), 'utf8');
   assert.doesNotMatch(source, /calendarFrost|isFrost/);
+});
+
+// ---- CP-117: no fabricated monthly sun/wind, no Grow/Dry/Rest strip, no class-code crop promises ----
+const BANNED = /Sunniest|windbreak|hedge row|highest-return|mist belt|Mist belt|Year-round|year-round production|thrive|Good for growing|\bGrow\b|\bRest\b|Planting calendar|Prevailing|in winter\b|Light\b|Calm|≈ \d+(\.\d+)? h\b|h avg/;
+const TWELVE_RUN = /(-?\d+(\.\d)?°? [JFMASOND] ){12}/g;
+const CFB = ['i', 'j', 'n'];
+
+for (const [name, data] of Object.entries(fixtures)) {
+  test(`CP-117 fixture ${name}: nothing fabricated on Overview or Climate`, () => {
+    const o = overview(data);
+    const c = climate(data);
+    assert.doesNotMatch(o, BANNED, 'Overview');
+    assert.doesNotMatch(c, BANNED, 'Climate');
+    assert.doesNotMatch(o, /NaN|-999/, 'Overview');
+    assert.doesNotMatch(c, /NaN|-999/, 'Climate');
+    assert.doesNotMatch(o, /Modelled annual mean wind: ≈ 0 km/, 'Overview never prints 0 km/h');
+    const runs = (c.match(TWELVE_RUN) ?? []).length;
+    if (WITHHELD.includes(name)) {
+      assert.equal(runs, 0, 'withheld Climate has no monthly runs');
+      return;
+    }
+    assert.equal(runs, 2, 'only rainfall and temperature have twelve-month runs');
+    assert.match(c, /Monthly sunshine is not shown/);
+    assert.match(c, /Monthly wind is not shown/);
+    assert.match(c, CFB.includes(name) ? /Temperate oceanic/ : /Subtropical highland, dry winter/);
+    assert.match(c, /No crops are suggested from the climate type alone/);
+    assert.doesNotMatch(c, /0 km\/h/);
+    assert.match(c, /641/, 'rainfall kept');
+  });
+}
+
+test('j: northern wind lines use calendar months, not seasons', () => {
+  const c = climate(fixtures.j);
+  assert.match(c, /December to February: from the W\./);
+  assert.match(c, /June to August: from the SW\./);
+  assert.match(c, /Modelled annual mean wind: ≈ 14 km\/h\./);
+  assert.match(c, /N E S W/, 'rose drawn for a known Dec–Feb direction');
+  assert.doesNotMatch(c, /(summer|winter)[^.]{0,40}from the|from the (W|SW)\b[^.]*(summer|winter)/i);
+  assert.match(overview(fixtures.j), /Modelled annual mean wind: ≈ 14 km\/h\./, 'Overview wind bullet');
+});
+
+test('k: southern Cwb keeps the tagged record low and the neutral class note', () => {
+  const c = climate(fixtures.k);
+  assert.match(c, /Modelled record low: -6\.2°C/);
+  assert.match(c, /Subtropical highland, dry winter/);
+  assert.match(c, /This climate type alone does not tell you whether there is frost\./);
+  assert.match(c, /December to February: from the N\./);
+  assert.match(c, /June to August: from the S\./);
+  assert.match(c, /Modelled annual mean wind: ≈ 11 km\/h\./);
+});
+
+test('l: zero wind and unknown directions are not printed as facts and draw no rose', () => {
+  const c = climate(fixtures.l);
+  assert.match(c, /Annual mean wind: not available\./);
+  assert.match(c, /Wind direction: not available\./);
+  assert.doesNotMatch(c, /0 km\/h|December to February|June to August/);
+  assert.doesNotMatch(c, /N E S W/, 'no compass rose');
+  assert.doesNotMatch(overview(fixtures.l), /annual mean wind/i, 'no wind bullet on Overview');
+});
+
+test('m: NaN speed and -999 sunshine print nothing; only the known June to August direction shows', () => {
+  const c = climate(fixtures.m);
+  assert.match(c, /Annual mean wind: not available\./);
+  assert.match(c, /June to August: from the S\./);
+  assert.doesNotMatch(c, /December to February|Wind direction: not available/);
+  assert.doesNotMatch(c, /N E S W/, 'no compass rose without a Dec–Feb direction');
+  assert.doesNotMatch(overview(fixtures.m), /annual mean wind/i);
+});
+
+test("zu render of k: the new sentences are English by design and nothing throws", () => {
+  const c = climate(fixtures.k, 'zu');
+  for (const sentence of [
+    'Monthly sunshine is not shown. This record holds no monthly sunshine hours for this site.',
+    'Monthly wind is not shown. This record holds no monthly wind figures for this site.',
+    'Modelled annual mean wind: ≈ 11 km/h.',
+    'December to February: from the N.',
+    'June to August: from the S.',
+    'No crops are suggested from the climate type alone. A climate type does not know your water, frost or soil. Use the crop plan for sowing months checked against this site.',
+    'Modelled record low: -6.2°C',
+  ]) assert.ok(c.includes(sentence), sentence);
+  assert.doesNotMatch(c, BANNED);
+  assert.doesNotThrow(() => overview(fixtures.k));
+});
+
+test('source: CP-117 identifiers and strings are gone from DataPanel.tsx outside comments', () => {
+  const source = readFileSync(new URL('../components/DataPanel.tsx', import.meta.url), 'utf8').split('\n').filter((l) => !/^\s*(\/\/|\{?\/\*|\*)/.test(l)).join('\n');
+  for (const gone of ['SUN_MULT', 'WIND_MULT', 'sunHours', 'monthlyWind', 'Sunniest', 'windbreak', 'Windbreak', 'ZONE_LABELS', 'MistBelt', 'CROPS[', 'cropSegs',
+    'goodForGrowing', 'Year-round', 'thrive', 'calendarGrow', 'calendarDry', 'calendarRest', 'plantingCalendarHeader', 'insightHighWind',
+    'insightModerateWind', 'prevailingWind', 'inWinter']) {
+    assert.ok(!source.includes(gone), `${gone} must not appear`);
+  }
 });
 
 // Evidence only: with DATAPANEL_RENDER_DUMP set to a directory, the text of each real render
@@ -213,4 +319,5 @@ if (process.env.DATAPANEL_RENDER_DUMP) {
     writeFileSync(`${process.env.DATAPANEL_RENDER_DUMP}/datapanel-${name}-overview.txt`, overview(data) + '\n');
     writeFileSync(`${process.env.DATAPANEL_RENDER_DUMP}/datapanel-${name}-climate.txt`, climate(data) + '\n');
   }
+  writeFileSync(`${process.env.DATAPANEL_RENDER_DUMP}/datapanel-k-zu-climate.txt`, climate(fixtures.k, 'zu') + '\n');
 }

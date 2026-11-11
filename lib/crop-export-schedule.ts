@@ -672,6 +672,12 @@ export interface ProductionGuide {
    * or recorded months, and when the plan holds no frost-tender crop: the field is then absent (CP-108).
    */
   frostTenderUnconfirmed?: string[];
+  /**
+   * The grower's own frost answer, present only when they gave one: "no", or "yes" with
+   * the months they ticked (possibly none). Absent when the question is unanswered. The
+   * printed table reads this so its row caveats follow the same answer as the guide.
+   */
+  observedFrost?: { answer: 'yes' | 'no'; months: number[] };
 }
 
 /** The screen and paper read one preparation checklist. Annual survey records describe
@@ -777,7 +783,7 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
     ], sources: links }];
   });
   if (ownRows.length) cropChoices.push({ title: 'Own dated records retained', lines: ['Catalogue variety and planting advice is withheld for these records. Open the Task Planner and check their saved source and dated estimates.'] });
-  return { area: zones.length ? growingZoneLabel(zones) : 'Growing area not resolved', siteObservations, recordedProduction, cropChoices, ...(frostTenderUnconfirmed.length ? { frostTenderUnconfirmed } : {}), ...(products ? buildProductGuidance(products, zones, conditions) : {}) };
+  return { area: zones.length ? growingZoneLabel(zones) : 'Growing area not resolved', siteObservations, recordedProduction, cropChoices, ...(frostTenderUnconfirmed.length ? { frostTenderUnconfirmed } : {}), ...(frost === 'yes' || frost === 'no' ? { observedFrost: { answer: frost, months: frost === 'yes' ? frostMonths : [] } } : {}), ...(products ? buildProductGuidance(products, zones, conditions) : {}) };
 }
 
 /** Grower estimates retain the source spacing range all the way to the space budget. */

@@ -22,3 +22,25 @@ export const FROST_UNCONFIRMED_ACTION_TEXT =
 /** On one row of the printed bed-by-bed table. Short: it shares the harvest cell. */
 export const FROST_UNCONFIRMED_ROW_TEXT =
   'Frost-tender: picking may stop when frost arrives. Confirm your frost months.';
+
+/**
+ * On one row of the printed table when the grower HAS recorded frost months and the crop
+ * still holds ground in one of them. `months` are short month names in calendar order.
+ * The months are the grower's own; the plan supplies none.
+ */
+export function frostRecordedRowText(months: readonly string[]): string {
+  return `Frost-tender: still in the ground in ${months.join(', ')}, when you recorded frost.`;
+}
+
+/**
+ * What the grower has told the plan about frost, as the printed table needs it.
+ *   not-recorded       no answer, or "yes" with no month ticked: the plan has no frost date
+ *   no-frost-observed  the grower's own observation that they have not seen frost
+ *   months             the months they ticked, with "now" so a crop already past them is not flagged
+ * A sowing calendar's name ("Hot area, no frost", "Light frost at most") is never one of
+ * these: it is a reading of gridded climate records, not an observation on the farm.
+ */
+export type PlanTableFrost =
+  | { kind: 'not-recorded' }
+  | { kind: 'no-frost-observed' }
+  | { kind: 'months'; months: readonly number[]; nowMonth: number };

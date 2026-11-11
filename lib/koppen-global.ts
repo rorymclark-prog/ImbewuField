@@ -195,6 +195,16 @@ export function koppenClassNote(code: string): string {
 }
 
 /**
+ * The conventional name of a class code ("Subtropical highland, dry winter"), from the same
+ * table. '' for a code the table does not hold. A screen that wants to name a climate type
+ * uses this, not a regional nickname of its own: the site data panel called every Cwb site
+ * a "mist belt" and every Csa site "coastal" (finding CP-117).
+ */
+export function koppenClassName(code: string): string {
+  return Object.hasOwn(DESCRIPTIONS, code) ? DESCRIPTIONS[code][0] : '';
+}
+
+/**
  * Classify a point from its monthly climatology.
  *
  * Returns code '?' rather than a guess when the input is incomplete — a wrong climate

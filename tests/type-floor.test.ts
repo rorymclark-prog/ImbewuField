@@ -287,8 +287,10 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
       + '29. The remaining 5 are the climate-calendar month strip (12 single-letter labels at '
       + '7.5px in a tight flex row) and the wind-compass rose\'s four N/E/S/W labels (tests/'
       + 'wind-compass-rose.test.ts owns that SVG\'s layout) — both need a layout change, not a '
-      + 'number, to raise further.',
-    budget: 5,
+      + 'number, to raise further. 11 November 2026 (finding CP-117): the Overview Grow / Dry / Rest '
+      + 'strip is removed with its unsourced month classes, and its 11px month letter with it, '
+      + 'down to 4.',
+    budget: 4,
   },
 
   'components/ReportView.tsx': {

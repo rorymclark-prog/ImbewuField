@@ -2,7 +2,7 @@
 
 import { numberLabel } from '@/lib/format-figures';
 import { monthlyTemperatureStatus, recordMinimumC } from '@/lib/climate-temperature';
-import { koppenClassNote } from '@/lib/koppen-global';
+import { koppenClassName, koppenClassNote } from '@/lib/koppen-global';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
@@ -110,63 +110,7 @@ const BIOME_COLORS: Record<string, string> = {
   NK: '#B89040', DE: '#C8A842', AT: '#5A8B4A', IOCB: '#3A9A7A', FOR: '#2D7A5C',
 };
 
-// Permaculture context per SA biome — design principles, zone guidance, water strategy
-const PERMA_CONTEXT: Record<string, { type: string; principles: string[]; water: string; zones: string }> = {
-  GR: {
-    type: 'Seasonal grassland / savanna analogue',
-    principles: ['Build swales on contour before summer rains', 'Pioneer legumes to accelerate succession', 'Integrate livestock for soil fertility and grass management'],
-    water: 'Summer thunderstorm — earthworks built in winter, planted before first rains (Aug–Sep)',
-    zones: 'Z1–2: intensive beds with windbreaks · Z3: food forest with indigenous trees · Z4–5: managed grassland',
-  },
-  SV: {
-    type: 'Fire-climax savanna — browse-adapted system',
-    principles: ['Firebreaks as productive edges (aloes, agave, succulents)', 'Multipurpose indigenous trees for shade, fodder, fruit', 'All earthworks before wet season; mulch heavily in dry months'],
-    water: 'Strong seasonality — brief intense storms; design for rapid capture and slow release',
-    zones: 'Z1: intensive garden near water · Z2–3: food forest with savanna-edge species · Z4: rotational grazing + timber',
-  },
-  FY: {
-    type: 'Mediterranean shrubland — fire-adapted, winter rainfall',
-    principles: ['Plant in autumn (Apr–May) not spring — rains follow planting', 'Fire-proof design: green belts, diverse species, no litter build-up', 'Fynbos soils are phosphorus-poor — avoid high-P compost; use leaf mulch only'],
-    water: 'Winter rainfall — harvest winter storms; long summer drought means passive conservation (mulch, shade) is critical',
-    zones: 'Z1–2: imported-soil beds (fynbos soil is challenging) · Z3–4: indigenous food forest (rooibos, buchu, wild figs, honeybush)',
-  },
-  SK: {
-    type: 'Semi-arid succulent scrub — drought-tolerance design',
-    principles: ['Every drop counts — channel all surfaces to productive soil', 'Succulents as living mulch and frost/wind barriers', 'Animals critical for nutrient cycling where biomass is low'],
-    water: 'Bimodal or erratic rain — all-year water capture needed; check-dams and subsurface cisterns most effective',
-    zones: 'Z1–2: very compact (water efficiency) · Z3: spekboom food forest (drought-proof, carbon-rich) · Z4–5: succulent rangeland',
-  },
-  NK: {
-    type: 'Karoo shrubland — semi-arid, unpredictable',
-    principles: ['Deep-rooted perennials over annuals — they survive drought gaps', 'Holistic planned grazing to restore karoo bush', 'Intensive production close to house; extensive low-impact use beyond'],
-    water: 'Unpredictable year-round rain — design for drought resilience first; opportunistic planting when rain arrives',
-    zones: 'Z1: drip-irrigated garden · Z2: food trees with deep root basins · Z3–5: karoo bush management and restoration',
-  },
-  DE: {
-    type: 'Desert oasis design — extreme scarcity',
-    principles: ['Underground cisterns for every rain event', 'Shade-first design — windbreaks and shade cloth protect soil and crops', 'All bare soil mulched to 10cm+ depth; no exposed soil ever'],
-    water: 'Every cm of rain is precious — fog collectors, condensation traps, check-dams maximise capture',
-    zones: 'Z1 only (intensive near water) · Everything else is passive wilderness management',
-  },
-  AT: {
-    type: 'Subtropical thicket — dense browse system',
-    principles: ['Spekboom (Portulacaria afra) is the keystone species — food, carbon, water storage', 'Dense multi-layer planting is the natural state — mimic it', 'Goats integrate naturally (as in wild thicket) — managed browsing'],
-    water: 'Variable rain — spekboom stores water in its leaves; thicket density shades and protects soil',
-    zones: 'Z1–2: irrigated garden · Z2–3: spekboom food forest · Z4–5: restore thicket (major carbon sequestration opportunity)',
-  },
-  IOCB: {
-    type: 'Subtropical coast — high-productivity tropical analogue',
-    principles: ['Year-round growing — stagger plantings weekly for continuous harvest', 'High humidity = fungal risk; good spacing and airflow essential', 'Tropical food forest layers (banana, pawpaw, avocado, moringa) are highly productive'],
-    water: 'Summer rainfall reliable — still harvest for dry spells; humidity reduces irrigation need significantly',
-    zones: 'Full 5-zone design possible · Z1–2: tropical kitchen garden · Z3: dense food forest · Z4: timber and fodder · Z5: coastal forest remnants',
-  },
-  FOR: {
-    type: 'Afro-temperate forest — shaded multi-layer system',
-    principles: ['Shade-tolerant food plants under existing canopy (wild ginger, arum, wild garlic)', 'No-dig in root zones — forest soil structure is delicate and irreplaceable', 'The forest edge is the most productive zone — light + shelter combined'],
-    water: 'Generally humid with high-quality water from leaf-litter filtration — protect water sources from any disturbance',
-    zones: 'Z1–2: clearings and forest edges for intensive food · Z3: food trees in light shade · Z4–5: forest conservation (highest SA biodiversity value)',
-  },
-};
+// (An unused PERMA_CONTEXT table of per-biome advice, including windbreak and year-round claims, was removed with CP-117.)
 
 const TAB_ICONS: Record<string, JSX.Element> = {
   Overview: <MapPin size={16} />,
@@ -846,13 +790,15 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       : t('siteSummaryRainEstimate').replace('{mm}', String(r));
     const englishSoil = translate('en', soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
     const zuluSoil = t(soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
-    const englishFrost = recordLowC !== null && recordLowC < 2 ? ` ${translate('en', 'siteSummaryFrostProtection')}` : '';
-    const zuluFrost = recordLowC !== null && recordLowC < 2 ? ` ${t('siteSummaryFrostProtection')}` : '';
+    // No frost sentence. It read "Protect against frost in winter." whenever the gridded record low
+    // was below 2 °C: advice from one modelled number, naming a season the record does not carry
+    // (frost also comes in autumn and spring). The record low itself is shown on the row and in
+    // the insight line above, with what it is and is not (finding CP-117).
     const englishPlan = translate('en', 'siteSummaryPlanPrompt');
     const zuluPlan = t('siteSummaryPlanPrompt');
     return {
-      english: `${englishWater} ${englishSoil}${englishFrost} ${englishPlan}`,
-      zulu: `${zuluWater} ${zuluSoil}${zuluFrost} ${zuluPlan}`,
+      english: `${englishWater} ${englishSoil} ${englishPlan}`,
+      zulu: `${zuluWater} ${zuluSoil} ${zuluPlan}`,
     };
   })();
   const limaRead = lang === 'zu' ? limaReadParts.zulu : limaReadParts.english;
@@ -1157,15 +1103,15 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 recordLowC === null
                   ? { color: 'var(--text-secondary)', text: 'The lowest temperature on record is not known for this site.' }
                   : { color: 'var(--text-secondary)', text: `Modelled record low: ${recordLowC}°C. This is a gridded figure for the wider area, not a frost record for your land.` },
-                (data.climate.windSpeed * 3.6) > 18
-                  ? { color: 'var(--gold)', text: t('insightHighWind').replace('{kmh}', (data.climate.windSpeed * 3.6).toFixed(0)).replace('{dir}', data.climate.windFromSummer) }
-                  : { color: 'var(--text-secondary)', text: t('insightModerateWind').replace('{dir}', data.climate.windFromSummer) },
+                Number.isFinite(data.climate.windSpeed) && data.climate.windSpeed > 0
+                  ? { color: 'var(--text-secondary)', text: `Modelled annual mean wind: ≈ ${(data.climate.windSpeed * 3.6).toFixed(0)} km/h.` }
+                  : null,
                 data.soil.soilSource !== 'lab' && data.soil.soilSource !== 'soilgrids'
                   ? { color: 'var(--text-secondary)', text: appLang === 'zu' ? 'Umhlabathi awukahlolwa. Hlela ukuhlolwa ngaphambi kokuthenga izinto zokuwulungisa.' : 'Soil carbon is not measured here. Arrange a soil test before amendment purchases.' }
                   : data.soil.organicCarbon < 1.5
                   ? { color: 'var(--gold)', text: t('insightLowSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) }
                   : { color: 'var(--color-forest-800)', text: t('insightGoodSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) },
-              ] as { color: string; text: string }[]).map((ins, i) => (
+              ] as ({ color: string; text: string } | null)[]).filter((ins): ins is { color: string; text: string } => ins !== null).map((ins, i) => (
                 <div key={i} className="flex gap-2 items-start text-xs font-display leading-relaxed py-1.5 px-2.5 rounded-lg" style={{ background: 'color-mix(in srgb, var(--bg-1) 80%, transparent)', border: '1px solid color-mix(in srgb, var(--border) 50%, transparent)', color: '#3A2E22' }}>
                   <span className="flex-shrink-0 font-bold mt-px" style={{ color: ins.color }}>→</span>
                   <span>{ins.text}</span>
@@ -1193,40 +1139,6 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <SpeakButton text={limaRead} englishText={limaReadParts.english} size={15} color="#5C5040" />
             </div>
 
-            {/* 12-month planting calendar strip */}
-            {temperatureStatus === 'complete' && data.rainfall.monthly?.length === 12 && (
-              <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid var(--border)' }}>
-                <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--color-forest-800)' }}>{t('plantingCalendarHeader')}</span>
-                <div className="flex gap-0.5 mt-2">
-                  {['J','F','M','A','M','J','J','A','S','O','N','D'].map((m, i) => {
-                    const rain = data.rainfall.monthly![i];
-                    const temp = data.climate.monthlyTemp[i] ?? 20;
-                    // No "Frost" class here. It was read from the month's MEAN (below 3 °C), so a
-                    // month with a mean of 10 °C and frosts on record was never marked, and the strip
-                    // read as saying which months have frost (finding CP-113). A month that cold now
-                    // falls under "Rest", as every other month too cool to grow already did.
-                    const isGrow = temp >= 12 && rain >= 30;
-                    const isDry  = !isGrow && rain < 20 && temp > 22;
-                    const bg = isGrow ? '#B5D9B5' : isDry ? '#E8C87A' : '#D8CEBC';
-                    const label = isGrow ? t('calendarGrow') : isDry ? t('calendarDry') : t('calendarRest');
-                    return (
-                      <div key={i} className="flex-1 flex flex-col items-center gap-0.5" title={`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i]}: ${label} (${rain}mm, ${temp.toFixed(0)}°C)`}>
-                        <div className="w-full rounded-sm" style={{ height: 26, background: bg }} />
-                        <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{m}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="flex gap-3 mt-2 flex-wrap">
-                  {([['#B5D9B5', t('calendarGrow')],['#E8C87A', t('calendarDry')],['#D8CEBC', t('calendarRest')]]).map(([c,l]) => (
-                    <div key={l} className="flex items-center gap-1">
-                      <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: c }} />
-                      <span style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)' }}>{l}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
                 </>
               );
               if (!simple) return detailContent;
@@ -1469,93 +1381,32 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           const rainAvg = annualRain / 12;
           const isWet = (r: number) => r > rainAvg * 0.9;
 
-          const ZONE_LABELS: Record<string, string> = {
-            Cwa: t('zoneHumidSubtropicalSummerRain'), Cwb: t('zoneHumidSubtropicalMistBelt'),
-            Csa: t('zoneMediterraneanCoastal'), Csb: t('zoneMediterraneanMaritime'),
-            Cfa: t('zoneHumidSubtropical'), Cfb: t('zoneTemperateOceanic'),
-            BWh: t('zoneSemiAridHotDesert'), BWk: t('zoneSemiAridColdDesert'),
-            BSh: t('zoneSemiAridHotSteppe'), BSk: t('zoneSemiAridColdSteppe'),
-            ET: t('zoneAlpineMontane'),
-          };
           const kp = data.climate.koppen;
-          // ZONE_LABELS only names the codes this tab was built around — but the classifier that
-          // actually produced `kp` (lib/koppen-global.ts) covers the real Köppen alphabet, and its
-          // own comments record live NASA POWER data returning 'Aw' for Durban, not the 'Cwa' this
-          // list expects, because of the grid's warm coastal bias. Falling back to the bare two or
-          // three letters told a Durban-area farmer nothing; koppenDesc is the SAME classifier's own
-          // name for whatever code came back, so the fallback is still a real answer.
-          const zoneLabel = ZONE_LABELS[kp] ?? data.climate.koppenDesc ?? kp;
-
-          // Cw / Cf / Cs: the translated summaries promise mild winters or a long frost-free season, which
-          // a class code cannot show, so those use the neutral English class note instead.
-          const classNote = (kp.startsWith('Cw') || kp.startsWith('Cf') || kp.startsWith('Cs')) ? koppenClassNote(kp) : '';
-          const zoneSummary =
-            classNote ? classNote
-            : kp.startsWith('Cw') || kp.startsWith('Cf') || kp.startsWith('Cs') ? 'Variable climate — use local rainfall and temperature data to plan your seasonal crop calendar.'
-            : kp.startsWith('BS') ? t('summarySemiAridSteppe')
-            : kp.startsWith('BW') ? t('summaryAridDesert')
-            : kp.startsWith('ET') ? t('summaryHighAltitude')
-            : 'Variable climate — use local rainfall and temperature data to plan your seasonal crop calendar.';
-
-          const CROPS: Record<string, Array<{ pre: string; bold: string; post: string }>> = {
-            Cwb: [{ pre: 'Year-round vegetables on summer rain — ', bold: 'maize, beans, leafy greens, brassicas & sweet potato', post: '.' }],
-            Cwa: [{ pre: 'Year-round vegetables on summer rain — ', bold: 'maize, beans, leafy greens, brassicas & sweet potato', post: '.' }],
-            Cfb: [{ pre: 'Well-distributed rain supports year-round production — ', bold: 'leafy greens, brassicas, stone fruit, berries & root vegetables', post: ' thrive.' }],
-            Cfa: [{ pre: 'Subtropical with year-round rain — ', bold: 'maize, subtropical fruit, leafy greens & legumes', post: '. High humidity — select disease-resistant varieties and maximise airflow.' }],
-            Csb: [{ pre: 'Rainy winters grow the best crops — ', bold: 'wheat, alliums, legumes, brassicas & root vegetables', post: '. Dry summers need drought-tolerant varieties: ' }, { pre: '', bold: 'olives, figs, lavender & stone fruit', post: '.' }],
-            Csa: [{ pre: 'Classic Mediterranean growing season — ', bold: 'wheat, olives, citrus, grapes, figs & root vegetables', post: ' thrive. Summer heat demands irrigation for annuals; drought-tolerant trees fruit without it.' }],
-            BSh: [{ pre: 'Drought-tolerant crops are essential — ', bold: 'sorghum, cowpeas, Moringa & indigenous grains', post: '. Water harvesting is a prerequisite for ' }, { pre: '', bold: 'food trees and market gardens', post: '.' }],
-            BSk: [{ pre: 'Cold steppe — ', bold: 'drought-tolerant small grains, garlic & root vegetables', post: ' on water-harvested plots. ' }, { pre: '', bold: 'Stone fruit & cool-season grains', post: ' are your most viable options.' }],
-            BWh: [{ pre: 'Arid — water harvesting before any food production. With irrigation: ', bold: 'citrus, dates, melons & heat-tolerant vegetables', post: '.' }],
-            BWk: [{ pre: 'Cold arid — water harvesting essential. Short growing window: ', bold: 'cold-hardy grains, root vegetables & wind-tolerant perennials', post: '.' }],
-            ET:  [{ pre: 'Short alpine season — ', bold: 'potatoes, kale, oats & alpine herbs', post: ' on warm north-facing aspects. Protect all crops from frost and strong wind.' }],
-          };
-          // Same gap as zoneLabel above: CROPS only covers the hand-picked codes, but koppenNote
-          // is the classifier's own one-sentence, grower-actionable read on whatever code it
-          // actually returned — a real answer instead of the generic line for every code this
-          // list doesn't happen to name (Durban's 'Aw' among them).
-          const cropSegs = CROPS[kp] ?? [{
-            pre: data.climate.koppenNote || 'Locally adapted varieties suited to your rainfall and temperature range.',
-            bold: '', post: '',
-          }];
+          // Conventional class name and neutral class sentence from the classifier (CP-117): no nicknames,
+          // no crop promises derived from the code.
+          const zoneLabel = koppenClassName(kp) || data.climate.koppenDesc || kp;
+          const zoneSummary = koppenClassNote(kp) || 'No description is held for this climate type.';
 
           const patternChip = data.rainfall.pattern === 'winter' ? t('climatePatternWinter') : data.rainfall.pattern === 'summer' ? t('climatePatternSummer') : t('climatePatternYearRound');
 
-          // Approximate monthly sunshine (seasonal model from annual solar average)
-          const SUN_MULT = data.rainfall.pattern === 'winter'
-            ? [1.10, 1.05, 0.97, 0.92, 0.88, 0.87, 0.88, 0.92, 0.98, 1.05, 1.10, 1.10]
-            : [0.87, 0.89, 0.93, 0.98, 1.04, 1.08, 1.08, 1.04, 0.98, 0.93, 0.89, 0.87];
-          const sunHours = SUN_MULT.map(m => Math.round((data.climate.solarRadiation / 0.82) * m * 10) / 10);
-          const sunMax = Math.max(...sunHours, 1);
-          const sunMin = Math.min(...sunHours);
-          const sunAvg = Math.round(sunHours.reduce((a, b) => a + b, 0) / 12 * 10) / 10;
-
-          // Approximate monthly wind (±~20% seasonal, windiest Aug–Oct)
-          const WIND_MULT = [0.87, 0.87, 0.90, 0.92, 0.95, 0.96, 0.98, 1.13, 1.18, 1.12, 1.00, 0.91];
-          const monthlyWind = WIND_MULT.map(m => Math.round(kmh * m));
-          const windMax = Math.max(...monthlyWind, 1);
+          // Wind: the record holds ONE annual mean and a Dec–Feb and a Jun–Aug direction. Nothing monthly (CP-117).
+          const annualWindKnown = Number.isFinite(data.climate.windSpeed) && data.climate.windSpeed > 0;
+          const dirKnown = (d: unknown) => typeof d === 'string' && d.trim() !== '' && d !== '—';
+          const summerDirKnown = dirKnown(data.climate.windFromSummer);
+          const winterDirKnown = dirKnown(data.climate.windFromWinter);
 
           const MONTH_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-          // Compass rose: direction → SVG rotation degrees
-          // Full 16-point lookup — climate.windFromSummer/windFromWinter come from nasa-power's
-          // aspectLabel(), which returns all 16 compass labels (NNE, ENE, ESE, SSE, SSW, WSW, WNW,
-          // NNW included), not just the 8 cardinal/intercardinal ones. An 8-point-only table used
-          // to leave those 8 labels unmatched, so the compass-rose arrow silently fell back to a
-          // fixed NE/SW default while the text underneath kept printing the real (different)
-          // direction — the arrow and the label disagreed on roughly half of all real sites.
+          // Compass rose: direction → SVG rotation degrees (full 16-point table, see nasa-power aspectLabel()).
+          // Drawn only for a December–February direction that is known AND in the table: no default arrow.
           const dirDeg = COMPASS16_BEARING as Record<string, number>;
-          const primRot = dirDeg[data.climate.windFromSummer] ?? 45;
-          const secRot  = dirDeg[data.climate.windFromWinter]  ?? 225;
+          const primRot = summerDirKnown ? dirDeg[data.climate.windFromSummer] : undefined;
+          const roseKnown = primRot !== undefined;
 
           // Colour helpers
           function tempColor(t: number) {
             const norm = (t - tMin) / ((tMax - tMin) || 1);
             return `hsl(${Math.round(47 - norm * 12)}, 62%, ${Math.round(33 + norm * 20)}%)`;
-          }
-          function sunColor(h: number) {
-            const norm = (h - sunMin) / ((sunMax - sunMin) || 1);
-            return `hsl(${Math.round(38 + norm * 5)}, ${Math.round(78 + norm * 8)}%, ${Math.round(54 + norm * 10)}%)`;
           }
 
           // Shared style helpers
@@ -1575,26 +1426,16 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               {/* 1 — Climate zone */}
               <div style={cardSt}>
                 <div style={{ ...ovlSt, marginBottom: 8 }}>{t('climateZone')}</div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 18, color: '#2A2317', lineHeight: 1.15 }}>{zoneLabel}</div>
+                <div lang="en" style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 18, color: '#2A2317', lineHeight: 1.15 }}>{zoneLabel}</div>
                 {!simple && (
-                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12.5, color: 'var(--text-muted)', margin: '3px 0 11px' }}>
+                  <div lang="en" style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12.5, color: 'var(--text-muted)', margin: '3px 0 11px' }}>
                     {t('koppenClimateCodeLabel')} {kp} — {zoneLabel}
                   </div>
                 )}
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5, marginTop: simple ? 6 : 0 }} {...(classNote || zoneSummary.startsWith('Variable climate') ? { lang: 'en' } : {})}>{zoneSummary}</div>
-                <div style={{ marginTop: 14, background: '#F1F4EA', border: '1px solid #DCE6CE', borderRadius: 12, padding: '13px 14px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 7 }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3C6B3F" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 21V11"/><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z"/><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z"/>
-                    </svg>
-                    <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-forest-700)' }}>{t('goodForGrowing')}</span>
-                  </div>
-                  <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 14, color: '#3D4A36', lineHeight: 1.5 }}>
-                    {cropSegs.map((seg, i) => (
-                      <span key={i}>{seg.pre}{seg.bold && <b style={{ fontWeight: 600 }}>{seg.bold}</b>}{seg.post}</span>
-                    ))}
-                  </div>
-                </div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5, marginTop: simple ? 6 : 0 }} lang="en">{zoneSummary}</div>
+                <p lang="en" data-class-crops="withheld" style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5, margin: '10px 0 0' }}>
+                  No crops are suggested from the climate type alone. A climate type does not know your water, frost or soil. Use the crop plan for sowing months checked against this site.
+                </p>
                 <div style={{ display: 'flex', gap: 8, marginTop: 13, flexWrap: 'wrap' }}>
                   <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} {t('chipRainPerYear')}</span>
                   <span style={chip('#EDE7DA', '#7A6A48')}>{patternChip}</span>
@@ -1654,70 +1495,48 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 </div>
               </div>
 
-              {/* 4 — Sunlight hours/day */}
+              {/* 4 — Sunlight hours/day: the record holds one annual mean and no monthly sunshine hours (CP-117) */}
               <div style={cardSt}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
-                  <div style={ovlSt}>{t('sunlightHoursDay')}</div>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, color: 'var(--gold)' }}>≈ {sunAvg} h avg</div>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'flex-end', gap: 5, height: 130, paddingTop: 2 }}>
-                  {sunHours.map((h, i) => (
-                    <div key={i} style={colSt}>
-                      <span style={valSt}>{h.toFixed(1)}</span>
-                      <div style={{ width: '64%', maxWidth: 23, height: Math.max(8, (h / sunMax) * 110), borderRadius: '5px 5px 2px 2px', background: sunColor(h) }} />
-                      <span style={monSt}>{MS[i]}</span>
-                    </div>
-                  ))}
-                </div>
-                <div style={{ ...implSt, marginTop: 11 }}>
-                  → {data.rainfall.pattern === 'winter'
-                    ? 'Sunniest in the wet summer — maximise solar gain in autumn and spring.'
-                    : 'Sunniest in the dry winter — ideal for cool-season crops and drying produce.'}
-                </div>
+                <div style={{ ...ovlSt, marginBottom: 10 }}>{t('sunlightHoursDay')}</div>
+                <p lang="en" data-monthly-sun="unavailable" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>
+                  Monthly sunshine is not shown. This record holds no monthly sunshine hours for this site.
+                </p>
               </div>
 
-              {/* 5 — Wind + compass rose */}
+              {/* 5 — Wind: one annual mean and two seasonal-window directions only; no monthly series (CP-117) */}
               <div style={cardSt}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
-                  <div style={ovlSt}>{t('windKmhCard')}</div>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, color: '#5E7A66' }}>
-                    {kmh > 22 ? 'Moderate – strong' : kmh > 12 ? 'Light – moderate' : 'Light'}
+                <div style={{ ...ovlSt, marginBottom: 10 }}>{t('windKmhCard')}</div>
+                <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+                  <div style={{ flex: 1, minWidth: 180 }}>
+                    <p lang="en" data-monthly-wind="unavailable" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>
+                      Monthly wind is not shown. This record holds no monthly wind figures for this site.
+                    </p>
+                    {annualWindKnown ? (
+                      <p lang="en" data-annual-wind="known" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0, marginTop: 8 }}>Modelled annual mean wind: ≈ {kmh} km/h.</p>
+                    ) : (
+                      <p lang="en" data-annual-wind="unknown" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0, marginTop: 8 }}>Annual mean wind: not available.</p>
+                    )}
+                    {summerDirKnown && <p lang="en" data-wind-dec-feb="known" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0, marginTop: 8 }}>December to February: from the {data.climate.windFromSummer}.</p>}
+                    {winterDirKnown && <p lang="en" data-wind-jun-aug="known" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0, marginTop: 8 }}>June to August: from the {data.climate.windFromWinter}.</p>}
+                    {!summerDirKnown && !winterDirKnown && <p lang="en" data-wind-direction="unknown" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0, marginTop: 8 }}>Wind direction: not available.</p>}
                   </div>
-                </div>
-                <div style={{ display: 'flex', gap: 16, alignItems: 'flex-end' }}>
-                  <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end', gap: 5, height: 120 }}>
-                    {monthlyWind.map((w, i) => (
-                      <div key={i} style={colSt}>
-                        <span style={valSt}>{w}</span>
-                        <div style={{ width: '64%', maxWidth: 23, height: Math.max(6, (w / windMax) * 100), borderRadius: '5px 5px 2px 2px', background: (i >= 7 && i <= 9) ? '#5E8A6E' : '#9DB3A4' }} />
-                        <span style={monSt}>{MS[i]}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div style={{ flexShrink: 0, width: 104, textAlign: 'center' }}>
-                    <svg width="100" height="100" viewBox="0 0 100 100">
-                      <circle cx="50" cy="50" r="42" fill="#F1ECE0" stroke="#D8CFBA" strokeWidth="1.5"/>
-                      <circle cx="50" cy="50" r="30" fill="none" stroke="#E2DAC6" strokeWidth="1"/>
-                      <g transform={`rotate(${secRot}, 50, 50)`}>
-                        <line x1="50" y1="50" x2="50" y2="16" stroke="#A9BEAF" strokeWidth="3.5" strokeLinecap="round"/>
-                        <path d="M50 16 L44 26 M50 16 L56 26" fill="none" stroke="#A9BEAF" strokeWidth="3.5" strokeLinecap="round"/>
-                      </g>
-                      <g transform={`rotate(${primRot}, 50, 50)`}>
-                        <line x1="50" y1="50" x2="50" y2="14" stroke="#3C6B4A" strokeWidth="4.5" strokeLinecap="round"/>
-                        <path d="M50 14 L43 25 M50 14 L57 25" fill="none" stroke="#3C6B4A" strokeWidth="4.5" strokeLinecap="round"/>
-                      </g>
-                      <circle cx="50" cy="50" r="3.2" fill="#3C6B4A"/>
-                      <text x="50" y="12" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fontWeight="700" fill="#6B6048">N</text>
-                      <text x="91" y="54" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fontWeight="700" fill="#A89A7E">E</text>
-                      <text x="50" y="95" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fontWeight="700" fill="#A89A7E">S</text>
-                      <text x="9" y="54" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fontWeight="700" fill="#A89A7E">W</text>
-                    </svg>
-                    <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 12, color: '#3C6B4A', marginTop: 2 }}>{t('prevailingWind')} {data.climate.windFromSummer}</div>
-                    <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12, color: 'var(--text-muted)' }}>{data.climate.windFromWinter} {t('inWinter')}</div>
-                  </div>
-                </div>
-                <div style={{ ...implSt, marginTop: 13 }}>
-                  → Prevailing wind is from the {data.climate.windFromSummer} — site a windbreak along that edge.
+                  {roseKnown && (
+                    <div style={{ flexShrink: 0, width: 104, textAlign: 'center' }}>
+                      <svg width="100" height="100" viewBox="0 0 100 100" role="img" aria-label="Compass rose marking the December to February wind direction">
+                        <circle cx="50" cy="50" r="42" fill="#F1ECE0" stroke="#D8CFBA" strokeWidth="1.5"/>
+                        <circle cx="50" cy="50" r="30" fill="none" stroke="#E2DAC6" strokeWidth="1"/>
+                        <g transform={`rotate(${primRot}, 50, 50)`}>
+                          <line x1="50" y1="50" x2="50" y2="14" stroke="#3C6B4A" strokeWidth="4.5" strokeLinecap="round"/>
+                          <path d="M50 14 L43 25 M50 14 L57 25" fill="none" stroke="#3C6B4A" strokeWidth="4.5" strokeLinecap="round"/>
+                        </g>
+                        <circle cx="50" cy="50" r="3.2" fill="#3C6B4A"/>
+                        <text x="50" y="12" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fontWeight="700" fill="#6B6048">N</text>
+                        <text x="91" y="54" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fontWeight="700" fill="#A89A7E">E</text>
+                        <text x="50" y="95" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fontWeight="700" fill="#A89A7E">S</text>
+                        <text x="9" y="54" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fontWeight="700" fill="#A89A7E">W</text>
+                      </svg>
+                    </div>
+                  )}
                 </div>
               </div>
 

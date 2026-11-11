@@ -14,6 +14,7 @@ import { observedFrostConflicts, observedFrostConflictsForPlanting } from '@/lib
 import { cropByKey, CROPS } from '@/lib/crop-catalog';
 import { buildProductionGuide } from '@/lib/crop-export-schedule';
 import { BENCHMARK_TIME_BASIS_LINE, BENCHMARK_TIME_BASIS_SHORT, buildPlanDashboard, buildPlanTableRows } from '@/lib/crop-export-benchmark';
+import { planTableFrost } from '@/lib/crop-export-pdf';
 import { occupiedMonthsForPlanting, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { FROST_UNCONFIRMED_ACTION_TEXT, FROST_UNCONFIRMED_ROW_TEXT, FROST_UNCONFIRMED_TEXT } from '@/lib/frost-uncertainty';
 import type { SiteSurvey } from '@/lib/site-survey';
@@ -108,25 +109,112 @@ test('recorded frost months still check every month the crop holds ground, the p
 
 test('the printed bed-by-bed table carries the caveat on frost-tender rows only, and changes nothing else (CP-108)', () => {
   const plain = buildPlanTableRows([TENDER, HARDY], BEDS);
-  const flagged = buildPlanTableRows([TENDER, HARDY], BEDS, false, true);
+  const flagged = buildPlanTableRows([TENDER, HARDY], BEDS, { kind: 'not-recorded' });
   const tomato = flagged.find((row) => row.crop === 'Tomatoes')!;
   const carrots = flagged.find((row) => row.crop === 'Carrots')!;
   assert.equal(tomato.frostCaveat, FROST_UNCONFIRMED_ROW_TEXT);
   assert.equal(carrots.frostCaveat, null);
-  assert.ok(plain.every((row) => row.frostCaveat === null), 'off by default');
+  assert.ok(plain.every((row) => row.frostCaveat === null), 'off when the caller knows nothing about the survey');
   // Same months, same kilograms, same everything else.
-  const strip = (rows: typeof plain) => rows.map(({ frostCaveat: _caveat, ...rest }) => rest);
   assert.deepEqual(strip(flagged), strip(plain));
-  // The older mild-frost caveat keeps its own text where it applied.
-  const winterPick: Planting = { id: 'tom-dec', bedId: 'bed-1', cropKey: 'tomatoes', sowMonth: 12 };
-  const mild = buildPlanTableRows([winterPick], BEDS, true, true)[0];
-  assert.match(mild.frostCaveat ?? '', /^Frost-tender: finish picking before the first frost/);
+});
+
+/* ── The caveat follows the grower's frost record and nothing else ─────── */
+
+const strip = (rows: ReturnType<typeof buildPlanTableRows>) => rows.map(({ frostCaveat: _caveat, ...rest }) => rest);
+const flaggedCrops = (rows: ReturnType<typeof buildPlanTableRows>) => rows.filter((row) => row.frostCaveat).map((row) => row.crop).sort();
+const conditions = (value: Record<string, unknown>) => value as SiteSurvey['productionConditions'];
+const ALL_FROST_STATES: Array<[string, SiteSurvey | null]> = [
+  ['no survey', null],
+  ['"no"', survey(conditions({ frost: 'no' }))],
+  ['"yes", no month', survey(conditions({ frost: 'yes', frostMonths: [] }))],
+  ['"yes", April', survey(conditions({ frost: 'yes', frostMonths: [4] }))],
+  ['"yes", July', survey(conditions({ frost: 'yes', frostMonths: [7] }))],
+  ['"yes", December', survey(conditions({ frost: 'yes', frostMonths: [12] }))],
+  ['"yes", April, July and December', survey(conditions({ frost: 'yes', frostMonths: [4, 7, 12] }))],
+];
+// Tender crops in different seasons, a hardy crop, a finished one-time sowing and one awaiting confirmation.
+const MIXED: Planting[] = [
+  { id: 'tom-sep', bedId: 'bed-1', cropKey: 'tomatoes', sowMonth: 9 },
+  { id: 'pep-nov', bedId: 'bed-2', cropKey: 'peppers', sowMonth: 11 },
+  { id: 'car', bedId: 'bed-2', cropKey: 'carrots', sowMonth: 3 },
+  { id: 'bean-done', bedId: 'bed-1', cropKey: 'green-beans', sowMonth: 2, once: '2026-02', finishedOnceSowing: true } as Planting,
+  { id: 'corn-wait', bedId: 'bed-1', cropKey: 'sweetcorn', sowMonth: 1, once: '2027-01', awaitingSowingConfirmation: true } as Planting,
+];
+
+test('unknown frost marks every active frost-tender row and names no month; "no" marks none; a calendar name is not asked', () => {
+  const guide = buildProductionGuide(null, MIXED, [], 11);
+  const rows = buildPlanTableRows(MIXED, BEDS, planTableFrost({ productionGuide: guide, now: new Date(2026, 10, 11) }));
+  assert.deepEqual(flaggedCrops(rows), ['Peppers', 'Tomatoes']);
+  for (const row of rows.filter((r) => r.frostCaveat)) assert.equal(row.frostCaveat, FROST_UNCONFIRMED_ROW_TEXT);
+  assert.deepEqual(guide.frostTenderUnconfirmed, ['Peppers', 'Tomatoes'], 'the guide names the same crops as the table marks');
+  // The finished sowing and the one awaiting confirmation are in neither.
+  assert.ok(rows.every((r) => !/Sweetcorn|Green beans/.test(r.crop) || r.frostCaveat === null));
+  // "We have not seen frost here".
+  const none = buildProductionGuide(survey(conditions({ frost: 'no' })), MIXED, [], 11);
+  assert.deepEqual(planTableFrost({ productionGuide: none }), { kind: 'no-frost-observed' });
+  assert.deepEqual(flaggedCrops(buildPlanTableRows(MIXED, BEDS, planTableFrost({ productionGuide: none }))), []);
+  // No survey reader at all (a caller without a guide): nothing is marked.
+  assert.equal(planTableFrost({}), undefined);
+  // Neither function can see the sowing calendar, so "Hot area, no frost" cannot hide the warning.
+  const pdf = readFileSync(new URL('../lib/crop-export-pdf.ts', import.meta.url), 'utf8');
+  const fn = pdf.slice(pdf.indexOf('export function planTableFrost('), pdf.indexOf('function drawFullPlan('));
+  assert.doesNotMatch(fn, /rainPattern|all-year|mild-frost|meta\./);
+  const benchmark = readFileSync(new URL('../lib/crop-export-benchmark.ts', import.meta.url), 'utf8');
+  const start = benchmark.indexOf('function frostCaveatFor(');
+  const table = benchmark.slice(start, benchmark.indexOf('\n}\n', start)); // the function body only, not the history note under it
+  assert.doesNotMatch(table, /rainPattern|all-year|mild-frost|lat\b|hemisphere/);
+  assert.match(benchmark, /export function buildPlanTableRows\(plantings: Planting\[\], beds: PlanBed\[\], frost\?: PlanTableFrost\): PlanTableRow\[\]/);
+});
+
+test('recorded frost in April, July or December marks exactly the crops still in the ground then, tail included, and the guide agrees', () => {
+  const now = new Date(2026, 10, 11); // November
+  for (const [label, s] of ALL_FROST_STATES) {
+    const guide = buildProductionGuide(s, MIXED, [], 11);
+    const rows = buildPlanTableRows(MIXED, BEDS, planTableFrost({ productionGuide: guide, now }));
+    const months = s?.productionConditions?.frost === 'yes' ? (s.productionConditions.frostMonths ?? []) : [];
+    if (months.length) {
+      // Expected from the planner's own whole-occupancy check, one planting at a time.
+      const expected = MIXED.filter((p) => !p.finishedOnceSowing && !p.awaitingSowingConfirmation)
+        .filter((p) => observedFrostConflictsForPlanting(p, 11, months).length)
+        .map((p) => cropByKey(p.cropKey)!.name).sort();
+      assert.deepEqual(flaggedCrops(rows), expected, label);
+      // The guide's own list names the same crops.
+      const check = item(guide, 'Planned crops to check for frost');
+      const guideCrops = (check?.lines ?? []).filter((line) => /^[^:]+: /.test(line) && !/^These planned/.test(line)).map((line) => line.split(':')[0]).sort();
+      assert.deepEqual(guideCrops, expected, `${label}: guide and table agree`);
+      // Each caveat names only months the grower recorded.
+      for (const row of rows.filter((r) => r.frostCaveat)) {
+        const named = (row.frostCaveat!.match(/\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/g) ?? []);
+        assert.ok(named.length >= 1, row.frostCaveat!);
+        for (const name of named) assert.ok(months.includes(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].indexOf(name) + 1), `${label}: ${name} was not recorded`);
+      }
+      assert.equal(item(guide, TITLE), undefined, `${label}: no generic notice once months are given`);
+    }
+    // Whatever was said about frost, no date, share or kilogram on any row moves.
+    assert.deepEqual(strip(rows), strip(buildPlanTableRows(MIXED, BEDS)), `${label}: rows unchanged apart from the caveat`);
+  }
+  // The cases really differ: December frost reaches the summer crops, April reaches the late pickers.
+  const of = (months: number[]) => flaggedCrops(buildPlanTableRows(MIXED, BEDS, { kind: 'months', months, nowMonth: 11 }));
+  assert.ok(of([12]).length >= 1, 'a December frost is honoured: nothing assumes frost is a mid-year event');
+  assert.notDeepEqual(of([12]), of([7]));
+  assert.deepEqual(of([]), [], 'an empty month list marks nothing by itself (the caller sends "not-recorded" for that)');
+});
+
+test('a picking tail that runs into a recorded frost month is marked even though sowing and first picking are clear of it', () => {
+  const tomato: Planting = { id: 'tom', bedId: 'bed-1', cropKey: 'tomatoes', sowMonth: 9 };
+  const held = occupiedMonthsForPlanting(tomato);
+  const last = held[held.length - 1];
+  const [row] = buildPlanTableRows([tomato], BEDS, { kind: 'months', months: [last], nowMonth: 9 });
+  assert.match(row.frostCaveat ?? '', /^Frost-tender: still in the ground in [A-Z][a-z]{2}, when you recorded frost\.$/);
+  // A month the crop does not hold at all marks nothing.
+  const free = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].find((m) => !held.includes(m));
+  if (free !== undefined) assert.equal(buildPlanTableRows([tomato], BEDS, { kind: 'months', months: [free], nowMonth: 9 })[0].frostCaveat, null);
 });
 
 test('the PDF takes the caveat from the guide, so the page and the paper cannot disagree (CP-108)', () => {
   const pdf = readFileSync(new URL('../lib/crop-export-pdf.ts', import.meta.url), 'utf8');
-  assert.match(pdf, /const frostUnconfirmed = \(input\.productionGuide\?\.frostTenderUnconfirmed\?\.length \?\? 0\) > 0;/);
-  assert.match(pdf, /buildPlanTableRows\(input\.plantings, input\.beds, mildFrostSite, frostUnconfirmed\)/);
+  assert.match(pdf, /buildPlanTableRows\(input\.plantings, input\.beds, planTableFrost\(input\)\)/);
   // The page shows the guide's observations in the open, beside the button that opens the survey.
   const card = readFileSync(new URL('../components/crops/ProductionGuideCard.tsx', import.meta.url), 'utf8');
   assert.match(card, /guide\.siteObservations\.map\(/);
