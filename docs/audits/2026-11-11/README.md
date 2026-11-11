@@ -1,0 +1,5 @@
+# Audits — 11 November 2026
+
+- [Sowing-calendar rule: held-out test](calendar-rule-holdout-claude.md): 56 new South African places, with places and pass criteria committed before any data was fetched. 54 complied with four frost constraints; Butterworth and Mossel Bay did not (CP-103, open, three options). This is not an accuracy figure: a place-blind answer passes the same constraints. CP-104 to CP-106 reported.
+- [Crop plan: the four open decisions](crop-plan-decisions-claude.md): weekly-target status (CP-079), one set of calendar names on the calendar page and Atlas (CP-097), a truthful missing-climate message (CP-096), and the out-of-season list left hidden without a climate reading (CP-094).
+- [Codex interim review: dispositions](codex-interim-review-dispositions-claude.md): CBR-01 to CBR-08, each with what was done and what is left. Three helper fixes (missing rainfall month, missing-value marker in the heat gate, a rainless month in the water screen), raw responses preserved and verified offline, the collector's real request policy disclosed.

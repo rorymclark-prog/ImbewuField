@@ -95,6 +95,33 @@ test('no place that never froze in twenty years is shown the hard-frost season, 
   assert.deepEqual(wrong, []);
 });
 
+test('the frost rules are one-sided: an answer that ignores the place can pass them, so they are not an accuracy score', () => {
+  // Independent review of 11 November 2026 (Codex, CBR-01). The frost rules above only forbid
+  // particular frost mistakes. Giving EVERY place the winter-rainfall calendar breaks none of
+  // them, at all 100 places: two rules constrain only the hot-area and light-frost answers,
+  // one allows the winter calendar at any frost count, one forbids only the hard-frost
+  // calendar. So "54 of 56 passed" is frost-constraint compliance, never the share of places
+  // given the right calendar. What pins the calendar itself is the named list for each set
+  // below, which is regression evidence, and nothing here measures sowing months or crops.
+  const breaks = (pattern: RainPattern, site: Site): boolean => {
+    const { airFrostDaysPerYear: frostDays, lowestDailyMinC: lowest, yearsWithFrost } = site.era5;
+    return (pattern === 'all-year' && (frostDays > 0 || lowest <= 0))
+      || (pattern === 'mild-frost' && frostDays >= 0.5)
+      || (frostDays >= 1 && pattern !== 'summer' && pattern !== 'winter')
+      || (pattern === 'summer' && yearsWithFrost === 0 && lowest > 0 && site.recordMinC > 0);
+  };
+  const passing = (pattern: RainPattern) => ALL_SITES.filter((site) => !breaks(pattern, site)).length;
+  assert.equal(passing('winter'), 100, 'the degenerate answer passes everywhere: the rules cannot see it');
+  // The other place-blind answers are caught, which is all these rules are for.
+  assert.equal(passing('summer'), 62);
+  assert.equal(passing('mild-frost'), 53);
+  assert.equal(passing('all-year'), 43);
+  // The app's own answers: every place except the two named in CP-103.
+  assert.deepEqual(ALL_SITES.filter((site) => breaks(climateOf(site).pattern, site)).map((site) => site.name).sort(), ['Butterworth', 'Mossel Bay']);
+  // And the app does not give the degenerate answer: 9 of 100 places are on the winter calendar.
+  assert.equal(ALL_SITES.filter((site) => climateOf(site).pattern === 'winter').length, 9);
+});
+
 // CP-103, OPEN. The held-out test of 11 November 2026 applied the rule just above to 56 new
 // places and two failed it: Butterworth (record minimum 1.4 °C, coldest month 12.9 °C) and
 // Mossel Bay (1.7 °C, 12.5 °C) never froze on either record and are given the hard-frost

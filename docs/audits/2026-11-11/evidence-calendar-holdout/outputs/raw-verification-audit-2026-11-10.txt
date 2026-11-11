@@ -1,0 +1,55 @@
+archive: raw-responses-2026-11-10.tar.xz  sha256 e9443e6be5e1f18d81489168502179474e00c14b8292bd09267b39acd0e5c064
+daily responses in the archive: 62; places to check: 44
+
+place                    sha256          cell lat  cell lon  elev m  km off  timezone               frost/yr  lowest frost yrs  result
+Mkuze sample farm        d008f1d9bced    -27.7329   31.9551     374     0.6  Africa/Johannesburg         0.0     3.7         0  complete; rebuilt figures equal the saved ones
+Durban                   c3c2cbbc2e27    -29.9121   31.0128       9     6.0  Africa/Johannesburg         0.0     7.6         0  complete; rebuilt figures equal the saved ones
+Richards Bay             ee0520e14b6e    -28.7873   31.9886       2     5.1  Africa/Johannesburg         0.0     7.1         0  complete; rebuilt figures equal the saved ones
+Hillcrest                f03ace5cf082    -29.7715   30.7317     641     3.8  Africa/Johannesburg         0.0     2.9         0  complete; rebuilt figures equal the saved ones
+Pietermaritzburg         333896e3be75    -29.5606   30.4167     648     5.6  Africa/Johannesburg         0.2    -0.4         4  complete; rebuilt figures equal the saved ones
+Underberg                25d139c38d1d    -29.7715   29.4774    1545     3.0  Africa/Johannesburg        41.2   -11.5        20  complete; rebuilt figures equal the saved ones
+Kokstad                  71815333af54    -30.5448   29.4353    1296     1.6  Africa/Johannesburg        15.0   -10.6        20  complete; rebuilt figures equal the saved ones
+Newcastle                6b59149ee539    -27.7329   29.9326    1190     3.0  Africa/Johannesburg         5.1    -4.2        18  complete; rebuilt figures equal the saved ones
+Vryheid                  6b6c61de7a7f    -27.8032   30.7762    1164     3.9  Africa/Johannesburg         3.6    -2.9        15  complete; rebuilt figures equal the saved ones
+Johannesburg             34cc5ee0758d    -26.1863   28.0263    1743     2.8  Africa/Johannesburg        12.8    -4.7        19  complete; rebuilt figures equal the saved ones
+Pretoria                 8b000f9e583b    -25.7645   28.2353    1327     4.8  Africa/Johannesburg         0.5    -1.6         8  complete; rebuilt figures equal the saved ones
+Ermelo                   f2a07ab959f4    -26.5378   29.9669    1694     1.6  Africa/Johannesburg         9.3    -4.9        20  complete; rebuilt figures equal the saved ones
+Bethlehem                aaf6d3839b6e    -28.2250   28.3352    1619     2.5  Africa/Johannesburg       21.85    -6.5        20  complete; rebuilt figures equal the saved ones
+Bloemfontein             ac0b3416a7ea    -29.1388   26.1724    1391     4.2  Africa/Johannesburg       22.45    -5.6        20  complete; rebuilt figures equal the saved ones
+Potchefstroom            24237c51f208    -26.7487   27.0796    1334     4.8  Africa/Johannesburg         8.4    -3.9        19  complete; rebuilt figures equal the saved ones
+Mahikeng                 0975f0a5e3d9    -25.8348   25.6161    1280     3.7  Africa/Johannesburg         5.8    -3.9        19  complete; rebuilt figures equal the saved ones
+Kimberley                019c4b43bae1    -28.7170   24.7603    1161     2.6  Africa/Johannesburg         8.0    -4.3        19  complete; rebuilt figures equal the saved ones
+Rustenburg               5bfc8379cbf2    -25.6942   27.2252    1166     3.1  Africa/Johannesburg        0.85    -1.2         9  complete; rebuilt figures equal the saved ones
+Mbombela                 830aa5ed8b6a    -25.4833   30.9436     663     3.0  Africa/Johannesburg         0.0     0.8         0  complete; rebuilt figures equal the saved ones
+Komatipoort              64243f6b3a8c    -25.4130   31.9827     159     3.8  Africa/Johannesburg         0.0     7.7         0  complete; rebuilt figures equal the saved ones
+Tzaneen                  4d3150de2d38    -23.8664   30.1905     710     5.1  Africa/Johannesburg         0.0     2.8         0  complete; rebuilt figures equal the saved ones
+Polokwane                e35b8466436f    -23.9367   29.4597    1261     4.2  Africa/Johannesburg        0.05     0.0         1  complete; rebuilt figures equal the saved ones
+Musina                   1ec1c60ffd5f    -22.3199   30.0620     537     4.0  Africa/Johannesburg         0.0     3.7         0  complete; rebuilt figures equal the saved ones
+Thohoyandou              94fe27b11723    -22.9525   30.4384     723     4.3  Africa/Johannesburg         0.0     4.4         0  complete; rebuilt figures equal the saved ones
+Phalaborwa               0d9927279d52    -23.9367   31.1758     440     3.7  Africa/Johannesburg         0.0     5.2         0  complete; rebuilt figures equal the saved ones
+Lephalale                d74ef606b381    -23.6555   27.7215     816     3.3  Africa/Johannesburg         0.0     1.1         0  complete; rebuilt figures equal the saved ones
+Mthatha                  8aef8e119a5a    -31.5993   28.7784     706     1.0  Africa/Johannesburg        0.05     0.0         1  complete; rebuilt figures equal the saved ones
+Port St Johns            f972302544d3    -31.5993   29.5329      69     2.4  Africa/Johannesburg         0.0     6.9         0  complete; rebuilt figures equal the saved ones
+East London              753ee19d6187    -33.0053   27.9386      25     4.0  Africa/Johannesburg         0.0     5.2         0  complete; rebuilt figures equal the saved ones
+Gqeberha                 d778e3ca5384    -33.9895   25.6180      87     3.7  Africa/Johannesburg         0.0     6.2         0  complete; rebuilt figures equal the saved ones
+Komani                   d99bedcadc9e    -31.9508   26.8916    1072     5.8  Africa/Johannesburg        10.4    -4.1        20  complete; rebuilt figures equal the saved ones
+Graaff-Reinet            a900a46aeba0    -32.2320   24.5157     754     2.4  Africa/Johannesburg         7.0    -4.0        20  complete; rebuilt figures equal the saved ones
+Cape Town                c8060b2594a2    -33.9895   18.4270      25     6.6  Africa/Johannesburg         0.0     3.5         0  complete; rebuilt figures equal the saved ones
+Stellenbosch             ceab41a13966    -33.9192   18.8529     111     1.4  Africa/Johannesburg         0.0     0.1         0  complete; rebuilt figures equal the saved ones
+Worcester                c2c50e6afc90    -33.6380   19.4293     227     2.3  Africa/Johannesburg         0.1    -3.0         2  complete; rebuilt figures equal the saved ones
+Ceres                    39078ddb6620    -33.3568   19.2222     454     8.3  Africa/Johannesburg         1.2    -3.5         9  complete; rebuilt figures equal the saved ones
+George                   9140a8a0632b    -33.9895   22.4719     237     3.5  Africa/Johannesburg         0.0     3.1         0  complete; rebuilt figures equal the saved ones
+Oudtshoorn               e5214fdf73a1    -33.5677   22.1933     315     2.6  Africa/Johannesburg        2.65    -2.8        15  complete; rebuilt figures equal the saved ones
+Beaufort West            a4aca5ead96c    -32.3726   22.6092     846     3.7  Africa/Johannesburg        3.75    -2.4        20  complete; rebuilt figures equal the saved ones
+Vredendal                c725f9cbe8fc    -31.6696   18.4532      35     4.4  Africa/Johannesburg         0.0     0.2         0  complete; rebuilt figures equal the saved ones
+Sutherland               c8b5d0e503dd    -32.3726   20.6432    1458     3.4  Africa/Johannesburg        23.6    -9.4        20  complete; rebuilt figures equal the saved ones
+Upington                 3dfae9736b3a    -28.4359   21.2727     798     2.7  Africa/Johannesburg        1.85    -2.0        17  complete; rebuilt figures equal the saved ones
+Springbok                bdc5a399e59e    -29.7012   17.8538     907     5.8  Africa/Johannesburg         1.2    -1.3        14  complete; rebuilt figures equal the saved ones
+Kuruman                  d76b021606a9    -27.4517   23.4564    1321     2.6  Africa/Johannesburg         3.7    -4.1        19  complete; rebuilt figures equal the saved ones
+
+places checked 44; complete and reproduced 44; refused or different 0; no raw response 0
+distinct daily grid cells 44; places sharing a daily cell: none
+distance from the requested point to the cell the provider returned: median 3.7 km, largest 8.3 km (Ceres)
+
+What the responses do NOT say: which model produced them. They carry no model field. The requests did not send
+`models` or `cell_selection`, so the provider's defaults applied (see the record). Units and dates are as stated above.

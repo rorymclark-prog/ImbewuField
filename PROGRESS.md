@@ -77,6 +77,20 @@ must provision — not buildable from code alone).
 - **Checked:** affected tests and typecheck locally; the sample farm in a browser with the climate route aborted and
   answering (390 px light and dark, 1280 px), a visitor's choice and the way back, and the PDF line.
 
+### 11 Nov 2026 — Crop plan: held-out test of the calendar rule, and the four open decisions (weekly-target assessment changed; full suite required before merge)
+
+Records: [`docs/audits/2026-11-11/`](docs/audits/2026-11-11/README.md). On PR #1334, not merged. Under three-way review (Claude, AGY Argon, Codex): all three must approve the same commit before merge.
+
+- **Held-out test.** The calendar rule merged on 10 November was run on 56 South African places it was not designed on. Places and pass criteria were committed before any climate data was fetched. 54 complied with four frost constraints. **This is not an accuracy figure:** an answer that gives every place the winter calendar passes the same constraints (Codex interim review, CBR-01). **Butterworth and Mossel Bay did not comply** (CP-103): no frost in twenty years on either record, yet on the hard-frost calendar. The direct fix was tried, measured and withdrawn: it also moves Pietermaritzburg and takes away the eight crops with no light-frost months (CP-082). The rule is unchanged. Both places are told on screen that they are close to the light-frost line. Decision needed; options are in the record.
+- **Also found, reported not judged:** the winter-rainfall calendar has no frost check (CP-104, Calvinia); the two climate datasets give different calendars at 9 of 56 places (CP-105); neighbouring towns share one grid reading (CP-106).
+- **Weekly targets (CP-079).** A target card now says "Not covered yet", "Covered on paper" or "Covered on paper, may be early". The credit is unchanged. For every crop except broad beans a covered target reads "may be early", because the plan counts the latest likely harvest month.
+- **One set of calendar names (CP-097).** The sowing calendar page and the Atlas use the planner's names. The calendar page offers "This farm's crop plan: …" as an explicit pick; nothing is preselected. isiZulu calendar names are unreviewed drafts.
+- **Missing climate (CP-096).** The fallback note and header chip say why there is no climate reading: still loading, signed-in growers only, or not available now. Access rules unchanged.
+- **Out-of-season list (CP-094).** Stays hidden for a mapped site with no climate reading. No change.
+- **Codex interim review of the held-out test (CBR-01 to CBR-08): all accepted.** Three helper fixes, none reachable from the app before: a rainfall year with a missing month is no longer a site climate; the heat gate no longer takes NASA's -999 marker or a missing month as evidence; a month with no rain never passes the rain-fed water screen. The collector did not request "ERA5 at the nearest cell" as I had written; it used the provider's default model mix and land cell. That is now stated everywhere, the raw responses are in the repository, and an offline check confirms all 100 records are complete and reproduce the saved frost figures. Record: `docs/audits/2026-11-11/codex-interim-review-dispositions-claude.md`.
+- **The 56 places are now a regression fixture.** Frost criteria run over all 100 places in `tests/sa-calendar-real-sites.test.ts`.
+- **Still open:** CP-103, CP-104, CP-082, CP-083, CP-080, CP-073 remaining, CP-098, CP-099, page work CP-047(b)/048(b)/049(b) and steps 3–7, a first-language review, and any check on a signed-in account or a physical phone.
+
 ### 10 Nov 2026 — Crop plan: fixes from the independent review of the calendar work (no farming number changed; full suite still required before merge)
 - **Record:** Update 2 in `docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md` (CP-092–CP-099). Commit `9a980a5c`.
   Codex reviewed PR #1328 at `2218228e` and `0c005462`; each fault was reproduced before it was changed.

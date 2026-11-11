@@ -5,7 +5,16 @@
 - Deployment inspected: not inspected. This audit runs the planner's own functions on climate data.
 - Previous audit: [crop plan accuracy fixes, 10 November](../2026-11-10/crop-plan-accuracy-fixes-claude.md). Carried forward: CP-073 remaining, CP-078, CP-083, CP-098, CP-099. IDs continue from CP-103.
 - Scope: which sowing calendar a real South African place is given by the automatic rule.
-- Evidence type: the app's own functions run on places it was not designed on, judged against an independent gridded frost record. No field check and no agronomist review.
+- Evidence type: the app's own functions run on places it was not designed on, judged against a second gridded frost record. No field check and no agronomist review.
+- Reviewed by: Codex, interim, on `9a5b102e` (tree `fec2aebb`): changes required. What was done about each finding is in [the dispositions record](codex-interim-review-dispositions-claude.md). Two corrections from that review apply throughout this page and are stated first.
+
+## Two corrections to read before the results
+
+**1. "54 of 56" is frost-constraint compliance. It is not calendar or farming accuracy.** The four criteria are one-sided. An answer that gives every place the winter-rainfall calendar passes all four at all 56 held-out places and all 44 development places ([`outputs/criteria-controls.txt`](evidence-calendar-holdout/outputs/criteria-controls.txt)). The criteria forbid certain frost mistakes; they cannot tell whether a place got the right calendar, and they say nothing about sowing months, crops or yields. No accuracy percentage can be taken from this page.
+
+**2. The second record is not "ERA5 only at the nearest cell".** I described it that way. The collector did not send a `models` or `cell_selection` parameter, so the provider's defaults applied. Open-Meteo's documentation says its default "Best Match" combines ECMWF IFS (from 2017), ERA5 and ERA5-Land, picks a land grid cell of similar elevation and adjusts to the point's elevation. The responses do not say which model produced them. The returned cells are 1 to 8 km from each town (median 4.3 km), and no two of the 56 share one. Wherever this page says "ERA5" or "independent record", read "Open-Meteo archive, default model selection, 2001 to 2020". The numbers are unchanged. The same applies to the 44 places of 10 November, collected the same way.
+
+How independent it is: it is a different product from the app's NASA POWER reading, at a finer grid. Both are reanalysis-based and may share observations. Neither is a weather station or a farm.
 
 ## Why
 
@@ -25,7 +34,7 @@ The places, their guide regions and the pass criteria are in [`evidence-calendar
 
 Run on 11 November 2026 at 04:17 UTC, on the frozen rule. All 56 places returned an app reading and an independent record.
 
-**54 of 56 passed all four criteria. 2 failed: Butterworth and Mossel Bay.**
+**54 of 56 complied with all four frost criteria. 2 did not: Butterworth and Mossel Bay.** See correction 1 above for what that does and does not mean.
 
 | Criterion | Places it applies to | Failed |
 | --- | --- | --- |
@@ -35,6 +44,8 @@ Run on 11 November 2026 at 04:17 UTC, on the frozen rule. All 56 places returned
 | H-D: never froze in 20 years, and the app's own record minimum is above 0 °C, must not be on the hard-frost calendar | 21 | 2 |
 
 Calendars given: Winter frost 32, Light frost at most 12, Hot area, no frost 8, Winter rainfall 4.
+
+The raw daily responses were checked offline after the review ([`outputs/raw-verification.txt`](evidence-calendar-holdout/outputs/raw-verification.txt)): all 56 hold the exact 7,305 days from 1 January 2001 to 31 December 2020, state °C and mm, have no missing value, and give the same frost figures when rebuilt without the collector's code. The collector itself did not check any of that before scoring; the review was right that it would have accepted an incomplete or mislabelled record. The check now refuses five corrupt records, including the review's three ([`outputs/raw-verification-negative-controls.txt`](evidence-calendar-holdout/outputs/raw-verification-negative-controls.txt)). The raw responses are in the repository: [`outputs/raw-responses-2026-11-11.tar.xz`](evidence-calendar-holdout/outputs/raw-responses-2026-11-11.tar.xz).
 
 Raw results for every place: [`outputs/holdout-results.json`](evidence-calendar-holdout/outputs/holdout-results.json). Tables: [`outputs/holdout-summary.txt`](evidence-calendar-holdout/outputs/holdout-summary.txt). Run log: [`outputs/holdout-run.txt`](evidence-calendar-holdout/outputs/holdout-run.txt). Scripts: [`holdout-harness.ts`](evidence-calendar-holdout/holdout-harness.ts), [`summarise.py`](evidence-calendar-holdout/summarise.py).
 
@@ -109,8 +120,12 @@ So the change fixes the frost label and has real costs. It takes eight crops awa
 
 ## What these results are and are not
 
-- They are a test of the calendar choice on places that did not shape it, against a second gridded dataset. They are not weather-station records, farm observations or an agronomist's judgement.
-- The pass criteria are frost rules. They say nothing about whether the sowing months inside a calendar are right for a place.
+- They are a check of four frost constraints on places that did not shape the rule, against a second gridded dataset. They are not weather-station records, farm observations or an agronomist's judgement.
+- They are not an accuracy score. A place-blind answer passes all four constraints (correction 1). A real validation needs criteria that can tell calendars apart, written down before new places are looked at.
+- One such criterion was tried **after** the results were known, so it is a description, not a result: whether the app's winter / not-winter answer agrees with the rain timing of the second record. It agrees at 55 of 56 places; Calvinia differs (CP-104). An always-winter answer would be wrong at 53 of 56. It uses the app's own 0.35 line and places already seen, so it is a candidate for the next pre-registered validation and nothing more.
+- All 56 places are in South Africa, between 34.4°S and 23.0°S. Nothing here applies to another country or hemisphere.
+- 19 of the 56 lie within 55 km of one of the 44 development places (the review's count). The app's reading is a grid cell about 50 km wide: three pairs of held-out towns share one reading, leaving 53 distinct readings. I have not measured how many held-out places share an app grid cell with a development place, so no independent sample size is claimed.
+- The frost constraints say nothing about whether the sowing months inside a calendar are right for a place.
 - Month overlap with the regional guide is reported in the summary file, by place, by region and by named crop-and-place pair. It is overlap with one secondary guide from 2004 under my own assignment of places to its regions. It is not an accuracy figure. The app's Western Cape rows are taken from that guide, so overlap there is by construction.
 - Coordinates were typed from memory to two decimals. A wrong town centre by a few kilometres selects the same or a neighbouring grid cell.
 - These 56 places have now been seen. From here they are regression evidence. Any change to the rule needs a new held-back set.
