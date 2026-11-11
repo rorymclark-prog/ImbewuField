@@ -1,0 +1,4 @@
+  country panel present -> choosing ZA
+light note: Climate records for this site are read for signed-in growers only, so this uses the nearest reference: Durban / KZN coast & hinterland (fallback). Sign in, or choose your own sowing calendar. | contains offline/loading: false
+  country panel present -> choosing ZA
+dark note: Climate records for this site are read for signed-in growers only, so this uses the nearest reference: Durban / KZN coast & hinterland (fallback). Sign in, or choose your own sowing calendar. | contains offline/loading: false

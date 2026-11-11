@@ -1,0 +1,14 @@
+  country panel present -> choosing ZA
+Auto-suggest step 0 dialog buttons (last 6): ["Best whole-year plan\nTries all 12 starting months ","Divide beds into crop sections\nOn by default: Auto","Rotate crops between beds\nAvoids immediate same-fa","Grow big vines in a veg bed anyway\nOff by default:","Reliable irrigation for every crop cycle\nThis auto","Suggest a plan"]
+go buttons: 1
+accept button: 1 Add 27 plantings to my plan
+export-like controls: ["Share tasks","Download the plan (PDF)","open it to print","Future harvest PDF","Detailed reference PDF"]
+  saved /home/user/ImbewuField/docs/audits/2026-11-11/evidence-decisions/artifacts/crop-plan-local-farm.pdf 691516 bytes; suggested name ImbewuField-Crop-Plan-Ubhejane-Creche-garden-2026-11-11.pdf
+other export candidate: /^Future harvest PDF/ Future harvest PDF
+  saved /home/user/ImbewuField/docs/audits/2026-11-11/evidence-decisions/artifacts/ImbewuField-Crop-Plan-Ubhejane-Creche-garden-future-harvest-2026-11-11.pdf 16658 bytes; suggested name ImbewuField-Crop-Plan-Ubhejane-Creche-garden-future-harvest-2026-11-11.pdf
+other export candidate: /^Detailed reference PDF/ Detailed reference PDF
+  saved /home/user/ImbewuField/docs/audits/2026-11-11/evidence-decisions/artifacts/ImbewuField-Crop-Plan-Ubhejane-Creche-garden-reference-2026-11-11.pdf 750662 bytes; suggested name ImbewuField-Crop-Plan-Ubhejane-Creche-garden-reference-2026-11-11.pdf
+json keys: imbewu_crop_plan_v2,imbewu_crop_plan_cutover_v2 {"imbewu_crop_plan_v2":9255,"imbewu_crop_plan_cutover_v2":208}
+overflow desktop {"sw":1280,"iw":1280,"over":false}
+
+ERRORS []

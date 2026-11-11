@@ -1,0 +1,43 @@
+
+== A1 401
+  country panel present -> choosing ZA
+A1 CONSOLE.error Failed to load resource: the server responded with a status of 401 (Unauthorized)
+header chip: {"text":"Light frost at most · summer rain · nearest reference: Durban / KZN coast & hinterland (fallback)","title":"Climate records for this site are read for signed-in growers only, so this uses the nearest reference: Durban / KZN coast & hinterland (fallback). Sign in, or choose your own sowing calendar."}
+overflow phone: {"sw":390,"iw":390,"over":false}
+select options: ["Let the app decide: Light frost at most","Winter frost (Highveld, Midlands, Karoo)","Light frost at most (warm areas and mild coasts)","Hot area, no frost (Lowveld, Limpopo valley, KZN coast)","Winter rainfall (Western Cape)"]
+select container text: "CLIMATE USED AUTOMATICALLY\n Light frost at most · summer rain\nSowing calendar for this site\nLet the app decide: Light frost at most\nWinter frost (Highveld, Midlands, Karoo)\nLight frost at most (warm areas and mild coasts)\nHot area, no frost (Lowveld, Limpopo valley, KZN coast)\nWinter rainfall (Western Cape)\n\nChoose one only if you know your land. The months offered for every crop change with it. Crops already on your plan stay where they are.\n\nClimate records for this site are read for signed-in growers only, so this uses the nearest reference: Durban / KZN coast & hinterland (fallback). Sign in, or choose your own sowing calendar."
+dialogs after choosing: 1
+header chip after choice: {"text":"Light frost at most · summer rain · chosen by you","title":"You chose this sowing calendar in Auto-suggest a plan"}
+
+== A2 abort
+  country panel present -> choosing ZA
+A2 CONSOLE.error Failed to load resource: net::ERR_FAILED
+header chip: {"text":"Light frost at most · summer rain · nearest reference: Durban / KZN coast & hinterland (fallback)","title":"Climate records for this site could not be read just now (no connection, or the climate service did not answer), so this uses the nearest reference: Durban / KZN coast & hinterland (fallback). You can choose your own sowing calendar."}
+overflow phone: {"sw":390,"iw":390,"over":false}
+select options: ["Let the app decide: Light frost at most","Winter frost (Highveld, Midlands, Karoo)","Light frost at most (warm areas and mild coasts)","Hot area, no frost (Lowveld, Limpopo valley, KZN coast)","Winter rainfall (Western Cape)"]
+select container text: "CLIMATE USED AUTOMATICALLY\n Light frost at most · summer rain\nSowing calendar for this site\nLet the app decide: Light frost at most\nWinter frost (Highveld, Midlands, Karoo)\nLight frost at most (warm areas and mild coasts)\nHot area, no frost (Lowveld, Limpopo valley, KZN coast)\nWinter rainfall (Western Cape)\n\nChoose one only if you know your land. The months offered for every crop change with it. Crops already on your plan stay where they are.\n\nClimate records for this site could not be read just now (no connection, or the climate service did not answer), so this uses the nearest reference: Durban / KZN coast & hinterland (fallback). You can choose your own sowing calendar."
+
+== A4 none
+  country panel present -> choosing ZA
+header chip: {"text":"Light frost at most · summer rain · nearest reference: Durban / KZN coast & hinterland (fallback)","title":"Climate records for this site are still loading. Until they arrive this uses the nearest reference: Durban / KZN coast & hinterland (fallback)."}
+overflow phone: {"sw":390,"iw":390,"over":false}
+select options: ["Let the app decide: Light frost at most","Winter frost (Highveld, Midlands, Karoo)","Light frost at most (warm areas and mild coasts)","Hot area, no frost (Lowveld, Limpopo valley, KZN coast)","Winter rainfall (Western Cape)"]
+select container text: "CLIMATE USED AUTOMATICALLY\n Light frost at most · summer rain\nSowing calendar for this site\nLet the app decide: Light frost at most\nWinter frost (Highveld, Midlands, Karoo)\nLight frost at most (warm areas and mild coasts)\nHot area, no frost (Lowveld, Limpopo valley, KZN coast)\nWinter rainfall (Western Cape)\n\nChoose one only if you know your land. The months offered for every crop change with it. Crops already on your plan stay where they are.\n\nClimate records for this site are still loading. Until they arrive this uses the nearest reference: Durban / KZN coast & hinterland (fallback)."
+
+== A1 dark phone
+  country panel present -> choosing ZA
+A1d CONSOLE.error Failed to load resource: the server responded with a status of 401 (Unauthorized)
+dark data-theme/bg: rgb(13, 10, 6)
+
+== A1 header desktop
+  country panel present -> choosing ZA
+A1x CONSOLE.error Failed to load resource: the server responded with a status of 401 (Unauthorized)
+chip {"text":"Light frost at most · summer rain · nearest reference: Durban / KZN coast & hinterland (fallback)","title":"Climate records for this site are read for signed-in growers only, so this uses the nearest reference: Durban / KZN coast & hinterland (fallback). Sign in, or choose your own sowing calendar."}
+
+== A3 slow
+FAIL locator.waitFor: Timeout 90000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-crop-bed-scroll]')[22m
+[2m    - waiting for navigation to finish...[22m
+[2m    - navigated to "http://localhost:4242/facilitator/crops"[22m
+
