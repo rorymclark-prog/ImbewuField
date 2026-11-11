@@ -34,7 +34,7 @@ const hooks=registerHooks({
   },
 });
 const {default:Calendar}=await import('../app/calendar/page.tsx');
-const {loadCropPlan,saveCropPlan}=await import('../lib/crop-plan.ts');
+const {loadCropPlan,saveCropPlan,withSowingCalendarChoice}=await import('../lib/crop-plan.ts');
 const {loadPlaces,updateSiteCountryContext}=await import('../lib/saved-places.ts');
 const {createSiteCountryContext,bindSiteContext,resolveSiteCountryContext}=await import('../lib/international/site-context.ts');
 const {createWorkspacePlanningReference}=await import('../lib/international/workspace-context.ts');
@@ -165,5 +165,44 @@ test('an empty plan shows the named general guide only after supported context a
     assert.match(ui.text(),/Showing the general planting guide/);
     assert.ok(ui.renderer.root.findAllByType('table').length>0);
     assert.deepEqual(loadCropPlan().plantings,[]);
+  }finally{ui.dispose();}
+});
+
+test('this farm\'s calendar is an explicit pick: offered only when the farm has one, never preselected, never in the reference guide',async()=>{
+  // CP-097 (Rory, 11 November 2026). The calendar page may offer the calendar the farm's crop
+  // plan uses, but it never takes it silently and never offers a regional fallback as the farm's.
+  await browser();country('ZA');
+  const options=(ui:ReturnType<typeof screen>)=>ui.select('Sowing calendar').findAllByType('option').map(option=>({value:option.props.value as string,text:text(option)}));
+  let ui=screen();try{
+    ui.choose('Calendar context',siteId);
+    assert.deepEqual(options(ui).map(option=>option.value),['','summer','mild-frost','all-year','winter'],'no calendar is known for this farm, so none is offered as its own');
+    assert.match(ui.text(),/This farm’s calendar is not known on this device yet/);
+    held(ui);
+  }finally{ui.dispose();}
+
+  assert.equal(saveCropPlan(withSowingCalendarChoice(loadCropPlan(),siteId,'mild-frost')),true);probe.patterns=[];
+  ui=screen();try{
+    ui.choose('Calendar context',siteId);
+    assert.equal(ui.select('Sowing calendar').props.value,'','the farm\'s calendar is offered, not preselected');
+    held(ui);assert.deepEqual(probe.patterns,[]);
+    assert.deepEqual(options(ui)[1],{value:'farm',text:'This farm\'s crop plan: Light frost at most (chosen by you)'});
+    assert.doesNotMatch(ui.text(),/not known on this device yet/);
+    ui.choose('Sowing calendar','farm');
+    assert.ok(ui.renderer.root.findAllByType('table').length>0);
+    assert.ok(probe.patterns.length>0);assert.ok(probe.patterns.every(value=>value==='mild-frost'),'the months shown are the farm calendar\'s');
+    assert.match(ui.text(),/Light frost at most · this farm’s crop plan/);
+    // Any other calendar can still be picked, and is not labelled as the farm's.
+    probe.patterns=[];ui.choose('Sowing calendar','summer');
+    assert.ok(probe.patterns.every(value=>value==='summer'));assert.doesNotMatch(ui.text(),/this farm’s crop plan/);
+  }finally{ui.dispose();}
+
+  // The separate reference guide is not a farm: it is never offered one, and says nothing about one.
+  const plan=loadCropPlan();plan.workspaceReferences=[createWorkspacePlanningReference('design:calendar-reference',true)!];saveCropPlan(plan);
+  ui=screen();try{
+    ui.choose('Calendar context','reference:calendar');
+    assert.deepEqual(options(ui).map(option=>option.value),['','summer','mild-frost','all-year','winter']);
+    assert.doesNotMatch(ui.text(),/This farm’s/);
+    // A stale "farm" value cannot select anything where no farm calendar is offered.
+    ui.choose('Sowing calendar','farm');assert.equal(ui.select('Sowing calendar').props.value,'');held(ui);
   }finally{ui.dispose();}
 });
