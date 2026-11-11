@@ -1477,3 +1477,40 @@ test('explicitly changing a confirmed one-off back to a repeating plan clears it
   assert.equal(replanned.finishedOnceSowing, undefined);
   assert.equal(plantingIsActiveOrPlanned(replanned, 10), true);
 });
+
+test('a one-time sowing with a share above a whole bed is withheld from the year-free benchmark too (Argon F-09)', async () => {
+  // Independent review of 11 November 2026: Argon's claim, reproduced by Codex on 9a5b102e
+  // with these inputs. The year-free walk skips one-time rows, and its share check let
+  // anything above zero through, so a saved `once` row with a share of 2.5 raised no conflict
+  // and the benchmark scaled its yield to two and a half beds (72.9 kg here, printed as
+  // "about 73 kg" in the year report), while the rolling check withheld the same plan.
+  // Synthetic row: the picker stores a share of 1 or more as a whole bed, so no screen
+  // creates this; a stored or imported row could carry it.
+  const plan = await import('@/lib/crop-plan');
+  const beds = [{ id: 'synthetic-bed', label: 'Synthetic review bed', areaM2: 9 }];
+  const once = { id: 'once', bedId: 'synthetic-bed', cropKey: 'cabbage', sowMonth: 10, once: '2026-10', areaFraction: 2.5 };
+  const recurring = { id: 'annual', bedId: 'synthetic-bed', cropKey: 'lettuce', sowMonth: 3, areaFraction: 0.5 };
+
+  assert.deepEqual(plan.benchmarkAreaConflictBedLabels([once, recurring], beds), ['Synthetic review bed']);
+  assert.equal(plan.buildPlanYieldBenchmark([once, recurring], beds).knownKg, null, 'no kilogram total from a share of 2.5 beds');
+  assert.equal(plan.buildPlanYieldBenchmark([once, recurring], beds, 11).knownKg, null, 'the rolling check already withheld it');
+  const details = plan.benchmarkAreaConflictDetails([once, recurring], beds);
+  assert.equal(details.length, 1);
+  assert.doesNotMatch(plan.buildYearReport([once, recurring], beds, { includeCalendarNarrative: false }).join(' '), /about 73 kg|72\.9/);
+
+  // The controls of the review, unchanged: a valid one-time half share is still counted,
+  // and a recurring oversized row is still refused on both paths.
+  const valid = plan.buildPlanYieldBenchmark([{ ...once, areaFraction: 0.5 }, recurring], beds);
+  assert.ok(typeof valid.knownKg === 'number' && Number.isFinite(valid.knownKg) && valid.knownKg > 0);
+  assert.deepEqual(plan.benchmarkAreaConflictBedLabels([{ ...once, areaFraction: 0.5 }, recurring], beds), []);
+  assert.equal(plan.buildPlanYieldBenchmark([{ ...recurring, areaFraction: 2.5 }], beds).knownKg, null);
+  assert.equal(plan.buildPlanYieldBenchmark([{ ...recurring, areaFraction: 2.5 }], beds, 11).knownKg, null);
+  // A whole-bed one-time row (no share stored) and a share of exactly 1 are valid.
+  const { areaFraction: _share, ...wholeBed } = once;
+  assert.deepEqual(plan.benchmarkAreaConflictBedLabels([wholeBed], beds), []);
+  assert.deepEqual(plan.benchmarkAreaConflictBedLabels([{ ...once, areaFraction: 1 }], beds), []);
+  // Other unusable one-time shares were already refused and still are.
+  for (const areaFraction of [0, -0.5, Number.NaN, Number.POSITIVE_INFINITY]) {
+    assert.deepEqual(plan.benchmarkAreaConflictBedLabels([{ ...once, areaFraction }], beds), ['Synthetic review bed'], String(areaFraction));
+  }
+});
