@@ -28,7 +28,7 @@
 import type { RainPattern } from '@/lib/crop-catalog';
 import { classifyKoppen, sowingCalendarFor, type RainSeason } from '@/lib/koppen-global';
 import { paidApiHeaders } from '@/lib/api-client-auth';
-import { completeMonthlyTemperatures, monthlyTemperatureStatus, recordMinimumC } from '@/lib/climate-temperature';
+import { completeMonthlyRainfallMm, completeMonthlyTemperatures, monthlyTemperatureStatus, recordMinimumC } from '@/lib/climate-temperature';
 
 export interface SiteClimate {
   /** The planner's sowing-calendar column, derived from this site's own climate:
@@ -61,9 +61,6 @@ export interface SiteClimate {
   /** Which satellite dataset the rainfall came from (see lib/nasa-power.ts). */
   rainfallSource: 'nasa-power' | 'open-meteo';
 }
-
-const twelveFinite = (values: unknown): values is number[] =>
-  Array.isArray(values) && values.length === 12 && values.every((v) => typeof v === 'number' && Number.isFinite(v));
 
 /**
  * Derive the site's RainPattern from a LocationData-shaped payload.
@@ -98,7 +95,7 @@ export function siteClimateFromLocationData(data: unknown, lat: number): SiteCli
 
   const monthlyRainMm = (rainfall as { monthly?: unknown }).monthly;
   const tempC = (climate as { monthlyTemp?: unknown }).monthlyTemp;
-  if (!twelveFinite(monthlyRainMm) || monthlyRainMm.some((v) => v < 0)) return null;
+  if (!completeMonthlyRainfallMm(monthlyRainMm)) return null;
   if (monthlyTemperatureStatus(climate) !== 'complete' || !completeMonthlyTemperatures(tempC)) return null;
 
   const monthly = { tempC, precipMm: monthlyRainMm, lat };
@@ -288,7 +285,7 @@ export interface DriestMonth {
 const FLAT_RAINFALL_SPREAD_MM = 1;
 
 export function driestMonths(monthlyRainMm: number[], count = 3): DriestMonth[] {
-  if (!twelveFinite(monthlyRainMm)) return [];
+  if (!completeMonthlyRainfallMm(monthlyRainMm)) return [];
   if (Math.max(...monthlyRainMm) - Math.min(...monthlyRainMm) < FLAT_RAINFALL_SPREAD_MM) return [];
   return monthlyRainMm
     .map((rainMm, index) => ({ month: index + 1, rainMm }))

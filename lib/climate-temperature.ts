@@ -36,6 +36,27 @@ export function completeMonthlyTemperatures(values: unknown): values is number[]
 }
 
 /**
+ * Twelve own, present, finite, non-negative monthly rainfall totals (mm), Jan..Dec.
+ *
+ * The rainfall twin of completeMonthlyTemperatures above. `Array.prototype.every` skips
+ * holes, so `[ , 100, ...]` passed the old "length 12 and every finite" checks in
+ * lib/site-climate.ts and lib/crop-climate-gate.ts: a year with January missing became a
+ * site calendar with the wrong annual total and the wrong rain season (independent review
+ * of 11 November 2026, CBR-04). A JSON round trip turns a hole into null, which those
+ * checks did reject, so no stored or fetched payload could reach it; this closes the
+ * helper itself. A missing month stays missing: nothing is filled in.
+ */
+export function completeMonthlyRainfallMm(values: unknown): values is number[] {
+  if (!Array.isArray(values) || values.length !== 12) return false;
+  for (let i = 0; i < 12; i++) {
+    if (!Object.prototype.hasOwnProperty.call(values, i)) return false;
+    const value: unknown = values[i];
+    if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) return false;
+  }
+  return true;
+}
+
+/**
  * Evaluates the provenance status of monthly temperature series in a ClimateData-shaped object.
  * - Non-objects, null, or missing/malformed coverage receipts => 'unknown'
  * - Coverage with source !== 'nasa-power' or invalid status string => 'unknown'
