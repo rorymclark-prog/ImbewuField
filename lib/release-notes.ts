@@ -41,11 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '11 November 2026', sha: '05105b0b492181cc31957981d157f9fdc7c40297', changes: [
-    'The Atlas shows the lowest recorded temperature and hides temperatures it cannot verify.',
+  { when: '11 November 2026', sha: '7ee356e001cf2335edfe48680566a0f0c8654e64', changes: [
+    'The crop plan says when your frost months are not confirmed for frost-tender crops.',
+    'The Atlas and site data show the lowest recorded temperature, not a frost-free label.',
     'A weekly harvest target now says when its crop could be ready too early.',
     'The sowing calendar page uses the crop plan\'s calendar names and can show your farm\'s.',
-    'When the climate records for your site cannot be read, the crop plan now says why.',
   ] },
   { when: '10 November 2026', sha: '889438f66e2df0557bc1b07061b09a2e94b7f5a8', changes: [
     'Choose your own sowing calendar if you know your land better than the climate records.',

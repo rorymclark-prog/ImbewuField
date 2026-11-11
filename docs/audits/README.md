@@ -258,6 +258,7 @@ or main. Local Downloads packs remain dated reading snapshots.
 - [Argon's claims F-07 and F-09, as reproduced by Codex: dispositions — 11 November 2026](2026-11-11/argon-claims-dispositions-claude.md).
 - [Codex final review of the crop-plan candidate: dispositions — 11 November 2026](2026-11-11/codex-final-review-dispositions-claude.md).
 - [Atlas climate card: class wording and dark mode — 11 November 2026](2026-11-11/atlas-climate-card-claude.md).
+- [Completion corrections after Codex's review of 00217575 — 11 November 2026](2026-11-11/completion-corrections-claude.md).
 - [Crop plan accuracy fixes: calendar choice, sowing months and weekly-target timing — 10 November 2026](2026-11-10/crop-plan-accuracy-fixes-claude.md).
 - [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md).
 - [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md).

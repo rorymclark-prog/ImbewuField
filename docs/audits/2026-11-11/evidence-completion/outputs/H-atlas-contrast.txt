@@ -1,0 +1,57 @@
+case                      element                ink       on  ratio    size weight  text
+earth-light-soil          section label      #9E5C08  #FFFEFA   5.22    13px    700  Soil
+earth-light-soil          mini-stat value    #261B10  #F8F4E9  15.33    14px    600  Loam
+earth-light-soil          mini-stat label    #755942  #F8F4E9   5.85    11px    400  Texture
+earth-light-soil          sand name          #6A5040  #FFFEFA   7.34    11px    400  Sand
+earth-light-soil          silt name          #6A5040  #FFFEFA   7.34    11px    400  Silt
+earth-light-soil          percentage         #7A4408  #FFFEFA   7.83    11px    400  45%
+earth-light-soil          soil caution title  #7A4408  #F3EADC   6.63    11px    700  Not a reading
+earth-light-soil          soil caution text  #261B10  #F3EADC  14.13  12.5px    400  NOT A READING. No soil data was available for this point, so
+earth-light-soil          month letter       #755942  #FFFEFA   6.38    11px    600  J
+earth-light-grow          section label      #9E5C08  #FFFEFA   5.22    13px    700  What could grow here
+earth-light-grow          mini-stat value    #261B10  #F8F4E9  15.33    14px    600  1745 m
+earth-light-grow          mini-stat label    #755942  #F8F4E9   5.85    11px    400  Elevation
+earth-light-grow          crop catalog note  #755942  #FFFEFA   6.38  11.5px    400  From our crop catalog: crops with a sowing window open in No
+earth-light-grow          crop name          #261B10  #F8F4E9  15.33    13px    600  Green beans
+earth-dark-soil           section label      #D8A840  #181208   8.50    13px    700  Soil
+earth-dark-soil           mini-stat value    #EEE4D0  #22190E  13.72    14px    600  Loam
+earth-dark-soil           mini-stat label    #A08564  #22190E   4.97    11px    400  Texture
+earth-dark-soil           sand name          #A8906C  #181208   6.09    11px    400  Sand
+earth-dark-soil           silt name          #A8906C  #181208   6.09    11px    400  Silt
+earth-dark-soil           percentage         #B49040  #181208   6.20    11px    400  45%
+earth-dark-soil           soil caution title  #B49040  #2F230F   5.12    11px    700  Not a reading
+earth-dark-soil           soil caution text  #EEE4D0  #2F230F  12.16  12.5px    400  NOT A READING. No soil data was available for this point, so
+earth-dark-soil           month letter       #A08564  #181208   5.34    11px    600  J
+earth-dark-grow           section label      #D8A840  #181208   8.50    13px    700  What could grow here
+earth-dark-grow           mini-stat value    #EEE4D0  #22190E  13.72    14px    600  1745 m
+earth-dark-grow           mini-stat label    #A08564  #22190E   4.97    11px    400  Elevation
+earth-dark-grow           crop catalog note  #A08564  #181208   5.34  11.5px    400  From our crop catalog: crops with a sowing window open in No
+earth-dark-grow           crop name          #EEE4D0  #22190E  13.72    13px    600  Green beans
+slate-light-soil          section label      #AA5C08  #F8FAFC   4.73    13px    700  Soil
+slate-light-soil          mini-stat value    #0C1526  #F1F5F9  16.66    14px    600  Loam
+slate-light-soil          mini-stat label    #5C6B7D  #F1F5F9   4.97    11px    400  Texture
+slate-light-soil          sand name          #445266  #F8FAFC   7.59    11px    400  Sand
+slate-light-soil          silt name          #445266  #F8FAFC   7.59    11px    400  Silt
+slate-light-soil          percentage         #7A4008  #F8FAFC   7.83    11px    400  45%
+slate-light-soil          soil caution title  #7A4008  #EEE6DE   6.63    11px    700  Not a reading
+slate-light-soil          soil caution text  #0C1526  #EEE6DE  14.78  12.5px    400  NOT A READING. No soil data was available for this point, so
+slate-light-soil          month letter       #5C6B7D  #F8FAFC   5.21    11px    600  J
+slate-light-grow          section label      #AA5C08  #F8FAFC   4.73    13px    700  What could grow here
+slate-light-grow          mini-stat value    #0C1526  #F1F5F9  16.66    14px    600  1745 m
+slate-light-grow          mini-stat label    #5C6B7D  #F1F5F9   4.97    11px    400  Elevation
+slate-light-grow          crop catalog note  #5C6B7D  #F8FAFC   5.21  11.5px    400  From our crop catalog: crops with a sowing window open in No
+slate-light-grow          crop name          #0C1526  #F1F5F9  16.66    13px    600  Green beans
+slate-dark-soil           section label      #E8A030  #0C1526   8.26    13px    700  Soil
+slate-dark-soil           mini-stat value    #DCE4F0  #1A2540  11.86    14px    600  Loam
+slate-dark-soil           mini-stat label    #8090AC  #1A2540   4.70    11px    400  Texture
+slate-dark-soil           sand name          #8898AA  #0C1526   6.19    11px    400  Sand
+slate-dark-soil           silt name          #8898AA  #0C1526   6.19    11px    400  Silt
+slate-dark-soil           percentage         #B49040  #0C1526   6.09    11px    400  45%
+slate-dark-soil           soil caution title  #B49040  #262527   5.09    11px    700  Not a reading
+slate-dark-soil           soil caution text  #DCE4F0  #262527  11.91  12.5px    400  NOT A READING. No soil data was available for this point, so
+slate-dark-soil           month letter       #8090AC  #0C1526   5.65    11px    600  J
+slate-dark-grow           section label      #E8A030  #0C1526   8.26    13px    700  What could grow here
+slate-dark-grow           mini-stat value    #DCE4F0  #1A2540  11.86    14px    600  1745 m
+slate-dark-grow           mini-stat label    #8090AC  #1A2540   4.70    11px    400  Elevation
+slate-dark-grow           crop catalog note  #8090AC  #0C1526   5.65  11.5px    400  From our crop catalog: crops with a sowing window open in No
+slate-dark-grow           crop name          #DCE4F0  #1A2540  11.86    13px    600  Green beans

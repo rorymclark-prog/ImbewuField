@@ -6,3 +6,6 @@
 *.ics binary
 # Raw test and server logs kept as evidence are stored exactly as captured, trailing spaces included.
 docs/audits/2026-11-11/evidence-atlas-climate-card/logs/* -whitespace
+docs/audits/2026-11-11/evidence-completion/logs/* -whitespace
+docs/audits/2026-11-11/evidence-completion/outputs/** -whitespace
+docs/audits/2026-11-11/evidence-completion/artifacts/*.txt -whitespace
