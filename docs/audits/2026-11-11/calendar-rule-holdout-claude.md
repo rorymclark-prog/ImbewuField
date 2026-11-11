@@ -42,7 +42,7 @@ Raw results for every place: [`outputs/holdout-results.json`](evidence-calendar-
 
 | ID | Problem | Status | Evidence and next action |
 | --- | --- | --- | --- |
-| CP-103 | Two places that never froze on either record are given the hard-frost calendar | open at this commit | See the next section. |
+| CP-103 | Two places that never froze on either record are given the hard-frost calendar | open, rule unchanged, decision needed | See the next two sections: what happens, the fix that was tried and not adopted, and three options. |
 | CP-104 | The winter-rainfall calendar is reached by rain timing alone, with no frost check | open, reported not judged | Calvinia is on the Western Cape calendar with 4.45 frost days a year on the independent record and an app record minimum of -4.1 °C. Its months come from the regional guide's Western Cape and South Coast column; Calvinia is in the Great Karoo. Malmesbury (0.6 frost days a year) and Paarl (0.1) are milder cases. Needs a source for winter-rainfall areas with a frost season before any change. |
 | CP-105 | The two climate datasets disagree on the calendar at 9 of 56 places | open, reported not judged | Malelane, Hazyview, Letsitele, Mokopane, Bela-Bela, Makhanda, Butterworth, Mossel Bay, Calvinia. The app uses NASA POWER. The same rule on ERA5 monthly values gives a different calendar. Seven of the nine are places the rule itself marks as close to a line, or have a frost record that differs between the datasets. This is the size of the uncertainty in any gridded reading. It is why the grower's own choice and frost answer take priority. |
 | CP-106 | Three pairs of towns share one climate reading | open, reported not judged | eMalahleni and Middelburg; Jozini and Pongola; Paarl and Malmesbury. NASA POWER's grid cell is about 50 km wide, so neighbouring towns get identical readings and the same calendar. Not a defect in the rule; a limit of the data. |
@@ -79,6 +79,34 @@ All places from both sets (100) whose app record minimum is between 0 and 2 °C:
 
 No place in this band has a frost season on the independent record. The most is Malmesbury's 0.6 days a year, and it is on the winter-rainfall calendar.
 
+### The obvious fix was tried and not adopted
+
+After the results above were committed and pushed (`9a5b102e`), I tried the direct fix in a working copy: treat a record minimum above 0 °C as "light frost at most". I measured what it does and then put the rule back. The rule in this branch is byte for byte the rule on main.
+
+What the change would do, measured on all 100 places:
+
+- It moves exactly three: Butterworth, Mossel Bay and **Pietermaritzburg** (record minimum 0.6 °C). All four criteria then pass at all 100 places.
+- Pietermaritzburg's independent record has four frost days in twenty years: 24 May 2007, 16 June 2010, 9 July 2014 and **22 August 2003**. The light-frost calendar adds August sowings of potato, watermelon, gem squash, baby marrow, spanspek and sweetcorn.
+- **Eight crops have no months on the light-frost calendar at all** (CP-082, open since 10 November): amaranth, sorghum, soybean, bambara groundnut, sunflower, mung bean, spider plant and African nightshade. A place moved to that calendar loses them from its plan.
+- Against the regional guide, the moved places are offered more of the guide's months and more months the guide does not list:
+
+| Place (guide column) | Calendar | Share of the app's months the guide lists | Share of the guide's months the app offers |
+| --- | --- | --- | --- |
+| Pietermaritzburg (KZN Midlands) | Winter frost, today | 73% | 76% |
+| | Light frost at most | 55% | 89% |
+| Butterworth (E Cape) | Winter frost, today | 78% | 75% |
+| | Light frost at most | 61% | 90% |
+| Mossel Bay (W Cape and South Coast) | Winter frost, today | 74% | 66% |
+| | Light frost at most | 65% | 90% |
+
+So the change fixes the frost label and has real costs. It takes eight crops away at the moved places, it moves a large town that does see an occasional late frost, and nothing I have shows the light-frost months suit these three places better than the hard-frost ones. That is a farming judgement, not a bug fix, and it is not mine to make alone.
+
+### Options for CP-103
+
+1. **Leave the rule as it is (what this branch does).** The two places stay on the cautious calendar. The grower is told the site is close to the light-frost line and can move it with one answer or by choosing a calendar. `tests/sa-calendar-real-sites.test.ts` now pins that advice at both places by name.
+2. **Change the rule after CP-082 is closed.** Once the eight crops have sourced light-frost months, moving a place no longer takes crops away. Then make the change and test it on a new held-back set. This is my recommendation.
+3. **Change the rule now.** Accept the loss of the eight crops at moved places until CP-082 is closed.
+
 ## What these results are and are not
 
 - They are a test of the calendar choice on places that did not shape it, against a second gridded dataset. They are not weather-station records, farm observations or an agronomist's judgement.
@@ -96,5 +124,7 @@ No place in this band has a frost season on the independent record. The most is 
 
 ## Next continuation
 
-1. Decide CP-103. My recommendation: treat a record minimum above 0 °C as "light frost at most", which is what that calendar's name already says, and test the changed rule on a new held-back set before it is trusted.
-2. CP-104 needs a source before any change.
+1. Decide CP-103 from the three options above. My recommendation is option 2.
+2. CP-082 (months for the eight crops) now blocks a clean fix for CP-103. It needs sources.
+3. CP-104 needs a source before any change.
+4. The 56 places are now a regression fixture, `tests/fixtures/sa-climate-holdout-2026-11-11.json`. Criteria H-A to H-C run over all 100 places in `tests/sa-calendar-real-sites.test.ts`.
