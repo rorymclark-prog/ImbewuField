@@ -94,7 +94,7 @@ import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall, referenceSowingCalendar } from '@/lib/water-calc';
-import { SAMPLE_FARM_CALENDAR_REASON, SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, siteClimateMissingNote, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
+import { SAMPLE_FARM_CALENDAR_REASON, SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, siteClimateMissingNote, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons, printedLocationLine } from '@/lib/sowing-calendar-label';
 import { SOWING_CALENDAR_NOTICE_HIDDEN_KEY, calendarCanJudgeSavedSowings, hiddenCalendarNoticeWrite, outOfCalendarLine, outOfCalendarSignature, parseHiddenCalendarNotices, planMayPredateCorrection, sowingsOutsideCalendar } from '@/lib/sowing-calendar-review';
 import { sowingCalendarInUse, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate, type SiteClimateMissingReason } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
@@ -2091,9 +2091,7 @@ function FacilitatorCropsPageInner() {
     const bedCount = beds.length - plotCount;
     // Provenance travels onto paper too: a printed plan must say whether its
     // climate is the site's own satellite-derived profile or a reference city.
-    const locationLine = climateSource === 'site'
-      ? 'This site (satellite climate records)'
-      : region ? `Nearest reference: ${region.name} (fallback)` : 'No site set';
+    const locationLine = printedLocationLine(calendarBasis, climateSource, region?.name);
     // Paper says whose call the calendar was, as the screen does ("chosen by you").
     const climateLine = printedSowingCalendarLine(calendarLabel, calendarBasis, climateSource);
     return {

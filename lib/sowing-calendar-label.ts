@@ -66,7 +66,16 @@ export function sowingCalendarOptionText(option: { label: string; where: string 
 
 const WARMTH_ORDER: RainPattern[] = ['summer', 'mild-frost', 'all-year'];
 
-const deg = (n: number): string => `${Math.round(n)} °C`;
+/**
+ * A temperature as the grower reads it, to one decimal place where the reading has one.
+ *
+ * It was rounded to whole degrees. The calendar rule draws its lines on the unrounded
+ * figure, so a record minimum of 1.7 °C printed as "2 °C", which is the rule's frost-free
+ * line, on a site the rule had just treated as below it (finding CP-109). The same could
+ * happen to a coldest-month mean of 15.9 °C against the hot-area line of 16 °C. The
+ * provider's figures carry one decimal; printing it moves no threshold.
+ */
+const deg = (n: number): string => `${Math.round(n * 10) / 10} °C`;
 
 /** Plain sentences that tell the grower why this calendar and what to do if it looks wrong. */
 export function sowingCalendarReasons(
@@ -134,6 +143,25 @@ export function sowingCalendarReasons(
  * A printed plan is handed to mentors and funders; it must say whose call the
  * calendar was.
  */
+/**
+ * Where the printed plan says its location and climate records came from.
+ *
+ * The sample farm's sowing calendar is declared in its sample data. Its plan printed
+ * "This site (satellite climate records) · Hot area, no frost … (sowing calendar set for the
+ * sample farm)": the calendar's stated origin sat directly after a claim of satellite records,
+ * so the line read as a satellite-derived calendar (finding CP-107). The sample farm is now
+ * named as the sample farm and makes no claim about records beside its calendar.
+ */
+export function printedLocationLine(
+  basis: CalendarBasis | 'reference',
+  climateSource: 'site' | 'reference' | 'none',
+  referenceName: string | null | undefined,
+): string {
+  if (basis === 'sample-farm') return 'Sample farm';
+  if (climateSource === 'site') return 'This site (satellite climate records)';
+  return referenceName ? `Nearest reference: ${referenceName} (fallback)` : 'No site set';
+}
+
 export function printedSowingCalendarLine(
   calendarLabel: string,
   basis: CalendarBasis | 'reference',

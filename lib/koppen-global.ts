@@ -185,6 +185,16 @@ const DESCRIPTIONS: Record<string, [string, string]> = {
 };
 
 /**
+ * The note for a class code, read from the one table above. '' for a code the table does
+ * not hold. For a screen that has only a stored code: a saved site can still carry a note
+ * written before 11 November 2026 ("mild all year from altitude"), and that stored sentence
+ * must not be printed in place of the current one (finding CP-113).
+ */
+export function koppenClassNote(code: string): string {
+  return Object.hasOwn(DESCRIPTIONS, code) ? DESCRIPTIONS[code][1] : '';
+}
+
+/**
  * Classify a point from its monthly climatology.
  *
  * Returns code '?' rather than a guess when the input is incomplete — a wrong climate

@@ -50,7 +50,7 @@ import {
 import {
   buildFieldSheet, buildOccupancyCalendar, compactPlaces, buildPlanDashboard,
   buildPlanTableRows, buildTopCrops, buildWorkloadSeries, cropAbbreviations,
-  type CalendarRow, type FieldSheetSection, type MonthCount,
+  type CalendarRow, type FieldSheetSection, type MonthCount, BENCHMARK_TIME_BASIS_LINE,
 } from '@/lib/crop-export-benchmark';
 import { cropByKey, type RainPattern } from '@/lib/crop-catalog';
 import { firstCropAgeLabel, formatRange, treePickingByMonth, treePickingPhrase, type PlacedTreeGroup, type TreeSeasonChoices } from '@/lib/perennial-harvest';
@@ -649,6 +649,7 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
       + (meta.lossAllowanceConfirmed
         ? `; ${dash.netKg!.toFixed(1)} kg after the ${meta.lossPercent}% loss allowance you confirmed.`
         : '; no loss-adjusted total is calculated until an allowance is confirmed.'),
+      BENCHMARK_TIME_BASIS_LINE,
       'This is a benchmark comparison, not a household or farm-yield guarantee. Record actual harvests and losses on the monthly record sheet.',
     ]
     : [
@@ -2023,7 +2024,9 @@ function drawFullPlan(s: Sheet, input: CropPlanPdfInput): void {
     'Each line is one planting. Yield is a conservative benchmark comparison where a verified kg/m² entry exists; "Not verified" is never treated as 0kg.');
 
   const mildFrostSite = input.meta.rainPattern === 'mild-frost';
-  const rows = buildPlanTableRows(input.plantings, input.beds, mildFrostSite).map((r) => ({
+  // CP-108: the guide knows whether the grower has given frost months; one source for the page and the paper.
+  const frostUnconfirmed = (input.productionGuide?.frostTenderUnconfirmed?.length ?? 0) > 0;
+  const rows = buildPlanTableRows(input.plantings, input.beds, mildFrostSite, frostUnconfirmed).map((r) => ({
     area: r.area,
     // A one-time starter has to say so on its own line. Without it the sheet a
     // farmer carries into the field reads a first-season bridge sowing as a

@@ -211,3 +211,27 @@ test('the climate card paints its code, note and chips with theme tokens (CP-115
   assert.match(source, /boxShadow: 'inset 0 0 0 1px var\(--border\)'/);
   assert.doesNotMatch(source.slice(source.indexOf('function chip('), source.indexOf('function MiniStat(')), /border:/);
 });
+
+test('outside the data bars the panel paints no fixed text colour or surface (CP-116)', () => {
+  // The soil "Silt" figure (#1F4D2B), the labels, the provenance caution, the draft note and the
+  // crop tiles kept fixed colours, so in dark mode they were dark ink on a dark card.
+  const source = readFileSync(new URL('../components/atlas/AtlasPanel.tsx', import.meta.url), 'utf8');
+  assert.doesNotMatch(source, /color: '#[0-9A-Fa-f]{3,8}'/, 'no fixed text colour anywhere in the panel');
+  // Two translucent tints stay, once each, as the fill of the "modelled" and "unknown" soil
+  // caution boxes: a 5% tint sits on a light or a dark card alike, and keeping them leaves
+  // those two recorded snapshots (tests/fixtures/report-assurance-translation) untouched
+  // apart from the paragraph ink. Everything else on the list is gone.
+  assert.equal(source.split("'rgba(31,77,43,0.05)'").length - 1, 1);
+  assert.equal(source.split("'rgba(32,25,15,0.05)'").length - 1, 1);
+  assert.equal((source.match(/rgba\(31,77,43|rgba\(32,25,15/g) ?? []).length, 2);
+  for (const old of ['#B07A1E', '#766A50', '#AC9E82', '#3A2E22', '#FFF8E8', "#7A4408'", "'#1F4D2B'", '"#1F4D2B"', '"#C07A1E"', 'rgba(226,216,196']) {
+    assert.ok(!source.includes(old), `${old} is gone`);
+  }
+  const css = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8');
+  // --font-sans (already in the file) is a typeface, declared once on :root, so the check is
+  // restricted to the colour tokens the panel uses.
+  const tokens = [...new Set([...source.matchAll(/var\((--[a-z0-9-]+)\)/g)].map((m) => m[1]))].filter((t) => t !== '--font-sans');
+  assert.ok(tokens.length > 5);
+  const missing = tokens.filter((t) => (css.match(new RegExp(`^\\s*${t}:`, 'gm')) ?? []).length < 4);
+  assert.deepEqual(missing, [], `declared fewer than four times in globals.css: ${missing.join(', ')}`);
+});

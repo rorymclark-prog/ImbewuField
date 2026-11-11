@@ -1,7 +1,8 @@
 'use client';
 
 import { numberLabel } from '@/lib/format-figures';
-import { monthlyTemperatureStatus } from '@/lib/climate-temperature';
+import { monthlyTemperatureStatus, recordMinimumC } from '@/lib/climate-temperature';
+import { koppenClassNote } from '@/lib/koppen-global';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
@@ -814,6 +815,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   if (!data) return null;
 
   const temperatureStatus = monthlyTemperatureStatus(data.climate);
+  // Validated gridded record minimum (null when untagged, an outage default or a missing-value marker).
+  const recordLowC = recordMinimumC(data.climate);
   const monthlyTemperatureNotice = temperatureStatus === 'complete'
     ? 'Monthly temperatures have complete model inputs. This does not confirm local crop suitability.'
     : temperatureStatus === 'incomplete'
@@ -831,9 +834,6 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     return { label: t('suitabilityChallenging'), bg: 'rgba(212,110,66,0.1)', border: 'rgba(212,110,66,0.3)', dot: '#D4922A', text: '#B83A18' };
   })();
 
-  // Frost label
-  const frostLabel = data.climate.minTemp < 2 ? t('frostLikely') : data.climate.minTemp < 5 ? t('frostOccasional') : t('frostRare');
-
   // Lima contextual read — one-line from actual data
   const limaReadParts = (() => {
     const r = data.rainfall.annual;
@@ -846,8 +846,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       : t('siteSummaryRainEstimate').replace('{mm}', String(r));
     const englishSoil = translate('en', soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
     const zuluSoil = t(soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
-    const englishFrost = data.climate.minTemp < 2 ? ` ${translate('en', 'siteSummaryFrostProtection')}` : '';
-    const zuluFrost = data.climate.minTemp < 2 ? ` ${t('siteSummaryFrostProtection')}` : '';
+    const englishFrost = recordLowC !== null && recordLowC < 2 ? ` ${translate('en', 'siteSummaryFrostProtection')}` : '';
+    const zuluFrost = recordLowC !== null && recordLowC < 2 ? ` ${t('siteSummaryFrostProtection')}` : '';
     const englishPlan = translate('en', 'siteSummaryPlanPrompt');
     const zuluPlan = t('siteSummaryPlanPrompt');
     return {
@@ -1132,9 +1132,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
                 <Snowflake size={16} style={{ color: 'var(--blue)', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('statFrostRisk')}</span>
-                <span className="font-display font-semibold" style={{ fontSize: 14, color: data.climate.minTemp < 2 ? 'var(--blue)' : 'var(--text-primary)' }}>
-                  {frostLabel}
+                <span lang="en" className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>Modelled record low</span>
+                <span lang="en" data-record-low={recordLowC === null ? 'unknown' : 'known'} className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
+                  {recordLowC === null ? 'Not known' : `${recordLowC}°C`}
                 </span>
               </div>
               <div className="flex items-center gap-3 px-4" style={{ height: 46 }}>
@@ -1154,11 +1154,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   : data.rainfall.annual < 700
                   ? { color: 'var(--text-secondary)', text: t('insightModerateRain').replace('{mm}', String(data.rainfall.annual)) }
                   : { color: 'var(--color-forest-800)', text: t('insightStrongRain').replace('{mm}', String(data.rainfall.annual)) },
-                data.climate.minTemp < 2
-                  ? { color: 'var(--blue)', text: t('insightFrostExpected').replace('{tempC}', String(data.climate.minTemp)) }
-                  : data.climate.minTemp < 6
-                  ? { color: 'var(--text-secondary)', text: t('insightLightFrost').replace('{tempC}', String(data.climate.minTemp)) }
-                  : { color: 'var(--color-forest-800)', text: t('insightFrostFree').replace('{tempC}', String(data.climate.minTemp)) },
+                recordLowC === null
+                  ? { color: 'var(--text-secondary)', text: 'The lowest temperature on record is not known for this site.' }
+                  : { color: 'var(--text-secondary)', text: `Modelled record low: ${recordLowC}°C. This is a gridded figure for the wider area, not a frost record for your land.` },
                 (data.climate.windSpeed * 3.6) > 18
                   ? { color: 'var(--gold)', text: t('insightHighWind').replace('{kmh}', (data.climate.windSpeed * 3.6).toFixed(0)).replace('{dir}', data.climate.windFromSummer) }
                   : { color: 'var(--text-secondary)', text: t('insightModerateWind').replace('{dir}', data.climate.windFromSummer) },
@@ -1203,11 +1201,14 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   {['J','F','M','A','M','J','J','A','S','O','N','D'].map((m, i) => {
                     const rain = data.rainfall.monthly![i];
                     const temp = data.climate.monthlyTemp[i] ?? 20;
-                    const isFrost = temp < 3;
-                    const isGrow = !isFrost && temp >= 12 && rain >= 30;
-                    const isDry  = !isFrost && !isGrow && rain < 20 && temp > 22;
-                    const bg = isFrost ? '#BFD9EE' : isGrow ? '#B5D9B5' : isDry ? '#E8C87A' : '#D8CEBC';
-                    const label = isFrost ? t('calendarFrost') : isGrow ? t('calendarGrow') : isDry ? t('calendarDry') : t('calendarRest');
+                    // No "Frost" class here. It was read from the month's MEAN (below 3 °C), so a
+                    // month with a mean of 10 °C and frosts on record was never marked, and the strip
+                    // read as saying which months have frost (finding CP-113). A month that cold now
+                    // falls under "Rest", as every other month too cool to grow already did.
+                    const isGrow = temp >= 12 && rain >= 30;
+                    const isDry  = !isGrow && rain < 20 && temp > 22;
+                    const bg = isGrow ? '#B5D9B5' : isDry ? '#E8C87A' : '#D8CEBC';
+                    const label = isGrow ? t('calendarGrow') : isDry ? t('calendarDry') : t('calendarRest');
                     return (
                       <div key={i} className="flex-1 flex flex-col items-center gap-0.5" title={`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i]}: ${label} (${rain}mm, ${temp.toFixed(0)}°C)`}>
                         <div className="w-full rounded-sm" style={{ height: 26, background: bg }} />
@@ -1217,7 +1218,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   })}
                 </div>
                 <div className="flex gap-3 mt-2 flex-wrap">
-                  {([['#B5D9B5', t('calendarGrow')],['#E8C87A', t('calendarDry')],['#BFD9EE', t('calendarFrost')],['#D8CEBC', t('calendarRest')]]).map(([c,l]) => (
+                  {([['#B5D9B5', t('calendarGrow')],['#E8C87A', t('calendarDry')],['#D8CEBC', t('calendarRest')]]).map(([c,l]) => (
                     <div key={l} className="flex items-center gap-1">
                       <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: c }} />
                       <span style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)' }}>{l}</span>
@@ -1485,19 +1486,21 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           // name for whatever code came back, so the fallback is still a real answer.
           const zoneLabel = ZONE_LABELS[kp] ?? data.climate.koppenDesc ?? kp;
 
+          // Cw / Cf / Cs: the translated summaries promise mild winters or a long frost-free season, which
+          // a class code cannot show, so those use the neutral English class note instead.
+          const classNote = (kp.startsWith('Cw') || kp.startsWith('Cf') || kp.startsWith('Cs')) ? koppenClassNote(kp) : '';
           const zoneSummary =
-            kp.startsWith('Cw') ? t('summaryWarmWetSummer')
-            : kp.startsWith('Cf') ? t('summaryReliableRainfall')
-            : kp.startsWith('Cs') ? t('summaryWetMildWinter')
+            classNote ? classNote
+            : kp.startsWith('Cw') || kp.startsWith('Cf') || kp.startsWith('Cs') ? 'Variable climate — use local rainfall and temperature data to plan your seasonal crop calendar.'
             : kp.startsWith('BS') ? t('summarySemiAridSteppe')
             : kp.startsWith('BW') ? t('summaryAridDesert')
             : kp.startsWith('ET') ? t('summaryHighAltitude')
             : 'Variable climate — use local rainfall and temperature data to plan your seasonal crop calendar.';
 
           const CROPS: Record<string, Array<{ pre: string; bold: string; post: string }>> = {
-            Cwb: [{ pre: 'Year-round vegetables on summer rain — ', bold: 'maize, beans, leafy greens, brassicas & sweet potato', post: '. The mild, dry winter suits cool-season crops; the warm, frost-free conditions also carry ' }, { pre: '', bold: 'bananas, avocado & subtropical fruit', post: '.' }],
-            Cwa: [{ pre: 'Year-round vegetables on summer rain — ', bold: 'maize, beans, leafy greens, brassicas & sweet potato', post: '. The warm, frost-free conditions also carry ' }, { pre: '', bold: 'tropical fruit, avocado & sugar cane', post: '.' }],
-            Cfb: [{ pre: 'Well-distributed rain supports year-round production — ', bold: 'leafy greens, brassicas, stone fruit, berries & root vegetables', post: ' thrive. Mild winters keep frost-tender crops viable on protected aspects.' }],
+            Cwb: [{ pre: 'Year-round vegetables on summer rain — ', bold: 'maize, beans, leafy greens, brassicas & sweet potato', post: '.' }],
+            Cwa: [{ pre: 'Year-round vegetables on summer rain — ', bold: 'maize, beans, leafy greens, brassicas & sweet potato', post: '.' }],
+            Cfb: [{ pre: 'Well-distributed rain supports year-round production — ', bold: 'leafy greens, brassicas, stone fruit, berries & root vegetables', post: ' thrive.' }],
             Cfa: [{ pre: 'Subtropical with year-round rain — ', bold: 'maize, subtropical fruit, leafy greens & legumes', post: '. High humidity — select disease-resistant varieties and maximise airflow.' }],
             Csb: [{ pre: 'Rainy winters grow the best crops — ', bold: 'wheat, alliums, legumes, brassicas & root vegetables', post: '. Dry summers need drought-tolerant varieties: ' }, { pre: '', bold: 'olives, figs, lavender & stone fruit', post: '.' }],
             Csa: [{ pre: 'Classic Mediterranean growing season — ', bold: 'wheat, olives, citrus, grapes, figs & root vegetables', post: ' thrive. Summer heat demands irrigation for annuals; drought-tolerant trees fruit without it.' }],
@@ -1517,8 +1520,6 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           }];
 
           const patternChip = data.rainfall.pattern === 'winter' ? t('climatePatternWinter') : data.rainfall.pattern === 'summer' ? t('climatePatternSummer') : t('climatePatternYearRound');
-          const frostChipGreen = tMin >= 5;
-          const frostChip = tMin < 2 ? t('climateFrostExpected') : tMin < 5 ? t('climateLightFrost') : t('climateFrostFree');
 
           // Approximate monthly sunshine (seasonal model from annual solar average)
           const SUN_MULT = data.rainfall.pattern === 'winter'
@@ -1534,11 +1535,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           const monthlyWind = WIND_MULT.map(m => Math.round(kmh * m));
           const windMax = Math.max(...monthlyWind, 1);
 
-          // Frost strip
-          const frostFreeDays = Math.round(temps.filter(t => t >= 5).length / 12 * 365);
-          const lightFrostMonths = temps
-            .map((t, i) => (t >= 2 && t < 5) ? ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i] : null)
-            .filter((v): v is string => v !== null);
+          const MONTH_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
           // Compass rose: direction → SVG rotation degrees
           // Full 16-point lookup — climate.windFromSummer/windFromWinter come from nasa-power's
@@ -1584,7 +1581,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     {t('koppenClimateCodeLabel')} {kp} — {zoneLabel}
                   </div>
                 )}
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5, marginTop: simple ? 6 : 0 }}>{zoneSummary}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5, marginTop: simple ? 6 : 0 }} {...(classNote || zoneSummary.startsWith('Variable climate') ? { lang: 'en' } : {})}>{zoneSummary}</div>
                 <div style={{ marginTop: 14, background: '#F1F4EA', border: '1px solid #DCE6CE', borderRadius: 12, padding: '13px 14px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 7 }}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3C6B3F" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -1601,7 +1598,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 <div style={{ display: 'flex', gap: 8, marginTop: 13, flexWrap: 'wrap' }}>
                   <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} {t('chipRainPerYear')}</span>
                   <span style={chip('#EDE7DA', '#7A6A48')}>{patternChip}</span>
-                  <span style={chip(frostChipGreen ? '#DDEBCF' : '#F4EAD0', frostChipGreen ? '#3C6B3F' : '#9A7A2E')}>{frostChip}</span>
+                  <span data-record-low={recordLowC === null ? 'unknown' : 'known'} lang="en" style={chip('#EDE7DA', '#7A6A48')}>{recordLowC === null ? 'Record low: not known' : `Modelled record low: ${recordLowC}°C`}</span>
                 </div>
               </div>
 
@@ -1652,8 +1649,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   })}
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 11, fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12, color: 'var(--text-muted)' }}>
-                  <span>{t('winterLowPrefix')} {Math.round(tMin)}° (Jun–Jul)</span>
-                  <span>{t('summerHighPrefix')} {Math.round(tMax)}°</span>
+                  <span lang="en">Coldest month mean ≈ {Math.round(tMin)}° ({MONTH_SHORT[temps.indexOf(tMin)]})</span>
+                  <span lang="en">Hottest month mean ≈ {Math.round(tMax)}° ({MONTH_SHORT[temps.indexOf(tMax)]})</span>
                 </div>
               </div>
 
@@ -1720,37 +1717,19 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   </div>
                 </div>
                 <div style={{ ...implSt, marginTop: 13 }}>
-                  → Windiest Aug–Oct — site a windbreak along the {data.climate.windFromSummer} edge before spring.
+                  → Prevailing wind is from the {data.climate.windFromSummer} — site a windbreak along that edge.
                 </div>
               </div>
 
               {/* 6 — Frost & growing season */}
               <div style={cardSt}>
                 <div style={{ ...ovlSt, marginBottom: 13 }}>{t('frostGrowingSeason')}</div>
-                <div style={{ display: 'flex', gap: 4, marginBottom: 7 }}>
-                  {temps.map((temp, i) => {
-                    const light = temp >= 2 && temp < 5;
-                    const hard  = temp < 2;
-                    return (
-                      <div key={i} style={{ flex: 1, height: 30, borderRadius: 5,
-                        background: hard ? '#C8D8EE' : light ? '#F2E2BB' : '#CDE3BE',
-                        border: light ? '1.5px solid #DDB85E' : hard ? '1.5px solid #6B9AC4' : 'none',
-                      }}/>
-                    );
-                  })}
-                </div>
-                <div style={{ display: 'flex', gap: 4, marginBottom: 14 }}>
-                  {MS.map((m, i) => (
-                    <div key={i} style={{ flex: 1, textAlign: 'center', fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 12, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{m}</div>
-                  ))}
-                </div>
-                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                  <span style={chip('#DDEBCF', '#3C6B3F')}>{t('frostFreePrefix')} {frostFreeDays} {t('daysUnit')}</span>
-                  {lightFrostMonths.length > 0 && (
-                    <span style={chip('#F4EAD0', '#9A7A2E')}>{t('lightFrostPrefix')} {lightFrostMonths.join('–')} valleys</span>
-                  )}
-                  {tMin < 5 && <span style={chip('#EDE7DA', '#7A6A48')}>{t('plantTenderMidAug')}</span>}
-                </div>
+                <p lang="en" data-record-low={recordLowC === null ? 'unknown' : 'known'} className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>
+                  {recordLowC === null ? 'Record low: not known.' : `Modelled record low: ${recordLowC}°C.`}
+                </p>
+                <p lang="en" className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', margin: '8px 0 0' }}>
+                  Frost months are not shown. Monthly averages cannot show frost, and this record has no daily frost history for your land. The record low is a gridded figure for the wider area.
+                </p>
               </div>
 
               {/* Lima → full report */}

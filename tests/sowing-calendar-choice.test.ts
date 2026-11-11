@@ -150,7 +150,9 @@ test('a grower who chose their calendar is told what the records give, and is wa
   // Johannesburg choosing the hot calendar: allowed, and told plainly what the records show.
   const johannesburg = site({ pattern: 'summer', closeCall: null, warmerNeighbour: null, coldestMonthC: 9.9, hottestMonthC: 21.6, recordMinC: -4.8 });
   const risky = lines(johannesburg, 'all-year');
-  assert.ok(risky.some((line) => /records show frost here \(lowest on record -5 °C\)/.test(line) && /record the months you see frost/.test(line)), risky.join('\n'));
+  // "-5 °C" until 11 November 2026: the fixture's record minimum is -4.8 °C and is now printed
+  // to its one decimal (finding CP-109). The warning itself is unchanged.
+  assert.ok(risky.some((line) => /records show frost here \(lowest on record -4\.8 °C\)/.test(line) && /record the months you see frost/.test(line)), risky.join('\n'));
   // Choosing a COLDER calendar than the records give needs no frost warning.
   assert.ok(!lines(site({ pattern: 'all-year', recordMinC: 6 }), 'summer').some((line) => /show frost here/.test(line)));
   // Choosing the same calendar says so.

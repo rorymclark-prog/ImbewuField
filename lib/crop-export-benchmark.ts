@@ -45,6 +45,7 @@ import {
   yieldByCrop,
 } from '@/lib/crop-plan';
 import { numberLabel } from '@/lib/format-figures';
+import { FROST_UNCONFIRMED_ROW_TEXT } from '@/lib/frost-uncertainty';
 import { bedShareLabel, inSentence, MONTH_NAMES, monthShort, rollingMonths, wrapMonth } from '@/lib/crop-export-schedule';
 
 /**
@@ -83,6 +84,20 @@ function pieceLabel(cropName: string, unit: string): string {
 export const SA_WINTER_FROST_MONTHS: ReadonlySet<number> = new Set([6, 7]);
 
 const FROST_CAVEAT_TEXT = 'Frost-tender: finish picking before the first frost or cover on clear, still nights.';
+
+/**
+ * The time basis of the benchmark total, printed beside it (finding CP-112).
+ *
+ * The total adds every planned crop cycle once and looks at no date. The reference cover
+ * prints it under the plan year ("November 2026 to October 2027"), where it read as that
+ * year's harvest: a plan whose ten-year table gives 11.3 kg for the first year showed
+ * 69.1 kg on the cover, because 21 of its 27 sowings are first picked after the year ends.
+ * Both figures are right. These lines say which one this is. They change no number.
+ */
+export const BENCHMARK_TIME_BASIS_SHORT = 'every planned crop cycle counted once; not the harvest of the plan year';
+export const BENCHMARK_TIME_BASIS_LINE =
+  'This total counts every planned crop cycle once, whenever its first picking falls, including cycles first picked after the plan year shown on the cover. '
+  + 'It is not the harvest of that year. The year-by-year table groups the same crop cycles by the year of first picking.';
 
 /** Does the inclusive month range start..end (wrapping past December) touch
  *  any month in `targets`? Capped at 12 steps — a harvest window longer than
@@ -203,7 +218,7 @@ export function buildPlanDashboard(
       detail: areaConflictBedLabels.length
         ? `resolve overlapping shares in ${areaConflictBedLabels.join(', ')}`
         : hasOwnRows ? 'own dated records need their checked source; catalogue total is withheld'
-          : hasKnownYield ? 'verified kg/m² crop entries only' : 'no verified kg/m² crop entry',
+          : hasKnownYield ? BENCHMARK_TIME_BASIS_SHORT : 'no verified kg/m² crop entry',
     },
     {
       // Same knownKg ÷ same areaM2 already above — never a separate estimate,
@@ -917,8 +932,12 @@ export interface PlanTableRow {
  *
  * `mildFrostSite` gates the frost caveat only — it never changes what is
  * sown or when; see SA_WINTER_FROST_MONTHS.
+ *
+ * `frostUnconfirmed` is true when the grower has not told the plan their frost months
+ * (CP-108). Every frost-tender row with a known harvest then carries a short caveat, on any
+ * calendar: the plan has no frost date for the farm, so it names no month.
  */
-export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[], mildFrostSite = false): PlanTableRow[] {
+export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[], mildFrostSite = false, frostUnconfirmed = false): PlanTableRow[] {
   const rows: PlanTableRow[] = [];
   const unitByCrop = unitByCropKey(plantings, beds);
   for (const bed of beds) {
@@ -969,7 +988,9 @@ export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[], mildF
         frostCaveat: mildFrostSite && crop.frostTender && h !== null && end !== null
           && monthRangeHits(h, end, SA_WINTER_FROST_MONTHS)
           ? FROST_CAVEAT_TEXT
-          : null,
+          : frostUnconfirmed && crop.frostTender === true && h !== null && end !== null
+            ? FROST_UNCONFIRMED_ROW_TEXT
+            : null,
       });
     });
   }

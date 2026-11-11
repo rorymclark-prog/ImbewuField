@@ -29,6 +29,7 @@ import { productionNeedsReview } from '@/lib/site-survey';
 import { cropVarietyRecord, varietiesForSite, type VarietySource } from '@/lib/crop-varieties';
 import { growingZoneLabel, type GrowingZoneId } from '@/lib/growing-zones';
 import { observedFrostConflictsForPlanting } from '@/lib/crop-autosuggest';
+import { FROST_UNCONFIRMED_ACTION_TEXT, FROST_UNCONFIRMED_TEXT } from '@/lib/frost-uncertainty';
 import { sanitiseNurserySettings, type NurserySettings } from '@/lib/nursery-settings';
 import {
   bedEntryMonth,
@@ -665,6 +666,12 @@ export interface ProductionGuide {
   cropChoices: ProductionGuideItem[];
   foodForest?: ProductionGuideItem[];
   animalProducts?: ProductionGuideItem[];
+  /**
+   * Names of the planned frost-tender crops when the grower has not told the plan their
+   * frost months (no answer, or "yes" with no month ticked). Absent when they answered "no"
+   * or recorded months, and when the plan holds no frost-tender crop: the field is then absent (CP-108).
+   */
+  frostTenderUnconfirmed?: string[];
 }
 
 /** The screen and paper read one preparation checklist. Annual survey records describe
@@ -718,6 +725,20 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
       'These planned crops will hold ground in months when frost has been observed here. Confirm local protection or change the planting before relying on these dates.',
     ] });
   }
+  // CP-108. With no frost months from the grower the plan has no frost date for this farm,
+  // so a frost-tender crop's picking months cannot be checked. Unknown is not "no frost":
+  // say which crops, and that the survey is where the months are recorded. A grower who
+  // answered "no" has given an observation, and one who ticked months gets the check above.
+  const frostMonthsGiven = frost === 'no' || (frost === 'yes' && frostMonths.length > 0);
+  const frostTenderUnconfirmed = frostMonthsGiven ? [] : [...new Set(active
+    .map((planting) => cropByKey(planting.cropKey))
+    .filter((crop) => crop?.frostTender === true)
+    .map((crop) => crop!.name))].sort((a, b) => a.localeCompare(b));
+  if (frostTenderUnconfirmed.length) siteObservations.push({ title: 'Frost-tender crops: frost months not confirmed', lines: [
+    `${frostTenderUnconfirmed.join(', ')}.`,
+    FROST_UNCONFIRMED_TEXT,
+    FROST_UNCONFIRMED_ACTION_TEXT,
+  ] });
   const names: Record<string, string> = {
     leafy_greens: 'Leafy greens', other_vegetables: 'Other vegetables', staple_crops: 'Staple crops',
     fruit: 'Fruit', nuts_berries: 'Nuts and berries', eggs: 'Eggs', poultry: 'Poultry meat',
@@ -756,7 +777,7 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
     ], sources: links }];
   });
   if (ownRows.length) cropChoices.push({ title: 'Own dated records retained', lines: ['Catalogue variety and planting advice is withheld for these records. Open the Task Planner and check their saved source and dated estimates.'] });
-  return { area: zones.length ? growingZoneLabel(zones) : 'Growing area not resolved', siteObservations, recordedProduction, cropChoices, ...(products ? buildProductGuidance(products, zones, conditions) : {}) };
+  return { area: zones.length ? growingZoneLabel(zones) : 'Growing area not resolved', siteObservations, recordedProduction, cropChoices, ...(frostTenderUnconfirmed.length ? { frostTenderUnconfirmed } : {}), ...(products ? buildProductGuidance(products, zones, conditions) : {}) };
 }
 
 /** Grower estimates retain the source spacing range all the way to the space budget. */

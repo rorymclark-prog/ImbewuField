@@ -65,7 +65,7 @@ function Card({ children, accent }: { children: React.ReactNode; accent?: string
 
 function Label({ icon, children }: { icon?: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-1.5 text-xs font-sans font-bold uppercase mb-2" style={{ color: '#B07A1E', letterSpacing: '0.12em', fontSize: 11 }}>
+    <div className="flex items-center gap-1.5 text-xs font-sans font-bold uppercase mb-2" style={{ color: 'var(--gold)', letterSpacing: '0.12em', fontSize: 11 }}>
       {icon}
       {children}
     </div>
@@ -89,7 +89,7 @@ function chip(tone: { bg: string; color: string }): React.CSSProperties {
 
 function MiniStat({ label, value, sub }: { label: React.ReactNode; value: string; sub?: string }) {
   return (
-    <div className="rounded-xl px-2.5 py-2 text-center" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.08)' }}>
+    <div className="rounded-xl px-2.5 py-2 text-center" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
       <div className="font-display font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{value}</div>
       <div className="font-sans mt-0.5" style={{ color: 'var(--text-muted)', fontSize: 'clamp(11px, 0.8vw, 12px)' }}>{label}</div>
       {sub && <div className="font-sans" style={{ color: 'var(--text-muted)', fontSize: 'clamp(11px, 0.8vw, 12px)' }}>{sub}</div>}
@@ -127,14 +127,14 @@ function MonthBars({ values, unit, colorFor, height = 96 }: {
     <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4, height: height + 34, paddingTop: 2 }}>
       {values.map((v, i) => (
         <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%' }}>
-          <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 'clamp(11px, 0.8vw, 12px)', color: '#766A50', marginBottom: 4 }}>{Math.round(v)}</span>
+          <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 'clamp(11px, 0.8vw, 12px)', color: 'var(--text-secondary)', marginBottom: 4 }}>{Math.round(v)}</span>
           <div style={{
             width: '68%', maxWidth: 20,
             height: Math.max(5, (Math.abs(v) / max) * height),
             borderRadius: '4px 4px 2px 2px',
             background: colorFor(v),
           }} />
-          <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 'clamp(11px, 0.8vw, 12px)', color: '#AC9E82', marginTop: 6 }}>{MONTH_LETTERS[i]}</span>
+          <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 'clamp(11px, 0.8vw, 12px)', color: 'var(--text-muted)', marginTop: 6 }}>{MONTH_LETTERS[i]}</span>
         </div>
       ))}
       <span className="sr-only">{unit}</span>
@@ -145,9 +145,9 @@ function MonthBars({ values, unit, colorFor, height = 96 }: {
 /* ── Soil provenance caution ───────────────────────────────────────────── */
 
 const SOIL_CAUTION_STYLE: Record<'lab' | 'soilgrids' | 'estimate' | 'unknown', { bg: string; border: string; color: string }> = {
-  lab: { bg: '#EAF3E2', border: '#CBDDBA', color: '#3C6B3F' },
+  lab: { bg: 'color-mix(in srgb, var(--emerald) 12%, transparent)', border: 'color-mix(in srgb, var(--emerald) 35%, transparent)', color: 'var(--emerald)' },
   soilgrids: { bg: 'rgba(31,77,43,0.05)', border: 'var(--border)', color: 'var(--text-secondary)' },
-  estimate: { bg: '#F8ECDD', border: '#E4C9A2', color: '#8A4A12' },
+  estimate: { bg: 'color-mix(in srgb, var(--gold) 12%, transparent)', border: 'color-mix(in srgb, var(--gold) 35%, transparent)', color: 'var(--gold-dim)' },
   unknown: { bg: 'rgba(32,25,15,0.05)', border: 'var(--border)', color: 'var(--text-secondary)' },
 };
 
@@ -160,7 +160,7 @@ function SoilProvenance({ source, language='en' }: { source: LocationData['soil'
       <AlertTriangle size={13} style={{ color: st.color, flexShrink: 0, marginTop: 2 }} />
       <div>
         <div className="font-sans font-bold uppercase" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', letterSpacing: '0.1em', color: st.color }}>{planSoilCautionTitle(source,language)}</div>
-        <p className="font-display leading-relaxed mt-0.5" style={{ fontSize: 12.5, color: '#3A2E22' }}>{text}</p>
+        <p className="font-display leading-relaxed mt-0.5" style={{ fontSize: 12.5, color: 'var(--text-primary)' }}>{text}</p>
       </div>
     </div>
   );
@@ -205,7 +205,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
   return (
     <div className="space-y-3">
       {isZulu && (
-        <div role="note" className="rounded-xl px-3 py-2 font-sans" style={{ fontSize: 11, lineHeight: 1.45, color: 'var(--text-secondary)', background: '#FFF8E8', border: '1px solid #E7D4A9' }}>
+        <div role="note" className="rounded-xl px-3 py-2 font-sans" style={{ fontSize: 11, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'color-mix(in srgb, var(--gold) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 35%, transparent)' }}>
           Umbhalo wesiZulu oboniswe lapha uwuhlaka olungakabuyekezwa. IsiNgisi sikhonjiswa ngaphansi kwamalebula ahunyushiwe. Idatha, amagama ezindawo nezinhlobo zezitshalo, izincazelo, imithombo nezixwayiso zokulima kuhlala njengoba zinikeziwe.
           <span className="block mt-1">IsiZulu interface wording is an unreviewed draft. English is shown under translated labels. Data, place and species names, explanations, sources and farming cautions remain as supplied.</span>
         </div>
@@ -224,7 +224,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
       </div>
 
       {/* 1 — Climate headline (Köppen) */}
-      <Card accent="#1F4D2B">
+      <Card accent="var(--color-forest-800)">
         <Label>{pairedLabel('Climate', 'Isimo sezulu', isZulu)}</Label>
         {koppenKnown && !temperaturesRecorded ? (
           <>
@@ -271,7 +271,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
         <Card>
           <div className="flex items-baseline justify-between">
             <Label icon={<Droplets size={12} />}>{pairedLabel('Rainfall', 'Imvula', isZulu)}</Label>
-            <span className="font-sans font-bold" style={{ fontSize: 12.5, color: '#3A6E92' }}>≈ {annualRain} mm / yr</span>
+            <span className="font-sans font-bold" style={{ fontSize: 12.5, color: 'var(--blue)' }}>≈ {annualRain} mm / yr</span>
           </div>
           <MonthBars
             values={rainfall.monthly}
@@ -324,16 +324,16 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
         </div>
         <div className="space-y-2 mt-3">
           {[
-            { name: 'Sand', pct: soil.sand, color: '#7A4408' },
-            { name: 'Silt', pct: soil.silt, color: '#1F4D2B' },
-            { name: 'Clay', pct: soil.clay, color: '#2D6B3C' },
+            { name: 'Sand', pct: soil.sand, color: 'var(--gold-dim)' },
+            { name: 'Silt', pct: soil.silt, color: 'var(--color-forest-800)' },
+            { name: 'Clay', pct: soil.clay, color: 'var(--emerald)' },
           ].map(({ name, pct, color }) => (
             <div key={name}>
               <div className="flex justify-between font-sans mb-0.5" style={{ fontSize: 11, color: 'var(--text-secondary)' }}>
                 <span>{name}</span>
                 <span style={{ color }}>{pct}%</span>
               </div>
-              <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(226,216,196,0.6)' }}>
+              <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
                 <div className="h-full rounded-full" style={{ width: `${Math.min(100, Math.max(0, pct))}%`, background: color, opacity: 0.8 }} />
               </div>
             </div>
@@ -380,7 +380,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
 
       {/* 7 — What could grow here */}
       {pattern && (
-        <Card accent="#C07A1E">
+        <Card accent="var(--gold)">
           <Label icon={<Sprout size={12} />}>{pairedLabel('What could grow here', 'Yini engakhula lapha?', isZulu)}</Label>
           <p className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: 10 }}>
             From our crop catalog: crops with a sowing window open in {MONTH_NAMES[monthNow - 1]} under the{' '}
@@ -397,7 +397,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 6,
                     fontSize: 13, fontWeight: 600, color: 'var(--text-primary)',
-                    background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.12)',
+                    background: 'var(--bg-2)', border: '1px solid var(--border)',
                     borderRadius: 999, padding: '5px 12px 5px 8px',
                   }}
                 >
