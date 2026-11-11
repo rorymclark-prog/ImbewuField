@@ -6,6 +6,7 @@ import {
   TRANSPLANT_ENTRY_EARLIEST_MONTHS, TRANSPLANT_ENTRY_PLANNED_MONTHS,
   type HarvestTarget, type KgHarvestTarget, type MonthlyHarvestTarget, type PlanBed, type Planting,
 } from './crop-plan';
+import { COVERAGE_TOLERANCE_KG, type HarvestTargetCoverage } from './harvest-target-coverage';
 
 export const HARVEST_TARGET_BASIS = 'Crop-cycle capacity uses the catalogue’s South African planning yields and picking windows. It does not forecast kilograms each week. Check local suitability, losses and actual harvest records before promising deliveries.';
 
@@ -56,18 +57,6 @@ export interface HarvestTargetAssessment {
   missingBasis: boolean;
   missingReasons: ('crop-evidence' | 'unit-weight' | 'zero-saleable-share')[];
 }
-
-export type HarvestTargetCoverage = 'not-assessed' | 'short' | 'covered' | 'covered-may-be-early';
-
-/** The card's status line. "On paper": weekly supply is never verified by the planner. */
-export const HARVEST_TARGET_COVERAGE_LABEL: Record<Exclude<HarvestTargetCoverage, 'not-assessed'>, string> = {
-  short: 'Not covered yet',
-  covered: 'Covered on paper',
-  'covered-may-be-early': 'Covered on paper, may be early',
-};
-
-/** Below this many kilograms a shortfall is rounding, not a gap (the card's own surplus cut-off). */
-export const COVERAGE_TOLERANCE_KG = 0.001;
 
 type KnownMassAssessment = HarvestTargetAssessment & { demandKg: number; shortageKg: number; surplusKg: number };
 
