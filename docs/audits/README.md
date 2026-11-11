@@ -260,6 +260,7 @@ or main. Local Downloads packs remain dated reading snapshots.
 - [Atlas climate card: class wording and dark mode — 11 November 2026](2026-11-11/atlas-climate-card-claude.md).
 - [Completion corrections after Codex's review of 00217575 — 11 November 2026](2026-11-11/completion-corrections-claude.md).
 - [CP-117 and the plan table's frost caveat — 11 November 2026](2026-11-11/cp117-frost-caveat-claude.md).
+- [CP-118: the site data panel's remaining unsourced verdicts — 11 November 2026](2026-11-11/cp118-site-data-claims-claude.md).
 - [Crop plan accuracy fixes: calendar choice, sowing months and weekly-target timing — 10 November 2026](2026-11-10/crop-plan-accuracy-fixes-claude.md).
 - [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md).
 - [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md).

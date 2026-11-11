@@ -41,9 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '11 November 2026', sha: '25612c28c329c7a0083819724957af79be7e1202', changes: [
+  { when: '11 November 2026', sha: '4e095ecc74cd71a3e8e16eb0fa70279f4a254542', changes: [
     'Printed frost warnings follow the frost months you record, not a fixed winter window.',
-    'Site data shows the lowest recorded temperature; made-up sun, wind and crop hints are gone',
+    'Site data shows its figures and sources, without made-up sun, wind, crop or site verdicts.',
     'A weekly harvest target now says when its crop could be ready too early.',
     'The sowing calendar page uses the crop plan\'s calendar names and can show your farm\'s.',
   ] },
