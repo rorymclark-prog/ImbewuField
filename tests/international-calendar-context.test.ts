@@ -1,3 +1,4 @@
+// CP-097: one set of calendar names -- the calendar page's select is now labelled "Sowing calendar" (was "South African reference pattern").
 import { initialiseCropPlanFixture, releaseCropPlanFixture, canonicalCropPlanFixtureKey } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -84,7 +85,7 @@ function held(ui:ReturnType<typeof screen>){
 test('a saved global summer pattern never chooses a calendar site, reference or planting window',async()=>{
   await browser();country('ZA');const ui=screen();try{
     held(ui);assert.equal(ui.select('Calendar context').props.value,'');assert.deepEqual(probe.patterns,[]);
-    ui.choose('Calendar context',siteId);held(ui);assert.equal(ui.select('South African reference pattern').props.value,'');assert.deepEqual(probe.patterns,[]);
+    ui.choose('Calendar context',siteId);held(ui);assert.equal(ui.select('Sowing calendar').props.value,'');assert.deepEqual(probe.patterns,[]);
   }finally{ui.dispose();}
 });
 
@@ -92,7 +93,7 @@ test('explicit supported site and reference pattern retain the same South Africa
   await browser();country('ZA');const ui=screen();try{
     ui.choose('Calendar context',siteId);
     for(const pattern of ['summer','winter','all-year','mild-frost']){
-      probe.patterns=[];ui.choose('South African reference pattern',pattern);
+      probe.patterns=[];ui.choose('Sowing calendar',pattern);
       assert.ok(ui.renderer.root.findAllByType('table').length>0);assert.ok(ui.text().includes('Plant now'));
       assert.ok(probe.patterns.length>0);assert.ok(probe.patterns.every(value=>value===pattern));
       assert.ok(probe.scrolls>0,'the selected month is brought into view when the held guide opens');
@@ -103,7 +104,7 @@ test('explicit supported site and reference pattern retain the same South Africa
 test('foreign or unknown sites cannot inherit an acknowledged unmapped guide or a previously selected pattern',async()=>{
   await browser();const plan=loadCropPlan();plan.workspaceReferences=[createWorkspacePlanningReference('design:calendar-reference',true)!];saveCropPlan(plan);
   const ui=screen();try{
-    ui.choose('Calendar context','reference:calendar');ui.choose('South African reference pattern','winter');assert.ok(ui.renderer.root.findAllByType('table').length>0);
+    ui.choose('Calendar context','reference:calendar');ui.choose('Sowing calendar','winter');assert.ok(ui.renderer.root.findAllByType('table').length>0);
     for(const code of ['KE','GB','US','BR']){
       act(()=>country(code));ui.choose('Calendar context',siteId);held(ui);
       assert.equal(ui.renderer.root.findAllByType('select').length,1);
@@ -113,10 +114,10 @@ test('foreign or unknown sites cannot inherit an acknowledged unmapped guide or 
 
 test('a country change or removed site immediately withholds the guide without selecting another saved site',async()=>{
   const {local,target}=await browser();country('ZA');const ui=screen();try{
-    ui.choose('Calendar context',siteId);ui.choose('South African reference pattern','summer');
+    ui.choose('Calendar context',siteId);ui.choose('Sowing calendar','summer');
     act(()=>country('KE'));held(ui);
-    act(()=>country('ZA'));assert.equal(ui.select('South African reference pattern').props.value,'');held(ui);
-    ui.choose('South African reference pattern','summer');
+    act(()=>country('ZA'));assert.equal(ui.select('Sowing calendar').props.value,'');held(ui);
+    ui.choose('Sowing calendar','summer');
     local.setItem('permamap_saved_places',JSON.stringify([{id:'other',name:'Different fixture site',lat:1,lon:0,biome:'',rainfall:0,elevation:0,savedAt:'2026-01-01T00:00:00.000Z'}]));
     act(()=>{target.dispatchEvent(new Event('storage'));});held(ui);assert.equal(ui.select('Calendar context').props.value,siteId);
   }finally{ui.dispose();}
@@ -128,9 +129,9 @@ test('separate guide acknowledgement saves only that reference in the existing p
     ui.choose('Calendar context','reference:calendar');held(ui);ui.acknowledge();held(ui);
     const saved=loadCropPlan();assert.deepEqual(saved.plantings,before.plantings);assert.equal(saved.rainPattern,before.rainPattern);
     assert.equal(saved.workspaceReferences?.[0].workspaceId,'design:calendar-reference');assert.equal(local.getItem('permamap_saved_places'),places);
-    ui.choose('South African reference pattern','all-year');assert.ok(ui.renderer.root.findAllByType('table').length>0);
+    ui.choose('Sowing calendar','all-year');assert.ok(ui.renderer.root.findAllByType('table').length>0);
     ui.dispose();ui=screen();held(ui);assert.equal(ui.select('Calendar context').props.value,'');
-    ui.choose('Calendar context','reference:calendar');held(ui);assert.equal(ui.select('South African reference pattern').props.value,'');
+    ui.choose('Calendar context','reference:calendar');held(ui);assert.equal(ui.select('Sowing calendar').props.value,'');
   }finally{ui.dispose();}
 });
 
@@ -160,7 +161,7 @@ test('an empty plan shows the named general guide only after supported context a
   await browser();saveCropPlan({version:1,plantings:[],updatedAt:1});country('ZA');const ui=screen();try{
     held(ui);assert.doesNotMatch(ui.text(),/Showing the general planting guide/);
     ui.choose('Calendar context',siteId);held(ui);
-    ui.choose('South African reference pattern','winter');
+    ui.choose('Sowing calendar','winter');
     assert.match(ui.text(),/Showing the general planting guide/);
     assert.ok(ui.renderer.root.findAllByType('table').length>0);
     assert.deepEqual(loadCropPlan().plantings,[]);

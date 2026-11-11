@@ -9,7 +9,7 @@
 
 import type { RainPattern } from '@/lib/crop-catalog';
 import { LATE_FROST_COLDEST_MONTH_C, type RainSeason } from '@/lib/koppen-global';
-import type { SiteClimate, CalendarBasis } from '@/lib/site-climate';
+import type { SiteClimate, CalendarBasis, SiteClimateMissingReason } from '@/lib/site-climate';
 
 /** Short name of the sowing calendar (a frost regime, not rain timing). */
 export const SOWING_CALENDAR_LABEL: Record<RainPattern, string> = {
@@ -17,6 +17,18 @@ export const SOWING_CALENDAR_LABEL: Record<RainPattern, string> = {
   'mild-frost': 'Light frost at most',
   'all-year': 'Hot area, no frost',
   winter: 'Winter rainfall',
+};
+
+/**
+ * isiZulu names for the same four calendars. Unreviewed drafts: three are taken from
+ * wording these screens already carried, 'Isithwathwa sasebusika' is composed from the
+ * same words; a first-language review is still owed (CP-097).
+ */
+export const SOWING_CALENDAR_LABEL_ZU: Record<RainPattern, string> = {
+  summer: 'Isithwathwa sasebusika',
+  'mild-frost': 'Isithwathwa esincane sasebusika',
+  'all-year': 'Izindawo ezishisayo, asikho isithwathwa',
+  winter: 'Imvula yasebusika',
 };
 
 export const RAIN_SEASON_LABEL: Record<RainSeason, string> = {
@@ -141,3 +153,20 @@ export function printedSowingCalendarLine(
 export const SAMPLE_FARM_CALENDAR_REASON =
   'This calendar is set for the sample farm, so the tour looks the same for everyone. '
   + 'On your own farm the app reads the climate records for your site, and you can choose a calendar yourself.';
+
+/**
+ * Why a mapped site is on the regional fallback, in words that are true for the case.
+ * The screen used to say "offline or still loading" for all three, including to a
+ * signed-out grower whose request had been refused and would never load (CP-096).
+ * 'loading' is the time before the request has answered.
+ */
+export function siteClimateMissingNote(
+  reason: SiteClimateMissingReason | 'loading', referenceName: string | null,
+): string {
+  const fallback = `the nearest reference: ${referenceName ?? 'regional point'} (fallback)`;
+  if (reason === 'loading') return `Climate records for this site are still loading. Until they arrive this uses ${fallback}.`;
+  if (reason === 'sign-in-required') {
+    return `Climate records for this site are read for signed-in growers only, so this uses ${fallback}. Sign in, or choose your own sowing calendar.`;
+  }
+  return `Climate records for this site could not be read just now (no connection, or the climate service did not answer), so this uses ${fallback}. You can choose your own sowing calendar.`;
+}

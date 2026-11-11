@@ -7,7 +7,7 @@ import {
   sowingCalendarChoiceFor, withSowingCalendarChoice, type CropPlanState, type Planting,
 } from '@/lib/crop-plan';
 import { sowingCalendarInUse, type SiteClimate } from '@/lib/site-climate';
-import { SAMPLE_FARM_CALENDAR_REASON, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
+import { SAMPLE_FARM_CALENDAR_REASON, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarOptionText, sowingCalendarReasons, siteClimateMissingNote } from '@/lib/sowing-calendar-label';
 import { sampleSowingCalendarFor } from '@/lib/sample-sowing-calendar';
 import { canonicalCoordinateSiteId } from '@/lib/site-id';
 import {
@@ -408,4 +408,20 @@ test('the record of hidden lists is per account, and a damaged record hides noth
   const hostile = parseHiddenCalendarNotices('{"__proto__":"x","site":"sig"}');
   assert.deepEqual(Object.keys(hostile), ['site']);
   assert.equal(Object.getPrototypeOf(hostile), Object.prototype);
+});
+
+test('the fallback note says why the site has no climate reading of its own', () => {
+  // CP-096: one sentence used to cover every case, "offline or still loading", including a
+  // signed-out grower whose request had been refused and would never load.
+  const loading = siteClimateMissingNote('loading', 'Mkuze');
+  const refused = siteClimateMissingNote('sign-in-required', 'Mkuze');
+  const unavailable = siteClimateMissingNote('unavailable', 'Mkuze');
+  assert.match(loading, /still loading/);
+  assert.match(refused, /signed-in growers only/);
+  assert.match(refused, /Sign in, or choose your own sowing calendar/);
+  assert.doesNotMatch(refused, /loading|offline|no connection/, 'a refusal is not a connection problem');
+  assert.match(unavailable, /could not be read just now/);
+  assert.doesNotMatch(unavailable, /Sign in/, 'signing in does not fix an outage');
+  for (const note of [loading, refused, unavailable]) assert.match(note, /nearest reference: Mkuze \(fallback\)/);
+  assert.match(siteClimateMissingNote('unavailable', null), /nearest reference: regional point \(fallback\)/);
 });

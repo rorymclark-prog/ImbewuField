@@ -25,27 +25,13 @@ import type { LocationData } from '@/lib/types';
 import { planSoilCaution, planSoilCautionTitle } from '@/lib/plan-assurance';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
+import { SOWING_CALENDAR_LABEL, SOWING_CALENDAR_LABEL_ZU } from '@/lib/sowing-calendar-label';
 import {
   atlasRainPattern, catalogMonthFor, koppenFrom, sowableInMonth,
-  type AtlasRainPattern,
 } from '@/lib/atlas';
 
 const MONTH_LETTERS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-const PATTERN_LABEL: Record<AtlasRainPattern, string> = {
-  'summer': 'Summer rainfall',
-  'winter': 'Winter rainfall',
-  'all-year': 'Hot, no frost',
-  'mild-frost': 'Summer rainfall, light frost',
-};
-
-const PATTERN_LABEL_ZU: Record<AtlasRainPattern, string> = {
-  summer: 'Imvula yasehlobo',
-  winter: 'Imvula yasebusika',
-  'all-year': 'Kuyashisa, asikho isithwathwa',
-  'mild-frost': 'Imvula yasehlobo, isithwathwa esincane',
-};
 
 /* ── Shared micro-styles (copied idiom from DataPanel) ─────────────────── */
 
@@ -237,7 +223,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
             )}
             <div style={{ display: 'flex', gap: 7, marginTop: 12, flexWrap: 'wrap' }}>
               <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} mm/yr</span>
-              {pattern && <span style={chip('#EDE7DA', '#7A6A48')}>{pairedLabel(PATTERN_LABEL[pattern], PATTERN_LABEL_ZU[pattern], isZulu)}</span>}
+              {pattern && <span style={chip('#EDE7DA', '#7A6A48')}>{pairedLabel(`Sowing calendar: ${SOWING_CALENDAR_LABEL[pattern]}`, `Ikhalenda lokutshala: ${SOWING_CALENDAR_LABEL_ZU[pattern]}`, isZulu)}</span>}
               <span style={chip(frostChipGreen ? '#DDEBCF' : '#F4EAD0', frostChipGreen ? '#3C6B3F' : '#9A7A2E')}>{pairedLabel(frostChip, frostChipZu, isZulu)}</span>
             </div>
           </>
@@ -362,7 +348,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
           <Label icon={<Sprout size={12} />}>{pairedLabel('What could grow here', 'Yini engakhula lapha?', isZulu)}</Label>
           <p className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: 10 }}>
             From our crop catalog: crops with a sowing window open in {MONTH_NAMES[monthNow - 1]} under the{' '}
-            <b style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{PATTERN_LABEL[pattern].toLowerCase()}</b> sowing calendar
+            <b style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{SOWING_CALENDAR_LABEL[pattern].toLowerCase()}</b> sowing calendar
             {northern ? ' (calendar shifted six months for the northern hemisphere)' : ''}.
             A description of the catalog, not planting advice for this site.
           </p>

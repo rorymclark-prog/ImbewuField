@@ -214,6 +214,9 @@ export function loadCachedSiteClimate(lat: number, lon: number): SiteClimate | n
   }
 }
 
+/** Why a mapped site has no climate reading of its own. */
+export type SiteClimateMissingReason = 'sign-in-required' | 'unavailable';
+
 /**
  * Cache-first resolve. On a cache miss it calls /api/location-data and, when
  * the response carries a real per-site reading, stores the WHOLE payload under
@@ -224,17 +227,27 @@ export function loadCachedSiteClimate(lat: number, lon: number): SiteClimate | n
  * fallback. A response whose reading is NOT per-site (NASA outage fallback) is
  * deliberately not cached: caching it would pin the fallback into every later
  * session until the version bumps.
+ *
+ * `onMissing` is told WHY there is no reading, so the screen does not have to guess
+ * (it used to say "offline or still loading" to a signed-out grower whose request had
+ * been refused, CP-096). It is called at most once, and only when null is returned.
  */
-export async function resolveSiteClimate(lat: number, lon: number): Promise<SiteClimate | null> {
+export async function resolveSiteClimate(
+  lat: number, lon: number, onMissing?: (reason: SiteClimateMissingReason) => void,
+): Promise<SiteClimate | null> {
   const cached = loadCachedSiteClimate(lat, lon);
   if (cached) return cached;
+  const missing = (reason: SiteClimateMissingReason): null => { onMissing?.(reason); return null; };
   if (!Number.isFinite(lat) || lat < -90 || lat > 90
-      || !Number.isFinite(lon) || lon < -180 || lon > 180) return null;
+      || !Number.isFinite(lon) || lon < -180 || lon > 180) return missing('unavailable');
   try {
     const res = await fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`, {
       headers: await paidApiHeaders(),
     });
-    if (!res.ok) return null;
+    // 401 is the route's own "Authentication required." (lib/api-auth.ts): this build
+    // reads climate records for signed-in growers only. Every other refusal, a NASA
+    // outage payload and a network error are the same thing to a grower: not available now.
+    if (!res.ok) return missing(res.status === 401 ? 'sign-in-required' : 'unavailable');
     const json: unknown = await res.json();
     const derived = siteClimateFromLocationData(json, lat);
     if (derived) {
@@ -242,9 +255,9 @@ export async function resolveSiteClimate(lat: number, lon: number): Promise<Site
         localStorage.setItem(locationDataCacheKey(lat, lon), JSON.stringify(json));
       } catch { /* quota exceeded — the live answer still stands for this session */ }
     }
-    return derived;
+    return derived ?? missing('unavailable');
   } catch {
-    return null;
+    return missing('unavailable');
   }
 }
 

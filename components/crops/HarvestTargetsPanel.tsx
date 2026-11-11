@@ -5,7 +5,7 @@ import { Target, Trash2 } from 'lucide-react';
 import { CROPS, cropByKey, hasPlanningYield, MONTHS_SHORT, type RainPattern } from '@/lib/crop-catalog';
 import { HARVEST_TARGET_UNITS, sanitiseHarvestTargets, resolveHarvestTargetDateWindow, isMonthlyHarvestTarget, type MonthlyHarvestTiming, type DatedHarvestTiming, type HarvestTarget, type PlanBed, type Planting, type HarvestPackUnit } from '@/lib/crop-plan';
 import { suggestHarvestTargets, type AutoSuggestAnswers, type AutoSuggestResult } from '@/lib/crop-autosuggest';
-import { assessHarvestTarget, HARVEST_TARGET_BASIS, targetMonthStamp } from '@/lib/harvest-targets';
+import { assessHarvestTarget, COVERAGE_TOLERANCE_KG, HARVEST_TARGET_BASIS, HARVEST_TARGET_COVERAGE_LABEL as COVERAGE_LABEL, targetMonthStamp, type HarvestTargetAssessment } from '@/lib/harvest-targets';
 import { numberLabel } from '@/lib/format-figures';
 import { buildNurseryForecast } from '@/lib/crop-export-schedule';
 import { sanitiseNurserySettings, type NurserySettings } from '@/lib/nursery-settings';
@@ -52,6 +52,14 @@ const targetAmount = (kg: number | null, target: HarvestTarget, massUnit: MassUn
     ? `${numberLabel(kg / target.kgPerUnit, 1)} ${unitLabel(target.unit)} equivalent (${derivedAmount(kg, massUnit)})`
     : derivedAmount(kg, massUnit);
 const monthName = (stamp: string) => `${MONTHS_SHORT[Number(stamp.slice(5)) - 1]} ${stamp.slice(0, 4)}`;
+/** What a target that is "covered, may be early" would lack without its possibly-early sowings. */
+function coveredOnlyByEarly(a: HarvestTargetAssessment, massUnit: MassUnit): string {
+  const short = a.demandKg === null ? 0 : Math.max(0, a.demandKg - a.onTimeAllocatedKg);
+  const lacks: string[] = [];
+  if (short > COVERAGE_TOLERANCE_KG) lacks.push(`this target would be ${targetAmount(short, a.target, massUnit)} short`);
+  if (a.earlyOnlyMonths.length) lacks.push(`${a.earlyOnlyMonths.map(monthName).join(', ')} would have no picking window`);
+  return `Without ${a.earlyCycles === 1 ? 'it' : 'them'}, ${lacks.join(' and ')}.`;
+}
 function targetWindowLabel(target: HarvestTarget): string {
   const window = resolveHarvestTargetDateWindow(target);
   if (!window) return 'Requested dates need review';
@@ -363,7 +371,8 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
         <div className="flex items-start justify-between gap-2">
           <div><h3 className="font-display font-semibold">{cropByKey(a.target.cropKey)?.name} · {weeklyLabel(a.target, massUnit)}</h3>
             {a.target.outlet && <p className="text-sm">{a.target.outlet}</p>}
-            <p className="text-xs text-[var(--text-secondary)]">{monthName(a.target.startMonth)} – {monthName(a.target.endMonth)} · {a.days} days</p></div>
+            <p className="text-xs text-[var(--text-secondary)]">{monthName(a.target.startMonth)} – {monthName(a.target.endMonth)} · {a.days} days</p>
+            {a.coverage !== 'not-assessed' && <p data-target-coverage={a.coverage} className={`text-sm font-semibold ${a.coverage === 'covered' ? 'text-[var(--text-primary)]' : 'text-[var(--gold)]'}`}>{COVERAGE_LABEL[a.coverage]}</p>}</div>
           <div className="flex gap-1 flex-shrink-0"><button type="button" className={secondary} onClick={() => editTarget(a.target)}>Edit</button><button type="button" className={secondary} aria-label={`Remove ${cropByKey(a.target.cropKey)?.name} target`} onClick={() => removeTarget(a.target)}><Trash2 size={16} aria-hidden /></button></div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 text-sm">
@@ -380,7 +389,7 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
         {a.missingReasons.includes('crop-evidence') && <p className="text-xs text-[var(--gold)]">Verified crop yield, timing or establishment evidence is missing.</p>}
         {a.gapMonths.length > 0 && <p className="text-xs text-[var(--gold)]">No linked picking window: {a.gapMonths.map(monthName).join(', ')}.</p>}
         {a.excludedRows > 0 && <p className="text-xs text-[var(--gold)]">{a.excludedRows} linked planting(s) excluded: check dates, crop, timing evidence, mapped area and overlaps.</p>}
-        {a.earlyCycles > 0 && a.earliestReadyMonth && <p className="text-xs text-[var(--gold)]">{a.earlyCycles === 1 ? '1 linked sowing' : `${a.earlyCycles} linked sowings`} could be ready before {monthName(a.target.startMonth)}, as early as {monthName(a.earliestReadyMonth)}. The plan counts the latest likely month, so a bed is not given away too soon. If the buyer cannot take it early, sow later.</p>}
+        {a.earlyCycles > 0 && a.earliestReadyMonth && <p className="text-xs text-[var(--gold)]">{a.earlyCycles === 1 ? '1 linked sowing' : `${a.earlyCycles} linked sowings`} could be ready before {monthName(a.target.startMonth)}, as early as {monthName(a.earliestReadyMonth)}. The plan counts the latest likely month, so a bed is not given away too soon. If the buyer cannot take it early, sow later.{a.coverage === 'covered-may-be-early' && ` ${coveredOnlyByEarly(a, massUnit)}`}</p>}
         <p className="text-xs text-[var(--text-secondary)]">Area is summed across crop cycles; successive crops may reuse ground. Weekly supply remains unverified.</p>
       </article>)}
 
@@ -399,7 +408,7 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
         {monthlyTargets.map((target) => {
           const a = assessHarvestTarget(target, beds, [...plantings, ...result.plantings]);
           if (!a) return null;
-          return <p key={target.id} className="text-sm"><strong>{cropByKey(target.cropKey)?.name} · {weeklyLabel(target, massUnit)}:</strong> {a.demandKg === null ? 'Growing space awaits your pack weight. ' : `${targetAmount(a.allocatedKg, target, massUnit)} linked cycle capacity after adding${target.marketablePercent === undefined ? ' (unadjusted benchmark)' : ' (after your saleable allowance)'}; ${targetAmount(a.shortageKg, target, massUnit)} still unallocated. `}{a.surplusKg !== null && a.surplusKg > 0.001 ? `${targetAmount(a.surplusKg, target, massUnit)} above total demand. ` : ''}{a.gapMonths.length ? `No picking window in ${a.gapMonths.map(monthName).join(', ')}.` : 'A picking window reaches each requested month; weekly quantities remain unverified.'}</p>;
+          return <p key={target.id} className="text-sm"><strong>{cropByKey(target.cropKey)?.name} · {weeklyLabel(target, massUnit)}:</strong> {a.demandKg === null ? 'Growing space awaits your pack weight. ' : `${targetAmount(a.allocatedKg, target, massUnit)} linked cycle capacity after adding${target.marketablePercent === undefined ? ' (unadjusted benchmark)' : ' (after your saleable allowance)'}; ${targetAmount(a.shortageKg, target, massUnit)} still unallocated. `}{a.surplusKg !== null && a.surplusKg > 0.001 ? `${targetAmount(a.surplusKg, target, massUnit)} above total demand. ` : ''}{a.gapMonths.length ? `No picking window in ${a.gapMonths.map(monthName).join(', ')}.` : 'A picking window reaches each requested month; weekly quantities remain unverified.'}{a.coverage === 'covered-may-be-early' ? ` ${coveredOnlyByEarly(a, massUnit)}` : ''}</p>;
         })}
         {result.plantings.length > 0 && <div className="max-h-64 overflow-auto"><table className="w-full text-left text-xs">
           <caption className="text-left mb-2">Proposed additions — saved crops stay in place</caption>

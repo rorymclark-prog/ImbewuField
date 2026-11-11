@@ -114,6 +114,56 @@ test('a sowing that could be ready before the buyer\'s window opens is credited 
   assert.equal(excluded.earlyCycles, 0);
 });
 
+test('a target met only by a sowing that could be ready early reads "covered, may be early", and the credit is unchanged',async()=>{
+  // Rory, 11 November 2026 (decision on CP-079): keep the credit, and say on the card when
+  // it rests on a crop that could be ready before the buyer's window opens.
+  const carrots: Planting = { id: 'car', bedId: beds[1].id, cropKey: 'carrots', sowMonth: 11, once: '2026-11', harvestTargetId: target.id };
+  const march = { ...target, startMonth: '2027-03', endMonth: '2027-03' };
+  // November carrots (80-120 days) are credited to March and could be lifted from January.
+  const early = assessHarvestTarget(march, beds, [carrots])!;
+  assert.equal(early.allocatedKg, beds[1].areaM2 * cropByKey('carrots')!.yieldKgPerM2!, 'the credit itself must not change');
+  assert.equal(early.shortageKg, 0);
+  assert.deepEqual(early.gapMonths, []);
+  assert.equal(early.coverage, 'covered-may-be-early');
+  assert.equal(early.onTimeAllocatedKg, 0, 'nothing is left once the possibly-early cycle is set aside');
+  assert.deepEqual(early.earlyOnlyMonths, ['2027-03']);
+
+  // The same sowing against a window that opens when it could first be ready is not early.
+  // Its picking month is still March only, so January and February are gaps: short, not covered.
+  const fromJanuary = assessHarvestTarget({ ...target, startMonth: '2027-01', endMonth: '2027-03' }, beds, [carrots])!;
+  assert.equal(fromJanuary.earlyCycles, 0);
+  assert.equal(fromJanuary.coverage, 'short');
+  assert.equal(fromJanuary.onTimeAllocatedKg, fromJanuary.allocatedKg);
+  assert.deepEqual(fromJanuary.earlyOnlyMonths, []);
+
+  // A gap or a shortfall is 'short' whether or not an early cycle is involved.
+  const gap = assessHarvestTarget({ ...target, startMonth: '2027-03', endMonth: '2027-04' }, beds, [carrots])!;
+  assert.equal(gap.coverage, 'short');
+  assert.deepEqual(gap.earlyOnlyMonths, ['2027-03']);
+  const big = assessHarvestTarget({ ...march, weeklyKg: 30 }, beds, [carrots])!;
+  assert.ok(big.shortageKg > 0);
+  assert.equal(big.coverage, 'short');
+
+  // Broad beans are the one catalogue crop whose earliest and credited months coincide,
+  // so a covered broad-bean target is plainly 'covered'.
+  const beans: Planting = { id: 'bb', bedId: beds[2].id, cropKey: 'broad-beans', sowMonth: 4, once: '2027-04', harvestTargetId: target.id };
+  const beanWindow = targetPickingWindow(beans, { ...target, cropKey: 'broad-beans', startMonth: '2027-01', endMonth: '2027-12' });
+  assert.ok(beanWindow.length > 0, 'fixture: the April broad beans are credited within 2027');
+  const stamp = (index: number) => `${Math.floor(index / 12)}-${String(index % 12 + 1).padStart(2, '0')}`;
+  const beanOrder = { ...target, cropKey: 'broad-beans', weeklyKg: 0.5, startMonth: stamp(beanWindow[0]), endMonth: stamp(beanWindow[beanWindow.length - 1]) };
+  const plain = assessHarvestTarget(beanOrder, beds, [beans])!;
+  assert.equal(plain.earlyCycles, 0);
+  assert.equal(plain.coverage, 'covered');
+  assert.equal(plain.onTimeAllocatedKg, plain.allocatedKg);
+
+  // No basis, no status: nothing was worked out, so nothing is called covered or short.
+  assert.equal(assessHarvestTarget(march, beds, [])!.coverage, 'short', 'an assessed target with no sowings is short');
+  const { weeklyKg: _kg, ...base } = march;
+  const noPackWeight = assessHarvestTarget({ ...base, unit: 'bunches' as const, weeklyQuantity: 6 }, beds, [carrots])!;
+  assert.deepEqual(noPackWeight.missingReasons, ['unit-weight']);
+  assert.equal(noPackWeight.coverage, 'not-assessed');
+});
+
 test('overbooked, pending, finished, missing and incorrectly dated allocations cannot inflate capacity',async()=>{
   const result = suggest();
   const row = result.plantings[0];

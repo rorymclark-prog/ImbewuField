@@ -14,9 +14,14 @@ import { CATALOG_KEY_FOR_CROP } from '@/lib/crop-display';
 import { produceLabel } from '@/lib/produce-label';
 import { sowMarksForPattern, type PlantMark } from '@/lib/crop-calendar';
 import type { RainPattern } from '@/lib/crop-catalog';
+import { SOWING_CALENDAR_LABEL, SOWING_CALENDAR_LABEL_ZU, SOWING_CALENDAR_OPTIONS, sowingCalendarOptionText } from '@/lib/sowing-calendar-label';
+import { farmCalendarOffer, farmCalendarOfferText } from '@/lib/calendar-page-farm-calendar';
+import { loadCachedSiteClimate } from '@/lib/site-climate';
+import { sampleSowingCalendarFor } from '@/lib/sample-sowing-calendar';
+import { loadSurvey } from '@/lib/site-survey';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
-import { loadCropPlan, saveCropPlan, CROP_PLAN_CHANGED_EVENT, type CropPlanState } from '@/lib/crop-plan';
+import { loadCropPlan, saveCropPlan, sowingCalendarChoiceFor, CROP_PLAN_CHANGED_EVENT, type CropPlanState } from '@/lib/crop-plan';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 import { coordinateSiteIdForPlace } from '@/lib/international/site-context';
 import { resolvePlanningSupport } from '@/lib/international/planning-support';
@@ -71,16 +76,6 @@ interface CropRow {
   harvestMonths: number[]; // 0-indexed
 }
 
-/** English + isiZulu label for each RainPattern the calendar can be showing —
- * explicitly selected for this reference guide. The globally stored plan
- * pattern is not bound to a physical site and cannot choose this context. */
-const RAIN_PATTERN_LABELS: Record<RainPattern, { en: string; zu: string }> = {
-  summer: { en: 'Summer-rainfall pattern', zu: 'Iphethini yemvula yasehlobo' },
-  'mild-frost': { en: 'Summer rain, light winter frost', zu: 'Imvula yasehlobo, isithwathwa esincane sasebusika' },
-  'all-year': { en: 'Hot areas, no frost (Lowveld, KZN coast)', zu: 'Izindawo ezishisayo, asikho isithwathwa' },
-  winter: { en: 'Winter-rainfall pattern', zu: 'Iphethini yemvula yasebusika' },
-};
-
 const CROP_BASE: { name: string; catalogKey: string; harvestMonths: number[] }[] = [
   { name: 'Spinach', catalogKey: CATALOG_KEY_FOR_CROP.Spinach, harvestMonths: [5, 6, 7, 8, 9] },
   { name: 'Tomatoes', catalogKey: CATALOG_KEY_FOR_CROP.Tomatoes, harvestMonths: [11, 0, 1, 2] },
@@ -92,7 +87,7 @@ const CROP_BASE: { name: string; catalogKey: string; harvestMonths: number[] }[]
   { name: 'Pumpkin', catalogKey: CATALOG_KEY_FOR_CROP.Pumpkin, harvestMonths: [1, 2, 3] },
 ];
 
-/** Builds CROPS for the explicitly chosen reference pattern after context approval.
+/** Builds CROPS for the explicitly chosen sowing calendar after context approval.
  * ux-18: `name` now comes from the shared produceLabel() helper
  * (lib/produce-label.ts) instead of CROP_BASE's own hardcoded string, so this grid spells a
  * crop the same way MyRecords, Home and /prices do, in whichever language is active — this was
@@ -427,10 +422,26 @@ export default function CalendarPage() {
   const selectedSiteId = isReference ? null : selectedContext || 'calendar-context-not-selected';
   const support = resolvePlanningSupport({places:snapshot.places,siteId:selectedSiteId,
     workspaceId:isReference ? referenceWorkspace : null,workspaceReferences:snapshot.plan.workspaceReferences});
-  const [rainPattern, setRainPattern] = useState<RainPattern | null>(null);
-  const patternLabel = rainPattern ? RAIN_PATTERN_LABELS[rainPattern] : null;
+  // The visitor picks a calendar, or picks "this farm's crop plan". Nothing is preselected.
+  const [calendarPick, setCalendarPick] = useState<RainPattern | 'farm' | null>(null);
+  // This farm's calendar, from what this device already holds (cache-only, no network).
+  // The selected context is only ever set by the visitor after mount, so none of this
+  // is read during the server render.
+  const farmOffer = useMemo(() => {
+    if (isReference || !selectedContext) return null;
+    const place = snapshot.places.find(p => coordinateSiteIdForPlace(p) === selectedContext);
+    if (!place) return null;
+    return farmCalendarOffer({
+      chosen: sowingCalendarChoiceFor(snapshot.plan, selectedContext),
+      sample: sampleSowingCalendarFor(selectedContext),
+      site: loadCachedSiteClimate(place.lat, place.lon),
+      observedFrost: loadSurvey(selectedContext)?.productionConditions?.frost,
+    });
+  }, [isReference, selectedContext, snapshot]);
+  const rainPattern: RainPattern | null = calendarPick === 'farm' ? farmOffer?.pattern ?? null : calendarPick;
+  const patternLabel = rainPattern ? { en: SOWING_CALENDAR_LABEL[rainPattern], zu: SOWING_CALENDAR_LABEL_ZU[rainPattern] } : null;
   const allowCalendar = support.allowCataloguePlanning && rainPattern !== null;
-  useEffect(() => { setRainPattern(null); }, [support.fingerprint]);
+  useEffect(() => { setCalendarPick(null); }, [support.fingerprint]);
   const plannedCropKeys = useMemo(() => {
     // The general guide does not quietly borrow a foreign farm's crop filter.
     if (isReference || !selectedContext) return new Set<string>();
@@ -534,7 +545,7 @@ export default function CalendarPage() {
           <p className="mt-2 text-sm text-[var(--text-secondary)]">This guide uses South African reference material. A country choice, a language or a saved sowing date cannot establish a local planting calendar for another country.</p>
           <label className="mt-3 block text-sm">Calendar context
             <select className="mt-1 min-h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-0)] p-2" value={selectedContext}
-              onChange={event=>{setSelectedContext(event.target.value);setRainPattern(null);setShowAllOverride(false);setShowYear(false);}}>
+              onChange={event=>{setSelectedContext(event.target.value);setCalendarPick(null);setShowAllOverride(false);setShowYear(false);}}>
               <option value="">Choose a saved site or a separate reference guide</option>
               {siteChoices.map(site=><option key={site.id} value={site.id}>{site.name} · saved site</option>)}
               <option value={referenceChoice}>South African reference guide · no mapped farm</option>
@@ -544,14 +555,19 @@ export default function CalendarPage() {
           {isReference && <div className="mt-3"><WorkspaceReferencePanel workspaceId={referenceWorkspace}
             reference={resolveWorkspacePlanningReference(snapshot.plan.workspaceReferences,referenceWorkspace)} onReference={saveReference} /></div>}
           {support.allowCataloguePlanning && <div className="mt-3">
-            <label className="block text-sm">South African reference pattern
-            <select className="mt-1 min-h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-0)] p-2" value={rainPattern ?? ''}
-              onChange={event=>setRainPattern(Object.hasOwn(RAIN_PATTERN_LABELS,event.target.value) ? event.target.value as RainPattern : null)}>
-              <option value="">Choose a reference pattern</option>
-              {Object.entries(RAIN_PATTERN_LABELS).map(([value,label])=><option key={value} value={value}>{label.en}</option>)}
+            <label className="block text-sm">Sowing calendar
+            <select className="mt-1 min-h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-0)] p-2" value={calendarPick ?? ''}
+              onChange={event=>{
+                const v = event.target.value;
+                setCalendarPick(v === 'farm' && farmOffer ? 'farm' : SOWING_CALENDAR_OPTIONS.some(o=>o.value===v) ? v as RainPattern : null);
+              }}>
+              <option value="">Choose a sowing calendar</option>
+              {farmOffer && <option value="farm">{farmCalendarOfferText(farmOffer)}</option>}
+              {SOWING_CALENDAR_OPTIONS.map(option=><option key={option.value} value={option.value}>{sowingCalendarOptionText(option)}</option>)}
             </select>
             </label>
-            <p className="mt-1 text-xs text-[var(--text-secondary)]">A reference pattern is not an observation of this site’s climate. No pattern is selected from the global saved crop plan.</p>
+            <p className="mt-1 text-xs text-[var(--text-secondary)]">A sowing calendar chosen here is a reference, not an observation of this site’s climate. Nothing is taken from a crop plan unless you pick it.</p>
+            {!isReference && !farmOffer && <p className="mt-1 text-xs text-[var(--text-secondary)]">This farm’s calendar is not known on this device yet. Open its crop plan once, or choose a calendar here.</p>}
           </div>}
         </section>
         {allowCalendar ? <>
@@ -906,6 +922,7 @@ export default function CalendarPage() {
                   }}
                 >
                   {patternLabel && localUi(patternLabel.en, patternLabel.zu, lang)}
+                  {patternLabel && calendarPick === 'farm' && <>{' · '}<span lang="en">this farm’s crop plan</span></>}
                 </span>
               </div>
             </div>
@@ -1072,7 +1089,7 @@ export default function CalendarPage() {
         </div>
         </> : <section aria-label="Calendar unavailable" className="m-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] p-4 font-sans text-[var(--text-primary)]">
           <h2 className="font-display text-lg font-semibold">Reference calendar not selected</h2>
-          <p className="mt-2 text-sm">Choose an explicitly supported saved site or acknowledge the separate South African reference guide, then choose a reference pattern. Monthly farming instructions remain unavailable until both choices are complete.</p>
+          <p className="mt-2 text-sm">Choose an explicitly supported saved site or acknowledge the separate South African reference guide, then choose a sowing calendar. Monthly farming instructions remain unavailable until both choices are complete.</p>
           <p className="mt-2 text-sm">Saved crops, country details and measured maps remain unchanged.</p>
           <a href="/facilitator/crops" className="mt-2 inline-block underline">Review site country and crop planning</a>
         </section>}
