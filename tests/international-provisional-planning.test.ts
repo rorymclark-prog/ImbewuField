@@ -154,6 +154,93 @@ test('method and water assumptions are matched before using a duration or yield'
   }
 });
 
+test('an automatic method cannot silently replace the explicitly requested method', () => {
+  const input = request();
+  const candidates = input.candidates.map(row => row.field === 'establishment'
+    ? candidate('establishment', 'transplant') : row);
+  const result = resolved({ ...input, candidates });
+  assert.equal(result.fields.establishment.status, 'missing');
+  assert.ok(result.rejected.some(row => row.reason === 'requested-method-mismatch'));
+  assert.equal(result.assessment.estimatedPlantCount.value, 26);
+  const unknownContext = resolved({ ...input, candidates, context: { ...input.context, establishment: null } });
+  assert.equal(unknownContext.fields.establishment.activeInput.state, 'provided');
+  assert.notEqual(result.fingerprint, unknownContext.fingerprint);
+});
+
+test('unknown method context can use an applicable automatic method but contradictory capsules are rejected', () => {
+  const input = request();
+  const candidates = input.candidates.map(row => row.field === 'establishment'
+    ? candidate('establishment', 'transplant', { establishment: 'transplant' }) : row);
+  const result = resolved({ ...input, candidates, context: { ...input.context, establishment: null } });
+  assert.equal(result.profile.inputs.establishment.state, 'provided');
+  assert.equal(result.profile.inputs.establishment.state === 'provided' && result.profile.inputs.establishment.value, 'transplant');
+  assert.equal(result.requestedEstablishment, null);
+  assert.equal(result.activeEstablishment, 'transplant');
+  const contradictory = resolved({ ...input, candidates: input.candidates.map(row => row.field === 'establishment'
+    ? candidate('establishment', 'transplant', { establishment: 'direct' }) : row) });
+  assert.equal(contradictory.fields.establishment.status, 'missing');
+  assert.ok(contradictory.rejected.some(row => row.reason === 'contradictory-method-candidate'));
+});
+
+test('the fingerprint retains the requested method even when the same automatic method is selected', () => {
+  const input = request();
+  const explicit = resolved(input);
+  const automatic = resolved({ ...input, context: { ...input.context, establishment: null } });
+  assert.deepEqual(explicit.profile, automatic.profile);
+  assert.notEqual(explicit.fingerprint, automatic.fingerprint);
+  assert.equal(explicit.requestedEstablishment, 'direct');
+  assert.equal(automatic.requestedEstablishment, null);
+});
+
+test('an explicit method edit retains its baseline and re-evaluates dependent evidence under the edited method', () => {
+  const input = request();
+  const result = resolved({ ...input, candidates: input.candidates.map(row => row.field === 'plantsPerM2'
+    ? { ...row, establishment: 'direct' } : row.field === 'yieldKgPerM2'
+      ? { ...row, establishment: 'transplant' } : row), overrides: {
+    establishment: { state: 'provided', value: 'transplant', unit: 'method', provenance: { kind: 'grower-estimate', recordedAt } },
+  } });
+  assert.equal(result.fields.establishment.status, 'overridden');
+  assert.equal(result.fields.establishment.baselineDefault?.state === 'provided' && result.fields.establishment.baselineDefault.value, 'direct');
+  assert.equal(result.assessment.estimatedPlantCount.value, null);
+  assert.equal(result.assessment.estimatedYieldKg.value, 42);
+});
+
+test('an unresolved automatic method cannot enable method-qualified dependent evidence', () => {
+  const input = request();
+  const candidates = input.candidates.map(row => row.field === 'plantsPerM2'
+    ? { ...row, establishment: 'direct' as const } : row);
+  const result = resolved({ ...input, context: { ...input.context, establishment: null }, candidates: [
+    ...candidates, candidate('establishment', 'transplant', { id: 'other-method' }),
+  ] });
+  assert.equal(result.fields.establishment.status, 'conflict');
+  assert.equal(result.assessment.estimatedPlantCount.value, null);
+  assert.equal(result.assessment.estimatedYieldKg.value, 42);
+});
+
+test('sparse month evidence or edits are rejected without losing independent calculations', () => {
+  const input = request();
+  const sparse = Array(1);
+  const result = resolved({ ...input, candidates: input.candidates.map(row => row.field === 'allowedEntryMonths'
+    ? candidate('allowedEntryMonths', sparse) : row) });
+  assert.equal(result.fields.allowedEntryMonths.status, 'missing');
+  assert.ok(result.profile);
+  assert.equal(result.assessment.estimatedPlantCount.value, 26);
+  assert.equal(result.assessment.estimatedYieldKg.value, 42);
+  const edit = resolved({ ...input, overrides: { allowedEntryMonths: { state: 'provided', value: sparse,
+    unit: 'utc-months', provenance: { kind: 'grower-estimate', recordedAt } } } });
+  assert.equal(edit.fields.allowedEntryMonths.status, 'invalid-override');
+  assert.equal(edit.assessment.estimatedPlantCount.value, 26);
+  assert.equal(edit.assessment.estimatedYieldKg.value, 42);
+});
+
+test('an explicitly empty planting window stays an exclusion rather than a missing or malformed month list', () => {
+  const input = request();
+  const result = resolved({ ...input, candidates: input.candidates.map(row => row.field === 'allowedEntryMonths'
+    ? candidate('allowedEntryMonths', []) : row) });
+  assert.equal(result.fields.allowedEntryMonths.status, 'selected');
+  assert.equal(result.assessment.entryWindow, 'excluded');
+});
+
 test('an explicit edit changes only its dependent output and retains the automatic baseline', () => {
   const result = resolved(request({ overrides: { plantsPerM2: { state: 'provided', value: 3, unit: 'plants/m2',
     provenance: { kind: 'external-reference', recordedAt, reference: 'Cannot promote an edit', sourceUrl: source.url } } } }));

@@ -196,8 +196,8 @@ export function normaliseGrowerMeasuredAreaInput(value: unknown): GrowerMeasured
 }
 const days = (v: unknown): v is number => nonNegative(v) && Number.isSafeInteger(v);
 const method = (v: unknown): v is 'direct' | 'transplant' => v === 'direct' || v === 'transplant';
-const months = (v: unknown): v is number[] => Array.isArray(v)
-  && v.every(m => Number.isInteger(m) && m >= 1 && m <= 12) && new Set(v).size === v.length;
+const months = (v: unknown): v is number[] => Array.isArray(v) && v.length <= 12
+  && Array.from(v).every(m => Number.isInteger(m) && m >= 1 && m <= 12) && new Set(v).size === v.length;
 
 /** Invalid supplied data is rejected, never silently replaced with a missing/default value. */
 export function normaliseGrowerPlanningProfile(value: unknown): GrowerPlanningProfile | null {

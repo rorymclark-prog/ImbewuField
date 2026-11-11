@@ -159,7 +159,7 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
           && geography.regionReference === context.agriculturalRegionReference
           : geography.kind === 'site' ? scope.kind === 'mapped-site' && geography.siteId === scope.siteId
             : geography.kind === 'explicit-transfer' && text(geography.assumption) && candidate.tier !== 'local-public-evidence';
-      if (!geographicMatch || (candidate.establishment !== 'any' && candidate.establishment !== establishment)
+      if (!geographicMatch || (field !== 'establishment' && candidate.establishment !== 'any' && candidate.establishment !== establishment)
         || (candidate.waterRegime !== 'any' && candidate.waterRegime !== context.waterRegime)
         || (candidate.varietyReference !== undefined && (!text(candidate.varietyReference)
           || candidate.varietyReference !== context.varietyReference))) { reject('scope-mismatch'); continue; }
@@ -175,6 +175,18 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
       } else if (temporal.kind !== 'recurring-season') { reject('invalid-time-scope'); continue; }
       const value = normaliseField(field, candidate.input);
       if (!value || value.state !== 'provided') { reject('invalid-value'); continue; }
+      if (field === 'establishment') {
+        // Applicability metadata cannot contradict the capsule's own method.
+        if (candidate.establishment !== 'any' && candidate.establishment !== value.value) {
+          reject('contradictory-method-candidate'); continue;
+        }
+        // An automatic default must respect an explicit requested method. A
+        // grower can still change it through the separate override below; later
+        // fields are then matched against that deliberately edited method.
+        if (context.establishment !== null && context.establishment !== value.value) {
+          reject('requested-method-mismatch'); continue;
+        }
+      }
       if (candidate.reportedRange !== undefined) {
         const range = candidate.reportedRange;
         if (!Array.isArray(range) || range.length !== 2 || ![range[0], range[1]].every(number => typeof number === 'number' && Number.isFinite(number) && number >= 0)
@@ -260,15 +272,20 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
       establishment = null;
     }
   }
-  const profile = makeProfile(inputs)!;
+  const profile = makeProfile(inputs);
+  // Every resolved result promises a valid profile. Do not rely on an erased
+  // non-null assertion if a future normalizer change breaks that invariant.
+  if (!profile) return freeze({ status: 'invalid-context' as const,
+    profile: null, fields: null, assessment: null, fingerprint: null });
   const assessment = assessProvisionalGrowerPlanning({ profile, scope, measuredAreaM2: request.measuredAreaM2,
     fieldEntryDate: request.fieldEntryDate });
   const canonicalContext: ProvisionalEvidenceContext = { scope, countryCode: context.countryCode,
-    agriculturalRegionReference: context.agriculturalRegionReference, establishment, waterRegime: context.waterRegime,
+    agriculturalRegionReference: context.agriculturalRegionReference, establishment: context.establishment, waterRegime: context.waterRegime,
     varietyReference: context.varietyReference ?? null };
   return freeze({ status: 'resolved' as const, provisional: true, sourceVerification: 'not-verified' as const,
     densityEstimateNotLayoutClearance: true as const, profile, fields: resolved, assessment, rejected,
     countryOrRegionApproval: false as const, knownPlantLegalityEstablished: false as const,
-    fingerprint: JSON.stringify([growerPlanningScopeKey(scope), canonicalContext, request.asOf, resolved,
+    requestedEstablishment: context.establishment, activeEstablishment: establishment,
+    fingerprint: JSON.stringify([growerPlanningScopeKey(scope), canonicalContext, establishment, request.asOf, resolved,
       [...rejected].sort((a, b) => JSON.stringify(a) < JSON.stringify(b) ? -1 : JSON.stringify(a) > JSON.stringify(b) ? 1 : 0), assessment.fingerprint]) });
 }
