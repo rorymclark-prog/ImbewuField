@@ -1,35 +1,15 @@
-HEAD 6ded8c235652a366117c417781624aadc7d6e86f
+HEAD 062b630408279519cc3b381248d288f226ee8928
+tree 7907684eb5dbcb0754d4562ed6d168180a326ffc
 status --porcelain (app components lib public package.json): []
-attempt 1 (attempt 1 of the earlier run, on a cold server, found no plan to accept and is discarded)
+attempt 1
   country panel present -> choosing ZA
-Auto-suggest step 0 dialog buttons (last 6): ["Best whole-year plan\nTries all 12 starting months ","Divide beds into crop sections\nOn by default: Auto","Rotate crops between beds\nAvoids immediate same-fa","Grow big vines in a veg bed anyway\nOff by default:","Reliable irrigation for every crop cycle\nThis auto","Suggest a plan"]
-go buttons: 1
-accept button: 1 Add 27 plantings to my plan
-FAIL locator.click: Timeout 30000ms exceeded.
-Call log:
-[2m  - waiting for getByRole('button', { name: /^Add \d+ plantings? to my plan/ }).first()[22m
-[2m    - locator resolved to <button class="flex-1 font-display font-semibold rounded-xl py-2">Add 27 plantings to my plan</button>[22m
-[2m  - attempting click action[22m
-[2m    2 × waiting for element to be visible, enabled and stable[22m
-[2m      - element is visible, enabled and stable[22m
-[2m      - scrolling into view if needed[22m
-[2m      - done scrolling[22m
-[2m      - <div role="status" class="no-print pwa-update-notifier">…</div> intercepts pointer events[22m
-[2m    - retrying click action[22m
-[2m    - waiting 20ms[22m
-[2m    2 × waiting for element to be visible, enabled and stable[22m
-[2m      - element is visible, enabled and stable[22m
-[2m      - scrolling into view if needed[22m
-[2m      - done scrolling[22m
-[2m      - <div role="status" class="no-print pwa-update-notifier">…</div> intercepts pointer events[22m
-[2m    - retrying click action[22m
-[2m      - waiting 100ms[22m
-[2m    29 × waiting for element to be visible, enabled and stable[22m
-[2m       - element is visible, enabled and stable[22m
-[2m       - scrolling into view if needed[22m
-[2m       - done scrolling[22m
-[2m       - <div role="status" class="no-print pwa-update-notifier">…</div> intercepts pointer events[22m
-[2m     - retrying click action[22m
-[2m       - waiting 500ms[22m
-[2m    - waiting for "http://
-exit 1
+header calendar chip: ["Hot area, no frost · summer rain · satellite records for this site"]
+accept button: Add 27 plantings to my plan
+  saved crop-plan-local-farm.pdf (691516 bytes) from "Download the plan (PDF)"; the app named it ImbewuField-Crop-Plan-Ubhejane-Creche-garden-2026-11-11.pdf
+  saved crop-plan-local-farm.ics (70586 bytes) from "Add 99 tasks to calendar"; the app named it ImbewuField-Crop-Plan-Ubhejane-Creche-garden-2026-11-11.ics
+  calendar file: 99 events; first lines: ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//ImbewuField//Crop Plan//EN","CALSCALE:GREGORIAN"]
+  saved crop-plan-local-farm-future-harvest.pdf (16658 bytes) from "Future harvest PDF"; the app named it ImbewuField-Crop-Plan-Ubhejane-Creche-garden-future-harvest-2026-11-11.pdf
+  saved crop-plan-local-farm-reference.pdf (750662 bytes) from "Detailed reference PDF"; the app named it ImbewuField-Crop-Plan-Ubhejane-Creche-garden-reference-2026-11-11.pdf
+  saved plan keys and planting counts: {"imbewu_crop_plan_v2":0,"imbewu_crop_plan_cutover_v2":0}
+ERRORS []
+exit 0
