@@ -1,7 +1,7 @@
 # Provisional global crop resolver audit
 
 - Auditor: Codex, 11 November 2026.
-- Reviewed revision: `1bdd26ebad4c0f95a87a0bd28641d9c38410b0d1`, branch `codex/global-provisional-planning-20261110`, with local resolver, arithmetic and regression changes.
+- Reviewed source revision: `a3fc45c8d3e0b08667bbc684d107a58a871605d0`, branch `codex/global-provisional-planning-20261110`, based on `84e42a24e48932e386eaae58343fc01eb51ded8e`. This record's subsequent verification update changes documentation only.
 - Deployment inspected: none; this implementation is not connected to an app route.
 - Previous work: [grower receipt review](../2026-11-07/grower-held-review-receipt.md), the existing grower arithmetic module and [shared crop checklist](../CROP-PLANNING-CHECKLIST.md).
 - Scope: evidence selection and independently available components of a provisional crop draft. No country calendar, crop value, saved plan or account policy is changed.
@@ -27,6 +27,7 @@ Missing yield or density does not erase dates that have sufficient independent i
 
 - Scoped TypeScript check: passed for the actual resolver and new regression-test dependency closure. The external check configuration explicitly resolves the checkout's real Node declarations; no declaration shims were added.
 - Resolver tests: 18 passed, zero failed, cancelled, skipped or pending. The file is registered in the existing full test command.
+- After rebasing onto current main, both grower/resolver files passed together: 54 tests, zero failures. Four separate registry/manifest checks confirm that every repository test is still registered exactly once. The package conflict was resolved by preserving all current-main entries and adding only the new resolver test.
 - The unlisted-country regression first failed because the resolver selected a country candidate labelled `OTHER`. The geographic match now requires a named country for country/region evidence; site-bound and explicit-transfer handling remain separate.
 - Fixture correction: the first run used a workspace identifier rejected by the existing scope validator. The fixture now uses the established `virtual-bed` workspace; the validator and behavioural assertions remain intact.
 - Whole-project typecheck and full CI: still required for the integrated candidate. The earlier whole-project attempt reached its deliberate 2 GB heap limit and is not recorded as a pass.
