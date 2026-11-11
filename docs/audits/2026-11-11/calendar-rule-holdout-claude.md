@@ -92,7 +92,7 @@ No place in this band has a frost season on the independent record. The most is 
 
 ### The obvious fix was tried and not adopted
 
-After the results above were committed and pushed (`9a5b102e`), I tried the direct fix in a working copy: treat a record minimum above 0 °C as "light frost at most". I measured what it does and then put the rule back. The rule in this branch is byte for byte the rule on main.
+After the results above were committed and pushed (`9a5b102e`), I tried the direct fix in a working copy: treat a record minimum above 0 °C as "light frost at most". I measured what it does and then put the rule back. The thresholds and the calendar each place gets are the same in this branch as on main. (Later the same day the close-call search gained two trials after independent review; that changes what one place, Eshowe, is told and no place's calendar. See [the Argon dispositions](argon-claims-dispositions-claude.md).)
 
 What the change would do, measured on all 100 places:
 

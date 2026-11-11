@@ -37,7 +37,7 @@ Not executed by me either. G12 (a generated plan and its export, inspected toget
 | `lib/crop-climate-gate.ts` | The gate uses the shared temperature and rainfall contracts. A month with no rain never passes the water screen. Description corrected. |
 | `lib/crop-autosuggest.ts` | One phrase in the rain-fed note. |
 
-No sowing month, duration, yield, spacing or calendar threshold changed. `lib/koppen-global.ts` and `lib/crop-catalog.ts` are unchanged from main.
+No sowing month, duration, yield, spacing or calendar threshold changed. `lib/crop-catalog.ts` is unchanged from main. (`lib/koppen-global.ts` was changed afterwards for a different review item, in the close-call search only: see [the Argon dispositions](argon-claims-dispositions-claude.md).)
 
 ## Verification
 
