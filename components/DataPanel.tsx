@@ -769,25 +769,20 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
   const bColor = BIOME_COLORS[data.biome.code] ?? '#6BA84F';
 
-  // Suitability badge — quick heuristic from rainfall + slope
-  const suitability = (() => {
-    const r = data.rainfall.annual;
-    const s = data.elevation.slopeDeg;
-    if (r >= 500 && s < 15) return { label: t('suitabilityGoodFit'), bg: 'rgba(31,77,43,0.1)', border: 'rgba(31,77,43,0.3)', dot: 'var(--color-forest-800)', text: 'var(--color-forest-800)' };
-    if (r >= 300 && s < 25) return { label: t('suitabilityFairSite'), bg: 'rgba(192,122,30,0.1)', border: 'rgba(192,122,30,0.3)', dot: '#C07A1E', text: '#9A6018' };
-    return { label: t('suitabilityChallenging'), bg: 'rgba(212,110,66,0.1)', border: 'rgba(212,110,66,0.3)', dot: '#D4922A', text: '#B83A18' };
-  })();
+  // No suitability badge. It read "Good fit" for 500 mm or more of rain on a slope under 15°,
+  // "Fair site" for 300 mm and 25°, and "Challenging" otherwise: a verdict on the site from two
+  // unsourced cut-offs, with no crop, water supply, soil or frost in it (finding CP-118).
 
   // Lima contextual read — one-line from actual data
   const limaReadParts = (() => {
     const r = data.rainfall.annual;
     const soilMeasured = data.soil.soilSource === 'lab';
-    const englishWater = r < 400
-      ? translate('en', 'siteSummaryRainEssential').replace('{mm}', String(r))
-      : translate('en', 'siteSummaryRainEstimate').replace('{mm}', String(r));
-    const zuluWater = r < 400
-      ? t('siteSummaryRainEssential').replace('{mm}', String(r))
-      : t('siteSummaryRainEstimate').replace('{mm}', String(r));
+    // The rainfall sentence states the figure. It used to switch at 400 mm between "water
+    // harvesting is essential" and "check dry-season supply before planning year-round crops":
+    // advice from an unsourced cut-off (finding CP-118). Not yet translated, so the isiZulu
+    // summary carries the same English sentence until a reviewed translation exists.
+    const englishWater = `Modelled annual rainfall: about ${r} mm.`;
+    const zuluWater = englishWater;
     const englishSoil = translate('en', soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
     const zuluSoil = t(soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
     // No frost sentence. It read "Protect against frost in winter." whenever the gridded record low
@@ -812,11 +807,6 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           <span className="font-display font-semibold truncate" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
             {displayName || biomeText(data.biome.code, 'name', data.biome.name, t)}
           </span>
-          <span className="flex items-center gap-1 px-2 py-0.5 rounded-md flex-shrink-0"
-                style={{ background: suitability.bg, border: `1px solid ${suitability.border}` }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: suitability.dot, display: 'inline-block' }} />
-            <span className="font-sans font-bold" style={{ fontSize: 12, color: suitability.text, whiteSpace: 'nowrap' }}>{suitability.label}</span>
-          </span>
           {isSaved && (
             <span className="ml-auto font-display tabular-nums flex-shrink-0" style={{ fontSize: 12, color: 'var(--gold)' }}>{scorePct}%</span>
           )}
@@ -829,7 +819,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           {t('siteReportOverline')}
         </div>
 
-        {/* Name + suitability badge */}
+        {/* Name (no suitability badge: CP-118) */}
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             {displayName ? (
@@ -876,13 +866,6 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             )}
           </div>
           <div className="flex items-center gap-1.5 flex-shrink-0">
-            <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg"
-                 style={{ background: suitability.bg, border: `1px solid ${suitability.border}` }}>
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: suitability.dot, display: 'inline-block', flexShrink: 0 }} />
-              <span className="font-sans font-bold" style={{ fontSize: 12, color: suitability.text, whiteSpace: 'nowrap' }}>
-                {suitability.label}
-              </span>
-            </div>
             {isSaved && currentPlace && <SiteManageMenu place={currentPlace} />}
           </div>
         </div>
@@ -1095,11 +1078,10 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             {/* Site insight bullets */}
             <div className="space-y-1.5">
               {([
-                data.rainfall.annual < 400
-                  ? { color: 'var(--gold)', text: t('insightSemiArid').replace('{mm}', String(data.rainfall.annual)) }
-                  : data.rainfall.annual < 700
-                  ? { color: 'var(--text-secondary)', text: t('insightModerateRain').replace('{mm}', String(data.rainfall.annual)) }
-                  : { color: 'var(--color-forest-800)', text: t('insightStrongRain').replace('{mm}', String(data.rainfall.annual)) },
+                // No rainfall line: it banded the annual figure at 400 and 700 mm into advice
+                // ("Water harvesting must come before food-tree establishment", "Mulch and swales
+                // extend the effective growing window significantly"). The figure itself is on the
+                // stat row above (finding CP-118).
                 recordLowC === null
                   ? { color: 'var(--text-secondary)', text: 'The lowest temperature on record is not known for this site.' }
                   : { color: 'var(--text-secondary)', text: `Modelled record low: ${recordLowC}°C. This is a gridded figure for the wider area, not a frost record for your land.` },
@@ -1108,9 +1090,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   : null,
                 data.soil.soilSource !== 'lab' && data.soil.soilSource !== 'soilgrids'
                   ? { color: 'var(--text-secondary)', text: appLang === 'zu' ? 'Umhlabathi awukahlolwa. Hlela ukuhlolwa ngaphambi kokuthenga izinto zokuwulungisa.' : 'Soil carbon is not measured here. Arrange a soil test before amendment purchases.' }
-                  : data.soil.organicCarbon < 1.5
-                  ? { color: 'var(--gold)', text: t('insightLowSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) }
-                  : { color: 'var(--color-forest-800)', text: t('insightGoodSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) },
+                  // No "low" or "reasonable" band at 1.5 %: the figure is reported as it is, with
+                  // what it is (finding CP-118). Not yet translated.
+                  : { color: 'var(--text-secondary)', text: `Soil organic carbon: ${data.soil.organicCarbon}% (${data.soil.soilSource === 'lab' ? 'from your soil test' : 'from the SoilGrids global model, not a test of your soil'}).` },
               ] as ({ color: string; text: string } | null)[]).filter((ins): ins is { color: string; text: string } => ins !== null).map((ins, i) => (
                 <div key={i} className="flex gap-2 items-start text-xs font-display leading-relaxed py-1.5 px-2.5 rounded-lg" style={{ background: 'color-mix(in srgb, var(--bg-1) 80%, transparent)', border: '1px solid color-mix(in srgb, var(--border) 50%, transparent)', color: '#3A2E22' }}>
                   <span className="flex-shrink-0 font-bold mt-px" style={{ color: ins.color }}>→</span>
@@ -1206,6 +1188,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             {/* Main challenges */}
             <Card>
               <Label>{t('cardMainChallenges')}</Label>
+              {/* These are general points for the biome, written for the whole biome, not findings for
+                  this site; one of them is about frost (finding CP-118). Said so, rather than removed. */}
+              <p lang="en" data-biome-general="true" className="text-xs font-sans mb-1.5" style={{ color: 'var(--text-muted)' }}>
+                General points for this biome, not findings for this site.
+              </p>
               <div className="space-y-1.5">
                 {biomeList(data.biome.code, 'challenges', data.biome.challenges, t).slice(0, 4).map((c, i) => (
                   <div key={i} className="flex gap-2 text-xs font-sans leading-relaxed" style={{ color: 'var(--text-primary)' }}>
@@ -1378,8 +1365,6 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           const tMin = Math.min(...temps);
           const tMax = Math.max(...temps);
           const rainMax = Math.max(...monthly, 1);
-          const rainAvg = annualRain / 12;
-          const isWet = (r: number) => r > rainAvg * 0.9;
 
           const kp = data.climate.koppen;
           // Conventional class name and neutral class sentence from the classifier (CP-117): no nicknames,
@@ -1454,20 +1439,16 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     {monthly.map((r, i) => (
                       <div key={i} style={colSt}>
                         <span style={valSt}>{Math.round(r)}</span>
-                        <div style={{ width: '64%', maxWidth: 23, height: Math.max(8, (r / rainMax) * 130), borderRadius: '5px 5px 2px 2px', background: isWet(r) ? '#3F92C9' : '#A6C9DF' }} />
+                        <div style={{ width: '64%', maxWidth: 23, height: Math.max(8, (r / rainMax) * 130), borderRadius: '5px 5px 2px 2px', background: '#3F92C9' }} />
                         <span style={monSt}>{MS[i]}</span>
                       </div>
                     ))}
                   </div>
-                  <div style={{ display: 'flex', gap: 8, margin: '13px 0 9px' }}>
-                    <span style={chip('#E7EEF4', '#3A6E92')}>
-                      <span style={{ width: 9, height: 9, borderRadius: 2, background: '#3F92C9', display: 'inline-block' }} /> {t('climateWetLabel')} · {data.rainfall.wetSeason}
-                    </span>
-                    <span style={chip('#EFEADF', '#8A7B58')}>
-                      <span style={{ width: 9, height: 9, borderRadius: 2, background: '#A6C9DF', display: 'inline-block' }} /> {t('climateDryLabel')} · {data.rainfall.drySeason}
-                    </span>
-                  </div>
-                  <div style={implSt}>→ {t('climateRainfallInsight').replace('{wet}', data.rainfall.wetSeason).replace('{dry}', data.rainfall.drySeason)}</div>
+                  {/* No "Wet · Oct–Mar / Dry · May–Aug" chips and no storm-water advice. Those months
+                      are fixed per rainfall pattern in the adapter, not read from this site's bars,
+                      and are the wrong half of the year north of the equator; the wet colouring
+                      used an unsourced 90 % of the monthly mean (finding CP-118). The bars above
+                      are the record. */}
                 </div>
               )}
 

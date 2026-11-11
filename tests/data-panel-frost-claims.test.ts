@@ -321,3 +321,54 @@ if (process.env.DATAPANEL_RENDER_DUMP) {
   }
   writeFileSync(`${process.env.DATAPANEL_RENDER_DUMP}/datapanel-k-zu-climate.txt`, climate(fixtures.k, 'zu') + '\n');
 }
+
+/* ── CP-118: the rest of the panel's unsourced verdicts ───────────────────── */
+
+// Each line below was a verdict or advice from an unsourced cut-off, or fixed months shown as this
+// site's: the "Good fit / Fair site / Challenging" badge (500 mm, 300 mm, 15°, 25°); the rainfall
+// bands at 400 and 700 mm and "before planning year-round crops"; the soil-carbon band at 1.5 %;
+// "Wet · Oct–Mar / Dry · May–Aug" and the storm-water advice. They are removed; the figures stay.
+const CP118_BANNED = /Good fit|Fair site|Challenging|water harvesting is essential|Check dry-season supply|year-round crops|Semi-arid site|moderate rainfall|strong rainfall|Mulch and swales|Water harvesting must come|Reported soil carbon|Reasonable soil carbon|Wet ·|Dry ·|Store storm-water|Most rain falls|dry spell/;
+
+const lowRain = place({}); lowRain.rainfall = { ...lowRain.rainfall, monthly: lowRain.rainfall.monthly.map((r: number) => Math.round(r / 3)), annual: 213 };
+const wetSteep = place({}); wetSteep.rainfall = { ...wetSteep.rainfall, monthly: wetSteep.rainfall.monthly.map((r: number) => r * 2), annual: 1282 }; wetSteep.elevation = { ...wetSteep.elevation, slopeDeg: 30, slopePct: 58 };
+const CP118_FIXTURES: Record<string, any> = { a: fixtures.a, i: fixtures.i, lowRain, wetSteep };
+
+for (const [name, data] of Object.entries(CP118_FIXTURES)) {
+  test(`CP-118 ${name}: no suitability verdict, rainfall or carbon band, or fixed wet and dry months`, () => {
+    for (const lang of ['en', 'zu']) {
+      const o = overview(data, lang);
+      const c = climate(data, lang);
+      assert.doesNotMatch(o, CP118_BANNED, `${lang} Overview`);
+      assert.doesNotMatch(c, CP118_BANNED, `${lang} Climate`);
+    }
+    const o = overview(data);
+    // The figures themselves are still there.
+    assert.match(o, new RegExp(`Modelled annual rainfall: about ${data.rainfall.annual} mm\\.`), 'site summary states the rainfall figure');
+    // These fixtures carry no soil source, so the existing "not measured" line shows and no band.
+    assert.match(o, /Soil carbon is not measured here\./);
+    assert.match(o, /General points for this biome, not findings for this site\./);
+    // Twelve monthly rainfall bars, all one colour.
+    const source = readFileSync(new URL('../components/DataPanel.tsx', import.meta.url), 'utf8');
+    assert.doesNotMatch(source, /isWet|rainAvg \* 0\.9/);
+  });
+}
+
+test('CP-118: soil carbon is reported with its source and no band, for a test and for the global model', () => {
+  const lab = place({}); lab.soil = { ...lab.soil, soilSource: 'lab', organicCarbon: 2.4 };
+  assert.match(overview(lab), /Soil organic carbon: 2\.4% \(from your soil test\)\./);
+  const grid = place({}); grid.soil = { ...grid.soil, soilSource: 'soilgrids', organicCarbon: 0.9 };
+  const o = overview(grid);
+  assert.match(o, /Soil organic carbon: 0\.9% \(from the SoilGrids global model, not a test of your soil\)\./);
+  assert.doesNotMatch(o, /Reported soil carbon|Reasonable soil carbon|yield gains/);
+});
+
+test('CP-118 source: the removed verdicts are gone outside comments', () => {
+  const lines = readFileSync(new URL('../components/DataPanel.tsx', import.meta.url), 'utf8').split('\n')
+    .filter((line) => !/^\s*(\/\/|\{\/\*|\*)/.test(line));
+  for (const gone of ['suitability.label', 'suitability.bg', 'suitabilityGoodFit', 'suitabilityFairSite', 'suitabilityChallenging', 'insightSemiArid', 'insightModerateRain', 'insightStrongRain',
+    'insightLowSoilCarbon', 'insightGoodSoilCarbon', 'siteSummaryRainEssential', 'siteSummaryRainEstimate', 'climateRainfallInsight', 'climateWetLabel', 'climateDryLabel',
+    'wetSeason', 'drySeason']) {
+    assert.equal(lines.filter((line) => line.includes(gone)).length, 0, gone);
+  }
+});
