@@ -75,3 +75,25 @@ Dev server on :4242, Playwright chromium, seeded signed-out local farm (Ubhejane
 - ImbewuField-Crop-Plan-Ubhejane-Creche-garden-reference-2026-11-11.pdf - "Detailed reference PDF"
 - crop-plan-local-farm.json - localStorage keys matching /crop_plan/
 - crop-plan-sample-farm.pdf (+ .pdf.txt) - sample mode, fresh context, after "Add 15 plantings to my plan"
+
+## The "local farm" is a constructed fixture (added 11 November, after Codex FDR-03)
+
+Wherever this file says "local farm" or "seeded signed-out local farm", it means the repository's published sample farm (`lib/demo-farm.ts`: design, beds and the saved place "Ubhejane Crèche" at -27.726231, 31.963044) stored as an ordinary saved farm in a signed-out browser with sample mode off. The app read live NASA POWER climate for those coordinates and its own Auto-suggest made the 27 sowings, which is why the saved rows carry `demo-bed-N` ids. It is not grower-observed data, and no account, private map or customer record was read.
+
+The seed the scripts read (`lib.cjs`, line 5) was a scratch file and is not in this folder. It can be rebuilt byte for byte:
+
+- As used: 4,271 bytes, sha256 `2430cdd2f014bfc86d34dbb0fd0858a2c63d36e0177320c2777062025888d0bb`, no trailing newline. Keys `design`, `plan`, `places`. The export runs seeded `design` and `places` only (`ctxOf`, `plan: false`).
+- Generator: `docs/audits/2026-11-10/evidence-crop-plan-accuracy-fixes/make-local-farm-seeds.ts`, run as `node --import ./tests/register-alias.mjs <that file> fresh.json`.
+- The builders stamp two fields with the time of generation. Set `design.savedAt` to `1794305296768` and `places[0].savedAt` to `"2026-10-11T10:08:16.768Z"`, then write `JSON.stringify({ design: JSON.stringify(design), plan: s.plan, places: JSON.stringify(places) })`. Checked on 11 November: identical to the as-used file.
+- Not saved: the climate values the app read during the exports. The PDFs record the calendar that resulted.
+
+## F: the Atlas panel and unverified temperatures (commit 7d5eda4d, 11 November)
+
+Record: [`../codex-final-review-dispositions-claude.md`](../codex-final-review-dispositions-claude.md). Script `scripts/f.cjs`, output `outputs/F.txt`. Johannesburg, eight cases. The place search is stubbed (no map token locally); `/api/location-data` is the app's own local route. For the changed cases the route's real answer is fetched and only the named fields are altered.
+
+- F-atlas-complete-phone-light.png, -phone-dark.png, -desktop.png: "Cwb", "Sowing calendar: Winter frost", "Modelled record low: -4.8°C", temperatures shown.
+- F-atlas-incomplete-phone-light.png, -phone-dark.png, -desktop.png: every month 20 °C with coverage "incomplete". Both notes; no climate type, calendar, crop list or temperature; rainfall shown.
+- F-atlas-no-receipt-phone-light.png: the coverage receipt removed. Same as incomplete.
+- F-atlas-complete-untagged-low-phone-light.png: the record low's source tag removed. "Record low: not known".
+- Each has a `-temperature-card.png` twin scrolled to the temperature card.
+- C-atlas-johannesburg-phone-light.png above is the BEFORE picture for the frost chip: it shows "Frost-free" beside "Sowing calendar: Winter frost".

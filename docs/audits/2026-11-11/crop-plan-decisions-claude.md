@@ -65,7 +65,7 @@ Browser cases are in the Verification section.
 
 ## Browser cases
 
-A real signed-out local farm at the sample farm's coordinates, on a local development server, driven by Playwright (Chromium) at 390 × 844 and 1280 × 800, light and dark. A Sonnet agent ran the scripts; I wrote the checks, read the raw outputs and looked at the screenshots. Evidence: [`evidence-decisions/`](evidence-decisions/README.md).
+A constructed fixture, not grower data: the published sample farm's design and coordinates saved as an ordinary farm in a signed-out browser with sample mode off, with live climate records for those coordinates (wording corrected on 11 November after Codex's FDR-03). On a local development server, driven by Playwright (Chromium) at 390 × 844 and 1280 × 800, light and dark. A Sonnet agent ran the scripts; I wrote the checks, read the raw outputs and looked at the screenshots. Evidence: [`evidence-decisions/`](evidence-decisions/README.md).
 
 | Case | Finding | What was done | Observed | Result |
 | --- | --- | --- | --- | --- |

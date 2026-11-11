@@ -41,10 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '11 November 2026', sha: 'bc153a8554d934d05fab7a5b3820f91a22f31200', changes: [
+  { when: '11 November 2026', sha: '7d5eda4d503b87db67b36bfa884c257dc8ae5457', changes: [
+    'The Atlas shows the lowest recorded temperature and hides temperatures it cannot verify.',
     'A weekly harvest target now says when its crop could be ready too early.',
-    'The sowing calendar page and the Atlas use the same calendar names as the crop plan.',
-    'On the sowing calendar page you can pick the calendar your farm\'s crop plan uses.',
+    'The sowing calendar page uses the crop plan\'s calendar names and can show your farm\'s.',
     'When the climate records for your site cannot be read, the crop plan now says why.',
   ] },
   { when: '10 November 2026', sha: '889438f66e2df0557bc1b07061b09a2e94b7f5a8', changes: [
