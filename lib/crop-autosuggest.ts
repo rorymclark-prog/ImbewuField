@@ -2923,7 +2923,7 @@ function firstSeasonFillNotes(
   } else if (added.length) {
     const runs = new Map<string, { cropName: string; sowMonth: number; labels: string[] }>();
     for (const entry of added) {
-      const key = `${entry.cropName} ${entry.sowMonth}`;
+      const key = `${entry.cropName}\u0000${entry.sowMonth}`;
       const run = runs.get(key) ?? { cropName: entry.cropName, sowMonth: entry.sowMonth, labels: [] };
       run.labels.push(entry.bed.label);
       runs.set(key, run);

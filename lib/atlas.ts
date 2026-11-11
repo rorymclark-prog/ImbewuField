@@ -29,7 +29,7 @@ import {
   type MonthlyClimate,
 } from './koppen-global';
 import { CROPS, type CropDef, type RainPattern } from './crop-catalog';
-import { recordMinimumC } from './climate-temperature';
+import { monthlyTemperatureStatus, recordMinimumC } from './climate-temperature';
 import type { LocationData } from './types';
 
 export type { AtlasRainPattern };
@@ -37,7 +37,7 @@ export type { AtlasRainPattern };
 /** The slice of LocationData the climate derivation actually needs. */
 export type AtlasClimateInput = Pick<LocationData, 'lat'> & {
   rainfall: Pick<LocationData['rainfall'], 'monthly'>;
-  climate: Pick<LocationData['climate'], 'monthlyTemp'> & Partial<Pick<LocationData['climate'], 'minTemp' | 'minTempSource'>>;
+  climate: Pick<LocationData['climate'], 'monthlyTemp'> & Partial<Pick<LocationData['climate'], 'minTemp' | 'minTempSource' | 'monthlyTempCoverage'>>;
 };
 
 /**
@@ -74,6 +74,14 @@ export function koppenFrom(data: AtlasClimateInput): KoppenResult {
  * pattern guessed from placeholder data would feed a fake crop list.
  */
 export function atlasRainPattern(data: AtlasClimateInput): AtlasRainPattern | null {
+  // The server fills a month NASA POWER did not supply with 20 °C so the temperature
+  // chart can still draw, and marks the year 'incomplete' (lib/nasa-power.ts). Those are
+  // display substitutes, not readings: a sowing calendar and a crop list derived from
+  // them would be exactly the "fake crop list" this function exists to refuse
+  // (independent review of 11 November 2026, Argon F-05). The crop planner already
+  // refuses such a year; the Atlas now does too. A payload with no coverage receipt at
+  // all (older callers) is treated as before.
+  if (monthlyTemperatureStatus(data.climate) === 'incomplete') return null;
   const mc = monthlyClimateFrom(data);
   const koppen = classifyKoppen(mc);
   if (koppen.code === '?') return null;
