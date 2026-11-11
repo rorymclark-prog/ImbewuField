@@ -1,0 +1,14 @@
+sha256 a83e07977b0b34bfc4e3de3364d0c1ab90a76b4e25f6d6141bfaf8b48b6c3db0  ImbewuField-Crop-Plan-Ubhejane-Creche-garden-future-harvest-2026-11-11.pdf
+sha256 e31b7d1f3cb3f52b8498ba8f0167ac08bd18f63950c99252f19cd83ba25bd3a2  ImbewuField-Crop-Plan-Ubhejane-Creche-garden-reference-2026-11-11.pdf
+sha256 676d65db06c20758948065e29d1f460825d4ee4a8498efb104cb093ddd741eaa  crop-plan-local-farm.json
+sha256 b4f1c5a485f575408a2b6614862714829febb8f85f9b45bfab9d8a8be4529f9c  crop-plan-local-farm.pdf
+sha256 c6e75c486f37dee79b3005d6faa8e6a9b7aff36b657640439deea942e899f897  crop-plan-local-farm.pdf.txt
+sha256 628c1b59acf05da540f34fd87726d5865c9a5d5d3a302f6d2c34d1e327248513  crop-plan-sample-farm.pdf
+sha256 ded4b3b097e3954a07264993a7e3142dac04495bee6db19b5e341602a090f17b  crop-plan-sample-farm.pdf.txt
+15913 bytes  ImbewuField-Crop-Plan-Ubhejane-Creche-garden-future-harvest-2026-11-11.pdf
+108419 bytes  ImbewuField-Crop-Plan-Ubhejane-Creche-garden-reference-2026-11-11.pdf
+468 bytes  crop-plan-local-farm.json
+92126 bytes  crop-plan-local-farm.pdf
+18729 bytes  crop-plan-local-farm.pdf.txt
+891023 bytes  crop-plan-sample-farm.pdf
+84124 bytes  crop-plan-sample-farm.pdf.txt

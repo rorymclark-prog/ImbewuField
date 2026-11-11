@@ -4,7 +4,7 @@
 - Reviewed revision: the package covers `9a5b102e850ff708d5f0761f8c17eaae4d96b54d`, tree `fec2aebb261a8774d3f132adc76745b49fd1810e`. The changes below are on branch `claude/blissful-pasteur-1c4ne6`, PR #1334.
 - Deployment inspected: not inspected for this record.
 - Previous audit: [Codex interim review dispositions](codex-interim-review-dispositions-claude.md), same day.
-- Scope: the six claims in the package. Three are confirmed and acted on. Three are qualified by Codex; I agree with its reading and change nothing for them.
+- Scope: the six claims in the Codex package, and then the twelve issues of Argon's own ledger (second half of this record).
 - Evidence type: source review, automated tests, an offline re-analysis of archived daily responses. I read the package's runner as text and did not execute it. No live collection, no browser.
 
 ## Dispositions
@@ -54,12 +54,35 @@ What this does not claim: that the hot-area calendar is right for Eshowe. That i
 
 Tests: `tests/koppen-global.test.ts` (the synthetic case, both directions, and that a single-reading neighbour still wins) and `tests/sa-calendar-real-sites.test.ts` (Eshowe by name, and a check over all 100 places that every calendar reachable by a one-degree shift of all months is one the site is told about).
 
+## The native Argon packet: every ledger issue
+
+Rory then relayed Argon's own interim packet: `argon-interim-review-9a5b102e.zip` (548,140 bytes, sha256 `a6f0917a98d660474519b53c522bb1da08d75dec505c086316ea64e13ae64028`, 88 entries; verified before opening). I read the handoff, the interim recommendation and the discrepancy ledger. Its disposition is "changes required, interim", with no final approval. One row for each ledger issue:
+
+| Ledger | Subject | Disposition | Evidence, and what is left |
+| --- | --- | --- | --- |
+| ISS-01 | Butterworth and Mossel Bay on the hard-frost calendar (CP-103); the reason line rounds 1.7 °C to "2 °C" | **Agreed; deferred to Rory's decision.** | The three options are in the held-out record. The rounding slip is real and is logged as CP-109: it should be settled with CP-103, because the right fix depends on which line the grower is being shown. No rule changed. |
+| ISS-02 | The criteria admit an always-winter answer; frost-bearing winter-rainfall places; bimodal south-coast places on the hard-frost calendar | **Accepted; wording and control fixed; the rest deferred.** | CBR-01 above. CP-104 stays open. Swellendam, Robertson and Caledon have real frost on the second record (0.15, 0.25 and 0.05 days a year, lowest -0.5, -1.2 and -0.1 °C) and record minimums below zero, so the hard-frost calendar is not a frost error there; whether its months suit a south-coast place is the regional question already open as CP-099. |
+| ISS-03 | Repeated climate readings between the two sets | **Accepted; now measured from raw data.** | The ledger's caution was right that identical readings do not prove a shared cell. The archived daily responses settle the second record: 56 distinct cells for the 56 places and 44 for the 44, none shared (`raw-verification*.txt`). For the app's own reading (a coarser grid) the repeats stand: 3 pairs inside the 56, and 6 of the 56 repeat a reading from the 44. So at most 48 of the 56 are new readings to the rule. The held-out record now says so. |
+| ISS-04 | Collectors omit the model, the cell policy and unit checks | **Accepted for my two audit collectors (CBR-02, CBR-03 above). Deferred for the app's own rainfall download.** | Audit collectors: disclosed, raw data preserved, verified offline. The app's `fetchOpenMeteoRainfall` already walks every expected date of its own configured period and refuses a gap or a non-number; it does not check the stated unit and does not pin a model. Pinning a model would change the rainfall growers see, so it needs its own comparison first. Not changed here; suggested as a separate task. |
+| ISS-05 | February counted as 28 days; rainfall from one provider with temperature from another; southern-hemisphere season names on the fetched rainfall | **Deferred, with reasons.** | All three are in the shared climate fetch, outside the crop plan. The planner does not read the fetched season names: it recomputes rain timing from the months with a latitude-aware rule (Codex C09, C11). The provider swap is the documented 30% rule and is labelled on screen. A 28-day February understates evaporation by under 1% of one month. None changes a calendar at the 100 recorded places. |
+| ISS-06 | 20 °C stand-ins fed to the climate classifier; sparse arrays; the -999 marker in the heat gate | **Sparse arrays and the marker: fixed (CBR-04, CBR-05 above). Stand-ins: fixed where the Atlas used them; deferred on the server.** | The crop planner already refuses a year marked incomplete. The Atlas did not: it derived a sowing calendar and a crop list from the stand-ins. `atlasRainPattern` now returns nothing for an incomplete year (`tests/atlas-explorer.test.ts`). The server still classifies the stand-ins for its display string; an existing test pins that display fields do not change with coverage, so that is another owner's contract and is not altered here. |
+| ISS-07 | The rain and evaporation screen | **Fixed as a water screen (CBR-06 above).** | No temperature threshold added, as the ledger asks. |
+| ISS-08 | Joint close call at Eshowe; "frost yes" on a light-frost site | **First: fixed in the search only (above). Second: no change, agreed.** | |
+| ISS-09 | The regional guide is not an accuracy measure; catalogue provenance limits | **Agreed; no change.** | Second-hand KZN rows (CP-083), eight crops without months (CP-082) and the secondary guide are standing limits, carried forward. |
+| ISS-10 | Occupancy, the old harness, the one-time share | **Occupancy: no change, agreed. Harness and share: done (above).** | |
+| ISS-11 | Planning is held back outside South Africa | **Agreed; no change.** | This branch does not alter country support. |
+| ISS-12 | A raw NUL byte in `lib/crop-autosuggest.ts`; whole-app, export and CI gates | **NUL byte: fixed. Gates: see the review packet.** | Confirmed on current code: one byte `0x00` at offset 149,980, line 2,926, inside a template string used as a map key. Replaced with the six characters `\u0000`, as lines 282 and 2,498 already do. The string at run time is identical. No other control byte is in the file, and no other source file has one. The file now reads as text. |
+
+Not adopted from Argon's original first pass, as its own second pass and Codex also conclude: an automatic demotion to hard frost on "frost yes", a shorter cabbage occupancy, a universal temperature cut-off in the water screen, and treating repeated readings as proven tuning leakage.
+
 ## What changed in the application because of this package
 
 | File | Change |
 | --- | --- |
 | `lib/crop-plan.ts` | A one-time sowing's share above a whole bed is an invalid share on the year-free path as well. |
 | `lib/koppen-global.ts` | Two joint trials added to the close-call search. No threshold, no calendar assignment. |
+| `lib/crop-autosuggest.ts` | One raw NUL byte replaced by its escape. Same string at run time. |
+| `lib/atlas.ts` | No sowing calendar or crop list from a year the server marked incomplete. |
 
 ## Verification
 
@@ -71,6 +94,6 @@ Tests: `tests/koppen-global.test.ts` (the synthetic case, both directions, and t
 
 ## Next continuation
 
-1. CP-108: decide the wording for late picking months that fall in frost.
+1. CP-108: decide the wording for late picking months that fall in frost. CP-109: the record minimum's rounding in the reason line, with CP-103.
 2. CP-104: a source for frost-prone winter-rainfall areas.
 3. The old harness stays in the repository as the record of what ran on 10 November. Any new exposure measurement should start from `exposure-span-recheck.ts`.

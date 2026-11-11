@@ -1,31 +1,35 @@
-HEAD dd9c876992c6649cd738e7c23f90a139e8b02228
+HEAD 6ded8c235652a366117c417781624aadc7d6e86f
 status --porcelain (app components lib public package.json): []
+attempt 1 (attempt 1 of the earlier run, on a cold server, found no plan to accept and is discarded)
   country panel present -> choosing ZA
 Auto-suggest step 0 dialog buttons (last 6): ["Best whole-year plan\nTries all 12 starting months ","Divide beds into crop sections\nOn by default: Auto","Rotate crops between beds\nAvoids immediate same-fa","Grow big vines in a veg bed anyway\nOff by default:","Reliable irrigation for every crop cycle\nThis auto","Suggest a plan"]
 go buttons: 1
 accept button: 1 Add 27 plantings to my plan
-export-like controls: ["Share tasks","Download the plan (PDF)","open it to print","Future harvest PDF","Detailed reference PDF"]
-  saved /home/user/ImbewuField/docs/audits/2026-11-11/evidence-decisions/artifacts/crop-plan-local-farm.pdf 691516 bytes; suggested name ImbewuField-Crop-Plan-Ubhejane-Creche-garden-2026-11-11.pdf
-other export candidate: /^Future harvest PDF/ Future harvest PDF
-  saved /home/user/ImbewuField/docs/audits/2026-11-11/evidence-decisions/artifacts/ImbewuField-Crop-Plan-Ubhejane-Creche-garden-future-harvest-2026-11-11.pdf 16658 bytes; suggested name ImbewuField-Crop-Plan-Ubhejane-Creche-garden-future-harvest-2026-11-11.pdf
-other export candidate: /^Detailed reference PDF/ Detailed reference PDF
-  saved /home/user/ImbewuField/docs/audits/2026-11-11/evidence-decisions/artifacts/ImbewuField-Crop-Plan-Ubhejane-Creche-garden-reference-2026-11-11.pdf 750662 bytes; suggested name ImbewuField-Crop-Plan-Ubhejane-Creche-garden-reference-2026-11-11.pdf
-json keys: imbewu_crop_plan_v2,imbewu_crop_plan_cutover_v2 {"imbewu_crop_plan_v2":9255,"imbewu_crop_plan_cutover_v2":208}
-overflow desktop {"sw":1280,"iw":1280,"over":false}
-
-ERRORS []
---- artifacts sha256 / bytes
-b3b6e64fa9a1795e0bc5f4456de629ce845882edc4f59b4ea03d7855cdb4f84f  16658  ImbewuField-Crop-Plan-Ubhejane-Creche-garden-future-harvest-2026-11-11.pdf
-eab8824dcf1f5f908489c6126b9cd9ee356a6c869983f271501e080436bb2de7  750662  ImbewuField-Crop-Plan-Ubhejane-Creche-garden-reference-2026-11-11.pdf
-065baa86611051c51aec64860a75b067c7b80147f2fa71bee5185a700c602f90  10741  crop-plan-local-farm.json
-367641bb2910f888512a4c5049e8e46e8d3e06fa8c2b6c66e642ad3fcefa98c0  691516  crop-plan-local-farm.pdf
-e6ba90c89d3cc6458ddd5c3c5eab7577f9437c8f6fd40ebd6ff9e97a163a9081  63632  crop-plan-local-farm.pdf.txt
-fcefc10e2d7ea43cfcc9bac049b94ccd88b59627a809f83de53179da8674eb16  891023  crop-plan-sample-farm.pdf
-ded4b3b097e3954a07264993a7e3142dac04495bee6db19b5e341602a090f17b  84124  crop-plan-sample-farm.pdf.txt
---- calendar lines in crop-plan-local-farm.pdf.txt
-316:Sowing calendar from satellite climate records for this site: Hot area, no frost - summer rain.
-818:   Cucurbitaceae family, same as pumpkin, butternut, cucumber and watermelon - avoid repeating this family in the same bed. Frost-tender vine crop; no Western Cape sowing calendar was found
---- calendar lines in crop-plan-sample-farm.pdf.txt
-210:This site (satellite climate records) - Hot area, no frost - summer rain (sowing calendar set for the sample farm)
-275:This site (satellite climate records) - Hot area, no frost - summer rain (sowing calendar set for the sample farm)
-479:Sowing calendar set for the sample farm: Hot area, no frost - summer rain.
+FAIL locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: /^Add \d+ plantings? to my plan/ }).first()[22m
+[2m    - locator resolved to <button class="flex-1 font-display font-semibold rounded-xl py-2">Add 27 plantings to my plan</button>[22m
+[2m  - attempting click action[22m
+[2m    2 × waiting for element to be visible, enabled and stable[22m
+[2m      - element is visible, enabled and stable[22m
+[2m      - scrolling into view if needed[22m
+[2m      - done scrolling[22m
+[2m      - <div role="status" class="no-print pwa-update-notifier">…</div> intercepts pointer events[22m
+[2m    - retrying click action[22m
+[2m    - waiting 20ms[22m
+[2m    2 × waiting for element to be visible, enabled and stable[22m
+[2m      - element is visible, enabled and stable[22m
+[2m      - scrolling into view if needed[22m
+[2m      - done scrolling[22m
+[2m      - <div role="status" class="no-print pwa-update-notifier">…</div> intercepts pointer events[22m
+[2m    - retrying click action[22m
+[2m      - waiting 100ms[22m
+[2m    29 × waiting for element to be visible, enabled and stable[22m
+[2m       - element is visible, enabled and stable[22m
+[2m       - scrolling into view if needed[22m
+[2m       - done scrolling[22m
+[2m       - <div role="status" class="no-print pwa-update-notifier">…</div> intercepts pointer events[22m
+[2m     - retrying click action[22m
+[2m       - waiting 500ms[22m
+[2m    - waiting for "http://
+exit 1
