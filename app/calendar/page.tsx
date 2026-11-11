@@ -15,7 +15,7 @@ import { produceLabel } from '@/lib/produce-label';
 import { sowMarksForPattern, type PlantMark } from '@/lib/crop-calendar';
 import type { RainPattern } from '@/lib/crop-catalog';
 import { SOWING_CALENDAR_LABEL, SOWING_CALENDAR_LABEL_ZU, SOWING_CALENDAR_OPTIONS, sowingCalendarOptionText } from '@/lib/sowing-calendar-label';
-import { farmCalendarOffer, farmCalendarOfferText } from '@/lib/calendar-page-farm-calendar';
+import { farmCalendarOffer, farmCalendarOfferNote, farmCalendarOfferText } from '@/lib/calendar-page-farm-calendar';
 import { loadCachedSiteClimate } from '@/lib/site-climate';
 import { sampleSowingCalendarFor } from '@/lib/sample-sowing-calendar';
 import { loadSurvey } from '@/lib/site-survey';
@@ -567,6 +567,7 @@ export default function CalendarPage() {
             </select>
             </label>
             <p className="mt-1 text-xs text-[var(--text-secondary)]">A sowing calendar chosen here is a reference, not an observation of this site’s climate. Nothing is taken from a crop plan unless you pick it.</p>
+            {!isReference && farmOffer && <p className="mt-1 text-xs text-[var(--text-secondary)]">{farmCalendarOfferNote(farmOffer)}</p>}
             {!isReference && !farmOffer && <p className="mt-1 text-xs text-[var(--text-secondary)]">This farm’s calendar is not known on this device yet. Open its crop plan once, or choose a calendar here.</p>}
           </div>}
         </section>

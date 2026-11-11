@@ -35,6 +35,17 @@ const BASIS_NOTE: Record<FarmCalendarOffer['basis'], string> = {
   'sample-farm': 'set for the sample farm',
 };
 
+/**
+ * The option's own text. Kept short: a phone shows about forty characters of a closed
+ * select, and "This farm's crop plan: Hot area, no frost (from this site's climate
+ * records)" was cut off after "(from" at 390 px. Whose call the calendar was goes in
+ * the line under the select (farmCalendarOfferNote).
+ */
 export function farmCalendarOfferText(offer: FarmCalendarOffer): string {
-  return `This farm's crop plan: ${SOWING_CALENDAR_LABEL[offer.pattern]} (${BASIS_NOTE[offer.basis]})`;
+  return `This farm's crop plan: ${SOWING_CALENDAR_LABEL[offer.pattern]}`;
+}
+
+/** The line under the select: which calendar the farm's plan uses, and on whose word. */
+export function farmCalendarOfferNote(offer: FarmCalendarOffer): string {
+  return `This farm's crop plan uses the "${SOWING_CALENDAR_LABEL[offer.pattern]}" calendar (${BASIS_NOTE[offer.basis]}).`;
 }

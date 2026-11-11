@@ -185,7 +185,8 @@ test('this farm\'s calendar is an explicit pick: offered only when the farm has 
     ui.choose('Calendar context',siteId);
     assert.equal(ui.select('Sowing calendar').props.value,'','the farm\'s calendar is offered, not preselected');
     held(ui);assert.deepEqual(probe.patterns,[]);
-    assert.deepEqual(options(ui)[1],{value:'farm',text:'This farm\'s crop plan: Light frost at most (chosen by you)'});
+    assert.deepEqual(options(ui)[1],{value:'farm',text:'This farm\'s crop plan: Light frost at most'});
+    assert.match(ui.text(),/This farm's crop plan uses the "Light frost at most" calendar \(chosen by you\)\./,'whose call the calendar was is said beside the select, before anything is picked');
     assert.doesNotMatch(ui.text(),/not known on this device yet/);
     ui.choose('Sowing calendar','farm');
     assert.ok(ui.renderer.root.findAllByType('table').length>0);

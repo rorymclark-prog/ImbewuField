@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
-import { farmCalendarOffer, farmCalendarOfferText } from '@/lib/calendar-page-farm-calendar';
+import { farmCalendarOffer, farmCalendarOfferNote, farmCalendarOfferText } from '@/lib/calendar-page-farm-calendar';
 import { siteClimateFromLocationData, type SiteClimate } from '@/lib/site-climate';
 import { SOWING_CALENDAR_LABEL, SOWING_CALENDAR_LABEL_ZU } from '@/lib/sowing-calendar-label';
 
@@ -39,11 +39,18 @@ test('the site\'s own records, and the grower\'s frost answer where the site is 
   assert.deepEqual(farmCalendarOffer({ chosen: null, sample: null, site, observedFrost: 'no' }), { pattern: 'all-year', basis: 'grower-frost' });
 });
 
-test('the offer text names the calendar and whose call it was', () => {
-  assert.equal(farmCalendarOfferText({ pattern: 'summer', basis: 'grower-choice' }), "This farm's crop plan: Winter frost (chosen by you)");
-  assert.equal(farmCalendarOfferText({ pattern: 'mild-frost', basis: 'site-climate' }), "This farm's crop plan: Light frost at most (from this site's climate records)");
-  assert.equal(farmCalendarOfferText({ pattern: 'all-year', basis: 'grower-frost' }), "This farm's crop plan: Hot area, no frost (from this site's climate records and your frost answer)");
-  assert.equal(farmCalendarOfferText({ pattern: 'winter', basis: 'sample-farm' }), "This farm's crop plan: Winter rainfall (set for the sample farm)");
+test('the option names the calendar; the line under it says whose call it was', () => {
+  // The option used to carry both ("... (from this site's climate records)"). In a browser at
+  // 390 px the closed select cut it off after "(from", so the reason moved to its own line.
+  assert.equal(farmCalendarOfferText({ pattern: 'summer', basis: 'grower-choice' }), "This farm's crop plan: Winter frost");
+  assert.equal(farmCalendarOfferText({ pattern: 'all-year', basis: 'site-climate' }), "This farm's crop plan: Hot area, no frost");
+  for (const pattern of ['summer', 'mild-frost', 'all-year', 'winter'] as const) {
+    assert.ok(farmCalendarOfferText({ pattern, basis: 'site-climate' }).length <= 42, `${pattern}: must fit a phone's closed select`);
+  }
+  assert.equal(farmCalendarOfferNote({ pattern: 'summer', basis: 'grower-choice' }), 'This farm\'s crop plan uses the "Winter frost" calendar (chosen by you).');
+  assert.equal(farmCalendarOfferNote({ pattern: 'mild-frost', basis: 'site-climate' }), 'This farm\'s crop plan uses the "Light frost at most" calendar (from this site\'s climate records).');
+  assert.equal(farmCalendarOfferNote({ pattern: 'all-year', basis: 'grower-frost' }), 'This farm\'s crop plan uses the "Hot area, no frost" calendar (from this site\'s climate records and your frost answer).');
+  assert.equal(farmCalendarOfferNote({ pattern: 'winter', basis: 'sample-farm' }), 'This farm\'s crop plan uses the "Winter rainfall" calendar (set for the sample farm).');
 });
 
 test('every calendar has an English and an isiZulu name', () => {
