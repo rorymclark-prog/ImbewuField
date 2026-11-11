@@ -41,6 +41,9 @@ export const DEMO_LOCATION: LocationData = {
     maxTemp: 42.1,
     minTemp: -2.3,
     monthlyTemp: [22.72, 22.25, 20.78, 17.67, 14.78, 11.6, 11.54, 14.43, 17.92, 19.83, 21.08, 22.4],
+    // The capture predates this field. All twelve months above are POWER's own values (none is
+    // lib/nasa-power.ts's 20 °C stand-in), so the current route would mark the set complete.
+    monthlyTempCoverage: { source: 'nasa-power', status: 'complete' },
     solarRadiation: 5.3,
     koppen: 'Dwb',
     koppenDesc: 'Cold continental highland',

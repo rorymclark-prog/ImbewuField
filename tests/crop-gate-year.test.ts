@@ -125,7 +125,8 @@ test('the example farm\'s verdicts, rain-fed, for the figure crops', () => {
   assert.deepEqual(okIn('cabbage'), [8, 9]);
   assert.deepEqual(refusedIn('cabbage'), [1, 2, 3]);
   assert.deepEqual(okIn('broad-beans'), []);
-  assert.deepEqual(refusedIn('broad-beans'), [3, 4, 5, 6, 7]);
+  // [4, 5] since main's 10 Nov accuracy audit (5f92c7ae3) cut the uncited hard-frost months.
+  assert.deepEqual(refusedIn('broad-beans'), [4, 5]);
   assert.deepEqual(okIn('maize'), [10, 11]);
   assert.deepEqual(refusedIn('maize'), []);
 });
