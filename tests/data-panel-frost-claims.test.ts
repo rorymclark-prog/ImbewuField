@@ -232,7 +232,7 @@ for (const [name, data] of Object.entries(fixtures)) {
     assert.doesNotMatch(c, BANNED, 'Climate');
     assert.doesNotMatch(o, /NaN|-999/, 'Overview');
     assert.doesNotMatch(c, /NaN|-999/, 'Climate');
-    assert.doesNotMatch(o, /Modelled annual mean wind: ≈ 0 km/, 'Overview never prints 0 km/h');
+    assert.doesNotMatch(o, /Modelled wind estimate: ≈ 0 km/, 'Overview never prints 0 km/h');
     const runs = (c.match(TWELVE_RUN) ?? []).length;
     if (WITHHELD.includes(name)) {
       assert.equal(runs, 0, 'withheld Climate has no monthly runs');
@@ -252,25 +252,26 @@ test('j: northern wind lines use calendar months, not seasons', () => {
   const c = climate(fixtures.j);
   assert.match(c, /December to February: from the W\./);
   assert.match(c, /June to August: from the SW\./);
-  assert.match(c, /Modelled annual mean wind: ≈ 14 km\/h\./);
+  assert.match(c, /Modelled wind estimate: ≈ 14 km\/h\./);
   assert.match(c, /N E S W/, 'rose drawn for a known Dec–Feb direction');
   assert.doesNotMatch(c, /(summer|winter)[^.]{0,40}from the|from the (W|SW)\b[^.]*(summer|winter)/i);
-  assert.match(overview(fixtures.j), /Modelled annual mean wind: ≈ 14 km\/h\./, 'Overview wind bullet');
+  assert.match(overview(fixtures.j), /Modelled wind estimate: ≈ 14 km\/h\./, 'Overview wind bullet');
 });
 
-test('k: southern Cwb keeps the tagged record low and the neutral class note', () => {
+test('k: southern Cwb keeps the tagged record low, conventional name and local-conditions limit', () => {
   const c = climate(fixtures.k);
   assert.match(c, /Modelled record low: -6\.2°C/);
   assert.match(c, /Subtropical highland, dry winter/);
-  assert.match(c, /This climate type alone does not tell you whether there is frost\./);
+  // Shared notes contain agricultural claims for other codes; the panel uses one local-conditions limit.
+  assert.match(c, /A climate type does not know your water, frost or soil/);
   assert.match(c, /December to February: from the N\./);
   assert.match(c, /June to August: from the S\./);
-  assert.match(c, /Modelled annual mean wind: ≈ 11 km\/h\./);
+  assert.match(c, /Modelled wind estimate: ≈ 11 km\/h\./);
 });
 
 test('l: zero wind and unknown directions are not printed as facts and draw no rose', () => {
   const c = climate(fixtures.l);
-  assert.match(c, /Annual mean wind: not available\./);
+  assert.match(c, /Wind estimate: not available\./);
   assert.match(c, /Wind direction: not available\./);
   assert.doesNotMatch(c, /0 km\/h|December to February|June to August/);
   assert.doesNotMatch(c, /N E S W/, 'no compass rose');
@@ -279,7 +280,7 @@ test('l: zero wind and unknown directions are not printed as facts and draw no r
 
 test('m: NaN speed and -999 sunshine print nothing; only the known June to August direction shows', () => {
   const c = climate(fixtures.m);
-  assert.match(c, /Annual mean wind: not available\./);
+  assert.match(c, /Wind estimate: not available\./);
   assert.match(c, /June to August: from the S\./);
   assert.doesNotMatch(c, /December to February|Wind direction: not available/);
   assert.doesNotMatch(c, /N E S W/, 'no compass rose without a Dec–Feb direction');
@@ -291,7 +292,7 @@ test("zu render of k: the new sentences are English by design and nothing throws
   for (const sentence of [
     'Monthly sunshine is not shown. This record holds no monthly sunshine hours for this site.',
     'Monthly wind is not shown. This record holds no monthly wind figures for this site.',
-    'Modelled annual mean wind: ≈ 11 km/h.',
+    'Modelled wind estimate: ≈ 11 km/h.',
     'December to February: from the N.',
     'June to August: from the S.',
     'No crops are suggested from the climate type alone. A climate type does not know your water, frost or soil. Use the crop plan for sowing months checked against this site.',
@@ -371,4 +372,18 @@ test('CP-118 source: the removed verdicts are gone outside comments', () => {
     'wetSeason', 'drySeason']) {
     assert.equal(lines.filter((line) => line.includes(gone)).length, 0, gone);
   }
+});
+
+// A partial wind record can produce a positive value: it cannot establish a full-year mean.
+// The class table also still contains agronomic notes for Cfa, despite its conventional name.
+test('positive wind retains its value without a full-year claim, and class notes do not promise a growing season', () => {
+  const d = place({ koppen: 'Cfa', koppenNote: 'Year-round crops thrive', windSpeed: 4 });
+  const panel = climate(d);
+  assert.match(panel, /Modelled wind estimate: ≈ 14 km\/h/);
+  assert.match(panel, /Time coverage is not recorded/);
+  assert.doesNotMatch(panel, /annual mean wind|long season|rot and fungus|Year-round crops thrive/i);
+  assert.match(panel, /Humid subtropical/);
+  assert.match(panel, /No crops are suggested from the climate type alone/);
+  assert.match(overview(d), /Modelled wind estimate: ≈ 14 km\/h/);
+  assert.doesNotMatch(overview(d), /annual mean wind/i);
 });
