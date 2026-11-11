@@ -44,7 +44,9 @@ export interface ClimateData {
   koppenDesc: string;
   /** One sentence a grower can act on, from the Köppen class. Optional — stored climate predates it. */
   koppenNote?: string;
-  windSpeed: number;        // m/s, annual mean at 2m
+  windSpeed: number;        // m/s estimate at 2m; time coverage may be partial
+  /** Present only when at least one valid WS2M month was returned; absent means unknown provenance. */
+  windSource?: 'nasa-power';
   windFromSummer: string;   // compass label wind blows FROM in summer (DJF)
   windFromWinter: string;   // compass label wind blows FROM in winter (JJA)
 }

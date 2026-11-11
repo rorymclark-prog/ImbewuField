@@ -66,11 +66,11 @@ function place(climate: Record<string, unknown>, lat = -26.2): any {
     lat, lon: 28.05,
     climate: {
       meanTemp: 16, maxTemp: 20, minTemp: -4.8, monthlyTemp: JHB, solarRadiation: 5,
-      koppen: 'Cwb', koppenDesc: 'Subtropical highland, dry winter', windSpeed: 3, windFromSummer: 'N', windFromWinter: 'S',
+      windSource: 'nasa-power', koppen: 'Cwb', koppenDesc: 'Subtropical highland, dry winter', windSpeed: 3, windFromSummer: 'N', windFromWinter: 'S',
       monthlyTempCoverage: COMPLETE, ...TAG,
       ...climate,
     },
-    rainfall: { monthly: RAIN, annual: RAIN.reduce((a, b) => a + b, 0), pattern: 'summer', wetSeason: 'Oct to Mar', drySeason: 'May to Aug' },
+    rainfall: { monthly: RAIN, annual: RAIN.reduce((a, b) => a + b, 0), rainfallSource: 'nasa-power', pattern: 'summer', wetSeason: 'Oct to Mar', drySeason: 'May to Aug' },
     soil: { textureClass: 'Loam', ph: 6.2, organicCarbon: 1.1, sand: 40, silt: 35, clay: 25 },
     elevation: { elevation: 1745, slopeDeg: 2, slopePct: 3, aspectLabel: 'N', aspectDeg: 0 },
     biome: { code: 'grassland', name: 'Grassland', keySpecies: [], challenges: [], description: '' },
@@ -111,7 +111,7 @@ const fixtures: Record<string, any> = {
   i: place({ monthlyTemp: NORTH, koppen: 'Cfb', koppenDesc: 'Temperate oceanic', minTemp: -15 }, 48.2),
   j: place({ monthlyTemp: NORTH, koppen: 'Cfb', koppenDesc: 'Temperate oceanic', windSpeed: 4, windFromSummer: 'W', windFromWinter: 'SW', solarRadiation: 3.1 }, 48.2),
   k: place({ monthlyTemp: UNDERBERG, minTemp: -6.2, windSpeed: 3, windFromSummer: 'N', windFromWinter: 'S' }),
-  l: place({ solarRadiation: 0, windSpeed: 0, windFromSummer: '—', windFromWinter: '—' }),
+  l: place({ solarRadiation: 0, windSpeed: 0, windSource: undefined, windFromSummer: '—', windFromWinter: '—' }),
   m: place({ solarRadiation: -999, windSpeed: NaN, windFromSummer: '—', windFromWinter: 'S' }),
   n: place({ monthlyTemp: JHB, koppen: 'Cfb', koppenDesc: 'Temperate oceanic' }),
 };
@@ -275,7 +275,7 @@ test('l: zero wind and unknown directions are not printed as facts and draw no r
   assert.match(c, /Wind direction: not available\./);
   assert.doesNotMatch(c, /0 km\/h|December to February|June to August/);
   assert.doesNotMatch(c, /N E S W/, 'no compass rose');
-  assert.doesNotMatch(overview(fixtures.l), /annual mean wind/i, 'no wind bullet on Overview');
+  assert.doesNotMatch(overview(fixtures.l), /annual mean wind/i, 'no annual wind claim on Overview');
 });
 
 test('m: NaN speed and -999 sunshine print nothing; only the known June to August direction shows', () => {
@@ -386,4 +386,59 @@ test('positive wind retains its value without a full-year claim, and class notes
   assert.match(panel, /No crops are suggested from the climate type alone/);
   assert.match(overview(d), /Modelled wind estimate: ≈ 14 km\/h/);
   assert.doesNotMatch(overview(d), /annual mean wind/i);
+});
+
+// Each reading has its own provenance. Losing a temperature year must not erase valid wind/rain.
+test('partial weather stays useful, while legacy defaults and untagged rainfall stay unknown', () => {
+  const partial = place({ monthlyTempCoverage: INCOMPLETE, monthlyTemp: [18], windSpeed: 4 });
+  assert.match(overview(partial), /Modelled wind estimate: ≈ 14 km\/h\. Time coverage is not recorded/);
+  assert.match(overview(partial), /Modelled annual rainfall: about 641 mm/);
+  assert.match(climate(partial), UNAVAILABLE);
+  const legacy = place({ windSource: undefined });
+  legacy.rainfall.rainfallSource = undefined;
+  assert.match(overview(legacy), /Annual rainfall is not known/);
+  assert.match(overview(legacy), /Wind estimate: not available/);
+  assert.doesNotMatch(overview(legacy), /Modelled annual rainfall|Modelled wind estimate|641/);
+  assert.match(climate(legacy), /Rainfall: not known/);
+  assert.doesNotMatch(climate(legacy), /641|Summer rainfall/);
+  const rainOnly = place({ windSource: undefined, monthlyTempCoverage: undefined });
+  rainOnly.rainfall.rainfallSource = 'open-meteo';
+  assert.match(overview(rainOnly), /Modelled annual rainfall: about 641 mm/);
+  assert.match(overview(rainOnly), /Wind estimate: not available/);
+  const calm = place({ windSpeed: 0 });
+  assert.match(overview(calm), /Modelled wind estimate: ≈ 0 km\/h/);
+  assert.match(climate(calm), /Modelled wind estimate: ≈ 0 km\/h/);
+});
+
+test('the actual location-route outage defaults never become modelled facts in Overview', async () => {
+  registerHooks({ resolve(specifier, context, next) {
+    if (context.parentURL?.endsWith('/app/api/location-data/route.ts')) {
+      const stubs: Record<string, string> = {
+        'next/server': 'export class NextRequest extends Request{};export const NextResponse={json:(body,init)=>Response.json(body,init)};',
+        '@/lib/api-auth': 'export const guardPaidApiRequest=async()=>({});',
+        '@/lib/nasa-power': 'export const fetchNasaPower=async()=>{throw new Error("offline fixture")};',
+        '@/lib/isric-soil': 'export const fetchSoilData=async()=>({textureClass:"Loam",ph:6.2,organicCarbon:1.9,sand:40,silt:35,clay:25,bulkDensity:1.2});',
+        '@/lib/elevation': 'export const fetchElevation=async()=>({elevation:1745,slopeDeg:2,slopePct:3,aspectLabel:"N",aspectDeg:0});',
+        '@/lib/sanbi': 'export const fetchVegetation=async()=>null;',
+      };
+      if (stubs[specifier]) return {shortCircuit:true,url:moduleUrl(stubs[specifier])};
+    }
+    return next(specifier, context);
+  }});
+  const { GET } = await import('../app/api/location-data/route.ts');
+  const response = await GET(new Request('http://fixture.invalid/api/location-data?lat=48.2&lon=16.3') as any);
+  assert.equal(response.status, 200);
+  const fallback = await response.json();
+  // Assert this exercises the real producer's fallback, not a hand-built unknown-weather record.
+  assert.equal(fallback.climate.windSpeed, 3);
+  assert.equal(fallback.rainfall.annual, 600);
+  assert.equal(fallback.climate.windSource, undefined);
+  assert.equal(fallback.rainfall.rainfallSource, undefined);
+  const shown = overview(fallback);
+  assert.doesNotMatch(shown, /Modelled wind estimate|Modelled annual rainfall|600|11 km\/h/);
+  assert.match(shown, /Annual rainfall is not known/);
+  assert.match(shown, /Wind estimate: not available/);
+  assert.match(shown, /1745/);
+  assert.match(shown, /Soil organic carbon: 1\.9%/);
+  assert.match(climate(fallback), UNAVAILABLE);
 });

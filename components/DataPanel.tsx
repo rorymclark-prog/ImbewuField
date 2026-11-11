@@ -759,6 +759,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   if (!data) return null;
 
   const temperatureStatus = monthlyTemperatureStatus(data.climate);
+  // A failed location lookup substitutes rain=600 mm and wind=3 m/s without source tags.
+  // Use each figure's own provenance, not temperature coverage, so independently supported
+  // partial wind and rainfall remain useful when the temperature year is incomplete.
+  const rainfallKnown = ['nasa-power', 'open-meteo'].includes(data.rainfall.rainfallSource ?? '')
+    && Number.isFinite(data.rainfall.annual) && data.rainfall.annual >= 0;
+  const windKnown = data.climate.windSource === 'nasa-power'
+    && Number.isFinite(data.climate.windSpeed) && data.climate.windSpeed >= 0;
   // Validated gridded record minimum (null when untagged, an outage default or a missing-value marker).
   const recordLowC = recordMinimumC(data.climate);
   const monthlyTemperatureNotice = temperatureStatus === 'complete'
@@ -781,7 +788,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     // harvesting is essential" and "check dry-season supply before planning year-round crops":
     // advice from an unsourced cut-off (finding CP-118). Not yet translated, so the isiZulu
     // summary carries the same English sentence until a reviewed translation exists.
-    const englishWater = `Modelled annual rainfall: about ${r} mm.`;
+    const englishWater = rainfallKnown ? `Modelled annual rainfall: about ${r} mm.` : 'Annual rainfall is not known for this site.';
     const zuluWater = englishWater;
     const englishSoil = translate('en', soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
     const zuluSoil = t(soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
@@ -1048,8 +1055,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
                 <Droplets size={18} style={{ color: 'var(--blue)', flexShrink: 0 }} />
                 <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('statAnnualRainfall')}</span>
-                <span className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
-                  {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-muted)' }}> mm</span>
+                <span lang="en" data-rainfall={rainfallKnown ? 'known' : 'unknown'} className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
+                  {rainfallKnown ? <>{data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-muted)' }}> mm</span></> : 'Not known'}
                 </span>
               </div>
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
@@ -1085,9 +1092,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 recordLowC === null
                   ? { color: 'var(--text-secondary)', text: 'The lowest temperature on record is not known for this site.' }
                   : { color: 'var(--text-secondary)', text: `Modelled record low: ${recordLowC}°C. This is a gridded figure for the wider area, not a frost record for your land.` },
-                Number.isFinite(data.climate.windSpeed) && data.climate.windSpeed > 0
-                  ? { color: 'var(--text-secondary)', text: `Modelled wind estimate: ≈ ${(data.climate.windSpeed * 3.6).toFixed(0)} km/h.` }
-                  : null,
+                windKnown
+                  ? { color: 'var(--text-secondary)', text: `Modelled wind estimate: ≈ ${(data.climate.windSpeed * 3.6).toFixed(0)} km/h. Time coverage is not recorded.` }
+                  : { color: 'var(--text-secondary)', text: 'Wind estimate: not available.' },
                 data.soil.soilSource !== 'lab' && data.soil.soilSource !== 'soilgrids'
                   ? { color: 'var(--text-secondary)', text: appLang === 'zu' ? 'Umhlabathi awukahlolwa. Hlela ukuhlolwa ngaphambi kokuthenga izinto zokuwulungisa.' : 'Soil carbon is not measured here. Arrange a soil test before amendment purchases.' }
                   // No "low" or "reasonable" band at 1.5 %: the figure is reported as it is, with
@@ -1378,7 +1385,6 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           // Wind: the record holds one estimate and Dec–Feb / Jun–Aug directions. Nothing monthly (CP-117).
           // The adapter can average fewer than twelve valid months. A positive value does not
           // establish annual coverage; preserve the estimate without claiming a full year.
-          const windKnown = Number.isFinite(data.climate.windSpeed) && data.climate.windSpeed > 0;
           const dirKnown = (d: unknown) => typeof d === 'string' && d.trim() !== '' && d !== '—';
           const summerDirKnown = dirKnown(data.climate.windFromSummer);
           const winterDirKnown = dirKnown(data.climate.windFromWinter);
@@ -1425,14 +1431,14 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   No crops are suggested from the climate type alone. A climate type does not know your water, frost or soil. Use the crop plan for sowing months checked against this site.
                 </p>
                 <div style={{ display: 'flex', gap: 8, marginTop: 13, flexWrap: 'wrap' }}>
-                  <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} {t('chipRainPerYear')}</span>
-                  <span style={chip('#EDE7DA', '#7A6A48')}>{patternChip}</span>
+                  {rainfallKnown ? <><span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} {t('chipRainPerYear')}</span>
+                  <span style={chip('#EDE7DA', '#7A6A48')}>{patternChip}</span></> : <span lang="en" style={chip('#EDE7DA', '#7A6A48')}>Rainfall: not known</span>}
                   <span data-record-low={recordLowC === null ? 'unknown' : 'known'} lang="en" style={chip('#EDE7DA', '#7A6A48')}>{recordLowC === null ? 'Record low: not known' : `Modelled record low: ${recordLowC}°C`}</span>
                 </div>
               </div>
 
               {/* 2 — Rainfall mm/month */}
-              {monthly.length === 12 && (
+              {rainfallKnown && monthly.length === 12 && (
                 <div style={cardSt}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
                     <div style={ovlSt}>{t('rainfallMmMonth')}</div>

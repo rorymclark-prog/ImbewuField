@@ -41,14 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '11 November 2026', sha: '23b379929901d737f7f972e69055d4c6dd4c7420', changes: [
-    'Site-data warnings and climate figures are easier to read in dark mode.',
-    'Wind figures are labelled as estimates when their time coverage is not recorded.',
-    'Climate types no longer promise a long growing season.',
-  ] },
-  { when: '11 November 2026', sha: '4e095ecc74cd71a3e8e16eb0fa70279f4a254542', changes: [
+  { when: '11 November 2026', sha: '9fc10ed7c15a87984d3150bdebe19aadb840c2fa', changes: [
     'Printed frost warnings follow the frost months you record, not a fixed winter window.',
-    'Site data shows its figures and sources, without made-up sun, wind, crop or site verdicts.',
+    'Site data marks unknown weather and wind coverage, drops climate-based crop promises, and is clearer in dark mode.',
     'A weekly harvest target now says when its crop could be ready too early.',
     'The sowing calendar page uses the crop plan\'s calendar names and can show your farm\'s.',
   ] },

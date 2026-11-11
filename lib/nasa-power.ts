@@ -253,6 +253,9 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   const solarRadiation = parseFloat((solarVals.reduce((a: number, b: number) => a + b, 0) / 12).toFixed(1));
 
   // Wind — mean speed at 2m, and dominant direction (FROM) for summer (DJF) vs winter (JJA)
+  // The location route substitutes 3 m/s on an outage. A positive speed alone cannot
+  // distinguish that default from a reading; tag valid wind independently of temperature.
+  const hasWindReading = MONTH_KEYS.some((key) => cleanNonNegative(asRecord(p.WS2M)[key]) !== null);
   const windSpeed = p.WS2M
     ? parseFloat((reduceParam(
       p.WS2M,
@@ -327,6 +330,6 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
 
   return {
     rainfall: { monthly, annual: parseFloat(annual.toFixed(0)), pattern, wetSeason, drySeason, rainfallSource },
-    climate: { meanTemp, maxTemp, minTemp, ...(hasMinimumReading ? { minTempSource: 'nasa-power' as const } : {}), monthlyTemp, monthlyTempCoverage, solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, windFromSummer, windFromWinter },
+    climate: { meanTemp, maxTemp, minTemp, ...(hasMinimumReading ? { minTempSource: 'nasa-power' as const } : {}), monthlyTemp, monthlyTempCoverage, solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, ...(hasWindReading ? { windSource: 'nasa-power' as const } : {}), windFromSummer, windFromWinter },
   };
 }
