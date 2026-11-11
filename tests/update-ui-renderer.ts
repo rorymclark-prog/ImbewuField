@@ -5,8 +5,8 @@ import { act,create,type ReactTestRenderer,type ReactTestInstance } from 'react-
 import { ChevronUp,X,Menu,ArrowRight } from 'lucide-react';
 import { controlT,type ControlLanguage } from './control-icon-renderers.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
-import { cleanUpdateTour,readUpdateGuide,UPDATE_GUIDE_KEY,OPEN_UPDATE_GUIDE_EVENT } from '../lib/update-tour.ts';
-import { RELEASE_NOTES,visibleNotes,visibleUpdateTour } from '../lib/release-notes.ts';
+import { cleanUpdateTour,readUpdateGuide,isUpdateGuideDestination,UPDATE_GUIDE_KEY,OPEN_UPDATE_GUIDE_EVENT } from '../lib/update-tour.ts';
+import { RELEASE_NOTES,visibleNotes,visibleUpdateTour ,MAX_SHOWN} from '../lib/release-notes.ts';
 import { cleanUpdateCopy,isUpdateCopyLanguage,loadUpdateCopy,updateDescription,updateTourSources,type UpdateCopy } from '../lib/update-copy.ts';
 import { useUpdateCopy } from '../lib/use-update-copy.ts';
 import { updateDateLabel } from '../lib/update-copy-date.ts';
@@ -24,8 +24,33 @@ function compiled(path:string,name:string,scope:Record<string,unknown>):any {
 }
 export function updateNodeText(node:ReactTestInstance):string{return node.children.map(n=>typeof n==='string'?n:updateNodeText(n)).join('');}
 const styleNames=Object.fromEntries([...read('components/UpdateGuide.module.css').matchAll(/\.([A-Za-z][\w-]*)/g)].map(m=>[m[1],m[1]]));
+
+let archivedTourFixtureActive=false;
+/** Newer real releases can also have tours. Consume the announced window with
+ * detached archived source data so positive fixtures never borrow those stops. */
+export async function withArchivedReleaseTour<T>(run:()=>T|Promise<T>):Promise<T> {
+ if(archivedTourFixtureActive)throw Error('Archived release fixtures must run sequentially');
+ const original=[...RELEASE_NOTES],archived=original.find(note=>note.sha==='a5300d2f7');
+ if(!archived?.tour||archived.tour.length<2)throw Error('The archived source fixture must retain its actual two guide destinations');
+ const clone=(note:(typeof RELEASE_NOTES)[number])=>({...note,changes:[...note.changes],...(note.tour?{tour:note.tour.map(stop=>({...stop}))}:{})});
+ const leading=[clone(archived)];let lines=archived.changes.length;
+ for(const sha of ['f98125ce1','6c7c33401','2589a52bf']){
+  if(lines>=MAX_SHOWN)break;
+  const filler=original.find(note=>note.sha===sha);
+  if(!filler||filler.tour?.length||!filler.changes.length)throw Error('The source fixture must supply real routine announcements without a guide');
+  leading.push(clone(filler));lines+=filler.changes.length;
+ }
+ if(lines<MAX_SHOWN)throw Error('Real archived source must fill the complete announced window');
+ archivedTourFixtureActive=true;RELEASE_NOTES.unshift(...leading);
+ try{return await run();}
+ finally{RELEASE_NOTES.splice(0,RELEASE_NOTES.length,...original);archivedTourFixtureActive=false;}
+}
+
 export interface UpdateUiOptions {
  seenPreview?:boolean;kind?:'banner'|'guide'|'history'|'discovery'|'onboarding';path?:string;simple?:boolean;sample?:boolean;waiting?:boolean;guide?:unknown;
+ releaseTour?:ReturnType<typeof visibleUpdateTour>;
+ /** Controlled history data isolates copy arrival/coverage; omitted keeps the real release history. */
+ historyNotes?:typeof RELEASE_NOTES;
  server?:(lang:string,url:string,index:number)=>Promise<any>;loader?:(lang:string)=>Promise<UpdateCopy>;
 }
 let fixtureId=0;
@@ -47,13 +72,13 @@ export async function actualUpdateUi(initial:ControlLanguage,options:UpdateUiOpt
  const registration=Object.assign(new EventTarget(),{waiting:options.waiting?{postMessage:(v:unknown)=>calls.posts.push(v)}:null,installing:null,update:async()=>{}});
  const worker=Object.assign(new EventTarget(),{controller:{},register:async()=>{calls.worker++;return registration;},getRegistration:async()=>registration});
  const document=Object.assign(new EventTarget(),{visibilityState:'visible',querySelector:()=>({getBoundingClientRect:()=>({top:8,left:8,width:44,height:44}),click:()=>calls.menu++})});
- const scope:Record<string,unknown>={React,...React,ChevronUp,X,Menu,ArrowRight,window,document,navigator:{serviceWorker:worker},process:{env:{NODE_ENV:'test'}},URLSearchParams,cleanUpdateTour,readUpdateGuide,UPDATE_GUIDE_KEY,OPEN_UPDATE_GUIDE_EVENT,isDifferentBuild,
-  isUpdateCopyLanguage,updateDescription,updateTourSources,cleanUpdateCopy,updateDateLabel,RELEASE_NOTES,styles:styleNames,
-  translate:(language:ControlLanguage,key:string)=>controlT(language)(key),APP_LANGS:appLanguages,loadLocale:async()=>{},useRouter:()=>({push:(url:string)=>calls.routes.push(url)}),useLanguage:()=>({lang,t:controlT(lang),onboarded:false,completeOnboarding:(language:string)=>calls.completed.push(language)}),useAppLevel:()=>simple?'simple':'full',usePathname:()=>path,useAuth:()=>({user:options.kind==='discovery'?{uid:actor}:null,loading:false}),useSampleRole:()=>options.sample??false,
+ const scope:Record<string,unknown>={React,...React,ChevronUp,X,Menu,ArrowRight,window,document,navigator:{serviceWorker:worker},process:{env:{NODE_ENV:'test'}},URLSearchParams,cleanUpdateTour,readUpdateGuide,isUpdateGuideDestination,UPDATE_GUIDE_KEY,OPEN_UPDATE_GUIDE_EVENT,isDifferentBuild,
+  isUpdateCopyLanguage,updateDescription,updateTourSources,cleanUpdateCopy,updateDateLabel,RELEASE_NOTES:options.historyNotes??RELEASE_NOTES,styles:styleNames,
+  translate:(language:ControlLanguage,key:string)=>controlT(language)(key),APP_LANGS:appLanguages,loadLocale:async()=>{},useRouter:()=>({push:(url:string)=>calls.routes.push(url)}),useLanguage:()=>({lang,t:controlT(lang),onboarded:false,completeOnboarding:(language:string)=>calls.completed.push(language)}),useAppLevel:()=>simple?'simple':'full',usePathname:()=>new URL(path,'http://fixture').pathname,useSearchParams:()=>new URL(path,'http://fixture').searchParams,useAuth:()=>({user:options.kind==='discovery'?{uid:actor}:null,loading:false}),useSampleRole:()=>options.sample??false,
   recordTourOpening,dismissTourMenuTip,TOUR_INVITATION_LIMIT,announceOverlay:()=>{},localStorage:{getItem:(k:string)=>storage.get(k)??null,setItem:(k:string,v:string)=>storage.set(k,v)},
   AppHeader:({title}:any)=>React.createElement('header',null,title),
   useUpdateCopy:(language:string,enabled:boolean)=>useUpdateCopy(language,enabled,options.loader??loadUpdateCopy),
-  loadReleaseNotes:async()=>{calls.lazy++;return{visibleNotes,visibleUpdateTour};},
+  loadReleaseNotes:async()=>{calls.lazy++;return{visibleNotes,visibleUpdateTour:()=>options.releaseTour??visibleUpdateTour()};},
   fetch:async(url:string)=>{calls.fetch.push(url);const language=new URL(url,'http://fixture').searchParams.get('language')??'';let data;if(options.server)data=await options.server(language,url,calls.fetch.length);else{const notes=visibleNotes(),tour=visibleUpdateTour();data={sha:'qa-new-build',notes,tour,...(isUpdateCopyLanguage(language)?{copyLanguage:language,copy:cleanUpdateCopy(await loadUpdateCopy(language),[...notes,...updateTourSources(tour)],language,language)}:{})};}return{ok:true,json:async()=>data};},
  };
  scope.FeatureUpdatePreview=compiled('components/FeatureUpdatePreview.tsx','FeatureUpdatePreview',scope);

@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import ts from 'typescript';
+import * as jsxRuntime from 'react/jsx-runtime';
+import React from 'react';
+import { act, create, type ReactTestRenderer } from 'react-test-renderer';
+import { usesInternationalReviewHelp } from '../lib/international/review-help.ts';
 
 // Follow-up to tests/map-control-overlap.test.ts's 12 August collisions. Flagged this time on the
 // funder dashboard, and /partners was already excluded for a related reason (see ChatWidget.tsx's
@@ -167,4 +172,250 @@ test('the /facilitator/crops right-dock offset is gone, not just overridden', ()
   assert.ok(posAt > 0, 'FAB_DEFAULT_POS moved');
   const table = widget.slice(posAt, widget.indexOf(';', posAt));
   assert.doesNotMatch(table, /facilitator\/crops/, 'the offset branch for an excluded route is dead code');
+});
+
+test('reference and language review pages replace the overlapping launcher only where in-flow help exists', () => {
+  // Reproduced at 390x844 on the final nursery preview: the launcher covers the Bengali
+  // heading and first line at the bottom of the page. Evaluate the real route conditions,
+  // including the clearance helper, rather than accepting a comment containing the route.
+  const widget = source('../components/ChatWidget.tsx');
+  const tree = ts.createSourceFile('ChatWidget.tsx', widget, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  let renderCondition: ts.Expression | undefined;
+  let clearanceCondition: ts.Expression | undefined;
+  function visit(node: ts.Node) {
+    if (ts.isIfStatement(node) && ts.isReturnStatement(node.thenStatement)
+      && node.thenStatement.expression?.kind === ts.SyntaxKind.NullKeyword
+      && node.expression.getText(tree).includes("pathname.startsWith('/login')")) renderCondition = node.expression;
+    if (ts.isFunctionDeclaration(node) && node.name?.text === 'isLimaFabHiddenRoute') {
+      const returned = node.body?.statements.find(ts.isReturnStatement);
+      clearanceCondition = returned?.expression;
+    }
+    ts.forEachChild(node, visit);
+  }
+  visit(tree);
+  assert.ok(renderCondition, 'the actual launcher return-null route guard must exist');
+  assert.ok(clearanceCondition, 'the actual clearance route guard must exist');
+  for (const expression of [renderCondition, clearanceCondition]) {
+    const evaluate = new Function('pathname', 'usesInternationalReviewHelp', `return (${expression.getText(tree)});`) as
+      (pathname: string, referenceHelp: typeof usesInternationalReviewHelp) => boolean;
+    const hidden = (pathname: string) => evaluate(pathname, usesInternationalReviewHelp);
+    // Actual 390px country-reference screenshots in both themes reproduced the same collision.
+    // These routes now own replacement help; retaining the old negative assertion would pin it.
+    for (const path of ['/international', '/international/', '/international/projects', '/international/projects/',
+      '/international/locales', '/international/locales/', '/international/locales/nursery-field-planting']) {
+      assert.equal(hidden(path), true, `${path} must never have a floating launcher over review text`);
+    }
+    for (const path of ['/international/sources', '/international/locales-archive', '/international/projects-archive',
+      '/international/projects/future', '/internationally', '/farmer']) {
+      assert.equal(hidden(path), false, `${path} must retain its existing floating-help behavior`);
+    }
+  }
+});
+
+test('country and project review share reachable in-place help without doubling worksheet help or replacing the review', () => {
+  const compile = (path: string) => ts.transpileModule(source(path), { compilerOptions: {
+    target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX,
+  } }).outputText;
+  let pathname = '/international';
+  const InlineHelp = ({ inPlace }: { inPlace?: boolean }) => React.createElement('section', { 'data-help': true, 'data-in-place': inPlace });
+  const frame: { exports: { default?: React.ComponentType<React.PropsWithChildren> } } = { exports: {} };
+  const requireFrame = (name: string): unknown => {
+    if (name === 'react/jsx-runtime') return jsxRuntime;
+    if (name === 'next/navigation') return { usePathname: () => pathname };
+    if (name === '@/components/LimaBar') return { default: InlineHelp };
+    if (name === '@/lib/international/review-help') return { usesInternationalReviewHelp };
+    if (name === './InternationalReviewHelp.module.css') return { default: { frame: 'reference-frame', help: 'reference-help' } };
+    throw Error(`Unexpected reference help dependency ${name}`);
+  };
+  new Function('require', 'exports', 'module', compile('../components/international/InternationalReviewHelp.tsx'))(requireFrame, frame.exports, frame);
+  assert.ok(frame.exports.default);
+  const layout: { exports: { default?: React.ComponentType<React.PropsWithChildren> } } = { exports: {} };
+  new Function('require', 'exports', 'module', compile('../app/international/layout.tsx'))((name: string) => {
+    if (name === 'react/jsx-runtime') return jsxRuntime;
+    if (name === '@/components/international/InternationalReviewHelp') return { default: frame.exports.default };
+    throw Error(`Unexpected international layout dependency ${name}`);
+  }, layout.exports, layout);
+  assert.ok(layout.exports.default);
+  const prior = Object.getOwnPropertyDescriptor(globalThis, 'IS_REACT_ACT_ENVIRONMENT');
+  Object.defineProperty(globalThis, 'IS_REACT_ACT_ENVIRONMENT', { configurable: true, value: true });
+  let renderer: ReactTestRenderer | undefined;
+  try {
+    for (const route of ['/international', '/international/', '/international/projects', '/international/projects/',
+      '/international/locales', '/international/locales/nursery-field-planting', '/international/locales/mass-entry',
+      '/international/sources', '/international/projects-archive', '/farmer']) {
+      pathname = route;
+      const worksheet = route.startsWith('/international/locales');
+      const review = React.createElement('main', { 'data-original-review': true }, 'Retained source, controls and unknown values');
+      const children = worksheet ? React.createElement('div', { 'data-language-draft-review': true }, review, React.createElement(InlineHelp, { inPlace: true })) : review;
+      act(() => { renderer = create(React.createElement(layout.exports.default!, null, children)); });
+      const region = renderer!.root.findAllByProps({ 'data-international-reference-review': true });
+      const owned = usesInternationalReviewHelp(route);
+      assert.equal(region.length, owned ? 1 : 0, route);
+      assert.equal(renderer!.root.findAllByProps({ 'data-original-review': true }).length, 1, 'the original review is retained once');
+      assert.equal(renderer!.root.findByProps({ 'data-original-review': true }).children[0], 'Retained source, controls and unknown values');
+      const help = renderer!.root.findAllByProps({ 'data-help': true });
+      assert.equal(help.length, owned || worksheet ? 1 : 0, 'one replacement help strip, never two on language worksheets');
+      for (const strip of help) assert.equal(strip.props['data-in-place'], true, 'help must preserve the current review instead of navigating away');
+      if (owned) {
+        assert.equal(region[0].props.tabIndex, 0, 'the shared scroll area is keyboard reachable');
+        assert.equal(region[0].props.role, 'region');
+        assert.equal(region[0].props.lang, 'en');
+        assert.equal(region[0].findByProps({ 'data-original-review': true }).parent, region[0], 'project scrolling can be released on the immediate main child');
+        const footer = region[0].findByProps({ className: 'reference-help' });
+        assert.ok(region[0].children.indexOf(footer) > region[0].children.indexOf(region[0].findByProps({ 'data-original-review': true })));
+        assert.match(region[0].findByType('style').children.join(''), /body:has\(\[data-international-reference-review\]\)/);
+      }
+      act(() => renderer!.unmount()); renderer = undefined;
+    }
+    const css = source('../components/international/InternationalReviewHelp.module.css');
+    assert.match(css, /\.frame\{[^}]*height:100dvh;[^}]*overflow-y:auto;/, 'help and long references share a reachable scroll owner');
+    assert.match(css, /\.frame>main\{height:auto;overflow:visible\}/, 'the project main must not trap help below a second viewport');
+    assert.match(css, /@media print\{\s*\.frame\{height:auto;overflow:visible;/);
+    assert.match(css, /\.help\{display:none\}/);
+    assert.doesNotMatch(css, /position\s*:\s*(?:fixed|absolute|sticky)/, 'replacement help must not recreate the overlay');
+  } finally {
+    if (renderer) act(() => renderer!.unmount());
+    if (prior) Object.defineProperty(globalThis, 'IS_REACT_ACT_ENVIRONMENT', prior);
+    else Reflect.deleteProperty(globalThis, 'IS_REACT_ACT_ENVIRONMENT');
+  }
+});
+
+test('both language worksheets retain one in-flow help strip after their unchanged children', () => {
+  const layout = source('../app/international/locales/layout.tsx');
+  const compiled = ts.transpileModule(layout, { compilerOptions: {
+    target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX,
+  } }).outputText;
+  const inlineHelp = () => null;
+  const output: { exports: { default?: (props: { children: unknown }) => unknown } } = { exports: {} };
+  const requireModule = (name: string) => {
+    if (name === 'react/jsx-runtime') return jsxRuntime;
+    if (name === '@/components/LimaBar') return { default: inlineHelp };
+    throw Error(`The review layout unexpectedly loads ${name}`);
+  };
+  new Function('require', 'exports', 'module', compiled)(requireModule, output.exports, output);
+  assert.ok(output.exports.default);
+  const worksheet = { type: 'synthetic-review-children', props: {} };
+  const rendered = output.exports.default({ children: worksheet }) as {
+    type: unknown;
+    props: { children: unknown[]; className?: string; tabIndex?: number; role?: string; 'aria-label'?: string; 'data-language-draft-review'?: boolean };
+  };
+  // The app body clips a viewport-height shell. Appending help after min-h-screen children
+  // without a scroll owner hides it below the viewport instead of making it available.
+  assert.equal(rendered.type, 'div');
+  assert.match(rendered.props.className ?? '', /(?:^|\s)h-dvh(?:\s|$)/, 'the review workspace must fit the visible viewport');
+  assert.match(rendered.props.className ?? '', /(?:^|\s)overflow-y-auto(?:\s|$)/, 'long worksheets and help must share a reachable scroll area');
+  assert.equal(rendered.props.tabIndex, 0, 'keyboard readers must be able to focus the scroll area');
+  assert.equal(rendered.props.role, 'region');
+  assert.equal(rendered.props['aria-label'], 'Language draft review');
+  assert.match(rendered.props.className ?? '', /(?:^|\s)print:h-auto(?:\s|$)/, 'printing must not constrain the review region to a viewport');
+  assert.match(rendered.props.className ?? '', /(?:^|\s)print:overflow-visible(?:\s|$)/, 'printing must not clip the review scroll area');
+  // Child-only print classes cannot release the root body's screen-height clip. Keep this
+  // escape local to the mounted worksheet, with no screen or unrelated-route override.
+  const [printStyle, actualChildren, helpContainer] = rendered.props.children as [
+    { type: unknown; props: { children: string } },
+    unknown,
+    { props: { className?: string; children: { type: unknown; props: { inPlace?: boolean } } } },
+  ];
+  assert.equal(rendered.props['data-language-draft-review'], true);
+  assert.equal(printStyle.type, 'style');
+  assert.match(printStyle.props.children, /^\s*@media print\s*\{/);
+  assert.match(printStyle.props.children, /body:has\(\[data-language-draft-review\]\)\s*\{\s*height:\s*auto\s*!important;\s*overflow:\s*visible\s*!important;/);
+  assert.match(printStyle.props.children, /\[data-language-draft-review\]\s+\[data-nursery-draft-comparison\]\s*\{\s*break-inside:\s*avoid;\s*page-break-inside:\s*avoid;\s*\}/,
+    'the whole marked comparison stays together in print when it fits, without a global article rule');
+  assert.equal(actualChildren, worksheet, 'the source/draft worksheet must be retained, not replaced by help');
+  assert.equal(helpContainer.props.children.type, inlineHelp, 'use the established LimaBar so help remains available');
+  assert.equal(helpContainer.props.children.props.inPlace, true, 'help must preserve the current worksheet instead of navigating away');
+  assert.match(helpContainer.props.className ?? '', /(?:^|\s)print:hidden(?:\s|$)/, 'help must not add a printed worksheet page');
+  assert.doesNotMatch(helpContainer.props.className ?? '', /(?:fixed|absolute|sticky)/, 'the replacement must be in flow, not another overlay');
+});
+
+test('inline help loads the photo composer only when opened and preserves the selected file and picker gesture', async () => {
+  const compiled = ts.transpileModule(source('../components/LimaBar.tsx'), { compilerOptions: {
+    target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX,
+  } }).outputText;
+  const state = { chatImports: 0, pickerClicks: 0, dialogOpens: 0, sample: true, lang: 'en' };
+  const photoProps: Array<{ initialFile: unknown; appLang: string; locationData: unknown }> = [];
+  const icon = () => null;
+  const output: { exports: { default?: React.ComponentType<{ inPlace?: boolean }> } } = { exports: {} };
+  const originalActFlag = Object.getOwnPropertyDescriptor(globalThis, 'IS_REACT_ACT_ENVIRONMENT');
+  Object.defineProperty(globalThis, 'IS_REACT_ACT_ENVIRONMENT', { configurable: true, value: true });
+  const requireModule = (name: string): unknown => {
+    if (name === 'react') return React;
+    if (name === 'react/jsx-runtime') return jsxRuntime;
+    if (name === 'lucide-react') return { Camera: icon, Loader2: icon, MessageCircleQuestion: icon, X: icon };
+    if (name === '@/lib/i18n') return { useLanguage: () => ({ t: (key: string) => key, lang: state.lang }) };
+    if (name === '@/lib/use-role-navigation') return { useSampleRole: () => state.sample };
+    if (name === 'next/link') return { default: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => React.createElement('a', props, children) };
+    if (name === 'next/dynamic') return { default: (load: () => Promise<{ default: React.ComponentType }>, options: { loading: React.ComponentType }) => {
+      const Deferred = React.lazy(load);
+      return (props: Record<string, unknown>) => React.createElement(React.Suspense, { fallback: React.createElement(options.loading) }, React.createElement(Deferred, props));
+    } };
+    if (name === './ChatPanel') {
+      state.chatImports++;
+      return { default: (props: typeof photoProps[number]) => { photoProps.push(props); return React.createElement('div', { 'data-photo-composer': true }); } };
+    }
+    throw Error(`Unexpected inline-help dependency ${name}`);
+  };
+  let renderer: ReactTestRenderer | undefined;
+  try {
+    new Function('require', 'exports', 'module', compiled)(requireModule, output.exports, output);
+    assert.ok(output.exports.default);
+    const Help = output.exports.default;
+    const mount = (inPlace = false) => act(() => {
+      renderer = create(React.createElement(Help, { inPlace }), { createNodeMock: element => {
+        if (element.type === 'input') return { click: () => { state.pickerClicks++; } };
+        if (element.type === 'dialog') return { showModal: () => { state.dialogOpens++; }, close: () => renderer!.root.findByType('dialog').props.onClose() };
+        return null;
+      } });
+    });
+    const photoButton = () => renderer!.root.findAllByType('button').find(button => button.children.includes('limaPhotoButton'))!;
+    mount();
+    assert.equal(renderer!.root.findByType('a').props.href, '/farmer?chat=1', 'existing callers keep their navigation link');
+    assert.equal(state.chatImports, 0, 'reading the page must not import the full composer');
+    assert.equal(photoProps.length, 0, 'reading the page must not render a composer');
+    act(() => photoButton().props.onClick());
+    assert.equal(state.dialogOpens, 1);
+    const pending = renderer!.root.findByProps({ role: 'status' });
+    assert.equal(pending.props['aria-busy'], 'true');
+    assert.equal(pending.props['aria-label'], 'limaWhoIs', 'pending photo help retains an existing translated accessible name');
+    await act(async () => { await Promise.resolve(); });
+    assert.equal(state.chatImports, 1, 'only opening photo help imports the panel');
+    assert.equal(photoProps.at(-1)?.initialFile, null);
+    assert.equal(photoProps.at(-1)?.appLang, 'en');
+    assert.equal(photoProps.at(-1)?.locationData, null);
+    act(() => renderer!.root.findByProps({ 'aria-label': 'limaClosePhotoDialog' }).props.onClick());
+    assert.equal(renderer!.root.findAllByProps({ 'data-photo-composer': true }).length, 0);
+    act(() => renderer!.unmount()); renderer = undefined;
+
+    state.sample = false;
+    mount();
+    act(() => photoButton().props.onClick());
+    assert.equal(state.pickerClicks, 1, 'ordinary photo help must open the native picker in the tap handler');
+    assert.equal(state.dialogOpens, 1, 'an unopened/cancelled picker must not open a composer');
+    const chosen = new File(['synthetic image bytes'], 'synthetic-help.jpg', { type: 'image/jpeg' });
+    const target = { files: [chosen], value: 'synthetic-selection' };
+    await act(async () => renderer!.root.findByType('input').props.onChange({ target }));
+    assert.equal(target.value, '', 'the same photo must remain selectable again');
+    assert.equal(state.dialogOpens, 2);
+    assert.equal(photoProps.at(-1)?.initialFile, chosen, 'deferred loading must retain the exact selected file');
+    assert.equal(state.chatImports, 1, 'reopening retains normal module caching');
+    act(() => renderer!.unmount()); renderer = undefined;
+
+    state.lang = 'zu';
+    mount(true);
+    assert.equal(renderer!.root.findAllByType('div')[0].props.lang, 'zu', 'localized help must not inherit the English review workspace language');
+    assert.equal(renderer!.root.findAllByType('a').length, 0, 'worksheet help must not navigate away');
+    const ask = renderer!.root.findAllByType('button').find(button => button.findAll(node => node.children.includes('limaAskButton')).length > 0);
+    assert.ok(ask, 'the worksheet retains a labelled help button');
+    act(() => ask.props.onClick());
+    assert.equal(state.dialogOpens, 3, 'asking from the worksheet opens the existing help dialog in place');
+    assert.equal(photoProps.at(-1)?.appLang, 'zu', 'in-place help retains the chosen app language');
+    assert.equal(photoProps.at(-1)?.initialFile, null);
+    assert.equal(state.pickerClicks, 1, 'asking without a photo must not open a picker');
+    assert.equal(state.chatImports, 1);
+  } finally {
+    if (renderer) act(() => renderer!.unmount());
+    if (originalActFlag) Object.defineProperty(globalThis, 'IS_REACT_ACT_ENVIRONMENT', originalActFlag);
+    else Reflect.deleteProperty(globalThis, 'IS_REACT_ACT_ENVIRONMENT');
+  }
 });

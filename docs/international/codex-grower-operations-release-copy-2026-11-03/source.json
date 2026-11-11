@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "reviewStatus": "unreviewed-ai-draft",
+  "fluentHumanApproval": false,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "sourceAuthority": {
+    "file": "lib/release-notes.ts",
+    "releaseSha": "fbe546d6c",
+    "sha256": "de8996bcef6021916108c3868dbbb2318ee0c144a707ad14708069198b8f04c4"
+  },
+  "messages": [
+    {
+      "key": "growerOperationsRelease1",
+      "english": "Follow saved grower cycles on their exact planned dates.",
+      "sha256": "c26b95b5f9df2ea8d832249903080808c707ad592209c4e77a4217cbd25c3c2d"
+    },
+    {
+      "key": "growerOperationsRelease2",
+      "english": "Check current designs before ticking work or exporting dates.",
+      "sha256": "0253e082c05ab48ae5f3d6ded5334831b148c78e3bc98ce1296b559e1ecfeab7"
+    },
+    {
+      "key": "growerOperationsRelease3",
+      "english": "Keep own crop estimates separate from catalogue print advice.",
+      "sha256": "eebe817347f357390824042e02c832a2c4a132cbea27706cc31540d8033dabd0"
+    },
+    {
+      "key": "growerOperationsRelease4",
+      "english": "Review your dated work",
+      "sha256": "61b5fb443d23cb6343b377c7346278def5f5de79009922ca666938f204180b57"
+    },
+    {
+      "key": "growerOperationsRelease5",
+      "english": "Task Planner → Dated work from your estimates",
+      "sha256": "6bb6a4dc0e264ac50308327797902dfee066f3fd9159f7071126785746e77a7a"
+    },
+    {
+      "key": "growerOperationsRelease6",
+      "english": "Open Task Planner to check work dates from your saved growing estimates.",
+      "sha256": "f0f30127e017c91d98710e6f5db3be1eec94284ca82b7caabe8568cf7e830de5"
+    }
+  ]
+}

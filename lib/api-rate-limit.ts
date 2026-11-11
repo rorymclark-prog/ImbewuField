@@ -134,6 +134,8 @@ const ROUTE_COST_CLASS: Record<string, CostClass> = {
   // API and SANBI — no model spend, but four third-party calls per pin, the same shape of cost
   // as the network reads above.
   'location-data': 'data',
+  // Explicit, authenticated PVGIS reference lookup; one free public-provider request.
+  'site-energy': 'data',
 };
 
 /** '/api/ai-render/poll' and 'ai-render/poll' are the same route. Compare one spelling. */

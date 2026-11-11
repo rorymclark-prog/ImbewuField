@@ -29,6 +29,7 @@ import {
   type MonthlyClimate,
 } from './koppen-global';
 import { CROPS, type CropDef, type RainPattern } from './crop-catalog';
+import { recordMinimumC } from './climate-temperature';
 import type { LocationData } from './types';
 
 export type { AtlasRainPattern };
@@ -36,7 +37,7 @@ export type { AtlasRainPattern };
 /** The slice of LocationData the climate derivation actually needs. */
 export type AtlasClimateInput = Pick<LocationData, 'lat'> & {
   rainfall: Pick<LocationData['rainfall'], 'monthly'>;
-  climate: Pick<LocationData['climate'], 'monthlyTemp'>;
+  climate: Pick<LocationData['climate'], 'monthlyTemp'> & Partial<Pick<LocationData['climate'], 'minTemp' | 'minTempSource'>>;
 };
 
 /**
@@ -45,10 +46,15 @@ export type AtlasClimateInput = Pick<LocationData, 'lat'> & {
  * already Jan-first in LocationData (see lib/nasa-power.ts).
  */
 export function monthlyClimateFrom(data: AtlasClimateInput): MonthlyClimate {
+  // The record minimum travels with the monthly means so the Atlas and the crop planner
+  // read the same point onto the same sowing calendar. Without it a frost-free arid
+  // site (Komatipoort) showed the hard-frost column here and the hot-area one in a plan.
+  const recordMinC = recordMinimumC(data.climate);
   return {
     tempC: data.climate.monthlyTemp,
     precipMm: data.rainfall.monthly,
     lat: data.lat,
+    ...(recordMinC === null ? {} : { recordMinC }),
   };
 }
 

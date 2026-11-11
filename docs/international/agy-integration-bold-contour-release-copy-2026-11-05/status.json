@@ -1,0 +1,11 @@
+{
+  "status": "unreviewed-ai-draft",
+  "sourceSha256": "84e299057b574f4f05dff909b18bc080fceb23599139bdae92d72a980afae708",
+  "sourceCount": 1,
+  "pairsCount": 4,
+  "commandsRun": false,
+  "testsRun": false,
+  "validation": "UNKNOWN",
+  "workersActive": 0,
+  "runtimeActivation": false
+}

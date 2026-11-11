@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture, releaseCropPlanFixture, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
@@ -41,7 +42,8 @@ class MemoryStorage {
   get length() { return this.rows.size; }
 }
 
-function installBrowser() {
+async function installBrowser() {
+  releaseCropPlanFixture();
   const local = new MemoryStorage();
   const session = new MemoryStorage();
   const target = new EventTarget() as EventTarget & {
@@ -53,6 +55,7 @@ function installBrowser() {
   Object.defineProperty(globalThis, 'window', { configurable: true, value: target });
   Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: local });
   Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, value: session });
+  await initialiseCropPlanFixture();
   return { target, local, session };
 }
 
@@ -118,7 +121,7 @@ function plan(bedId: string): CropPlanState {
   };
 }
 
-test('every answered survey check contributes once, including explicit none/zero answers', () => {
+test('every answered survey check contributes once, including explicit none/zero answers',async()=>{
   const complete = survey();
   assert.equal(surveyFilledCount(complete), SURVEY_TOTAL_FIELDS);
 
@@ -141,7 +144,7 @@ test('every answered survey check contributes once, including explicit none/zero
   assert.equal(surveyFilledCount(survey({ roofMainM2: -1 })), SURVEY_TOTAL_FIELDS - 1);
 });
 
-test('a community survey counts the visible member answer, never the hidden adults answer', () => {
+test('a community survey counts the visible member answer, never the hidden adults answer',async()=>{
   const community = survey({
     siteType: 'community',
     adults: '',
@@ -151,15 +154,15 @@ test('a community survey counts the visible member answer, never the hidden adul
   assert.equal(surveyFilledCount({ ...community, memberCount: '' }), SURVEY_TOTAL_FIELDS - 1);
 });
 
-test('crop-plan completion belongs only to a planting in this canvas bed', () => {
+test('crop-plan completion belongs only to a planting in this canvas bed',async()=>{
   const here = canvas();
   assert.equal(cropPlanBelongsToCanvas(here, plan('bed-here')), true);
   assert.equal(cropPlanBelongsToCanvas(here, plan('bed-on-another-farm')), false);
   assert.equal(cropPlanBelongsToCanvas(null, plan('bed-here')), false);
 });
 
-test('saving a crop plan emits the progress event after the new data is readable', () => {
-  const { target } = installBrowser();
+test('saving a crop plan emits the progress event after the new data is readable',async()=>{
+  const { target } = await installBrowser();
   let observed: CropPlanState | null = null;
   target.addEventListener(CROP_PLAN_CHANGED_EVENT, () => { observed = loadCropPlan(); });
 
@@ -170,8 +173,8 @@ test('saving a crop plan emits the progress event after the new data is readable
   assert.ok(PROGRESS_EVENTS.includes(CROP_PLAN_CHANGED_EVENT));
 });
 
-test('boundary progress ignores water and degenerate rings, then reports real unique vertices', () => {
-  const { local } = installBrowser();
+test('boundary progress ignores water and degenerate rings, then reports real unique vertices',async()=>{
+  const { local } = await installBrowser();
   local.setItem('imbewu_farm_shapes', JSON.stringify({
     type: 'FeatureCollection',
     features: [
@@ -207,8 +210,8 @@ test('boundary progress ignores water and degenerate rings, then reports real un
   assert.equal(boundaryNearCoords({ lat: -20, lon: 20 }), false);
 });
 
-test('a nearby parcel in any MultiPolygon part earns boundary progress', () => {
-  const { local } = installBrowser();
+test('a nearby parcel in any MultiPolygon part earns boundary progress',async()=>{
+  const { local } = await installBrowser();
   local.setItem('imbewu_farm_shapes', JSON.stringify({
     type: 'FeatureCollection',
     features: [{
@@ -228,8 +231,8 @@ test('a nearby parcel in any MultiPolygon part earns boundary progress', () => {
   assert.equal(boundaryNearCoords({ lat: -29, lon: 31 }), true);
 });
 
-test('saved-place and boundary scoping reject invalid coordinates', () => {
-  const { local } = installBrowser();
+test('saved-place and boundary scoping reject invalid coordinates',async()=>{
+  const { local } = await installBrowser();
   local.setItem('permamap_saved_places', JSON.stringify([{
     id: 'farm',
     name: 'Farm',
@@ -261,8 +264,8 @@ test('saved-place and boundary scoping reject invalid coordinates', () => {
   }
 });
 
-test('end-to-end progress stays site-scoped and chooses the first genuinely missing step', () => {
-  const { local } = installBrowser();
+test('end-to-end progress stays site-scoped and chooses the first genuinely missing step',async()=>{
+  const { local } = await installBrowser();
   const coords = { lat: -29, lon: 31 };
   const siteId = 'site:-29.00000,31.00000';
   local.setItem('permamap_saved_places', JSON.stringify([{
@@ -270,7 +273,7 @@ test('end-to-end progress stays site-scoped and chooses the first genuinely miss
   }]));
   local.setItem(`imbewu_site_survey_${siteId}`, JSON.stringify(survey()));
   local.setItem(`imbewu_design_canvas_${siteId}`, JSON.stringify(canvas(siteId)));
-  local.setItem('imbewu_crop_plan_v1', JSON.stringify(plan('bed-on-another-farm')));
+  replaceCanonicalCropPlanFixtureRaw(JSON.stringify(plan('bed-on-another-farm')));
 
   const beforeBoundary = getSiteProgress(coords);
   assert.equal(beforeBoundary.inputs.hasCropPlan, false);
@@ -284,7 +287,7 @@ test('end-to-end progress stays site-scoped and chooses the first genuinely miss
       geometry: { type: 'Polygon', coordinates: [[[31, -29], [31.01, -29], [31, -29.01], [31, -29]]] },
     }],
   }));
-  local.setItem('imbewu_crop_plan_v1', JSON.stringify(plan('bed-here')));
+  replaceCanonicalCropPlanFixtureRaw(JSON.stringify(plan('bed-here')));
 
   const complete = getSiteProgress(coords);
   assert.equal(complete.inputs.hasCropPlan, true);
@@ -296,8 +299,8 @@ test('end-to-end progress stays site-scoped and chooses the first genuinely miss
   }
 });
 
-test('guided-state corruption is normalised and defaults are returned as fresh values', () => {
-  const { local } = installBrowser();
+test('guided-state corruption is normalised and defaults are returned as fresh values',async()=>{
+  const { local } = await installBrowser();
   const first = getGuidedState();
   first.enabled = false;
   assert.equal(getGuidedState().enabled, true);
@@ -312,8 +315,8 @@ test('guided-state corruption is normalised and defaults are returned as fresh v
   assert.equal(getGuidedState().retired, true);
 });
 
-test('guided changes are observable and repeated dismissals eventually retire the coach', () => {
-  const { target } = installBrowser();
+test('guided changes are observable and repeated dismissals eventually retire the coach',async()=>{
+  const { target } = await installBrowser();
   let events = 0;
   target.addEventListener(GUIDED_CHANGED_EVENT, () => { events += 1; });
 
@@ -331,8 +334,8 @@ test('guided changes are observable and repeated dismissals eventually retire th
   assert.deepEqual(getGuidedState(), { enabled: true, dismissals: 0, retired: false });
 });
 
-test('failed guided-state writes keep the prior state and emit no false change event', () => {
-  const { target, local } = installBrowser();
+test('failed guided-state writes keep the prior state and emit no false change event',async()=>{
+  const { target, local } = await installBrowser();
   setGuidedState({ enabled: false });
   const before = getGuidedState();
   let events = 0;

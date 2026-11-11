@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { ensureLearningContextCurrent, learningContextSourceBefore } from './learning-context-history-checks.ts';
 
 // Wave 17 (23 Oct 2026, dark-forest-2 track w17-01): text on a var(--color-forest-800) fill on the
 // Studies page uses --on-forest-800 (cream in light, dark ink in dark) instead of plain --on-forest,
@@ -35,6 +36,8 @@ for (const [file, row] of Object.entries(files)) {
 
 let lastSuccessfulSignature = '';
 export function ensureWave17Current(): void {
+  // A newer reviewed notice must pass before this older owner's cached view.
+  ensureLearningContextCurrent();
   const signature = Object.entries(files).flatMap(([file, row]) => [file, row.beforePath]).map(file => {
     const s = statSync(resolve(root, file), { bigint: true, throwIfNoEntry: false });
     return s ? [file, s.dev, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':') : file + ':absent';
@@ -43,7 +46,7 @@ export function ensureWave17Current(): void {
   for (const [file, row] of Object.entries(files)) {
     const before = read(row.beforePath);
     assert.equal(sha(before), row.beforeSha256, file + ': wave 17 predecessor fixture may not change');
-    const live = read(file);
+    const live = learningContextSourceBefore(file, read(file));
     assert.equal(live.length, row.afterBytes, file + ': complete live wave 17 successor size');
     assert.equal(sha(live), row.afterSha256, file + ': complete live wave 17 successor, including every unlisted byte');
     const a = before.toString(), b = live.toString();
@@ -68,6 +71,7 @@ export function wave17SourceBefore<T extends string | Uint8Array>(file: string, 
   const row = files[file];
   if (!row) return supplied;
   ensureWave17Current();
+  supplied = learningContextSourceBefore(file, supplied);
   if (sha(supplied) !== row.afterSha256) return supplied;
   const before = beforeFiles.get(file)!;
   return (typeof supplied === 'string' ? before.toString() : Buffer.from(before)) as T;

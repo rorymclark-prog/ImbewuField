@@ -33,9 +33,58 @@ export function isRecordsRegionalLang(lang: string): lang is RecordsRegionalLang
   return (RECORDS_REGIONAL_LANGS as readonly string[]).includes(lang);
 }
 
+// New financial/source qualifications stay in English until their exact meaning
+// has a paired review. This records a hold, not a translation or approval.
+export const RECORDS_ENGLISH_HOLDS: Readonly<Record<string, string>> = Object.freeze({
+  "Saved invoice currency summary": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "Saved invoices on this device, across all loaded dates. Choose one currency to view its recorded amounts.": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "Summary currency": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "Choose currency": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "Refresh saved invoices": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "DEMO — these are sample invoice amounts.": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "Saved invoice records changed or need review. Totals are unavailable. Refresh the current records before choosing a currency.": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "Choose a currency to view invoice counts and amounts.": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "Issued invoices": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "Recorded paid invoices": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "Unpaid invoices": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "{count} invoice(s)": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "Invoice-only amounts exclude pending link drafts, external sales records and costs. Recorded paid reflects the saved invoice status; it is not proof of bank receipt, cash income or profit. No currency conversion is made.": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "Amount unavailable": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
+  "Close recorded invoice prices": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "Choose a recorded invoice price": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "Recorded invoice prices need review. Reopen the current records before choosing a price.": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "Prices previously recorded on invoices in {currency} for this exact item and unit. Confirm the price for this sale.": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "No matching recorded invoice prices.": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "Recorded amount unavailable": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "Invoice #{invoice} · {buyer} · {date}": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "Use this recorded price": "Recorded-price controls need paired financial-language review. Retain exact English; historical invoice values are not current price advice or buyer agreement.",
+  "Orchard is switched off, so {kg} kg is not in the harvest figure: {names}.": "The held-currency version intentionally makes no complete Rand-income claim. Regional paired wording has not been reviewed; retain the exact English.",
+  "Orchard is switched off, so {kg} kg is not in Yield logged: {names}.": "The held-currency version intentionally makes no complete cash-margin claim. Regional paired wording has not been reviewed; retain the exact English.",
+  "Orchard is switched off, so this card leaves out {picked} picked and {sold} sold: {names}. Only the kilograms here are filtered. Money elsewhere follows the recorded invoice currency review.": "This revised physical-filter explanation follows scoped invoice-currency review. The retired wording made a broader Rand claim; replacement regional drafts require paired review.",
+  "Orchard is switched off, so this card leaves out {picked} picked: {names}. Only the kilograms here are filtered. Money elsewhere follows the recorded invoice currency review.": "This revised physical-filter explanation follows scoped invoice-currency review. The retired wording made a broader Rand claim; replacement regional drafts require paired review.",
+  "Orchard is switched off, so this card leaves out {sold} sold: {names}. Only the kilograms here are filtered. Money elsewhere follows the recorded invoice currency review.": "This revised physical-filter explanation follows scoped invoice-currency review. The retired wording made a broader Rand claim; replacement regional drafts require paired review.",
+  "Readable weighed produce sold": "Loaded-source coverage may be incomplete, so this label deliberately qualifies the physical evidence. Regional wording has not been reviewed; keep the exact English.",
+  "Only explicitly assigned entries are included.": "This allocation qualifier limits which growing-area entries contribute to the figure. Regional wording has not been reviewed; retain the exact English rather than implying whole-book coverage.",
+  "Download PDF": "The action downloads a file separately from sharing or printing. A regional label for this action has not been reviewed; retain the exact English.",
+  "Keep this invoice separate from the rand sale book until its currency can be reconciled.": "This currency hold must not imply conversion or inclusion in Rand cash totals. Regional financial wording has not been reviewed; retain the exact English.",
+});
+
+// Historical packets retain the old drafts. Even a regeneration from those
+// packets cannot reactivate the former universal Rand claim through this lookup.
+export const RECORDS_RETIRED_SOURCES: Readonly<Record<string, string>> = Object.freeze({
+  "Orchard is switched off, so this card leaves out {picked} picked and {sold} sold: {names}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.": "Retired after invoice currency/source holds made the former universal Rand claim invalid. Exact prior drafts and source hashes are preserved in docs/international/invoice-currency-retired-records-drafts.json.",
+  "Orchard is switched off, so this card leaves out {picked} picked: {names}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.": "Retired after invoice currency/source holds made the former universal Rand claim invalid. Exact prior drafts and source hashes are preserved in docs/international/invoice-currency-retired-records-drafts.json.",
+  "Orchard is switched off, so this card leaves out {sold} sold: {names}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.": "Retired after invoice currency/source holds made the former universal Rand claim invalid. Exact prior drafts and source hashes are preserved in docs/international/invoice-currency-retired-records-drafts.json.",
+});
+
+export function recordsEnglishHoldReason(lang: string, english: string): string | null {
+  return isRecordsRegionalLang(lang) && Object.hasOwn(RECORDS_ENGLISH_HOLDS, english) ? RECORDS_ENGLISH_HOLDS[english] : null;
+}
+
 /** The draft for `english` in `lang`, or null when there is none (the caller shows English). */
 export function recordsDraft(lang: string, english: string): string | null {
   if (lang !== 'zu' && !isRecordsRegionalLang(lang)) return null;
+  if (Object.hasOwn(RECORDS_RETIRED_SOURCES, english) || recordsEnglishHoldReason(lang, english)) return null;
   const row = RECORDS_DRAFTS[english];
   const draft = row?.[lang as RecordsDraftLang];
   return typeof draft === 'string' && draft.trim() !== '' ? draft : null;

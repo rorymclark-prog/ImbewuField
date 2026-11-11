@@ -1,4 +1,4 @@
-import { isJournalDate, sortJournal, type JournalCategory, type JournalEntry } from './field-journal';
+import { inspectJournalNurseryFieldPlanting, inspectJournalNurseryProgress, inspectJournalNurserySowing, isJournalDate, sortJournal, type JournalCategory, type JournalEntry } from './field-journal';
 import { farmMemoryText } from './farm-memory-copy';
 
 export interface JournalViewFilters {
@@ -77,7 +77,27 @@ export function filterJournalEntries(entries: JournalEntry[], filters: JournalVi
     if (filters.bed && journalBedFilterValue(entry) !== filters.bed) return false;
     if (filters.crop && entry.cropName !== filters.crop) return false;
     if (!words.length) return true;
-    const text = searchText([entry.title, entry.notes, entry.bedLabel, entry.cropName].filter(Boolean).join(' '));
+    const planting = inspectJournalNurseryFieldPlanting(entry);
+    // Search the checked historical snapshot, never a raw malformed marker or
+    // today's editable batch labels. Explicit zero must remain searchable.
+    const plantingText = planting.status === 'observed'
+      ? ['Recorded nursery field planting', String(planting.observation.plantsPlanted),
+        planting.observation.references.variety, planting.observation.references.seedLotReference,
+        planting.observation.references.raisingBatchReference].filter(value => value !== null).join(' ')
+      : planting.status === 'held' ? 'Nursery field planting evidence needs review' : '';
+    // The same checked-snapshot rule for the earlier observations of that batch.
+    const sowing = inspectJournalNurserySowing(entry), progress = inspectJournalNurseryProgress(entry);
+    const sowingText = sowing.status === 'observed'
+      ? ['Recorded nursery sowing', sowing.observation.traysUsed === null ? null : String(sowing.observation.traysUsed),
+        sowing.observation.references.variety, sowing.observation.references.seedLotReference,
+        sowing.observation.references.raisingBatchReference].filter(value => value !== null).join(' ')
+      : sowing.status === 'held' ? 'Nursery sowing evidence needs review' : '';
+    const progressText = progress.status === 'observed'
+      ? ['Recorded nursery plant count', String(progress.observation.plantsObserved),
+        progress.observation.references.variety, progress.observation.references.seedLotReference,
+        progress.observation.references.raisingBatchReference].filter(value => value !== null).join(' ')
+      : progress.status === 'held' ? 'Nursery count evidence needs review' : '';
+    const text = searchText([entry.title, entry.notes, entry.bedLabel, entry.cropName, plantingText, sowingText, progressText].filter(Boolean).join(' '));
     return words.every(word => text.includes(word));
   }));
 }

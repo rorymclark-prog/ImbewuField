@@ -1,0 +1,19 @@
+{
+  "sourceSha256": "1b4857be57afdbda2b073d118a244eef8ddf9299a42d5c4af7b88594ea80b8e4",
+  "pairs": 16,
+  "reviewStatus": "unreviewed-ai-draft",
+  "humanApproval": false,
+  "newAppLanguageActivation": false,
+  "use": "Existing-language update/history captions only; exact English remains displayed underneath. This does not certify fluent quality or create a new application-language dictionary. No dedicated visible AI-draft badge is claimed.",
+  "validation": {
+    "actualPairs": 16,
+    "damagedControlsPerLocale": 16,
+    "actualNotesWords": 159
+  },
+  "identifiedCorrections": [
+    "TS versions distinguished from tests",
+    "VE versions distinguished from reports"
+  ],
+  "sourceReconciliation": "Actual route verified as /farmer. The four English strings and message hashes remain frozen after correcting the tourhref and later release commit stamps.",
+  "releaseState": "Draft integration; full suite, source-owner findings, current-head CI and combined Map/output review remain pending."
+}

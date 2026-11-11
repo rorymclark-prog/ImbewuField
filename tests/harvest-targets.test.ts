@@ -1,3 +1,4 @@
+import { initialiseCropPlanFixture, releaseCropPlanFixture, readCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { suggestHarvestTargets, autoSuggestPlan, type AutoSuggestAnswers } from '@/lib/crop-autosuggest';
@@ -6,7 +7,7 @@ import {
   benchmarkAreaConflictDetails, estimatedYieldKg, loadCropPlan, saveCropPlan, sanitiseHarvestTargets,
   tasksForPlan, taskMonthsFromNow, type HarvestTarget, type PlanBed, type Planting,
 } from '@/lib/crop-plan';
-import { assessHarvestTarget, targetDemand, targetPickingWindow, type HarvestTargetAssessment } from '@/lib/harvest-targets';
+import { assessHarvestTarget, earliestReadyMonthIndex, targetDemand, targetPickingWindow, type HarvestTargetAssessment } from '@/lib/harvest-targets';
 import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
 
 const now = { year: 2026, month: 11 };
@@ -16,21 +17,21 @@ const beds: PlanBed[] = Array.from({ length: 4 }, (_, i) => ({ id: `bed-${i}`, l
 const target: HarvestTarget = { id: 'buyer-a', siteId: 'farm-a', cropKey: 'carrots', weeklyKg: 3, startMonth: '2027-01', endMonth: '2027-12' };
 const suggest = (ts = [target], bs = beds, ps: Planting[] = [], a = answers) => suggestHarvestTargets(ts, 'farm-a', a, 'mild-frost', bs, ps, now);
 
-test('weekly demand uses actual days including leap February and a December–January boundary', () => {
+test('weekly demand uses actual days including leap February and a December–January boundary',async()=>{
   assert.deepEqual(targetDemand({ ...target, weeklyKg: 7, startMonth: '2028-02', endMonth: '2028-02' }), { days: 29, demandKg: 29 });
   assert.deepEqual(targetDemand({ ...target, weeklyKg: 7, startMonth: '2026-12', endMonth: '2027-01' }), { days: 62, demandKg: 62 });
   const a = assessHarvestTarget(target, [], [])!;
   assert.equal(a.cycleAreaM2, a.demandKg / cropByKey(target.cropKey)!.yieldKgPerM2!);
 });
 
-test('corrupt targets cannot produce infinite demand, unknown crops or multi-year promises', () => {
+test('corrupt targets cannot produce infinite demand, unknown crops or multi-year promises',async()=>{
   for (const patch of [{ weeklyKg: NaN }, { weeklyKg: Infinity }, { weeklyKg: -1 }, { weeklyKg: Number.MAX_VALUE },
     { cropKey: 'unidentified' }, { startMonth: '2027-13' }, { endMonth: '2026-12' }, { endMonth: '2028-01' },
     { siteId: '' }, { id: '' }]) assert.equal(sanitiseHarvestTargets([{ ...target, ...patch }]).length, 0);
   assert.deepEqual(sanitiseHarvestTargets([target, target, null]), [target]);
 });
 
-test('target sowings are dated, add-only, demand-limited and generate the existing task calendar', () => {
+test('target sowings are dated, add-only, demand-limited and generate the existing task calendar',async()=>{
   const original = structuredClone({ beds, target });
   const result = suggest();
   assert.ok(result.plantings.length > 1, 'a small repeated demand can be spread across legal cohorts');
@@ -51,7 +52,7 @@ test('target sowings are dated, add-only, demand-limited and generate the existi
   }
 });
 
-test('other sites and unlinked crops are not double-counted against a buyer target', () => {
+test('other sites and unlinked crops are not double-counted against a buyer target',async()=>{
   const result = suggest();
   const unrelated = result.plantings.map(({ harvestTargetId: _target, ...row }) => row);
   assert.equal(assessHarvestTarget(target, beds, unrelated)!.allocatedKg, 0);
@@ -60,7 +61,7 @@ test('other sites and unlinked crops are not double-counted against a buyer targ
   assert.equal(assessHarvestTarget(other, beds, result.plantings)!.allocatedKg, 0);
 });
 
-test('missing yield evidence stays visible without making up a crop weight', () => {
+test('missing yield evidence stays visible without making up a crop weight',async()=>{
   const t = { ...target, cropKey: 'amadumbe' };
   const a = assessHarvestTarget(t, beds, [])!;
   assert.equal(a.cycleAreaM2, null);
@@ -70,7 +71,7 @@ test('missing yield evidence stays visible without making up a crop weight', () 
   assert.ok(suggest([t]).notes.some((n) => n.kind === 'gap' && n.text.includes('evidence')));
 });
 
-test('a partly overlapping picking window is not prorated into invented weekly output', () => {
+test('a partly overlapping picking window is not prorated into invented weekly output',async()=>{
   const row: Planting = { id: 'chard', bedId: beds[0].id, cropKey: 'swiss-chard', sowMonth: 11, once: '2026-11', harvestTargetId: target.id };
   const t = { ...target, cropKey: row.cropKey, startMonth: '2027-01', endMonth: '2027-01' };
   assert.deepEqual(targetPickingWindow(row, t), []);
@@ -80,7 +81,40 @@ test('a partly overlapping picking window is not prorated into invented weekly o
   assert.equal(assessHarvestTarget(whole, beds, [row])!.allocatedKg, beds[0].areaM2 * cropByKey(row.cropKey)!.yieldKgPerM2!);
 });
 
-test('overbooked, pending, finished, missing and incorrectly dated allocations cannot inflate capacity', () => {
+test('a sowing that could be ready before the buyer\'s window opens is credited as before and the grower is told',async()=>{
+  // CP-079 (10 November 2026 accuracy audit). The picking month is the LATE edge: upper
+  // published duration, rounded up, after a two-month nursery. Cabbage sown in January is
+  // credited to an August order (1 + 2 + ceil(125/30) = month 8), while its published range
+  // starts at 65 days — after the shortest one-month nursery it could be cut from April.
+  // The credit is deliberately unchanged; what was missing was any word of this on screen.
+  const cabbage: Planting = { id: 'cab', bedId: beds[0].id, cropKey: 'cabbage', sowMonth: 1, once: '2027-01', harvestTargetId: target.id };
+  const order = { ...target, cropKey: 'cabbage', startMonth: '2027-08', endMonth: '2027-08' };
+  assert.deepEqual(targetPickingWindow(cabbage, order), [2027 * 12 + 7], 'fixture: the January sowing is credited to August');
+  assert.equal(earliestReadyMonthIndex(cabbage, 2027 * 12 + 7), 2027 * 12 + 0 + 1 + Math.floor(65 / 30));
+  const early = assessHarvestTarget(order, beds, [cabbage])!;
+  assert.equal(early.allocatedKg, beds[0].areaM2 * cropByKey('cabbage')!.yieldKgPerM2!, 'the credit itself must not change');
+  assert.equal(early.earlyCycles, 1);
+  assert.equal(early.earliestReadyMonth, '2027-04', 'January + one nursery month + two whole months of 65 days = April');
+
+  // A window that already covers the early end has nothing to warn about.
+  const covered = assessHarvestTarget({ ...order, startMonth: '2027-04' }, beds, [cabbage])!;
+  assert.equal(covered.earlyCycles, 0);
+  assert.equal(covered.earliestReadyMonth, null);
+
+  // A direct-sown crop has no nursery month: carrots sown in November (80-120 days) could
+  // be ready from January, so a January order is not early and a February one is.
+  const carrots: Planting = { id: 'car', bedId: beds[1].id, cropKey: 'carrots', sowMonth: 11, once: '2026-11', harvestTargetId: target.id };
+  assert.equal(earliestReadyMonthIndex(carrots, 0), 2026 * 12 + 10 + 2);
+  assert.equal(assessHarvestTarget({ ...target, startMonth: '2027-01', endMonth: '2027-06' }, beds, [carrots])!.earlyCycles, 0);
+  assert.equal(assessHarvestTarget({ ...target, startMonth: '2027-02', endMonth: '2027-06' }, beds, [carrots])!.earlyCycles, 1);
+
+  // A row that is excluded from the credit is never counted as an early one either.
+  const excluded = assessHarvestTarget(order, beds, [{ ...cabbage, awaitingSowingConfirmation: true }])!;
+  assert.equal(excluded.allocatedKg, 0);
+  assert.equal(excluded.earlyCycles, 0);
+});
+
+test('overbooked, pending, finished, missing and incorrectly dated allocations cannot inflate capacity',async()=>{
   const result = suggest();
   const row = result.plantings[0];
   for (const change of [{ awaitingSowingConfirmation: true }, { finishedOnceSowing: true }, { bedId: 'gone' },
@@ -95,7 +129,7 @@ test('overbooked, pending, finished, missing and incorrectly dated allocations c
   assert.equal(assessHarvestTarget(target, beds, [confirmed])!.allocatedKg, assessHarvestTarget(target, beds, [row])!.allocatedKg);
 });
 
-test('whole open fields stay indivisible and plot-only crops do not leak into beds', () => {
+test('whole open fields stay indivisible and plot-only crops do not leak into beds',async()=>{
   const t = { ...target, cropKey: 'maize', weeklyKg: 0.1 };
   assert.equal(suggest([t], beds).plantings.length, 0);
   const plots: PlanBed[] = [{ id: 'field', label: 'Open field', areaM2: 100, kind: 'plot' }];
@@ -105,7 +139,7 @@ test('whole open fields stay indivisible and plot-only crops do not leak into be
   assert.ok(assessHarvestTarget(t, plots, result.plantings)!.surplusKg > 0);
 });
 
-test('existing crops block occupied ground and a sales target cannot waive rotation', () => {
+test('existing crops block occupied ground and a sales target cannot waive rotation',async()=>{
   const bs = [beds[0]];
   const t = { ...target, cropKey: 'cabbage', startMonth: '2027-06', endMonth: '2027-06' };
   const existing: Planting[] = [{ id: 'previous', bedId: bs[0].id, cropKey: 'broccoli', sowMonth: 6, existing: true }];
@@ -119,7 +153,7 @@ test('existing crops block occupied ground and a sales target cannot waive rotat
   assert.equal(suggest([short], beds, occupied).plantings.length, 0);
 });
 
-test('water and source-calendar gates apply to targets and restore the ordinary planner context', () => {
+test('water and source-calendar gates apply to targets and restore the ordinary planner context',async()=>{
   const baseline = autoSuggestPlan(answers, 'mild-frost', beds, [], now.month, now);
   const dry = suggest([target], beds, [], { ...answers, reliableIrrigation: false });
   assert.equal(dry.plantings.length, 0);
@@ -129,14 +163,14 @@ test('water and source-calendar gates apply to targets and restore the ordinary 
   assert.deepEqual(autoSuggestPlan(answers, 'mild-frost', beds, [], now.month, now), baseline);
 });
 
-test('an unverified incumbent cannot silently release a bed for promised target capacity', () => {
+test('an unverified incumbent cannot silently release a bed for promised target capacity',async()=>{
   const saved: Planting[] = [{ id: 'unverified', bedId: beds[0].id, cropKey: 'unknown-saved-key', sowMonth: 11, existing: true }];
   const result = suggest([target], [beds[0]], saved);
   assert.equal(result.plantings.length, 0);
   assert.ok(result.notes.some((n) => n.kind === 'warning' && n.bedIds?.includes(beds[0].id)));
 });
 
-test('a large order is shared between legal sowing cohorts instead of putting nearly every bed in the first month', () => {
+test('a large order is shared between legal sowing cohorts instead of putting nearly every bed in the first month',async()=>{
   const mappedBeds = Array.from({ length: 24 }, (_, i) => ({ id: `mapped-${i}`, label: `Block / Bed ${i}`, areaM2: 12 * 1.2, minDimM: 1.2 }));
   const order = { ...target, weeklyKg: 5, startMonth: '2026-11', endMonth: '2027-10' };
   const result = suggestHarvestTargets([order], order.siteId, { ...answers, allowMixedCropsInBed: false }, 'summer', mappedBeds, [], now);
@@ -150,7 +184,7 @@ test('a large order is shared between legal sowing cohorts instead of putting ne
   assert.equal(assessHarvestTarget(order, mappedBeds, result.plantings, now)!.shortageKg, 0);
 });
 
-test('raising a target can add a free share to an accepted cohort without replacing its saved row or task identity', () => {
+test('raising a target can add a free share to an accepted cohort without replacing its saved row or task identity',async()=>{
   const small = { ...target, weeklyKg: 0.1 };
   const first = suggest([small], [beds[0]]).plantings;
   assert.equal(first.length, 1);
@@ -164,7 +198,7 @@ test('raising a target can add a free share to an accepted cohort without replac
   assert.equal(suggest([bigger], [beds[0]], [...first, ...extra]).plantings.length, 0);
 });
 
-test('a finished cohort retains its history while replacement sowing tasks get new identities', () => {
+test('a finished cohort retains its history while replacement sowing tasks get new identities',async()=>{
   const order = { ...target, weeklyKg: 0.1 };
   const finished = suggest([order], [beds[0]]).plantings.map((p) => ({ ...p, finishedOnceSowing: true as const }));
   const replacement = suggest([order], [beds[0]], finished).plantings;
@@ -173,27 +207,32 @@ test('a finished cohort retains its history while replacement sowing tasks get n
   assert.ok(assessHarvestTarget(order, [beds[0]], [...finished, ...replacement], now)!.allocatedKg > 0);
 });
 
-test('saved targets round-trip with an account and old crop plans still load without targets', () => {
+test('saved targets round-trip with an account and old crop plans still load without targets',async()=>{
   const original = Object.getOwnPropertyDescriptor(globalThis, 'window');
   const storage = new Map<string, string>();
   const localStorage = { getItem: (k: string) => storage.get(k) ?? null, setItem: (k: string, v: string) => storage.set(k, v) };
   Object.defineProperty(globalThis, 'window', { configurable: true, value: { localStorage, sessionStorage: { getItem: () => null }, dispatchEvent: () => true } });
   bindMountedAccountLocalStorageUid('harvest-owner');
   try {
+    await initialiseCropPlanFixture();
     assert.equal(saveCropPlan({ version: 1, plantings: [], harvestTargets: [target], updatedAt: 1 }), true);
     assert.deepEqual(loadCropPlan().harvestTargets, [target]);
     assert.equal(saveCropPlan({ version: 1, plantings: [], updatedAt: 2 }), true);
     assert.equal(loadCropPlan().harvestTargets, undefined);
-    assert.equal(saveCropPlan({ version: 1, plantings: [], harvestTargets: [target, { ...target, id: 'bad', weeklyKg: Infinity }], updatedAt: 3 }), true);
-    assert.deepEqual(loadCropPlan().harvestTargets, [target]);
+    // Non-JSON quantities cannot be silently serialized into a different claim.
+    const before = readCanonicalCropPlanFixtureRaw();
+    assert.equal(saveCropPlan({ version: 1, plantings: [], harvestTargets: [target, { ...target, id: 'bad', weeklyKg: Infinity }], updatedAt: 3 }), false);
+    assert.equal(readCanonicalCropPlanFixtureRaw(), before);
+    assert.equal(loadCropPlan().harvestTargets, undefined);
   } finally {
+    releaseCropPlanFixture();
     bindMountedAccountLocalStorageUid(null);
     if (original) Object.defineProperty(globalThis, 'window', original);
     else Reflect.deleteProperty(globalThis, 'window');
   }
 });
 
-test('produce packs retain their own unit and conversion rather than borrowing a universal bunch weight', () => {
+test('produce packs retain their own unit and conversion rather than borrowing a universal bunch weight',async()=>{
   const { weeklyKg: _kg, ...base } = target;
   for (const unit of ['bunches', 'bags', 'crates', 'trays', 'each'] as const) {
     const pack = { ...base, unit, weeklyQuantity: 6, kgPerUnit: 0.5, outlet: 'Saturday market' };
@@ -214,7 +253,7 @@ test('produce packs retain their own unit and conversion rather than borrowing a
   assert.ok(result.notes.some((n) => n.text.includes('conversion')));
 });
 
-test('invalid pack counts, conflicting mass fields and impossible allowances cannot become target evidence', () => {
+test('invalid pack counts, conflicting mass fields and impossible allowances cannot become target evidence',async()=>{
   const { weeklyKg: _kg, ...base } = target;
   const pack = { ...base, unit: 'each', weeklyQuantity: 6, kgPerUnit: 0.5 };
   for (const patch of [{ weeklyQuantity: 1.5 }, { weeklyQuantity: 0 }, { weeklyQuantity: Infinity },
@@ -229,7 +268,7 @@ test('invalid pack counts, conflicting mass fields and impossible allowances can
   assert.equal(sanitiseHarvestTargets([{ ...target, kgPerUnit: 0.5 }]).length, 0);
 });
 
-test('a grower saleable allowance increases target area without changing the catalogue or gross harvest benchmark', () => {
+test('a grower saleable allowance increases target area without changing the catalogue or gross harvest benchmark',async()=>{
   const crop = structuredClone(cropByKey(target.cropKey));
   const half = { ...target, marketablePercent: 50 };
   const rows = suggest().plantings;
@@ -251,7 +290,7 @@ test('a grower saleable allowance increases target area without changing the cat
   assert.deepEqual(cropByKey(target.cropKey), crop);
 });
 
-test('saleable targets allocate additional real space and keep accepted rows when the allowance changes', () => {
+test('saleable targets allocate additional real space and keep accepted rows when the allowance changes',async()=>{
   const order = { ...target, weeklyKg: 0.5 };
   const first = suggest([order]).plantings;
   const copy = structuredClone(first);
@@ -263,7 +302,7 @@ test('saleable targets allocate additional real space and keep accepted rows whe
   assert.deepEqual(first, copy);
 });
 
-test('unknown pack weights and private outlet assumptions survive the existing account-scoped plan store', () => {
+test('unknown pack weights and private outlet assumptions survive the existing account-scoped plan store',async()=>{
   const original = Object.getOwnPropertyDescriptor(globalThis, 'window');
   const storage = new Map<string, string>();
   const localStorage = { getItem: (k: string) => storage.get(k) ?? null, setItem: (k: string, v: string) => storage.set(k, v) };
@@ -272,13 +311,17 @@ test('unknown pack weights and private outlet assumptions survive the existing a
   const pack = { ...base, unit: 'bunches' as const, weeklyQuantity: 10, marketablePercent: 75, outlet: 'Private restaurant order' };
   bindMountedAccountLocalStorageUid('pack-owner');
   try {
+    await initialiseCropPlanFixture();
     assert.equal(saveCropPlan({ version: 1, plantings: [], harvestTargets: [pack], updatedAt: 1 }), true);
     assert.deepEqual(loadCropPlan().harvestTargets, [pack]);
     bindMountedAccountLocalStorageUid('different-account');
+    await initialiseCropPlanFixture();
     assert.equal(loadCropPlan().harvestTargets, undefined);
     bindMountedAccountLocalStorageUid('pack-owner');
+    await initialiseCropPlanFixture();
     assert.deepEqual(loadCropPlan().harvestTargets, [pack]);
   } finally {
+    releaseCropPlanFixture();
     bindMountedAccountLocalStorageUid(null);
     if (original) Object.defineProperty(globalThis, 'window', original);
     else Reflect.deleteProperty(globalThis, 'window');

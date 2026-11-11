@@ -2,20 +2,27 @@
 
 // DesignAdvisor — floating advice card over the Design Studio canvas.
 //
-// Runs evaluateDesign() locally (instant, free) on every state change and shows the
-// top advice as a small card. A badge expands the rest, plus an "Ask AI" button that
-// calls /api/design-advice for a few extra farmer-friendly suggestions.
+// Regional tips need the current saved-site country basis. Explicit paid requests
+// additionally match the displayed semantic source to the caller's saved canvas.
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { Sparkles, X, ChevronUp, ChevronDown, TriangleAlert, Lightbulb, Loader2 } from 'lucide-react';
-import type { DesignCanvasState, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { pointInRing } from '@/lib/design-canvas';
-import { ELEMENTS_BY_ID, GROUND_FEATURES } from '@/lib/design-elements';
-import { evaluateDesign, type Advice, type AdviceLayer } from '@/lib/design-rules';
+import type { DesignCanvasState } from '@/lib/design-canvas';
+import { DESIGN_CANVAS_CHANGED_EVENT, readCanvasSourceReceipt } from '@/lib/design-canvas';
+import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import { evaluateDesign, type AdviceLayer } from '@/lib/design-rules';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
-import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
+import { useAuth } from '@/lib/auth';
+import { getFirebase } from '@/lib/firebase/init';
+import { activeAccountUid } from '@/lib/account-local-storage';
+import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
+import { currentPlanningSupport } from '@/lib/international/planning-support';
+import { DESIGN_ADVICE_DEMO_SITE, inspectDesignAdviceSource } from '@/lib/design-advice-source';
+import { requestDesignAdvice, type DesignAdviceClientSnapshot } from '@/lib/design-advice-client';
+import { largestStudioRing } from '@/lib/base-layers';
+import { ringCentroid } from '@/lib/water-system';
 
 const GOLD = '#F7C97E';
 const DARK = '#0B120B';
@@ -52,120 +59,110 @@ interface AiSuggestion {
   msg: string;
 }
 
-// 8-point compass label for an item's position relative to the frame centre.
-function compassEighth(dx: number, dy: number): string {
-  // dx, dy in normalised [-0.5..0.5] space; y increases southward (screen convention).
-  if (Math.abs(dx) < 0.03 && Math.abs(dy) < 0.03) return 'centre';
-  const angle = (Math.atan2(dx, -dy) * 180) / Math.PI; // 0 = north, 90 = east
-  const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-  const idx = Math.round(((angle % 360) + 360) % 360 / 45) % 8;
-  return dirs[idx];
-}
-
-function zoneForItem(item: PlacedItem, zones: ZoneShape[]): number | null {
-  for (const z of zones) {
-    if (z.points.length >= 3 && pointInRing([item.x, item.y], z.points)) return z.zone;
-  }
-  return null;
-}
-
-// Rough shoelace area in normalised units, scaled by frame metres for a ballpark m² — shared by
-// the effort-zone and ground-feature summaries below so the two can't compute area two ways.
-function ringAreaM2(points: Array<[number, number]>, frame: DesignCanvasState['frame']): number {
-  let area2 = 0;
-  for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
-    const [xi, yi] = points[i];
-    const [xj, yj] = points[j];
-    area2 += xj * yi - xi * yj;
-  }
-  const normArea = Math.abs(area2) / 2;
-  return Math.round(normArea * frame.imgW * frame.mPerPx * frame.imgH * frame.mPerPx);
-}
-
-function buildDesignSummary(state: DesignCanvasState) {
-  // Ground-feature areas (house/patio/lawn…) ride on ZoneShape but are NOT effort-zones —
-  // exclude them from the advisor's zone reasoning.
-  const effortZones = state.zones.filter((z) => !z.feature);
-  const items = state.items.map((it) => {
-    const def = ELEMENTS_BY_ID[it.defId];
-    const dx = it.x - 0.5;
-    const dy = it.y - 0.5;
-    return {
-      name: def?.name ?? it.defId,
-      zone: zoneForItem(it, effortZones),
-      approxPos: compassEighth(dx, dy),
-    };
-  });
-
-  const zones = effortZones.map((z) => ({ zone: z.zone, areaApprox: ringAreaM2(z.points, state.frame) }));
-
-  // EXISTING SITE FABRIC — the farmer's traced house, patio, driveway, lawn, veg garden, orchard,
-  // cleared ground and boundary. Lima answering "where should I put a chicken coop" or "is this a
-  // good spot for a food forest" with no idea the farmer already has a lawn there, or where the
-  // driveway runs, is exactly the "advice that ignores the actual design" gap this summary exists to
-  // close (docs/ACTIVE-MAP-QUALITY-TASKS.md P3: "Give Ask Lima structured design and location
-  // context ... existing elements"). Read-only: this only widens what Lima is TOLD, never what it
-  // can do — Lima still only proposes, the farmer still places everything themselves.
-  const groundFeatures = state.zones
-    .filter((z) => z.feature && z.feature !== 'boundary' && z.points.length >= 3)
-    .map((z) => ({ kind: GROUND_FEATURES[z.feature!]?.label ?? z.feature, areaApprox: ringAreaM2(z.points, state.frame) }));
-
-  const lineKinds = state.lines.reduce<Record<string, number>>((acc, l) => {
-    acc[l.kind] = (acc[l.kind] ?? 0) + 1;
-    return acc;
-  }, {});
-
-  return {
-    currentStep: state.step,
-    items,
-    zones,
-    groundFeatures,
-    lines: lineKinds,
-    counts: { items: state.items.length, zones: state.zones.length, lines: state.lines.length, groundFeatures: groundFeatures.length },
-  };
-}
-
-export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simple = false }: DesignAdvisorProps) {
+export default function DesignAdvisor({ state, simple = false }: DesignAdvisorProps) {
   const { t } = useLanguage();
-  const [advice, setAdvice] = useState<Advice[]>([]);
+  const { user } = useAuth();
   // The tip card starts CLOSED and only opens when the farmer taps the chip. It used to open
   // itself, and the effect below reset the dismissal on EVERY edit (lastChangeId is updatedAt,
   // which restamps on every drag/add/delete) — so it reappeared the instant you closed it, on top
   // of the tool row. A tip must never stand between the farmer and their next action.
   const [tipOpen, setTipOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const [aiSuggestions, setAiSuggestions] = useState<AiSuggestion[]>([]);
-  const [aiLoading, setAiLoading] = useState(false);
-  const [aiError, setAiError] = useState<string | null>(null);
+  const [storedSuggestions, setAiSuggestions] = useState<AiSuggestion[]>([]);
+  const [loadingKey, setLoadingKey] = useState<string | null>(null);
+  const [storedError, setAiError] = useState<string | null>(null);
+  const [resultKey, setResultKey] = useState<string | null>(null);
+  const [, refreshContext] = useState(0);
+  const liveState = useRef(state);
+  liveState.current = state;
+  const requestVersion = useRef(0);
+  const pending = useRef<AbortController | null>(null);
+
+  function readContext() {
+    try {
+      const current = liveState.current, sample = isSampleMode(), ownerUid = activeAccountUid();
+      const tokenUser = getFirebase()?.auth.currentUser ?? null;
+      const source = inspectDesignAdviceSource(current, current.siteId);
+      const support = currentPlanningSupport(current.siteId);
+      const reference = sample && current.siteId === DESIGN_ADVICE_DEMO_SITE;
+      const receipt = readCanvasSourceReceipt(current.siteId);
+      const savedSource = receipt.status === 'ready' ? inspectDesignAdviceSource(receipt.raw, current.siteId) : null;
+      const agreesWithDevice = receipt.status === 'ready' && receipt.ownerUid === ownerUid && receipt.sample === sample
+        && savedSource?.status === 'ready' && source.status === 'ready' && savedSource.canonical === source.canonical;
+      const localReady = source.status === 'ready' && (reference || !sample && agreesWithDevice
+        && support.allowCataloguePlanning && support.mode === 'south-african-site');
+      const countryFingerprint = reference ? `original-demo-reference:${current.siteId}` : support.fingerprint;
+      const key = source.status === 'ready' ? JSON.stringify([ownerUid, tokenUser?.uid ?? null, sample,
+        current.siteId, current.step, source.canonical, countryFingerprint]) : null;
+      const snapshot: DesignAdviceClientSnapshot | null = localReady && key
+        && (reference || !!ownerUid && ownerUid === tokenUser?.uid)
+        ? { key, mode: reference ? 'original-demo-reference' : 'personal-site', siteId: current.siteId,
+            currentStep: current.step, raw: current, countryFingerprint }
+        : null;
+      return { localReady, snapshot, tokenUser, reference };
+    } catch {
+      return { localReady: false, snapshot: null, tokenUser: null, reference: false };
+    }
+  }
+  const context = readContext();
+  const contextKey = context.snapshot?.key ?? null;
+  const aiSuggestions = resultKey === contextKey && contextKey ? storedSuggestions : [];
+  const aiError = resultKey === contextKey && contextKey ? storedError : null;
+  const aiLoading = !!contextKey && loadingKey === contextKey;
+  const askLabel = context.reference ? 'Ask Lima about the original sample layout' : t('designAdvisorAskLima');
+  const referenceBasis = <div lang="en" style={{ color: '#FBF6EC', fontSize: 11, background: GLASS, borderRadius: 8, padding: '5px 8px' }}>
+    {context.reference ? 'South African sample reference' : 'Existing South African references · grower-confirmed country; local agronomy is unverified.'}
+    {!context.snapshot && <div>Sign in and save this site’s country details to ask Lima.</div>}
+  </div>;
+  const unavailable = 'Local design advice needs a supported saved site and current country details. Your drawing remains available.';
+  // These props previously had no source identity. A roof traced on this admitted
+  // canvas is usable; the old fetched site and map-only roof props are unbound.
+  const advice = useMemo(() => {
+    if (!context.localReady) return [];
+    const house = largestStudioRing(state, 'house');
+    return evaluateDesign(state, ELEMENTS_BY_ID, undefined, house ? { houseXY: ringCentroid(house) } : undefined);
+  }, [state, context.localReady]);
   // Wraps the whole cluster so an outside tap can dismiss it (below). Lives on the shell — the
   // transparent shell has pointerEvents:'none', so only the visible chip/card counts as "inside".
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    const next = evaluateDesign(
-      state,
-      ELEMENTS_BY_ID,
-      site
-        ? {
-            windFromSummer: site.windFromSummer,
-            slopeDeg: site.slopeDeg,
-            aspectLabel: site.aspectLabel,
-            rainfallMm: site.rainfallMm,
-            slopePct: site.slopePct,
-          }
-        : undefined,
-      houseXY ? { houseXY } : undefined,
-    );
-    setAdvice(next);
-    // Deliberately does NOT touch tipOpen: refreshing the advice must never force the card back
-    // open (that was the "can't move on without closing it" bug), nor slam it shut while the
-    // farmer is reading it mid-edit.
-    // A fresh state change invalidates any previously-fetched AI suggestions.
+    let active = true;
+    let refreshQueued = false;
+    let latestInvalidationVersion = 0;
+    function invalidate() {
+      latestInvalidationVersion = ++requestVersion.current;
+      pending.current?.abort();
+      // Navigation saves dispatch while the parent's state updater is rendering.
+      // Revoke advice now; only React's refresh waits until that render is over.
+      if (refreshQueued) return;
+      refreshQueued = true;
+      queueMicrotask(() => {
+        if (!active) return;
+        refreshQueued = false;
+        const invalidationVersion = latestInvalidationVersion;
+        // A new Ask can start before this refresh, or while React queues its setter.
+        setLoadingKey(current => requestVersion.current === invalidationVersion ? null : current);
+        refreshContext(value => value + 1);
+      });
+    }
+    const events = ['permamap-places-changed', DESIGN_CANVAS_CHANGED_EVENT, SAMPLE_MODE_EVENT, 'storage'];
+    for (const event of events) window.addEventListener(event, invalidate);
+    return () => {
+      active = false;
+      ++requestVersion.current;
+      pending.current?.abort();
+      for (const event of events) window.removeEventListener(event, invalidate);
+    };
+  }, []);
+  useEffect(() => {
+    ++requestVersion.current;
+    pending.current?.abort();
+    setLoadingKey(null);
     setAiSuggestions([]);
     setAiError(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.items.length, state.zones.length, state.lines.length, lastChangeId]);
+    setResultKey(null);
+  }, [contextKey, user?.uid]);
 
   // Dismiss on a tap/click ANYWHERE outside the cluster (Rory: "i cant close lima if i click
   // anywhere — it should close auto"), plus Escape. Only armed while something is open, so the
@@ -221,37 +218,30 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simp
   const rest = forThisLayer.slice(1);
   const moreCount = rest.length;
 
-  const designSummary = useMemo(() => buildDesignSummary(state), [state]);
-
   async function askAi() {
-    setAiLoading(true);
+    const captured = readContext(), snapshot = captured.snapshot;
+    if (!snapshot) return;
+    pending.current?.abort();
+    const controller = new AbortController();
+    pending.current = controller;
+    const version = ++requestVersion.current;
+    const isCurrent = () => {
+      const next = readContext();
+      return requestVersion.current === version && next.snapshot?.key === snapshot.key && next.tokenUser === captured.tokenUser;
+    };
+    setLoadingKey(snapshot.key);
+    setResultKey(snapshot.key);
     setAiError(null);
-    try {
-      const res = await fetch('/api/design-advice', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
-        body: JSON.stringify({ designSummary, site }),
-      });
-      if (!res.ok) {
-        const errBody = await res.json().catch(() => ({}));
-        // Only the 429 body (lib/api-rate-limit.ts) is farmer copy; other error bodies are developer text.
-        throw new UserFacingError(res.status === 429 && errBody?.error || formatDesignTranslation(t('designAdvisorRequestFailed'), {
-          status: res.status,
-        }));
-      }
-      const data = await res.json();
-      const suggestions: string[] = Array.isArray(data?.suggestions) ? data.suggestions : [];
-      // Drop blank/whitespace suggestions — otherwise they render as bare "LIMA" badges with no
-      // text (Rory: "Ask AI does something weird"). If NONE survive, say so instead of showing
-      // empty pills.
-      const clean = suggestions.map((s) => (typeof s === 'string' ? s.trim() : '')).filter(Boolean);
-      setAiSuggestions(clean.map((msg) => ({ msg })));
-      if (clean.length === 0) setAiError(t('designAdvisorNothingToAdd'));
+    setAiSuggestions([]);
+    const result = await requestDesignAdvice({ snapshot, isCurrent, signal: controller.signal,
+      headers: () => paidApiHeaders(captured.tokenUser), fetcher: init => fetch('/api/design-advice', init) });
+    if (!isCurrent() || result.status === 'stale') return;
+    setLoadingKey(null);
+    if (result.status === 'error') setAiError(result.error ?? t('designAdvisorUnavailable'));
+    else {
+      setAiSuggestions(result.suggestions.map(msg => ({ msg })));
+      if (!result.suggestions.length) setAiError(t('designAdvisorNothingToAdd'));
       else setExpanded(true);
-    } catch (err) {
-      setAiError(userFacingMessage(err, t('designAdvisorUnavailable'), t));
-    } finally {
-      setAiLoading(false);
     }
   }
 
@@ -277,6 +267,10 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simp
   };
   const inner: CSSProperties = { pointerEvents: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 };
 
+  if (!context.localReady) {
+    return <div ref={containerRef} style={shell}><div style={inner} lang="en"><ErrorPill message={unavailable} /></div></div>;
+  }
+
   if (!top) {
     // No local advice — still offer the AI pill. Simple has no AI suggestion feed: nothing to
     // show yet means nothing renders.
@@ -284,9 +278,10 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simp
     return (
       <div ref={containerRef} style={shell}>
         <div style={inner}>
-          <AskAiButton onClick={askAi} loading={aiLoading} label={t('designAdvisorAskLima')} />
+          {referenceBasis}
+          <AskAiButton onClick={askAi} loading={aiLoading} label={askLabel} disabled={!context.snapshot} english={context.reference} />
           {aiError && <ErrorPill message={aiError} />}
-          {aiSuggestions.length > 0 && <AiList suggestions={aiSuggestions} />}
+          {aiSuggestions.length > 0 && <AiList reference={context.reference} suggestions={aiSuggestions} />}
         </div>
       </div>
     );
@@ -297,6 +292,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simp
     return (
       <div ref={containerRef} style={shell}>
         <div style={inner}>
+          {referenceBasis}
           <button
             onClick={() => setTipOpen(true)}
             aria-label={formatDesignTranslation(t('designAdvisorTapToRead'), {
@@ -324,9 +320,9 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simp
             Lima · {forThisLayer.length}{layerName ? ` ${layerName}` : ''}{' '}
             {t(forThisLayer.length === 1 ? 'designAdvisorTip' : 'designAdvisorTips')}
           </button>
-          {!simple && <AskAiButton onClick={askAi} loading={aiLoading} label={t('designAdvisorAskLima')} />}
+          {!simple && <AskAiButton onClick={askAi} loading={aiLoading} label={askLabel} disabled={!context.snapshot} english={context.reference} />}
           {!simple && aiError && <ErrorPill message={aiError} />}
-          {!simple && aiSuggestions.length > 0 && <AiList suggestions={aiSuggestions} />}
+          {!simple && aiSuggestions.length > 0 && <AiList reference={context.reference} suggestions={aiSuggestions} />}
         </div>
       </div>
     );
@@ -335,6 +331,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simp
   return (
     <div ref={containerRef} style={shell}>
       <div style={inner}>
+      {referenceBasis}
       <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: GOLD, fontSize: 11, fontWeight: 800, letterSpacing: 0.3, paddingLeft: 2 }}>
         <Sparkles size={12} /> LIMA{layerName ? ` · ${layerName.toUpperCase()}` : ''}
       </div>
@@ -407,7 +404,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simp
             {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
           </button>
         )}
-        <AskAiButton onClick={askAi} loading={aiLoading} label={t('designAdvisorAskLima')} />
+        <AskAiButton onClick={askAi} loading={aiLoading} label={askLabel} disabled={!context.snapshot} english={context.reference} />
       </div>
       )}
 
@@ -450,7 +447,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simp
               <span>{a.msg}</span>
             </div>
           ))}
-          {aiSuggestions.length > 0 && <AiList suggestions={aiSuggestions} inline />}
+          {aiSuggestions.length > 0 && <AiList reference={context.reference} suggestions={aiSuggestions} inline />}
         </div>
       )}
       </div>
@@ -458,11 +455,12 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simp
   );
 }
 
-function AskAiButton({ onClick, loading, label }: { onClick: () => void; loading: boolean; label: string }) {
+function AskAiButton({ onClick, loading, label, disabled = false, english = false }: { onClick: () => void; loading: boolean; label: string; disabled?: boolean; english?: boolean }) {
   return (
     <button
       onClick={onClick}
-      disabled={loading}
+      disabled={loading || disabled}
+      lang={english ? 'en' : undefined}
       style={{
         minHeight: 32,
         padding: '4px 10px',
@@ -475,8 +473,8 @@ function AskAiButton({ onClick, loading, label }: { onClick: () => void; loading
         display: 'flex',
         alignItems: 'center',
         gap: 4,
-        cursor: loading ? 'default' : 'pointer',
-        opacity: loading ? 0.7 : 1,
+        cursor: loading || disabled ? 'default' : 'pointer',
+        opacity: loading || disabled ? 0.7 : 1,
       }}
     >
       {loading ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} color={GOLD} />}
@@ -502,7 +500,7 @@ function ErrorPill({ message }: { message: string }) {
   );
 }
 
-function AiList({ suggestions, inline }: { suggestions: AiSuggestion[]; inline?: boolean }) {
+function AiList({ suggestions, inline, reference }: { suggestions: AiSuggestion[]; inline?: boolean; reference?: boolean }) {
   // Standalone (non-inline) use renders directly over the satellite map — without an opaque
   // card behind it the text read as messy, low-contrast overlay text that also crowded the
   // "Lima · N tips" / "Ask Lima" chips right above it. Give it the same solid dark card
@@ -531,6 +529,7 @@ function AiList({ suggestions, inline }: { suggestions: AiSuggestion[]; inline?:
             }),
       }}
     >
+      {reference && <div lang="en" style={{ fontSize: 12, fontWeight: 700 }}>Original sample layout reference — your edits were not analysed.</div>}
       {suggestions.map((s, i) => (
         <div key={i} style={{ display: 'flex', gap: 6, fontSize: 12.5, lineHeight: 1.3 }}>
           <span

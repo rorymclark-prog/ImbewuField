@@ -8,6 +8,7 @@ import styles from './SiteSurveySheet.module.css';
 import SurveyZuluDraftPair from './SurveyZuluDraftPair';
 import SiteSurveyProductionYear from './SiteSurveyProductionYear';
 import type { LocationData } from '@/lib/types';
+import { normaliseElevationEvidence, normaliseSiteEnergy } from '@/lib/site-energy';
 
 const LABELS: Record<string, string> = {
   food:'goalFoodSecurityLabel',income:'goalGenerateIncomeLabel',soil:'challengePoorSoil',education:'goalDemonstrateTeachLabel',
@@ -31,6 +32,10 @@ export default function SiteSurveyReview({ survey:s, onEdit, onEditProduction, p
 }) {
   const {lang,t}=useLanguage();
   const unknown=t('surveyNotRecorded');
+  const elevation=normaliseElevationEvidence(s.elevationEvidence,s.siteId);
+  const energy=normaliseSiteEnergy(s.energyEvidence,s.siteId);
+  const solar=energy?.solar;
+  const wind=energy?.wind;
   const list=(values:string[], overrides:Record<string,string>={})=>values.length?values.map(v=>t(overrides[v]??LABELS[v]??(v==='none'?'surveyNoneReported':v))).join(' · '):unknown;
   const challengeSources:Record<string,string>={drought:'Drought / dry spells',pests:'Pests & disease',soil:'Poor / degraded soil',water:'Limited water access',funding:'Funding / costs',labour:'Not enough labour',flooding:'Flooding / erosion',market:'Market access',none:'No major challenges'};
   const practiceSources:Record<string,string>={organic:'Fully organic','mostly-organic':'Mostly organic',conventional:'Conventional',experimenting:'Experimenting / mixed'};
@@ -57,6 +62,8 @@ export default function SiteSurveyReview({ survey:s, onEdit, onEditProduction, p
       [t('sectionHowIsLandPrepared'),list(s.landPrepMethod?[s.landPrepMethod]:[])],
       [t('sectionSoilInputs'),list(s.soilAmendments)],
       [t('sectionFencing'),s.hasFencing?t({full:'fencingFull',partial:'fencingPartial',none:'fencingNone'}[s.hasFencing]??s.hasFencing):unknown],
+      ['Approximate terrain elevation',elevation?.model?`${elevation.model.elevationM} m above sea level`:unknown,elevation?.model?'OpenTopoData SRTM30m · retrieval date not recorded · not a surveyed benchmark':''],
+      ['Separate elevation benchmark',elevation?.benchmark?.elevationM!=null?`${elevation.benchmark.elevationM} m`:unknown,elevation?.benchmark?`${elevation.benchmark.method}; source: ${elevation.benchmark.source||'not recorded'}; datum: ${elevation.benchmark.datum||'unknown'}; date: ${elevation.benchmark.observedOn||'not recorded'}`:''],
     ]},
     {step:2,Icon:Sprout,title:t('surveyGrowingResources'),rows:[
       [t('sectionCropsGrowing'),list(s.existingCrops)],
@@ -77,6 +84,9 @@ export default function SiteSurveyReview({ survey:s, onEdit, onEditProduction, p
       [t('toggleGuttersLabel'),t(s.hasGutters?'surveyAnswerYes':'surveyAnswerNo')],
       [t('sectionMainBuildingRoofArea'),area(s.roofMainM2),s.roofMainM2===null?'':t(s.roofAreaSource==='auto'?'surveySourceMap':'surveySourceFarmer')],
       [t('sectionSecondaryRoofs'),area(s.roofSecondaryM2),s.roofSecondaryM2===null?'':t(s.roofSecondarySource==='auto'?'surveySourceMap':'surveySourceFarmer')],
+      ['Solar reference',solar?`${solar.annualKwh} kWh/year for an assumed 1 kWp`:unknown,solar?`JRC PVGIS ${solar.version}; ${solar.radiationDatabase}/${solar.meteorologicalDatabase}; ${solar.startYear}–${solar.endYear}; retrieved ${solar.fetchedAt}. c-Si, free-standing, tilt ${solar.tiltDegrees}°, azimuth ${solar.azimuthDegreesFromSouth}° from south; losses 14%; terrain horizon. Not installed capacity.`:''],
+      ['Nearby solar shade',energy?.solarShadeNotes||unknown,'Farmer-reported observation'],
+      ['Wind resource',wind?`${wind.meanSpeedMs??'Unknown'} m/s at ${wind.heightM??'unknown'} m above ground`:unknown,wind?`${wind.kind==='atlas'?'Manually recorded atlas':'Reported measurement'}; ${wind.source||'source unknown'}; period ${wind.period||'unknown'}; exposure ${wind.exposure||'unknown'}; obstacles ${wind.obstacles||'not recorded'}. Not turbine kWh.`:''],
     ]},
     {step:6,Icon:AlertTriangle,title:paired('stepChallenges','Challenges & Priorities'),rows:[
       [paired('sectionFarmingApproach','Farming approach'),s.farmingPractice?paired(LABELS[s.farmingPractice]??s.farmingPractice,practiceSources[s.farmingPractice]??s.farmingPractice):unknown],

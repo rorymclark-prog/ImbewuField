@@ -115,6 +115,17 @@ export function numberLabel(n: number, maximumFractionDigits = 3): string {
   return `${sign}${grouped}${frac ? `.${frac}` : ''}`;
 }
 
+/** Whole-cycle demand can divide weekly records into recurring decimals. Keep
+ * those tails off the phone without turning a small positive requirement into
+ * zero, or presenting a rounded estimate as the exact supplied quantity. */
+export function estimateNumberLabel(value: number | null): string {
+  if (value === null || !Number.isFinite(value)) return 'Unknown';
+  const label = numberLabel(value);
+  const displayed = Number(label.replace(/ /g, ''));
+  if (displayed === 0 && value !== 0) return String(value);
+  return displayed === value ? label : `≈${label}`;
+}
+
 /**
  * '15 Aug 2026' — the staff dashboards' shared date format (mentor, assessments, ngo). Raw
  * 'YYYY-MM-DD' strings were leaking straight onto the screen (e.g. 'Due 2026-08-01'); this is

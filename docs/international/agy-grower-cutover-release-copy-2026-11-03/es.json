@@ -1,0 +1,44 @@
+{
+  "locale": "es",
+  "sourceSha256": "995635430ac2753284e1e264194f6a0e12657fa60bf4984258b8ffd1606cdcf1",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "growerCutoverRelease01",
+      "english": "Keep newer crop plans safe when an older app session saves its copy.",
+      "sha256": "ba6b3858225ab4b16d7fc6df426a1f1b5d0e8423cc320c66895391907d7b213d",
+      "translation": "Mantén seguros los planes de cultivo más recientes cuando una sesión anterior de la aplicación guarda su copia."
+    },
+    {
+      "key": "growerCutoverRelease02",
+      "english": "Review retained copies before continuing with your current crop plan.",
+      "sha256": "cb1f629bc8f3149595693cbb263317862972f7d96e8cbb9a0bf37a5cf5458154",
+      "translation": "Revisa las copias conservadas antes de continuar con tu plan de cultivo actual."
+    },
+    {
+      "key": "growerCutoverRelease03",
+      "english": "Retry interrupted guest crop transfers without replacing saved account work.",
+      "sha256": "e45178673850c502670623568d922bd5e174980df1ef5e01203238cfb8f85d50",
+      "translation": "Reintenta las transferencias interrumpidas de trabajo de cultivo de invitado sin reemplazar el trabajo guardado en la cuenta."
+    },
+    {
+      "key": "growerCutoverRelease04",
+      "english": "Review crop-plan storage",
+      "sha256": "9f71b653e482a228a2420a523b2ddd0ae66fb0127ce408365181d1f31e9a2e40",
+      "translation": "Revisar el almacenamiento del plan de cultivo"
+    },
+    {
+      "key": "growerCutoverRelease05",
+      "english": "Production plan → Crop-plan storage",
+      "sha256": "69d18ea436cf193452d776b56982187910fbba8d8d23e1c4351a4804394cea4a",
+      "translation": "Plan de producción → Almacenamiento del plan de cultivo"
+    },
+    {
+      "key": "growerCutoverRelease06",
+      "english": "Check the storage notice. If an older session changed its copy, download both copies and review them before choosing to keep your current plan.",
+      "sha256": "7e1a7564efa6947f7b405503d2f60804a0e08ebf14c56b4924e7a3fdc666dc83",
+      "translation": "Comprueba el aviso de almacenamiento. Si una sesión anterior modificó su copia, descarga ambas copias y revísalas antes de elegir mantener tu plan actual."
+    }
+  ]
+}

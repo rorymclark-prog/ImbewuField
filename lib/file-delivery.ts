@@ -70,19 +70,67 @@ export function prefersShareSheet(): boolean {
   }
 }
 
-/** Always a real download, straight to the browser's download folder. */
-export function downloadFile(blob: Blob, filename: string): FileDelivery {
+type DownloadContextCurrent = () => boolean | Promise<boolean>;
+type DownloadHandoffCurrent = () => boolean;
+
+function prepareDownload(blob: Blob, filename: string): { download: (handoffCurrent?: DownloadHandoffCurrent) => FileDelivery; discard: () => void } {
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  a.rel = 'noopener';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  // Revoking immediately can cancel the download on some WebKit builds.
-  setTimeout(() => URL.revokeObjectURL(url), 10_000);
-  return 'downloaded';
+  let anchor: HTMLAnchorElement | null = null;
+  let released = false;
+  function release(delayed: boolean) {
+    if (released) return;
+    released = true;
+    try { anchor?.remove(); }
+    finally {
+      // Revoking immediately can cancel a handed-off download on WebKit.
+      if (delayed) setTimeout(() => URL.revokeObjectURL(url), 10_000);
+      else URL.revokeObjectURL(url);
+    }
+  }
+  try {
+    anchor = document.createElement('a');
+    anchor.hidden = true;
+    anchor.tabIndex = -1;
+    anchor.href = url;
+    anchor.download = filename;
+    anchor.rel = 'noopener';
+    document.body.appendChild(anchor);
+  } catch (error) {
+    release(false);
+    throw error;
+  }
+  return {
+    download(handoffCurrent) {
+      let admitted = false;
+      try { admitted = handoffCurrent === undefined || handoffCurrent() === true; } catch { /* A withdrawn view cannot hand off its file. */ }
+      if (!admitted) { release(false); return 'cancelled'; }
+      try { anchor!.click(); }
+      catch (error) { release(false); throw error; }
+      release(true);
+      return 'downloaded';
+    },
+    discard: () => release(false),
+  };
+}
+
+async function downloadCurrentFile(blob: Blob, filename: string, contextCurrent: DownloadContextCurrent, handoffCurrent?: DownloadHandoffCurrent): Promise<FileDelivery> {
+  const current = async () => { try { return (await contextCurrent()) === true; } catch { return false; } };
+  if (!await current()) return 'cancelled';
+  const prepared = prepareDownload(blob, filename);
+  // Preparation can outlive the original saved-source view. Its caller owns
+  // the actual fresh-reader check; a hidden anchor grants no permission itself.
+  if (!await current()) { prepared.discard(); return 'cancelled'; }
+  // Other promise continuations may retire the view after the fresh read passes.
+  // Its synchronous revocation predicate runs in the click path without awaiting.
+  return prepared.download(handoffCurrent);
+}
+
+/** The unguarded form stays synchronous; a guarded handoff awaits fresh admission. */
+export function downloadFile(blob: Blob, filename: string): FileDelivery;
+export function downloadFile(blob: Blob, filename: string, contextCurrent: undefined): FileDelivery;
+export function downloadFile(blob: Blob, filename: string, contextCurrent: DownloadContextCurrent, handoffCurrent?: DownloadHandoffCurrent): Promise<FileDelivery>;
+export function downloadFile(blob: Blob, filename: string, contextCurrent?: DownloadContextCurrent, handoffCurrent?: DownloadHandoffCurrent): FileDelivery | Promise<FileDelivery> {
+  return contextCurrent === undefined ? prepareDownload(blob, filename).download() : downloadCurrentFile(blob, filename, contextCurrent, handoffCurrent);
 }
 
 /** Explicit sharing honours the choice on desktop too, and reports cancellation separately. */
@@ -128,10 +176,15 @@ export function openFileInTab(blob: Blob): boolean {
 }
 
 /** The default route for this device, with the other always still available. */
-export async function deliverFile(blob: Blob, filename: string, shareTitle: string): Promise<FileDelivery> {
+export async function deliverFile(blob: Blob, filename: string, shareTitle: string, contextCurrent?: () => boolean): Promise<FileDelivery> {
+  const current = () => { try { return contextCurrent === undefined || contextCurrent() === true; } catch { return false; } };
+  if (!current()) return 'cancelled';
   if (prefersShareSheet()) {
     const result = await shareFile(blob, filename, shareTitle);
     if (result !== 'unavailable') return result;
   }
-  return downloadFile(blob, filename);
+  // A share sheet may outlive the account/site that produced this private file.
+  // Withdrawing that original context also withdraws its delayed download fallback.
+  if (!current()) return 'cancelled';
+  return contextCurrent ? downloadFile(blob, filename, contextCurrent, contextCurrent) : downloadFile(blob, filename);
 }

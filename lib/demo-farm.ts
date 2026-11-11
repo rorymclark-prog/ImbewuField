@@ -22,6 +22,7 @@ import { SAMPLE_ORCHARD, sampleOrchardRecords } from './sample-orchard';
 
 import type { FeatureCollection, Geometry } from 'geojson';
 import type { CropPlanState, Planting } from './crop-plan';
+import type { RainPattern } from './crop-catalog';
 // The sample farm's money is priced from the app's own researched price table,
 // never from figures typed into this fixture — see pricePerKg below.
 import { DEFAULT_CROP_PRICES } from './crop-prices';
@@ -40,6 +41,31 @@ import type { LocationData } from './types';
 import { buildDemoGeometryLockFixture } from './demo-geometry-fixture';
 
 export const DEMO_SITE = Object.freeze({ lat: -27.726231, lon: 31.963044, name: 'Ubhejane Crèche' });
+
+/* THE SAMPLE FARM'S SOWING CALENDAR IS PART OF THE SAMPLE, NOT A LIVE READING
+   (Rory, 10 November 2026: "go ahead with the fixed calendar for the sample farm").
+
+   The planner normally reads a site's calendar from climate records fetched for its
+   coordinates. For the sample farm that made the first screen a visitor sees depend on
+   a network call. Where the climate route requires sign-in (the preview does, and
+   /api/location-data is deliberately outside the sample guest lane) the call is
+   refused, the page falls back to the nearest reference region, and the sample's plan,
+   written for the hot-area calendar, sat beside a crop picker offering light-frost
+   months. A recorded reading of this site, run through the calendar rule, gives the
+   hot-area calendar (tests/sa-calendar-real-sites.test.ts, "Mkuze sample farm"), and the
+   sample plan below is in season on it in every opening month.
+   Read it through lib/sample-sowing-calendar.ts.
+
+   So the sample declares that calendar here, and every screen that shows it says it is
+   set for the sample farm. It is never presented as climate records, and no cached
+   reading is seeded to stand in for one. A visitor who picks another calendar in
+   Auto-suggest a plan still gets their choice. */
+export const DEMO_SOWING_CALENDAR: RainPattern = 'all-year';
+
+/** The scope the crop plan keys this site by: the planner's own form, five decimal places. */
+export function demoSowingCalendarScopeId(): string {
+  return `site:${DEMO_SITE.lat.toFixed(5)},${DEMO_SITE.lon.toFixed(5)}`;
+}
 
 // A fictional caretaker profile so ProfileSheet has something plausible to
 // display/edit during the demo — never a real signed-in user's profile, and
@@ -149,29 +175,39 @@ export function buildDemoFacilitatorState(): FacilitatorDesignState {
 }
 
 /* ── Crop plan: a full year across the 7 growing beds above ───────────────
-   DEMO_SITE resolves the 'summer' rain pattern through the per-site climate
-   path (lib/site-climate.ts over NASA POWER monthly normals for these exact
-   coordinates — summer-dominant rain, frost-free winter). The sow months
-   below are RECORDS of what this frost-free lowveld garden planted, not a
-   template: the autumn sowings (chard/carrots in April, lettuce in May) are
-   normal practice where winters carry no frost, and the planner shows its
-   "outside the usual sowing window — still allowed" advisory against the
-   conservative interior 'summer' windows rather than silently rewriting
-   history. The plan mixes already-growing (existing:true) plantings with
-   future ones and divides several beds into measured strips. The fractions
-   below were checked against every month of the audited crop-duration
-   calendar: concurrent strips never exceed the mapped bed, and the plan never overbooks a mapped bed. */
+   DEMO_SITE is a frost-free lowveld garden with summer rain. Since the
+   10 November 2026 accuracy fixes it resolves the HOT-AREA sowing calendar
+   through the per-site climate path (lib/site-climate.ts: no frost on record,
+   coldest month 16.8 °C, hottest 24.7 °C) — KZN DARD's "hot areas, frost-free"
+   column, where vegetables are sown from late summer through winter into
+   spring and midsummer is closed for most of them.
+
+   Every sowing below is in that calendar's months. Four were not: this plan
+   was first written against the hard-frost interior calendar the site used to
+   be given, so it sowed butternut in December, tomatoes and green beans in
+   October and lettuce in September. They now read March, September, February
+   and August, the nearest in-season months that still never overbook a bed in
+   any opening month (tests/demo-finance.test.ts checks all twelve). The
+   autumn sowings that were "outside the usual window" on the old calendar —
+   chard and carrots in April, lettuce in May — are simply in season on this
+   one. The sample farm is the first plan a visitor sees; it must not model the
+   wrong season.
+
+   The plan mixes already-growing (existing:true) plantings with future ones
+   and divides several beds into measured strips. The fractions below were
+   checked against every month of the audited crop-duration calendar:
+   concurrent strips never exceed the mapped bed, and the plan never overbooks a mapped bed. */
 
 export function buildDemoCropPlan(): CropPlanState {
   const plantings: Planting[] = [
     { id: 'demo-planting-1', bedId: 'demo-bed-6', cropKey: 'garlic', sowMonth: 5, areaFraction: 0.5, existing: true },
     { id: 'demo-planting-2', bedId: 'demo-bed-1', cropKey: 'onions', sowMonth: 3, areaFraction: 3.67 / 6, existing: true },
-    { id: 'demo-planting-3', bedId: 'demo-bed-3', cropKey: 'butternut', sowMonth: 12 },
+    { id: 'demo-planting-3', bedId: 'demo-bed-3', cropKey: 'butternut', sowMonth: 3 },
     { id: 'demo-planting-4', bedId: 'demo-bed-5', cropKey: 'swiss-chard', sowMonth: 4, areaFraction: 5.67 / 6, existing: true },
-    { id: 'demo-planting-5', bedId: 'demo-bed-4', cropKey: 'tomatoes', sowMonth: 10, areaFraction: 0.75 },
+    { id: 'demo-planting-5', bedId: 'demo-bed-4', cropKey: 'tomatoes', sowMonth: 9, areaFraction: 0.75 },
     { id: 'demo-planting-6', bedId: 'demo-hugel-1', cropKey: 'maize', sowMonth: 10, areaFraction: 5 / 6 },
-    { id: 'demo-planting-7', bedId: 'demo-bed-5', cropKey: 'green-beans', sowMonth: 10, areaFraction: 4.13 / 6 },
-    { id: 'demo-planting-8', bedId: 'demo-bed-2', cropKey: 'lettuce', sowMonth: 9, areaFraction: 3.7 / 6 },
+    { id: 'demo-planting-7', bedId: 'demo-bed-5', cropKey: 'green-beans', sowMonth: 2, areaFraction: 4.13 / 6 },
+    { id: 'demo-planting-8', bedId: 'demo-bed-2', cropKey: 'lettuce', sowMonth: 8, areaFraction: 3.7 / 6 },
     { id: 'demo-planting-9', bedId: 'demo-bed-6', cropKey: 'broccoli', sowMonth: 2, areaFraction: 3.75 / 8 },
     { id: 'demo-planting-10', bedId: 'demo-bed-6', cropKey: 'sweet-potato', sowMonth: 10, areaFraction: 3.67 / 8 },
     { id: 'demo-planting-11', bedId: 'demo-bed-1', cropKey: 'cabbage', sowMonth: 3, areaFraction: 2.33 / 6, existing: true },

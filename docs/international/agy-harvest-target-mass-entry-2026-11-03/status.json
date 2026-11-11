@@ -1,0 +1,96 @@
+{
+  "job": "agy-harvest-target-mass-entry-2026-11-03",
+  "status": "complete",
+  "sourceHead": "844e4a1bcbf9d1b25d5cc7b747ea22f88e1f727e",
+  "inspectedSources": [
+    {
+      "sourcePath": "components/crops/HarvestTargetsPanel.tsx",
+      "scope": "complete source",
+      "sourceBytes": 22052,
+      "sourceSha256": "b24ee3565cb1c0fd7bcf620715c22a688cb4c6563e6238513d24029cd2c92c94"
+    },
+    {
+      "sourcePath": "lib/harvest-targets.ts",
+      "scope": "complete source",
+      "sourceBytes": 6471,
+      "sourceSha256": "c203815c7d6b6cc23494031c1bf23424fb4fd4f6f7ce340a312e6ac5be7fe781"
+    },
+    {
+      "sourcePath": "lib/international/grower-harvest-demand.ts",
+      "scope": "complete source",
+      "sourceBytes": 3946,
+      "sourceSha256": "5190e766c82771b98fd188b86cd13216e7cc84a72e38631661dbd71d155149fa"
+    },
+    {
+      "sourcePath": "lib/crop-plan.ts",
+      "scope": "ten exact named AST statements, not whole source",
+      "sourceBytes": 131028,
+      "sourceSha256": "f12d7df80f066466c2b16fa34c791931333345014327c7da2ae2cdc33553c580",
+      "extractBytes": 4249,
+      "extractSha256": "25eff23f928f85d9cc55b5e740dee8811f69a1a1d13d6831c367d830aed32433"
+    },
+    {
+      "sourcePath": "docs/international/agy-grower-unit-standards-2026-11-03/CONVERSION-FACTS.md",
+      "scope": "completed coordinator-reviewed research summary, not a primary body or API integration",
+      "sourceBytes": 2760,
+      "sourceSha256": "6a8d8f13156f6676a9519450c3ee92d6a75a8426a58dcf480f46aae37a190b08",
+      "nistPrimarySha256": {
+        "appendixB8": "be7334086bcb574317dd1f78a7822adb699670b7f2bece6ca8a252884158eb5f",
+        "appendixB9": "0197b5ee24ad88a42cabb9f58a2a08bbda25431dc9182c222e66c09390583396",
+        "footnotes": "20a953aad34582d88d50b099b9b3d4ed9d069787cbfe32b4220f965f21967bd5"
+      }
+    }
+  ],
+  "conversionFacts": {
+    "avoirdupoisPoundToKilogramExact": "0.45359237 (NIST SP 811 Footnote 22)",
+    "avoirdupoisPoundTableRounded": "0.4535924 (not used for canonical conversion)",
+    "kilogramToPoundInverse": "kg / 0.45359237 (derived arithmetic)",
+    "excludedUnits": [
+      "avoirdupois ounce (unresolved exactness in supplied table)",
+      "troy mass units",
+      "pound-force",
+      "fluid volume units"
+    ]
+  },
+  "outputs": [
+    "docs/international/agy-harvest-target-mass-entry-2026-11-03/HARVEST-MASS-ENTRY.md",
+    "docs/international/agy-harvest-target-mass-entry-2026-11-03/status.json"
+  ],
+  "uninspectedAreas": {
+    "unshownImportsParentCallbacksAndObservedConsumers": [
+      "normaliseRecordUnit",
+      "validRecordQuantity",
+      "stampIndexOf",
+      "numberLabel",
+      "suggestHarvestTargets",
+      "buildNurseryForecast",
+      "onTargets",
+      "onSaveTargets",
+      "onAccept",
+      "observedFarmRecordConsumers"
+    ],
+    "status": "UNKNOWN"
+  },
+  "constraints": {
+    "mainWriterOnly": true,
+    "workers": 0,
+    "shellCommandsRun": 0,
+    "networkCalls": 0,
+    "codeOrTestEdits": 0,
+    "runtimeOrSettingsChanges": 0,
+    "optionalInteractionSharing": "OFF"
+  },
+  "coordinatorCompactReview": {
+    "reviewedAtUtc": "2026-11-03T12:42:59.610921+00:00",
+    "actualWhitespaceWords": 409,
+    "beforeCoordinatorCondensingWords": 521,
+    "allFiveSnapshotBytesAndSha256Checked": true,
+    "unprovidedTroyFactorRemoved": true,
+    "importedQuantityValidationRemainsUnknown": true,
+    "finitePositivePackProductAndOptionalSourceBoundaryCorrected": true,
+    "sampleOriginalReceiptDistinguishedFromDevicePersistence": true,
+    "coordinatorCondensedDuplicateSchemaAndBoundsWithoutChangingRules": true,
+    "researchTestsExecuted": 0,
+    "implementationByResearch": false
+  }
+}

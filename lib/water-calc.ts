@@ -56,10 +56,30 @@ export const REGIONAL_RAINFALL: RegionalRainfall[] = [
   { name: 'KZN midlands', lat: -29.6, lon: 30.4, annualMm: 1000, pattern: 'summer' },
   { name: 'Johannesburg / Gauteng', lat: -26.2, lon: 28.05, annualMm: 779, pattern: 'summer' },
   { name: 'Cape Town / W Cape', lat: -33.93, lon: 18.42, annualMm: 686, pattern: 'winter' },
-  { name: 'Eastern Cape coast', lat: -33.0, lon: 27.9, annualMm: 850, pattern: 'all-year' },
+  { name: 'Eastern Cape coast', lat: -33.0, lon: 27.9, annualMm: 850, pattern: 'all-year', frostRisk: 'mild' },
   { name: 'Limpopo', lat: -23.9, lon: 29.45, annualMm: 500, pattern: 'summer' },
   { name: 'Karoo', lat: -32.3, lon: 22.5, annualMm: 260, pattern: 'all-year' },
 ];
+
+/**
+ * The crop planner's sowing-calendar column for a reference region, for the labelled
+ * fallback when the site's own climate could not be read (no coordinates, API down,
+ * offline with nothing cached).
+ *
+ * `pattern` above is RAIN TIMING and the planner's columns are FROST regimes, so the
+ * two must not be read as one. Until 2026-11-10 they were: 'all-year' rain was handed
+ * to the planner as its frost-free column, which put a Karoo site — severe frost, rain
+ * in both halves of the year — on winter sowings of tender crops. A reference point is
+ * a guess from up to hundreds of kilometres away, so it leans cold: only a region
+ * flagged mild gets the light-frost column, and none gets the hot-area one.
+ */
+export function referenceSowingCalendar(
+  region: Pick<RegionalRainfall, 'pattern' | 'frostRisk'> | null | undefined,
+): 'summer' | 'winter' | 'mild-frost' {
+  if (!region) return 'summer';
+  if (region.pattern === 'winter') return 'winter';
+  return region.frostRisk === 'mild' ? 'mild-frost' : 'summer';
+}
 
 /**
  * Find the closest regional rainfall reference entry to a given lat/lon,
@@ -153,6 +173,10 @@ export interface HarvestDescription {
 export interface SiteRainfallOverride {
   annualMm: number;
   pattern: 'summer' | 'winter' | 'all-year' | 'mild-frost';
+  /** When the rain falls (lib/site-climate.ts). Preferred over `pattern`, which is the
+   * planner's FROST column: a hot lowveld site is on 'all-year' with summer rain, and
+   * sizing its tank as if rain came all year would under-size it. */
+  rainSeason?: 'summer' | 'winter' | 'all-year';
 }
 
 /** Format a litre volume with space-separated thousands, e.g. 98000 -> '98 000'. */
@@ -184,9 +208,10 @@ export function describeHarvest(
   const region = nearestRainfall(lat, lon);
   if (siteAnnualMm === null && !region) return null;
 
-  // 'mild-frost' is summer rainfall with light winter frost — frost is
-  // irrelevant to storage sizing, so it takes the summer storage share.
-  const sitePattern = site?.pattern === 'mild-frost' ? 'summer' : site?.pattern;
+  // Storage sizing is a rain-timing question, so the site's rain season decides it.
+  // Only a caller that predates `rainSeason` falls back to the planner's column, where
+  // 'mild-frost' is summer rainfall with light winter frost and takes the summer share.
+  const sitePattern = site?.rainSeason ?? (site?.pattern === 'mild-frost' ? 'summer' : site?.pattern);
   const annualMm = siteAnnualMm ?? region!.annualMm;
   const pattern: 'summer' | 'winter' | 'all-year' =
     (siteAnnualMm !== null && sitePattern) ? sitePattern : region?.pattern ?? 'summer';

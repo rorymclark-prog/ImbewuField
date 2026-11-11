@@ -1,0 +1,47 @@
+{
+  "reviewer": "Codex coordinator",
+  "actualPairs": 4,
+  "damagedControlsRejected": 15,
+  "notesActualWords": 81,
+  "runtimeActivation": false,
+  "fluentHumanApproval": false,
+  "scope": "Source/hash/structure/negative controls; original96wordnotes condensed bycoordinator, no fluent certification.",
+  "captureContext": "mainCommit records origin of the one English literal. sourceFileSha256 is the frozen uncommitted combined release file with b1922126+9c8289ff parents, not the whole file at immutable main.",
+  "files": [
+    {
+      "path": "source.json",
+      "bytes": 613,
+      "sha256": "0c13cc8ef76375e5f16c598caa575a36256c137d9143d618afe1f133f3a022f3"
+    },
+    {
+      "path": "st.json",
+      "bytes": 609,
+      "sha256": "fef0d284232bcc3e54404888fa3cf148411c8cacafce0b804a4ad7640e0cd6a3"
+    },
+    {
+      "path": "ts.json",
+      "bytes": 609,
+      "sha256": "a8dc9d1b68f7b8d82dd082b95667b4f75e27513f3b9f872220ca6e0d909abb83"
+    },
+    {
+      "path": "ve.json",
+      "bytes": 599,
+      "sha256": "497bdc9fede305c45775391e7c993d1df0a0bad35a434a45d8c79183cf375236"
+    },
+    {
+      "path": "zu.json",
+      "bytes": 577,
+      "sha256": "d8c0843232e4e82c50bc9b6511ac1600a308900a4545362df4ce84ada1bf5948"
+    },
+    {
+      "path": "review-notes.md",
+      "bytes": 627,
+      "sha256": "4523ad380e18e725b188ae6f36d1b8c50cff831532447c238b1299ac65927f13"
+    },
+    {
+      "path": "status.json",
+      "bytes": 460,
+      "sha256": "93ec1c783ce493a371d502e9808f0a1610c145a3cb264fc742c4975e6d337f7d"
+    }
+  ]
+}

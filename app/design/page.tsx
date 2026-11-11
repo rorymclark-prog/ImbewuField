@@ -9,8 +9,13 @@ import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState, typ
 import Link from 'next/link';
 import AppHeader from '@/components/layout/AppHeader';
 import FieldBlocksPanel from '@/components/design/FieldBlocksPanel';
+import FieldLayoutImportPanel from '@/components/design/FieldLayoutImportPanel';
 import { configureFieldBlock, reconcileFieldBlockEdit } from '@/lib/bed-block';
-import { loadCropPlan } from '@/lib/crop-plan';
+import { deliverFieldLayoutExport } from '@/lib/field-layout-delivery';
+import { readFieldLayoutImportFile, beginFieldLayoutImportAppend, discardFieldLayoutImport } from '@/lib/field-layout-import-delivery';
+import { readFieldBlockAllocations, fieldBlockAllocatedIds, assertFieldBlockAllocationsCurrent,
+  assertFieldBlockLayoutReadable, fieldBlockSourceKey } from '@/lib/field-block-allocations';
+import { isSampleMode } from '@/lib/sample-mode';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
 import { ArrowLeft, ArrowRight, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock, AlertTriangle, Droplets } from 'lucide-react';
@@ -33,7 +38,9 @@ import {
 import { readLocalFarmShapes, MAP_STATE_EVENT } from '@/lib/map-sync';
 import { pickWinner, pushDesignCanvas, reconcileDesignCanvas, subscribeDesignCanvasLive } from '@/lib/design-canvas-sync';
 import { useAuth } from '@/lib/auth';
+import { advisorRegionPresentation, observeDesignAdvisorLayout, type AdvisorVisibleRegion } from '@/lib/design-advisor-layout';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { monthlyTemperatureStatus } from '@/lib/climate-temperature';
 import {
   computeCanvasFrame,
   contentCountOf,
@@ -474,7 +481,7 @@ function freshState(siteId: string, frame: Omit<CanvasFrame, 'satDataUrl'>): Des
 }
 
 function locationDataCacheKey(lat: number, lon: number): string {
-  return `imbewu_loc_v6_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+  return `imbewu_loc_v7_${lat.toFixed(5)}_${lon.toFixed(5)}`;
 }
 
 function readCachedLocationData(lat: number, lon: number): LocationData | null {
@@ -486,7 +493,8 @@ function readCachedLocationData(lat: number, lon: number): LocationData | null {
     const raw = localStorage.getItem(locationDataCacheKey(lat, lon));
     if (!raw) return null;
     const parsed = JSON.parse(raw);
-    return parsed && typeof parsed === 'object' ? (parsed as LocationData) : null;
+    return parsed && typeof parsed === 'object' && monthlyTemperatureStatus(parsed.climate) === 'complete'
+      ? (parsed as LocationData) : null;
   } catch {
     return null;
   }
@@ -610,6 +618,9 @@ function DesignStudioInner() {
   const simple = useAppLevel() === 'simple';
   const appConfirm = useAppConfirm();
   const { user, loading: authLoading } = useAuth();
+  const fieldEditSample = isSampleMode();
+  const fieldEditActor = useMemo(() => ({ owner: fieldEditSample ? null : user?.uid ?? null, sample: fieldEditSample, loading: authLoading }),
+    [authLoading, user?.uid, fieldEditSample]);
   const params = useSearchParams();
   const latRaw = params.get('lat');
   const lonRaw = params.get('lon');
@@ -730,6 +741,7 @@ function DesignStudioInner() {
   const [tracedLayers, setTracedLayers] = useState<TracedLayer[]>([]);
   const [houseXY, setHouseXY] = useState<[number, number] | null>(null);
   const [frame, setFrame] = useState<CanvasFrame | null>(null);
+  const fieldFrameRef = useRef(frame); fieldFrameRef.current = frame;
   const [canvasState, setCanvasState] = useState<DesignCanvasState | null>(null);
   // "Import your own photo" (Base step) — which Storage URL's bytes are currently loaded into
   // frame.satDataUrl, so the effects below never refetch a custom photo they've already fetched,
@@ -765,6 +777,18 @@ function DesignStudioInner() {
   // can be deleted together (Rory's "command-select for multiple + delete" ask).
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const selectedId = selectedIds.length === 1 ? selectedIds[0] : null;
+  const fieldExportMounted = useRef(false);
+  const fieldExportView = useRef({ state: canvasState, frame, selectedId, actor: fieldEditActor });
+  fieldExportView.current = { state: canvasState, frame, selectedId, actor: fieldEditActor };
+  const fieldImportContextKey = useMemo(() => {
+    try { return canvasState && frame ? JSON.stringify([fieldBlockSourceKey(canvasState, null, frame),
+      canvasState.rev, canvasState.updatedAt, selectedId, fieldEditActor]) : null; }
+    catch { return null; }
+  }, [canvasState, frame, selectedId, fieldEditActor]);
+  useEffect(() => {
+    fieldExportMounted.current = true;
+    return () => { fieldExportMounted.current = false; };
+  }, []);
 
   // Tidy outline (lib/tidy-outline.ts) preview — set only while previewing a pending tidy of the
   // single selected zone/line; `id` pins the preview to that ONE shape so a selection change or a
@@ -1167,6 +1191,14 @@ function DesignStudioInner() {
     try { window.localStorage.setItem(DESIGN_WORKSPACE_MODE_KEY, next); } catch { /* view preference only */ }
   }, []);
   const canvasWrapRef = useRef<HTMLDivElement | null>(null);
+  const [phonePaletteElement, setPhonePaletteElement] = useState<HTMLDivElement | null>(null);
+  const [advisorVisibleRegion, setAdvisorVisibleRegion] = useState<AdvisorVisibleRegion | null>(null);
+  useEffect(() => {
+    if (!isPhone || !canvasWrapRef.current) { setAdvisorVisibleRegion(null); return; }
+    return observeDesignAdvisorLayout({ canvas: canvasWrapRef.current, sheet: phonePaletteElement,
+      onChange: next => setAdvisorVisibleRegion(previous => previous?.topInset === next?.topInset
+        && previous?.bottomInset === next?.bottomInset && previous?.availableHeight === next?.availableHeight ? previous : next) });
+  }, [isPhone, phonePaletteElement, hasSite]);
   useEffect(() => {
     if (!isPhone) return;
     const el = canvasWrapRef.current;
@@ -1733,31 +1765,56 @@ function DesignStudioInner() {
 
   // Persist canvas state on change (with undo history), and re-run the advisor.
   const handleChange = useCallback(
-    (updater: (prev: DesignCanvasState) => DesignCanvasState) => {
+    (updater: (prev: DesignCanvasState) => DesignCanvasState, applied?: (state: DesignCanvasState) => void,
+      rejected?: (message: string) => void) => {
+      const intent = readFieldBlockAllocations(fieldEditActor);
+      // React can replay a queued field application. Reuse this action's exact
+      // returned state instead of saving it twice or treating its own result as
+      // an outside edit. Other canvas callers retain their existing semantics.
+      const replay = applied ? new WeakMap<DesignCanvasState, DesignCanvasState>() : null;
       setCanvasState((prev) => {
-        if (!prev) return prev;
+        if (!prev) { rejected?.('The design is not available. Reopen it before adding fields.'); return prev; }
         // A genuinely new edit invalidates whatever future we might have redone back to —
         // standard undo/redo semantics. Without this, undo → edit → redo would silently
         // resurrect a stale future state the farmer never asked for.
         let next: DesignCanvasState;
+        const allocations = readFieldBlockAllocations(fieldEditActor);
         try {
-          next = reconcileFieldBlockEdit(prev, updater(prev), new Set(loadCropPlan().plantings.map(p => p.bedId)));
+          assertFieldBlockAllocationsCurrent(intent);
+          assertFieldBlockAllocationsCurrent(allocations);
+          next = reconcileFieldBlockEdit(prev, updater(prev), fieldBlockAllocatedIds(allocations, prev));
+          assertFieldBlockAllocationsCurrent(allocations);
+          // Even a cached action must pass today's frame/source guard. A cache
+          // is a duplicate-work receipt, never permission to reuse an old scale.
+          const replayed = replay?.get(prev);
+          if (replayed) return replayed;
+          if (applied && next === prev) return prev;
         } catch (e) {
           setEditError((e as Error).message);
+          rejected?.((e as Error).message);
           return prev;
         }
         setSaved(false);
         setEditError(null);
+        let stamped: DesignCanvasState | null;
+        try {
+          assertFieldBlockAllocationsCurrent(allocations);
+          stamped = persistCanvasState(next);
+        } catch (e) { setEditError((e as Error).message); rejected?.((e as Error).message); return prev; }
         undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
         redoStack.current = [];
-        const stamped = persistCanvasState(next);
         setSaved(!!stamped);
         setSaveError(stamped ? null : t('designStorageFull'));
         // Hold the STAMPED state so the next edit counts rev up from what was actually saved.
-        return stamped ?? next;
+        const result = stamped ?? next;
+        replay?.set(prev, result);
+        replay?.set(result, result);
+        if (stamped) applied?.(result);
+        else rejected?.('The field outlines could not be saved. Check the current design and available device space.');
+        return result;
       });
     },
-    [t],
+    [t, fieldEditActor],
   );
 
   // "Import your own photo" (Base step) — apply the farmer's calibrated photo as the base image
@@ -2158,6 +2215,7 @@ function DesignStudioInner() {
   }, [handleChange, revertToSatellite, appConfirm, t]);
 
   const handleUndo = useCallback(() => {
+    const intent = readFieldBlockAllocations(fieldEditActor);
     setCanvasState((prev) => {
       let popped = undoStack.current[undoStack.current.length - 1];
       if (!popped || !prev) {
@@ -2166,21 +2224,26 @@ function DesignStudioInner() {
       }
       // Crop allocations can arrive after this history snapshot was recorded.
       // Restoring history must protect the same measured ground as a fresh edit.
-      try { popped = reconcileFieldBlockEdit(prev, popped, new Set(loadCropPlan().plantings.map(p => p.bedId))); }
+      const allocations = readFieldBlockAllocations(fieldEditActor);
+      try { assertFieldBlockAllocationsCurrent(intent); popped = reconcileFieldBlockEdit(prev, popped, fieldBlockAllocatedIds(allocations, prev)); }
       catch (e) { setEditError((e as Error).message); return prev; }
       setSaved(false);
       setEditError(null);
-      undoStack.current.pop();
       // Stash what we're undoing FROM so redo can bring it back — this is the only place
       // the pre-undo state is available; once we restore `popped` below it's gone otherwise.
-      redoStack.current = [...redoStack.current, prev].slice(-MAX_UNDO);
       // An undo restores OLD CONTENT but is itself a NEW edit, so it must count rev forward from
       // where we are now (`prev`) — not from the stale rev the popped snapshot was saved with.
       // Bumping the popped rev instead makes consecutive undos emit DESCENDING revs (…13, 12,
       // 11…): the cloud copy would then out-rank each undo, reject the push, and the live
       // listener would apply the cloud copy straight back over it — an undo that visibly undoes
       // itself. Restoring content is never a reason to move the counter backwards.
-      const stamped = persistCanvasState({ ...popped, rev: prev.rev });
+      let stamped: DesignCanvasState | null;
+      try {
+        assertFieldBlockAllocationsCurrent(allocations);
+        stamped = persistCanvasState({ ...popped, rev: prev.rev });
+      } catch (e) { setEditError((e as Error).message); return prev; }
+      undoStack.current.pop();
+      redoStack.current = [...redoStack.current, prev].slice(-MAX_UNDO);
       // Same rule handleChange follows: only claim "Saved" when the write actually landed, and
       // tell the farmer when it didn't. This used to say setSaved(true) unconditionally, so an
       // undo made while storage was full showed a calm "Saved" over a design that had just
@@ -2190,35 +2253,41 @@ function DesignStudioInner() {
       setSaveError(stamped ? null : t('designStorageFull'));
       return stamped ?? popped;
     });
-  }, [t]);
+  }, [t, fieldEditActor]);
 
   const handleRedo = useCallback(() => {
+    const intent = readFieldBlockAllocations(fieldEditActor);
     setCanvasState((prev) => {
       let popped = redoStack.current[redoStack.current.length - 1];
       if (!popped || !prev) {
         setSaved(true);
         return prev;
       }
-      try { popped = reconcileFieldBlockEdit(prev, popped, new Set(loadCropPlan().plantings.map(p => p.bedId))); }
+      const allocations = readFieldBlockAllocations(fieldEditActor);
+      try { assertFieldBlockAllocationsCurrent(intent); popped = reconcileFieldBlockEdit(prev, popped, fieldBlockAllocatedIds(allocations, prev)); }
       catch (e) { setEditError((e as Error).message); return prev; }
       setSaved(false);
       setEditError(null);
-      redoStack.current.pop();
       // Mirror of handleUndo: put the pre-redo state back on the undo stack so undo can
       // reverse this redo, same as any other edit.
-      undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
       // Same rev reasoning as handleUndo: a redo is itself a NEW edit and must count rev
       // forward from `prev`, not from the stale rev the popped (redone) snapshot was saved
       // with — otherwise consecutive redos emit descending revs, the cloud copy out-ranks
       // them, and the live listener silently reverts the redo the farmer just asked for.
-      const stamped = persistCanvasState({ ...popped, rev: prev.rev });
+      let stamped: DesignCanvasState | null;
+      try {
+        assertFieldBlockAllocationsCurrent(allocations);
+        stamped = persistCanvasState({ ...popped, rev: prev.rev });
+      } catch (e) { setEditError((e as Error).message); return prev; }
+      redoStack.current.pop();
+      undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
       // Mirror of handleUndo's fix above — a redo is a save like any other and must not claim
       // "Saved" when persistCanvasState just reported it couldn't write.
       setSaved(!!stamped);
       setSaveError(stamped ? null : t('designStorageFull'));
       return stamped ?? popped;
     });
-  }, [t]);
+  }, [t, fieldEditActor]);
 
   // Delete whatever is selected (one or many items/zones/lines) — palette Delete + keyboard.
   const onDeleteSelected = selectedIds.length
@@ -3674,10 +3743,11 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           </div>
         )}
 
-        {/* Advisor (Lima) — rendered INSIDE the canvas container so it anchors to the canvas's
-            bottom-left, which sits directly above the status bar + element palette. It can never
-            overlap those bottom bars, and taps outside it dismiss it. */}
+        {/* The phone palette is fixed to the viewport, outside the canvas flex flow.
+            Reserve its measured overlap only for this advice overlay, never for plan geometry. */}
         {bottomShow.advisor && canvasState && canvasState.step !== 'glossy' && (
+          <div className={isPhone ? 'phone-advisor-region' : undefined}
+            style={advisorRegionPresentation(isPhone, advisorVisibleRegion)}>
           <DesignAdvisorLazy
             state={canvasState}
             site={site}
@@ -3685,7 +3755,17 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             lastChangeId={canvasState.updatedAt}
             simple={simple}
           />
+          </div>
         )}
+        <style jsx>{`
+          .phone-advisor-region > :global(div) {
+            position: relative !important;
+            min-height: 0;
+            flex-shrink: 1;
+            overflow-y: auto;
+            pointer-events: auto !important;
+          }
+        `}</style>
       </div>
 
       {/* Import your own photo — Base step only. Lets a farmer use a drone/aerial photo of their
@@ -4163,6 +4243,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           component, so the panel comes back exactly where it was parked. */}
       {bottomShow.tools && canvasState && canvasState.step !== 'glossy' && !previewFilter && (
         <DesignPalette
+          phoneSheetRef={setPhonePaletteElement}
           bottomStop={bottomStop}
           onBottomStopChange={setBottomStop}
           hiddenSections={simple ? undefined : { count: dismissed.length, onRestore: showAllSections }}
@@ -4209,10 +4290,27 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           selectedIdentity={selectedIdentity}
           areaFillControl={{ value: areaFill, onChange: changeAreaFill }}
           bedBlockControl={bedBlockControl}
-          fieldBlocksPanel={frame && <FieldBlocksPanel
+          fieldBlocksPanel={frame && <div><FieldBlocksPanel
             state={canvasState}
             frame={frame}
             selectedId={selectedId}
+            applyError={editError}
+            onExport={(request, formCurrent) => {
+              const expected = { state: canvasState, frame, selectedId, actor: fieldEditActor };
+              if (!expected.state || !expected.frame || typeof request.allFields !== 'boolean'
+                || typeof request.includeLabels !== 'boolean' || !request.allFields && !request.fieldId) {
+                return Promise.resolve({ status: 'held' as const, message: 'Select the current saved field before exporting.' });
+              }
+              return deliverFieldLayoutExport({ state: expected.state, frame: expected.frame, actor: expected.actor,
+                selection: request.allFields ? { kind: 'all' } : { kind: 'selected', fieldId: request.fieldId! },
+                includeLabels: request.includeLabels,
+                isCurrent: () => {
+                  const live = fieldExportView.current;
+                  return fieldExportMounted.current && live.state === expected.state && live.frame === expected.frame
+                    && live.selectedId === expected.selectedId && live.actor.owner === expected.actor.owner
+                    && live.actor.sample === expected.actor.sample && live.actor.loading === expected.actor.loading && formCurrent();
+                } });
+            }}
             onDraw={() => {
               setAreaFeature('staple_garden');
               setZoneDraw(3);
@@ -4220,16 +4318,66 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               setActiveLayers(a => ({ ...a, planting: true }));
             }}
             onSelect={id => { handleSetTool('select'); setSelectedIds([id]); }}
-            onApply={(id, name, config) => {
-              const allocations = new Set(loadCropPlan().plantings.map(p => p.bedId));
-              // Validate before the state updater: failures belong beside the form,
-              // not in React's render/update cycle.
-              configureFieldBlock(canvasState, id, name, config, frame, allocations);
-              handleChange(prev => configureFieldBlock(prev, id, name, config, frame, allocations));
+            onApply={(id, name, config, acknowledge) => {
+              const expectedSource = fieldBlockSourceKey(canvasState, id, frame);
+              const allocations = readFieldBlockAllocations(fieldEditActor);
+              // Validate beside the form, then repeat against the actual queued
+              // state/frame: a once-valid preview cannot adopt a replacement field.
+              assertFieldBlockLayoutReadable(allocations);
+              configureFieldBlock(canvasState, id, name, config, frame, fieldBlockAllocatedIds(allocations, canvasState));
+              let appliedSource: string | null = null;
+              handleChange(prev => {
+                assertFieldBlockAllocationsCurrent(allocations);
+                const currentFrame = fieldFrameRef.current;
+                if (currentFrame && appliedSource && fieldBlockSourceKey(prev, id, currentFrame) === appliedSource) return prev;
+                if (!currentFrame || fieldBlockSourceKey(prev, id, currentFrame) !== expectedSource)
+                  throw Error('The field or map scale changed. Reload its settings before applying this layout.');
+                const current = readFieldBlockAllocations(fieldEditActor);
+                assertFieldBlockLayoutReadable(current);
+                const next = configureFieldBlock(prev, id, name, config, currentFrame, fieldBlockAllocatedIds(current, prev));
+                assertFieldBlockAllocationsCurrent(current);
+                return next;
+              }, result => {
+                const currentFrame = fieldFrameRef.current;
+                if (!currentFrame) return;
+                appliedSource = fieldBlockSourceKey(result, id, currentFrame);
+                // A result receipt is not a commit: the form consumes it only
+                // when those exact source values reach its committed props.
+                acknowledge?.(appliedSource);
+              });
               handleSetTool('select');
               setActiveLayers(a => ({ ...a, planting: true }));
             }}
-          />}
+          /><FieldLayoutImportPanel contextKey={fieldImportContextKey} sample={fieldEditActor.sample}
+            onDiscard={discardFieldLayoutImport}
+            onRead={(file, formCurrent) => {
+              const expected = { state: canvasState, frame, actor: fieldEditActor };
+              return readFieldLayoutImportFile({ ...expected, file, formIsCurrent: formCurrent, isCurrent: () => {
+                const live = fieldExportView.current;
+                return fieldExportMounted.current && live.state === expected.state && live.frame === expected.frame
+                  && live.actor === expected.actor;
+              } });
+            }}
+            onAppend={(review, ids, formCurrent) => new Promise(resolve => {
+              try {
+                const action = beginFieldLayoutImportAppend(review, ids, newId, formCurrent);
+                handleChange(prev => {
+                  const currentFrame = fieldFrameRef.current;
+                  if (!currentFrame) throw Error('The map reference is unavailable. Read the KML again.');
+                  return action.apply(prev, currentFrame);
+                }, written => {
+                  try {
+                    action.written(written);
+                    setActiveLayers(value => ({ ...value, planting: true }));
+                    resolve({ status: 'applied', message: `${ids.length} field outline${ids.length === 1 ? '' : 's'} saved. Select a field to choose beds or open ground.` });
+                  } catch {
+                    action.failed();
+                    resolve({ status: 'held', message: 'The saved map changed during this action. Check its current field outlines before importing again.' });
+                  }
+                }, message => { action.failed(); resolve({ status: 'held', message }); });
+              } catch (error) { resolve({ status: 'held', message: (error as Error).message }); }
+            })}
+          /></div>}
           setActiveLayers={setActiveLayers}
           onUndo={handleUndo}
           canUndo={undoStack.current.length > 0}

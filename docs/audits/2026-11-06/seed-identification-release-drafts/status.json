@@ -1,0 +1,23 @@
+{
+  "order": "agy-seed-identification-release-copy-2026-11-06",
+  "status": "COMPLETED",
+  "sourceSha256": "fe826da1f3c03aa48d47074726ce3e0e45a7e6bcd084c7549b75309796846681",
+  "validation": "NOT RUN — coordinator-owned",
+  "runtimeActivation": false,
+  "workers": 0,
+  "workersActive": 0,
+  "outputsWritten": [
+    "docs/international/agy-seed-identification-release-copy-2026-11-06/zu.json",
+    "docs/international/agy-seed-identification-release-copy-2026-11-06/st.json",
+    "docs/international/agy-seed-identification-release-copy-2026-11-06/ts.json",
+    "docs/international/agy-seed-identification-release-copy-2026-11-06/ve.json",
+    "docs/international/agy-seed-identification-release-copy-2026-11-06/review-notes.md",
+    "docs/international/agy-seed-identification-release-copy-2026-11-06/status.json"
+  ],
+  "coordinatorReview": {
+    "originalNotesWords": 222,
+    "notesWords": 135,
+    "noteProvenance": "Coordinator condensed original notes after six actual outputfiles; remaining native response explicitly interrupted at handoff before process-driver migration.",
+    "review": "Identified planning/membership/seed-lot drafting corrections inspected; no fluent or human certification."
+  }
+}

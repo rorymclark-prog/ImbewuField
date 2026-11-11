@@ -1,0 +1,38 @@
+{
+  "taskId": "agy-field-layout-export-copy-2026-11-04",
+  "status": "ready_for_review",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "sourceSha256": "883ab3ffd0593e2387cda3f5518511ed5fa1ee1281cd83a5f654efa5a4de5afd",
+  "messagesCount": 23,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "totalDraftPairs": 92,
+  "generatedFiles": [
+    "fr.json",
+    "es.json",
+    "pt-BR.json",
+    "sw.json",
+    "review-notes.md",
+    "status.json"
+  ],
+  "workerProvenance": "main_only_zero_subagents",
+  "nativeWorkerUsed": false,
+  "fluentCertificationClaimed": false,
+  "notesWordCount": 158,
+  "coordinatorReview": {
+    "pairs": 92,
+    "damagedControlsRejected": 14,
+    "actualNotesWords": 158,
+    "sourceAndBrandLiteralsVerified": true,
+    "fluentApproved": false,
+    "workerContactObserved": 1,
+    "independentWorkerFileAuthorshipVerified": false,
+    "mainReportedNoWorkerUsed": true,
+    "scope": "structure and identified wording boundaries; not semantic certification"
+  }
+}

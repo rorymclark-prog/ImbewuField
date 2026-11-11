@@ -1,0 +1,40 @@
+{
+  "sourceSha256": "8cc0504b3ec81b996eb4d043a1f896fba92249ce1cc91506a134fd1095c42eef",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "pairs": [
+    {
+      "locale": "st",
+      "key": "nurseryPrintReviewRelease.message.01",
+      "english": "Printed language reviews keep each comparison together when it fits on a page.",
+      "messageSha256": "1733d5afdcfe53f9edd9bbb1443be2ff275f43b3d16e8fd824b5947f945c6ebc",
+      "translation": "Dintlha tse hatisitsweng tsa tlhahlobo ya puo di boloka papiso e nngwe le e nngwe e kopane ha e lekana leqepheng."
+    },
+    {
+      "locale": "ts",
+      "key": "nurseryPrintReviewRelease.message.01",
+      "english": "Printed language reviews keep each comparison together when it fits on a page.",
+      "messageSha256": "1733d5afdcfe53f9edd9bbb1443be2ff275f43b3d16e8fd824b5947f945c6ebc",
+      "translation": "Swikambelo swa ririmi leswi gandlisiweke swi hlayisa mfaniso wun'wana na wun'wana wu ri xikan'we loko wu ringanela eka phepha."
+    },
+    {
+      "locale": "ve",
+      "key": "nurseryPrintReviewRelease.message.01",
+      "english": "Printed language reviews keep each comparison together when it fits on a page.",
+      "messageSha256": "1733d5afdcfe53f9edd9bbb1443be2ff275f43b3d16e8fd824b5947f945c6ebc",
+      "translation": "Tsedzuluso dzo gandwiswaho dza luambo dzi vhea mbambedzo inwe na inwe khathihi musi i tshi lingana kha siaṭari."
+    },
+    {
+      "locale": "zu",
+      "key": "nurseryPrintReviewRelease.message.01",
+      "english": "Printed language reviews keep each comparison together when it fits on a page.",
+      "messageSha256": "1733d5afdcfe53f9edd9bbb1443be2ff275f43b3d16e8fd824b5947f945c6ebc",
+      "translation": "Ukubuyekezwa kolimi okushicilelwe kugcina uqhathaniso ngalunye ndawonye lapho lulingana ekhasini."
+    }
+  ],
+  "reviewNotes": "Four unreviewed candidate translations for print-review layout note nurseryPrintReviewRelease.message.01. Describes keeping individual comparison blocks together only when they fit within a single page, without guaranteeing arbitrary text sizes or certifying translations.",
+  "validation": "UNKNOWN",
+  "commandsRun": false,
+  "testsRun": false,
+  "workersActive": 0
+}

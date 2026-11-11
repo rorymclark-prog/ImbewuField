@@ -31,6 +31,9 @@ import SiteSurveyReview from './SiteSurveyReview';
 import SurveyZuluDraftPair, { surveyZuluConfirmDraft, SURVEY_DISCARD_CONFIRM_ENGLISH, SURVEY_DISCARD_BUTTON_ENGLISH } from './SurveyZuluDraftPair';
 import { resolveSiteSurveyWelcomeDraft, type SiteSurveyWelcomeField } from '@/lib/site-survey-welcome-drafts';
 import type { LocationData } from '@/lib/types';
+import { locationElevationReference, normaliseElevationEvidence, normaliseSiteEnergy, surveyEnergyInputErrors, type ElevationEvidence, type SiteEnergyEvidence, type SurveyEnergyInputs } from '@/lib/site-energy';
+import SiteSurveyElevation from './SiteSurveyElevation';
+import SiteSurveyEnergy from './SiteSurveyEnergy';
 
 interface Props {
   placeId: string;
@@ -430,6 +433,17 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
   const [soilAmendments, setSoilAmendments] = useState<string[]>(existing?.soilAmendments ?? []);
   const [fencing, setFencing] = useState(existing?.hasFencing ?? '');
   const [productionConditions, setProductionConditions] = useState<SiteProductionConditions>(existing?.productionConditions ?? {});
+  const [elevationEvidence, setElevationEvidence] = useState<ElevationEvidence>(() => ({
+    ...normaliseElevationEvidence(existing?.elevationEvidence, siteId),
+    model: normaliseElevationEvidence(existing?.elevationEvidence, siteId)?.model ?? locationElevationReference(locationData, siteId),
+  }));
+  const [energyEvidence, setEnergyEvidence] = useState<SiteEnergyEvidence>(() => normaliseSiteEnergy(existing?.energyEvidence, siteId) ?? {});
+  const [energyInputs, setEnergyInputs] = useState<SurveyEnergyInputs>(() => initialDraft?.inputs.energy ?? {
+    benchmarkElevation: existing?.elevationEvidence?.benchmark?.elevationM?.toString() ?? '',
+    windSpeed: existing?.energyEvidence?.wind?.meanSpeedMs?.toString() ?? '',
+    windHeight: existing?.energyEvidence?.wind?.heightM?.toString() ?? '',
+  });
+  const setEnergyInput = (key: keyof SurveyEnergyInputs, raw: string) => setEnergyInputs(previous => ({ ...previous, [key]: raw }));
 
   // Step 4 — What exists
   const [crops, setCrops] = useState<string[]>(existing?.existingCrops ?? []);
@@ -528,6 +542,8 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
       ),
       productionYear: productionYear === '' ? undefined : Number(productionYear),
       productionConditions: Object.keys(productionConditions).length ? productionConditions : undefined,
+      elevationEvidence: normaliseElevationEvidence(elevationEvidence, siteId),
+      energyEvidence: normaliseSiteEnergy(energyEvidence, siteId),
       poultryManagement: Object.keys(poultryManagement).length || layingHens !== '' ? {
         ...poultryManagement,
         layingHens: layingHens === '' ? null : Number(layingHens),
@@ -538,7 +554,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
   const initialFingerprint = useRef(initialDraft ? '' : fingerprint);
   const draft: SiteSurveyDraft = {
     version: 1, answers: { ...survey, memberCount, marketType, reportedProduction },
-    inputs: { roofMain, roofSecondary, growingArea: existingGrowingArea, layingHens, productionYear },
+    inputs: { roofMain, roofSecondary, growingArea: existingGrowingArea, layingHens, productionYear, energy: energyInputs },
     mode, step, started, baseRevision: savedRevision.current,
   };
   const draftFingerprint = JSON.stringify(draft);
@@ -569,7 +585,8 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
     { step: 5, missing: waterSource.length === 0 || waterDelivery.length === 0 },
     { step: 6, missing: !practice || challenges.length === 0 },
   ].filter(item => item.missing);
-  const canSave = !invalidArea && !invalidLayingHens && !invalidProductionYear && invalidProduction.length === 0 && missingSections.length === 0;
+  const energyErrors = surveyEnergyInputErrors(energyInputs, energyEvidence.wind?.kind);
+  const canSave = Object.keys(energyErrors).length === 0 && !invalidArea && !invalidLayingHens && !invalidProductionYear && invalidProduction.length === 0 && missingSections.length === 0;
   const handleSave = () => {
     if (!canSave) return;
     if (!surveyDraftScopeIsActive(scope, siteId) || surveyRevision(loadSurvey(siteId)) !== savedRevision.current) {
@@ -851,6 +868,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
         {/* ── Step 6: Resources & Inputs — Roof catchment ── */}
         {step === 5 && (
           <div className="space-y-5">
+            <SiteSurveyEnergy siteId={siteId} coords={siteLoc} scope={scope} value={energyEvidence} onChange={setEnergyEvidence} numericInputs={energyInputs} onNumericInputChange={setEnergyInput}/>
             <div style={{ background: 'rgba(35,94,134,0.06)', borderRadius: 14, padding: '12px 14px', border: '1px solid rgba(35,94,134,0.18)' }}>
               <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.5 }}>
                 <span className="font-semibold" style={{ color: 'var(--blue)' }}>{paired('roofCatchmentWhyMattersLabel', 'Why this matters: ')}</span>
@@ -898,6 +916,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
         {/* ── Step 1: Land & Location ── */}
         {step === 1 && (
           <div className="space-y-5">
+            <SiteSurveyElevation value={elevationEvidence} onChange={setElevationEvidence} numericInputs={energyInputs} onNumericInputChange={setEnergyInput}/>
             <div>
               <SectionLabel>{paired('sectionHowIsLandPrepared', 'How is the land prepared?')}</SectionLabel>
               <div className="space-y-2">
@@ -1274,6 +1293,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
         }}>Close and keep draft</button></p>}
         {!started && <div className={styles.footerInner}><span className={styles.saveReminder}>{t('surveySwitchHint')}</span><button className={styles.primary} onClick={() => { if (!route.includes(step)) setStep(2); setStarted(true); }}><RegionalWelcomeCopy language={lang} field={dirty || existing ? 'continue' : 'begin'}>{dirty || existing ? t('surveyContinue') : t('surveyBegin')}</RegionalWelcomeCopy><ArrowRight size={18}/></button></div>}
         {saveError && <p role="alert" className={styles.warning}>{lang === 'zu' ? <SurveyZuluDraftPair english="Your survey could not be saved. Keep this screen open and try again.">{t('surveySaveError')}</SurveyZuluDraftPair> : t('surveySaveError')}</p>}
+        {started && Object.keys(energyErrors).length > 0 && <p lang="en" role="alert" className={styles.warning}>Check elevation in Land & Location and wind in Resources & Inputs before saving. {Object.values(energyErrors).join(' ')}</p>}
         {started && invalidLayingHens && <p lang="en" role="alert" className={styles.warning}>Check the laying-hen count before saving. Enter a whole number, zero, or leave it blank.</p>}
         {started && invalidProductionYear && <p lang="en" role="alert" className={styles.warning}>Check the production reporting year before saving. Use a recorded year up to {new Date().getFullYear()}, or leave it blank.</p>}
         {started && (invalidArea || invalidProduction.length > 0) && <p role="alert" className={styles.warning}>{lang === 'zu' ? <SurveyZuluDraftPair english="Check the production entries and areas before saving. Use positive numbers or zero; leave unknowns blank.">{t('surveyFixBeforeSave')}</SurveyZuluDraftPair> : t('surveyFixBeforeSave')}</p>}

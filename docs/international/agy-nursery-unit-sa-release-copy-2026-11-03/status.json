@@ -1,0 +1,51 @@
+{
+  "job": "agy-nursery-unit-sa-release-copy-2026-11-03",
+  "status": "complete",
+  "sourcePacket": "docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/source.json",
+  "sourceSha256": "0757135f0b7b1fbb405e0b20378ea9e3519f5981ffa7acb02c217140a045206d",
+  "sourceCommitBase": "844e4a1bcbf9d1b25d5cc7b747ea22f88e1f727e",
+  "sourceFiles": [
+    {
+      "path": "lib/release-notes.ts",
+      "bytes": 346535,
+      "sha256": "f2c5e662d3476f376ce2dd1bdee38f55587d3f1e9fb1484f91bde2124cf0f259"
+    }
+  ],
+  "schemaExample": "docs/international/agy-field-block-unit-translations-2026-11-03/fr.json",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "messagesPerLocale": 6,
+  "totalDrafts": 24,
+  "outputs": [
+    "docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/zu.json",
+    "docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/st.json",
+    "docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/ts.json",
+    "docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/ve.json",
+    "docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/review-notes.md",
+    "docs/international/agy-nursery-unit-sa-release-copy-2026-11-03/status.json"
+  ],
+  "constraints": {
+    "mainWriterOnly": true,
+    "workers": 0,
+    "shellCommandsRun": 0,
+    "networkCalls": 0,
+    "codeOrTestEdits": 0,
+    "runtimeOrSettingsChanges": 0,
+    "optionalInteractionSharing": "OFF"
+  },
+  "coordinatorReview": {
+    "reviewedAtUtc": "2026-11-03T12:18:24.822239+00:00",
+    "exactPairsChecked": 24,
+    "damagedPacketControlsRejected": 14,
+    "actualNotesWhitespaceWords": 192,
+    "ambiguousSquareFootInchAndZeroStockWordingCorrected": true,
+    "fluentOrSemanticCertification": false,
+    "generationPacketRuntimeActivation": false
+  }
+}

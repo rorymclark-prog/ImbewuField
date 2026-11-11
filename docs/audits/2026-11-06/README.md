@@ -9,3 +9,12 @@
 - [Ten paired exact SVG and AI samples — Codex](paired-map-samples-codex.md). Previous Sector preserved; remaining illustrations are drafts with observed fidelity issues.
 
 - [All-map illustration treatments, surrounding context and draft guides — Codex](all-map-illustration-guides-codex.md). Research and saved-example review only; no runtime settings or new AI outputs.
+
+- [Field seed cycle export integration](field-seed-cycle-integration-codex.md):
+  source-bound follow-up on the assembled baseline; local gates passed and new
+  current-head CI/browser delivery remain pending.
+
+The [audit archive](../README.md) retains the earlier area records and release
+limitations. This index addition does not reclassify earlier evidence.
+
+- [Site survey elevation and energy: release contracts and integrated account QA — Codex](site-energy-survey-release-codex.md)

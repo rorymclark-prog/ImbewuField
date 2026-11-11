@@ -1,0 +1,16 @@
+{
+  "provenance": "Coordinator selection of Codex-authored candidates for existing notice languages only",
+  "candidatePacketSha256": "333dab8d6a2d2d6ec64f362d1b3a84687343707940d883c8303d3cd4dcd19d93",
+  "sources": 4,
+  "pairs": 16,
+  "newRuntimeLanguages": false,
+  "fluentApproval": false,
+  "candidatesRemainUnreviewed": true,
+  "englishFallbackAndDraftNotice": "existing mechanism unchanged",
+  "selectedFiles": [
+    "lib/update-copy-locales/zu.ts",
+    "lib/update-copy-locales/st.ts",
+    "lib/update-copy-locales/ts.ts",
+    "lib/update-copy-locales/ve.ts"
+  ]
+}

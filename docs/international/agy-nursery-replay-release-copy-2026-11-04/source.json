@@ -1,0 +1,19 @@
+{
+  "base": "1427bc824a068815eac9f88e20f07652ff7920c8",
+  "locales": [
+    "st",
+    "ts",
+    "ve",
+    "zu",
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "entries": [
+    {
+      "english": "Keep editing nursery equipment and buyer targets after a confirmed save.",
+      "messageSha256": "0262b56b4261b2242a21da9fc3e3bb15978504a4250a8e843ff87929e96227a2"
+    }
+  ]
+}

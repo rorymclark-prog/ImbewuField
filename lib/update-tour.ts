@@ -19,9 +19,20 @@ export function cleanUpdateTour(value: unknown): UpdateTourStop[] {
     && typeof stop.where === 'string' && stop.where.trim().length > 0
     && typeof stop.detail === 'string' && stop.detail.trim().length > 0
     && typeof stop.href === 'string'
-    && /^\/[a-zA-Z0-9/_-]*(?:#[a-zA-Z0-9_-]+)?$/.test(stop.href)
+    // These guide steps open existing panels. Admit their exact destinations,
+    // without opening the stored guide to arbitrary query strings or redirects.
+    && (stop.href === '/farmer?panel=Ask' || stop.href === '/records?tab=sold'
+      || /^\/[a-zA-Z0-9/_-]*(?:#[a-zA-Z0-9_-]+)?$/.exec(stop.href)?.[0] === stop.href)
     && !stop.href.includes('//'),
   );
+}
+
+/** Ask and Sold share a page with other panels; pathname alone is not arrival. */
+export function isUpdateGuideDestination(pathname: string, search: string, href: string): boolean {
+  const destination = href.split('#')[0];
+  return destination.includes('?')
+    ? pathname + (search ? '?' + search : '') === destination
+    : pathname === destination;
 }
 
 export function readUpdateGuide(raw: string | null, loadedSha: string | null): UpdateGuideState | null {

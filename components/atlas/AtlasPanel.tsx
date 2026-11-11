@@ -36,14 +36,14 @@ const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'Ju
 const PATTERN_LABEL: Record<AtlasRainPattern, string> = {
   'summer': 'Summer rainfall',
   'winter': 'Winter rainfall',
-  'all-year': 'Year-round rainfall',
+  'all-year': 'Hot, no frost',
   'mild-frost': 'Summer rainfall, light frost',
 };
 
 const PATTERN_LABEL_ZU: Record<AtlasRainPattern, string> = {
   summer: 'Imvula yasehlobo',
   winter: 'Imvula yasebusika',
-  'all-year': 'Imvula unyaka wonke',
+  'all-year': 'Kuyashisa, asikho isithwathwa',
   'mild-frost': 'Imvula yasehlobo, isithwathwa esincane',
 };
 
@@ -361,8 +361,8 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
         <Card accent="#C07A1E">
           <Label icon={<Sprout size={12} />}>{pairedLabel('What could grow here', 'Yini engakhula lapha?', isZulu)}</Label>
           <p className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: 10 }}>
-            From our crop catalog: crops with a sowing window open in {MONTH_NAMES[monthNow - 1]} under a{' '}
-            <b style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{PATTERN_LABEL[pattern].toLowerCase()}</b> pattern
+            From our crop catalog: crops with a sowing window open in {MONTH_NAMES[monthNow - 1]} under the{' '}
+            <b style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{PATTERN_LABEL[pattern].toLowerCase()}</b> sowing calendar
             {northern ? ' (calendar shifted six months for the northern hemisphere)' : ''}.
             A description of the catalog, not planting advice for this site.
           </p>

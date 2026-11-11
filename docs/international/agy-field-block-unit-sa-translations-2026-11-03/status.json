@@ -1,0 +1,51 @@
+{
+  "workorder": "docs/international/agy-field-block-unit-sa-translations-2026-11-03/WORKORDER.md",
+  "status": "completed-awaiting-root-review",
+  "sourcePath": "../agy-field-block-unit-translations-2026-11-03/source.json",
+  "sourceSha256": "b60a09754ec9965e7110d7ecaa690222077821f2495a4d9f8e01233691f8a321",
+  "sourceCommitBase": "6e184d251234566a94f1c61f0ddd925805ac66cc",
+  "baseCommitIdentifiesSnapshot": false,
+  "sourceFiles": [
+    {
+      "path": "components/design/FieldBlocksPanel.tsx",
+      "sha256": "ebc3ae23f446c852d4b89f3551b7c4d5c33a8b507892c967982359880ae7b021"
+    },
+    {
+      "path": "lib/release-notes.ts",
+      "sha256": "7b311fd25f8d51992c8ad047eedf31765cbbd2c69f0c5f50e8acbdca75cb6dd2"
+    }
+  ],
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "messagesPerLocale": 20,
+  "totalDrafts": 80,
+  "reviewNotesWordCount": 216,
+  "reviewNotesMaxWords": 250,
+  "activeWorkers": 0,
+  "workerState": "stopped",
+  "commandsExecuted": 0,
+  "testsExecuted": 0,
+  "selfValidatorsExecuted": 0,
+  "networkRequests": 0,
+  "outputs": [
+    "zu.json",
+    "st.json",
+    "ts.json",
+    "ve.json",
+    "review-notes.md",
+    "status.json"
+  ],
+  "coordinatorStructuralReview": {
+    "checkedAtUtc": "2026-11-03T10:51:49.244173+00:00",
+    "pairs": 80,
+    "damagedControlsRejected": 12,
+    "actualReviewNotesWords": 216,
+    "humanFluentReview": false
+  }
+}

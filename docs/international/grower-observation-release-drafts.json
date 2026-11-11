@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "status": "unreviewed-ai-draft",
+  "provenance": "Codex",
+  "sourceKind": "Codex-ai-draft",
+  "runtimeActivation": false,
+  "runtimeSelection": "existing-four-update-descriptions-only",
+  "humanReview": false,
+  "fluentReview": false,
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "73f4b5bd06d6fcd8f608b7287a8ab57f4d0b3a859eed5240e63dec0a743a616c",
+  "milestoneId": "grower-field-observations",
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "reviewNotes": "AI draft candidates only. The observed day is chosen by the user and confirmed; the planned task reference remains separate. Recording a note leaves checklist, harvest, stock and sales records unchanged. No new runtime language or human/fluent approval.",
+  "dictionaryPreservation": {
+    "zu": {
+      "originalFileSha256": "c8ec10c503b097a34764ca9c0a472bf9dd9ddcf9b004f4959bdb05b5dc0a1cb0",
+      "selectedFileSha256": "77491ff1cb48f9701a7f4a7e124071749390a367fbd6b27fec1ba6687416dd14",
+      "historicalBytesPreserved": true
+    },
+    "st": {
+      "originalFileSha256": "c31969055ff79d756cd583b22acfe2b2839a5a0d462275a98ae86a37b0939b16",
+      "selectedFileSha256": "b5a06382bd3a749a9cc638e24f71e74223797c851923bacda07a8c4097aaf5b3",
+      "historicalBytesPreserved": true
+    },
+    "ts": {
+      "originalFileSha256": "fc2e4cd6efb11331a2054b698993158fea386a8db612d94539e7ed45a66831be",
+      "selectedFileSha256": "0aa48e334bda53f97454c1563306ab77a36f619f132e27a4bb77bb267219dd16",
+      "historicalBytesPreserved": true
+    },
+    "ve": {
+      "originalFileSha256": "8c5fcd656cec0210eb39933340cbedb280fee52bbea80406ae3e324f02c9b8d0",
+      "selectedFileSha256": "c571c8fbbd31996b334b90c75ab366af6c882e211274186aa67335ae5541763c",
+      "historicalBytesPreserved": true
+    }
+  },
+  "messages": [
+    {
+      "key": "change",
+      "sourceOrder": 1,
+      "english": "Record your own field observations from planned tasks.",
+      "messageSha256": "66281a60f3b60894bcd1f92af8ce33581daac5e79a5af5a14fc6f698c0a23893",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceFileSha256": "73f4b5bd06d6fcd8f608b7287a8ab57f4d0b3a859eed5240e63dec0a743a616c",
+      "translations": {
+        "zu": "Rekhoda lokho okubonile ensimini yakho kusukela emisebenzini ehleliwe.",
+        "st": "Ngola seo o se boneng tshimong ya hao ho tswa mesebetsing e rerilweng.",
+        "ts": "Rekhoda leswi u swi voneke ensin’wini ya wena ku suka eka mintirho leyi kunguhatiweke.",
+        "ve": "Rekhodani zwe na zwi vhona tsimuni yaṋu ni tshi bva kha mishumo yo pulaniwaho."
+      }
+    },
+    {
+      "key": "tour.title",
+      "sourceOrder": 2,
+      "english": "Record a field observation",
+      "messageSha256": "b257737078e0060a13e6ad2e1e2824703b182ecd76aaff80d7a882c10931325c",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceFileSha256": "73f4b5bd06d6fcd8f608b7287a8ab57f4d0b3a859eed5240e63dec0a743a616c",
+      "translations": {
+        "zu": "Rekhoda lokho okubonile ensimini",
+        "st": "Ngola seo o se boneng tshimong",
+        "ts": "Rekhoda leswi u swi voneke ensin’wini",
+        "ve": "Rekhodani zwe na zwi vhona tsimuni"
+      }
+    },
+    {
+      "key": "tour.where",
+      "sourceOrder": 3,
+      "english": "Task Planner → Dated work → Record what happened",
+      "messageSha256": "479814ede6c78b2ba9bf5e101c989e7cfb42be206597ab6d374b37ff49f9ada6",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceFileSha256": "73f4b5bd06d6fcd8f608b7287a8ab57f4d0b3a859eed5240e63dec0a743a616c",
+      "translations": {
+        "zu": "Umhleli Wemisebenzi → Umsebenzi onezinsuku → Rekhoda okwenzekile",
+        "st": "Moralo wa Mesebetsi → Mosebetsi o nang le matsatsi → Ngola se etsahetseng",
+        "ts": "Mupulani wa Mintirho → Mintirho leyi nga ni masiku → Rekhoda leswi humeleleke",
+        "ve": "Mupulani wa Mishumo → Mushumo u re na madatumu → Rekhodani zwe zwa itea"
+      }
+    },
+    {
+      "key": "tour.detail",
+      "sourceOrder": 4,
+      "english": "Choose the day you observed something, write a note and confirm it. The journal keeps the planned reference separately; checklist, harvest, stock and sales records are unchanged.",
+      "messageSha256": "e5bc4e9a5a738e086bc3e804015ed4ad634126ae21d7f2860318c263a79a8731",
+      "sourceFile": "lib/release-notes.ts",
+      "sourceFileSha256": "73f4b5bd06d6fcd8f608b7287a8ab57f4d0b3a859eed5240e63dec0a743a616c",
+      "translations": {
+        "zu": "Khetha usuku obone ngalo okuthile, ubhale inothi bese uliqinisekisa. Ijenali igcina ireferensi yomsebenzi ohleliwe ngokwehlukana; amarekhodi ohlu lokuhlola, okuvuniwe, isitoko nokuthengisa awashintshi.",
+        "st": "Kgetha letsatsi leo o boneng ho hong ka lona, ngola ntlha mme o e netefatse. Jenale e boloka tshupiso ya mosebetsi o rerilweng ka thoko; direkoto tsa lenane la ho hlahloba, kotulo, setoko le thekiso ha di fetohe.",
+        "ts": "Hlawula siku leri u voneke swo karhi ha rona, tsala notsi kutani u yi tiyisisa. Jenali yi hlayisa xikombo xa ntirho lowu kunguhatiweke hi ku hambana; tirhekhodo ta nxaxamelo wo kambela, ntshovelo, xitoko ni ku xavisa a ti cinci.",
+        "ve": "Khethani ḓuvha ḽe na vhona tshithu ngaḽo, ṅwalani notsi ni i khwaṱhisedze. Dzhenala i vhulunga ndaedzo ya mushumo wo pulaniwaho nga thungo; rekhodo dza mutevhe wa u sedzulusa, khaṋo, tshitoko na thengiso a dzi shanduki."
+      }
+    }
+  ]
+}

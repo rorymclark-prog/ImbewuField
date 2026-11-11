@@ -1,0 +1,49 @@
+{
+  "coordinatorReview": "exact source-text/hash reconciliation only; not fluent or customer review",
+  "checkedAtUtc": "2026-11-03T15:24:59.324720+00:00",
+  "implementationCommit": "7833c0ac4abc74567535bd6e91da71d8b872b4f8",
+  "sourcePacketSha256": "7acc221092b084ffe654d908777f38e41a2166d582800e254425de4c61467f8b",
+  "originalPacketUnchanged": true,
+  "files": [
+    {
+      "path": "lib/release-notes.ts",
+      "frozenSnapshot": {
+        "bytes": 347051,
+        "sha256": "521d15a2dd1cc25bff6f4808000488912a78d15c308a58301693bc63a93235e8"
+      },
+      "currentBytes": 347052,
+      "currentSha256": "03e611cec26b7b9799a3ec666a726089e29b49bcbc9758bf94058487cc738545"
+    }
+  ],
+  "messages": [
+    {
+      "key": "harvestMassRelease01",
+      "englishSha256": "3e978fc4a6741970bf0824660ab727ba4cd388c6b95e02ac94868055da7aa78e",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMassRelease02",
+      "englishSha256": "f22f4e3c44a8daa16ff927cfd9d6729246d75d93a7614fa3a5c6a9f12c1fb811",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMassRelease03",
+      "englishSha256": "4e37a4962dd155a0671e77f26f4b7bd2201ad16af2e83d40fc2b9cdc1ec91779",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMassRelease04",
+      "englishSha256": "9db9cd7863c8a50a79923209647f89331b98e386fb767924c711c42915e7c3a4",
+      "exactEnglishPresent": true
+    },
+    {
+      "key": "harvestMassRelease05",
+      "englishSha256": "5c5c475afb8b38fd05961f91419db6eece0435ac4e9c6f484d6f4a8ee06f0a28",
+      "exactEnglishPresent": true
+    }
+  ],
+  "selectedDescriptionPairs": 20,
+  "newRuntimeLanguages": false,
+  "humanApproval": false,
+  "note": "Generation runtimeActivation false remains historical. Global messages remain unselected; clarified SA descriptions use the existing disclosed draft tables. Release SHA-only restamp and subsequent code changes do not alter these exact English messages."
+}

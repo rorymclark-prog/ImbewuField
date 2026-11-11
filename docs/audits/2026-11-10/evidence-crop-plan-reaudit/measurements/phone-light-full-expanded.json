@@ -1,0 +1,6296 @@
+{
+ "config": {
+  "name": "phone-light-full-expanded",
+  "viewport": "390x844",
+  "devicePixelRatio": 1,
+  "theme": "earth light",
+  "level": "full",
+  "lang": "en",
+  "sectionsOpened": true,
+  "countryHold": "confirmed as ZA",
+  "appTextScale": 1,
+  "url": "/facilitator/crops",
+  "site": "public sample farm",
+  "servedBuild": {
+   "branch": "claude/blissful-pasteur-1c4ne6",
+   "sha": "3303ed3"
+  },
+  "siteClimate": {
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsShown": true,
+   "plannerShown": true
+  }
+ },
+ "totals": {
+  "controls": 431,
+  "textRuns": 2142,
+  "contrastFailures": 46,
+  "contrastFailuresConfirmedByPixels": 42,
+  "contrastFailuresNotPixelSampled": 4,
+  "contrastFailuresOnDisabledControls": 2,
+  "textUnder12px": 301,
+  "targetsUnder24_noException": 15,
+  "targetsUnder24_withException": 53,
+  "targets24to44": 95,
+  "unnamedControls": 0,
+  "clippedText": 10,
+  "h1": 0,
+  "docOverflowX": false
+ },
+ "layout": {
+  "scrollAreaTopPx": 204,
+  "scrollAreaHeightPx": 549,
+  "windowHeightPx": 844,
+  "scrollAreaShare": 0.65,
+  "calendarTopInScrollPx": 18861,
+  "pageScrollHeightPx": 52778,
+  "headerScrollWidthPx": 973,
+  "headerClientWidthPx": 390
+ },
+ "contrast": [
+  {
+   "text": "Lettuce",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "note": "outside the window"
+   }
+  },
+  {
+   "text": "(62%)",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.39,
+      "ratioAgainstText": 1.61
+     },
+     {
+      "colour": "#DEE8D4",
+      "shareOfBox": 0.16,
+      "ratioAgainstText": 1.26
+     }
+    ],
+    "worstRatio": 1.26,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "Carrots",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.48,
+      "ratioAgainstText": 1.61
+     }
+    ],
+    "worstRatio": 1.61,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(86%)",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.48,
+      "ratioAgainstText": 1.61
+     }
+    ],
+    "worstRatio": 1.61,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Butternut",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.53,
+      "ratioAgainstText": 1.61
+     }
+    ],
+    "worstRatio": 1.61,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(1/1)",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.53,
+      "ratioAgainstText": 1.61
+     }
+    ],
+    "worstRatio": 1.61,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Tomatoes",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "84x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.37,
+      "ratioAgainstText": 1.61
+     },
+     {
+      "colour": "#DEE8D4",
+      "shareOfBox": 0.1,
+      "ratioAgainstText": 1.26
+     }
+    ],
+    "worstRatio": 1.26,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "(75%)",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "84x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.37,
+      "ratioAgainstText": 1.61
+     },
+     {
+      "colour": "#DEE8D4",
+      "shareOfBox": 0.1,
+      "ratioAgainstText": 1.26
+     }
+    ],
+    "worstRatio": 1.26,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "Carrots",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "72x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.51,
+      "ratioAgainstText": 1.61
+     }
+    ],
+    "worstRatio": 1.61,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(20%)",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "72x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.51,
+      "ratioAgainstText": 1.61
+     }
+    ],
+    "worstRatio": 1.61,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Green beans",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "note": "outside the window"
+   }
+  },
+  {
+   "text": "(69%)",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.64,
+      "ratioAgainstText": 1.61
+     }
+    ],
+    "worstRatio": 1.61,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Broccoli",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "76x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.38,
+      "ratioAgainstText": 1.61
+     },
+     {
+      "colour": "#DEE8D4",
+      "shareOfBox": 0.1,
+      "ratioAgainstText": 1.26
+     }
+    ],
+    "worstRatio": 1.26,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "(47%)",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "76x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.38,
+      "ratioAgainstText": 1.61
+     },
+     {
+      "colour": "#DEE8D4",
+      "shareOfBox": 0.1,
+      "ratioAgainstText": 1.26
+     }
+    ],
+    "worstRatio": 1.26,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "Sweet potato",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "note": "outside the window"
+   }
+  },
+  {
+   "text": "(46%)",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.69,
+      "ratioAgainstText": 1.61
+     }
+    ],
+    "worstRatio": 1.61,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Maize (mielies)",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "note": "outside the window"
+   }
+  },
+  {
+   "text": "(83%)",
+   "declared": {
+    "ratio": 1.55,
+    "text": "#FFFFFD",
+    "background": "#BFD6B4",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#BCD3AE",
+      "shareOfBox": 0.58,
+      "ratioAgainstText": 1.61
+     }
+    ],
+    "worstRatio": 1.61,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "check / transplant",
+   "declared": {
+    "ratio": 2.09,
+    "text": "#CFAD81",
+    "background": "#FFFEFA",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 9,
+   "weight": 700,
+   "boxPx": "100x16",
+   "selector": "div > div > div > button[aria-label=\"Plan to transplant Lettuce in \"].font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#FDFBF4",
+      "shareOfBox": 0.27,
+      "ratioAgainstText": 2.04
+     },
+     {
+      "colour": "#DEE8D4",
+      "shareOfBox": 0.17,
+      "ratioAgainstText": 1.67
+     },
+     {
+      "colour": "#FFFEFA",
+      "shareOfBox": 0.13,
+      "ratioAgainstText": 2.09
+     }
+    ],
+    "worstRatio": 1.67,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "check / transplant",
+   "declared": {
+    "ratio": 2.09,
+    "text": "#CFAD81",
+    "background": "#FFFEFA",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 9,
+   "weight": 700,
+   "boxPx": "100x16",
+   "selector": "div > div > div > button[aria-label=\"Plan to transplant Tomatoes in\"].font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#DEE8D4",
+      "shareOfBox": 0.27,
+      "ratioAgainstText": 1.67
+     },
+     {
+      "colour": "#FDFBF4",
+      "shareOfBox": 0.19,
+      "ratioAgainstText": 2.04
+     },
+     {
+      "colour": "#FFFEFA",
+      "shareOfBox": 0.11,
+      "ratioAgainstText": 2.09
+     }
+    ],
+    "worstRatio": 1.67,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "check / transplant",
+   "declared": {
+    "ratio": 2.09,
+    "text": "#CFAD81",
+    "background": "#FFFEFA",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 9,
+   "weight": 700,
+   "boxPx": "100x16",
+   "selector": "div > div > div > button[aria-label=\"Plan to transplant Broccoli in\"].font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#FDFBF4",
+      "shareOfBox": 0.31,
+      "ratioAgainstText": 2.04
+     },
+     {
+      "colour": "#DEE8D4",
+      "shareOfBox": 0.26,
+      "ratioAgainstText": 1.67
+     }
+    ],
+    "worstRatio": 1.67,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "Lettuce",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.35,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(62%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.35,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Carrots",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.49,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(86%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.49,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Butternut",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.54,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(1/1)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.54,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Carrots",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "72x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.52,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(20%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "72x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.52,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Green beans",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "99x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.48,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(69%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "99x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.48,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Broccoli",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "76x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.38,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(47%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "76x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.38,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Sweet potato",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "103x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.52,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(46%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "103x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.52,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Maize (mielies)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "111x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.48,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(83%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "111x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.48,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Save country details",
+   "declared": {
+    "ratio": 2.61,
+    "text": "#FFFFFD",
+    "background": "#8FA697",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 16,
+   "weight": 600,
+   "boxPx": "332x44",
+   "selector": "section[aria-label=\"Site country and region\"].mb-4.rounded-2xl > details.mt-3 > form.grid.gap-3 > button.min-h-11.rounded-xl",
+   "disabled": true,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#8DA495",
+      "shareOfBox": 0.9,
+      "ratioAgainstText": 2.66
+     }
+    ],
+    "worstRatio": 2.66,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Review automatic crop plan",
+   "declared": {
+    "ratio": 3.28,
+    "text": "#938D85",
+    "background": "#FFFEFA",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 14,
+   "weight": 400,
+   "boxPx": "205x44",
+   "selector": "div.mx-auto.w-full > details.mb-4.rounded-2xl > section[aria-label=\"Grower automatic plan review\"].space-y-4.px-4 > button.min-h-11.rounded-lg",
+   "disabled": true,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#FFFEFA",
+      "shareOfBox": 0.84,
+      "ratioAgainstText": 3.26
+     }
+    ],
+    "worstRatio": 3.26,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Onions",
+   "declared": {
+    "ratio": 3.71,
+    "text": "#FFFFFF",
+    "background": "#8C8654",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#B8934A",
+      "shareOfBox": 0.66,
+      "ratioAgainstText": 2.87
+     }
+    ],
+    "worstRatio": 2.87,
+    "agreesWithDeclared": false,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(61%)",
+   "declared": {
+    "ratio": 3.71,
+    "text": "#FFFFFF",
+    "background": "#8C8654",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#B8934A",
+      "shareOfBox": 0.66,
+      "ratioAgainstText": 2.87
+     }
+    ],
+    "worstRatio": 2.87,
+    "agreesWithDeclared": false,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Garlic",
+   "declared": {
+    "ratio": 3.71,
+    "text": "#FFFFFF",
+    "background": "#8C8654",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "50x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#8C8654",
+      "shareOfBox": 0.38,
+      "ratioAgainstText": 3.71
+     },
+     {
+      "colour": "#B8934A",
+      "shareOfBox": 0.13,
+      "ratioAgainstText": 2.87
+     }
+    ],
+    "worstRatio": 2.87,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "(½)",
+   "declared": {
+    "ratio": 3.71,
+    "text": "#FFFFFF",
+    "background": "#8C8654",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "50x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#8C8654",
+      "shareOfBox": 0.38,
+      "ratioAgainstText": 3.71
+     },
+     {
+      "colour": "#B8934A",
+      "shareOfBox": 0.13,
+      "ratioAgainstText": 2.87
+     }
+    ],
+    "worstRatio": 2.87,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "1 plants need age groups",
+   "declared": {
+    "ratio": 3.85,
+    "text": "#9E5C08",
+    "background": "#E4DCC6",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 400,
+   "boxPx": "266x18",
+   "selector": "div.mt-4.rounded-xl > div.flex.items-start > div > p",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#E4DCC6",
+      "shareOfBox": 0.85,
+      "ratioAgainstText": 3.85
+     }
+    ],
+    "worstRatio": 3.85,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "1 plants need age groups",
+   "declared": {
+    "ratio": 3.85,
+    "text": "#9E5C08",
+    "background": "#E4DCC6",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 400,
+   "boxPx": "266x18",
+   "selector": "div.mt-4.rounded-xl > div.flex.items-start > div > p",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#E4DCC6",
+      "shareOfBox": 0.85,
+      "ratioAgainstText": 3.85
+     }
+    ],
+    "worstRatio": 3.85,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "2 plants need age groups",
+   "declared": {
+    "ratio": 3.85,
+    "text": "#9E5C08",
+    "background": "#E4DCC6",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 400,
+   "boxPx": "266x18",
+   "selector": "div.mt-4.rounded-xl > div.flex.items-start > div > p",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#E4DCC6",
+      "shareOfBox": 0.85,
+      "ratioAgainstText": 3.85
+     }
+    ],
+    "worstRatio": 3.85,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "1 plants need age groups",
+   "declared": {
+    "ratio": 3.85,
+    "text": "#9E5C08",
+    "background": "#E4DCC6",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 400,
+   "boxPx": "266x18",
+   "selector": "div.mt-4.rounded-xl > div.flex.items-start > div > p",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#E4DCC6",
+      "shareOfBox": 0.85,
+      "ratioAgainstText": 3.85
+     }
+    ],
+    "worstRatio": 3.85,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "check / transplant",
+   "declared": {
+    "ratio": 3.85,
+    "text": "#9E5C08",
+    "background": "#E4DCC6",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 10,
+   "weight": 600,
+   "boxPx": "108x14",
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.font-sans.mb-5 > span.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#E4DCC6",
+      "shareOfBox": 0.51,
+      "ratioAgainstText": 3.85
+     }
+    ],
+    "worstRatio": 3.85,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  }
+ ],
+ "textUnder12px": [
+  {
+   "text": "Plants and housing from your map",
+   "fontPx": 11,
+   "selector": "div.flex.flex-col > header.flex-shrink-0.flex > div.flex.flex-col > span.font-sans.truncate",
+   "count": 1
+  },
+  {
+   "text": "Bed",
+   "fontPx": 10,
+   "selector": "div.rounded-2xl.mb-5 > div.flex > div > span.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Year one — from this month",
+   "fontPx": 9.5,
+   "selector": "div.flex-1 > div > div.flex > div.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Year two — repeat crops; check plant ages",
+   "fontPx": 9.5,
+   "selector": "div.flex-1 > div > div.flex > div.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Vegetables",
+   "fontPx": 10.5,
+   "selector": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"veg\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "6.0",
+   "fontPx": 11,
+   "selector": "div > div.flex > div > div.font-mono",
+   "count": 6
+  },
+  {
+   "text": "m²",
+   "fontPx": 11,
+   "selector": "div > div.flex > div > div.font-mono",
+   "count": 11
+  },
+  {
+   "text": "Onions",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(61%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Lettuce",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(62%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "check / transplant",
+   "fontPx": 9,
+   "selector": "div > div > div > button[aria-label=\"Plan to transplant Lettuce in \"].font-sans",
+   "count": 5
+  },
+  {
+   "text": "Carrots",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 4
+  },
+  {
+   "text": "(86%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Butternut",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(1/1)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Tomatoes",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(75%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(20%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Green beans",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(69%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "8.0",
+   "fontPx": 11,
+   "selector": "div > div.flex > div > div.font-mono",
+   "count": 1
+  },
+  {
+   "text": "Garlic",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(½)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Broccoli",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(47%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Sweet potato",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(46%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Staple grain",
+   "fontPx": 10,
+   "selector": "div.flex > div > div.font-sans > span",
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(83%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Staple crops",
+   "fontPx": 10.5,
+   "selector": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"staple\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "plot",
+   "fontPx": 8.5,
+   "selector": "div.flex > div > div.font-display.font-semibold > span.font-sans.font-semibold",
+   "count": 4
+  },
+  {
+   "text": "21.0",
+   "fontPx": 11,
+   "selector": "div > div.flex > div > div.font-mono",
+   "count": 4
+  },
+  {
+   "text": "Fruit, nuts & berries",
+   "fontPx": 10.5,
+   "selector": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"trees\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "From your map · hover or tap a bar",
+   "fontPx": 10,
+   "selector": "div > div[data-crop-calendar-produce=\"trees\"].flex > div > div.font-sans",
+   "count": 2
+  },
+  {
+   "text": "Outlined bars: sourced planning references when established. Solid bars: locally",
+   "fontPx": 11,
+   "selector": "div > div[data-crop-calendar-produce=\"trees\"].flex > div > p.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Mango",
+   "fontPx": 11,
+   "selector": "div > button[aria-label=\"Mango — fruit · 1 plant on you\"].font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "· reference",
+   "fontPx": 11,
+   "selector": "div > button[aria-label=\"Mango — fruit · 1 plant on you\"].font-sans > span > span",
+   "count": 4
+  },
+  {
+   "text": "(proposed)",
+   "fontPx": 11,
+   "selector": "div > button[aria-label=\"Mango — fruit · 1 plant on you\"].font-sans > span > span",
+   "count": 4
+  },
+  {
+   "text": "Avocado",
+   "fontPx": 11,
+   "selector": "div > button[aria-label=\"Avocado — fruit · 1 plant on y\"].font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "On your map, with picking months to confirm: Avocado, Mango, Moringa, Num-num. T",
+   "fontPx": 11,
+   "selector": "div > div[data-crop-calendar-produce=\"trees\"].flex > div > div.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Animal products",
+   "fontPx": 10.5,
+   "selector": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"animals\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "These confirmations are kept on this device for this design.",
+   "fontPx": 11.5,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > p.font-sans.mb-3",
+   "count": 1
+  },
+  {
+   "text": "29.7 kg",
+   "fontPx": 11,
+   "selector": "div > div > button.grid.gap-2 > span",
+   "count": 1
+  },
+  {
+   "text": "*",
+   "fontPx": 11,
+   "selector": "div > div > button.grid.gap-2 > span",
+   "count": 10
+  },
+  {
+   "text": "48.8 kg",
+   "fontPx": 11,
+   "selector": "div > div > button.grid.gap-2 > span",
+   "count": 9
+  },
+  {
+   "text": "* Known subtotal only. Missing production is not zero. Striped ends show harvest",
+   "fontPx": 11,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > section[data-production-projection=\"true\"].mt-4.rounded-2xl > p.mt-2",
+   "count": 1
+  },
+  {
+   "text": "KZN DARD, Fruit and Nut Production, PDF pp. 6–7 (regional reference; confirm cur",
+   "fontPx": 11,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "SA Avocado Industry Overview – South African Avocado Growers' Association (SAAGA",
+   "fontPx": 11,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agric",
+   "fontPx": 11,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+   "fontPx": 11,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Wolstenholme, Kaiser & Palmer, 'Yield Potential of Intensively Managed Avocados ",
+   "fontPx": 11,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18, p. 7",
+   "fontPx": 11,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Wolstenholme, Kaiser & Palmer (1991), SAAGA Yearbook 14:15–18; reflowed PDF, p. ",
+   "fontPx": 11,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "ARC Climate-Smart Agriculture, module 6, printed pp. 239–242",
+   "fontPx": 11,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow R",
+   "fontPx": 11,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "KZN DARD, Fruit and Nut Production in KZN, Mango bearing age; printed p.16, p. 2",
+   "fontPx": 11,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "North West DARD: Moringa production for food security (2021)",
+   "fontPx": 11,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "North West Department of Agriculture and Rural Development, Moringa (Moringa ole",
+   "fontPx": 11,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 2
+  },
+  {
+   "text": "SANBI PlantZAfrica: carissa-macrocarpa",
+   "fontPx": 11,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Onion chapter, KZN DARD vegetable production guide, chapter 27, p. 1",
+   "fontPx": 11,
+   "selector": "details.mt-3 > div.py-2 > ul.font-sans.mt-1 > li",
+   "count": 1
+  },
+  {
+   "text": "Onion chapter, KZN DARD vegetable production guide, chapter 27, p. 2",
+   "fontPx": 11,
+   "selector": "details.mt-3 > div.py-2 > ul.font-sans.mt-1 > li",
+   "count": 1
+  },
+  {
+   "text": "Onion chapter, KZN DARD vegetable production guide, chapter 27, p. 3",
+   "fontPx": 11,
+   "selector": "details.mt-3 > div.py-2 > ul.font-sans.mt-1 > li",
+   "count": 1
+  },
+  {
+   "text": "Fordhook Giant, Sakata product page",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Bright Lights, Starke Ayres product page",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Rodade, Sakata product page",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Contender bush bean, Starke Ayres product page",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Star 2000 bush bean, Starke Ayres product page",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "LETTUCE INTRODUCTION, KZN DARD, p. 2",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Brigadier Lettuce Seeds, Starke Ayres product page",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "LETTUCE INTRODUCTION, KZN DARD, p. 1",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "COLE CROPS, KZN DARD, p. 3",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "COLE CROPS, KZN DARD (Table 14, Sowing times, reading the Broccoli row's three c",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 3
+  },
+  {
+   "text": "Conquistador F1 Hybrid Fresh Market Cabbage, Sakata product page",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Chantenay Karoo, Sakata product page",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "Kuroda, Sakata product page",
+   "fontPx": 11,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "text": "2026",
+   "fontPx": 10,
+   "selector": "div[aria-label=\"Fresh food graph; scroll sidew\"].ProductionAvailabilityGraphs_scroll__txw6e > svg[aria-label=\"Fresh food: different food typ\"] > g[aria-label=\"Nov 2026: 1 food types — Onion\"] > text",
+   "count": 8
+  },
+  {
+   "text": "2027",
+   "fontPx": 10,
+   "selector": "div[aria-label=\"Fresh food graph; scroll sidew\"].ProductionAvailabilityGraphs_scroll__txw6e > svg[aria-label=\"Fresh food: different food typ\"] > g[aria-label=\"Jan 2027: 0 food types with ma\"] > text",
+   "count": 40
+  },
+  {
+   "text": "Fresh",
+   "fontPx": 11,
+   "selector": "div.ProductionAvailabilityGraphs_foodGrid__BtDfH > article.ProductionAvailabilityGraphs_card__6kRyE > div.ProductionAvailabilityGraphs_key__xNRuh > span",
+   "count": 2
+  },
+  {
+   "text": "Number of food types",
+   "fontPx": 11,
+   "selector": "div.ProductionAvailabilityGraphs_foodGrid__BtDfH > article.ProductionAvailabilityGraphs_card__6kRyE > div.ProductionAvailabilityGraphs_key__xNRuh > span",
+   "count": 2
+  },
+  {
+   "text": "Planned pantry food",
+   "fontPx": 11,
+   "selector": "div.ProductionAvailabilityGraphs_foodGrid__BtDfH > article.ProductionAvailabilityGraphs_card__6kRyE > div.ProductionAvailabilityGraphs_key__xNRuh > span",
+   "count": 1
+  },
+  {
+   "text": "Recorded kept food",
+   "fontPx": 11,
+   "selector": "div.ProductionAvailabilityGraphs_foodGrid__BtDfH > article.ProductionAvailabilityGraphs_card__6kRyE > div.ProductionAvailabilityGraphs_key__xNRuh > span",
+   "count": 1
+  },
+  {
+   "text": "One food counts once, even if it is both fresh and frozen. These are planned or ",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > details.rounded-2xl.p-4 > section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > p.ProductionAvailabilityGraphs_note__VnK5z",
+   "count": 1
+  },
+  {
+   "text": "kg · * = known subtotal with missing weights. ? = quantity unknown. – = no new c",
+   "fontPx": 11,
+   "selector": "details.rounded-2xl.p-4 > section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > article.ProductionAvailabilityGraphs_card__6kRyE > p.ProductionAvailabilityGraphs_note__VnK5z",
+   "count": 1
+  },
+  {
+   "text": "Occupied",
+   "fontPx": 11,
+   "selector": "section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > article.ProductionAvailabilityGraphs_card__6kRyE.ProductionAvailabilityGraphs_space__t8_CE > div.ProductionAvailabilityGraphs_key__xNRuh > span",
+   "count": 1
+  },
+  {
+   "text": "Free between crops",
+   "fontPx": 11,
+   "selector": "section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > article.ProductionAvailabilityGraphs_card__6kRyE.ProductionAvailabilityGraphs_space__t8_CE > div.ProductionAvailabilityGraphs_key__xNRuh > span",
+   "count": 1
+  },
+  {
+   "text": "Crop ground only: food forest, animal areas and ponds are not measured here. The",
+   "fontPx": 11,
+   "selector": "details.rounded-2xl.p-4 > section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > article.ProductionAvailabilityGraphs_card__6kRyE.ProductionAvailabilityGraphs_space__t8_CE > p.ProductionAvailabilityGraphs_note__VnK5z",
+   "count": 1
+  },
+  {
+   "text": "check / transplant",
+   "fontPx": 10,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.font-sans.mb-5 > span.font-sans",
+   "count": 1
+  },
+  {
+   "text": "marks when to start checking seedlings raised in a tray. The crop bar starts at ",
+   "fontPx": 11.5,
+   "selector": "div.flex.flex-col > div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.font-sans.mb-5",
+   "count": 1
+  },
+  {
+   "text": "How the two-year timeline works (↻, faded bars, rotation)",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.font-sans.mb-5 > details.mt-1.5 > summary.font-sans",
+   "count": 1
+  },
+  {
+   "text": "↻ marks where year two begins. The timeline shows",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.font-sans.mb-5 > details.mt-1.5 > div.mt-1",
+   "count": 1
+  },
+  {
+   "text": "two full years",
+   "fontPx": 11.5,
+   "selector": "div.font-sans.mb-5 > details.mt-1.5 > div.mt-1 > strong",
+   "count": 1
+  },
+  {
+   "text": "— pan sideways to reach the second one. This plan holds one annual cycle rather ",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.font-sans.mb-5 > details.mt-1.5 > div.mt-1",
+   "count": 1
+  },
+  {
+   "text": "faded",
+   "fontPx": 11.5,
+   "selector": "div.font-sans.mb-5 > details.mt-1.5 > div.mt-1 > em",
+   "count": 1
+  },
+  {
+   "text": "to say so: it is what these beds do if nothing changes, not a second year you ha",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.font-sans.mb-5 > details.mt-1.5 > div.mt-1",
+   "count": 1
+  },
+  {
+   "text": "Rotate crops",
+   "fontPx": 11.5,
+   "selector": "div.font-sans.mb-5 > details.mt-1.5 > div.mt-1 > strong",
+   "count": 1
+  },
+  {
+   "text": "only avoids immediate same-family sequences inside this annual plan and after a ",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.font-sans.mb-5 > details.mt-1.5 > div.mt-1",
+   "count": 1
+  },
+  {
+   "text": "Availability",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "Field utilization",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "Plan-cycle value",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "An established year",
+   "fontPx": 11,
+   "selector": "div.rounded-2xl.p-4 > div.flex.flex-wrap > div.inline-flex.rounded-full > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "From today",
+   "fontPx": 11,
+   "selector": "div.rounded-2xl.p-4 > div.flex.flex-wrap > div.inline-flex.rounded-full > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "Follows the planting calendar from today; existing and one-off crops appear only",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.flex.flex-wrap > span.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Ready to pick",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.flex.flex-wrap > span.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "text": "Stored under named conditions",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.flex.flex-wrap > span.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "text": "fresh vegetables & staples",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div[data-year-of-food=\"true\"].rounded-2xl.p-4 > div.font-sans.flex > span.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "text": "fruit",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div[data-year-of-food=\"true\"].rounded-2xl.p-4 > div.font-sans.flex > span.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "text": "animal products",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div[data-year-of-food=\"true\"].rounded-2xl.p-4 > div.font-sans.flex > span.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "text": "in store only",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div[data-year-of-food=\"true\"].rounded-2xl.p-4 > div.font-sans.flex > span.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "text": "this month",
+   "fontPx": 10,
+   "selector": "div.rounded-2xl.p-4 > div.mb-2.5 > div.font-display.font-semibold > span.font-sans",
+   "count": 1
+  },
+  {
+   "text": "1",
+   "fontPx": 10.5,
+   "selector": "div.space-y-2 > div.rounded-xl > div.flex.items-baseline > span.font-mono",
+   "count": 4
+  },
+  {
+   "text": "job",
+   "fontPx": 10.5,
+   "selector": "div.space-y-2 > div.rounded-xl > div.flex.items-baseline > span.font-mono",
+   "count": 4
+  },
+  {
+   "text": "Bed 3",
+   "fontPx": 10.5,
+   "selector": "div.space-y-1.5.mt-1 > div > div.flex.flex-wrap > span.font-sans",
+   "count": 2
+  },
+  {
+   "text": "assess soil and drainage; use a soil test or local advice before adding amendmen",
+   "fontPx": 11.5,
+   "selector": "div.rounded-xl > div.space-y-1.5.mt-1 > div > div.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Bed 1",
+   "fontPx": 10.5,
+   "selector": "div.space-y-1.5.mt-1 > div > div.flex.flex-wrap > span.font-sans",
+   "count": 1
+  },
+  {
+   "text": "next month",
+   "fontPx": 10,
+   "selector": "div.rounded-2xl.p-4 > div.mb-2.5 > div.font-display.font-semibold > span.font-sans",
+   "count": 1
+  },
+  {
+   "text": "rows 150cm apart · 40cm apart in the row",
+   "fontPx": 11.5,
+   "selector": "div.rounded-xl > div.space-y-1.5.mt-1 > div > div.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Bed 6",
+   "fontPx": 10.5,
+   "selector": "div.space-y-1.5.mt-1 > div > div.flex.flex-wrap > span.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Published optimum-condition maturity endpoints are planning slots, not promises.",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > div.font-sans.rounded-lg",
+   "count": 1
+  },
+  {
+   "text": "Looking ahead",
+   "fontPx": 10,
+   "selector": "div.rounded-2xl.p-4 > div > button.font-sans.uppercase > span",
+   "count": 1
+  },
+  {
+   "text": "▸",
+   "fontPx": 10,
+   "selector": "div.rounded-2xl.p-4 > div > button.font-sans.uppercase > span",
+   "count": 1
+  },
+  {
+   "text": "By crop",
+   "fontPx": 11,
+   "selector": "div.rounded-2xl.p-4 > div.flex.items-center > div.flex.rounded-lg > button.font-sans",
+   "count": 1
+  },
+  {
+   "text": "By bed",
+   "fontPx": 11,
+   "selector": "div.rounded-2xl.p-4 > div.flex.items-center > div.flex.rounded-lg > button.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Conservative mapped-area comparison for one cycle of each active or planned plan",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > div.font-sans.mb-2",
+   "count": 1
+  },
+  {
+   "text": "Bar length compares crops · % is share of the",
+   "fontPx": 10.5,
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > div.font-sans.mb-1.5",
+   "count": 1
+  },
+  {
+   "text": "56.7",
+   "fontPx": 10.5,
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > div.font-sans.mb-1.5",
+   "count": 1
+  },
+  {
+   "text": "kg above",
+   "fontPx": 10.5,
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > div.font-sans.mb-1.5",
+   "count": 1
+  },
+  {
+   "text": "24",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 1
+  },
+  {
+   "text": "%",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 10
+  },
+  {
+   "text": "22",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 1
+  },
+  {
+   "text": "13",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 1
+  },
+  {
+   "text": "10",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 2
+  },
+  {
+   "text": "8",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 1
+  },
+  {
+   "text": "4",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 2
+  },
+  {
+   "text": "3",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 2
+  },
+  {
+   "text": "What each file contains",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > details.font-sans.mt-2.5 > summary",
+   "count": 1
+  },
+  {
+   "text": "The calendar file works with Google Calendar and Apple Calendar. Tasks land as w",
+   "fontPx": 11,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.rounded-2xl.p-4 > details.font-sans.mt-2.5",
+   "count": 1
+  },
+  {
+   "text": "It also has what to buy, monthly tick-off jobs and a harvest record.",
+   "fontPx": 11,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.rounded-2xl.p-4 > details.font-sans.mt-2.5",
+   "count": 1
+  },
+  {
+   "text": "Picking dates for trees and animals must be confirmed locally; plants and housin",
+   "fontPx": 11,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.rounded-2xl.p-4 > details.font-sans.mt-2.5",
+   "count": 1
+  },
+  {
+   "text": "Grouped by the month to get it. Ready-grown seedlings are listed for the month t",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.scroll-mt-24.rounded-2xl > p.font-sans.mb-2",
+   "count": 1
+  },
+  {
+   "text": "Source packet seed before the December sowing month. Sow straight into the groun",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 3",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "Buying ready-grown seedlings? Source them only when the bed and seedlings are re",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 3
+  },
+  {
+   "text": "· for Bed 6",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 2
+  },
+  {
+   "text": "Source packet seed before the April sowing month. Sow straight into the ground i",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 2, Bed 4",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "Source packet seed before the October sowing month. Sow straight into the ground",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 2
+  },
+  {
+   "text": "· for Bed 5",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 2",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 7",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "Living planting material — the mapped area holds about 9–17 slips at the spacing",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 4",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "What these quantities do and do not cover",
+   "fontPx": 11,
+   "selector": "div.grid.gap-4 > div.scroll-mt-24.rounded-2xl > details.mt-2 > summary.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Field-position ranges come from mapped area and published spacing; they are not ",
+   "fontPx": 10,
+   "selector": "div.grid.gap-4 > div.scroll-mt-24.rounded-2xl > details.mt-2 > p.font-mono.mt-1",
+   "count": 1
+  },
+  {
+   "text": "Every yield figure and date here is either from a published source or labelled a",
+   "fontPx": 11.5,
+   "selector": "div.rounded-2xl.p-4 > button.w-full.flex > span > span.font-sans.block",
+   "count": 1
+  },
+  {
+   "text": "Which crops count as relatives, and why that is not the same as a food group.",
+   "fontPx": 11.5,
+   "selector": "div.rounded-2xl.p-4 > button.w-full.flex > span > span.font-sans.block",
+   "count": 1
+  },
+  {
+   "text": "Planning guide only — sow windows are general. Adjust to your local rainfall, fr",
+   "fontPx": 11,
+   "selector": "div.flex.flex-col > div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.font-sans.mt-4",
+   "count": 1
+  }
+ ],
+ "targetsUnder24": [
+  {
+   "label": "on",
+   "widthPx": 13,
+   "heightPx": 13,
+   "tag": "input",
+   "exception": "user-agent control",
+   "clashesWith": null,
+   "selector": "section[aria-label=\"Grower planning estimates\"].space-y-4.px-4 > form.space-y-3 > label.flex.min-h-11 > input",
+   "count": 20
+  },
+  {
+   "label": "check / transplant",
+   "widthPx": 100,
+   "heightPx": 16,
+   "tag": "button",
+   "exception": null,
+   "clashesWith": "Lettuce (62%)",
+   "selector": "div > div > div > button[aria-label=\"Plan to transplant Lettuce in \"].font-sans",
+   "count": 5
+  },
+  {
+   "label": "Source",
+   "widthPx": 40,
+   "heightPx": 14,
+   "tag": "a",
+   "exception": "inline",
+   "clashesWith": null,
+   "selector": "div[data-tree-age-editor=\"true\"].font-sans.mt-4 > div > p > a",
+   "count": 5
+  },
+  {
+   "label": "Source p. 6",
+   "widthPx": 63,
+   "heightPx": 14,
+   "tag": "a",
+   "exception": "inline",
+   "clashesWith": null,
+   "selector": "div > details.mt-2.p-3 > p.mt-2 > a",
+   "count": 1
+  },
+  {
+   "label": "Source p. 7",
+   "widthPx": 62,
+   "heightPx": 14,
+   "tag": "a",
+   "exception": "inline",
+   "clashesWith": null,
+   "selector": "div > details.mt-2.p-3 > p.mt-2 > a",
+   "count": 1
+  },
+  {
+   "label": "SANBI PlantZAfrica: carissa-macrocarpa",
+   "widthPx": 207,
+   "heightPx": 12,
+   "tag": "a",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "Fordhook Giant, Sakata product page",
+   "widthPx": 190,
+   "heightPx": 12,
+   "tag": "a",
+   "exception": null,
+   "clashesWith": "Bright Lights, Starke Ayres product page",
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "Bright Lights, Starke Ayres product page",
+   "widthPx": 208,
+   "heightPx": 12,
+   "tag": "a",
+   "exception": null,
+   "clashesWith": "Fordhook Giant, Sakata product page",
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "Rodade, Sakata product page",
+   "widthPx": 151,
+   "heightPx": 12,
+   "tag": "a",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "Contender bush bean, Starke Ayres product page",
+   "widthPx": 251,
+   "heightPx": 12,
+   "tag": "a",
+   "exception": null,
+   "clashesWith": "Star 2000 bush bean, Starke Ayres produc",
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "Star 2000 bush bean, Starke Ayres product page",
+   "widthPx": 248,
+   "heightPx": 12,
+   "tag": "a",
+   "exception": null,
+   "clashesWith": "Contender bush bean, Starke Ayres produc",
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "LETTUCE INTRODUCTION, KZN DARD, p. 2",
+   "widthPx": 218,
+   "heightPx": 12,
+   "tag": "a",
+   "exception": null,
+   "clashesWith": "Brigadier Lettuce Seeds, Starke Ayres pr",
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "Brigadier Lettuce Seeds, Starke Ayres product page",
+   "widthPx": 264,
+   "heightPx": 12,
+   "tag": "a",
+   "exception": null,
+   "clashesWith": "LETTUCE INTRODUCTION, KZN DARD, p. 2",
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "LETTUCE INTRODUCTION, KZN DARD, p. 1",
+   "widthPx": 216,
+   "heightPx": 12,
+   "tag": "a",
+   "exception": null,
+   "clashesWith": "Brigadier Lettuce Seeds, Starke Ayres pr",
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "COLE CROPS, KZN DARD, p. 3",
+   "widthPx": 153,
+   "heightPx": 12,
+   "tag": "a",
+   "exception": null,
+   "clashesWith": "COLE CROPS, KZN DARD (Table 14, Sowing t",
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "Chantenay Karoo, Sakata product page",
+   "widthPx": 199,
+   "heightPx": 12,
+   "tag": "a",
+   "exception": null,
+   "clashesWith": "Kuroda, Sakata product page",
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "Kuroda, Sakata product page",
+   "widthPx": 148,
+   "heightPx": 12,
+   "tag": "a",
+   "exception": null,
+   "clashesWith": "Chantenay Karoo, Sakata product page",
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "on",
+   "widthPx": 17,
+   "heightPx": 17,
+   "tag": "input",
+   "exception": "user-agent control",
+   "clashesWith": null,
+   "selector": "section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > fieldset.ProductionAvailabilityGraphs_options__2YxIc > label > input",
+   "count": 5
+  },
+  {
+   "label": "on",
+   "widthPx": 18,
+   "heightPx": 18,
+   "tag": "input",
+   "exception": "user-agent control",
+   "clashesWith": null,
+   "selector": "div.ProductionRecordsEditor_monthGrid__y17Cn > div.ProductionRecordsEditor_month__Tvc8n > label.ProductionRecordsEditor_check__Yw76K > input",
+   "count": 12
+  },
+  {
+   "label": "How the two-year timeline works (↻, faded bars, rotation)",
+   "widthPx": 366,
+   "heightPx": 17,
+   "tag": "summary",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.mx-auto.w-full > div.font-sans.mb-5 > details.mt-1.5 > summary.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Show 2 more months",
+   "widthPx": 118,
+   "heightPx": 18,
+   "tag": "button",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.mx-auto.w-full > div[data-year-of-food=\"true\"].rounded-2xl.p-4 > section[data-gap-fills=\"true\"] > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "LOOKING AHEAD ▸",
+   "widthPx": 332,
+   "heightPx": 15,
+   "tag": "button",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.grid.gap-4 > div.rounded-2xl.p-4 > div > button.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "label": "By crop",
+   "widthPx": 57,
+   "heightPx": 23,
+   "tag": "button",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.rounded-2xl.p-4 > div.flex.items-center > div.flex.rounded-lg > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "By bed",
+   "widthPx": 53,
+   "heightPx": 23,
+   "tag": "button",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.rounded-2xl.p-4 > div.flex.items-center > div.flex.rounded-lg > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Later in the next 12 months (1 more month)",
+   "widthPx": 306,
+   "heightPx": 19,
+   "tag": "summary",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.scroll-mt-24.rounded-2xl > div.space-y-3 > details.rounded-xl.px-3 > summary.font-display.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "What these quantities do and do not cover",
+   "widthPx": 332,
+   "heightPx": 17,
+   "tag": "summary",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.grid.gap-4 > div.scroll-mt-24.rounded-2xl > details.mt-2 > summary.font-sans",
+   "count": 1
+  }
+ ],
+ "targets24to44": [
+  {
+   "label": "Home",
+   "widthPx": 34,
+   "heightPx": 34,
+   "tag": "a",
+   "selector": "body.h-screen.overflow-hidden > div.flex.flex-col > header.flex-shrink-0.flex > a[aria-label=\"Home\"].flex-shrink-0.flex",
+   "count": 1
+  },
+  {
+   "label": "‹ Back to design",
+   "widthPx": 109,
+   "heightPx": 29,
+   "tag": "a",
+   "selector": "body.h-screen.overflow-hidden > div.flex.flex-col > header.flex-shrink-0.flex > a[aria-label=\"Back to design\"].flex-shrink-0.flex",
+   "count": 1
+  },
+  {
+   "label": "7 beds · 4 plots",
+   "widthPx": 126,
+   "heightPx": 28,
+   "tag": "button",
+   "selector": "body.h-screen.overflow-hidden > div.flex.flex-col > header.flex-shrink-0.flex > button.flex-shrink-0.inline-flex",
+   "count": 1
+  },
+  {
+   "label": "Kilograms (kg) Pounds (lb)",
+   "widthPx": 332,
+   "heightPx": 36,
+   "tag": "select",
+   "selector": "details.mb-4.rounded-2xl > div.px-4.pb-4 > label.text-sm > select[aria-label=\"Harvest weight unit\"].w-full.rounded-lg",
+   "count": 2
+  },
+  {
+   "label": "Choose a crop Maize (mielies) Dry beans (sugar beans) Green ",
+   "widthPx": 332,
+   "heightPx": 36,
+   "tag": "select",
+   "selector": "div.px-4.pb-4 > form.grid.grid-cols-1 > label.text-sm > select.w-full.rounded-lg",
+   "count": 2
+  },
+  {
+   "label": "INPUT",
+   "widthPx": 332,
+   "heightPx": 39,
+   "tag": "input",
+   "selector": "div.px-4.pb-4 > form.grid.grid-cols-1 > label.text-sm > input.w-full.rounded-lg",
+   "count": 6
+  },
+  {
+   "label": "kg bunches bags crates Trays of harvested produce Items / he",
+   "widthPx": 332,
+   "heightPx": 36,
+   "tag": "select",
+   "selector": "div.px-4.pb-4 > form.grid.grid-cols-1 > label.text-sm > select.w-full.rounded-lg",
+   "count": 2
+  },
+  {
+   "label": "INPUT",
+   "widthPx": 332,
+   "heightPx": 41,
+   "tag": "input",
+   "selector": "div.px-4.pb-4 > form.grid.grid-cols-1 > label.text-sm > input.w-full.rounded-lg",
+   "count": 2
+  },
+  {
+   "label": "Auto-suggest a plan",
+   "widthPx": 258,
+   "heightPx": 43,
+   "tag": "button",
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.flex.gap-2 > button.flex-1.py-2.5",
+   "count": 1
+  },
+  {
+   "label": "Clear all",
+   "widthPx": 100,
+   "heightPx": 43,
+   "tag": "button",
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.flex.gap-2 > button.px-4.py-2.5",
+   "count": 1
+  },
+  {
+   "label": "2026-11",
+   "widthPx": 332,
+   "heightPx": 41,
+   "tag": "input",
+   "selector": "div.px-4.pb-4 > form.grid.grid-cols-1 > label.text-sm > input.w-full.rounded-lg",
+   "count": 1
+  },
+  {
+   "label": "2027-10",
+   "widthPx": 332,
+   "heightPx": 41,
+   "tag": "input",
+   "selector": "div.px-4.pb-4 > form.grid.grid-cols-1 > label.text-sm > input.w-full.rounded-lg",
+   "count": 1
+  },
+  {
+   "label": "Onions (61%)",
+   "widthPx": 58,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "+ crop",
+   "widthPx": 56,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 11
+  },
+  {
+   "label": "Lettuce (62%)",
+   "widthPx": 290,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Lettuce (62%)",
+   "widthPx": 58,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Carrots (86%)",
+   "widthPx": 290,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Butternut (1/1)",
+   "widthPx": 348,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Tomatoes (75%)",
+   "widthPx": 406,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Carrots (20%)",
+   "widthPx": 290,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Green beans (69%)",
+   "widthPx": 174,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Green beans (69%)",
+   "widthPx": 58,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Garlic (½)",
+   "widthPx": 116,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Broccoli (47%)",
+   "widthPx": 348,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Sweet potato (46%)",
+   "widthPx": 406,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Sweet potato (46%)",
+   "widthPx": 58,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Maize (mielies) (83%)",
+   "widthPx": 348,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Maize (mielies) (83%)",
+   "widthPx": 58,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Mango · reference (proposed)",
+   "widthPx": 290,
+   "heightPx": 30,
+   "tag": "button",
+   "selector": "div > div > div > button[aria-label=\"Mango — fruit · 1 plant on you\"].font-sans",
+   "count": 2
+  },
+  {
+   "label": "Avocado · reference (proposed)",
+   "widthPx": 290,
+   "heightPx": 30,
+   "tag": "button",
+   "selector": "div > div > div > button[aria-label=\"Avocado — fruit · 1 plant on y\"].font-sans",
+   "count": 2
+  },
+  {
+   "label": "Avocado · 0 existing, 1 proposed · confirm picking months",
+   "widthPx": 332,
+   "heightPx": 39,
+   "tag": "summary",
+   "selector": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Mango · 0 existing, 1 proposed · confirm picking months",
+   "widthPx": 332,
+   "heightPx": 39,
+   "tag": "summary",
+   "selector": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Moringa · 0 existing, 2 proposed · confirm picking months",
+   "widthPx": 332,
+   "heightPx": 39,
+   "tag": "summary",
+   "selector": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Num-num · 0 existing, 1 proposed · confirm picking months",
+   "widthPx": 332,
+   "heightPx": 39,
+   "tag": "summary",
+   "selector": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "KZN DARD, Fruit and Nut Production, PDF pp. 6–7 (regional re",
+   "widthPx": 300,
+   "heightPx": 29,
+   "tag": "a",
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "SA Avocado Industry Overview – South African Avocado Growers",
+   "widthPx": 281,
+   "heightPx": 29,
+   "tag": "a",
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+   "widthPx": 314,
+   "heightPx": 29,
+   "tag": "a",
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 2
+  },
+  {
+   "label": "Wolstenholme, Kaiser & Palmer (1991), SAAGA Yearbook 14:15–1",
+   "widthPx": 286,
+   "heightPx": 29,
+   "tag": "a",
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "ARC Climate-Smart Agriculture, module 6, printed pp. 239–242",
+   "widthPx": 303,
+   "heightPx": 29,
+   "tag": "a",
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "KZN DARD, Fruit and Nut Production in KZN, Mango bearing age",
+   "widthPx": 306,
+   "heightPx": 29,
+   "tag": "a",
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "North West DARD: Moringa production for food security (2021)",
+   "widthPx": 283,
+   "heightPx": 29,
+   "tag": "a",
+   "selector": "details > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "COLE CROPS, KZN DARD (Table 14, Sowing times, reading the Br",
+   "widthPx": 309,
+   "heightPx": 29,
+   "tag": "a",
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "History of Sweet Potato Breeding in South Africa: 1952-2024,",
+   "widthPx": 312,
+   "heightPx": 29,
+   "tag": "a",
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 3
+  },
+  {
+   "label": "Conquistador F1 Hybrid Fresh Market Cabbage, Sakata product ",
+   "widthPx": 279,
+   "heightPx": 29,
+   "tag": "a",
+   "selector": "div.py-2 > ul.font-sans.mt-1 > li > a",
+   "count": 1
+  },
+  {
+   "label": "What is included in kept food?",
+   "widthPx": 298,
+   "heightPx": 28,
+   "tag": "summary",
+   "selector": "details.rounded-2xl.p-4 > section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > details.ProductionAvailabilityGraphs_records__jqlZq > summary",
+   "count": 1
+  },
+  {
+   "label": "Crop-cycle estimates",
+   "widthPx": 148,
+   "heightPx": 42,
+   "tag": "button",
+   "selector": "section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > article.ProductionAvailabilityGraphs_card__6kRyE > div[aria-label=\"Kilogram graph view\"].ProductionAvailabilityGraphs_viewButtons__xz3pa > button",
+   "count": 1
+  },
+  {
+   "label": "Monthly production",
+   "widthPx": 138,
+   "heightPx": 42,
+   "tag": "button",
+   "selector": "section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > article.ProductionAvailabilityGraphs_card__6kRyE > div[aria-label=\"Kilogram graph view\"].ProductionAvailabilityGraphs_viewButtons__xz3pa > button",
+   "count": 1
+  },
+  {
+   "label": "Food in store",
+   "widthPx": 101,
+   "heightPx": 42,
+   "tag": "button",
+   "selector": "section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > article.ProductionAvailabilityGraphs_card__6kRyE > div[aria-label=\"Kilogram graph view\"].ProductionAvailabilityGraphs_viewButtons__xz3pa > button",
+   "count": 1
+  },
+  {
+   "label": "See weights and information still needed",
+   "widthPx": 310,
+   "heightPx": 32,
+   "tag": "summary",
+   "selector": "section[aria-label=\"Food availability and growing \"].ProductionAvailabilityGraphs_graphs__5KBPG > article.ProductionAvailabilityGraphs_card__6kRyE > details.ProductionAvailabilityGraphs_quantities__IIR_q > summary",
+   "count": 1
+  },
+  {
+   "label": "Availability",
+   "widthPx": 84,
+   "heightPx": 27,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Field utilization",
+   "widthPx": 107,
+   "heightPx": 27,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Plan-cycle value",
+   "widthPx": 113,
+   "heightPx": 27,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "An established year",
+   "widthPx": 123,
+   "heightPx": 25,
+   "tag": "button",
+   "selector": "div.rounded-2xl.p-4 > div.flex.flex-wrap > div.inline-flex.rounded-full > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "From today",
+   "widthPx": 79,
+   "heightPx": 25,
+   "tag": "button",
+   "selector": "div.rounded-2xl.p-4 > div.flex.flex-wrap > div.inline-flex.rounded-full > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Fruit, nuts & berries shown · 4 kinds on your map",
+   "widthPx": 311,
+   "heightPx": 28,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.flex.flex-wrap > button.font-sans.rounded-full",
+   "count": 1
+  },
+  {
+   "label": "Plan it",
+   "widthPx": 60,
+   "heightPx": 28,
+   "tag": "button",
+   "selector": "div[data-gap-fill-month=\"1\"] > ul > li[data-gap-fill-suggestion=\"baby-marrow\"].flex.flex-wrap > button[aria-label=\"Plan Baby marrow (courgette), \"].font-sans.font-semibold",
+   "count": 9
+  },
+  {
+   "label": "Share tasks",
+   "widthPx": 104,
+   "heightPx": 30,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > button.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "label": "Feeding your crops ▸",
+   "widthPx": 332,
+   "heightPx": 32,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > button.w-full.flex",
+   "count": 1
+  },
+  {
+   "label": "Protecting your crops ▸",
+   "widthPx": 332,
+   "heightPx": 32,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > button.w-full.flex",
+   "count": 1
+  }
+ ],
+ "unnamedControls": [],
+ "clippedText": [
+  {
+   "text": "Onions",
+   "shownPx": 30,
+   "neededPx": 67,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(61%)",
+   "shownPx": 30,
+   "neededPx": 67,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Lettuce",
+   "shownPx": 30,
+   "neededPx": 73,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(62%)",
+   "shownPx": 30,
+   "neededPx": 73,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Green beans",
+   "shownPx": 30,
+   "neededPx": 99,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(69%)",
+   "shownPx": 30,
+   "neededPx": 99,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Sweet potato",
+   "shownPx": 30,
+   "neededPx": 103,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(46%)",
+   "shownPx": 30,
+   "neededPx": 103,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "shownPx": 30,
+   "neededPx": 111,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(83%)",
+   "shownPx": 30,
+   "neededPx": 111,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  }
+ ],
+ "headings": [
+  "H3 New estimate profile",
+  "H4 Saved planned nursery batches",
+  "H2 Site country and region",
+  "H3 Nursery planning forecast",
+  "H4 Broccoli",
+  "H4 Lettuce",
+  "H4 Tomatoes",
+  "H2 How production changes as plants grow",
+  "H3 Nov 2026 – Oct 2027",
+  "H3 Check your farm conditions",
+  "H3 Fruit, nuts and indigenous foods",
+  "H4 Avocado",
+  "H4 Mango",
+  "H4 Moringa",
+  "H4 Num-num",
+  "H4 Water through the dry season",
+  "H4 Frost on this farm",
+  "H4 Sun and drainage",
+  "H4 Garlic",
+  "H4 Onions",
+  "H4 Butternut",
+  "H4 Swiss chard (spinach)",
+  "H4 Tomatoes",
+  "H4 Maize (mielies)",
+  "H4 Green beans",
+  "H4 Lettuce",
+  "H4 Broccoli",
+  "H4 Sweet potato",
+  "H4 Cabbage",
+  "H4 Carrots",
+  "H2 Food and growing space",
+  "H3 Fresh food",
+  "H3 Fresh + kept food",
+  "H3 Production in kilograms",
+  "H3 Crop growing space",
+  "H3 Nursery estimates for sourcing",
+  "H4 Broccoli",
+  "H4 Lettuce",
+  "H4 Tomatoes"
+ ],
+ "h1Rendered": [],
+ "consoleErrors": [],
+ "textCorpus": [
+  {
+   "text": "Tour",
+   "count": 1
+  },
+  {
+   "text": "‹",
+   "count": 1
+  },
+  {
+   "text": "Back to design",
+   "count": 1
+  },
+  {
+   "text": "Production plan",
+   "count": 1
+  },
+  {
+   "text": "Plants and housing from your map",
+   "count": 1
+  },
+  {
+   "text": "7",
+   "count": 1
+  },
+  {
+   "text": "beds",
+   "count": 1
+  },
+  {
+   "text": "· 4 plots",
+   "count": 1
+  },
+  {
+   "text": "Summer rainfall · mild winter frost",
+   "count": 1
+  },
+  {
+   "text": "· satellite records for this site",
+   "count": 1
+  },
+  {
+   "text": "Vegetables and staples · Fruit, nuts & berries · Animal products. Housing is listed. Use the site survey for animal numbers and care checks.",
+   "count": 1
+  },
+  {
+   "text": "Country details are available from this device. Live account updates are unavailable.",
+   "count": 1
+  },
+  {
+   "text": "Country details saved for this sample session only.",
+   "count": 1
+  },
+  {
+   "text": "Harvest targets",
+   "count": 2
+  },
+  {
+   "text": "Your buyer-demand records",
+   "count": 1
+  },
+  {
+   "text": "Record what a market, restaurant or box scheme wants. Crop names identify your records. Use your own growing estimates below to review capacity; saving a target does not approve local farming advice or promise supply.",
+   "count": 1
+  },
+  {
+   "text": "Harvest weight unit",
+   "count": 2
+  },
+  {
+   "text": "Weight units change entry and display only. Saved weights stay in kilograms. Use decimals with a dot or comma; no grouping, fractions or unit suffixes. Pack counts, sales units, dates and saleable share are unchanged.",
+   "count": 2
+  },
+  {
+   "text": "Reload saved harvest targets",
+   "count": 2
+  },
+  {
+   "text": "Crop",
+   "count": 2
+  },
+  {
+   "text": "Weekly quantity",
+   "count": 2
+  },
+  {
+   "text": "(kg)",
+   "count": 2
+  },
+  {
+   "text": "Sales unit",
+   "count": 2
+  },
+  {
+   "text": "For (optional)",
+   "count": 2
+  },
+  {
+   "text": "Demand date entry",
+   "count": 1
+  },
+  {
+   "text": "First harvest month",
+   "count": 2
+  },
+  {
+   "text": "Last harvest month (included)",
+   "count": 2
+  },
+  {
+   "text": "Saleable share (%) (optional)",
+   "count": 2
+  },
+  {
+   "text": "Use your own harvest weight per sales unit and saleable share. Blank values stay saved as unknown; own-cycle capacity waits for them. Trays here contain harvested produce, not nursery seedlings.",
+   "count": 1
+  },
+  {
+   "text": "Save harvest target",
+   "count": 2
+  },
+  {
+   "text": "Targets are saved with this site’s crop plan on this device.",
+   "count": 2
+  },
+  {
+   "text": "Buyer demand is separate from crop capacity, observed harvests and sales.",
+   "count": 1
+  },
+  {
+   "text": "Removing a target keeps its plantings.",
+   "count": 2
+  },
+  {
+   "text": "Your growing estimates",
+   "count": 1
+  },
+  {
+   "text": "Use your own estimates with an existing measured bed, in any country. Crop names identify your records only. These calculations do not use catalogue growing instructions or approve local suitability.",
+   "count": 1
+  },
+  {
+   "text": "Estimate units",
+   "count": 1
+  },
+  {
+   "text": "Unit choice is temporary in this sample.",
+   "count": 1
+  },
+  {
+   "text": "Units change entry and display only. Saved density stays in plants per m² and harvest weight in kg per m² per cycle. Durations, whole plant counts and UTC dates keep their meaning.",
+   "count": 1
+  },
+  {
+   "text": "No saved estimate profiles for this context.",
+   "count": 1
+  },
+  {
+   "text": "New estimate profile",
+   "count": 1
+  },
+  {
+   "text": "Crop identity",
+   "count": 1
+  },
+  {
+   "text": "Establishment method",
+   "count": 1
+  },
+  {
+   "text": "Plant density (plants per m²)",
+   "count": 1
+  },
+  {
+   "text": "Harvest weight (kg per m² per cycle)",
+   "count": 1
+  },
+  {
+   "text": "Nursery duration (days)",
+   "count": 1
+  },
+  {
+   "text": "Field entry to first harvest (days)",
+   "count": 1
+  },
+  {
+   "text": "Picking duration (days)",
+   "count": 1
+  },
+  {
+   "text": "Field occupancy (days)",
+   "count": 1
+  },
+  {
+   "text": "Turnaround after clearing (days)",
+   "count": 1
+  },
+  {
+   "text": "Leave unknown numbers blank. Nursery duration is required only for transplants. Field occupancy must include the full picking period. Zero is retained as entered; it is never treated as missing.",
+   "count": 1
+  },
+  {
+   "text": "I specify the allowed field-entry months",
+   "count": 1
+  },
+  {
+   "text": "Allowed field-entry months (UTC)",
+   "count": 1
+  },
+  {
+   "text": "Jan",
+   "count": 21
+  },
+  {
+   "text": "Feb",
+   "count": 20
+  },
+  {
+   "text": "Mar",
+   "count": 21
+  },
+  {
+   "text": "Apr",
+   "count": 18
+  },
+  {
+   "text": "May",
+   "count": 17
+  },
+  {
+   "text": "Jun",
+   "count": 18
+  },
+  {
+   "text": "Jul",
+   "count": 17
+  },
+  {
+   "text": "Aug",
+   "count": 17
+  },
+  {
+   "text": "Sep",
+   "count": 18
+  },
+  {
+   "text": "Oct",
+   "count": 18
+  },
+  {
+   "text": "Nov",
+   "count": 24
+  },
+  {
+   "text": "Dec",
+   "count": 20
+  },
+  {
+   "text": "An unspecified window stays missing. Specifying a window with no months permits no field-entry date.",
+   "count": 1
+  },
+  {
+   "text": "I supply these as my estimates",
+   "count": 1
+  },
+  {
+   "text": "Provided profile values are recorded as grower estimates at the time you save or review. They are not independently verified evidence.",
+   "count": 1
+  },
+  {
+   "text": "Save estimate profile",
+   "count": 1
+  },
+  {
+   "text": "Start a new profile",
+   "count": 1
+  },
+  {
+   "text": "Review one measured bed",
+   "count": 1
+  },
+  {
+   "text": "Check the current saved layout before reviewing a measured bed. Estimate profiles can still be saved while measurements are unavailable.",
+   "count": 1
+  },
+  {
+   "text": "Check saved bed measurements",
+   "count": 1
+  },
+  {
+   "text": "Measured bed",
+   "count": 1
+  },
+  {
+   "text": "Measured area:",
+   "count": 1
+  },
+  {
+   "text": "Not selected",
+   "count": 1
+  },
+  {
+   "text": ". Area comes from this bed and cannot be changed here.",
+   "count": 1
+  },
+  {
+   "text": "Planned field-entry date (UTC)",
+   "count": 1
+  },
+  {
+   "text": "Review estimated capacity and dates",
+   "count": 1
+  },
+  {
+   "text": "Automatic plan from your estimates",
+   "count": 1
+  },
+  {
+   "text": "Match your saved buyer targets to whole beds or field plots using your own growing estimates. This does not choose a local crop calendar or promise weekly deliveries.",
+   "count": 1
+  },
+  {
+   "text": "Ubhejane Crèche",
+   "count": 1
+  },
+  {
+   "text": ". Areas come from the saved design; check them against your ground measurements.",
+   "count": 1
+  },
+  {
+   "text": "Check saved design",
+   "count": 1
+  },
+  {
+   "text": "The saved source may have changed. Check its current design again.",
+   "count": 1
+  },
+  {
+   "text": "No current design has been checked for this review.",
+   "count": 1
+  },
+  {
+   "text": "Buyer targets and priority",
+   "count": 1
+  },
+  {
+   "text": "Save buyer targets and growing estimates above first. Select each target and its matching estimate profile. Earlier targets have priority.",
+   "count": 1
+  },
+  {
+   "text": "No saved buyer targets for this mapped site.",
+   "count": 1
+  },
+  {
+   "text": "Household and trial growing (no buyer)",
+   "count": 1
+  },
+  {
+   "text": "Plan your own food or a trial on the same measured beds with your own growing estimates. Enter the gross harvest weight this plan should cover across the whole harvest window. Choose kilograms or pounds independently of country or language. Blank means not entered; 0 means a known zero.",
+   "count": 1
+  },
+  {
+   "text": "This is not a nutrition or food-security assessment, a sale, or evidence that a crop or trial is suitable or safe.",
+   "count": 1
+  },
+  {
+   "text": "Save a growing estimate for this site above first.",
+   "count": 1
+  },
+  {
+   "text": "Add household demand",
+   "count": 1
+  },
+  {
+   "text": "Add trial demand",
+   "count": 1
+  },
+  {
+   "text": "First planning date (UTC)",
+   "count": 1
+  },
+  {
+   "text": "Planning ends before (UTC)",
+   "count": 1
+  },
+  {
+   "text": "Search work limit",
+   "count": 1
+  },
+  {
+   "text": "The search work limit is a software budget of 1–10,000 checks. Reaching it leaves the result unknown; it does not prove there is no space.",
+   "count": 1
+  },
+  {
+   "text": "Your available growing space",
+   "count": 1
+  },
+  {
+   "text": "Nothing is assumed free. Enter each available interval. Known existing occupations are checked separately and cannot be overridden here. End dates are exclusive: the end day is outside that interval. Gaps are unavailable. Adjacent intervals stay separate; a crop cycle must fit within one interval.",
+   "count": 1
+  },
+  {
+   "text": "No eligible saved bed or field-plot measurements have been checked.",
+   "count": 1
+  },
+  {
+   "text": "I supply these planning dates and availability as my estimates.",
+   "count": 1
+  },
+  {
+   "text": "Review automatic crop plan",
+   "count": 1
+  },
+  {
+   "text": "Saved planned nursery batches",
+   "count": 1
+  },
+  {
+   "text": "Check the saved plan to review nursery batches or open the separate field seed worksheet for accepted cycles without nursery raising. Field seed sourcing does not require a nursery batch, nursery equipment or a nursery review horizon. References do not record actual sowing, available seeds or live nursery stock.",
+   "count": 1
+  },
+  {
+   "text": "DEMO — references stay in this sample session.",
+   "count": 1
+  },
+  {
+   "text": "Check saved nursery batches",
+   "count": 1
+  },
+  {
+   "text": "Check the current saved plan to load eligible planned nursery batches.",
+   "count": 1
+  },
+  {
+   "text": "Site country and region",
+   "count": 1
+  },
+  {
+   "text": "Saved country: South Africa. This is the grower’s description, not local agronomy approval.",
+   "count": 1
+  },
+  {
+   "text": "Review country evidence",
+   "count": 1
+  },
+  {
+   "text": "· Reference tools only; opening this link does not save country details or approve farming advice.",
+   "count": 1
+  },
+  {
+   "text": "Review or change country details",
+   "count": 1
+  },
+  {
+   "text": "Site country",
+   "count": 1
+  },
+  {
+   "text": "Jurisdiction reference (optional)",
+   "count": 1
+  },
+  {
+   "text": "Agricultural region reference (optional)",
+   "count": 1
+  },
+  {
+   "text": "Country, language, currency and measurement units are separate choices. These details do not select a planting calendar or approve farming advice. They travel with a site if you explicitly share that site.",
+   "count": 1
+  },
+  {
+   "text": "I confirm these details describe this mapped site.",
+   "count": 1
+  },
+  {
+   "text": "Save country details",
+   "count": 1
+  },
+  {
+   "text": "Auto-suggest a plan",
+   "count": 1
+  },
+  {
+   "text": "Clear all",
+   "count": 1
+  },
+  {
+   "text": "Plan from weekly demand",
+   "count": 1
+  },
+  {
+   "text": "Plan the produce you want each week for a market, restaurant or box scheme. Review the growing space and dated sowings before adding them to your saved beds.",
+   "count": 1
+  },
+  {
+   "text": "Use your measured harvest weight for one produce pack. A target without its pack weight stays saved; growing space waits for that conversion. The saleable share is a percentage of the catalogue benchmark; leave it blank to apply no allowance. Trays here contain harvested produce; nursery starts need their own planning.",
+   "count": 1
+  },
+  {
+   "text": "Crop-cycle capacity uses the catalogue’s South African planning yields and picking windows. It does not forecast kilograms each week. Check local suitability, losses and actual harvest records before promising deliveries.",
+   "count": 1
+  },
+  {
+   "text": "Nursery planner",
+   "count": 1
+  },
+  {
+   "text": "This site’s trays and growing surface",
+   "count": 1
+  },
+  {
+   "text": "Plan nursery demand from accepted crop sowings. Add your own equipment and crop estimates below. Blank values stay unknown; the app does not choose germination rates, tray sizes or nursery losses for you.",
+   "count": 1
+  },
+  {
+   "text": "Nursery planning forecast",
+   "count": 1
+  },
+  {
+   "text": "A forecast from crop-plan allocations, not an observation of seedling or empty-tray stock. Months provide coarse envelopes; weekly rows do not imply exact sowing or transplanting dates.",
+   "count": 2
+  },
+  {
+   "text": "Incomplete forecast. Known quantities below are only part of the demand; unknown requirements cannot confirm spare space or stock.",
+   "count": 2
+  },
+  {
+   "text": "Peak simultaneous trays",
+   "count": 2
+  },
+  {
+   "text": "· known part",
+   "count": 6
+  },
+  {
+   "text": "Unknown",
+   "count": 136
+  },
+  {
+   "text": "Peak simultaneous footprint",
+   "count": 2
+  },
+  {
+   "text": "Seasonal tray fills",
+   "count": 2
+  },
+  {
+   "text": "Seasonal fills count repeated uses. Owned containers are compared with the simultaneous peak, so a tray reused later is not counted as a second item of stock.",
+   "count": 2
+  },
+  {
+   "text": "Add this site’s own nursery profile for this crop.",
+   "count": 8
+  },
+  {
+   "text": "Choose a container belonging to this site; its capacity is unknown.",
+   "count": 8
+  },
+  {
+   "text": "Choose a nursery space belonging to this site; its usable surface is unknown.",
+   "count": 8
+  },
+  {
+   "text": "Container dimensions are unknown; nursery surface demand cannot be calculated.",
+   "count": 8
+  },
+  {
+   "text": "Dated nursery cohorts ·",
+   "count": 2
+  },
+  {
+   "text": "3",
+   "count": 7
+  },
+  {
+   "text": "Broccoli",
+   "count": 7
+  },
+  {
+   "text": "Planned sowing",
+   "count": 6
+  },
+  {
+   "text": "·",
+   "count": 28
+  },
+  {
+   "text": "Feb 2027",
+   "count": 3
+  },
+  {
+   "text": "Bed 6",
+   "count": 4
+  },
+  {
+   "text": "Source field positions",
+   "count": 6
+  },
+  {
+   "text": "11–21",
+   "count": 4
+  },
+  {
+   "text": "Usable starts needed",
+   "count": 6
+  },
+  {
+   "text": "Seeds to sow",
+   "count": 6
+  },
+  {
+   "text": "Whole tray fills",
+   "count": 6
+  },
+  {
+   "text": "Tray footprint",
+   "count": 6
+  },
+  {
+   "text": "Field-position basis: mapped allocation and shared catalogue spacing.",
+   "count": 6
+  },
+  {
+   "text": "rows 60–70cm apart · 30–45cm apart in the row · sow 1.5–2cm deep",
+   "count": 2
+  },
+  {
+   "text": ".",
+   "count": 29
+  },
+  {
+   "text": "Working field calendar:",
+   "count": 6
+  },
+  {
+   "text": "Apr 2027",
+   "count": 3
+  },
+  {
+   "text": "Published calendar readiness envelope",
+   "count": 6
+  },
+  {
+   "text": ":",
+   "count": 13
+  },
+  {
+   "text": "1 Mar 2027 – 31 May 2027",
+   "count": 2
+  },
+  {
+   "text": "Nursery reservation envelope:",
+   "count": 6
+  },
+  {
+   "text": "1 Feb 2027 – 31 May 2027",
+   "count": 2
+  },
+  {
+   "text": "Source and grower assumptions",
+   "count": 6
+  },
+  {
+   "text": "Coarse monthly planning envelope, not exact sowing dates.",
+   "count": 6
+  },
+  {
+   "text": "No extra field-establishment allowance is included.",
+   "count": 6
+  },
+  {
+   "text": "Reservation uses the existing latest field-entry month; no grower nursery duration was entered.",
+   "count": 6
+  },
+  {
+   "text": "Lettuce",
+   "count": 7
+  },
+  {
+   "text": "Sep 2027",
+   "count": 3
+  },
+  {
+   "text": "Bed 2",
+   "count": 3
+  },
+  {
+   "text": "21–37",
+   "count": 4
+  },
+  {
+   "text": "rows 40–50cm apart · 25–35cm apart in the row · sow 1.5–2cm deep",
+   "count": 2
+  },
+  {
+   "text": "Nov 2027",
+   "count": 3
+  },
+  {
+   "text": "1 Oct 2027 – 31 Dec 2027",
+   "count": 2
+  },
+  {
+   "text": "1 Sep 2027 – 31 Dec 2027",
+   "count": 2
+  },
+  {
+   "text": "Tomatoes",
+   "count": 6
+  },
+  {
+   "text": "Oct 2027",
+   "count": 3
+  },
+  {
+   "text": "Bed 4",
+   "count": 4
+  },
+  {
+   "text": "6–17",
+   "count": 4
+  },
+  {
+   "text": "rows 90–120cm apart · 30–60cm apart in the row · sow 1cm deep",
+   "count": 2
+  },
+  {
+   "text": "Dec 2027",
+   "count": 2
+  },
+  {
+   "text": "1 Nov 2027 – 31 Jan 2028",
+   "count": 2
+  },
+  {
+   "text": "1 Oct 2027 – 31 Jan 2028",
+   "count": 2
+  },
+  {
+   "text": "Net growing-surface budgets",
+   "count": 2
+  },
+  {
+   "text": "No nursery growing surface saved for this site.",
+   "count": 2
+  },
+  {
+   "text": "Demand with no assigned resource remains unresolved.",
+   "count": 4
+  },
+  {
+   "text": "Container stock budgets",
+   "count": 2
+  },
+  {
+   "text": "No container types saved for this site.",
+   "count": 2
+  },
+  {
+   "text": "All nursery demand by week",
+   "count": 2
+  },
+  {
+   "text": "Combined peaks. Check each named resource above; combined surface alone cannot establish that an assigned bench is available.",
+   "count": 2
+  },
+  {
+   "text": "Week envelope",
+   "count": 2
+  },
+  {
+   "text": "Simultaneous trays",
+   "count": 2
+  },
+  {
+   "text": "Footprint (m²)",
+   "count": 2
+  },
+  {
+   "text": "Completeness",
+   "count": 2
+  },
+  {
+   "text": "1 Nov 2026 – 7 Nov 2026",
+   "count": 2
+  },
+  {
+   "text": "0",
+   "count": 122
+  },
+  {
+   "text": "Calculated",
+   "count": 50
+  },
+  {
+   "text": "8 Nov 2026 – 14 Nov 2026",
+   "count": 2
+  },
+  {
+   "text": "15 Nov 2026 – 21 Nov 2026",
+   "count": 2
+  },
+  {
+   "text": "22 Nov 2026 – 28 Nov 2026",
+   "count": 2
+  },
+  {
+   "text": "29 Nov 2026 – 5 Dec 2026",
+   "count": 2
+  },
+  {
+   "text": "6 Dec 2026 – 12 Dec 2026",
+   "count": 2
+  },
+  {
+   "text": "13 Dec 2026 – 19 Dec 2026",
+   "count": 2
+  },
+  {
+   "text": "20 Dec 2026 – 26 Dec 2026",
+   "count": 2
+  },
+  {
+   "text": "27 Dec 2026 – 2 Jan 2027",
+   "count": 2
+  },
+  {
+   "text": "3 Jan 2027 – 9 Jan 2027",
+   "count": 2
+  },
+  {
+   "text": "10 Jan 2027 – 16 Jan 2027",
+   "count": 2
+  },
+  {
+   "text": "17 Jan 2027 – 23 Jan 2027",
+   "count": 2
+  },
+  {
+   "text": "24 Jan 2027 – 30 Jan 2027",
+   "count": 2
+  },
+  {
+   "text": "31 Jan 2027 – 6 Feb 2027",
+   "count": 2
+  },
+  {
+   "text": "Known part only",
+   "count": 56
+  },
+  {
+   "text": "7 Feb 2027 – 13 Feb 2027",
+   "count": 2
+  },
+  {
+   "text": "14 Feb 2027 – 20 Feb 2027",
+   "count": 2
+  },
+  {
+   "text": "21 Feb 2027 – 27 Feb 2027",
+   "count": 2
+  },
+  {
+   "text": "28 Feb 2027 – 6 Mar 2027",
+   "count": 2
+  },
+  {
+   "text": "7 Mar 2027 – 13 Mar 2027",
+   "count": 2
+  },
+  {
+   "text": "14 Mar 2027 – 20 Mar 2027",
+   "count": 2
+  },
+  {
+   "text": "21 Mar 2027 – 27 Mar 2027",
+   "count": 2
+  },
+  {
+   "text": "28 Mar 2027 – 3 Apr 2027",
+   "count": 2
+  },
+  {
+   "text": "4 Apr 2027 – 10 Apr 2027",
+   "count": 2
+  },
+  {
+   "text": "11 Apr 2027 – 17 Apr 2027",
+   "count": 2
+  },
+  {
+   "text": "18 Apr 2027 – 24 Apr 2027",
+   "count": 2
+  },
+  {
+   "text": "25 Apr 2027 – 1 May 2027",
+   "count": 2
+  },
+  {
+   "text": "2 May 2027 – 8 May 2027",
+   "count": 2
+  },
+  {
+   "text": "9 May 2027 – 15 May 2027",
+   "count": 2
+  },
+  {
+   "text": "16 May 2027 – 22 May 2027",
+   "count": 2
+  },
+  {
+   "text": "23 May 2027 – 29 May 2027",
+   "count": 2
+  },
+  {
+   "text": "30 May 2027 – 5 Jun 2027",
+   "count": 2
+  },
+  {
+   "text": "6 Jun 2027 – 12 Jun 2027",
+   "count": 2
+  },
+  {
+   "text": "13 Jun 2027 – 19 Jun 2027",
+   "count": 2
+  },
+  {
+   "text": "20 Jun 2027 – 26 Jun 2027",
+   "count": 2
+  },
+  {
+   "text": "27 Jun 2027 – 3 Jul 2027",
+   "count": 2
+  },
+  {
+   "text": "4 Jul 2027 – 10 Jul 2027",
+   "count": 2
+  },
+  {
+   "text": "11 Jul 2027 – 17 Jul 2027",
+   "count": 2
+  },
+  {
+   "text": "18 Jul 2027 – 24 Jul 2027",
+   "count": 2
+  },
+  {
+   "text": "25 Jul 2027 – 31 Jul 2027",
+   "count": 2
+  },
+  {
+   "text": "1 Aug 2027 – 7 Aug 2027",
+   "count": 2
+  },
+  {
+   "text": "8 Aug 2027 – 14 Aug 2027",
+   "count": 2
+  },
+  {
+   "text": "15 Aug 2027 – 21 Aug 2027",
+   "count": 2
+  },
+  {
+   "text": "22 Aug 2027 – 28 Aug 2027",
+   "count": 2
+  },
+  {
+   "text": "29 Aug 2027 – 4 Sep 2027",
+   "count": 2
+  },
+  {
+   "text": "5 Sep 2027 – 11 Sep 2027",
+   "count": 2
+  },
+  {
+   "text": "12 Sep 2027 – 18 Sep 2027",
+   "count": 2
+  },
+  {
+   "text": "19 Sep 2027 – 25 Sep 2027",
+   "count": 2
+  },
+  {
+   "text": "26 Sep 2027 – 2 Oct 2027",
+   "count": 2
+  },
+  {
+   "text": "3 Oct 2027 – 9 Oct 2027",
+   "count": 2
+  },
+  {
+   "text": "10 Oct 2027 – 16 Oct 2027",
+   "count": 2
+  },
+  {
+   "text": "17 Oct 2027 – 23 Oct 2027",
+   "count": 2
+  },
+  {
+   "text": "24 Oct 2027 – 30 Oct 2027",
+   "count": 2
+  },
+  {
+   "text": "31 Oct 2027 – 31 Oct 2027",
+   "count": 2
+  },
+  {
+   "text": "Coarse monthly planning envelopes, not exact sowing dates. Upper range ends budget nursery space against the grower’s net usable surface. No aisle allowance or geometric packing guarantee is inferred. Incomplete estimates show known assigned demand only; unknown or unassigned demand is not zero and prevents a spare-capacity claim. Shortages on incomplete budgets are known lower bounds. Seasonal tray uses are separate from peak simultaneous stock. Field dates, tasks and yields stay unchanged.",
+   "count": 2
+  },
+  {
+   "text": "Download nursery CSV",
+   "count": 1
+  },
+  {
+   "text": "Sample farm: this export is marked DEMO and contains example planning data.",
+   "count": 1
+  },
+  {
+   "text": "Review seeds and equipment to source",
+   "count": 1
+  },
+  {
+   "text": "Open task planner",
+   "count": 1
+  },
+  {
+   "text": "Nursery checks leave your field-task calendar unchanged. Review the crop plan before changing field dates.",
+   "count": 1
+  },
+  {
+   "text": "Nursery units",
+   "count": 1
+  },
+  {
+   "text": "Units change entry and display only. Saved tray sizes stay in centimetres and net surface stays in square metres. Use decimal numbers with a dot or comma; no grouping, fractions or unit suffixes. Counts, percentages and dates keep their own units.",
+   "count": 1
+  },
+  {
+   "text": "Reload saved nursery settings",
+   "count": 1
+  },
+  {
+   "text": "1. Net nursery growing surface ·",
+   "count": 1
+  },
+  {
+   "text": "For this site only. Enter the net surface allocated to these crops after paths, work areas and other uses. Zero means no surface is allocated.",
+   "count": 1
+  },
+  {
+   "text": "Space name",
+   "count": 1
+  },
+  {
+   "text": "Net usable surface (",
+   "count": 1
+  },
+  {
+   "text": "m²",
+   "count": 12
+  },
+  {
+   "text": ")",
+   "count": 3
+  },
+  {
+   "text": "Add nursery space",
+   "count": 1
+  },
+  {
+   "text": "2. Your trays and containers ·",
+   "count": 1
+  },
+  {
+   "text": "Give each tray type its own name. Outer width and length determine its bench footprint. Owned stock is the number allocated to this plan, not a count of trays currently empty.",
+   "count": 1
+  },
+  {
+   "text": "Container name",
+   "count": 1
+  },
+  {
+   "text": "Cells per container (optional)",
+   "count": 1
+  },
+  {
+   "text": "Owned containers (optional)",
+   "count": 1
+  },
+  {
+   "text": "Outer width (",
+   "count": 1
+  },
+  {
+   "text": "cm",
+   "count": 2
+  },
+  {
+   "text": ", optional)",
+   "count": 2
+  },
+  {
+   "text": "Outer length (",
+   "count": 1
+  },
+  {
+   "text": "Add container type",
+   "count": 1
+  },
+  {
+   "text": "3. Your crop nursery recipes ·",
+   "count": 1
+  },
+  {
+   "text": "Keep one recipe per crop identity for this site. Your own method and losses need review; a crop name does not determine propagation. The catalogue forecast uses only its supported transplant crops and timing. Own dated cycles keep their reviewed field dates.",
+   "count": 1
+  },
+  {
+   "text": "Crop identity for nursery recipe",
+   "count": 1
+  },
+  {
+   "text": "Nursery model",
+   "count": 1
+  },
+  {
+   "text": "Container type",
+   "count": 1
+  },
+  {
+   "text": "Allocated nursery space",
+   "count": 1
+  },
+  {
+   "text": "Your field survival (%, optional)",
+   "count": 1
+  },
+  {
+   "text": "Your nursery duration (weeks, optional)",
+   "count": 1
+  },
+  {
+   "text": "Field survival is separate from nursery losses. Own-cycle requirements stay unknown until you enter it. The separate catalogue forecast applies no extra field allowance when blank. A saved 0% remains an observation, not a finite positive raising requirement.",
+   "count": 1
+  },
+  {
+   "text": "Save crop recipe",
+   "count": 1
+  },
+  {
+   "text": "Settings belong to this site’s crop plan on this device. Removing equipment leaves its dependent recipes visibly incomplete. This is a planning forecast, not observed live nursery stock. Net surface does not guarantee rectangular tray packing or include up-pot stage scheduling.",
+   "count": 1
+  },
+  {
+   "text": "Bed",
+   "count": 1
+  },
+  {
+   "text": "Year one — from this month",
+   "count": 1
+  },
+  {
+   "text": "Year two — repeat crops; check plant ages",
+   "count": 1
+  },
+  {
+   "text": "Now",
+   "count": 2
+  },
+  {
+   "text": "2027",
+   "count": 52
+  },
+  {
+   "text": "↻",
+   "count": 2
+  },
+  {
+   "text": "2028",
+   "count": 2
+  },
+  {
+   "text": "Vegetables",
+   "count": 2
+  },
+  {
+   "text": "Bed 1",
+   "count": 10
+  },
+  {
+   "text": "6.0",
+   "count": 6
+  },
+  {
+   "text": "Onions",
+   "count": 4
+  },
+  {
+   "text": "(61%)",
+   "count": 1
+  },
+  {
+   "text": "+ crop",
+   "count": 11
+  },
+  {
+   "text": "(62%)",
+   "count": 2
+  },
+  {
+   "text": "check / transplant",
+   "count": 6
+  },
+  {
+   "text": "Carrots",
+   "count": 8
+  },
+  {
+   "text": "(86%)",
+   "count": 2
+  },
+  {
+   "text": "Bed 3",
+   "count": 3
+  },
+  {
+   "text": "Butternut",
+   "count": 7
+  },
+  {
+   "text": "(1/1)",
+   "count": 2
+  },
+  {
+   "text": "(75%)",
+   "count": 1
+  },
+  {
+   "text": "(20%)",
+   "count": 2
+  },
+  {
+   "text": "Bed 5",
+   "count": 1
+  },
+  {
+   "text": "Green beans",
+   "count": 6
+  },
+  {
+   "text": "(69%)",
+   "count": 2
+  },
+  {
+   "text": "8.0",
+   "count": 1
+  },
+  {
+   "text": "Garlic",
+   "count": 4
+  },
+  {
+   "text": "(½)",
+   "count": 1
+  },
+  {
+   "text": "(47%)",
+   "count": 2
+  },
+  {
+   "text": "Sweet potato",
+   "count": 5
+  },
+  {
+   "text": "(46%)",
+   "count": 2
+  },
+  {
+   "text": "Bed 7",
+   "count": 1
+  },
+  {
+   "text": "Staple grain",
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "count": 5
+  },
+  {
+   "text": "(83%)",
+   "count": 2
+  },
+  {
+   "text": "Staple crops",
+   "count": 2
+  },
+  {
+   "text": "Plot 1",
+   "count": 1
+  },
+  {
+   "text": "plot",
+   "count": 4
+  },
+  {
+   "text": "21.0",
+   "count": 4
+  },
+  {
+   "text": "Plot 2",
+   "count": 1
+  },
+  {
+   "text": "Plot 3",
+   "count": 1
+  },
+  {
+   "text": "Plot 4",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts & berries",
+   "count": 2
+  },
+  {
+   "text": "Your trees & bushes",
+   "count": 1
+  },
+  {
+   "text": "From your map · hover or tap a bar",
+   "count": 2
+  },
+  {
+   "text": "Outlined bars: sourced planning references when established. Solid bars: locally confirmed picking months. New plants need time; references do not count towards food totals.",
+   "count": 1
+  },
+  {
+   "text": "Mango",
+   "count": 5
+  },
+  {
+   "text": "· reference",
+   "count": 4
+  },
+  {
+   "text": "(proposed)",
+   "count": 4
+  },
+  {
+   "text": "Avocado",
+   "count": 5
+  },
+  {
+   "text": "On your map, with picking months to confirm: Avocado, Mango, Moringa, Num-num. They stay listed on the printed plan.",
+   "count": 1
+  },
+  {
+   "text": "Animal products",
+   "count": 1
+  },
+  {
+   "text": "Your animals",
+   "count": 1
+  },
+  {
+   "text": "No locally confirmed production months yet. Hives, coops and pens on your map stay listed below and on the printed plan.",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts & berries on your map",
+   "count": 1
+  },
+  {
+   "text": "Picking months vary by place and variety. Outlined calendar marks are planning references when established. Confirm months for plants that already give food here to count them in food totals. Plants stay on the printed plan while dates are unknown.",
+   "count": 1
+  },
+  {
+   "text": "These confirmations are kept on this device for this design.",
+   "count": 1
+  },
+  {
+   "text": "existing",
+   "count": 4
+  },
+  {
+   "text": ", 1 proposed",
+   "count": 3
+  },
+  {
+   "text": "confirm picking months",
+   "count": 4
+  },
+  {
+   "text": "All existing plants of this kind already give food here.",
+   "count": 4
+  },
+  {
+   "text": "Only proposed plants: no current picking dates.",
+   "count": 4
+  },
+  {
+   "text": "Plant ages & future harvest",
+   "count": 4
+  },
+  {
+   "text": "Put plants planted together in one group. Keep older and younger plants separate. Dates and expected kg stay on this device with your picking months.",
+   "count": 4
+  },
+  {
+   "text": "First-crop reference:",
+   "count": 3
+  },
+  {
+   "text": "2–3 years",
+   "count": 1
+  },
+  {
+   "text": "after planting.",
+   "count": 3
+  },
+  {
+   "text": "Source",
+   "count": 8
+  },
+  {
+   "text": "Established production reference:",
+   "count": 1
+  },
+  {
+   "text": "6–8",
+   "count": 1
+  },
+  {
+   "text": "years. Check the source's cultivar and conditions.",
+   "count": 1
+  },
+  {
+   "text": "Age & production references",
+   "count": 3
+  },
+  {
+   "text": "Check variety, planting stock, site and units before using a reference. Your entered kg schedule supplies the projection.",
+   "count": 3
+  },
+  {
+   "text": "First crop:",
+   "count": 3
+  },
+  {
+   "text": "Bruyns Hill, Natal Midlands bioclimatic group 2; irrigated Hass on clonal Duke 7 rootstock, 7 x 7 m (200 trees/ha), planted 1982–1984. The paper reports Hass starting in its second season and Fuerte in its third. The two-to-three-year reference describes those trial cultivars, not every avocado or nursery starting age.",
+   "count": 1
+  },
+  {
+   "text": "Established production:",
+   "count": 1
+  },
+  {
+   "text": "In this irrigated, intensively managed Natal Midlands trial, Hass reached about 20 t/ha at age 6 and orchards approached maximum sustainable average yield by age 8. This is a trial-specific bearing reference; there is no national plateau or automatically interpolated age-yield curve.",
+   "count": 1
+  },
+  {
+   "text": "Source production:",
+   "count": 1
+  },
+  {
+   "text": "100–112.5",
+   "count": 1
+  },
+  {
+   "text": "kg/plant.",
+   "count": 1
+  },
+  {
+   "text": "Same-trial arithmetic at the initial 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree at age 6; sustainable average 22,500 kg/ha / 200 = 112.5 kg/tree. At age 3, 10,000 kg/ha / 200 = 50 kg/tree equivalent. These are average-equivalent reference values for the named Hass/Duke 7 orchard conditions, not measured individual-tree yields or default production for a different density, cultivar, climate or management. Intermediate ages are not inferred.",
+   "count": 1
+  },
+  {
+   "text": "Hass age benchmarks — irrigated Natal Midlands trial",
+   "count": 1
+  },
+  {
+   "text": "Hass on Duke 7, initially 200 trees/ha at Bruyns Hill (Natal Midlands bioclimatic group 2), with intensive irrigation and nutrition. Age 3: 10,000 kg/ha; age 6: 20,000 kg/ha; sustainable average about 22,500 kg/ha. Same-study density permits equivalents of 50 kg/tree at age 3 and 100 kg/tree at age 6; there is no reference for every intermediate age. These orchard benchmarks are conditional on good resources, comparable climate and timely orchard management, including Phytophthora control and thinning; do not auto-fill farm quantities.",
+   "count": 1
+  },
+  {
+   "text": "p. 6",
+   "count": 1
+  },
+  {
+   "text": "1",
+   "count": 38
+  },
+  {
+   "text": "plants still need an age group.",
+   "count": 4
+  },
+  {
+   "text": "+ Add age group",
+   "count": 4
+  },
+  {
+   "text": "Tap the months you pick from these plants here:",
+   "count": 4
+  },
+  {
+   "text": "Reference seasons — check place and variety:",
+   "count": 4
+  },
+  {
+   "text": "South Africa (general, SAAGA industry overview)",
+   "count": 1
+  },
+  {
+   "text": "Feb–Oct",
+   "count": 1
+  },
+  {
+   "text": "SA Avocado Industry Overview – South African Avocado Growers' Association (SAAGA)",
+   "count": 2
+  },
+  {
+   "text": "South Africa - warm subtropical regions (Hass cultivar)",
+   "count": 1
+  },
+  {
+   "text": "Jun–Oct",
+   "count": 1
+  },
+  {
+   "text": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops)",
+   "count": 2
+  },
+  {
+   "text": ", p. 5",
+   "count": 2
+  },
+  {
+   "text": "South Africa - cool subtropical regions (Hass cultivar)",
+   "count": 1
+  },
+  {
+   "text": "Aug–Dec",
+   "count": 1
+  },
+  {
+   "text": "3–4 years",
+   "count": 1
+  },
+  {
+   "text": "Grafted mango stock in the KZN guide generally begins bearing after 3–4 years. Context is frost-free tropical/warm subtropical production with low humidity at flowering, including dry Zululand, Valley Bushveld and Lowveld. The text distinguishes grafted stock from seed-raised Peach/Sabre; do not apply this age to an unrecorded seedling or infer yearly kg.",
+   "count": 1
+  },
+  {
+   "text": "Grafted mango establishment — regional guide",
+   "count": 1
+  },
+  {
+   "text": "Grafted stock generally first bears around 3–4 years and may remain productive 20 years or longer under the guide conditions. Seed-raised trees are a separate planting-material case. Frost, wet spring flowering conditions, cultivar and field establishment must be checked; longevity is not an age-yield curve.",
+   "count": 1
+  },
+  {
+   "text": "p. 20",
+   "count": 1
+  },
+  {
+   "text": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area)",
+   "count": 1
+  },
+  {
+   "text": "Nov–Mar",
+   "count": 1
+  },
+  {
+   "text": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024)",
+   "count": 1
+  },
+  {
+   "text": ", p. 3",
+   "count": 1
+  },
+  {
+   "text": "Moringa",
+   "count": 3
+  },
+  {
+   "text": ", 2 proposed",
+   "count": 1
+  },
+  {
+   "text": "6–12 months",
+   "count": 1
+  },
+  {
+   "text": "The 6–12-month reference concerns the first leaf harvest after planting. Flowers and pods are normally produced during the second year of growth in the same North West guide. Leaf readiness does not establish pod production or picking months.",
+   "count": 1
+  },
+  {
+   "text": "Pod development, not a young green-pod picking calendar",
+   "count": 1
+  },
+  {
+   "text": "This botanical description discusses pods that become brown at maturity. The separate harvesting section requires young, tender, green pods for food and supplies no calendar for that stage. March–April is retained as pod-development phenology, not a confirmed young-pod picking season or leaf calendar.",
+   "count": 1
+  },
+  {
+   "text": "p. 7",
+   "count": 1
+  },
+  {
+   "text": "2",
+   "count": 14
+  },
+  {
+   "text": "No picking months are verified in the source record. Local observations can still be recorded above.",
+   "count": 2
+  },
+  {
+   "text": "Num-num",
+   "count": 3
+  },
+  {
+   "text": "First-crop age is not sourced. Add a locally checked yield schedule.",
+   "count": 1
+  },
+  {
+   "text": "How production changes as plants grow",
+   "count": 1
+  },
+  {
+   "text": "The next ten years, starting this month. Add planting dates and expected yields under each plant above. Missing yields remain visible; young trees do not receive a mature-tree yield.",
+   "count": 1
+  },
+  {
+   "text": "●",
+   "count": 2
+  },
+  {
+   "text": "Vegetables & staples",
+   "count": 1
+  },
+  {
+   "text": "Numbers are projections in kg",
+   "count": 1
+  },
+  {
+   "text": "Nov 2026",
+   "count": 2
+  },
+  {
+   "text": "29.7 kg",
+   "count": 1
+  },
+  {
+   "text": "*",
+   "count": 10
+  },
+  {
+   "text": "48.8 kg",
+   "count": 9
+  },
+  {
+   "text": "Nov 2028",
+   "count": 1
+  },
+  {
+   "text": "Nov 2029",
+   "count": 1
+  },
+  {
+   "text": "Nov 2030",
+   "count": 1
+  },
+  {
+   "text": "Nov 2031",
+   "count": 1
+  },
+  {
+   "text": "Nov 2032",
+   "count": 1
+  },
+  {
+   "text": "Nov 2033",
+   "count": 1
+  },
+  {
+   "text": "Nov 2034",
+   "count": 1
+  },
+  {
+   "text": "Nov 2035",
+   "count": 1
+  },
+  {
+   "text": "* Known subtotal only. Missing production is not zero. Striped ends show harvest that changes as plants age during the year.",
+   "count": 1
+  },
+  {
+   "text": "Nov 2026 – Oct 2027",
+   "count": 1
+  },
+  {
+   "text": "Vegetables & staples:",
+   "count": 1
+  },
+  {
+   "text": "29.7 kg from cycles starting harvest in this period",
+   "count": 1
+  },
+  {
+   "text": "plant",
+   "count": 3
+  },
+  {
+   "text": "Needs information",
+   "count": 4
+  },
+  {
+   "text": "Age not recorded",
+   "count": 4
+  },
+  {
+   "text": "Add planting dates",
+   "count": 4
+  },
+  {
+   "text": "1 plants need age groups",
+   "count": 3
+  },
+  {
+   "text": "plants",
+   "count": 1
+  },
+  {
+   "text": "2 plants need age groups",
+   "count": 1
+  },
+  {
+   "text": "What the projection assumes",
+   "count": 1
+  },
+  {
+   "text": "Projection, not a harvest promise. Vegetables and staples repeat only saved recurring sowings; dated and existing crops happen once.",
+   "count": 1
+  },
+  {
+   "text": "Vegetable and staple crop-cycle kilograms are counted in the year of first picking, not divided into monthly quantities. Carry-in harvests need actual records.",
+   "count": 1
+  },
+  {
+   "text": "Vegetable and staple estimates hold bed area, sowings and crop benchmarks constant. Revise the plan if growing trees change shade, water or available bed space.",
+   "count": 1
+  },
+  {
+   "text": "Tree ages run from planting on this site. Separate older and younger plants into age groups. Research first-crop ages are references, not guaranteed dates.",
+   "count": 1
+  },
+  {
+   "text": "Tree kg are your farm or nursery assumptions per plant per year. Values hold until the next age you enter; no growth multiplier is invented. A range covers changes within the year. Review the schedule as plants age.",
+   "count": 1
+  },
+  {
+   "text": "Check that the variety, local climate, pollination, water and care match your yield assumptions. Ages alone do not establish site suitability or survival.",
+   "count": 1
+  },
+  {
+   "text": "Known subtotals leave out missing yields. Eggs, meat, milk, fish and honey are not included in these crop kg totals. Picking months and food-gap checks still need local confirmation.",
+   "count": 1
+  },
+  {
+   "text": "Check your farm conditions",
+   "count": 1
+  },
+  {
+   "text": "Update site survey",
+   "count": 1
+  },
+  {
+   "text": "Climate area:",
+   "count": 1
+  },
+  {
+   "text": "Subtropical coast or Lowveld / Bushveld",
+   "count": 1
+  },
+  {
+   "text": "Your survey supplies the observations below.",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts and indigenous foods",
+   "count": 1
+  },
+  {
+   "text": "Bars use a labelled variety assumption or regional reference. New plants need time to produce. Only locally confirmed months enter your food totals.",
+   "count": 1
+  },
+  {
+   "text": "Assumed variety: Hass",
+   "count": 1
+  },
+  {
+   "text": "· expected when established",
+   "count": 2
+  },
+  {
+   "text": "0 existing; 1 proposed. Products: fruit.",
+   "count": 2
+  },
+  {
+   "text": "Care and what to buy",
+   "count": 4
+  },
+  {
+   "text": "First crop reference: 2–3 years. Bruyns Hill, Natal Midlands bioclimatic group 2; irrigated Hass on clonal Duke 7 rootstock, 7 x 7 m (200 trees/ha), planted 1982–1984. The paper reports Hass starting in its second season and Fuerte in its third. The two-to-three-year reference describes those trial cultivars, not every avocado or nursery starting age. Actual timing depends on variety and site care.",
+   "count": 1
+  },
+  {
+   "text": "Established production reference: 6–8 years. In this irrigated, intensively managed Natal Midlands trial, Hass reached about 20 t/ha at age 6 and orchards approached maximum sustainable average yield by age 8. This is a trial-specific bearing reference; there is no national plateau or automatically interpolated age-yield curve.",
+   "count": 1
+  },
+  {
+   "text": "Production reference: 100–112.5 kg/plant. Same-trial arithmetic at the initial 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree at age 6; sustainable average 22,500 kg/ha / 200 = 112.5 kg/tree. At age 3, 10,000 kg/ha / 200 = 50 kg/tree equivalent. These are average-equivalent reference values for the named Hass/Duke 7 orchard conditions, not measured individual-tree yields or default production for a different density, cultivar, climate or management. Intermediate ages are not inferred.",
+   "count": 1
+  },
+  {
+   "text": "Hass age benchmarks — irrigated Natal Midlands trial: Hass on Duke 7, initially 200 trees/ha at Bruyns Hill (Natal Midlands bioclimatic group 2), with intensive irrigation and nutrition. Age 3: 10,000 kg/ha; age 6: 20,000 kg/ha; sustainable average about 22,500 kg/ha. Same-study density permits equivalents of 50 kg/tree at age 3 and 100 kg/tree at age 6; there is no reference for every intermediate age. These orchard benchmarks are conditional on good resources, comparable climate and timely orchard management, including Phytophthora control and thinning; do not auto-fill farm quantities.",
+   "count": 1
+  },
+  {
+   "text": "Keep roots well drained; water matters during flowering.",
+   "count": 1
+  },
+  {
+   "text": "Buying advice: KZN sequence: earlier Fuerte (May–Nov), middle Hass (Aug–Dec), later Ryan (Nov–Feb). These seasons overlap. Buy labelled grafted trees; confirm rootstock and pollination partners.",
+   "count": 1
+  },
+  {
+   "text": "Pollination: partly self fertile. Check the chosen cultivar's requirements with the nursery.",
+   "count": 1
+  },
+  {
+   "text": "Assumed variety: Hass. South Africa - warm subtropical regions (Hass cultivar). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+   "count": 1
+  },
+  {
+   "text": "KZN DARD, Fruit and Nut Production, PDF pp. 6–7 (regional reference; confirm current nursery stock)",
+   "count": 1
+  },
+  {
+   "text": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops), p. 5",
+   "count": 1
+  },
+  {
+   "text": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+   "count": 1
+  },
+  {
+   "text": "Wolstenholme, Kaiser & Palmer, 'Yield Potential of Intensively Managed Avocados in the Natal Midlands — The Early Bearing Years', South African Avocado Growers' Association Yearbook 1991, 14:15-18, p. 6",
+   "count": 1
+  },
+  {
+   "text": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18, p. 7",
+   "count": 1
+  },
+  {
+   "text": "Wolstenholme, Kaiser & Palmer (1991), SAAGA Yearbook 14:15–18; reflowed PDF, p. 6",
+   "count": 1
+  },
+  {
+   "text": "Regional reference: Mango",
+   "count": 1
+  },
+  {
+   "text": "First crop reference: 3–4 years. Grafted mango stock in the KZN guide generally begins bearing after 3–4 years. Context is frost-free tropical/warm subtropical production with low humidity at flowering, including dry Zululand, Valley Bushveld and Lowveld. The text distinguishes grafted stock from seed-raised Peach/Sabre; do not apply this age to an unrecorded seedling or infer yearly kg. Actual timing depends on variety and site care.",
+   "count": 1
+  },
+  {
+   "text": "Grafted mango establishment — regional guide: Grafted stock generally first bears around 3–4 years and may remain productive 20 years or longer under the guide conditions. Seed-raised trees are a separate planting-material case. Frost, wet spring flowering conditions, cultivar and field establishment must be checked; longevity is not an age-yield curve.",
+   "count": 1
+  },
+  {
+   "text": "Check frost, drainage and flowering-season disease pressure. Heat and sunburn sensitivity differ between cultivars.",
+   "count": 1
+  },
+  {
+   "text": "Assumed planting variety: Tommy Atkins, subject to local flowering and frost checks. Confirm its local picking months; the calendar uses a labelled regional reference where sourced.",
+   "count": 1
+  },
+  {
+   "text": "Buying advice: ARC identifies Tommy Atkins and Kent among more heat/sunburn-tolerant options; Sensation and Keitt are more susceptible. Confirm local harvest dates before choosing a succession.",
+   "count": 1
+  },
+  {
+   "text": "Regional reference: Mango. South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area). Regional industry season, not a Tommy Atkins-only harvest window. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+   "count": 1
+  },
+  {
+   "text": "ARC Climate-Smart Agriculture, module 6, printed pp. 239–242",
+   "count": 1
+  },
+  {
+   "text": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024), p. 3",
+   "count": 1
+  },
+  {
+   "text": "KZN DARD, Fruit and Nut Production in KZN, Mango bearing age; printed p.16, p. 20",
+   "count": 1
+  },
+  {
+   "text": "0 existing; 2 proposed. Products: Leaves and green pods; keep their records separate.",
+   "count": 1
+  },
+  {
+   "text": "First crop reference: 6–12 months. The 6–12-month reference concerns the first leaf harvest after planting. Flowers and pods are normally produced during the second year of growth in the same North West guide. Leaf readiness does not establish pod production or picking months. Actual timing depends on variety and site care.",
+   "count": 1
+  },
+  {
+   "text": "Pod development, not a young green-pod picking calendar: This botanical description discusses pods that become brown at maturity. The separate harvesting section requires young, tender, green pods for food and supplies no calendar for that stage. March–April is retained as pod-development phenology, not a confirmed young-pod picking season or leaf calendar.",
+   "count": 1
+  },
+  {
+   "text": "Choose a sunny, well-drained growing position, protect establishment and plan pruning for leaf harvest.",
+   "count": 1
+  },
+  {
+   "text": "Buying advice: Use correctly identified local planting material. No locally validated named cultivar shortlist is sourced; this plan does not claim nitrogen fixation or medicinal effects.",
+   "count": 1
+  },
+  {
+   "text": "Expected picking season: no fixed regional months sourced. Record planting and picking dates locally.",
+   "count": 2
+  },
+  {
+   "text": "North West DARD: Moringa production for food security (2021)",
+   "count": 1
+  },
+  {
+   "text": "North West Department of Agriculture and Rural Development, Moringa (Moringa oleifera) production: A possible solution to South African food security challenges, p. 33",
+   "count": 1
+  },
+  {
+   "text": "North West Department of Agriculture and Rural Development, Moringa (Moringa oleifera) production: A possible solution to South African food security challenges, p. 7",
+   "count": 1
+  },
+  {
+   "text": "0 existing; 1 proposed. Products: Ripe fruit, fresh or preserved.",
+   "count": 1
+  },
+  {
+   "text": "Time to first crop: not sourced; do not rely on newly planted stock for immediate food.",
+   "count": 1
+  },
+  {
+   "text": "Coastal plant; allow for thorns near children and paths.",
+   "count": 1
+  },
+  {
+   "text": "Buying advice: Ask for a locally suitable fruiting plant; no named food cultivar is established by this source.",
+   "count": 1
+  },
+  {
+   "text": "SANBI PlantZAfrica: carissa-macrocarpa",
+   "count": 1
+  },
+  {
+   "text": "Water through the dry season",
+   "count": 1
+  },
+  {
+   "text": "Not recorded. Complete the site survey and confirm water before choosing an intensive plan.",
+   "count": 1
+  },
+  {
+   "text": "Frost on this farm",
+   "count": 1
+  },
+  {
+   "text": "Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates.",
+   "count": 1
+  },
+  {
+   "text": "Sun and drainage",
+   "count": 1
+  },
+  {
+   "text": "Sun: not recorded.",
+   "count": 1
+  },
+  {
+   "text": "Drainage: not recorded. Soil-test results and crop-specific needs still need checking.",
+   "count": 1
+  },
+  {
+   "text": "Crop varieties to check locally (",
+   "count": 1
+  },
+  {
+   "text": "12",
+   "count": 1
+  },
+  {
+   "text": "crops",
+   "count": 1
+  },
+  {
+   "text": "Research groupings can infer climate fit. Confirm the season, soil, water and current stock with a local grower or extension officer. A recorded variety does not change this plan’s crop timing.",
+   "count": 1
+  },
+  {
+   "text": "Recorded variety: not chosen yet.",
+   "count": 12
+  },
+  {
+   "text": "The research has no matching regional shortlist. Ask a local grower or extension officer which named variety suits this season.",
+   "count": 3
+  },
+  {
+   "text": "Research shortlist for similar climates: Texas Grano 502 PPR; Granex 33; Pyramid.",
+   "count": 1
+  },
+  {
+   "text": "Onion chapter, KZN DARD vegetable production guide, chapter 27, p. 1",
+   "count": 1
+  },
+  {
+   "text": "Onion chapter, KZN DARD vegetable production guide, chapter 27, p. 2",
+   "count": 1
+  },
+  {
+   "text": "Onion chapter, KZN DARD vegetable production guide, chapter 27, p. 3",
+   "count": 1
+  },
+  {
+   "text": "Swiss chard (spinach)",
+   "count": 2
+  },
+  {
+   "text": "Research shortlist for similar climates: Fordhook Giant; Bright Lights.",
+   "count": 1
+  },
+  {
+   "text": "Fordhook Giant, Sakata product page",
+   "count": 1
+  },
+  {
+   "text": "Bright Lights, Starke Ayres product page",
+   "count": 1
+  },
+  {
+   "text": "Research shortlist for similar climates: Rodade.",
+   "count": 1
+  },
+  {
+   "text": "Rodade, Sakata product page",
+   "count": 1
+  },
+  {
+   "text": "Research shortlist for similar climates: Contender; Star 2000.",
+   "count": 1
+  },
+  {
+   "text": "Contender bush bean, Starke Ayres product page",
+   "count": 1
+  },
+  {
+   "text": "Star 2000 bush bean, Starke Ayres product page",
+   "count": 1
+  },
+  {
+   "text": "Research shortlist for similar climates: Aviram; Tropical Emperor; Summer Gold; Brigadier.",
+   "count": 1
+  },
+  {
+   "text": "LETTUCE INTRODUCTION, KZN DARD, p. 2",
+   "count": 1
+  },
+  {
+   "text": "Brigadier Lettuce Seeds, Starke Ayres product page",
+   "count": 1
+  },
+  {
+   "text": "LETTUCE INTRODUCTION, KZN DARD, p. 1",
+   "count": 1
+  },
+  {
+   "text": "Research shortlist for similar climates: Green Valiant; Liberty; Pirate; Star 2201; Viking.",
+   "count": 1
+  },
+  {
+   "text": "COLE CROPS, KZN DARD, p. 3",
+   "count": 1
+  },
+  {
+   "text": "COLE CROPS, KZN DARD (Table 14, Sowing times, reading the Broccoli row's three columns: Cold/Warm/Hot areas), p. 3",
+   "count": 1
+  },
+  {
+   "text": "Research shortlist for similar climates: Blesbok; Khumo; Impala; Bosbok.",
+   "count": 1
+  },
+  {
+   "text": "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024, p. 1",
+   "count": 1
+  },
+  {
+   "text": "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024, p. 2",
+   "count": 1
+  },
+  {
+   "text": "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024, p. 3",
+   "count": 1
+  },
+  {
+   "text": "Cabbage",
+   "count": 1
+  },
+  {
+   "text": "Research shortlist for similar climates: Conquistador.",
+   "count": 1
+  },
+  {
+   "text": "Conquistador F1 Hybrid Fresh Market Cabbage, Sakata product page",
+   "count": 1
+  },
+  {
+   "text": "Research shortlist for similar climates: Chantenay Karoo; Kuroda.",
+   "count": 1
+  },
+  {
+   "text": "Chantenay Karoo, Sakata product page",
+   "count": 1
+  },
+  {
+   "text": "Kuroda, Sakata product page",
+   "count": 1
+  },
+  {
+   "text": "Food, production kg and growing space graphs",
+   "count": 1
+  },
+  {
+   "text": "Food and growing space",
+   "count": 1
+  },
+  {
+   "text": "Include kept food",
+   "count": 1
+  },
+  {
+   "text": "Stored",
+   "count": 1
+  },
+  {
+   "text": "Frozen",
+   "count": 1
+  },
+  {
+   "text": "Dried",
+   "count": 1
+  },
+  {
+   "text": "Fermented",
+   "count": 1
+  },
+  {
+   "text": "Processed",
+   "count": 1
+  },
+  {
+   "text": "Fresh food",
+   "count": 1
+  },
+  {
+   "text": "Harvested or produced this month, including staple crops.",
+   "count": 1
+  },
+  {
+   "text": "2026",
+   "count": 10
+  },
+  {
+   "text": "Fresh",
+   "count": 2
+  },
+  {
+   "text": "Number of food types",
+   "count": 2
+  },
+  {
+   "text": "Fresh + kept food",
+   "count": 1
+  },
+  {
+   "text": "Fresh harvest, food in store and recorded preserved food.",
+   "count": 1
+  },
+  {
+   "text": "Planned pantry food",
+   "count": 1
+  },
+  {
+   "text": "Recorded kept food",
+   "count": 1
+  },
+  {
+   "text": "One food counts once, even if it is both fresh and frozen. These are planned or recorded windows, not kilograms or meals. Regional reference seasons and undated plants or housing stay outside these totals.",
+   "count": 1
+  },
+  {
+   "text": "What is included in kept food?",
+   "count": 1
+  },
+  {
+   "text": "Food in store follows each crop’s sourced storage conditions. Freezing, drying, fermentation and other processing enter only through dated stock records. A harvest does not automatically create preserved food.",
+   "count": 1
+  },
+  {
+   "text": "No kept-food records are supplied. Their availability is unknown. This graph uses only the marked harvest and sourced crop-storage windows.",
+   "count": 1
+  },
+  {
+   "text": "Production in kilograms",
+   "count": 1
+  },
+  {
+   "text": "Crop-cycle estimates",
+   "count": 1
+  },
+  {
+   "text": "Monthly production",
+   "count": 1
+  },
+  {
+   "text": "Food in store",
+   "count": 1
+  },
+  {
+   "text": "Whole crop-cycle benchmarks, grouped by the month picking starts. A bar is the full cycle, not kilograms harvested in that month.",
+   "count": 1
+  },
+  {
+   "text": "6",
+   "count": 2
+  },
+  {
+   "text": "13",
+   "count": 5
+  },
+  {
+   "text": "5.5",
+   "count": 3
+  },
+  {
+   "text": "2.4",
+   "count": 2
+  },
+  {
+   "text": "–",
+   "count": 14
+  },
+  {
+   "text": "7.2",
+   "count": 2
+  },
+  {
+   "text": "1.9",
+   "count": 2
+  },
+  {
+   "text": "12.7",
+   "count": 2
+  },
+  {
+   "text": "kg · * = known subtotal with missing weights. ? = quantity unknown. – = no new crop cycle starts picking. Litres, eggs and items retain their own units. Tree kg by age remain in the yearly projection; they are not spread across months.",
+   "count": 1
+  },
+  {
+   "text": "See weights and information still needed",
+   "count": 1
+  },
+  {
+   "text": "Onions: 5.5 kg for its full cycle",
+   "count": 1
+  },
+  {
+   "text": "Garlic: 2.4 kg for its full cycle",
+   "count": 1
+  },
+  {
+   "text": "No new crop cycle starts picking",
+   "count": 7
+  },
+  {
+   "text": "Butternut: 7.2 kg for its full cycle",
+   "count": 1
+  },
+  {
+   "text": "Broccoli: 1.9 kg for its full cycle",
+   "count": 1
+  },
+  {
+   "text": "Carrots: 10.3 kg for its full cycle · Carrots: 2.4 kg for its full cycle",
+   "count": 1
+  },
+  {
+   "text": "Crop growing space",
+   "count": 1
+  },
+  {
+   "text": "128",
+   "count": 1
+  },
+  {
+   "text": "m² of mapped beds and staple plots. Stored food does not keep a bed occupied.",
+   "count": 1
+  },
+  {
+   "text": "%",
+   "count": 25
+  },
+  {
+   "text": "50",
+   "count": 1
+  },
+  {
+   "text": "100",
+   "count": 1
+  },
+  {
+   "text": "8",
+   "count": 6
+  },
+  {
+   "text": "5",
+   "count": 2
+  },
+  {
+   "text": "Occupied",
+   "count": 1
+  },
+  {
+   "text": "Free between crops",
+   "count": 1
+  },
+  {
+   "text": "Crop ground only: food forest, animal areas and ponds are not measured here. The graph caps occupation at each bed’s size; it does not prove that overlapping plantings fit. Keep the plan’s space checks.",
+   "count": 1
+  },
+  {
+   "text": "The map supplies growing areas and plant counts. Record monthly quantities below. For crop R/m², use All tools → Food, field & value → Plan-cycle value and review prices, losses and the amount sold.",
+   "count": 1
+  },
+  {
+   "text": "Use your own records or a locally checked estimate. Missing amounts stay unknown. Eggs, litres and kg are kept separate.",
+   "count": 1
+  },
+  {
+   "text": "Record expected or actual production",
+   "count": 1
+  },
+  {
+   "text": "record",
+   "count": 2
+  },
+  {
+   "text": "s",
+   "count": 2
+  },
+  {
+   "text": "Choose one product and one month. Expected means your estimate; actual means what was produced. Adding the same product, month and status replaces its previous figure.",
+   "count": 1
+  },
+  {
+   "text": "Product",
+   "count": 1
+  },
+  {
+   "text": "Month",
+   "count": 1
+  },
+  {
+   "text": "Which figure?",
+   "count": 1
+  },
+  {
+   "text": "Amount",
+   "count": 1
+  },
+  {
+   "text": "Unit",
+   "count": 1
+  },
+  {
+   "text": "My price per unit (R)",
+   "count": 1
+  },
+  {
+   "text": "Optional · your own price",
+   "count": 1
+  },
+  {
+   "text": "Note",
+   "count": 1
+  },
+  {
+   "text": "Optional",
+   "count": 2
+  },
+  {
+   "text": "This price is your record, not a live market price or a profit calculation.",
+   "count": 1
+  },
+  {
+   "text": "Add production record",
+   "count": 1
+  },
+  {
+   "text": "No monthly production amounts recorded. Unknown does not mean zero.",
+   "count": 1
+  },
+  {
+   "text": "Record food kept in store",
+   "count": 1
+  },
+  {
+   "text": "Record food you have kept, bought or carried from an earlier harvest. Choose its months yourself. The plan does not work out a safe shelf life or a preservation recipe.",
+   "count": 1
+  },
+  {
+   "text": "Original food",
+   "count": 1
+  },
+  {
+   "text": "Name of food in store",
+   "count": 1
+  },
+  {
+   "text": "How is it kept?",
+   "count": 1
+  },
+  {
+   "text": "Months with food in store",
+   "count": 1
+  },
+  {
+   "text": "Tick each month. Add kg held in that month only if you know it. Blank kg stays unknown; nothing carries forward automatically.",
+   "count": 1
+  },
+  {
+   "text": "Dec 2026",
+   "count": 1
+  },
+  {
+   "text": "Jan 2027",
+   "count": 1
+  },
+  {
+   "text": "Mar 2027",
+   "count": 1
+  },
+  {
+   "text": "May 2027",
+   "count": 1
+  },
+  {
+   "text": "Jun 2027",
+   "count": 1
+  },
+  {
+   "text": "Jul 2027",
+   "count": 1
+  },
+  {
+   "text": "Aug 2027",
+   "count": 1
+  },
+  {
+   "text": "Stock note",
+   "count": 1
+  },
+  {
+   "text": "Add stock record",
+   "count": 1
+  },
+  {
+   "text": "No kept-food records yet. A harvest does not automatically create stored or processed food.",
+   "count": 1
+  },
+  {
+   "text": "marks when to start checking seedlings raised in a tray. The crop bar starts at the planned transplant month; if seedlings are delayed, update the planting instead of treating the bed as occupied. Tap it (or the crop bar) for details.",
+   "count": 1
+  },
+  {
+   "text": "How the two-year timeline works (↻, faded bars, rotation)",
+   "count": 1
+  },
+  {
+   "text": "↻ marks where year two begins. The timeline shows",
+   "count": 1
+  },
+  {
+   "text": "two full years",
+   "count": 1
+  },
+  {
+   "text": "— pan sideways to reach the second one. This plan holds one annual cycle rather than a separate plan per year, so year two is that same cycle coming round again, drawn",
+   "count": 1
+  },
+  {
+   "text": "faded",
+   "count": 1
+  },
+  {
+   "text": "to say so: it is what these beds do if nothing changes, not a second year you have decided on.",
+   "count": 1
+  },
+  {
+   "text": "Rotate crops",
+   "count": 1
+  },
+  {
+   "text": "only avoids immediate same-family sequences inside this annual plan and after a crop marked as already growing. A sound multi-year rotation needs dated records from earlier seasons; this screen does not store or invent them.",
+   "count": 1
+  },
+  {
+   "text": "Food, field & value",
+   "count": 1
+  },
+  {
+   "text": "Availability",
+   "count": 1
+  },
+  {
+   "text": "Field utilization",
+   "count": 1
+  },
+  {
+   "text": "Plan-cycle value",
+   "count": 1
+  },
+  {
+   "text": "An established year",
+   "count": 1
+  },
+  {
+   "text": "From today",
+   "count": 1
+  },
+  {
+   "text": "Follows the planting calendar from today; existing and one-off crops appear only in their own season.",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts & berries shown · 4 kinds on your map",
+   "count": 1
+  },
+  {
+   "text": "Vegetables and staple crops are shown in separate rows. Green means ready to pick; gold means stored under sourced conditions. The source does not provide a within-window kg curve, so this chart deliberately shows no monthly kilograms or money.",
+   "count": 1
+  },
+  {
+   "text": "Ready to pick",
+   "count": 1
+  },
+  {
+   "text": "Stored under named conditions",
+   "count": 1
+  },
+  {
+   "text": "4",
+   "count": 5
+  },
+  {
+   "text": "Year of food",
+   "count": 1
+  },
+  {
+   "text": "Something fresh in 6 of 12 months; nothing fresh in Jan–Mar, Jun, Sep–Oct.",
+   "count": 1
+  },
+  {
+   "text": "The next 12 months from today",
+   "count": 1
+  },
+  {
+   "text": ", beds, trees and animals together — the rows switched on in the chart above. This shows whether food comes in, not whether it is enough. Availability bars count crop kinds, not kilograms.",
+   "count": 1
+  },
+  {
+   "text": "fresh vegetables & staples",
+   "count": 1
+  },
+  {
+   "text": "fruit",
+   "count": 1
+  },
+  {
+   "text": "animal products",
+   "count": 1
+  },
+  {
+   "text": "in store only",
+   "count": 1
+  },
+  {
+   "text": "Fill the months with no fresh crop",
+   "count": 1
+  },
+  {
+   "text": "Sowings in this region's usual window",
+   "count": 1
+  },
+  {
+   "text": "that your site’s temperatures allow",
+   "count": 1
+  },
+  {
+   "text": ", on a bed with room over the crop's months. “Plan it” opens the normal planting form so you can check it first.",
+   "count": 1
+  },
+  {
+   "text": "—",
+   "count": 4
+  },
+  {
+   "text": "nothing fresh at all",
+   "count": 4
+  },
+  {
+   "text": "Baby marrow (courgette)",
+   "count": 3
+  },
+  {
+   "text": "· sow",
+   "count": 9
+  },
+  {
+   "text": "in",
+   "count": 9
+  },
+  {
+   "text": "(",
+   "count": 9
+  },
+  {
+   "text": "a third of the bed",
+   "count": 6
+  },
+  {
+   "text": ") · picking",
+   "count": 9
+  },
+  {
+   "text": "Plan it",
+   "count": 9
+  },
+  {
+   "text": "a quarter of the bed",
+   "count": 1
+  },
+  {
+   "text": "Nov–Feb",
+   "count": 1
+  },
+  {
+   "text": "Beetroot",
+   "count": 2
+  },
+  {
+   "text": "Feb–Mar",
+   "count": 2
+  },
+  {
+   "text": "whole bed",
+   "count": 2
+  },
+  {
+   "text": "Cucumber",
+   "count": 1
+  },
+  {
+   "text": "No crop with sourced timing picks in this month from a sowing in this region’s window and your site’s temperatures.",
+   "count": 1
+  },
+  {
+   "text": "Show 2 more months",
+   "count": 1
+  },
+  {
+   "text": "Tasks",
+   "count": 1
+  },
+  {
+   "text": "this month",
+   "count": 1
+  },
+  {
+   "text": "Prep ground",
+   "count": 1
+  },
+  {
+   "text": "job",
+   "count": 4
+  },
+  {
+   "text": "assess soil and drainage; use a soil test or local advice before adding amendments",
+   "count": 1
+  },
+  {
+   "text": "Harvest",
+   "count": 2
+  },
+  {
+   "text": "next month",
+   "count": 1
+  },
+  {
+   "text": "Sow",
+   "count": 1
+  },
+  {
+   "text": "rows 150cm apart · 40cm apart in the row",
+   "count": 1
+  },
+  {
+   "text": "Published optimum-condition maturity endpoints are planning slots, not promises. Before any successor is sown or transplanted, confirm the previous crop is finished and the bed is actually clear; crops may mature later.",
+   "count": 1
+  },
+  {
+   "text": "Share tasks",
+   "count": 1
+  },
+  {
+   "text": "Looking ahead",
+   "count": 1
+  },
+  {
+   "text": "▸",
+   "count": 5
+  },
+  {
+   "text": "Harvest total — conservative benchmark",
+   "count": 1
+  },
+  {
+   "text": "By crop",
+   "count": 1
+  },
+  {
+   "text": "By bed",
+   "count": 1
+  },
+  {
+   "text": "56.7",
+   "count": 2
+  },
+  {
+   "text": "kg across active and planned crop cycles",
+   "count": 1
+  },
+  {
+   "text": "0.44",
+   "count": 1
+  },
+  {
+   "text": "kg/m² across",
+   "count": 1
+  },
+  {
+   "text": "128.0",
+   "count": 1
+  },
+  {
+   "text": "m² of growing space — a density figure for comparing plans, not a yield promise",
+   "count": 1
+  },
+  {
+   "text": "Conservative mapped-area comparison for one cycle of each active or planned planting; no loss allowance or within-month picking curve is applied here. A finished one-off crop is not repeated into a later year.",
+   "count": 1
+  },
+  {
+   "text": "Bar length compares crops · % is share of the",
+   "count": 1
+  },
+  {
+   "text": "kg above",
+   "count": 1
+  },
+  {
+   "text": "13.5",
+   "count": 1
+  },
+  {
+   "text": "kg",
+   "count": 10
+  },
+  {
+   "text": "24",
+   "count": 1
+  },
+  {
+   "text": "22",
+   "count": 1
+  },
+  {
+   "text": "10",
+   "count": 2
+  },
+  {
+   "text": "4.4",
+   "count": 1
+  },
+  {
+   "text": "2.1",
+   "count": 1
+  },
+  {
+   "text": "1.5",
+   "count": 1
+  },
+  {
+   "text": "Take this plan with you",
+   "count": 1
+  },
+  {
+   "text": "Files are made on this device. Download a copy to use away from the app.",
+   "count": 1
+  },
+  {
+   "text": "Your plan includes vegetables, fruit, nuts, berries and animal products from your map.",
+   "count": 1
+  },
+  {
+   "text": "Add 37 tasks to calendar",
+   "count": 1
+  },
+  {
+   "text": "Download the plan (PDF)",
+   "count": 1
+  },
+  {
+   "text": "Calendar & jobs",
+   "count": 1
+  },
+  {
+   "text": "Or:",
+   "count": 1
+  },
+  {
+   "text": "open it to print",
+   "count": 1
+  },
+  {
+   "text": "Future harvest PDF",
+   "count": 1
+  },
+  {
+   "text": "Detailed reference PDF",
+   "count": 1
+  },
+  {
+   "text": "What each file contains",
+   "count": 1
+  },
+  {
+   "text": "The calendar file works with Google Calendar and Apple Calendar. Tasks land as whole-day entries on the first of their month — this plan works in months, not exact days — with a reminder three days before. The printed plan shows each crop growing in its bed across the months, like the app, plus pictures of what you can pick.",
+   "count": 1
+  },
+  {
+   "text": "It also has what to buy, monthly tick-off jobs and a harvest record.",
+   "count": 1
+  },
+  {
+   "text": "Picking dates for trees and animals must be confirmed locally; plants and housing with unknown dates stay listed on the plan. The separate Future harvest PDF has the ten-year graph and age groups. Calendar & jobs gives concise wall sheets in your chosen paper size. Record animal numbers and care checks in the site survey; confirm production months in this plan. The detailed reference includes the full bed-by-bed plan, benchmarks, buying lists, guidance, monthly field sheets and harvest records.",
+   "count": 1
+  },
+  {
+   "text": "Seeds & seedlings — what to buy, and when",
+   "count": 1
+  },
+  {
+   "text": "Grouped by the month to get it. Ready-grown seedlings are listed for the month they go in the ground.",
+   "count": 1
+  },
+  {
+   "text": "packet rate needed",
+   "count": 4
+  },
+  {
+   "text": "Source packet seed before the December sowing month. Sow straight into the ground in December for about 10 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy.",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 3",
+   "count": 1
+  },
+  {
+   "text": "~11–21 seedlings positions",
+   "count": 1
+  },
+  {
+   "text": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is March–May. The mapped area holds about 11–21 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the February tray-sowing month, use its tray-sowing rate, and sow trays in February. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed.",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 6",
+   "count": 2
+  },
+  {
+   "text": "Source packet seed before the April sowing month. Sow straight into the ground in April for about 316–1 585 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy.",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 2, Bed 4",
+   "count": 1
+  },
+  {
+   "text": "Later in the next 12 months (",
+   "count": 1
+  },
+  {
+   "text": "more",
+   "count": 1
+  },
+  {
+   "text": "month",
+   "count": 1
+  },
+  {
+   "text": "Source packet seed before the October sowing month. Sow straight into the ground in October for about 98–230 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy.",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 5",
+   "count": 1
+  },
+  {
+   "text": "~21–37 seedlings positions",
+   "count": 1
+  },
+  {
+   "text": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is October–December. The mapped area holds about 21–37 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the September tray-sowing month, use its tray-sowing rate, and sow trays in September. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed.",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 2",
+   "count": 1
+  },
+  {
+   "text": "Source packet seed before the October sowing month. Sow straight into the ground in October for about 21–22 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy.",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 7",
+   "count": 1
+  },
+  {
+   "text": "~9–17 slips positions",
+   "count": 1
+  },
+  {
+   "text": "Living planting material — the mapped area holds about 9–17 slips at the spacings this plan uses. This is not a guaranteed buy quantity and it allows nothing for material that does not take; ask the supplier what they advise for this crop. Get it close to planting in October, then follow the supplier's or your local handling advice. No general storage advice is assumed here.",
+   "count": 1
+  },
+  {
+   "text": "~6–17 seedlings positions",
+   "count": 1
+  },
+  {
+   "text": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is November–January. The mapped area holds about 6–17 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the October tray-sowing month, use its tray-sowing rate, and sow trays in October. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed.",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 4",
+   "count": 1
+  },
+  {
+   "text": "What these quantities do and do not cover",
+   "count": 1
+  },
+  {
+   "text": "Field-position ranges come from mapped area and published spacing; they are not guaranteed buy quantities or germination/loss allowances. Supplier and crop-specific guidance may change what to purchase. Botanical seed quantity is not inferred from mature spacing: use the packet's crop-specific direct-sowing rate and germination guidance. Planting-piece ranges are shown only for seedlings, cloves, corms, slips and seed potatoes when both spacing axes are verified. Where a row layout is not verified, confirm it locally before buying material.",
+   "count": 1
+  },
+  {
+   "text": "Raising your own: seeds and equipment to source",
+   "count": 1
+  },
+  {
+   "text": "Use seeds to sow for planned cohorts and the named resource shortages below. These are your nursery estimates, separate from the field-position references in the buying calendar. Already confirmed sowings show historical seed requirements, not a new seed order. No packet size, price or procurement lead time is assumed.",
+   "count": 1
+  },
+  {
+   "text": "Nursery estimates for sourcing",
+   "count": 1
+  },
+  {
+   "text": "Open the existing task planner",
+   "count": 1
+  },
+  {
+   "text": "Planned crop comparison",
+   "count": 1
+  },
+  {
+   "text": "New vegetable and staple crop cycles, using published yield benchmarks. See Year of food above for picking months and gaps.",
+   "count": 1
+  },
+  {
+   "text": "For crops with a verified kg/m² benchmark, the new bed crop cycles in this comparison total about 49kg in the conservative commercial comparison. No monthly kilogram split is shown because the benchmark source does not say how yield is distributed within each fresh-picking window. This is not a household or farm-yield guarantee.",
+   "count": 1
+  },
+  {
+   "text": "Within the benchmark comparison, Tomatoes is the biggest crop-cycle total at ~14kg. Confirm the actual harvest and household demand before treating any amount as surplus to sell or preserve.",
+   "count": 1
+  },
+  {
+   "text": "What the planner can prove",
+   "count": 1
+  },
+  {
+   "text": "Every yield figure and date here is either from a published source or labelled as an estimate to confirm locally — tap for the method and the sources.",
+   "count": 1
+  },
+  {
+   "text": "Rotate by botanical family",
+   "count": 1
+  },
+  {
+   "text": "Which crops count as relatives, and why that is not the same as a food group.",
+   "count": 1
+  },
+  {
+   "text": "Growing organically",
+   "count": 1
+  },
+  {
+   "text": "This plan does not prescribe a fertiliser or pesticide programme. Soil condition, the diagnosed problem, the exact crop and the current South African label all matter; ask a local extension officer or qualified adviser where possible.",
+   "count": 1
+  },
+  {
+   "text": "Feeding your crops",
+   "count": 1
+  },
+  {
+   "text": "Protecting your crops",
+   "count": 1
+  },
+  {
+   "text": "Planning guide only — sow windows are general. Adjust to your local rainfall, frost dates and microclimate.",
+   "count": 1
+  },
+  {
+   "text": "Lima, your planting helper",
+   "count": 1
+  },
+  {
+   "text": "Ask for help",
+   "count": 1
+  },
+  {
+   "text": "Photo",
+   "count": 1
+  }
+ ]
+}

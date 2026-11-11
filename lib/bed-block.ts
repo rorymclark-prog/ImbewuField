@@ -37,18 +37,25 @@ export function reconcileFieldBlockEdit(prev: DesignCanvasState, next: DesignCan
   for (const item of prev.items) {
     if (!item.fieldBlockId || !allocated.has(item.id)) continue;
     const after = next.items.find(i => i.id === item.id);
-    if (!after || after.x !== item.x || after.y !== item.y
+    if (!after || after.defId !== item.defId || after.x !== item.x || after.y !== item.y
       || after.wM !== item.wM || after.hM !== item.hM || after.rot !== item.rot
       || after.fieldBlockId !== item.fieldBlockId)
       throw new Error('Remove this bed’s crop allocations before changing or deleting its layout.');
   }
   const deleted = new Set(prev.zones.filter(z => z.fieldBlock && !next.zones.some(n => n.id === z.id)).map(z => z.id));
-  for (const zone of prev.zones.filter(z => z.fieldBlock)) {
+  for (const zone of prev.zones.filter(z => z.fieldBlock || z.feature === 'staple_garden' && allocated.has(z.id))) {
     const children = prev.items.filter(i => i.fieldBlockId === zone.id);
     const after = next.zones.find(z => z.id === zone.id);
-    if (deleted.has(zone.id) && (allocated.has(zone.id) || children.some(i => allocated.has(i.id))))
+    if (!after && (allocated.has(zone.id) || children.some(i => allocated.has(i.id))))
       throw new Error('Remove this field’s crop allocations before deleting it.');
-    if (after && allocated.has(zone.id) && (after.feature !== zone.feature || JSON.stringify(after.points) !== JSON.stringify(zone.points)))
+    // An occupied open parent is itself the planning area. Restoring a beds
+    // configuration can hide that area even when its outline never moved.
+    const sameLayout = (a: ZoneShape['fieldBlock'], b: ZoneShape['fieldBlock']) => a === undefined || b === undefined
+      ? a === b : a.mode === b.mode && a.bedLengthM === b.bedLengthM && a.bedWidthM === b.bedWidthM
+        && a.pathWidthM === b.pathWidthM && a.angleDeg === b.angleDeg;
+    const occupied = allocated.has(zone.id) || children.some(item => allocated.has(item.id));
+    if (after && occupied && (after.feature !== zone.feature || JSON.stringify(after.points) !== JSON.stringify(zone.points)
+      || !sameLayout(after.fieldBlock, zone.fieldBlock)))
       throw new Error('Remove this field’s crop allocations before changing its outline.');
     if (after?.fieldBlock?.mode === 'beds' && children.length && JSON.stringify(after.points) !== JSON.stringify(zone.points))
       throw new Error('Switch this block to an open field before editing its outline, then fill it again.');
@@ -121,6 +128,25 @@ export function bedsInsideField(
   return { beds, paths };
 }
 
+function rectangleFootprintAtExtent(
+  item: { x: number; y: number; wM: number; hM: number; rot?: number },
+  w: number, h: number,
+): Point[] {
+  // Saved rotation is relative to the element's natural width/height axes.
+  // Only the generator converts a length bearing to angleDeg - 90.
+  const a = (item.rot ?? 0) * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+  const dx = item.wM / 2, dy = item.hM / 2;
+  return [[-dx,-dy],[dx,-dy],[dx,dy],[-dx,dy]].map(([x,y]): Point => [item.x+(x*c-y*s)/w,item.y+(x*s+y*c)/h]);
+}
+
+/** The same physical footprint used for field exclusions and detached exports. */
+export function fieldBlockRectangleFootprint(
+  item: { x: number; y: number; wM: number; hM: number; rot?: number },
+  frame: Pick<CanvasFrame, 'mPerPx' | 'imgW' | 'imgH'>,
+): Point[] {
+  return rectangleFootprintAtExtent(item, frame.imgW * frame.mPerPx, frame.imgH * frame.mPerPx);
+}
+
 /** Existing physical footprints stay in place; filling a field must not plant
  * over a bed, building or tree already recorded by the farmer. */
 export function fieldBlockExclusions(state: DesignCanvasState, zoneId: string, frame: Pick<CanvasFrame, 'mPerPx' | 'imgW' | 'imgH'>): Point[][] {
@@ -128,9 +154,7 @@ export function fieldBlockExclusions(state: DesignCanvasState, zoneId: string, f
   const rings: Point[][] = state.items.filter(i => i.fieldBlockId !== zoneId).flatMap(item => {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def) return [];
-    const a = (item.rot ?? 0) * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
-    const dx = (item.wM ?? def.wM)/2, dy = (item.hM ?? def.hM)/2;
-    return [[[-dx,-dy],[dx,-dy],[dx,dy],[-dx,dy]].map(([x,y]): Point => [item.x+(x*c-y*s)/w,item.y+(x*s+y*c)/h])];
+    return [rectangleFootprintAtExtent({ x: item.x, y: item.y, wM: item.wM ?? def.wM, hM: item.hM ?? def.hM, rot: item.rot }, w, h)];
   });
   for (const zone of state.zones) if (zone.id !== zoneId && zone.feature && ['house','patio','driveway'].includes(zone.feature)) rings.push(zone.points);
   return rings;

@@ -1,0 +1,259 @@
+{
+ "servedBuild": {
+  "branch": "claude/blissful-pasteur-1c4ne6",
+  "sha": "504b319"
+ },
+ "site": "public sample farm",
+ "shots": [
+  {
+   "file": "01-gate-first-screen-phone.png",
+   "shows": "first screen of the Production plan before the country is confirmed",
+   "viewport": "390x844",
+   "devicePixelRatio": 2,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "left unconfirmed",
+   "appTextScale": 1,
+   "locationDataStatuses": [],
+   "fruitReferenceBarsOnPage": false
+  },
+  {
+   "file": "02-gate-hold-text-phone.png",
+   "shows": "the hold that replaces the planner",
+   "viewport": "390x844",
+   "devicePixelRatio": 2,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "left unconfirmed",
+   "appTextScale": 1,
+   "locationDataStatuses": [],
+   "fruitReferenceBarsOnPage": false
+  },
+  {
+   "file": "03-gate-isizulu-phone.png",
+   "shows": "the same first screen in isiZulu",
+   "viewport": "390x844",
+   "devicePixelRatio": 2,
+   "theme": "earth light",
+   "lang": "zu",
+   "level": "simple",
+   "countryHold": "left unconfirmed",
+   "appTextScale": 1,
+   "locationDataStatuses": [],
+   "fruitReferenceBarsOnPage": false
+  },
+  {
+   "file": "04-after-confirm-first-screen-phone.png",
+   "shows": "first screen after confirming South Africa",
+   "viewport": "390x844",
+   "devicePixelRatio": 2,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1,
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  },
+  {
+   "file": "05-after-confirm-second-screen-phone.png",
+   "shows": "second screen",
+   "viewport": "390x844",
+   "devicePixelRatio": 2,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1,
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  },
+  {
+   "file": "06-calendar-phone-light.png",
+   "shows": "where the bed calendar starts; crop bar labels",
+   "viewport": "390x844",
+   "devicePixelRatio": 2,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1,
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  },
+  {
+   "file": "07-sticky-header-bleed-and-clipped-notes-phone.png",
+   "shows": "section band and rows behind the pinned month header; clipped notes in the fruit and animal rows",
+   "viewport": "390x844",
+   "devicePixelRatio": 2,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1,
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  },
+  {
+   "file": "17-plant-list-repeated-phone.png",
+   "shows": "the plant list repeated below the calendar",
+   "viewport": "390x844",
+   "devicePixelRatio": 2,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1,
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  },
+  {
+   "file": "08-calendar-phone-dark.png",
+   "shows": "dark mode: current month label and bars",
+   "viewport": "390x844",
+   "devicePixelRatio": 2,
+   "theme": "earth dark",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1,
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  },
+  {
+   "file": "09-calendar-desktop-1280.png",
+   "shows": "desktop type sizes and the faded year-two bars",
+   "viewport": "1280x800",
+   "devicePixelRatio": 1,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1,
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  },
+  {
+   "file": "10-desktop-640x400-zoom-equivalent.png",
+   "shows": "room left for the plan at a 200%-zoom-equivalent window",
+   "viewport": "640x400",
+   "devicePixelRatio": 2,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "full",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1,
+   "note": "a 640x400 CSS-pixel window at device pixel ratio 2: the layout a 1280x800 window gets at 200% zoom, emulated. Real browser zoom was not used.",
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  },
+  {
+   "file": "11-text-scale-140-isizulu-phone.png",
+   "shows": "app text size 1.4 in isiZulu",
+   "viewport": "390x844",
+   "devicePixelRatio": 2,
+   "theme": "earth light",
+   "lang": "zu",
+   "level": "simple",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1.4,
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  },
+  {
+   "file": "12-weekly-target-card-phone.png",
+   "shows": "a saved 5 kg/week carrot target",
+   "viewport": "390x844",
+   "devicePixelRatio": 2,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1,
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  },
+  {
+   "file": "13-weekly-target-review-phone.png",
+   "shows": "the proposal review for that target",
+   "viewport": "390x844",
+   "devicePixelRatio": 2,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1,
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  },
+  {
+   "file": "14-sheet-crop-picker-phone.png",
+   "shows": "crop picker sheet",
+   "viewport": "390x844",
+   "devicePixelRatio": 1,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1,
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  },
+  {
+   "file": "15-sheet-planting-detail-phone.png",
+   "shows": "planting detail sheet",
+   "viewport": "390x844",
+   "devicePixelRatio": 1,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1,
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  },
+  {
+   "file": "16-own-estimates-form-phone.png",
+   "shows": "the own-estimate profile form",
+   "viewport": "390x844",
+   "devicePixelRatio": 2,
+   "theme": "earth light",
+   "lang": "en",
+   "level": "simple",
+   "countryHold": "confirmed as ZA",
+   "appTextScale": 1,
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsOnPage": true
+  }
+ ]
+}

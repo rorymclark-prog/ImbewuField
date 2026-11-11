@@ -1,6 +1,28 @@
 # ImbewuField audit archive
 
+Latest country evidence continuation — [Review next steps and dated-evidence counts — 10 November 2026](2026-11-10/country-evidence-next-steps-codex.md). Affected source/React checks pass; changed-preview appearance remains unverified.
+
+Latest review warning continuation — [Mass-entry review warning contrast — 10 November 2026](2026-11-10/mass-review-warning-contrast-codex.md). A production dark-theme contrast failure is reproduced; changed-preview verification remains open.
+
+Latest private verification consolidation — [Preserved parent coverage and scoped Water validation — 7 November 2026](2026-11-07/international-performance-consolidation.md). Local source preparation; current successor checks and release gates remain separate.
+
+Latest release-test continuation — [Coverage with an empty current guide — 7 November 2026](2026-11-07/performance-release-fixtures.md). Explicit historical positive fixtures, honest current defaults and retained assertions; current-head full CI remains separate.
+
+Latest combined-source continuation — [Current main, map captions, learning context and receipt review — 7 November 2026](2026-11-07/international-release-next.md). Separate local source prepared; new combined verification and genuine device/account gates remain open.
+
+Latest learning-context implementation — [Course origin and explicit saved-site choice — 7 November 2026](2026-11-07/learning-region-context.md). Source/focused review complete; current combined type/full and actual device/account gates remain open.
+
+Latest crop-plan receipt continuation — [Completed write followed by a held review — 7 November 2026](2026-11-07/grower-held-review-receipt.md). Before/after controls and bounded source review are separate from combined release validation.
+
+Latest bounded follow-up — [Editorial contour caption clipping — 7 November 2026](2026-11-07/editorial-contour-captions-codex.md). Native source and corrected output inspected; isolated correction, not yet deployed.
+
 Latest companion style — [Editorial Atlas — 7 November 2026](2026-11-07/editorial-map-style-codex.md). Second selectable appearance and circular Sector page; native outputs inspected, fresh provider artwork remains unverified.
+
+Latest release-copy verification — [Exact-source availability and non-vacuous language controls — 7 November 2026](2026-11-07/calendar-copy-coverage.md). Focused source/React checks are separate from pending current-head full and calendar device/import gates.
+
+Latest field seed follow-up — [Per-cycle CSV integration — 6 November 2026](2026-11-06/field-seed-cycle-integration-codex.md). Typecheck and 615 affected checks pass; new current-head CI and actual multi-cycle delivery remain pending.
+
+Latest international release candidate — [Current-main, print and account-gate reconciliation — 5 November 2026](2026-11-05/international-nursery-final-reconcile-codex.md). Source integration is prepared; new full/visual/account gates remain pending.
 
 Latest runtime continuation — [Approved map styling and cross-location checks — 6 November 2026](2026-11-06/approved-map-style-runtime-codex.md). Actual app outputs and provider terrain/context inspected; current-head release evidence is separate on PR/issue #35.
 
@@ -14,9 +36,15 @@ Latest illustrated-map review — [All-map treatment and surrounding-context gui
 
 Latest Zones wording review — [Boundary authority and care-intensity evidence — 5 November 2026](2026-11-05/zones-authority-key-codex.md). Findings only; fresh exact inspected, current saved AI remains unverified.
 
+Latest site-survey energy slice — [Release contracts and integrated account QA — 6 November 2026](2026-11-06/site-energy-survey-release-codex.md). Actual local save/recovery and account isolation verified; full release gates, hosted OAuth and language/device limits remain explicit.
+
 Latest Sector styling — [Actual supplied-reference wind/rain motifs and retained terrain detail — 5 November 2026](2026-11-05/sector-reference-flow-codex.md). Native imagery inspected; release gates/identity follow on the PR and ledger.
 
 Latest Sector release follow-up — [Typography contracts and native update descriptions — 5 November 2026](2026-11-05/sector-release-contracts-codex.md). Broad-arrow artwork is retained; original-device free AI recovery remains unverified.
+
+Latest language-review UI continuation: [Language review help placement — 5 November 2026](2026-11-05/language-review-inline-help-codex.md). The phone collision is reproduced; the separate changed preview remains pending.
+
+Latest international nursery integration — [Current-main reconciliation and preserved verification scope — 5 November 2026](2026-11-05/international-nursery-main-reconcile-codex.md). New ordered/current-head and actual output gates remain pending.
 
 Latest assistant release integration — [Combined OAuth and branding over live Water/Sector — 4 November 2026](2026-11-04/assistant-release-main-integration-codex.md). Required release checks and normal published-host login remain open.
 
@@ -156,7 +184,25 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
-Latest: [Production plan re-audit — 10 October 2026](2026-10-10/production-reaudit-codex.md).
+Shared acceptance checks: [Crop planning checklist](CROP-PLANNING-CHECKLIST.md).
+Use this with the latest dated crop record; it is a verification checklist, not a
+claim that every check has passed or that the proposed farming fixes are deployed.
+
+Latest record: [Crop plan accuracy fixes: calendar choice, sowing months and weekly-target timing — 10 November 2026](2026-11-10/crop-plan-accuracy-fixes-claude.md). What was done about CP-073–CP-083, with before and after figures for 44 places, and CP-086–CP-090. The calendar is now chosen by frost and heat; 39 sowing-month rows are corrected to their source rows; Lowveld agreement with the regional guide went from 35% to 61% and the KZN coast from 47% to 72%. A later update the same day adds a grower's own calendar choice and a list of saved sowings that are out of season (CP-089, CP-091). A second update answers the independent review: a missing-value marker read as a record low, a hidden list that did not return, a list judged against a fallback calendar, and a printed plan that did not say the grower chose the calendar are fixed (CP-092–CP-096), as are a record of hidden lists that was not kept per account (CP-100) and a retained hide handler that could write one account's site into another's record (CP-101); the 13 crop-and-place pairs that still share no month with the guide are named with a disposition each (CP-073 remaining, CP-098, CP-099); every surface the calendar reaches is listed with how it was checked. A third update gives the sample farm a fixed, labelled calendar in its own sample data, so its first screen no longer depends on a live climate call (CP-102). Guide overlap is not an accuracy figure, and the 44 places are now regression evidence, not an independent test. Still open: the calendar page and Atlas do not follow a chosen calendar (CP-097), the KZN table has not been re-read (CP-083), the heat check (CP-080), and whether an early-ready sowing should count toward a target (CP-079).
+
+The audit it answers: [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md). The planner's own functions run for 44 South African and 18 other locations against 20 years of independent daily weather and a published regional sowing guide: CP-073–CP-083. The arithmetic and the interior calendars hold; frost-free Lowveld, Limpopo and KZN coast sites were shown the wrong season. Findings only; no farming data changed in that record.
+
+Same day: [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md). First rendered review of `/facilitator/crops` on released `8a4d1fd`: CP-047–CP-072, with measured contrast, keyboard, phone, dark, isiZulu and large-text evidence. Findings and a plan only; no code changed.
+
+Latest field-block continuation: [Metres and international feet, retained drafts and crop allocations — 3 November 2026](2026-11-03/field-block-units-codex.md). Exact-tree checks, populated browser and current-head release gates remain open.
+
+Previous grower continuation: [Protected crop storage, account transfer and retained-copy review — 3 November 2026](2026-11-03/grower-storage-cutover-codex.md). Current-head checks, real two-tab/offline, populated browser and account gates remain open.
+
+Previous acceptance milestone: [Reviewed proposal saves, Finance evidence and sign-in preservation — 3 November 2026](2026-11-03/grower-acceptance-codex.md).
+
+Previous grower continuation: [Dated work and canonical save admission — 3 November 2026](2026-11-03/grower-operations-codex.md).
+
+Previous: [Production plan re-audit — 10 October 2026](2026-10-10/production-reaudit-codex.md).
 
 Previous: [Production by plant age and clearer graphics — 4 October 2026](2026-10-04/production-age-visuals-codex.md).
 
@@ -204,6 +250,11 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Crop plan accuracy fixes: calendar choice, sowing months and weekly-target timing — 10 November 2026](2026-11-10/crop-plan-accuracy-fixes-claude.md).
+- [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md).
+- [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md).
+- [Mass-entry review warning contrast — 10 November 2026](2026-11-10/mass-review-warning-contrast-codex.md).
+
 - [Zones reserve context and national locator — 6 November 2026](2026-11-06/zones-reserve-context-codex.md).
 
 - [Paired exact SVG and AI map samples — 6 November 2026](2026-11-06/paired-map-samples-codex.md).
@@ -217,6 +268,11 @@ or main. Local Downloads packs remain dated reading snapshots.
 - [Named historical areas — 3 November 2026](2026-11-03/historical-area-labels-codex.md).
 - [Approved historical baseline — 3 November 2026](2026-11-03/historical-baseline-codex.md).
 - [Nine-layer AI fidelity corrections — 3 November 2026](2026-11-03/ai-layer-fidelity-corrections-codex.md).
+
+- **2026-11-03:** [Field-block entry in metres and international feet](2026-11-03/field-block-units-codex.md).
+- **2026-11-03:** [Protected crop storage, account transfer and retained-copy review](2026-11-03/grower-storage-cutover-codex.md).
+- **2026-11-03:** [Reviewed proposal saves, Finance evidence and sign-in preservation](2026-11-03/grower-acceptance-codex.md).
+- **2026-11-03:** [Dated grower work and canonical save admission](2026-11-03/grower-operations-codex.md).
 
 - [Nursery forecast source and verification — 1 November 2026](2026-11-01/nursery-source-and-verification.md).
 
@@ -414,3 +470,7 @@ with screenshots. That pack was exported at `a9b3f5a`; it does not include the
 The browser audit could not exercise the signed-in roles. Its coverage limit is
 not evidence that the current signed-in survey works or fails.
 - [Vegetables L2 fuller regional drafts — 2026-10-05](2026-10-05/study-vegetables-l2-fuller-codex.md)
+
+Latest crop-plan feedback — [Resolved save feedback and final main reconciliation](2026-11-05/nursery-save-feedback-codex.md). Final current-tree and browser gates remain pending.
+
+- [Learning-region draft worksheet and preserved source history](2026-11-07/learning-region-review-worksheet.md) — inactive language comparison, offline CSV and exact compatibility composition; combined verification pending.

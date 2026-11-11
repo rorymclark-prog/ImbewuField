@@ -1,0 +1,659 @@
+{
+ "config": {
+  "viewport": "390x844",
+  "theme": "earth light",
+  "level": "simple",
+  "lang": "en",
+  "url": "/facilitator/crops",
+  "servedBuild": {
+   "branch": "claude/blissful-pasteur-1c4ne6",
+   "sha": "504b319"
+  },
+  "site": "public sample farm",
+  "countryConfirmed": "ZA",
+  "isolation": "new browser context and page load per check"
+ },
+ "pageLoads": [
+  {
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
+  },
+  {
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
+  },
+  {
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
+  },
+  {
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
+  },
+  {
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
+  },
+  {
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
+  },
+  {
+   "locationDataStatus": 200,
+   "fruitReferenceBarsShown": true
+  }
+ ],
+ "sheets": [
+  {
+   "sheet": "crop-picker",
+   "expectedTitle": "^Add a crop$",
+   "runA": {
+    "opened": true,
+    "title": "Add a crop",
+    "role": null,
+    "ariaModal": null,
+    "accessibleName": null,
+    "focusMovedIntoSheetOnOpen": true,
+    "focusAfterOpen": "input \"\"",
+    "focusStillOnTrigger": false,
+    "focusableControlsInSheet": 94,
+    "closeButton": {
+     "widthPx": 18,
+     "heightPx": 18,
+     "ariaLabel": "Close"
+    },
+    "escapeClosesSheet": false,
+    "closeButtonClosesSheet": true,
+    "closedBy": "pointer click on its Close button",
+    "focusAfterClose": "body \"Tour Production plan Plants and hous\"",
+    "focusReturnedToTrigger": false
+   },
+   "runB": {
+    "opened": true,
+    "focusWentTo": "a \"Ask for help\"",
+    "focusInsideOnOpen": true,
+    "tabPressesToReachSheet": 0,
+    "tabPressesInsideBeforeFocusLeft": 93,
+    "focusableControlsInSheet": 94,
+    "reading": "focus is not contained: Tab leaves the sheet for the page behind it"
+   }
+  },
+  {
+   "sheet": "planting-detail",
+   "expectedTitle": "^Butternut",
+   "runA": {
+    "opened": true,
+    "title": "Butternut",
+    "role": null,
+    "ariaModal": null,
+    "accessibleName": null,
+    "focusMovedIntoSheetOnOpen": false,
+    "focusAfterOpen": "button \"Butternut\"",
+    "focusStillOnTrigger": true,
+    "focusableControlsInSheet": 4,
+    "closeButton": {
+     "widthPx": 16,
+     "heightPx": 16,
+     "ariaLabel": "Close"
+    },
+    "escapeClosesSheet": false,
+    "closeButtonClosesSheet": true,
+    "closedBy": "pointer click on its Close button",
+    "focusAfterClose": "body \"Tour Production plan Plants and hous\"",
+    "focusReturnedToTrigger": false
+   },
+   "runB": {
+    "opened": true,
+    "focusWentTo": "a \"Ask for help\"",
+    "focusInsideOnOpen": false,
+    "tabPressesToReachSheet": 60,
+    "tabPressesInsideBeforeFocusLeft": 4,
+    "focusableControlsInSheet": 4,
+    "reading": "focus is not contained: Tab leaves the sheet for the page behind it"
+   }
+  },
+  {
+   "sheet": "auto-suggest",
+   "expectedTitle": "^Auto-suggest a plan$",
+   "runA": {
+    "opened": true,
+    "title": "Auto-suggest a plan",
+    "role": null,
+    "ariaModal": null,
+    "accessibleName": null,
+    "focusMovedIntoSheetOnOpen": false,
+    "focusAfterOpen": "button \"Auto-suggest a plan\"",
+    "focusStillOnTrigger": true,
+    "focusableControlsInSheet": 76,
+    "closeButton": {
+     "widthPx": 18,
+     "heightPx": 18,
+     "ariaLabel": "Close"
+    },
+    "escapeClosesSheet": false,
+    "closeButtonClosesSheet": true,
+    "closedBy": "pointer click on its Close button",
+    "focusAfterClose": "body \"Tour Production plan Plants and hous\"",
+    "focusReturnedToTrigger": false
+   },
+   "runB": {
+    "opened": true,
+    "focusWentTo": "a \"Ask for help\"",
+    "focusInsideOnOpen": false,
+    "tabPressesToReachSheet": 70,
+    "tabPressesInsideBeforeFocusLeft": 14,
+    "focusableControlsInSheet": 76,
+    "reading": "focus is not contained: Tab leaves the sheet for the page behind it"
+   }
+  }
+ ],
+ "tabStops": [
+  {
+   "tag": "button",
+   "text": "Tour",
+   "focusVisible": true,
+   "outline": "solid 3px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 75,
+   "heightPx": 44
+  },
+  {
+   "tag": "a",
+   "text": "Home",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(106, 80, 64)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 34,
+   "heightPx": 34
+  },
+  {
+   "tag": "summary",
+   "text": "Harvest targets Your buyer-demand re",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 364,
+   "heightPx": 48
+  },
+  {
+   "tag": "summary",
+   "text": "Your growing estimates",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 364,
+   "heightPx": 48
+  },
+  {
+   "tag": "summary",
+   "text": "Automatic plan from your estimates",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 364,
+   "heightPx": 48
+  },
+  {
+   "tag": "button",
+   "text": "Check saved nursery batches",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 216,
+   "heightPx": 44
+  },
+  {
+   "tag": "a",
+   "text": "Review country evidence",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 162,
+   "heightPx": 44
+  },
+  {
+   "tag": "summary",
+   "text": "Review or change country details",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 332,
+   "heightPx": 44
+  },
+  {
+   "tag": "button",
+   "text": "Auto-suggest a plan",
+   "focusVisible": true,
+   "outline": "solid 3px rgb(247, 242, 233)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 366,
+   "heightPx": 43
+  },
+  {
+   "tag": "summary",
+   "text": "Harvest targets Plan from weekly dem",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 364,
+   "heightPx": 48
+  },
+  {
+   "tag": "summary",
+   "text": "Nursery plannerThis site’s trays and",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 364,
+   "heightPx": 72
+  },
+  {
+   "tag": "button",
+   "text": "Onions",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 58,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "+ crop",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(30, 77, 51)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Lettuce",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Lettuce",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 58,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Carrots",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Carrots",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "+ crop",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(30, 77, 51)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Butternut",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": false,
+   "widthPx": 348,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Butternut",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 348,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "+ crop",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(30, 77, 51)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Tomatoes",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": false,
+   "widthPx": 406,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Carrots",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Carrots",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "+ crop",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(30, 77, 51)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Green beans",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 174,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Green beans",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 58,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "+ crop",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(30, 77, 51)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Garlic",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 116,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Broccoli",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": false,
+   "widthPx": 348,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Broccoli",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 348,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Sweet potato",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": false,
+   "widthPx": 406,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Sweet potato",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 58,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "+ crop",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(30, 77, 51)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Maize (mielies)",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 348,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Maize (mielies)",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(255, 255, 255)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 58,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "+ crop",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(30, 77, 51)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "+ crop",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(30, 77, 51)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "+ crop",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(30, 77, 51)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "+ crop",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(30, 77, 51)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "+ crop",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(30, 77, 51)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 56,
+   "heightPx": 26
+  },
+  {
+   "tag": "button",
+   "text": "Mango · reference (proposed)",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": false,
+   "widthPx": 290,
+   "heightPx": 30
+  },
+  {
+   "tag": "button",
+   "text": "Mango · reference (proposed)",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 30
+  },
+  {
+   "tag": "button",
+   "text": "Avocado · reference (proposed)",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": false,
+   "widthPx": 290,
+   "heightPx": 30
+  },
+  {
+   "tag": "button",
+   "text": "Avocado · reference (proposed)",
+   "focusVisible": true,
+   "outline": "solid 2px rgb(38, 27, 16)",
+   "boxShadow": "none",
+   "hasIndicator": true,
+   "fullyInViewport": true,
+   "widthPx": 290,
+   "heightPx": 30
+  }
+ ],
+ "summary": {
+  "tabStopsSampled": 45,
+  "tabStopsWithoutFocusIndicator": 0,
+  "sheetsOpened": 3,
+  "sheetsWithDialogRole": 0,
+  "sheetsWithAccessibleName": 0,
+  "sheetsTakingFocusOnOpen": 1,
+  "sheetsClosedByEscape": 0,
+  "sheetsClosedByOwnCloseButton": 3,
+  "sheetsReturningFocusToTrigger": 0,
+  "sheetsContainingTab": 0
+ }
+}

@@ -1,0 +1,38 @@
+{
+  "locale": "st",
+  "sourceSha256": "7acc221092b084ffe654d908777f38e41a2166d582800e254425de4c61467f8b",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "harvestMassRelease01",
+      "english": "Enter weekly harvest targets and your produce-pack weights in kilograms or pounds.",
+      "sha256": "3e978fc4a6741970bf0824660ab727ba4cd388c6b95e02ac94868055da7aa78e",
+      "translation": "Kenya lipakane tsa kotulo tsa beke le beke le boima ba hau ba liphuthelwana tsa kotulo ka lik'hilograma (kg) kapa liponto tsa boima (lb)."
+    },
+    {
+      "key": "harvestMassRelease02",
+      "english": "Keep buyer entries when a save cannot be confirmed.",
+      "sha256": "f22f4e3c44a8daa16ff927cfd9d6729246d75d93a7614fa3a5c6a9f12c1fb811",
+      "translation": "Boloka lintlha tsa litlhoko tsa bareki tseo u li kentseng li ntse li le teng ha ho boloka ho sa khone ho netefatsoa."
+    },
+    {
+      "key": "harvestMassRelease03",
+      "english": "Choose harvest weight units",
+      "sha256": "4e37a4962dd155a0671e77f26f4b7bd2201ad16af2e83d40fc2b9cdc1ec91779",
+      "translation": "Khetha li-unit tsa boima ba kotulo"
+    },
+    {
+      "key": "harvestMassRelease04",
+      "english": "Production plan → Harvest targets",
+      "sha256": "9db9cd7863c8a50a79923209647f89331b98e386fb767924c711c42915e7c3a4",
+      "translation": "Moralo oa tlhahiso → Lipakane tsa kotulo"
+    },
+    {
+      "key": "harvestMassRelease05",
+      "english": "Choose kilograms or pounds, enter your harvest target or your own pack weight, then save. Unknown pack weights stay missing; target totals are planning estimates.",
+      "sha256": "5c5c475afb8b38fd05961f91419db6eece0435ac4e9c6f484d6f4a8ee06f0a28",
+      "translation": "Khetha lik'hilograma (kg) kapa liponto tsa boima (lb), kenya pakane ea hau ea kotulo kapa boima boo u bo lekantseng ba sephuthelwana sa kotulo, ebe u a boloka. Boima ba liphuthelwana bo sa tsejoeng bo lula bo le sieo; kakaretso ea lipakane ke likhakanyo tsa moralo feela."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+Local development server, a real local farm (signed out, not sample mode), climate endpoint live. 10 November 2026.
+
+== R1. A fresh farm with no saved plan at all
+stored at start: {"imbewu_crop_plan_v2":{"bytes":144,"plantings":0,"choices":null},"imbewu_crop_plan_cutover_v2":{"bytes":208,"plantings":0,"choices":null},"hidden":null}
+modal: {"heading":"CLIMATE USED AUTOMATICALLY","value":"","auto":"Let the app decide: Hot area, no frost"}
+stored after choosing light frost: {"imbewu_crop_plan_v2":{"bytes":269,"plantings":0,"choices":[{"scopeId":"site:-27.72623,31.96304","calendar":"mild-frost","chosenAt":<time>}]},"imbewu_crop_plan_cutover_v2":{"bytes":208,"plantings":0,"choices":null},"hidden":null}
+AFTER RELOAD modal: {"heading":"SOWING CALENDAR YOU CHOSE","value":"mild-frost","auto":"Let the app decide: Hot area, no frost"}
+stored after "Let the app decide": {"imbewu_crop_plan_v2":{"bytes":144,"plantings":0,"choices":null},"imbewu_crop_plan_cutover_v2":{"bytes":208,"plantings":0,"choices":null},"hidden":null}
+AFTER RELOAD modal: {"heading":"CLIMATE USED AUTOMATICALLY","value":"","auto":"Let the app decide: Hot area, no frost"}
+
+== R2. A plan saved before the calendar choice existed (15 sowings, old storage key)
+stored at start: {"imbewu_crop_plan_v2":{"bytes":2085,"plantings":15,"choices":null},"imbewu_crop_plan_v1":{"bytes":1745,"plantings":15,"choices":null},"imbewu_crop_plan_cutover_v2":{"bytes":4148,"plantings":15,"choices":null},"hidden":null}
+modal: {"heading":"CLIMATE USED AUTOMATICALLY","value":"","auto":"Let the app decide: Hot area, no frost"} | list rows: []
+after choosing light frost, list rows: ["Butternut on Bed 3: planned for March. This calendar sows it Oct–Dec.","Green beans on Bed 5: planned for February. This calendar sows it Sep–Jan."]
+reason: You chose the "Light frost at most" calendar for this site. These sowings were planned on a different one.
+stored: {"imbewu_crop_plan_v2":{"bytes":2210,"plantings":15,"choices":[{"scopeId":"site:-27.72623,31.96304","calendar":"mild-frost","chosenAt":<time>}]},"imbewu_crop_plan_v1":{"bytes":1745,"plantings":15,"choices":null},"imbewu_crop_plan_cutover_v2":{"bytes":4148,"plantings":15,"choices":null},"hidden":null}
+AFTER RELOAD modal: {"heading":"SOWING CALENDAR YOU CHOSE","value":"mild-frost","auto":"Let the app decide: Hot area, no frost"} | list rows: ["Butternut on Bed 3: planned for March. This calendar sows it Oct–Dec.","Green beans on Bed 5: planned for February. This calendar sows it Sep–Jan."]
+after Hide: list 0 | hidden key: {"site:-27.72623,31.96304":"mild-frost|demo-planting-3:butternut:3:10.11.12,demo-planting-7:green-beans:2:1.9.10.11.12"}
+AFTER RELOAD (hidden): list 0 | choice mild-frost
+  PDF saved real-farm-chosen-calendar.pdf 489689 bytes
+after choosing a DIFFERENT calendar (hard frost): list rows returned: 5
+after "Let the app decide": modal {"heading":"CLIMATE USED AUTOMATICALLY","value":"","auto":"Let the app decide: Hot area, no frost"} | list 0
+stored: {"imbewu_crop_plan_v2":{"bytes":2085,"plantings":15,"choices":null},"imbewu_crop_plan_v1":{"bytes":1745,"plantings":15,"choices":null},"imbewu_crop_plan_cutover_v2":{"bytes":4148,"plantings":15,"choices":null},"hidden":"{\"site:-27.72623,31.96304\":\"mild-frost|demo-planting-3:butternut:3:10.11.12,demo-planting-7:green-beans:2:1.9.10.11.12\"}"}
+AFTER RELOAD (cleared): modal {"heading":"CLIMATE USED AUTOMATICALLY","value":"","auto":"Let the app decide: Hot area, no frost"} | list 0
+  PDF saved real-farm-automatic-calendar.pdf 489605 bytes

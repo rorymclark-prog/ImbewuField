@@ -1,0 +1,14 @@
+{
+  "coordinatorRecordedAtUtc": "2026-11-03T12:28:09.362621+00:00",
+  "implementationCommit": "e9d2ee95684a0242dd852b3e4e4a0ba4d072baad",
+  "frozenWholeSourceSha256": "1ad74cb3f57f231db0e80de9f5fc154f057db42485c628e6510711a79addc6ef",
+  "sourcePath": "components/crops/NurseryPlanPanel.tsx",
+  "originalSnapshotBytes": 40074,
+  "originalSnapshotSha256": "83662d0936bd840f1651c9f6e57d2a6b51ab1ff5b059a736f63e165d6951d474",
+  "currentBytes": 42289,
+  "currentSha256": "174629cbd896f0a5a427e36393d1bb6b9334ec044a6a4729b2afff79b647d41b",
+  "exactEnglishKeyMessagePairsUnchanged": 18,
+  "reconciliation": "English messages remain exact; implementation surrounding them and release SHA metadata changed after source freezing. Original packet provenance is retained.",
+  "humanOrFluentApproval": false,
+  "newRuntimeLanguage": false
+}

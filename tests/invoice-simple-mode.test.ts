@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import ts from 'typescript';
 
 // Simple / All tools on /invoice (lib/app-level.ts). /invoice showed four advanced disclosures
 // and an entry-kind picker up front even for a farmer just recording a quick farm-gate sale.
@@ -23,7 +24,20 @@ test('Simple hides the entry-kind picker and defaults to a new sale', () => {
   assert.match(block, /\{!simple && \(/, 'the "What are you recording?" picker must be gated on !simple');
   // entryKind still defaults to 'new' in state, so a farmer who never sees the picker still
   // gets a plain new-sale invoice.
-  assert.match(SOURCE, /const \[entryKind, setEntryKind\] = useState<InvoiceEntryKind>\('new'\);/);
+  // The input setter may wrap dispatch to revoke stale price choices. The
+  // farmer-facing rule is the actual initial state, independent of that name.
+  const ast = ts.createSourceFile('invoice.tsx', SOURCE, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const defaults: ts.Expression[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isArrayBindingPattern(node.name)
+      && node.name.elements[0]?.getText(ast) === 'entryKind' && node.initializer
+      && ts.isCallExpression(node.initializer) && node.initializer.expression.getText(ast) === 'useState') {
+      const initial = node.initializer.arguments[0]; if (initial) defaults.push(initial);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(ast); assert.equal(defaults.length, 1, 'the actual entry-kind state has one initial authority');
+  assert.ok(ts.isStringLiteral(defaults[0]) && defaults[0].text === 'new', 'a hidden picker still creates an ordinary new-sale invoice');
 });
 
 test('Simple hides the payment-terms chooser and uses the existing default', () => {

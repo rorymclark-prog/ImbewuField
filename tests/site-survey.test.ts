@@ -1,6 +1,8 @@
 import test from 'node:test';
 import { activeAccountLocalStorageKey, bindMountedAccountLocalStorageUid } from '../lib/account-local-storage.ts';
 import assert from 'node:assert/strict';
+import { parsePvgisResponse } from '../lib/site-energy.ts';
+import { pvgisFixture, withDeviceClock } from './fixtures/site-energy.ts';
 
 import {
   readSurveyDraft, writeSurveyDraft, clearSurveyDraft, surveyDraftScope, surveyRevision,
@@ -69,6 +71,51 @@ function survey(overrides: Partial<SiteSurvey> = {}): SiteSurvey {
     ...overrides,
   };
 }
+
+test('elevation and energy evidence round-trip only through the saved survey, with source and account isolation', () => {
+  const { local } = installBrowser();
+  bindMountedAccountLocalStorageUid('energy-account-a');
+  const siteId = 'site:45.00000,8.00000';
+  const original = survey({ siteId,
+    elevationEvidence: { model: { siteId, elevationM: 0, source: 'OpenTopoData SRTM30m', sampleBaselineM: 120 }, benchmark: { elevationM: -2, method: 'surveyed', datum: 'local datum', source: 'benchmark record' } },
+    energyEvidence: { solar: parsePvgisResponse(pvgisFixture(), siteId, '2026-11-05T12:00:00.000Z'), wind: { kind: 'measured', heightM: 12, meanSpeedMs: 0, source: 'fixture instrument', period: 'fixture period', obstacles: 'nearby roof' } },
+  });
+  try {
+    assert.ok(saveSurvey(original));
+    const reopened = loadSurvey(siteId)!;
+    assert.deepEqual(reopened.elevationEvidence, original.elevationEvidence);
+    assert.deepEqual(reopened.energyEvidence, original.energyEvidence);
+    assert.match(surveyToPrompt(reopened, 800), /local datum/);
+    assert.match(surveyToPrompt(reopened, 800), /not installed capacity/);
+    assert.match(surveyToPrompt(reopened, 800), /fixture instrument/);
+    bindMountedAccountLocalStorageUid('energy-account-b');
+    assert.equal(loadSurvey(siteId), null);
+    bindMountedAccountLocalStorageUid('energy-account-a');
+    assert.equal(loadSurvey(siteId)?.energyEvidence?.solar?.annualKwh, 1200);
+    const otherSite = 'site:46.00000,8.00000';
+    assert.ok(saveSurvey({ ...original, siteId: otherSite }));
+    assert.equal(loadSurvey(otherSite)?.energyEvidence?.solar, undefined);
+    assert.equal(loadSurvey(otherSite)?.elevationEvidence?.model, undefined);
+    assert.ok(local.rows.size > 0);
+  } finally { bindMountedAccountLocalStorageUid(null); }
+});
+
+test('invalid elevation and wind raw strings survive draft recovery but do not enter saved report facts', () => {
+  installBrowser(); bindMountedAccountLocalStorageUid('energy-raw-draft');
+  const siteId = 'site:45.00000,8.00000';
+  const inputs = { roofMain: '', roofSecondary: '', growingArea: '', layingHens: '', productionYear: '', energy: { benchmarkElevation: '11000', windSpeed: '101', windHeight: '1001' } };
+  const draft: SiteSurveyDraft = { version: 1, answers: survey({ siteId }), inputs, mode: 'full', step: 5, started: true, baseRevision: surveyRevision(null) };
+  try {
+    const scope = surveyDraftScope(siteId);
+    assert.ok(writeSurveyDraft(scope, draft, null));
+    const recovered = readSurveyDraft(scope).draft;
+    assert.deepEqual(recovered?.inputs.energy, inputs.energy);
+    assert.equal(loadSurvey(siteId), null);
+    assert.doesNotMatch(surveyToPrompt(recovered!.answers, 800), /11000|101 m\/s|1001 m/);
+    const token = writeSurveyDraft(scope, { ...draft, inputs: { ...inputs, energy: { ...inputs.energy, windSpeed: 101 as unknown as string } } }, readSurveyDraft(scope).token);
+    assert.ok(token); assert.equal(readSurveyDraft(scope).error, true, 'corrupt raw inputs stay recoverable for explicit discard');
+  } finally { bindMountedAccountLocalStorageUid(null); }
+});
 
 test('a complete survey produces finite, specific report context', () => {
   const prompt = surveyToPrompt(survey(), 800);
@@ -596,4 +643,22 @@ test('sales intention cannot become achieved sales or income in either report pu
   const unselected = surveyToPrompt(survey({ isCommercial: false, reportedProduction: [] }), 800);
   assert.match(unselected, /Selling or planning to sell produce: Not selected in the saved survey/);
   assert.doesNotMatch(unselected, /Selling produce: No \(household \/ community use\)/);
+});
+
+
+test('loading and resaving on a wrong-clock device retains the saved solar reference and report evidence', () => {
+  installBrowser(); bindMountedAccountLocalStorageUid('energy-wrong-clock');
+  const siteId = 'site:45.00000,8.00000';
+  const solar = parsePvgisResponse(pvgisFixture(), siteId, '2026-11-05T12:00:00.000Z');
+  try {
+    assert.ok(saveSurvey(survey({ siteId, energyEvidence: { solar } })));
+    withDeviceClock('2022-06-01T08:00:00.000Z', () => {
+      const reopened = loadSurvey(siteId)!;
+      assert.deepEqual(reopened.energyEvidence?.solar, solar);
+      const resaved = saveSurvey({ ...reopened, notes: 'Other survey answer edited on a wrong-clock device' })!;
+      assert.deepEqual(resaved.energyEvidence?.solar, solar);
+      assert.match(surveyToPrompt(resaved, 800), /2005–2023/);
+    });
+    assert.deepEqual(loadSurvey(siteId)?.energyEvidence?.solar, solar);
+  } finally { bindMountedAccountLocalStorageUid(null); }
 });

@@ -37,6 +37,8 @@ import { reportTreeIllustrations, reportChapterGraphics } from '../lib/report-ch
 import { siteReportVisuals } from '../lib/report-visuals';
 import { DEMO_LOCATION } from '../lib/demo-site';
 import { activeAccountLocalStorageKey } from '../lib/account-local-storage';
+import { createSiteCountryContext } from '../lib/international/site-context.ts';
+import { updateSiteCountryContext } from '../lib/saved-places.ts';
 
 test('the report checklist acknowledges saved work without claiming it is verified',()=>{
   const inputs={hasSite:true,boundaryPointCount:3,surveyFilledFields:2,surveyTotalFields:10,zoneCount:1,elementCount:0,hasCropPlan:false};
@@ -125,11 +127,18 @@ test('chapter graphics use named catalogue trees and typed chart values, never i
     setItem: () => {},
     removeItem: () => {},
   };
+  // The product-window fixtures explicitly use the existing SA reference basis;
+  // coordinates alone no longer approve that basis in the real collector.
+  Object.assign(globalThis, { window: Object.assign(new EventTarget(), {
+    localStorage: globalThis.localStorage, sessionStorage: globalThis.sessionStorage,
+  }) });
+  const siteId = 'site:-27.72623,31.96304';
+  assert.equal(updateSiteCountryContext(siteId, createSiteCountryContext({siteId,countryCode:'ZA',confirmed:true})).status, 'local-saved');
 }
 
 // The demo farm is the funder-demo surface and the only fixture with a full authored design.
 // Nothing here asserts an agronomic claim — every number is geometry the fixture already carries.
-function demoFacts(): ReportSiteFacts {
+function demoFacts(cropPlan = buildDemoCropPlan()): ReportSiteFacts {
   return collectReportSiteFacts({
     siteId: 'site:-27.72623,31.96304',
     lat: -27.726231,
@@ -137,8 +146,17 @@ function demoFacts(): ReportSiteFacts {
     canvas: buildDemoDesignCanvasState(),
     farmName: buildDemoSavedPlace().name,
     waterPoints: buildDemoWaterPoints(),
-    cropPlan: buildDemoCropPlan(),
+    cropPlan,
   });
+}
+
+/** The sample plan with its butternut moved to December, the month a zero-based reader
+ * drops. The sample farm itself sowed butternut in December until 2026-11-10, when its
+ * plan was moved onto its own corrected (hot-area) sowing calendar and butternut became a
+ * March sowing; the December edge these tests exist for is kept here on purpose. */
+function demoPlanWithDecemberButternut() {
+  const plan = buildDemoCropPlan();
+  return { ...plan, plantings: plan.plantings.map((planting) => planting.cropKey === 'butternut' ? { ...planting, sowMonth: 12 } : planting) };
 }
 
 const HEADER_BASE = {
@@ -192,12 +210,14 @@ test('sowMonth is read one-based, the way every other reader in the codebase rea
   // crop-plan/crop-autosuggest/crop-export-schedule all index MONTHS_SHORT[sowMonth - 1]).
   // Reading it zero-based shifts every date in a farmer-facing document by one month and
   // silently drops December.
-  const facts = demoFacts();
+  const facts = demoFacts(demoPlanWithDecemberButternut());
   assert.ok(facts.crop);
   assert.equal(facts.crop.plantingCount, buildDemoCropPlan().plantings.length);
   const butternut = facts.crop.crops.find((crop) => /butternut/i.test(crop.name));
   assert.ok(butternut, 'the December sowing must not be dropped');
   assert.deepEqual(butternut.sowMonths, ['Dec']);
+  // The sample farm's own butternut, on its corrected calendar, reads March.
+  assert.deepEqual(demoFacts().crop?.crops.find((crop) => /butternut/i.test(crop.name))?.sowMonths, ['Mar']);
   const chard = facts.crop.crops.find((crop) => /chard/i.test(crop.name));
   assert.deepEqual(chard?.sowMonths, ['Apr']);
 });
@@ -284,7 +304,7 @@ test('zone design describes the rings drawn, and names the ones that are not', (
 });
 
 test('the crop-plan block names the farmer\'s crops and refuses to print a yield', () => {
-  const block = cropPlanPromptBlock(demoFacts());
+  const block = cropPlanPromptBlock(demoFacts(demoPlanWithDecemberButternut()));
   assert.match(block, new RegExp(`${buildDemoCropPlan().plantings.length} plantings`));
   assert.match(block, /Butternut — sown Dec in Bed \d+/);
   assert.match(block, /Do NOT print a yield or an income figure/);
@@ -565,7 +585,9 @@ test('annual production evidence survives report storage and prompt input withou
   facts.crop!.snapshot = snapshot;
   const clean = normaliseReportSiteFacts(facts)!;
   assert.deepEqual(clean.crop!.snapshot!.annualProduction, snapshot.annualProduction);
-  const prompt = cropPlanPromptBlock(clean);
+  // This arithmetic/provenance fixture explicitly exercises an established planning basis.
+  // Unqualified prompt callers now retain raw records without generating local calendars.
+  const prompt = cropPlanPromptBlock(clean, true);
   assert.match(prompt, /WHOLE-YEAR FOOD AND PRODUCT PLAN/); assert.match(prompt, /Dec 2026/);
   assert.match(prompt, /not recorded harvests/); assert.match(prompt, /Housing units are not animal counts/);
   const old = { ...snapshot }; delete old.annualProduction;

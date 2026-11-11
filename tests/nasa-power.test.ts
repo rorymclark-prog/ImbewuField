@@ -335,3 +335,76 @@ test('invalid coordinates are rejected before spending a network request', async
   );
   assert.equal(called, false);
 });
+
+async function fetchMonthlyMeanFixture(means: unknown, minima: unknown = monthValues(8)) {
+  const payload = nasaPayload();
+  const parameters: Record<string, unknown> = payload.properties.parameter;
+  parameters.T2M = means;
+  parameters.T2M_MIN = minima;
+  let requests = 0;
+  const result = await withFetch(
+    (async (input) => {
+      requests++;
+      const url = new URL(String(input));
+      if (url.hostname === 'power.larc.nasa.gov') return response(payload);
+      assert.equal(url.hostname, 'archive-api.open-meteo.com', 'only the two existing provider boundaries are used');
+      return response({}, false, 503);
+    }) as typeof fetch,
+    () => fetchNasaPower(-29, 31),
+  );
+  assert.equal(requests, 2);
+  return result;
+}
+
+test('complete raw monthly means retain cold and zero values and carry their own coverage', async () => {
+  const result = await fetchMonthlyMeanFixture({ ...monthValues(18), JAN: -5, FEB: 0, ANN: 18 });
+  assert.deepEqual(result.climate.monthlyTempCoverage, { source: 'nasa-power', status: 'complete' });
+  assert.deepEqual(result.climate.monthlyTemp, [-5, 0, ...Array(10).fill(18)]);
+  assert.equal(result.climate.meanTemp, 14.6);
+  assert.equal(result.climate.minTempSource, 'nasa-power');
+  assert.equal(result.climate.minTemp, 8);
+});
+
+test('missing or invalid monthly means cannot acquire coverage from the unchanged display fill or complete minima', async () => {
+  // A supplied value equal to the display fill and an absent value can look
+  // identical on screen. Only the raw supplied month may carry complete coverage.
+  const control = await fetchMonthlyMeanFixture({ ...monthValues(18), JAN: 20 });
+  const { monthlyTempCoverage: controlCoverage, ...displayControl } = control.climate;
+  assert.deepEqual(controlCoverage, { source: 'nasa-power', status: 'complete' });
+  const missing = monthValues(18); delete missing.JAN;
+  const invalidMeans: unknown[] = [missing, ...[
+    -999, -900, null, undefined, Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, '18', false,
+  ].map(JAN => ({ ...monthValues(18), JAN }))];
+  for (const means of invalidMeans) {
+    const result = await fetchMonthlyMeanFixture(means);
+    const { monthlyTempCoverage, ...display } = result.climate;
+    assert.deepEqual(monthlyTempCoverage, { source: 'nasa-power', status: 'incomplete' });
+    assert.deepEqual(display, displayControl, 'coverage must not alter any existing display fallback or reduction');
+    assert.deepEqual(result.rainfall, control.rainfall, 'mean coverage must not alter rainfall selection or values');
+    assert.equal(result.climate.minTempSource, 'nasa-power', 'complete minimum readings stay independent');
+  }
+});
+
+test('sparse arrays, annual-only data and wrong month-key shapes stay incomplete rather than pretending to be monthly records', async () => {
+  const sparse = new Array<number>(12); sparse[0] = 18;
+  const wrongKeys = Object.fromEntries(MONTH_KEYS.map(key => [key.toLowerCase(), 18]));
+  for (const means of [undefined, null, [], sparse, Array(12).fill(18), { ANN: 18 }, wrongKeys, 'monthly means']) {
+    const result = await fetchMonthlyMeanFixture(means);
+    assert.deepEqual(result.climate.monthlyTempCoverage, { source: 'nasa-power', status: 'incomplete' });
+    assert.deepEqual(result.climate.monthlyTemp, Array(12).fill(20), 'existing absent-record numeric display remains unchanged');
+    assert.equal(result.climate.meanTemp, 20);
+    assert.equal(result.climate.minTempSource, 'nasa-power');
+  }
+});
+
+test('complete monthly means do not stamp absent monthly minimum readings as frost evidence', async () => {
+  const missingMinimum = monthValues(8); delete missingMinimum.JAN;
+  const partial = await fetchMonthlyMeanFixture(monthValues(18), missingMinimum);
+  assert.deepEqual(partial.climate.monthlyTempCoverage, { source: 'nasa-power', status: 'complete' });
+  assert.equal(partial.climate.minTempSource, undefined);
+  assert.equal(partial.climate.minTemp, 8);
+  const absent = await fetchMonthlyMeanFixture(monthValues(18), monthValues(-999));
+  assert.deepEqual(absent.climate.monthlyTempCoverage, { source: 'nasa-power', status: 'complete' });
+  assert.equal(absent.climate.minTempSource, undefined);
+  assert.equal(absent.climate.minTemp, 5, 'the existing numeric minimum fallback stays unchanged');
+});

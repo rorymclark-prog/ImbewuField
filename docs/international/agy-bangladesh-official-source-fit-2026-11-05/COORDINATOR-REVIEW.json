@@ -1,0 +1,14 @@
+{
+  "atUtc": "2026-11-05T11:33:20.926819+00:00",
+  "actualWords": 343,
+  "sourceReceiptsChecked": 3,
+  "coordinatorCorrections": [
+    "Native351words; condensed scope language and removed unsupported unified-API/extra-menu inference.",
+    "Proposed checks explicitly marked not executed.",
+    "Earlier native private-path status creation denied; final status uses basenames only."
+  ],
+  "documentSha256": "b5be0db15c2ae9853e39ea6aecfc5b35d1717532386ef000fd8d2a29022f0cff",
+  "statusSha256": "97589cbb3b54d37d266750687661170700275436450f8aa41dac1d29646a2683",
+  "nativeBeforeCoordinatorSha256": "a49dd9a3a70f4c833c473c026ecd63e19e01f26760a69d436778ab8d2b494443",
+  "scope": "Three official HTML source inspections only; no API/PDFpayload/account/network integration/local readiness or rights approval."
+}

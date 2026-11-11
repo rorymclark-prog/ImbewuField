@@ -1,3 +1,4 @@
+import { hasGrowerCycleMarker } from './international/grower-cycle';
 // ── Crop plan → a document each reader can actually work from ───────────────
 //
 // "If a farmer wants a crop plan printed he can export it as a PDF from the
@@ -64,7 +65,7 @@ export interface CropPlanPdfMeta {
   /** Optional page-level notice for clearly identified demonstrations and other special documents. */
   documentNotice?: string;
   /**
-   * "KZN Midlands · Summer rainfall", or an honest "No site set" line.
+   * "KZN Midlands · Winter frost", or an honest "No site set" line.
    *
    * FOR DISPLAY ONLY. Never take this apart again to recover the two halves — see locationLine.
    */
@@ -76,7 +77,7 @@ export interface CropPlanPdfMeta {
    * siteLine is joined with U+00B7 MIDDLE DOT and the split was on an ASCII hyphen, so all seven
    * regions in lib/water-calc.ts produced a one-element array: LOCATION got the whole string and
    * CLIMATE fell through to "Not set" while the climate was sitting right there. Worse where the
-   * pattern label carries its own hyphen — "Karoo · All-year rainfall" split on THAT, printing
+   * pattern label carries its own hyphen — "Karoo · All-year rainfall" (the label this used to carry) split on THAT, printing
    * LOCATION "Karoo · All" and CLIMATE "year rainfall".
    *
    * The lesson is not "use the right separator". A display string is a rendering, and parsing one
@@ -84,7 +85,7 @@ export interface CropPlanPdfMeta {
    * and climate label are two values at the source; they travel as two values.
    */
   locationLine: string;
-  /** The climate pattern, on its own: "Summer rainfall". Empty when genuinely unknown. */
+  /** The climate pattern, on its own: "Hot area, no frost · summer rain" (lib/sowing-calendar-label.ts). Empty when genuinely unknown. */
   climateLine: string;
   /**
    * The site's rainfall/frost pattern as DATA, not the rendered climateLine text — used to gate
@@ -851,7 +852,8 @@ function drawYearInNumbers(
     lossAllowanceConfirmed: input.meta.lossAllowanceConfirmed,
     nowMonth,
   });
-  const yieldNote = coverage.areaConflictBedLabels.length
+  const ownCoverageHeld = !!coverage.heldGrowerPlantingIds?.length;
+  const yieldNote = ownCoverageHeld ? 'Own dated records are retained. Complete catalogue yield and food coverage are withheld; check the saved source and dated estimates in the Task Planner.' : coverage.areaConflictBedLabels.length
     ? `No kilogram figure is shown because ${coverage.areaConflictBedLabels.join(', ')} ${coverage.areaConflictBedLabels.length === 1 ? 'has' : 'have'} overlapping or invalid planting shares. Resolve the layout before using a benchmark.`
     : coverage.hasKnownYield
     ? `The ${coverage.grossKg!.toFixed(1)} kg figure is a sum of crop-cycle benchmarks. It is not divided into months because the source does not provide a within-window picking curve.`
@@ -861,7 +863,7 @@ function drawYearInNumbers(
   // shelf lives existed in the catalog and reached the printed plan nowhere. A
   // plan with no storage crop gets no line at all rather than a "0 of 12", which
   // would read as a finding about the year instead of the absence of the data.
-  const storedNote = coverage.storedFoodMonths > 0
+  const storedNote = !ownCoverageHeld && coverage.storedFoodMonths > 0
     ? `${coverage.storedFoodMonths} of 12 months also have food from store, from ${coverage.storedFoodCrops.length} crop${coverage.storedFoodCrops.length === 1 ? '' : 's'} with a sourced shelf life (${coverage.storedFoodCrops.join(', ')}). Each shelf life assumes particular storage conditions for that crop and does not hold without them.`
     : null;
   const yieldH = panel(s, {
@@ -870,7 +872,7 @@ function drawYearInNumbers(
     bg: INK.panelCream,
     body: [
       yieldNote,
-      `${coverage.freshPickingMonths} of 12 months have at least one verified fresh-picking window; that is timing, not monthly kilograms.`,
+      ownCoverageHeld ? 'Complete fresh-picking coverage is unknown; own dated records are not missing or zero harvest.' : `${coverage.freshPickingMonths} of 12 months have at least one verified fresh-picking window; that is timing, not monthly kilograms.`,
       ...(storedNote ? [storedNote] : []),
     ],
   });
@@ -1023,11 +1025,19 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
       });
     };
 
-    if (!lanes.length) {
+    const ownRows = input.plantings.filter(p => p.bedId === row.bedId && hasGrowerCycleMarker(p));
+    if (!lanes.length && !ownRows.length) {
       drawGridRow();
       s.font(9.5);
       s.ink(INK.muted);
-      s.doc.text('No dated crop reserved here', s.margin + 8, s.y + 21);
+      s.doc.text(input.plantings.some(hasGrowerCycleMarker) ? 'Catalogue occupancy incomplete' : 'No dated crop reserved here', s.margin + 8, s.y + 21);
+      s.y += rowH;
+    }
+    if (ownRows.length) {
+      if (!s.fits(rowH)) { newCalendarPage(); drawBedHead(row, true); }
+      drawGridRow(); s.font(9); s.ink(INK.muted);
+      s.doc.text('Own dated records held', s.margin + 8, s.y + 21);
+      s.doc.text('Own dates need a checked source - see Task Planner', s.margin + labelW + 8, s.y + 21);
       s.y += rowH;
     }
     for (const planting of lanes) {
@@ -1426,7 +1436,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     if (s.need(panelHeight(s, body, true, true) + 12)) masthead(s, 'Sowings to confirm');
     s.y += panel(s, { title: 'Did these sowings happen?', body, bg: INK.panelCream, accent: INK.gold }) + 12;
   }
-  const storage = [...new Set(input.plantings.map((p) => p.cropKey))].map(cropByKey)
+  const storage = [...new Set(input.plantings.filter(p => !hasGrowerCycleMarker(p)).map((p) => p.cropKey))].map(cropByKey)
     .filter((c) => c && c.storageMonths && c.storageConditions);
   if (storage.length) {
     s.page('portrait'); masthead(s, 'Keeping food');
@@ -1865,7 +1875,7 @@ function drawTaskSummary(s: Sheet, input: CropPlanPdfInput, nowMonth: number): v
   })).filter((m) => m.lines.length > 0);
 
   if (!months.length) {
-    s.paragraph('No plantings yet, so there is nothing to print here.', { size: 9.5, ink: INK.muted });
+    s.paragraph(input.plantings.some(hasGrowerCycleMarker) ? 'Own dated records are retained. No catalogue jobs are supplied for them; check the saved source and dated work in the Task Planner.' : 'No plantings yet, so there is nothing to print here.', { size: 9.5, ink: INK.muted });
     return;
   }
   if (picking.some((slot) => slot.length > 0)) {
@@ -2507,6 +2517,11 @@ export function drawCropPlanPages(doc: Doc, input: CropPlanPdfInput, append = fa
     }
     s.y = s.margin;
   };
+  if (input.plantings.some(hasGrowerCycleMarker)) {
+    startPage('portrait'); masthead(s, 'Own dated records');
+    pageTitle(s, 'Saved own records retained', 'Catalogue outputs are incomplete',
+      'These records require their checked saved source and dated estimates in the Task Planner. Catalogue dates, planting quantities, advice and complete food or free-land coverage are withheld for them. They are not empty beds or zero harvest.');
+  }
 
   if (want.has('dashboard')) { startPage('portrait'); drawDashboard(s, input, now, nowMonth); }
   if (want.has('numbers')) { startPage('portrait'); drawYearInNumbers(s, input, nowMonth, workload); }

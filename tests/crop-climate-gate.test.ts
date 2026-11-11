@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { autoSuggestPlan, fillFirstSeasonGaps, observedFrostConflicts, observedFrostConflictsForPlanting, recomputeLaterThisYear, type AutoSuggestAnswers } from '../lib/crop-autosuggest.ts';
-import { CROPS, cropByKey, hasVerifiedSchedule } from '../lib/crop-catalog.ts';
+import { CROPS, FROST_FREE_CALENDAR_CITED, cropByKey, hasVerifiedSchedule } from '../lib/crop-catalog.ts';
 import { occupiedMonthsForPlanting, type PlanBed, type Planting } from '../lib/crop-plan.ts';
 import { ECOCROP_HEAT_LIMITS_C, rainFedGrowingMonths, thornthwaitePetMm } from '../lib/crop-climate-gate.ts';
 
@@ -93,14 +93,24 @@ test('a rain-fed plan only grows crops through the wet months', () => {
   assert.ok(texts(r).some((t) => /^Rain-fed plan:/.test(t)));
 });
 
-test('a frost-free plan names the crops whose frost-free months are not sourced', () => {
-  const cited = autoSuggestPlan({ ...base, cropKeys: ['swiss-chard', 'onions'] }, 'all-year', BEDS, [], 3);
-  assert.ok(cited.plantings.length);
-  assert.ok(!texts(cited).some((t) => /not yet from a published local table/.test(t)));
-  const mixed = autoSuggestPlan({ ...base, cropKeys: ['swiss-chard', 'lettuce'] }, 'all-year', BEDS, [], 3);
-  assert.ok(mixed.plantings.some((p) => p.cropKey === 'lettuce'), 'fixture: lettuce must place');
-  const note = texts(mixed).find((t) => /not yet from a published local table/.test(t));
-  assert.ok(note && /Lettuce/.test(note) && !/Swiss chard/.test(note), note);
+test('a hot-area plan names exactly the planted crops whose hot-area months are not a published row', () => {
+  // This used to pin lettuce as "the unsourced crop". On 2026-11-10 lettuce's hot-area
+  // months were corrected to its KZN DARD Table 6 row, so the pinned name went stale
+  // while the rule stayed true. The rule is what is asserted now: a planted crop is
+  // named when it is outside FROST_FREE_CALENDAR_CITED, and never when it is inside.
+  const namedIn = (keys: string[]) => {
+    const plan = autoSuggestPlan({ ...base, cropKeys: keys }, 'all-year', BEDS, [], 3);
+    for (const key of keys) assert.ok(plan.plantings.some((p) => p.cropKey === key), `fixture: ${key} must place`);
+    return texts(plan).find((t) => /not yet from a published local table/.test(t));
+  };
+  const citedKeys = ['swiss-chard', 'onions', 'lettuce'];
+  for (const key of citedKeys) assert.ok(FROST_FREE_CALENDAR_CITED.has(key), `fixture: ${key} must be a cited row`);
+  assert.equal(namedIn(citedKeys), undefined, 'a plan of cited rows must not send the grower to re-check them');
+
+  // Kale has no row in any table; its hot-area months borrow the cabbage row and say so.
+  assert.ok(!FROST_FREE_CALENDAR_CITED.has('kale'), 'fixture: kale must be an uncited proxy');
+  const note = namedIn(['swiss-chard', 'kale']);
+  assert.ok(note && /Kale/.test(note) && !/Swiss chard/.test(note), note);
 });
 
 test('farmer-observed frost limits tender crops even when the satellite mean and regional calendar are warm', () => {

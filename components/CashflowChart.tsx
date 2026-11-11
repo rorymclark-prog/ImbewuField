@@ -27,6 +27,7 @@ import { TrendingUp } from 'lucide-react';
 import type { ExpenseLog, ProductionLog, SalesLog } from '@/lib/db/types';
 import type { SavedInvoice } from '@/lib/invoices';
 import { buildFinanceSeries, type FinanceMonthPoint } from '@/lib/finance-series';
+import { invoiceRandReviewMessage } from '@/lib/invoice-sales';
 import { cappedScale } from '@/lib/chart-scale';
 import { BreakMark } from '@/components/ChartBreakMark';
 import { randLabel, randTick } from '@/lib/format-figures';
@@ -131,6 +132,17 @@ export default function CashflowChart({
     );
   }
 
+  const drawableMonths = series.months.filter(drawableMoneyMonth);
+  if (series.moneyReview.status === 'held' || series.totalInZar === null || series.totalNetZar === null || drawableMonths.length !== series.months.length) {
+    return <section className="rounded-2xl overflow-hidden" style={CARD}>
+      {header}
+      <div className="px-4 py-5 space-y-2">
+        <p role="status">{invoiceRandReviewMessage(series.moneyReview) || 'Rand income and related results are unavailable. Review the recorded invoice currencies.'}</p>
+        <Figure label={text('Out', 'Ephumayo')} value={randLabel(series.totalOutZar)} tone={OUT_TEXT} />
+      </div>
+    </section>;
+  }
+
   if (!series.hasRecords) {
     return (
       <section className="rounded-2xl overflow-hidden" style={CARD}>
@@ -153,9 +165,9 @@ export default function CashflowChart({
     );
   }
 
-  const selected = series.months.find((m) => m.key === picked)
-    ?? [...series.months].reverse().find((m) => m.hasRecords)
-    ?? series.months[series.months.length - 1];
+  const selected = drawableMonths.find((m) => m.key === picked)
+    ?? [...drawableMonths].reverse().find((m) => m.hasRecords)
+    ?? drawableMonths[drawableMonths.length - 1];
 
   return (
     <section className="rounded-2xl overflow-hidden" style={CARD}>
@@ -175,11 +187,11 @@ export default function CashflowChart({
         english="Money received minus recorded spending for these months. Unrecorded costs are not included."
         zulu="Imali engenile kususwe imali esetshenzisiwe erekhodiwe kulezi zinyanga. Izindleko ezingarekhodiwe azifakiwe." />
 
-      <Panels months={series.months} selectedKey={selected.key} onPick={setPicked} wide={wide} lang={lang} />
+      <Panels months={drawableMonths} selectedKey={selected.key} onPick={setPicked} wide={wide} lang={lang} />
 
       <Readout month={selected} lang={lang} />
 
-      <ClipNote months={series.months} lang={lang} />
+      <ClipNote months={drawableMonths} lang={lang} />
 
       <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: 'var(--bg-2)' }}>
         <IsiZuluDraftSource className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
@@ -211,6 +223,13 @@ function Figure({ label, value, tone }: { label: string; value: string; tone: st
 const PHONE = { W: 320, PAD: { left: 34, right: 8, top: 12, bottom: 16 }, BARS_H: 118, GAP_H: 10, RUN_H: 44, barCap: 15 };
 const DESK  = { W: 760, PAD: { left: 52, right: 12, top: 14, bottom: 18 }, BARS_H: 150, GAP_H: 14, RUN_H: 56, barCap: 22 };
 
+type DrawableMoneyMonth = Omit<FinanceMonthPoint, 'moneyInZar' | 'netZar' | 'runningZar'> & {
+  moneyInZar: number; netZar: number; runningZar: number;
+};
+function drawableMoneyMonth(month: FinanceMonthPoint): month is DrawableMoneyMonth {
+  return month.moneyInZar !== null && month.netZar !== null && month.runningZar !== null;
+}
+
 function Panels({
   months,
   selectedKey,
@@ -218,7 +237,7 @@ function Panels({
   wide,
   lang,
 }: {
-  months: FinanceMonthPoint[];
+  months: DrawableMoneyMonth[];
   selectedKey: string;
   onPick: (key: string) => void;
   wide: boolean;
@@ -346,7 +365,7 @@ function Panels({
  * A capped axis is only honest while the figures it cut are still on the screen.
  * This is that condition, kept: every clipped month is named in full.
  */
-function ClipNote({ months, lang }: { months: FinanceMonthPoint[]; lang: string }) {
+function ClipNote({ months, lang }: { months: DrawableMoneyMonth[]; lang: string }) {
   const inScale = cappedScale(months.map((m) => m.moneyInZar));
   const outScale = cappedScale(months.map((m) => m.moneyOutZar));
   const cutEnglish: string[] = [];
@@ -383,7 +402,7 @@ function ClipNote({ months, lang }: { months: FinanceMonthPoint[]; lang: string 
   );
 }
 
-function Readout({ month, lang }: { month: FinanceMonthPoint; lang: string }) {
+function Readout({ month, lang }: { month: DrawableMoneyMonth; lang: string }) {
   const text = (en: string, zu: string) => lang === 'zu' ? zu : recordsFill(lang, en);
   return (
     <div className="px-4 py-2.5 flex flex-wrap items-baseline" style={{ gap: '2px 14px', borderTop: `1px solid ${HAIRLINE}` }}>

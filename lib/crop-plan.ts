@@ -2,15 +2,25 @@ import type { CropDef, RainPattern } from './crop-catalog';
 import { cropByKey, CROPS, hasPlanningYield, MONTHS_SHORT, plantsPerM2, plantsPerM2Range } from './crop-catalog';
 import { normaliseRecordUnit, validRecordQuantity, type RecordUnit } from './farm-records';
 import { sanitiseNurserySettings, type NurserySettings } from './nursery-settings';
+import { detachJsonData } from './lossless-json';
+import { sanitiseWorkspacePlanningReferences, type WorkspacePlanningReference } from './international/workspace-context';
+import {
+  addGrowerUtcDays, isGrowerUtcDate, normaliseGrowerPlanningProfile,
+  normaliseGrowerPlanningProfiles, type GrowerPlanningProfile,
+} from './international/grower-planning';
+import { hasGrowerCycleMarker, preserveGrowerCycleMarker } from './international/grower-cycle';
 import { foodGroupOf, nutritionGroupOf } from './crop-groups';
 import {
   isSampleMode,
+  SAMPLE_MODE_EVENT,
   getSandboxCropPlan, setSandboxCropPlan,
   getSandboxFavouriteCropKeys, setSandboxFavouriteCropKeys,
   getSandboxAllowBedSharing, setSandboxAllowBedSharing,
   getSandboxCashflowSettings, setSandboxCashflowSettings,
 } from './sample-mode';
-import { activeAccountLocalStorageKey } from './account-local-storage';
+import { activeAccountLocalStorageKey, activeAccountUid } from './account-local-storage';
+import { readCropPlanStorage, writeCropPlanStorageRaw, captureCropPlanStorageLease, cropPlanStorageLeaseMatches, makeBrowserCropPlanStorageContext } from './crop-plan-storage';
+export { initialiseCropPlanStorage, readCropPlanStorageStatus, releaseAllDocumentCropPlanLeases } from './crop-plan-storage';
 import { sanitiseProductionRecords, sanitisePreservedFoodRecords, type DatedProductionRecord, type PreservedFoodRecord } from './production-records';
 // TYPE ONLY, and it has to stay that way: crop-autosuggest imports THIS module
 // at runtime, so a value import here would close the cycle. `import type` is
@@ -35,6 +45,12 @@ export interface PlanBed {
 }
 
 export interface Planting {
+  /** Presence is significant even when malformed: never strip a held own-basis
+   * row into catalogue planning. Live own arithmetic needs current context. */
+  growerCycle?: unknown;
+  /** Optional reference for one saved planned nursery batch. Presence remains
+   * significant when malformed; it is not observed seed or seedling stock. */
+  nurseryBatchReference?: unknown;
   /** A dated crop-cycle capacity allocation, never a weekly delivery promise. */
   harvestTargetId?: string;
   id: string;
@@ -100,6 +116,11 @@ export interface Planting {
 export interface CropPlanState {
   version: 1;
   plantings: Planting[];
+  /** An explicit reference basis for an unmapped workspace, never a country declaration. */
+  workspaceReferences?: WorkspacePlanningReference[];
+  /** Grower-supplied assumptions stay with this account's existing plan book.
+   * They never approve a country or supply missing catalogue recommendations. */
+  growerPlanningProfiles?: GrowerPlanningProfile[];
   /** Buyer demand belongs to a site, even when two farms use the same crop. */
   harvestTargets?: HarvestTarget[];
   /** Grower-owned nursery equipment and estimates, scoped to their sites. */
@@ -107,6 +128,9 @@ export interface CropPlanState {
   /** Climate window used when the plan was generated. Optional so every plan
    * saved before this field existed remains readable. */
   rainPattern?: RainPattern;
+  /** The sowing calendar a grower has chosen for a site themselves, overriding
+   * the one read from climate records. Absent for every site left on automatic. */
+  sowingCalendarChoices?: SowingCalendarChoice[];
   /** Exact dated quantities travel with the plan; a housing icon cannot supply them. */
   productionRecords?: DatedProductionRecord[];
   /** Recorded stock months and weights, without inferred preservation or shelf life. */
@@ -137,13 +161,30 @@ export interface CropPlanState {
   updatedAt: number;
 }
 
-interface HarvestTargetBase {
-  id: string;
-  siteId: string;
-  cropKey: string;
+export interface MonthlyHarvestTiming {
   /** Inclusive calendar months; demand uses their actual day counts. */
   startMonth: string;
   endMonth: string;
+  timing?: never;
+  window?: never;
+}
+
+export interface DatedHarvestTiming {
+  timing: 'date-window';
+  window: {
+    readonly start: string;
+    readonly endExclusive: string;
+  };
+  startMonth?: never;
+  endMonth?: never;
+}
+
+export type HarvestTargetTiming = MonthlyHarvestTiming | DatedHarvestTiming;
+
+interface HarvestTargetShared {
+  id: string;
+  siteId: string;
+  cropKey: string;
   /** A private planning label, not a permission to share a customer's details. */
   outlet?: string;
   /** Grower's own expected saleable fraction; absence applies no allowance. */
@@ -152,20 +193,34 @@ interface HarvestTargetBase {
 
 export const HARVEST_TARGET_UNITS = ['kg', 'bunches', 'bags', 'crates', 'trays', 'each'] as const satisfies readonly RecordUnit[];
 export type HarvestPackUnit = Exclude<typeof HARVEST_TARGET_UNITS[number], 'kg'>;
-export interface KgHarvestTarget extends HarvestTargetBase {
+
+interface KgHarvestDemand {
   weeklyKg: number;
   weeklyQuantity?: never;
   unit?: never;
   kgPerUnit?: never;
 }
-export interface PackHarvestTarget extends HarvestTargetBase {
+
+interface PackHarvestDemand {
   weeklyQuantity: number;
   unit: HarvestPackUnit;
   /** Harvest weight represented by one produce pack, supplied by the grower. */
   kgPerUnit?: number;
   weeklyKg?: never;
 }
-export type HarvestTarget = KgHarvestTarget | PackHarvestTarget;
+
+export type KgHarvestTarget = HarvestTargetShared & KgHarvestDemand & HarvestTargetTiming;
+export type PackHarvestTarget = HarvestTargetShared & PackHarvestDemand & HarvestTargetTiming;
+
+export type MonthlyKgHarvestTarget = HarvestTargetShared & KgHarvestDemand & MonthlyHarvestTiming;
+export type MonthlyPackHarvestTarget = HarvestTargetShared & PackHarvestDemand & MonthlyHarvestTiming;
+export type MonthlyHarvestTarget = MonthlyKgHarvestTarget | MonthlyPackHarvestTarget;
+
+export type DatedKgHarvestTarget = HarvestTargetShared & KgHarvestDemand & DatedHarvestTiming;
+export type DatedPackHarvestTarget = HarvestTargetShared & PackHarvestDemand & DatedHarvestTiming;
+export type DatedHarvestTarget = DatedKgHarvestTarget | DatedPackHarvestTarget;
+
+export type HarvestTarget = MonthlyHarvestTarget | DatedHarvestTarget;
 
 /** A bunch, head or tray has no universal weight. Keep an unknown conversion
  * unknown, and never borrow a weight from another crop, customer or farm. */
@@ -185,26 +240,143 @@ export function harvestTargetMonthIndex(stamp: unknown): number | null {
   return index !== null && index >= 2020 * 12 && index < 2100 * 12 ? index : null;
 }
 
+export interface HarvestTargetDateWindow {
+  readonly timing: 'monthly' | 'date-window';
+  readonly start: string;
+  readonly endExclusive: string;
+  readonly days: number;
+}
+
+/** Canonical harvest target demand interval resolver. Resolves legacy inclusive
+ * calendar months or explicit UTC date windows into half-open date bounds. */
+export function resolveHarvestTargetDateWindow(value: unknown): HarvestTargetDateWindow | null {
+  try {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+    const proto = Object.getPrototypeOf(value);
+    if (proto !== Object.prototype && proto !== null) return null;
+
+    const descTiming = Object.getOwnPropertyDescriptor(value, 'timing');
+    const descWindow = Object.getOwnPropertyDescriptor(value, 'window');
+    const descStartMonth = Object.getOwnPropertyDescriptor(value, 'startMonth');
+    const descEndMonth = Object.getOwnPropertyDescriptor(value, 'endMonth');
+
+    if (descTiming && (!descTiming.enumerable || !Object.hasOwn(descTiming, 'value'))) return null;
+    if (descWindow && (!descWindow.enumerable || !Object.hasOwn(descWindow, 'value'))) return null;
+    if (descStartMonth && (!descStartMonth.enumerable || !Object.hasOwn(descStartMonth, 'value'))) return null;
+    if (descEndMonth && (!descEndMonth.enumerable || !Object.hasOwn(descEndMonth, 'value'))) return null;
+
+    const hasTiming = descTiming !== undefined;
+    const hasWindow = descWindow !== undefined;
+
+    if (hasTiming || hasWindow) {
+      if (descStartMonth !== undefined || descEndMonth !== undefined) return null;
+      if (!descTiming || descTiming.value !== 'date-window') return null;
+      if (!descWindow || !descWindow.value || typeof descWindow.value !== 'object') return null;
+
+      let detachedWindow: unknown;
+      try {
+        detachedWindow = detachJsonData(descWindow.value);
+      } catch {
+        return null;
+      }
+      if (!detachedWindow || typeof detachedWindow !== 'object' || Array.isArray(detachedWindow)) return null;
+
+      const windowKeys = Reflect.ownKeys(detachedWindow);
+      if (windowKeys.length !== 2) return null;
+      if (!Object.hasOwn(detachedWindow, 'start') || !Object.hasOwn(detachedWindow, 'endExclusive')) return null;
+
+      const start = (detachedWindow as Record<string, unknown>).start;
+      const endExclusive = (detachedWindow as Record<string, unknown>).endExclusive;
+      if (typeof start !== 'string' || typeof endExclusive !== 'string') return null;
+      if (!isGrowerUtcDate(start) || !isGrowerUtcDate(endExclusive) || start >= endExclusive) return null;
+      if (start < '2020-01-01' || endExclusive > '2100-01-01') return null;
+
+      const days = (Date.parse(`${endExclusive}T00:00:00.000Z`) - Date.parse(`${start}T00:00:00.000Z`)) / 86_400_000;
+      if (!Number.isSafeInteger(days) || days <= 0 || days > 366) return null;
+      if (addGrowerUtcDays(start, days) !== endExclusive) return null;
+
+      return Object.freeze({
+        timing: 'date-window',
+        start,
+        endExclusive,
+        days,
+      });
+    }
+
+    if (!descStartMonth || !Object.hasOwn(descStartMonth, 'value') || !descStartMonth.enumerable
+      || !descEndMonth || !Object.hasOwn(descEndMonth, 'value') || !descEndMonth.enumerable) {
+      return null;
+    }
+
+    const startMonth = descStartMonth.value;
+    const endMonth = descEndMonth.value;
+    const startIdx = harvestTargetMonthIndex(startMonth);
+    const endIdx = harvestTargetMonthIndex(endMonth);
+    if (startIdx === null || endIdx === null || endIdx < startIdx || endIdx - startIdx >= 12) {
+      return null;
+    }
+
+    const startDate = `${startMonth}-01`;
+    const endYear = Math.floor((endIdx + 1) / 12);
+    const endMonthNum = (endIdx + 1) % 12 + 1;
+    const endExclusiveDate = `${endYear}-${String(endMonthNum).padStart(2, '0')}-01`;
+    const days = (Date.UTC(endYear, endMonthNum - 1, 1) - Date.UTC(Math.floor(startIdx / 12), startIdx % 12, 1)) / 86_400_000;
+    if (!Number.isSafeInteger(days) || days <= 0) return null;
+    if (addGrowerUtcDays(startDate, days) !== endExclusiveDate) return null;
+
+    return Object.freeze({
+      timing: 'monthly',
+      start: startDate,
+      endExclusive: endExclusiveDate,
+      days,
+    });
+  } catch {
+    return null;
+  }
+}
+
+/** Check whether a harvest target uses legacy monthly calendar bounds. */
+export function isMonthlyHarvestTarget(value: HarvestTarget): value is MonthlyHarvestTarget {
+  const window = resolveHarvestTargetDateWindow(value);
+  return window !== null && window.timing === 'monthly';
+}
+
 export function sanitiseHarvestTargets(value: unknown): HarvestTarget[] {
   if (!Array.isArray(value)) return [];
   const seen = new Set<string>();
   return value.flatMap((raw): HarvestTarget[] => {
     if (!raw || typeof raw !== 'object') return [];
+    const timing = resolveHarvestTargetDateWindow(raw);
+    if (!timing) return [];
+
     const t = raw as Partial<HarvestTarget>;
-    const start = harvestTargetMonthIndex(t.startMonth);
-    const end = harvestTargetMonthIndex(t.endMonth);
     if (typeof t.id !== 'string' || !t.id.trim() || seen.has(t.id)
       || typeof t.siteId !== 'string' || !t.siteId.trim()
       || typeof t.cropKey !== 'string' || !cropByKey(t.cropKey)
-      || start === null || end === null || end < start || end - start >= 12
       || (t.outlet !== undefined && (typeof t.outlet !== 'string' || t.outlet.trim().length > 120))
       || (t.marketablePercent !== undefined && (typeof t.marketablePercent !== 'number'
         || !Number.isFinite(t.marketablePercent) || t.marketablePercent < 0 || t.marketablePercent > 100))) return [];
-    const base = { id: t.id, siteId: t.siteId, cropKey: t.cropKey,
-      startMonth: t.startMonth!, endMonth: t.endMonth!,
+
+    let timingFields: MonthlyHarvestTiming | DatedHarvestTiming;
+    if (timing.timing === 'monthly') {
+      const startMonth = timing.start.slice(0, 7);
+      const lastDay = addGrowerUtcDays(timing.endExclusive, -1);
+      if (!lastDay) return [];
+      const endMonth = lastDay.slice(0, 7);
+      timingFields = { startMonth, endMonth };
+    } else {
+      timingFields = { timing: 'date-window', window: { start: timing.start, endExclusive: timing.endExclusive } };
+    }
+
+    const base = {
+      id: t.id,
+      siteId: t.siteId,
+      cropKey: t.cropKey,
+      ...timingFields,
       ...(t.outlet?.trim() ? { outlet: t.outlet.trim() } : {}),
       ...(t.marketablePercent !== undefined ? { marketablePercent: t.marketablePercent } : {}),
     };
+
     let target: HarvestTarget;
     if (t.weeklyQuantity !== undefined) {
       const unit = normaliseRecordUnit(t.unit);
@@ -227,7 +399,6 @@ export function sanitiseHarvestTargets(value: unknown): HarvestTarget[] {
   });
 }
 
-const STORAGE_KEY = 'imbewu_crop_plan_v1';
 export const CROP_PLAN_CHANGED_EVENT = 'imbewu-crop-plan-changed';
 
 function emptyPlan(): CropPlanState {
@@ -243,6 +414,7 @@ function stampIndexOf(stamp: unknown): number | null {
 /** A dated projection must use the saved year, not the next month with that name.
  * Keeping the resolver here makes bed occupation and projected picking agree. */
 export function datedPlantingSowIndex(planting: Planting, originIndex: number): number | null {
+  if (hasGrowerCycleMarker(planting)) return null;
   if (!Number.isInteger(planting.sowMonth) || planting.sowMonth < 1 || planting.sowMonth > 12) return null;
   const stamp = planting.confirmedOnceSowing ?? planting.once;
   if (stamp !== undefined) {
@@ -297,6 +469,7 @@ export function settleOnceRows(
 ): Planting[] {
   const nowIndex = nowYear * 12 + (nowMonth - 1);
   return plantings.map((planting) => {
+    if (hasGrowerCycleMarker(planting)) return planting;
     let row = planting;
     if (confirmedOnceHasFinished(row, nowIndex)) row = { ...row, finishedOnceSowing: true };
     if (row.inNursery !== undefined && !nurseryStampIsLive(row, nowIndex)) {
@@ -317,6 +490,7 @@ export function settleOnceRows(
 
 /** Called only after the farmer confirms that this dated sowing happened. */
 export function confirmOnceSowing(planting: Planting, nowYear: number, nowMonth: number): Planting {
+  if (hasGrowerCycleMarker(planting)) return planting;
   const stamp = planting.once;
   const stampIndex = stampIndexOf(stamp);
   const nowIndex = nowYear * 12 + nowMonth - 1;
@@ -333,6 +507,7 @@ export function confirmOnceSowing(planting: Planting, nowYear: number, nowMonth:
 }
 
 function confirmedOnceHasFinished(planting: Planting, nowIndex: number): boolean {
+  if (hasGrowerCycleMarker(planting)) return false;
   const sowIndex = stampIndexOf(planting.confirmedOnceSowing);
   const crop = cropByKey(planting.cropKey);
   if (sowIndex === null || !crop || crop.timingVerified === false) return false;
@@ -373,6 +548,7 @@ export function restampEditedOnce(
   nowYear: number,
   nowMonth: number,
 ): Planting {
+  if (hasGrowerCycleMarker(planting)) return planting;
   if (!Number.isInteger(planting.sowMonth) || planting.sowMonth < 1 || planting.sowMonth > 12
     || !Number.isInteger(nowYear) || !Number.isInteger(nowMonth) || nowMonth < 1 || nowMonth > 12) return planting;
   if (typeof planting.once !== 'string') {
@@ -405,42 +581,68 @@ export function restampEditedOnce(
   };
 }
 
+function assertNurseryReferencePresence(planting: unknown): void {
+  if (!planting || typeof planting !== 'object') return;
+  const field = Object.getOwnPropertyDescriptor(planting, 'nurseryBatchReference');
+  // Ordinary optional sample fields may be undefined. This presence-sensitive
+  // attachment cannot: JSON omission would turn held evidence into no label.
+  if (field && (!Object.hasOwn(field, 'value') || field.value === undefined)) throw Error('Unreadable planned nursery reference');
+  // Nested attachment properties are presence-sensitive too; accepting their
+  // undefined values here would silently omit held evidence from the token.
+  if (field) copyCropPlanAuthoredData(field.value);
+}
+function preservePlantingMarker(planting: Planting): Planting {
+  assertNurseryReferencePresence(planting);
+  return hasGrowerCycleMarker(planting) ? { ...planting, ...preserveGrowerCycleMarker(planting) } : planting;
+}
+
+function projectLoadedCropPlan(parsed: Partial<CropPlanState> | null | undefined, settleNow: Date, sample = false): CropPlanState {
+  const settle = (plantings: Planting[]): Planting[] =>
+    settleOnceRows(plantings.map(preservePlantingMarker), settleNow.getFullYear(), settleNow.getMonth() + 1);
+  if (sample) {
+    const sandbox = parsed as CropPlanState;
+    return { ...sandbox, plantings: settle(sandbox.plantings),
+      ...(sandbox.growerPlanningProfiles !== undefined
+        ? { growerPlanningProfiles: normaliseGrowerPlanningProfiles(sandbox.growerPlanningProfiles) } : {}),
+      ...(sandbox.workspaceReferences !== undefined
+        ? { workspaceReferences: sanitiseWorkspacePlanningReferences(sandbox.workspaceReferences) } : {}),
+      ...(sandbox.sowingCalendarChoices !== undefined
+        ? { sowingCalendarChoices: sanitiseSowingCalendarChoices(sandbox.sowingCalendarChoices) } : {}) };
+  }
+  if (!parsed || !Array.isArray(parsed.plantings)) return emptyPlan();
+  const planNotes = sanitisePlanNotes(parsed.planNotes);
+  return {
+    version: 1,
+    plantings: settle(parsed.plantings),
+    ...(parsed.growerPlanningProfiles !== undefined
+      ? { growerPlanningProfiles: normaliseGrowerPlanningProfiles(parsed.growerPlanningProfiles) } : {}),
+    ...(parsed.workspaceReferences !== undefined
+      ? { workspaceReferences: sanitiseWorkspacePlanningReferences(parsed.workspaceReferences) } : {}),
+    ...(Array.isArray(parsed.harvestTargets) ? { harvestTargets: sanitiseHarvestTargets(parsed.harvestTargets) } : {}),
+    ...(parsed.nursery !== undefined ? { nursery: sanitiseNurserySettings(parsed.nursery) } : {}),
+    ...(isRainPattern(parsed.rainPattern) ? { rainPattern: parsed.rainPattern } : {}),
+    ...(sanitiseSowingCalendarChoices(parsed.sowingCalendarChoices).length
+      ? { sowingCalendarChoices: sanitiseSowingCalendarChoices(parsed.sowingCalendarChoices) } : {}),
+    ...(Array.isArray(parsed.productionRecords) ? { productionRecords: sanitiseProductionRecords(parsed.productionRecords) } : {}),
+    ...(Array.isArray(parsed.preservedProducts) ? { preservedProducts: sanitisePreservedFoodRecords(parsed.preservedProducts) } : {}),
+    // The timestamp travels ONLY with notes. A stored date on its own labels
+    // nothing, and notes without a date would have to be shown undated —
+    // which is the dishonesty this pair exists to prevent.
+    ...(planNotes.length && isPlanNotesAt(parsed.planNotesAt)
+      ? { planNotes, planNotesAt: parsed.planNotesAt }
+      : {}),
+    updatedAt: typeof parsed.updatedAt === 'number' ? parsed.updatedAt : Date.now(),
+  };
+}
+
 export function loadCropPlan(): CropPlanState {
   const settleNow = new Date();
-  const settle = (plantings: Planting[]): Planting[] =>
-    settleOnceRows(plantings, settleNow.getFullYear(), settleNow.getMonth() + 1);
-  if (isSampleMode()) {
-    const sandbox = getSandboxCropPlan();
-    return { ...sandbox, plantings: settle(sandbox.plantings) };
-  }
-  if (typeof window === 'undefined' || !window.localStorage) {
-    return emptyPlan();
-  }
+  if (isSampleMode()) return projectLoadedCropPlan(getSandboxCropPlan(), settleNow, true);
+  if (typeof window === 'undefined' || !window.localStorage) return emptyPlan();
   try {
-    const raw = window.localStorage.getItem(activeAccountLocalStorageKey(STORAGE_KEY));
-    if (!raw) return emptyPlan();
-    const parsed = JSON.parse(raw) as Partial<CropPlanState> | null;
-    if (!parsed || !Array.isArray(parsed.plantings)) return emptyPlan();
-    const planNotes = sanitisePlanNotes(parsed.planNotes);
-    return {
-      version: 1,
-      plantings: settle(parsed.plantings),
-      ...(Array.isArray(parsed.harvestTargets) ? { harvestTargets: sanitiseHarvestTargets(parsed.harvestTargets) } : {}),
-      ...(parsed.nursery !== undefined ? { nursery: sanitiseNurserySettings(parsed.nursery) } : {}),
-      ...(isRainPattern(parsed.rainPattern) ? { rainPattern: parsed.rainPattern } : {}),
-      ...(Array.isArray(parsed.productionRecords) ? { productionRecords: sanitiseProductionRecords(parsed.productionRecords) } : {}),
-      ...(Array.isArray(parsed.preservedProducts) ? { preservedProducts: sanitisePreservedFoodRecords(parsed.preservedProducts) } : {}),
-      // The timestamp travels ONLY with notes. A stored date on its own labels
-      // nothing, and notes without a date would have to be shown undated —
-      // which is the dishonesty this pair exists to prevent.
-      ...(planNotes.length && isPlanNotesAt(parsed.planNotesAt)
-        ? { planNotes, planNotesAt: parsed.planNotesAt }
-        : {}),
-      updatedAt: typeof parsed.updatedAt === 'number' ? parsed.updatedAt : Date.now(),
-    };
-  } catch {
-    return emptyPlan();
-  }
+    const stored = readCropPlanStorage();
+    return stored.bookRaw === null ? emptyPlan() : projectLoadedCropPlan(JSON.parse(stored.bookRaw), settleNow);
+  } catch { return emptyPlan(); }
 }
 
 const PLAN_NOTE_KINDS: readonly PlanNoteKind[] = ['warning', 'choice', 'gap', 'basis'];
@@ -495,6 +697,449 @@ function isRainPattern(value: unknown): value is RainPattern {
 }
 
 /**
+ * A grower's own choice of sowing calendar for one planning scope.
+ *
+ * WHY IT EXISTS (10 November 2026, Rory: "go ahead with decisions 2 and 3"). The
+ * calendar is read from gridded climate records for a cell tens of kilometres wide.
+ * The accuracy audit showed what that costs at the edges: Mbombela reads 0.1 °C short
+ * of the hot-area line, Tzaneen's cell includes the escarpment above the town, and
+ * Worcester shares a cell with the Ceres mountains. A grower knows whether frost
+ * reaches their beds; the grid does not. Until now their only lever was the frost
+ * answer in the site survey, which could move a close call one step.
+ *
+ * `scopeId` is the mapped site's id, or the workspace id of an unmapped plan
+ * ('virtual-bed', a design id): the same ids the rest of this plan book is scoped by,
+ * because one account can hold several farms and a choice for one must never leak
+ * onto another. It is a planner setting, not a climate observation: nothing here
+ * says the site IS frost-free, only which calendar the grower asked to plan with.
+ */
+export interface SowingCalendarChoice {
+  scopeId: string;
+  calendar: RainPattern;
+  /** When the grower chose it (epoch ms) — shown so a stale choice is not anonymous. */
+  chosenAt: number;
+}
+
+const SOWING_CALENDAR_CHOICE_LIMIT = 100;
+
+/** Keep only well-formed choices, one per scope (the newest wins). Never throws. */
+export function sanitiseSowingCalendarChoices(value: unknown): SowingCalendarChoice[] {
+  if (!Array.isArray(value)) return [];
+  const byScope = new Map<string, SowingCalendarChoice>();
+  for (const raw of value) {
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) continue;
+    const row = raw as Partial<SowingCalendarChoice>;
+    if (typeof row.scopeId !== 'string' || !row.scopeId.trim() || row.scopeId.length > 200) continue;
+    if (!isRainPattern(row.calendar)) continue;
+    if (typeof row.chosenAt !== 'number' || !Number.isFinite(row.chosenAt) || row.chosenAt <= 0) continue;
+    const previous = byScope.get(row.scopeId);
+    if (!previous || row.chosenAt >= previous.chosenAt) {
+      byScope.set(row.scopeId, { scopeId: row.scopeId, calendar: row.calendar, chosenAt: row.chosenAt });
+    }
+  }
+  return [...byScope.values()].slice(0, SOWING_CALENDAR_CHOICE_LIMIT);
+}
+
+/** The calendar the grower chose for this scope, or null when it is on automatic. */
+export function sowingCalendarChoiceFor(
+  state: Pick<CropPlanState, 'sowingCalendarChoices'> | null | undefined, scopeId: string | null | undefined,
+): RainPattern | null {
+  if (!state || !scopeId) return null;
+  return sanitiseSowingCalendarChoices(state.sowingCalendarChoices).find((row) => row.scopeId === scopeId)?.calendar ?? null;
+}
+
+/**
+ * The plan book with this scope's calendar choice set, or cleared when `calendar` is
+ * null ("let the app decide"). Other scopes' choices are carried through untouched,
+ * and a book with no choices left drops the field so it reads as it did before.
+ */
+export function withSowingCalendarChoice<T extends Pick<CropPlanState, 'sowingCalendarChoices'>>(
+  state: T, scopeId: string, calendar: RainPattern | null, chosenAt: number = Date.now(),
+): T {
+  const others = sanitiseSowingCalendarChoices(state.sowingCalendarChoices).filter((row) => row.scopeId !== scopeId);
+  const next = calendar && scopeId.trim() && isRainPattern(calendar)
+    ? sanitiseSowingCalendarChoices([...others, { scopeId, calendar, chosenAt }])
+    : others;
+  const { sowingCalendarChoices: _dropped, ...rest } = state;
+  return (next.length ? { ...rest, sowingCalendarChoices: next } : rest) as T;
+}
+
+/** Opaque, account-bound device revision for delayed writers. Keep this token
+ * inside the current page: it contains private plan data, not analytics. Missing
+ * storage is stable; corrupt/unreadable storage has no write authority. */
+export type RawCropPlanReceipt =
+  | { readonly status: 'ready'; readonly raw: unknown; readonly token: string }
+  | { readonly status: 'held'; readonly reasons: readonly string[] };
+
+/** Operational projection must see the whole authored row list, including bad
+ * markers and duplicate identities that the projector holds. Never settle or
+ * repair that evidence while reading it. The token stays inside the caller. */
+function copyCropPlanAuthoredData(value: unknown, parents = new Set<object>(), allowUndefined = false): unknown {
+  if (value === undefined && allowUndefined) return undefined;
+  if (value === null || typeof value === 'string' || typeof value === 'boolean'
+    || typeof value === 'number' && Number.isFinite(value)) return value;
+  if (!value || typeof value !== 'object' || parents.has(value)) throw Error('Unreadable book');
+  if (!Array.isArray(value) && Object.getPrototypeOf(value) !== Object.prototype && Object.getPrototypeOf(value) !== null) throw Error('Unreadable book');
+  parents.add(value);
+  try {
+    const descriptors = Object.getOwnPropertyDescriptors(value);
+    if (Array.isArray(value)) {
+      if (Reflect.ownKeys(descriptors).some(key => key !== 'length' && (typeof key !== 'string' || !/^(0|[1-9]\d*)$/.test(key)))
+        || Object.keys(descriptors).filter(key => key !== 'length').length !== value.length) throw Error('Unreadable book');
+      return Array.from({ length: value.length }, (_, index) => {
+        const property = descriptors[index]; if (!property || !('value' in property)) throw Error('Unreadable book');
+        if (property.value === undefined) throw Error('Unreadable array entry');
+        return copyCropPlanAuthoredData(property.value, parents, allowUndefined);
+      });
+    }
+    const result: Record<string, unknown> = {};
+    for (const key of Reflect.ownKeys(descriptors)) {
+      const property = typeof key === 'string' ? descriptors[key] : null;
+      if (typeof key !== 'string' || !property || !('value' in property)) throw Error('Unreadable book');
+      if (allowUndefined && !property.enumerable) throw Error('Non-JSON candidate property');
+      Object.defineProperty(result, key, { value: copyCropPlanAuthoredData(property.value, parents, allowUndefined), enumerable: true, configurable: true, writable: true });
+    }
+    return result;
+  } finally { parents.delete(value); }
+}
+// Every sample token reads the same descriptor-safe snapshot. A safe initial
+// load cannot authorize a later getter whose JSON result merely looks unchanged.
+function sampleCropPlanSnapshot(value: unknown = getSandboxCropPlan()): { raw: unknown; token: string } {
+  const copied = copyCropPlanAuthoredData(value, new Set(), true);
+  const rows = copied && typeof copied === 'object' && !Array.isArray(copied) ? (copied as Partial<CropPlanState>).plantings : null;
+  if (Array.isArray(rows)) {
+    rows.forEach(assertNurseryReferencePresence);
+    // Optional sample fields may follow JSON omission, but a present malformed
+    // cycle origin must remain held rather than turn into an unknown origin.
+    (copied as Partial<CropPlanState>).plantings = rows.map(row => hasGrowerCycleMarker(row) ? preservePlantingMarker(row) : row);
+  }
+  const raw: unknown = JSON.parse(JSON.stringify(copied));
+  return { raw, token: JSON.stringify(['sample', raw]) };
+}
+export function readRawCropPlanReceipt(): RawCropPlanReceipt {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) return { status: 'held', reasons: ['book-unavailable'] };
+    const owner = activeAccountUid(), sample = isSampleMode();
+
+    let raw: unknown, token: string;
+    if (sample) {
+      // Optional undefined object fields follow the actual sample token's JSON
+      // semantics; malformed/duplicate entries remain intact and unsafe data holds.
+      ({ raw, token } = sampleCropPlanSnapshot());
+    } else {
+      const stored = readCropPlanStorage();
+      if (!stored.writable || stored.bookRaw === null || stored.token === null) return { status: 'held', reasons: [stored.reason ?? 'book-unavailable'] };
+      raw = copyCropPlanAuthoredData(JSON.parse(stored.bookRaw)); token = stored.token;
+    }
+    if (activeAccountUid() !== owner || isSampleMode() !== sample || cropPlanWriteToken() !== token) return { status: 'held', reasons: ['book-changed'] };
+    return { status: 'ready', raw, token };
+  } catch { return { status: 'held', reasons: ['book-unreadable'] }; }
+}
+
+export type CropPlanWriteAdmission =
+  | { readonly status: 'ready'; readonly source: 'present' | 'absent' }
+  | { readonly status: 'held'; readonly reasons: readonly string[] };
+export interface CropPlanWriteLoad {
+  readonly book: CropPlanState;
+  readonly token: string | null;
+  readonly admission: CropPlanWriteAdmission;
+}
+const cropPlanAdmissions = new WeakMap<object, { owner: string | null; sample: boolean; token: string; loadedKey: string; lease: object | null }>();
+export type GrowerProfileChangeRequest =
+  | { readonly kind: 'edit'; readonly profileId: string; readonly expectedProfile: GrowerPlanningProfile | null }
+  | { readonly kind: 'remove'; readonly profileId: string; readonly expectedProfile: GrowerPlanningProfile };
+export interface GrowerProfileChangePermit { readonly kind: 'grower-profile-change-permit' }
+interface GrowerProfileChangeProof {
+  readonly admission: CropPlanWriteAdmission;
+  readonly token: string;
+  readonly loadedKey: string;
+  readonly candidateKey: string;
+  readonly win: Window;
+  revoked: boolean;
+  stop: () => void;
+}
+// This is one attempted profile action under an existing load admission, not a
+// stored permission or another book. Ordinary autosave never obtains a permit.
+const growerProfileChangePermits = new WeakMap<object, GrowerProfileChangeProof>();
+// Parent mint/save is synchronous. Even an abandoned action may retain only one
+// listener per window; a new action, explicit cancel or sample transition ends it.
+const pendingGrowerProfileChanges = new WeakMap<Window, { permit: GrowerProfileChangePermit; proof: GrowerProfileChangeProof }>();
+function releaseGrowerProfileChangePermit(permit: GrowerProfileChangePermit, proof: GrowerProfileChangeProof): void {
+  try { proof.stop(); } catch { /* Optional observer cleanup cannot undo a stored receipt. */ }
+  growerProfileChangePermits.delete(permit);
+  if (pendingGrowerProfileChanges.get(proof.win)?.permit === permit) pendingGrowerProfileChanges.delete(proof.win);
+}
+/** Explicitly cancel an unused action; this never restores a consumed action. */
+export function revokeGrowerProfileChangePermit(permit: GrowerProfileChangePermit): void {
+  const proof = growerProfileChangePermits.get(permit);
+  if (!proof) return;
+  proof.revoked = true;
+  releaseGrowerProfileChangePermit(permit, proof);
+}
+function cropPlanDataKey(value: unknown): string {
+  const detached = copyCropPlanAuthoredData(value, new Set(), true);
+  const ordered = (_key: string, node: unknown) => node && typeof node === 'object' && !Array.isArray(node)
+    ? Object.fromEntries(Object.keys(node).sort().map(key => [key, (node as Record<string, unknown>)[key]])) : node;
+  return JSON.stringify(detached, ordered);
+}
+
+/** The raw receipt and the displayed book come from one captured load. A fresh
+ * token cannot retrospectively grant a lossy or dirty display write authority. */
+export function loadCropPlanWithWriteAdmission(): CropPlanWriteLoad {
+  const held = (book: CropPlanState, token: string | null, reason: string): CropPlanWriteLoad => ({ book, token,
+    admission: Object.freeze({ status: 'held', reasons: Object.freeze([reason]) }) });
+  let book = emptyPlan(), token: string | null = null;
+  try {
+    const owner = activeAccountUid(), sample = isSampleMode(), now = new Date();
+    const persistentContext = sample ? null : makeBrowserCropPlanStorageContext();
+    const actorCurrent = () => activeAccountUid() === owner && isSampleMode() === sample
+      && (sample || !!persistentContext?.isCurrent());
+    if (!actorCurrent()) return held(emptyPlan(), null, 'book-changed');
+    const lease = sample ? null : captureCropPlanStorageLease(persistentContext);
+    // A sample is an in-memory object, so only its descriptor-safe raw reader
+    // may establish the first token; JSON must never invoke a sample getter.
+    if (!sample) token = cropPlanWriteToken();
+    const receipt = readRawCropPlanReceipt();
+    if (!actorCurrent()) return held(emptyPlan(), null, 'book-changed');
+    if (sample && receipt.status === 'ready') token = receipt.token;
+    const unchanged = () => actorCurrent()
+      && (sample || cropPlanStorageLeaseMatches(lease, persistentContext)) && cropPlanWriteToken() === token;
+    let source: 'present' | 'absent';
+    if (receipt.status === 'ready') {
+      if (receipt.token !== token || !unchanged()) return held(book, token, 'book-changed');
+      const raw = receipt.raw as Partial<CropPlanState> | null;
+      try { book = projectLoadedCropPlan(raw, now, sample); } catch { book = emptyPlan(); }
+      if (!actorCurrent()) return held(emptyPlan(), null, 'book-changed');
+      if (!raw || raw.version !== 1 || !Array.isArray(raw.plantings)) return held(book, token, 'book-envelope-unreviewed');
+      let expected: unknown;
+      try { expected = { ...raw, plantings: settleOnceRows(raw.plantings.map(preservePlantingMarker), now.getFullYear(), now.getMonth() + 1) }; }
+      catch { return held(book, token, 'raw-book-lossy-display'); }
+      if (cropPlanDataKey(expected) !== cropPlanDataKey(book)) return held(book, token, 'raw-book-lossy-display');
+      source = 'present';
+    } else {
+      // A second tab lacks write authority, not a saved book. Read only the
+      // context captured before this load; a later account cannot lend its
+      // records to the earlier caller. Sample objects have no such fallback.
+      if (!sample && persistentContext && actorCurrent()) {
+        const display = readCropPlanStorage(persistentContext);
+        if (!actorCurrent()) return held(emptyPlan(), null, 'book-changed');
+        if (display.bookRaw !== null) {
+          try { book = projectLoadedCropPlan(JSON.parse(display.bookRaw), now); } catch { book = emptyPlan(); }
+          if (!actorCurrent()) return held(emptyPlan(), null, 'book-changed');
+          return held(book, null, display.reason ?? 'book-unavailable');
+        }
+      }
+      if (sample || receipt.reasons.length !== 1 || receipt.reasons[0] !== 'missing-book' || token === null || !unchanged()) {
+        return held(book, token, 'book-unreadable');
+      }
+      source = 'absent';
+    }
+    if (!actorCurrent()) return held(emptyPlan(), null, 'book-changed');
+    if (token === null || !unchanged()) return held(book, token, 'book-changed');
+    const admission = Object.freeze({ status: 'ready' as const, source });
+    cropPlanAdmissions.set(admission, { owner, sample, token, loadedKey: cropPlanDataKey(book), lease });
+    return { book, token, admission };
+  } catch { return held(book, token, 'book-unreadable'); }
+}
+
+/** Private load provenance only; the caller must also check its actual actor,
+ * sample context, live raw token and loaded-base identity before the writer. */
+export function cropPlanWriteAdmissionMatches(admission: CropPlanWriteAdmission | undefined, loadedBaseKey: string, token: string | null): boolean {
+  try {
+    const proof = admission && cropPlanAdmissions.get(admission);
+    return !!proof && token === proof.token && activeAccountUid() === proof.owner && isSampleMode() === proof.sample
+      && (proof.sample || cropPlanStorageLeaseMatches(proof.lease))
+      && cropPlanDataKey(JSON.parse(loadedBaseKey)) === proof.loadedKey;
+  } catch { return false; }
+}
+
+/** Compare the candidate with both any caller preparation and the actual global
+ * writer projection. Standard optional undefined JSON fields and the existing
+ * durable invalid-marker representation keep their established meaning. */
+export function cropPlanWriteCandidateIsLossless(candidate: CropPlanState, prepared: CropPlanState = candidate): boolean {
+  try {
+    copyCropPlanAuthoredData(candidate, new Set(), true); copyCropPlanAuthoredData(prepared, new Set(), true);
+    const meaningful = { ...candidate, plantings: candidate.plantings.map(preservePlantingMarker) };
+    return cropPlanDataKey(meaningful) === cropPlanDataKey(cropPlanStorageValue(prepared));
+  } catch { return false; }
+}
+
+function existingExactDensitySourcesPreserved(previous: CropPlanState, candidate: CropPlanState): boolean {
+  const next = candidate.growerPlanningProfiles ?? [];
+  return (previous.growerPlanningProfiles ?? []).every(profile => {
+    if (!profile.exactDensitySources) return true;
+    const retained = next.find(row => row.profileId === profile.profileId);
+    return !!retained && cropPlanDataKey(retained.exactDensitySources ?? null) === cropPlanDataKey(profile.exactDensitySources);
+  });
+}
+
+function growerProfileChangeIsExplicit(previous: CropPlanState, candidate: CropPlanState, request: GrowerProfileChangeRequest): boolean {
+  const before = previous.growerPlanningProfiles ?? [], after = candidate.growerPlanningProfiles ?? [];
+  const prior = before.find(row => row.profileId === request.profileId), next = after.find(row => row.profileId === request.profileId);
+  const unaffected = (rows: readonly GrowerPlanningProfile[]) => rows.filter(row => row.profileId !== request.profileId)
+    .map(row => [row.profileId, cropPlanDataKey(row)] as const).sort(([a], [b]) => a.localeCompare(b));
+  const otherBookData = (book: CropPlanState) => {
+    const { growerPlanningProfiles: _profiles, updatedAt: _updatedAt, ...rest } = book;
+    return rest;
+  };
+  if (cropPlanDataKey(unaffected(before)) !== cropPlanDataKey(unaffected(after))
+    || cropPlanDataKey(otherBookData(previous)) !== cropPlanDataKey(otherBookData(candidate))) return false;
+  if (request.expectedProfile === null) return request.kind === 'edit' && !prior && !!next;
+  const expected = normaliseGrowerPlanningProfile(request.expectedProfile);
+  if (!expected || !prior || expected.profileId !== request.profileId
+    || cropPlanDataKey(request.expectedProfile) !== cropPlanDataKey(expected)
+    || cropPlanDataKey(expected) !== cropPlanDataKey(prior)) return false;
+  if (request.kind === 'remove') return !next;
+  if (!next) return false;
+  // An intentional edit may replace origin with newly validated source, or
+  // explicitly clear the density. A still-provided Number cannot justify
+  // silently falling back from its original source digits to legacy arithmetic.
+  for (const field of ['plantsPerM2', 'yieldKgPerM2'] as const) {
+    if (prior.exactDensitySources?.[field] && next.inputs[field].state === 'provided' && !next.exactDensitySources?.[field]) return false;
+  }
+  return true;
+}
+
+/** The real confirmed profile edit/remove action calls this after its existing
+ * source/scope checks. Array absence by itself is never deletion intent. The
+ * permission covers one exact candidate under this load, not another actor,
+ * scope, stale copy, unrelated edit or a later retry. */
+export function createGrowerProfileChangePermit(
+  admission: CropPlanWriteAdmission, loadedBase: CropPlanState, candidate: CropPlanState, request: GrowerProfileChangeRequest,
+): GrowerProfileChangePermit | null {
+  let issued: { permit: GrowerProfileChangePermit; proof: GrowerProfileChangeProof } | null = null;
+  try {
+    const proof = cropPlanAdmissions.get(admission);
+    if (!proof || typeof window === 'undefined') return null;
+    const win = window;
+    const base = copyCropPlanAuthoredData(loadedBase, new Set(), true) as CropPlanState;
+    if (!cropPlanWriteAdmissionMatches(admission, JSON.stringify(base), proof.token) || cropPlanWriteToken() !== proof.token) return null;
+    const action = copyCropPlanAuthoredData(request, new Set(), true) as GrowerProfileChangeRequest;
+    if (!action || typeof action !== 'object' || Array.isArray(action)
+      || Object.keys(action).length !== 3 || !['kind', 'profileId', 'expectedProfile'].every(key => Object.hasOwn(action, key))
+      || !['edit', 'remove'].includes(action.kind) || typeof action.profileId !== 'string' || !action.profileId.trim()
+      || !cropPlanWriteCandidateIsLossless(candidate)) return null;
+    const saved = cropPlanStorageValue(copyCropPlanAuthoredData(candidate, new Set(), true) as CropPlanState);
+    if (!growerProfileChangeIsExplicit(base, saved, action)
+      || window !== win || !cropPlanWriteAdmissionMatches(admission, JSON.stringify(base), proof.token) || cropPlanWriteToken() !== proof.token) return null;
+    const permit = Object.freeze({ kind: 'grower-profile-change-permit' as const });
+    const operation: GrowerProfileChangeProof = { admission, token: proof.token, win, revoked: false, stop: () => {},
+      loadedKey: cropPlanDataKey(base), candidateKey: cropPlanDataKey(saved) };
+    issued = { permit, proof: operation };
+    const previous = pendingGrowerProfileChanges.get(win);
+    if (previous) {
+      previous.proof.revoked = true;
+      releaseGrowerProfileChangePermit(previous.permit, previous.proof);
+    }
+    const sampleChanged = () => {
+      operation.revoked = true;
+      releaseGrowerProfileChangePermit(permit, operation);
+    };
+    operation.stop = () => win.removeEventListener(SAMPLE_MODE_EVENT, sampleChanged);
+    win.addEventListener(SAMPLE_MODE_EVENT, sampleChanged);
+    if (operation.revoked || window !== win || !cropPlanWriteAdmissionMatches(admission, JSON.stringify(base), proof.token)
+      || cropPlanWriteToken() !== proof.token) {
+      operation.revoked = true; releaseGrowerProfileChangePermit(permit, operation); return null;
+    }
+    growerProfileChangePermits.set(permit, operation);
+    pendingGrowerProfileChanges.set(win, issued);
+    return permit;
+  } catch {
+    if (issued) { issued.proof.revoked = true; releaseGrowerProfileChangePermit(issued.permit, issued.proof); }
+    return null;
+  }
+}
+
+export function cropPlanWriteToken(): string | null {
+  try {
+    if (isSampleMode()) return sampleCropPlanSnapshot().token;
+    if (typeof window === 'undefined' || !window.localStorage) return null;
+    const stored = readCropPlanStorage();
+    return stored.writable ? stored.token : null;
+  } catch { return null; }
+}
+
+export type CropPlanWriteReceipt = { saved: true; token: string } | { saved: false; token: null };
+
+function cropPlanStorageValue(s: CropPlanState): CropPlanState {
+  let saved = { ...s, plantings: s.plantings.map(preservePlantingMarker) };
+  if (s.workspaceReferences !== undefined) saved = { ...saved, workspaceReferences: sanitiseWorkspacePlanningReferences(s.workspaceReferences) };
+  if (s.growerPlanningProfiles !== undefined) {
+    saved = { ...saved, growerPlanningProfiles: normaliseGrowerPlanningProfiles(s.growerPlanningProfiles) };
+  }
+  if (s.sowingCalendarChoices !== undefined) saved = { ...saved, sowingCalendarChoices: sanitiseSowingCalendarChoices(s.sowingCalendarChoices) };
+  return saved;
+}
+/** Return the exact bytes this writer stored, rather than blessing whatever
+ * another tab may have written before a later read. Tokens stay device-private. */
+
+export function saveCropPlanWithReceipt(s: CropPlanState, options?: { readonly growerProfileChange?: GrowerProfileChangePermit; readonly writeIsCurrent?: () => boolean }): CropPlanWriteReceipt {
+  let profileChange: GrowerProfileChangeProof | undefined, profileChangePermit: GrowerProfileChangePermit | undefined;
+  let writeIsCurrent: (() => boolean) | undefined;
+  try {
+    if (options !== undefined) {
+      if (!options || typeof options !== 'object') return { saved: false, token: null };
+      const guard = Object.getOwnPropertyDescriptor(options, 'writeIsCurrent');
+      if (guard && (!('value' in guard) || typeof guard.value !== 'function')) return { saved: false, token: null };
+      writeIsCurrent = guard?.value;
+      const supplied = Object.getOwnPropertyDescriptor(options, 'growerProfileChange');
+      if (supplied && !('value' in supplied)) return { saved: false, token: null };
+      if (supplied?.value !== undefined) {
+        profileChange = growerProfileChangePermits.get(supplied.value);
+        // Consume before validation/commit: a failed attempt requires a fresh
+        // explicit action to mint another permit, never replay of this object.
+        if (!profileChange) return { saved: false, token: null };
+        profileChangePermit = supplied.value;
+        growerProfileChangePermits.delete(supplied.value);
+        if (profileChange.revoked || typeof window === 'undefined' || window !== profileChange.win) return { saved: false, token: null };
+      }
+    }
+    if (writeIsCurrent && writeIsCurrent() !== true) return { saved: false, token: null };
+    // Reject accessor-bearing candidates before spread/normalisation can execute them.
+    const detached = copyCropPlanAuthoredData(s, new Set(), true) as CropPlanState;
+    const saved = cropPlanStorageValue(detached);
+    const owner = activeAccountUid(), sample = isSampleMode(), loaded = loadCropPlanWithWriteAdmission();
+    // Every current caller shares this gate. A calendar or finance edit must
+    // not erase evidence its display load could not represent losslessly.
+    if (loaded.admission.status !== 'ready' || !cropPlanWriteCandidateIsLossless(detached, saved)
+      || activeAccountUid() !== owner || isSampleMode() !== sample || cropPlanWriteToken() !== loaded.token) return { saved: false, token: null };
+    if (profileChange) {
+      if (profileChange.revoked || typeof window === 'undefined' || window !== profileChange.win
+        || loaded.token !== profileChange.token || cropPlanDataKey(loaded.book) !== profileChange.loadedKey
+        || cropPlanDataKey(saved) !== profileChange.candidateKey
+        || !cropPlanWriteAdmissionMatches(profileChange.admission, JSON.stringify(loaded.book), profileChange.token)) return { saved: false, token: null };
+    } else if (!existingExactDensitySourcesPreserved(loaded.book, saved)) return { saved: false, token: null };
+    if (sample) {
+      const { token } = sampleCropPlanSnapshot(saved);
+      if (profileChange && (profileChange.revoked || typeof window === 'undefined' || window !== profileChange.win)) return { saved: false, token: null };
+      if (writeIsCurrent && writeIsCurrent() !== true) return { saved: false, token: null };
+      setSandboxCropPlan(saved);
+      try { if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT)); } catch { /* An optional refresh event cannot undo an actual saved receipt. */ }
+      return { saved: true, token };
+    }
+    if (typeof window === 'undefined' || !window.localStorage) return { saved: false, token: null };
+    let receipt: CropPlanWriteReceipt;
+    if (profileChange || writeIsCurrent) {
+      const operation = profileChange, context = makeBrowserCropPlanStorageContext();
+      if (!context) return { saved: false, token: null };
+      const operationIsCurrent = () => (!operation || !operation.revoked && typeof window !== 'undefined' && window === operation.win)
+        && (!writeIsCurrent || writeIsCurrent() === true);
+      // A storage read inside the underlying context check or raw writer can
+      // dispatch sample enter/exit and return to the same owner/mode/token.
+      // A nursery source can also be withdrawn during those reads. Carry its
+      // original revocation callback, which grants no new write authority.
+      // Carry the latched operation boundary into that writer's existing checks,
+      // before and after the underlying check, rather than checking only once.
+      const guarded = { ...context, isCurrent: () => operationIsCurrent() && context.isCurrent() && operationIsCurrent() };
+      receipt = writeCropPlanStorageRaw(JSON.stringify(saved), guarded);
+    } else receipt = writeCropPlanStorageRaw(JSON.stringify(saved));
+    try { if (receipt.saved) window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT)); } catch { /* The stored-byte receipt remains authoritative. */ }
+    return receipt;
+  } catch { return { saved: false, token: null }; }
+  finally { if (profileChange && profileChangePermit) releaseGrowerProfileChangePermit(profileChangePermit, profileChange); }
+}
+
+/**
  * Persist the crop plan. Returns whether it actually reached storage.
  *
  * IT USED TO RETURN void AND SWALLOW THE FAILURE — "fail silently, plan just won't persist". The
@@ -507,22 +1152,9 @@ function isRainPattern(value: unknown): value is RainPattern {
  * but they are equally not a save, and a function that answers "did this persist" must not say yes
  * about a write it never attempted.
  */
+
 export function saveCropPlan(s: CropPlanState): boolean {
-  if (isSampleMode()) {
-    setSandboxCropPlan(s);
-    if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
-    return true; // the sandbox IS the demo's real store, so this genuinely did persist
-  }
-  if (typeof window === 'undefined' || !window.localStorage) return false;
-  try {
-    window.localStorage.setItem(activeAccountLocalStorageKey(STORAGE_KEY), JSON.stringify(s));
-    window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
-    return true;
-  } catch {
-    // Quota exceeded or storage unavailable. The CALLER must surface this — returning false is
-    // the entire point of this signature. See the planner's saveFailed banner.
-    return false;
-  }
+  return saveCropPlanWithReceipt(s).saved;
 }
 
 // A personal shortlist of crop keys — purely a UI convenience (quick access
@@ -664,10 +1296,14 @@ export function existingSowOffset(sowMonth: number, nowMonth: number): number {
  * Every calendar month a known planting occupies its bed: sowing through the
  * end of the fresh-harvest window. A missing crop key or invalid sow month has
  * no defensible occupancy, so returns no months rather than inventing one.
+ * Grower cycles need current scope/geometry and are excluded here. An empty
+ * legacy result does not prove their bed is free: callers must surface
+ * bedHasUnverifiedTiming or use the context-aware grower projection.
  */
 export function occupiedMonthsForPlanting(
-  planting: Pick<Planting, 'cropKey' | 'sowMonth' | 'awaitingSowingConfirmation' | 'finishedOnceSowing'>,
+  planting: Pick<Planting, 'cropKey' | 'sowMonth' | 'awaitingSowingConfirmation' | 'finishedOnceSowing' | 'growerCycle'>,
 ): number[] {
+  if (hasGrowerCycleMarker(planting)) return [];
   if (planting.awaitingSowingConfirmation || planting.finishedOnceSowing) return [];
   const crop = cropByKey(planting.cropKey);
   if (!crop || crop.timingVerified === false || !Number.isInteger(planting.sowMonth) || planting.sowMonth < 1 || planting.sowMonth > 12) {
@@ -692,10 +1328,11 @@ export function occupiedMonthsForPlanting(
  * offset is essential across Dec/Jan (and at the far edge of the rolling
  * window): resolving the entry month independently can move it back a year. */
 export function plantingBedEntryOffsets(
-  planting: Pick<Planting, 'cropKey' | 'sowMonth' | 'existing' | 'once' | 'awaitingSowingConfirmation' | 'finishedOnceSowing'>,
+  planting: Pick<Planting, 'cropKey' | 'sowMonth' | 'existing' | 'once' | 'awaitingSowingConfirmation' | 'finishedOnceSowing' | 'growerCycle'>,
   nowMonth: number,
   horizonMonths = 24,
 ): number[] {
+  if (hasGrowerCycleMarker(planting)) return [];
   if (planting.awaitingSowingConfirmation || planting.finishedOnceSowing) return [];
   const crop = cropByKey(planting.cropKey);
   if (!crop || horizonMonths <= 0) return [];
@@ -716,15 +1353,17 @@ export function plantingBedEntryOffsets(
   return offsets;
 }
 
-/** Whether a saved row belongs in a forward-looking benchmark. A planned row
+/** Whether a saved catalogue row belongs in a forward-looking benchmark. Own
+ * cycles require their separate current-context projection. A planned legacy row
  * always does. An existing row only does while its single observed cohort can
  * still hold the bed; a stale, finished crop must not reappear next year as
  * either yield or conflict. Unknown timing stays visible because the app
  * cannot prove that ground is free. */
 export function plantingIsActiveOrPlanned(
-  planting: Pick<Planting, 'cropKey' | 'sowMonth' | 'existing' | 'awaitingSowingConfirmation' | 'finishedOnceSowing'>,
+  planting: Pick<Planting, 'cropKey' | 'sowMonth' | 'existing' | 'awaitingSowingConfirmation' | 'finishedOnceSowing' | 'growerCycle'>,
   nowMonth: number,
 ): boolean {
+  if (hasGrowerCycleMarker(planting)) return false;
   if (planting.awaitingSowingConfirmation || planting.finishedOnceSowing) return false;
   if (!planting.existing) return true;
   const crop = cropByKey(planting.cropKey);
@@ -739,7 +1378,7 @@ export function plantingIsActiveOrPlanned(
  * one-time starter (`once`) is a single first-season bridge by definition. */
 export function recurringPlanPlantings(plantings: Planting[]): Planting[] {
   return plantings.filter((planting) =>
-    planting.existing !== true && !planting.awaitingSowingConfirmation && !planting.finishedOnceSowing && typeof planting.once !== 'string');
+    !hasGrowerCycleMarker(planting) && planting.existing !== true && !planting.awaitingSowingConfirmation && !planting.finishedOnceSowing && typeof planting.once !== 'string');
 }
 
 /** One overbooked bed, and the plantings actually implicated in its conflict.
@@ -804,6 +1443,7 @@ function benchmarkAreaConflictBeds(
   const uncertain = new Map<string, { share: number; ids: string[] }>();
 
   for (const planting of plantings) {
+    if (hasGrowerCycleMarker(planting)) continue;
     if (planting.awaitingSowingConfirmation || planting.finishedOnceSowing) continue;
     const bed = bedById.get(planting.bedId);
     if (!bed) continue;
@@ -1098,6 +1738,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[], nowMonth?: 
   const tasks: CropTask[] = [];
 
   for (const p of plantings) {
+    if (hasGrowerCycleMarker(p)) continue;
     if (p.awaitingSowingConfirmation || p.finishedOnceSowing) continue;
     const crop = cropByKey(p.cropKey);
     if (!crop) continue;
@@ -1246,6 +1887,9 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[], nowMonth?: 
 }
 
 export function estimatedYieldKg(p: Planting, bedAreaM2: number): number {
+  // This numeric legacy API reports excluded rows as zero contribution, not
+  // a forecast of the grower's harvest. The benchmark separately holds totals.
+  if (hasGrowerCycleMarker(p)) return 0;
   if (p.awaitingSowingConfirmation || p.finishedOnceSowing) return 0;
   const crop = cropByKey(p.cropKey);
   if (!crop) return 0;
@@ -1265,6 +1909,7 @@ export function estimatedYieldKg(p: Planting, bedAreaM2: number): number {
  * with itself").
  */
 export function isGenuinelyIntercropped(p: Planting, allPlantings: Planting[]): boolean {
+  if (hasGrowerCycleMarker(p)) return false;
   if ((p.areaFraction ?? 1) >= 1) return false;
   const crop = cropByKey(p.cropKey);
   if (!crop) return false;
@@ -1298,6 +1943,7 @@ export function yieldByCrop(plantings: Planting[], beds: PlanBed[]): { cropKey: 
   const bedArea = new Map(beds.map((b) => [b.id, b.areaM2]));
   const totals = new Map<string, number>();
   for (const p of plantings) {
+    if (hasGrowerCycleMarker(p)) continue;
     const area = bedArea.get(p.bedId);
     if (area === undefined) continue;
     const kg = estimatedYieldKgAdjusted(p, area, plantings);
@@ -1323,6 +1969,7 @@ export function yieldByCrop(plantings: Planting[], beds: PlanBed[]): { cropKey: 
 export function unverifiedYieldCropNames(plantings: Planting[]): string[] {
   const names = new Set<string>();
   for (const planting of plantings) {
+    if (hasGrowerCycleMarker(planting)) continue;
     const crop = cropByKey(planting.cropKey);
     if (crop?.yieldKgPerM2 === null) names.add(crop.name);
   }
@@ -1334,6 +1981,7 @@ export function unverifiedYieldCropNames(plantings: Planting[]): string[] {
 export function nonFoodCropNames(plantings: Planting[]): string[] {
   const names = new Set<string>();
   for (const planting of plantings) {
+    if (hasGrowerCycleMarker(planting)) continue;
     const crop = cropByKey(planting.cropKey);
     if (crop?.yieldKgPerM2 === 0) names.add(crop.name);
   }
@@ -1353,8 +2001,8 @@ export interface PlanYieldBenchmark {
    * catalog entries have a verified positive kg/m² value. This is deliberately
    * not assigned to calendar months: the source gives a crop-cycle yield, not
    * a within-window picking curve. */
-  /** Null when saved bed shares overlap or are invalid. Guessing which crop
-   * loses land would turn a draft layout into a false total. */
+  /** Null when saved shares overlap/are invalid or mapped own-basis rows need
+   * current context. A partial catalogue subtotal must not look like the book. */
   knownKg: number | null;
   byCrop: ReturnType<typeof yieldByCrop>;
   /** Food crops omitted from `knownKg`; absence of a benchmark is not 0 kg. */
@@ -1363,6 +2011,8 @@ export interface PlanYieldBenchmark {
   nonFoodCrops: string[];
   /** Resolve these bed layouts before any kg or Rand subtotal is shown. */
   areaConflictBedLabels: string[];
+  /** Current own-basis context is absent from this catalogue-only comparison. */
+  heldGrowerPlantingIds?: string[];
   /** Every bed and plot's area, m² — the same total `knownKg` is divided by
    * to make `kgPerM2`, so a screen showing both can never show a kg/m² that
    * doesn't match its own kg and its own m² figures. */
@@ -1401,12 +2051,15 @@ export interface PlanYieldBenchmark {
  */
 export function buildPlanYieldBenchmark(plantings: Planting[], beds: PlanBed[], nowMonth?: number): PlanYieldBenchmark {
   const bedIds = new Set(beds.map((bed) => bed.id));
+  const heldGrowerPlantings = plantings.filter(planting => bedIds.has(planting.bedId) && hasGrowerCycleMarker(planting));
+  const heldGrowerPlantingIds = heldGrowerPlantings.map(planting => planting.id);
   const mapped = plantings.filter((planting) =>
-    bedIds.has(planting.bedId) && !planting.awaitingSowingConfirmation && !planting.finishedOnceSowing
+    !hasGrowerCycleMarker(planting) && bedIds.has(planting.bedId) && !planting.awaitingSowingConfirmation && !planting.finishedOnceSowing
       && (nowMonth === undefined || plantingIsActiveOrPlanned(planting, nowMonth)));
   const areaConflictBedLabels = benchmarkAreaConflictBedLabels(mapped, beds, nowMonth);
   const byCrop = yieldByCrop(mapped, beds);
-  const knownKg = areaConflictBedLabels.length
+  const held = areaConflictBedLabels.length > 0 || heldGrowerPlantingIds.length > 0;
+  const knownKg = held
     ? null
     : byCrop.reduce((sum, crop) => sum + crop.kg, 0);
   const growingAreaM2 = totalGrowingAreaM2(beds);
@@ -1419,12 +2072,13 @@ export function buildPlanYieldBenchmark(plantings: Planting[], beds: PlanBed[], 
   return {
     knownKg,
     // Keep the conflict structurally unable to leak into a value subtotal.
-    byCrop: areaConflictBedLabels.length ? [] : byCrop,
-    byCropBeds: areaConflictBedLabels.length ? [] : byCropBeds,
-    byCropPlots: areaConflictBedLabels.length ? [] : byCropPlots,
+    byCrop: held ? [] : byCrop,
+    byCropBeds: held ? [] : byCropBeds,
+    byCropPlots: held ? [] : byCropPlots,
     unknownYieldCrops: unverifiedYieldCropNames(mapped),
     nonFoodCrops: nonFoodCropNames(mapped),
     areaConflictBedLabels,
+    ...(heldGrowerPlantingIds.length ? { heldGrowerPlantingIds } : {}),
     growingAreaM2,
     bedAreaM2: totalGrowingAreaM2(beds.filter((bed) => bed.kind !== 'plot')),
     plotAreaM2: totalGrowingAreaM2(beds.filter((bed) => bed.kind === 'plot')),
@@ -1471,7 +2125,7 @@ export function benchmarkAreaConflictDetails(
 ): BedAreaConflict[] {
   const bedIds = new Set(beds.map((bed) => bed.id));
   const mapped = plantings.filter((planting) =>
-    bedIds.has(planting.bedId) && !planting.awaitingSowingConfirmation && !planting.finishedOnceSowing
+    !hasGrowerCycleMarker(planting) && bedIds.has(planting.bedId) && !planting.awaitingSowingConfirmation && !planting.finishedOnceSowing
       && (nowMonth === undefined || plantingIsActiveOrPlanned(planting, nowMonth)));
   const byId = new Map(mapped.map((planting) => [planting.id, planting]));
   return benchmarkAreaConflictBeds(mapped, beds, nowMonth)
@@ -1594,7 +2248,7 @@ function overlappingBedPlantings(
   bedId: string, sowMonth: number, harvestEndMonth: number, plantings: Planting[], excludeId?: string,
 ): { planting: Planting; crop: CropDef }[] {
   return plantings
-    .filter((p) => p.bedId === bedId && p.id !== excludeId)
+    .filter((p) => !hasGrowerCycleMarker(p) && p.bedId === bedId && p.id !== excludeId)
     .flatMap((planting) => {
       const crop = cropByKey(planting.cropKey);
       if (!crop || crop.timingVerified === false) return [];
@@ -1680,8 +2334,8 @@ export function bedOverlapWarning(
   };
 }
 
-/** Whether the numeric overlap excludes a legacy record whose finish timing
- * cannot be derived. Callers must surface this instead of presenting the
+/** Whether numeric overlap excludes unknown timing or a grower cycle needing
+ * its own current context. Callers must surface this instead of presenting the
  * returned fraction as a complete occupancy answer. */
 export function bedHasUnverifiedTiming(
   bedId: string,
@@ -1691,7 +2345,7 @@ export function bedHasUnverifiedTiming(
   return plantings.some((planting) =>
     planting.bedId === bedId
     && planting.id !== excludeId
-    && cropByKey(planting.cropKey)?.timingVerified === false);
+    && (hasGrowerCycleMarker(planting) || cropByKey(planting.cropKey)?.timingVerified === false));
 }
 
 /**
@@ -1705,6 +2359,7 @@ export function bedHasUnverifiedTiming(
  * if they want something else.
  */
 export function suggestSubstituteCrop(planting: Planting, allPlantings: Planting[]): CropDef | null {
+  if (hasGrowerCycleMarker(planting)) return null;
   const current = cropByKey(planting.cropKey);
   if (!current) return null;
   const group = nutritionGroupOf(current);
@@ -1794,6 +2449,19 @@ const PROPAGATION_UNIT: Record<string, string> = {
 };
 
 /**
+ * Pure helper to read known non-botanical planting-material units from the existing
+ * dictionary. Direct-field seed planning must share these existing material distinctions
+ * without duplicating the mapping or treating nursery absence as proof of seed material.
+ * Returns null if the crop key is not an existing mapped vegetative exception.
+ */
+export function knownVegetativePropagationUnit(cropKey: unknown): string | null {
+  if (typeof cropKey === 'string' && Object.hasOwn(PROPAGATION_UNIT, cropKey)) {
+    return PROPAGATION_UNIT[cropKey];
+  }
+  return null;
+}
+
+/**
  * Canonical cohort-level calculation shared by the screen total and buying
  * schedule. Splits of the same crop sown in the same month aggregate before
  * rounding; genuinely separate succession months remain separate purchases.
@@ -1810,6 +2478,7 @@ export function seedBoqBatchesForPlan(plantings: Planting[], beds: PlanBed[]): S
     bedIds: Set<string>;
   }>();
   for (const p of plantings) {
+    if (hasGrowerCycleMarker(p)) continue;
     // An established cohort has nothing left to buy. A cohort still in the
     // nursery does — the farmer buying ready-grown seedlings has not bought
     // them yet, and this is the month the plan stages them for. No nowMonth
@@ -1868,7 +2537,7 @@ export function seedBoqBatchesForPlan(plantings: Planting[], beds: PlanBed[]): S
           sowMonth, bedIds: [...bedIds], inNursery,
         };
       }
-      const unit = PROPAGATION_UNIT[cropKey] ?? (crop.transplant ? 'seedlings' : 'seeds');
+      const unit = knownVegetativePropagationUnit(cropKey) ?? (crop.transplant ? 'seedlings' : 'seeds');
       const finalPlantPositions = Math.max(1, Math.round(rawCount));
       const minimumPositions = Math.max(1, Math.floor(rawMinimum));
       const maximumPositions = Math.max(minimumPositions, Math.ceil(rawMaximum));
@@ -1991,6 +2660,9 @@ export interface YearReportOptions {
 
 export function buildYearReport(plantings: Planting[], beds: PlanBed[], options: YearReportOptions = {}): string[] {
   const bedIds = new Set(beds.map((bed) => bed.id));
+  if (plantings.some(planting => bedIds.has(planting.bedId) && hasGrowerCycleMarker(planting))) {
+    return ['Some saved cycles use your own dated estimates. This catalogue comparison is unavailable until their current site and measured growing space are checked.'];
+  }
   const toPlant = plantings.filter((p) => !p.existing && !p.awaitingSowingConfirmation && !p.finishedOnceSowing && bedIds.has(p.bedId) && cropByKey(p.cropKey));
   if (!toPlant.length) return [];
   const unknownYieldCrops = unverifiedYieldCropNames(toPlant);
@@ -2160,6 +2832,7 @@ export interface FoodAvailabilityItem {
 export function buildFoodAvailability(plantings: Planting[], beds: PlanBed[], nowMonth?: number, horizonMonths?: number): FoodAvailabilityItem[][] {
   const byMonth: Map<string, FoodAvailabilityStatus>[] = Array.from({ length: horizonMonths ?? 13 }, () => new Map());
   for (const p of plantings) {
+    if (hasGrowerCycleMarker(p)) continue;
     if (p.awaitingSowingConfirmation || p.finishedOnceSowing) continue;
     const crop = cropByKey(p.cropKey);
     const bed = beds.find((b) => b.id === p.bedId);
@@ -2201,6 +2874,7 @@ export function buildFoodAvailability(plantings: Planting[], beds: PlanBed[], no
  * timing calculations, but place their results at the same occurrences as
  * the bed timeline. With a horizon, nowMonth is required. */
 function chartSlotsForPlanting(planting: Planting, offsetFromSow: number, nowMonth?: number, horizonMonths?: number): number[] {
+  if (hasGrowerCycleMarker(planting)) return [];
   if (horizonMonths === undefined) {
     return slotIsPast(planting, nowMonth, offsetFromSow)
       ? [] : [wrapMonth(planting.sowMonth + offsetFromSow)];
@@ -2239,6 +2913,7 @@ export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBe
   // and the whole chart over 100% — physically impossible and confusing.
   const perBed = new Map<string, number[]>();
   for (const p of plantings) {
+    if (hasGrowerCycleMarker(p)) continue;
     if (p.awaitingSowingConfirmation || p.finishedOnceSowing) continue;
     const crop = cropByKey(p.cropKey);
     const bed = beds.find((b) => b.id === p.bedId);

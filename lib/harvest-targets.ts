@@ -2,15 +2,15 @@ import { cropByKey, hasAutomaticPlanningBasis } from './crop-catalog';
 import {
   benchmarkDatedAreaConflictPlantingIds, datedPlantingSowIndex, estimatedYieldKg,
   harvestTargetMonthIndex, planningMaturityMonths, sanitiseHarvestTargets,
-  harvestTargetWeeklyKg, harvestTargetYieldFactor,
-  TRANSPLANT_ENTRY_PLANNED_MONTHS,
-  type HarvestTarget, type KgHarvestTarget, type PlanBed, type Planting,
+  harvestTargetWeeklyKg, harvestTargetYieldFactor, isMonthlyHarvestTarget, resolveHarvestTargetDateWindow,
+  TRANSPLANT_ENTRY_EARLIEST_MONTHS, TRANSPLANT_ENTRY_PLANNED_MONTHS,
+  type HarvestTarget, type KgHarvestTarget, type MonthlyHarvestTarget, type PlanBed, type Planting,
 } from './crop-plan';
 
 export const HARVEST_TARGET_BASIS = 'Crop-cycle capacity uses the catalogue’s South African planning yields and picking windows. It does not forecast kilograms each week. Check local suitability, losses and actual harvest records before promising deliveries.';
 
 export interface HarvestTargetAssessment {
-  target: HarvestTarget;
+  target: MonthlyHarvestTarget;
   demandKg: number | null;
   days: number;
   /** Area summed across crop cycles, not a claim about simultaneous land. */
@@ -22,6 +22,22 @@ export interface HarvestTargetAssessment {
   pickingMonths: string[];
   gapMonths: string[];
   excludedRows: number;
+  /**
+   * Credited crop cycles that could be READY BEFORE THE WINDOW OPENS, and the earliest
+   * month one of them could be (a targetMonthStamp), or null when none could.
+   *
+   * The picking months above are the LATE edge on purpose: the upper published
+   * duration, rounded up to a whole month, after a two-month nursery. That is the right
+   * caution for releasing a bed and the wrong one for a delivery date. The 10 November
+   * 2026 accuracy audit measured it against the catalogue's own duration ranges: one
+   * month later than a typical season for 30 crops, two for six, three for cabbage and
+   * cauliflower (CP-079). A cabbage sown in January is credited to an August order and
+   * will usually be ready from May.
+   *
+   * This does not change what is credited. It lets the screen say so.
+   */
+  earlyCycles: number;
+  earliestReadyMonth: string | null;
   missingBasis: boolean;
   missingReasons: ('crop-evidence' | 'unit-weight' | 'zero-saleable-share')[];
 }
@@ -35,18 +51,20 @@ export function targetMonthStamp(index: number): string {
 export function targetDemand(target: KgHarvestTarget): { demandKg: number; days: number } | null;
 export function targetDemand(target: HarvestTarget): { demandKg: number | null; days: number } | null;
 export function targetDemand(target: HarvestTarget): { demandKg: number | null; days: number } | null {
-  if (!sanitiseHarvestTargets([target]).length) return null;
-  const start = harvestTargetMonthIndex(target.startMonth)!;
-  const end = harvestTargetMonthIndex(target.endMonth)!;
-  const days = (Date.UTC(Math.floor((end + 1) / 12), (end + 1) % 12, 1)
-    - Date.UTC(Math.floor(start / 12), start % 12, 1)) / 86_400_000;
-  const weeklyKg = harvestTargetWeeklyKg(target);
+  const saved = sanitiseHarvestTargets([target])[0];
+  if (!saved) return null;
+  const window = resolveHarvestTargetDateWindow(saved);
+  if (!window) return null;
+  const { days } = window;
+  const weeklyKg = harvestTargetWeeklyKg(saved);
   return { days, demandKg: weeklyKg === null ? null : weeklyKg * days / 7 };
 }
 
 /** Credit a whole cycle only when its entire planning picking window fits.
  * Prorating an overlapping cycle would invent a within-cycle harvest curve. */
 export function targetPickingWindow(planting: Planting, target: HarvestTarget): number[] {
+  // Month-based catalogue windows cannot establish an exact dated buyer window.
+  if (!isMonthlyHarvestTarget(target)) return [];
   const crop = cropByKey(planting.cropKey);
   const start = harvestTargetMonthIndex(target.startMonth);
   const end = harvestTargetMonthIndex(target.endMonth);
@@ -62,6 +80,22 @@ export function targetPickingWindow(planting: Planting, target: HarvestTarget): 
   return Array.from({ length: last - first + 1 }, (_, offset) => first + offset);
 }
 
+/**
+ * The earliest month a sowing could plausibly give its first harvest: the LOWER end of
+ * the published duration counted in whole months already elapsed, after the shortest
+ * nursery period the planner allows. Seed sown on the first of a month with a 60-day
+ * crop is ready two months later, so the offset rounds DOWN, where the planning month
+ * rounds up. Null for a row that is not a dated sowing of a known crop.
+ */
+export function earliestReadyMonthIndex(planting: Planting, originIndex: number): number | null {
+  const crop = cropByKey(planting.cropKey);
+  const sow = datedPlantingSowIndex(planting, originIndex);
+  if (!crop || sow === null) return null;
+  const shortestDays = crop.daysToHarvestRange?.[0] ?? crop.daysToHarvest;
+  if (!Number.isFinite(shortestDays) || shortestDays <= 0) return null;
+  return sow + Math.floor(shortestDays / 30) + (crop.transplant ? TRANSPLANT_ENTRY_EARLIEST_MONTHS : 0);
+}
+
 export function assessHarvestTarget(
   target: KgHarvestTarget, beds: PlanBed[], plantings: Planting[], now?: { year: number; month: number },
 ): KnownMassAssessment | null;
@@ -72,6 +106,7 @@ export function assessHarvestTarget(
   target: HarvestTarget, beds: PlanBed[], plantings: Planting[],
   now = { year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
 ): HarvestTargetAssessment | null {
+  if (!isMonthlyHarvestTarget(target)) return null;
   const demand = targetDemand(target);
   if (!demand) return null;
   const crop = cropByKey(target.cropKey)!;
@@ -91,8 +126,11 @@ export function assessHarvestTarget(
     startIndex, endIndex: harvestTargetMonthIndex(target.endMonth)! + 1, originIndex,
   });
   const picking = new Set<number>();
+  const windowStart = harvestTargetMonthIndex(target.startMonth)!;
   let grossCycleKg = 0;
   let excludedRows = 0;
+  let earlyCycles = 0;
+  let earliestReady: number | null = null;
   for (const row of linked) {
     const bed = bedById.get(row.bedId);
     const window = targetPickingWindow(row, target);
@@ -107,6 +145,11 @@ export function assessHarvestTarget(
     if (!Number.isFinite(kg) || !Number.isFinite(grossCycleKg + kg)) { excludedRows++; continue; }
     grossCycleKg += kg;
     window.forEach((month) => picking.add(month));
+    const ready = earliestReadyMonthIndex(row, windowStart);
+    if (ready !== null && ready < windowStart) {
+      earlyCycles++;
+      earliestReady = earliestReady === null ? ready : Math.min(earliestReady, ready);
+    }
   }
   const start = harvestTargetMonthIndex(target.startMonth)!;
   const end = harvestTargetMonthIndex(target.endMonth)!;
@@ -118,6 +161,7 @@ export function assessHarvestTarget(
     allocatedKg, grossCycleKg,
     shortageKg: demand.demandKg === null ? null : Math.max(0, demand.demandKg - allocatedKg),
     surplusKg: demand.demandKg === null ? null : Math.max(0, allocatedKg - demand.demandKg), excludedRows,
+    earlyCycles, earliestReadyMonth: earliestReady === null ? null : targetMonthStamp(earliestReady),
     pickingMonths: months.filter((m) => picking.has(m)).map(targetMonthStamp),
     gapMonths: months.filter((m) => !picking.has(m)).map(targetMonthStamp),
   };

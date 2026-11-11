@@ -4,11 +4,21 @@
 //             KZN Midlands) — real hard frost risk May-Aug, warm-season crops wait for it to pass.
 //   winter  = winter-rainfall Western Cape (Mediterranean climate)
 //             — mild wet winters, hot dry summers; warm crops grown spring-summer under irrigation.
-//   all-year = frost-free subtropical/coastal Eastern Cape style climate
-//             — broader, more forgiving windows.
-//   mild-frost = summer-rainfall coastal hinterland (e.g. Durban's Upper Highway belt —
+//             No government table covers it. Since 2026-11-10 its rows follow the seed
+//             industry's regional guide where that has one (the "General sowing guide
+//             (according to SANSOR)", 'Western Cape and South Coast' column; transcribed in
+//             research/crop-sources/_sansor-sowing-guide.json) — a secondary source, named
+//             as one in each row's comment. Nine rows used to be copies of 'summer'.
+//   all-year = HOT, frost-free areas: the Lowveld, the Limpopo valley, the Zululand and
+//             KZN coast. The name is historical — it is KZN DARD's "Hot areas, frost-free"
+//             column, and what marks it is the season, not the rain: vegetables are sown
+//             from late summer through winter into spring, and midsummer is closed for
+//             most of them. A mild frost-free coast (East London, Gqeberha, George) is
+//             NOT this column; it reads the warm-area one below (lib/koppen-global.ts).
+//   mild-frost = warm areas with light frost at most (e.g. Durban's Upper Highway belt —
 //             Hillcrest/Kloof/Gillitts-type elevated ground 20-40km inland of the coast):
 //             real but light frost in low pockets on clear winter nights, not Highveld-severe.
+//             Also the column for a frost-free coast whose summer is mild, not hot.
 //             These are crop-specific KZN DARD "warm areas / light frosts" windows where
 //             that table covers the crop, not a blanket copy of either another pattern.
 // Months are 1-12 (Jan-Dec). These are coarse planning windows; the per-crop comments name
@@ -207,8 +217,14 @@ export const CROPS: CropDef[] = [
     frostTender: true,
     sowMonths: {
       summer: [9, 10, 11, 12, 1],
-      winter: [8, 9, 10, 11],
-      'all-year': [2, 3, 4, 8, 9, 10, 11],
+      // Was [8,9,10,11], uncited: August and September are before the guide's window and
+      // before the inland valleys are clear of frost. SANSOR general sowing guide, 'Western Cape and South Coast' column,
+      // 'Bean (dwarf)' row: 'Oct - Feb' (2026-11-10 accuracy audit, CP-076).
+      winter: [10, 11, 12, 1, 2],
+      // Was [2,3,4,8,9,10,11], uncited: it kept Oct-Nov, which the source closes, and
+      // lacked May-Jul, which it opens. KZN DARD Plant Establishment Table 6, 'Bean, bush' row,
+      // 'Hot areas Frost-free' column: 'Feb - Sept' (2026-11-10 accuracy audit, CP-075).
+      'all-year': [2, 3, 4, 5, 6, 7, 8, 9],
       'mild-frost': [9, 10, 11, 12, 1],
     },
     daysToHarvest: 60,
@@ -241,7 +257,10 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       summer: [10, 11, 12],
       winter: [9, 10, 11],
-      'all-year': [8, 9, 10, 11],
+      // Was [8,9,10,11], uncited. KZN DARD Plant Establishment Table 6 has one 'Cucurbits' row for
+      // the family; its 'Hot areas Frost-free' column is 'Mar - May, Jul - Oct' — the
+      // same row gem squash, baby marrow and spanspek already use (CP-075).
+      'all-year': [3, 4, 5, 7, 8, 9, 10],
       'mild-frost': [10, 11, 12],
     },
     daysToHarvest: 110,
@@ -276,7 +295,9 @@ export const CROPS: CropDef[] = [
       // during the hard-frost interior's May-Aug frost (header) before its first harvest.
       summer: [10, 11],
       winter: [9, 10, 11],
-      'all-year': [8, 9, 10, 11],
+      // Was [8,9,10,11], uncited. KZN DARD Plant Establishment Table 6, 'Cucurbits' row, 'Hot areas
+      // Frost-free' column: 'Mar - May, Jul - Oct' (CP-075).
+      'all-year': [3, 4, 5, 7, 8, 9, 10],
       'mild-frost': [9, 10, 11], // shifted earlier, dropped Dec — Starke Ayres national Sowing Guide + Seeds for Africa KZN chart (both agree Sep-Nov, not Oct-Dec)
     },
     daysToHarvest: 130, // conservative upper end of 110–130 days — KZN DARD Length of Growing Period
@@ -310,7 +331,9 @@ export const CROPS: CropDef[] = [
     icon: '🍃',
     sowMonths: {
       summer: [2, 3, 8, 9, 10],
-      winter: [2, 3, 4, 8, 9, 10],
+      // Was [2,3,4,8,9,10], uncited. SANSOR general sowing guide, 'Western Cape and South Coast' column,
+      // Swiss chard row: 'Mar - Apr, Aug - Sept' (CP-076).
+      winter: [3, 4, 8, 9],
       // Was [1,2,3,4,5,8,9,10,11,12], uncited — did not match the source
       // table's Hot-areas column in either direction (missing Jun-Jul, which
       // it includes; carrying Jan and Sep-Dec, which it doesn't). KZN DARD
@@ -349,8 +372,16 @@ export const CROPS: CropDef[] = [
     // rather than the widest single claim.
     sowMonths: {
       summer: [1, 2, 3, 8, 9],
+      // BORROWED: no table has a kale row, and this is the hard-frost column's months.
+      // Left as it was on 2026-11-10 because no Western Cape source was found to
+      // replace it with; every Cape plan already tells the grower to check months locally.
       winter: [1, 2, 3, 8, 9],
-      'all-year': [1, 2, 3, 4, 8, 9, 10, 11, 12],
+      // Was [1,2,3,4,8,9,10,11,12], uncited, with sowing through a hot-area summer.
+      // No table has a kale row (searched 2026-08-23). Kale is the same species as
+      // cabbage, so the cabbage row's hot-area months are used as the nearest proxy.
+      // It is a proxy, so kale stays out of FROST_FREE_CALENDAR_CITED and a hot-area
+      // plan still tells the grower these months are unchecked (CP-075).
+      'all-year': [2, 3, 4, 5, 6],
       // Kale shrugs off far worse than light frost — its own note below says
       // frost sweetens it — so it's a genuine May-Jul winter crop here, and
       // Starke Ayres' guide gates winter sowing on frost severity, not on
@@ -420,8 +451,14 @@ export const CROPS: CropDef[] = [
     icon: '🥬',
     sowMonths: {
       summer: [1, 2, 3, 8, 9],
-      winter: [1, 2, 3, 8, 9],
-      'all-year': [1, 2, 3, 4, 8, 9, 10],
+      // Was [1,2,3,8,9], a copy of the hard-frost column with no Western Cape source.
+      // SANSOR general sowing guide, 'Western Cape and South Coast' column, Cabbage row: 'Nov - Apr' (CP-076).
+      winter: [11, 12, 1, 2, 3, 4],
+      // Was [1,2,3,4,8,9,10], uncited. KZN DARD Plant Establishment Table 6, Cabbage row, 'Hot areas
+      // Frost-free' column: 'Feb - Jun/Jul' — the ambiguous July endpoint is excluded,
+      // this catalog's convention. The SANSOR regional guide's Lowveld and KZN-coast
+      // columns give the same Feb-Jun (CP-075).
+      'all-year': [2, 3, 4, 5, 6],
       // Classic winter crop — heads firm up better with a cool spell.
       'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], // KZN DARD Table 6: cabbage is plantable all year with suitable cultivars
     },
@@ -496,7 +533,9 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9, 10],
-      'all-year': [1, 2, 3, 4, 8, 9, 10, 11],
+      // Was [1,2,3,4,8,9,10,11], uncited. KZN DARD Plant Establishment Table 6, Beetroot row, 'Hot
+      // areas Frost-free' column: 'Feb - Sept' (CP-075).
+      'all-year': [2, 3, 4, 5, 6, 7, 8, 9],
       'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], // KZN DARD Table 6: all year in warm/light-frost areas
     },
     daysToHarvest: 70, // conservative upper end of 56–70 days — KZN DARD Length of Growing Period
@@ -524,7 +563,11 @@ export const CROPS: CropDef[] = [
     icon: '🧅',
     sowMonths: {
       summer: [3, 4, 5],
-      winter: [2, 3, 4],
+      // Was [2,3,4], uncited. Bulbing follows day length, so the Cape sows later than the
+      // north: SANSOR general sowing guide, 'Western Cape and South Coast' column, Onion row:
+      // 'Apr - May'; Starke Ayres' onion guideline has the southern regions transplanting
+      // July to October, which is the same sowing. February seed there bolts (CP-076).
+      winter: [4, 5],
       // Was [2,3,4,5], uncited — an extra May not in the source table.
       // KZN DARD Table 6, Onion row, 'Hot areas Frost-free' column: 'Feb - Apr'.
       'all-year': [2, 3, 4],
@@ -565,6 +608,10 @@ export const CROPS: CropDef[] = [
     frostTender: true,
     sowMonths: {
       summer: [8, 9, 10],
+      // Western Cape: Starke Ayres' tomato guideline gives 'Western Cape - Oct to Dec' for
+      // establishment (seed sown some six weeks earlier), and the SANSOR guide's Western
+      // Cape column 'Jul - Sept'. August to October seed is inside the first and overlaps
+      // the second, so this row stands on Western Cape sources, not on the interior's (CP-076).
       winter: [8, 9, 10],
       // Was [2,3,7,8,9] — byte-identical to peppers, uncited, and narrower
       // than mild-frost even though this pattern is meant to be the broadest
@@ -604,6 +651,7 @@ export const CROPS: CropDef[] = [
     frostTender: true,
     sowMonths: {
       summer: [8, 9, 10],
+      // SANSOR general sowing guide, 'Western Cape and South Coast' column, Capsicum row: 'Aug - Oct' (CP-076).
       winter: [8, 9, 10],
       // Was [2,3,7,8,9] — byte-identical to tomatoes, uncited, and narrower
       // than mild-frost even though this pattern is meant to be the broadest
@@ -644,6 +692,7 @@ export const CROPS: CropDef[] = [
     // yield is chilli-specific — see below.
     sowMonths: {
       summer: [8, 9, 10],
+      // SANSOR general sowing guide, 'Western Cape and South Coast' column, Capsicum row: 'Aug - Oct' (CP-076).
       winter: [8, 9, 10],
       'all-year': [1, 2, 3, 7, 8, 9, 10, 11, 12],
       'mild-frost': [8, 9, 10, 11], // KZN DARD Table 6, warm/light-frost area
@@ -679,9 +728,14 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       // Frost gate (2026-09-27 audit): Dec removed — sown then, this frost-tender crop is in the field
       // during the hard-frost interior's May-Aug frost (header) before its first harvest.
-      summer: [10, 11],
+      // October removed 2026-11-10: KZN DARD Table 6, 'Sweet potato (cuttings)' row, 'Cold
+      // areas' column, is 'Nov' alone, and the coldest sites still frost in October (CP-077).
+      summer: [11],
       winter: [9, 10, 11],
-      'all-year': [8, 9, 10, 11],
+      // Was [8,9,10,11]: inside the source row but four months short of it.
+      // KZN DARD Plant Establishment Table 6, 'Sweet potato (cuttings)' row, 'Hot areas Frost-free'
+      // column: 'Aug - Mar' (CP-075).
+      'all-year': [8, 9, 10, 11, 12, 1, 2, 3],
       'mild-frost': [10, 11, 12],
     },
     daysToHarvest: 150, // upper end of 90–150 days — KZN DARD Length of Growing Period
@@ -719,19 +773,19 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       // Frost gate (2026-09-27 audit): Feb, Mar removed — sown then, this frost-tender crop is in the field
       // during the hard-frost interior's May-Aug frost (header) before its first harvest.
-      summer: [8, 9],
+      // Was [8,9]. KZN DARD Table 6, 'Potato (tubers)' row, 'Cold areas' column:
+      // 'Sept/Oct'. An August planting emerges in September, which is still a frost month
+      // at the coldest sites — Underberg had September frost in 45% of years 2001-2020 and
+      // Sutherland in 80% (CP-077, CP-081). October's crop is lifted in February, clear of frost.
+      summer: [9, 10],
       winter: [7, 8, 9],
-      // Added 4,5 (Apr-May): a 2026-08-19 audit (commit ff2c014) removed this
-      // window from mild-frost below because its source (a potato-specific
-      // bulletin) explicitly ties it to frost-free, irrigated conditions —
-      // but never gave it a new home, so the codebase carried the comment
-      // without the data it describes. KZN DARD Table 6 (the SAME table
-      // mild-frost below is sourced from, a different document from the
-      // potato-specific bulletin) independently gives Potato's own 'Hot areas
-      // Frost-free' column as exactly 'April/May' — confirming the window
-      // belongs under all-year, not re-added to mild-frost as a second,
-      // differently-sourced number.
-      'all-year': [2, 3, 4, 5, 7, 8, 9],
+      // KZN DARD Plant Establishment Table 6, 'Potato (tubers)' row, 'Hot areas
+      // Frost-free' column: 'April/May', and the potato-specific bulletin ties the
+      // same Apr-May slot to frost-free, irrigated ground. Until 2026-11-10 this
+      // column also carried Feb, Mar, Jul, Aug and Sep, which neither source gives
+      // for a hot area: a July or August planting there bulks its tubers in
+      // October and November heat. Removed (accuracy audit, CP-075).
+      'all-year': [4, 5],
       // KZN's potato-specific bulletin limits cooler-area planting to Aug-Oct
       // plus January; its Apr-May slot is explicitly frost-free and irrigated.
       'mild-frost': [1, 8, 9, 10],
@@ -772,7 +826,11 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9, 10],
-      'all-year': [1, 2, 3, 4, 8, 9, 10, 11, 12],
+      // Was [1,2,3,4,8,9,10,11,12], uncited: open through a hot-area summer and
+      // closed in its winter, the reverse of the source. KZN DARD Plant Establishment Table 6,
+      // Lettuce row, 'Hot areas Frost-free' column: 'Feb - Aug/Sept' — the ambiguous
+      // September endpoint is excluded (CP-075).
+      'all-year': [2, 3, 4, 5, 6, 7, 8],
       // KZN DARD Plant Establishment Table 6 lists lettuce all year in a
       // warm/light-frost area; summer still needs a heat/bolt-tolerant variety.
       'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -809,7 +867,9 @@ export const CROPS: CropDef[] = [
       // during the hard-frost interior's May-Aug frost (header) before its first harvest.
       summer: [],
       winter: [9, 10],
-      'all-year': [8, 9, 10, 11],
+      // Was [8,9,10,11]: inside the source row but short of it. KZN DARD Plant Establishment Table 6,
+      // 'Madumbe (corms)' row, 'Hot areas Frost-free' column: 'Jul - Dec, Mar' (CP-075).
+      'all-year': [7, 8, 9, 10, 11, 12, 3],
       'mild-frost': [9, 10, 11],
     },
     daysToHarvest: 300, // conservative upper end of 8–10 months — DAFF Brochure Amadumbe 2010
@@ -880,7 +940,9 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       summer: [4, 5],
       winter: [3, 4, 5],
-      'all-year': [4, 5, 6],
+      // Was [4,5,6]: June is in no column of the source. KZN DARD Plant Establishment Table 6,
+      // 'Garlic (cloves)' row, all three columns: 'Apr - May' (CP-075).
+      'all-year': [4, 5],
       'mild-frost': [4, 5], // KZN DARD Table 6, warm/light-frost area
     },
     daysToHarvest: 210,
@@ -910,9 +972,18 @@ export const CROPS: CropDef[] = [
     name: 'Peas',
     icon: '🟢',
     sowMonths: {
-      summer: [2, 3, 8],
-      winter: [2, 3, 4],
-      'all-year': [1, 2, 3, 4, 8, 9],
+      // Was [2,3,8]. February and March are in no interior source: peas sown then flower
+      // into the hard frost, and it is the flowers frost kills. KZN DARD Table 6, Pea row,
+      // 'Cold areas' column: 'Jun/Jul - Sept' (ambiguous June excluded); the SANSOR guide's
+      // Highveld column gives the same Jul-Sept (2026-11-10 accuracy audit, CP-077).
+      summer: [7, 8, 9],
+      // Was [2,3,4], uncited, and outside the Cape's own pea season, which is the winter
+      // rain. SANSOR general sowing guide, 'Western Cape and South Coast' column, Pea row: 'Apr - Aug' (CP-076).
+      winter: [4, 5, 6, 7, 8],
+      // Was [1,2,3,4,8,9], uncited, with peas sown into a hot-area January.
+      // KZN DARD Plant Establishment Table 6, Pea row, 'Hot areas Frost-free' column: 'Mar - May/Jun'
+      // — the ambiguous June endpoint is excluded (CP-075).
+      'all-year': [3, 4, 5],
       'mild-frost': [3, 4, 5, 6, 7, 8], // KZN DARD Table 6, warm/light-frost area
     },
     daysToHarvest: 80, // upper end of 60–80 days — KZN DARD Length of Growing Period
@@ -944,13 +1015,20 @@ export const CROPS: CropDef[] = [
     name: 'Broad beans (fava beans)',
     icon: '🫘',
     sowMonths: {
-      // Unlike dry-beans/green-beans, broad beans are bred to overwinter —
-      // real frost doesn't kill them, so unlike every other 'summer'-pattern
-      // crop they get genuine May-Jul coverage even under hard-frost
-      // interior conditions, not just the mild-frost hinterland pattern.
-      summer: [3, 4, 5, 6, 7],
-      winter: [3, 4, 5],
-      'all-year': [2, 3, 4, 5, 6, 7, 8],
+      // Was [3,4,5,6,7], argued from frost hardiness: broad beans do overwinter, but
+      // that is a reason they can be sown in autumn, not a sowing calendar. Both
+      // published tables give April and May only — KZN DARD Table 6, 'Bean, broad'
+      // row, 'Apr - May' in all three columns, and the SANSOR guide's Highveld,
+      // Middleveld and KZN Midlands columns (2026-11-10 accuracy audit, CP-077).
+      summer: [4, 5],
+      // Was [3,4,5]. SANSOR general sowing guide, 'Western Cape and South Coast' column,
+      // 'Bean (broad)' row: 'Apr - Jun' (CP-076).
+      winter: [4, 5, 6],
+      // Was [2..8], uncited. Frost hardiness is why the hard-frost column above runs
+      // through winter; it says nothing about a hot area, where heat is the limit.
+      // KZN DARD Plant Establishment Table 6, 'Bean, broad' row, 'Hot areas Frost-free' column:
+      // 'Apr - May' (CP-075).
+      'all-year': [4, 5],
       'mild-frost': [4, 5], // KZN DARD Table 6: Apr-May in warm/light-frost areas
     },
     daysToHarvest: 120, // conservative official duration — KZN DARD Length of Growing Period
@@ -976,9 +1054,16 @@ export const CROPS: CropDef[] = [
     name: 'Broccoli',
     icon: '🥦',
     sowMonths: {
-      summer: [1, 2, 3, 8],
-      winter: [1, 2, 3, 8],
-      'all-year': [1, 2, 3, 4, 8, 9],
+      // Was [1,2,3,8]. March and August are in no interior source. KZN DARD Table 6,
+      // Broccoli row, 'Cold areas' column: 'Sept - Jan'; the SANSOR guide's Highveld,
+      // Northern Cape and KZN Midlands columns add February ('Dec - Feb') (CP-077).
+      summer: [9, 10, 11, 12, 1, 2],
+      // Was [1,2,3,8], a copy of the hard-frost column with no Western Cape source.
+      // SANSOR general sowing guide, 'Western Cape and South Coast' column, Broccoli row: 'Dec - Jan' (CP-076).
+      winter: [12, 1],
+      // Was [1,2,3,4,8,9], uncited. KZN DARD Plant Establishment Table 6, Broccoli row, 'Hot areas
+      // Frost-free' column: 'Feb - Jun/Jul' — the ambiguous July endpoint is excluded (CP-075).
+      'all-year': [2, 3, 4, 5, 6],
       // Another crop that heads up better after a cool spell.
       'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9],
     },
@@ -1009,7 +1094,9 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       summer: [9, 10, 11, 12],
       winter: [9, 10, 11],
-      'all-year': [8, 9, 10, 11],
+      // Was [8,9,10,11], uncited. KZN DARD Plant Establishment Table 6, 'Cucurbits' row, 'Hot areas
+      // Frost-free' column: 'Mar - May, Jul - Oct' (CP-075).
+      'all-year': [3, 4, 5, 7, 8, 9, 10],
       'mild-frost': [9, 10, 11, 12],
     },
     daysToHarvest: 70, // upper end of 60–70 days — Starke Ayres Cucumber Ashley product page
@@ -1038,7 +1125,9 @@ export const CROPS: CropDef[] = [
     frostTender: true,
     sowMonths: {
       summer: [10, 11, 12],
-      winter: [9, 10, 11],
+      // SANSOR general sowing guide, 'Western Cape and South Coast' column, 'Melon (water)' row: 'Sept - Oct';
+      // November was not in it (CP-076).
+      winter: [9, 10],
       'all-year': [8, 9, 10],
       'mild-frost': [8, 9, 10], // shifted earlier — Seeds for Africa KZN Vegetable Planting Chart (Aug-Oct only)
     },
@@ -1064,7 +1153,11 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       summer: [2, 3, 8, 9],
       winter: [2, 3, 4, 8, 9],
-      'all-year': [1, 2, 3, 4, 8, 9, 10, 11],
+      // Was [1,2,3,4,8,9,10,11], uncited. No table has a coriander row. This entry's
+      // own rule is 'bolts in heat, not cold — same logic as lettuce', so the lettuce
+      // row's hot-area months are used. It is a proxy: coriander stays out of
+      // FROST_FREE_CALENDAR_CITED, so a plan still names it as unchecked (CP-075).
+      'all-year': [2, 3, 4, 5, 6, 7, 8],
       // Bolts in heat, not cold — same logic as lettuce.
       'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     },
@@ -1139,12 +1232,11 @@ export const CROPS: CropDef[] = [
       // anchored to, and DAFF separately warns seed germinates poorly in
       // warm weather — mirrors the existing chard summer trim.
       summer: [2, 3, 8, 9, 10],
-      // UNSOURCEABLE as a dedicated Western Cape calendar. Opened only the
-      // intersection of DAFF's national window ('planted from August until
-      // April') and KZN DARD Table 6's 'Warm areas Light frosts' column
-      // (Feb-May, Jul-Sept) — WC lowlands being a light-frost, cool-winter
-      // climate: {2,3,4} ∪ {8,9} (May and Jul are KZN-only, excluded).
-      winter: [2, 3, 4, 8, 9],
+      // Was [2,3,4,8,9], built by intersecting a national window with a KZN column
+      // because no Western Cape calendar had been found. One has:
+      // SANSOR general sowing guide, 'Western Cape and South Coast' column, Spinach
+      // row: 'Mar - May' (2026-11-10 accuracy audit, CP-076).
+      winter: [3, 4, 5],
       // KZN DARD Table 6, 'Hot areas Frost-free' column: Mar-Aug.
       'all-year': [3, 4, 5, 6, 7, 8],
       // KZN DARD Table 6, 'Warm areas Light frosts' column: Feb-May, Jul-Sept.
@@ -1182,13 +1274,12 @@ export const CROPS: CropDef[] = [
       // cold/moderate-frost column corroborates Aug-Mar; Oct-Dec appear only
       // in that KZN column and are excluded conservatively here.
       summer: [1, 2, 3, 4, 8, 9],
-      // UNSOURCEABLE — no KZN DARD/GDARD/DALRRD/Elsenburg primary source
-      // names winter-rainfall Western Cape turnip sowing months, and Starke
-      // Ayres' national home-garden chart (Summer/Autumn only, no regional
-      // axis) cannot support month-level WC windows either. Empty array has
-      // catalog precedent (maize, dry-beans, oats) — an honest gap beats an
-      // invented month.
-      winter: [],
+      // Was empty: no government source names Western Cape turnip months, and an
+      // honest gap beat an invented month. The seed industry's regional table does
+      // name them — SANSOR general sowing guide, 'Western Cape and South Coast'
+      // column, Turnip row: 'Mar - Nov'. It is a secondary source and is cited as
+      // one (2026-11-10 accuracy audit, CP-076).
+      winter: [3, 4, 5, 6, 7, 8, 9, 10, 11],
       // KZN DARD Table 6, 'Hot areas Frost-free' column: 'Feb - Sept/Oct' —
       // the ambiguous Oct endpoint is excluded conservatively.
       'all-year': [2, 3, 4, 5, 6, 7, 8, 9],
@@ -1266,9 +1357,10 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       // KZN DARD Table 6, 'Cold areas / Moderate frosts' column.
       summer: [8, 9, 12, 1, 2, 3],
-      // No dedicated Western Cape source; set equal to 'summer' by
-      // inference, same treatment as this catalog's other cole crops.
-      winter: [8, 9, 12, 1, 2, 3],
+      // Was a copy of 'summer', by inference. SANSOR general sowing guide,
+      // 'Western Cape and South Coast' column, Cauliflower rows (early, main crop
+      // and late together): 'Nov - Apr' (2026-11-10 accuracy audit, CP-076).
+      winter: [11, 12, 1, 2, 3, 4],
       // KZN DARD Table 6, 'Hot areas / Frost-free' column.
       'all-year': [2, 3, 4],
       // KZN DARD Table 6, 'Warm areas / Light frosts' column.
@@ -1307,7 +1399,9 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       // DAFF national parsley guide.
       summer: [8, 9, 10, 11, 12, 1, 2, 3],
-      winter: [8, 9, 10, 11, 12, 1, 2, 3], // no WC-specific source; set equal to 'summer'
+      // Was a copy of 'summer'. SANSOR general sowing guide, 'Western Cape and South
+      // Coast' column, Parsley row: 'Mar - Nov' (2026-11-10 accuracy audit, CP-076).
+      winter: [3, 4, 5, 6, 7, 8, 9, 10, 11],
       'all-year': [2, 3, 4, 5, 6, 7, 8, 9],
       'mild-frost': [7, 8, 9, 10, 11, 12, 1, 2, 3, 4],
     },
@@ -1433,7 +1527,11 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       // KZN DARD 'Cucurbits' proxy row (same treatment as pumpkin in this catalog).
       summer: [9, 10, 11, 12, 1],
-      winter: [], // Western Cape is a real production area (Starke Ayres) but no month calendar sourced
+      // Was empty for want of a month calendar. SANSOR general sowing guide, 'Western
+      // Cape and South Coast' column, 'Squash (trailing types)' row: 'Aug - Jan'.
+      // August is left out: a frost-tender seedling up in August meets frost in the
+      // inland valleys, and this catalog's other Cape cucurbits start in September (CP-076).
+      winter: [9, 10, 11, 12, 1],
       'all-year': [3, 4, 5, 7, 8, 9, 10],
       'mild-frost': [8, 9, 10, 11, 12, 1, 2],
     },
@@ -1464,7 +1562,10 @@ export const CROPS: CropDef[] = [
     frostTender: true,
     sowMonths: {
       summer: [9, 10, 11, 12, 1],
-      winter: [],
+      // Was empty. SANSOR general sowing guide, 'Western Cape and South Coast' column,
+      // 'Squash (bush types)' row: 'Aug - Jan'; August left out for frost, as for gem
+      // squash (2026-11-10 accuracy audit, CP-076).
+      winter: [9, 10, 11, 12, 1],
       'all-year': [3, 4, 5, 7, 8, 9, 10],
       'mild-frost': [8, 9, 10, 11, 12, 1, 2],
     },
@@ -1498,7 +1599,9 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       // January dropped: that sowing's harvest would run into frost.
       summer: [9, 10, 11, 12],
-      winter: [], // Western Cape is a real production area (Venus cultivar) but no month calendar sourced
+      // Was empty for want of a month calendar. SANSOR general sowing guide, 'Western
+      // Cape and South Coast' column, 'Melons (sweet)' row: 'Sept - Dec' (CP-076).
+      winter: [9, 10, 11, 12],
       'all-year': [3, 4, 5, 7, 8, 9, 10],
       'mild-frost': [8, 9, 10, 11, 12, 1, 2],
     },
@@ -1531,7 +1634,11 @@ export const CROPS: CropDef[] = [
     frostTender: true,
     sowMonths: {
       summer: [9, 10, 11, 12],
-      winter: [],
+      // Was empty. Two Western Cape sources overlap on September to December: the
+      // SANSOR general sowing guide's 'Western Cape and South Coast' column ('Mealies
+      // (green and sweetcorn)': 'Aug - Dec') and Starke Ayres' sweetcorn guideline
+      // ('Western Cape - Sept to Feb'). Only the months both give are opened (CP-076).
+      winter: [9, 10, 11, 12],
       'all-year': [1, 2, 3, 7, 8, 9],
       'mild-frost': [8, 9, 10, 11, 12, 1, 2],
     },
@@ -1566,7 +1673,12 @@ export const CROPS: CropDef[] = [
       summer: [11, 12],
       winter: [], // a Western Cape yield-trial exists but is not treated as a sowing-calendar source
       'all-year': [12, 1],
-      'mild-frost': [],
+      // Was empty, so a warm-area grower could not schedule cowpea at all (accuracy
+      // audit, CP-082). The national Cowpeas Infopak (Department of Agriculture and
+      // ARC): 'The best time to plant cowpeas in cooler areas is the middle of
+      // November. In warmer areas the crop can be planted during the middle of
+      // December.' https://www.arc.agric.za/arc-gci/Documents/CultivatingCowpeas.pdf
+      'mild-frost': [12],
     },
     // 21 days = first imifino (leaf) pick; 120 days = grain-type upper bound (used for bed occupancy).
     daysToHarvest: 120,
@@ -1659,7 +1771,9 @@ export const CROPS: CropDef[] = [
     icon: '🔴',
     sowMonths: {
       summer: [7, 8, 9, 10, 11, 12, 1, 2, 3, 4],
-      winter: [7, 8, 9, 10, 11, 12, 1, 2, 3, 4], // no WC-specific source; set equal to 'summer'
+      // Was a copy of 'summer'. SANSOR general sowing guide, 'Western Cape and South
+      // Coast' column, Radish row: 'Mar - Oct' (2026-11-10 accuracy audit, CP-076).
+      winter: [3, 4, 5, 6, 7, 8, 9, 10],
       'all-year': [3, 4, 5, 6, 7, 8, 9, 10],
       'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     },
@@ -1859,14 +1973,29 @@ export const CROPS: CropDef[] = [
   },
 ];
 
-/** Crops whose 'all-year' (frost-free) sowing months are taken from the KZN
- * DARD Plant Establishment Table 6 'Hot areas Frost-free' column
- * (https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf).
- * Audited 2026-09-27: every other crop's 'all-year' months have no source
- * found yet, so the planner says so when a frost-free plan uses them rather
- * than presenting them as checked. */
+/** Crops whose 'all-year' (hot-area, frost-free) sowing months are a row of KZN
+ * DARD's Table 6 'Hot areas Frost-free' column: the row that names the crop, or the
+ * table's own group row for it ('Cucurbits', 'Bean, bush'). Dry beans and watermelon
+ * are inside their row but deliberately narrower. Cauliflower's row is the same
+ * department's Cole Crops Table 14.
+ * (https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf;
+ * the rows as transcribed are in research/crop-sources/_frost-free-months.json and the
+ * per-crop dossiers, and tests/crop-calendar-sources.test.ts ties this column to them.)
+ *
+ * Every other crop's 'all-year' months have no published row — kale and coriander
+ * borrow a related crop's row, and say so — and the planner names those crops when a
+ * hot-area plan uses them rather than presenting them as checked.
+ *
+ * 2026-11-10: the list was eight crops while the column cited the table for
+ * eight more, so a plan warned about cauliflower and radish months that were
+ * sourced; and sixteen older rows did not match the column they were filed
+ * under. Both are corrected here (accuracy audit, CP-075, CP-088). */
 export const FROST_FREE_CALENDAR_CITED: ReadonlySet<string> = new Set([
   'swiss-chard', 'onions', 'tomatoes', 'peppers', 'chilli', 'true-spinach', 'turnip', 'carrots',
+  'green-beans', 'dry-beans', 'cabbage', 'beetroot', 'lettuce', 'garlic', 'peas', 'broccoli',
+  'broad-beans', 'potato', 'sweet-potato', 'amadumbe',
+  'butternut', 'pumpkin', 'cucumber', 'watermelon', 'gem-squash', 'baby-marrow', 'spanspek',
+  'cauliflower', 'parsley', 'radish', 'brinjal', 'sweetcorn',
 ]);
 
 export function cropByKey(k: string): CropDef | undefined {

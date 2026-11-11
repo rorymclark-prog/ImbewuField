@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { classifyKoppen, rainPatternFor, summerMonthIndices, type MonthlyClimate } from '@/lib/koppen-global';
+import { classifyKoppen, rainPatternFor, sowingCalendarFor, summerMonthIndices, type MonthlyClimate } from '@/lib/koppen-global';
 
 // These tests check the RULES, not the weather.
 //
@@ -192,8 +192,17 @@ test('the rainfall pattern bridge matches the planner\'s four patterns', () => {
   const winterRain = seasonal({ summerTemp: 24, winterTemp: 14, summerRain: 10, winterRain: 140, lat });
   assert.equal(rainPatternFor(winterRain, classifyKoppen(winterRain)), 'winter');
 
+  // Rain in both halves of the year used to be the ONLY way to reach 'all-year', and
+  // reached it whatever the frost. That column is KZN DARD's "hot areas, frost-free":
+  // it is chosen by frost and heat (2026-11-10 accuracy audit, CP-074), so even rain
+  // with no frost evidence reads the warm-area column — the colder neighbour.
   const evenRain = seasonal({ summerTemp: 24, winterTemp: 16, summerRain: 100, winterRain: 100, lat });
-  assert.equal(rainPatternFor(evenRain, classifyKoppen(evenRain)), 'all-year');
+  assert.equal(rainPatternFor(evenRain, classifyKoppen(evenRain)), 'mild-frost');
+  // The same climate with a frost-free record is a hot area, on even rain or summer rain.
+  for (const rain of [{ summerRain: 100, winterRain: 100 }, { summerRain: 140, winterRain: 10 }]) {
+    const hot = { ...seasonal({ summerTemp: 24, winterTemp: 16, ...rain, lat }), recordMinC: 5 };
+    assert.equal(rainPatternFor(hot, classifyKoppen(hot)), 'all-year');
+  }
 
   // A hard-frost winter decides the calendar whatever the rain timing: the frost-waiting
   // 'summer' column — never the LIGHT-frost one (the pre-2026-09-27 inversion).
@@ -202,7 +211,81 @@ test('the rainfall pattern bridge matches the planner\'s four patterns', () => {
   const frostyWinterRain = seasonal({ summerTemp: 22, winterTemp: 2, summerRain: 10, winterRain: 140, lat });
   assert.equal(rainPatternFor(frostyWinterRain, classifyKoppen(frostyWinterRain)), 'summer');
 
-  // ...but a tropical climate is never called mild-frost, however the numbers fall.
+  // ...and a hot tropical lowland is the hot-area column: never a frost calendar, with
+  // or without a record minimum (its coldest month is past Köppen's 18 °C tropical line).
   const tropical = flat(26, 200, -10);
-  assert.notEqual(rainPatternFor(tropical, classifyKoppen(tropical)), 'mild-frost');
+  assert.equal(rainPatternFor(tropical, classifyKoppen(tropical)), 'all-year');
+  // A COOL tropical highland (Nairobi: coldest month 18.7 °C, hottest 21.6 °C) is frost-free
+  // but has no hot summer to close, so it reads the warm-area column. Until 2026-11-10 this
+  // test said a tropical climate is "never mild-frost"; what is true is that it is never
+  // sent to the hard-frost one.
+  const highland = { ...seasonal({ summerTemp: 21.6, winterTemp: 18.7, summerRain: 120, winterRain: 90, lat: -1 }), recordMinC: 8.7 };
+  assert.equal(classifyKoppen(highland).group, 'A');
+  assert.equal(rainPatternFor(highland, classifyKoppen(highland)), 'mild-frost');
+});
+
+test('the record minimum decides frost where a mean cannot: arid sites and close calls', () => {
+  const lat = -25;
+  // Komatipoort-like: semi-arid, summer rain, coldest month 18 °C. The mean-and-aridity
+  // guess sent every such site to the hard-frost column (CP-073). Its own record clears it.
+  const lowveld = seasonal({ summerTemp: 26, winterTemp: 18.4, summerRain: 85, winterRain: 12, lat });
+  assert.equal(classifyKoppen(lowveld).group, 'B', 'fixture: must be an arid class');
+  assert.equal(rainPatternFor({ ...lowveld, recordMinC: 6.9 }, classifyKoppen(lowveld)), 'all-year');
+  // Upington-like: also arid and summer-rain, but its record shows frost. Stays on the frost column.
+  const kalahari = seasonal({ summerTemp: 28, winterTemp: 12, summerRain: 28, winterRain: 4, lat });
+  assert.equal(classifyKoppen(kalahari).group, 'B');
+  assert.equal(rainPatternFor({ ...kalahari, recordMinC: -2.5 }, classifyKoppen(kalahari)), 'summer');
+  // An arid site with a warm mean and NO record minimum is not cleared: lean cold.
+  const unknown = seasonal({ summerTemp: 27, winterTemp: 15.3, summerRain: 60, winterRain: 8, lat });
+  assert.equal(classifyKoppen(unknown).group, 'B');
+  assert.equal(rainPatternFor(unknown, classifyKoppen(unknown)), 'summer');
+  // Lephalale-like: the same site with a record that just stays above freezing is a
+  // light-frost site — and one that reached freezing is not.
+  assert.equal(rainPatternFor({ ...unknown, recordMinC: 0.1 }, classifyKoppen(unknown)), 'mild-frost');
+  assert.equal(rainPatternFor({ ...unknown, recordMinC: 0 }, classifyKoppen(unknown)), 'summer');
+
+  // Frost-free and hot in summer, but a winter too cool for beans to keep growing
+  // (below 16 °C): the warm-area column, however frost-free the record.
+  const coolWinter = { ...seasonal({ summerTemp: 25, winterTemp: 15, summerRain: 140, winterRain: 20, lat }), recordMinC: 6 };
+  assert.equal(rainPatternFor(coolWinter, classifyKoppen(coolWinter)), 'mild-frost');
+  // Frost-free with a warm winter but a mild summer (East London): nothing to close, so warm-area.
+  const mildSummer = { ...seasonal({ summerTemp: 23.4, winterTemp: 17.6, summerRain: 110, winterRain: 55, lat }), recordMinC: 10 };
+  assert.equal(rainPatternFor(mildSummer, classifyKoppen(mildSummer)), 'mild-frost');
+  // A record that touched 2 °C is not treated as frost-free: the rule's line is 2 °C, and a
+  // grid cell that came that close may hold colder ground the grid does not show.
+  const touched = { ...seasonal({ summerTemp: 26, winterTemp: 17, summerRain: 140, winterRain: 20, lat }), recordMinC: 1.9 };
+  assert.equal(rainPatternFor(touched, classifyKoppen(touched)), 'mild-frost');
+  // A frost-free record makes a cool maritime coast a warm-area site even under 13 °C (George).
+  const coolCoast = { ...seasonal({ summerTemp: 20, winterTemp: 12.7, summerRain: 55, winterRain: 50, lat: -34 }), recordMinC: 3.1 };
+  assert.equal(rainPatternFor(coolCoast, classifyKoppen(coolCoast)), 'mild-frost');
+  assert.equal(rainPatternFor({ ...coolCoast, recordMinC: undefined }, classifyKoppen(coolCoast)), 'summer');
+});
+
+test('the calendar choice reports rain timing separately and flags a close call', () => {
+  const lat = -25;
+  // A hot lowveld farm is on the frost-free column and still has SUMMER rain. Tank sizing
+  // and rain labels read rainSeason; reading `pattern` there would call this "all-year rain".
+  const lowveld = { ...seasonal({ summerTemp: 26, winterTemp: 18.4, summerRain: 85, winterRain: 12, lat }), recordMinC: 6.9 };
+  const choice = sowingCalendarFor(lowveld, classifyKoppen(lowveld));
+  assert.equal(choice.pattern, 'all-year');
+  assert.equal(choice.rainSeason, 'summer');
+  assert.equal(choice.closeCall, null, 'well inside every line: nothing to warn about');
+  assert.equal(choice.recordMinC, 6.9);
+
+  // Mbombela's real readings (NASA POWER, 2026-11-10): 0.1 °C short of the warm-winter
+  // line. It gets the colder column, and the grower is told the hot one is close.
+  const nearHot = { ...seasonal({ summerTemp: 24.5, winterTemp: 15.9, summerRain: 95, winterRain: 18, lat }), recordMinC: 3.2 };
+  const near = sowingCalendarFor(nearHot, classifyKoppen(nearHot));
+  assert.equal(near.pattern, 'mild-frost');
+  assert.equal(near.closeCall, 'all-year');
+
+  // The colder neighbour is named first when a site has one on each side.
+  const justHot = { ...seasonal({ summerTemp: 24.7, winterTemp: 16.8, summerRain: 105, winterRain: 23, lat }), recordMinC: 5.4 };
+  const just = sowingCalendarFor(justHot, classifyKoppen(justHot));
+  assert.equal(just.pattern, 'all-year');
+  assert.equal(just.closeCall, 'mild-frost');
+
+  // Even rain is 'all-year' rain whatever column the frost test picks.
+  const coast = { ...seasonal({ summerTemp: 21, winterTemp: 14, summerRain: 55, winterRain: 50, lat: -34 }), recordMinC: 5 };
+  assert.equal(sowingCalendarFor(coast, classifyKoppen(coast)).rainSeason, 'all-year');
 });

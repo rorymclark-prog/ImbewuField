@@ -1,0 +1,395 @@
+{
+ "view": {
+  "name": "phone-light-simple-zu",
+  "viewport": "390x844",
+  "devicePixelRatio": 1,
+  "theme": "earth light",
+  "level": "simple",
+  "lang": "en vs zu",
+  "sectionsOpened": false,
+  "countryHold": "confirmed as ZA",
+  "appTextScale": 1,
+  "url": "/facilitator/crops",
+  "site": "public sample farm",
+  "servedBuild": {
+   "branch": "claude/blissful-pasteur-1c4ne6",
+   "sha": "3303ed3"
+  },
+  "siteClimate": {
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsShown": true,
+   "plannerShown": true
+  }
+ },
+ "method": "Text runs identical in the English and isiZulu captures of the same view, sorted by rule. Heuristic: check the lists.",
+ "rules": {
+  "translated": "the isiZulu run does not occur in the English capture",
+  "figures, units and dates": "only digits, punctuation, units and month names remain",
+  "crop, plant, bed and app names": "a catalogue crop name, one of the sample farm's four plants, \"Bed n\"/\"Plot n\", or an app name, optionally followed by figures",
+  "sentences of 9 or more words": "guidance, caveats and explanations. Some of this is sourced farming copy that must stay English until reviewed; this script cannot tell which",
+  "short labels of 8 words or fewer": "headings, buttons, field labels and status words, and fragments of them where a label is split across elements: the interface text that could carry an isiZulu draft"
+ },
+ "summary": {
+  "translated": {
+   "distinctRuns": 17,
+   "occurrences": 17
+  },
+  "figures, units and dates": {
+   "distinctRuns": 41,
+   "occurrences": 135
+  },
+  "crop, plant, bed and app names": {
+   "distinctRuns": 25,
+   "occurrences": 46
+  },
+  "sentences of 9 or more words": {
+   "distinctRuns": 27,
+   "occurrences": 28
+  },
+  "short labels of 8 words or fewer": {
+   "distinctRuns": 71,
+   "occurrences": 120
+  }
+ },
+ "interfaceLabels": {
+  "translatedRuns": 17,
+  "unchangedShortLabels": 71,
+  "statement": "71 distinct short labels or label fragments are unchanged English and 17 distinct runs are translated (120 and 17 occurrences)."
+ },
+ "translated": [
+  "Uhambo",
+  "Uhlelo lokukhiqiza",
+  "Izitshalo nezindlu zezilwane ezisemephini yakho",
+  "IsiZulu draft · Isaziso senguqulo yesiZulu esalungiswa.",
+  "This interface draft has not been reviewed by a fluent isiZulu speaker. Crop names, planting times, climate and price assumptions, and task instructions remain in English pending source and local farming review. Amagama ezitshalo, izikhathi zokutshala, isimo sezulu, amanani nemiyalelo yemisebenzi kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.",
+  "Phakamisa uhlelo ngokuzenzakalelayo",
+  "Umbhede",
+  "Engeza isilimo",
+  "Hamba nalolu hlelo",
+  "Draft notice: exported task names, planting times and instructions remain in English pending source and local farming review. Isaziso: amagama emisebenzi, izikhathi zokutshala nemiyalelo kumafayela athunyelwayo kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.",
+  "Engeza 37 imisebenzi ekhalendeni",
+  "Landa uhlelo (PDF)",
+  "Ikhalenda nemisebenzi",
+  "yivule ukuze uphrinte",
+  "Lima, umsizi wakho wokutshala",
+  "Cela usizo",
+  "Isithombe"
+ ],
+ "unchangedShortLabels": [
+  {
+   "text": "+ crop",
+   "count": 11
+  },
+  {
+   "text": "plot",
+   "count": 4
+  },
+  {
+   "text": "· reference",
+   "count": 4
+  },
+  {
+   "text": "(proposed)",
+   "count": 4
+  },
+  {
+   "text": "existing",
+   "count": 4
+  },
+  {
+   "text": "confirm picking months",
+   "count": 4
+  },
+  {
+   "text": "Needs information",
+   "count": 4
+  },
+  {
+   "text": "Age not recorded",
+   "count": 4
+  },
+  {
+   "text": "Add planting dates",
+   "count": 4
+  },
+  {
+   "text": "Care and what to buy",
+   "count": 4
+  },
+  {
+   "text": ", 1 proposed",
+   "count": 3
+  },
+  {
+   "text": "plant",
+   "count": 3
+  },
+  {
+   "text": "1 plants need age groups",
+   "count": 3
+  },
+  {
+   "text": "Harvest targets",
+   "count": 2
+  },
+  {
+   "text": "Fruit, nuts & berries",
+   "count": 2
+  },
+  {
+   "text": "· expected when established",
+   "count": 2
+  },
+  {
+   "text": "0 existing; 1 proposed. Products: fruit.",
+   "count": 2
+  },
+  {
+   "text": "record",
+   "count": 2
+  },
+  {
+   "text": "s",
+   "count": 2
+  },
+  {
+   "text": "Country details saved for this sample session only.",
+   "count": 1
+  },
+  {
+   "text": "Your buyer-demand records",
+   "count": 1
+  },
+  {
+   "text": "Your growing estimates",
+   "count": 1
+  },
+  {
+   "text": "Automatic plan from your estimates",
+   "count": 1
+  },
+  {
+   "text": "Saved planned nursery batches",
+   "count": 1
+  },
+  {
+   "text": "DEMO — references stay in this sample session.",
+   "count": 1
+  },
+  {
+   "text": "Check saved nursery batches",
+   "count": 1
+  },
+  {
+   "text": "Site country and region",
+   "count": 1
+  },
+  {
+   "text": "Review country evidence",
+   "count": 1
+  },
+  {
+   "text": "Review or change country details",
+   "count": 1
+  },
+  {
+   "text": "Plan from weekly demand",
+   "count": 1
+  },
+  {
+   "text": "Nursery planner",
+   "count": 1
+  },
+  {
+   "text": "This site’s trays and growing surface",
+   "count": 1
+  },
+  {
+   "text": "Year one — from this month",
+   "count": 1
+  },
+  {
+   "text": "Year two — repeat crops; check plant ages",
+   "count": 1
+  },
+  {
+   "text": "Now",
+   "count": 1
+  },
+  {
+   "text": "Vegetables",
+   "count": 1
+  },
+  {
+   "text": "Staple grain",
+   "count": 1
+  },
+  {
+   "text": "Staple crops",
+   "count": 1
+  },
+  {
+   "text": "Your trees & bushes",
+   "count": 1
+  },
+  {
+   "text": "Animal products",
+   "count": 1
+  },
+  {
+   "text": "Your animals",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts & berries on your map",
+   "count": 1
+  },
+  {
+   "text": ", 2 proposed",
+   "count": 1
+  },
+  {
+   "text": "How production changes as plants grow",
+   "count": 1
+  },
+  {
+   "text": "Vegetables & staples",
+   "count": 1
+  },
+  {
+   "text": "Numbers are projections in kg",
+   "count": 1
+  },
+  {
+   "text": "Vegetables & staples:",
+   "count": 1
+  },
+  {
+   "text": "plants",
+   "count": 1
+  },
+  {
+   "text": "2 plants need age groups",
+   "count": 1
+  },
+  {
+   "text": "What the projection assumes",
+   "count": 1
+  },
+  {
+   "text": "Check your farm conditions",
+   "count": 1
+  },
+  {
+   "text": "Update site survey",
+   "count": 1
+  },
+  {
+   "text": "Climate area:",
+   "count": 1
+  },
+  {
+   "text": "Subtropical coast or Lowveld / Bushveld",
+   "count": 1
+  },
+  {
+   "text": "Your survey supplies the observations below.",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts and indigenous foods",
+   "count": 1
+  },
+  {
+   "text": "Assumed variety: Hass",
+   "count": 1
+  },
+  {
+   "text": "Regional reference: Mango",
+   "count": 1
+  },
+  {
+   "text": "Water through the dry season",
+   "count": 1
+  },
+  {
+   "text": "Frost on this farm",
+   "count": 1
+  },
+  {
+   "text": "Sun and drainage",
+   "count": 1
+  },
+  {
+   "text": "Sun: not recorded.",
+   "count": 1
+  },
+  {
+   "text": "Crop varieties to check locally (",
+   "count": 1
+  },
+  {
+   "text": "crops",
+   "count": 1
+  },
+  {
+   "text": "Food, production kg and growing space graphs",
+   "count": 1
+  },
+  {
+   "text": "Record expected or actual production",
+   "count": 1
+  },
+  {
+   "text": "Record food kept in store",
+   "count": 1
+  },
+  {
+   "text": "Or:",
+   "count": 1
+  },
+  {
+   "text": "Future harvest PDF",
+   "count": 1
+  },
+  {
+   "text": "Detailed reference PDF",
+   "count": 1
+  },
+  {
+   "text": "What each file contains",
+   "count": 1
+  }
+ ],
+ "unchangedSentences": [
+  "Vegetables and staples · Fruit, nuts & berries · Animal products. Housing is listed. Use the site survey for animal numbers and care checks.",
+  "Country details are available from this device. Live account updates are unavailable.",
+  "Check the saved plan to review nursery batches or open the separate field seed worksheet for accepted cycles without nursery raising. Field seed sourcing does not require a nursery batch, nursery equipment or a nursery review horizon. References do not record actual sowing, available seeds or live nursery stock.",
+  "Check the current saved plan to load eligible planned nursery batches.",
+  "Saved country: South Africa. This is the grower’s description, not local agronomy approval.",
+  "· Reference tools only; opening this link does not save country details or approve farming advice.",
+  "From your map · hover or tap a bar",
+  "Outlined bars: sourced planning references when established. Solid bars: locally confirmed picking months. New plants need time; references do not count towards food totals.",
+  "On your map, with picking months to confirm: Avocado, Mango, Moringa, Num-num. They stay listed on the printed plan.",
+  "No locally confirmed production months yet. Hives, coops and pens on your map stay listed below and on the printed plan.",
+  "Picking months vary by place and variety. Outlined calendar marks are planning references when established. Confirm months for plants that already give food here to count them in food totals. Plants stay on the printed plan while dates are unknown.",
+  "These confirmations are kept on this device for this design.",
+  "The next ten years, starting this month. Add planting dates and expected yields under each plant above. Missing yields remain visible; young trees do not receive a mature-tree yield.",
+  "* Known subtotal only. Missing production is not zero. Striped ends show harvest that changes as plants age during the year.",
+  "29.7 kg from cycles starting harvest in this period",
+  "Bars use a labelled variety assumption or regional reference. New plants need time to produce. Only locally confirmed months enter your food totals.",
+  "0 existing; 2 proposed. Products: Leaves and green pods; keep their records separate.",
+  "0 existing; 1 proposed. Products: Ripe fruit, fresh or preserved.",
+  "Not recorded. Complete the site survey and confirm water before choosing an intensive plan.",
+  "Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates.",
+  "Drainage: not recorded. Soil-test results and crop-specific needs still need checking.",
+  "Use your own records or a locally checked estimate. Missing amounts stay unknown. Eggs, litres and kg are kept separate.",
+  "Files are made on this device. Download a copy to use away from the app.",
+  "Your plan includes vegetables, fruit, nuts, berries and animal products from your map.",
+  "The calendar file works with Google Calendar and Apple Calendar. Tasks land as whole-day entries on the first of their month — this plan works in months, not exact days — with a reminder three days before. The printed plan shows each crop growing in its bed across the months, like the app, plus pictures of what you can pick.",
+  "It also has what to buy, monthly tick-off jobs and a harvest record.",
+  "Picking dates for trees and animals must be confirmed locally; plants and housing with unknown dates stay listed on the plan. The separate Future harvest PDF has the ten-year graph and age groups. Calendar & jobs gives concise wall sheets in your chosen paper size. Record animal numbers and care checks in the site survey; confirm production months in this plan. The detailed reference includes the full bed-by-bed plan, benchmarks, buying lists, guidance, monthly field sheets and harvest records."
+ ]
+}

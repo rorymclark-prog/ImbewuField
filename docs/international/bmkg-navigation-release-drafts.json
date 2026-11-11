@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "status": "unreviewed-ai-draft",
+  "provenance": "Codex",
+  "sourceKind": "Codex-ai-draft",
+  "runtimeActivation": false,
+  "runtimeSelection": "existing-four-update-descriptions-only",
+  "humanReview": false,
+  "fluentReview": false,
+  "sourceFile": "lib/release-notes.ts",
+  "sourceFileSha256": "2e40aee2c8cd37776518aedb91053eb62412d7c1c7b8fedceb2dce67e7c3b9b8",
+  "milestoneId": "indonesia-bmkg-research-navigation",
+  "locales": [
+    "zu",
+    "st",
+    "ve",
+    "ts"
+  ],
+  "reviewNotes": "Twelve source-paired release-description candidates for four existing languages, Codex provenance. No fluent/human approval or new runtime language. Links are not a forecast feed or approved local advice; provider terms applicability remains unresolved.",
+  "dictionaryPreservation": {
+    "zu": {
+      "originalFileSha256": "d12a870b8e6b575bd28843b03255aab8f197cd1a616749a76cfbda58f26598c8",
+      "selectedFileSha256": "5d4e957facd1f0967f9ef158ebda9fffbbbccd8ab10c1eb4f8bf7dae06486f76"
+    },
+    "st": {
+      "originalFileSha256": "6947712b6864d3ad378695e057caf2370fa6e65f85f982f8cf9a8fe0462b780d",
+      "selectedFileSha256": "2fcd5b9e19f6c5eb3fb1610c0bf58a1ababcbf81e99e6e394c36b4f314ba49ca"
+    },
+    "ve": {
+      "originalFileSha256": "0227ef6e5f3c0085bf517aba595410ef4ed102d5cea37cd4a6ab9bc20d069e11",
+      "selectedFileSha256": "278796c49b6124e50cf076dcd5b8f29f5d2b7575d59145dea506c0fd4bd57c84"
+    },
+    "ts": {
+      "originalFileSha256": "b41360fffccfc8c738edb7353e90f29aa113f6a59f0c6e9dfe98f31c188e51f7",
+      "selectedFileSha256": "ba2888af6e1e6744ceb797cfd85d8ada0f0ba289310d38613caa46e4ce2df5c9"
+    }
+  },
+  "releasePairs": [
+    {
+      "english": "Find Indonesia’s official BMKG sources",
+      "zu": "Thola imithombo esemthethweni ye-BMKG yase-Indonesia",
+      "st": "Fumana mehlodi ya semmuso ya BMKG ya Indonesia",
+      "ve": "Wanani zwiko zwa tshiofisi zwa BMKG ya Indonesia",
+      "ts": "Kuma swihlovo swa ximfumo swa BMKG swa Indonesia",
+      "messageSha256": "a923821db43df86b88b8d91746fb0e3352caa9bce796608f887dcfc5d1cb1036"
+    },
+    {
+      "english": "Country evidence → Research priorities → Indonesia",
+      "zu": "Ubufakazi bezwe → Izinto ezibalulekile zocwaningo → Indonesia",
+      "st": "Bopaki ba naha → Dintho tse tlang pele dipatlisisong → Indonesia",
+      "ve": "Vhuṱanzi ha shango → Zwine zwa tea u ṱoḓisiswa u thoma → Indonesia",
+      "ts": "Vumbhoni bya tiko → Swilo leswi rhangisiwaka eka ndzavisiso → Indonesia",
+      "messageSha256": "fb983d2edd599bd8b4d5d945fec0bb3f42edc29a98d38192187f15d02d4db954"
+    },
+    {
+      "english": "Open the official forecast documentation, open-data description and terms from Indonesia’s research-queue card. Source links do not enable a forecast feed or local crop advice.",
+      "zu": "Vula imibhalo esemthethweni yesibikezelo, incazelo yedatha evulekile nemigomo ekhadini locwaningo lase-Indonesia. Izixhumanisi zemithombo azivuli idatha yesibikezelo noma izeluleko zezitshalo zendawo.",
+      "st": "Bula ditokomane tsa semmuso tsa ponelopele, tlhaloso ya data e bulehileng le dipehelo kareteng ya Indonesia lenaneng la dipatlisiso. Dihokelo tsa mehlodi ha di bulele data ya ponelopele kapa keletso ya dijalo ya lehae.",
+      "ve": "Vulani maḓokumente a tshiofisi a mavhonele a mutsho, ṱhaluso ya data yo vuleaho na milayo kha garata ya Indonesia ya ṱoḓisiso. Zwikhokanyi zwa zwiko a zwi vulisi data ya mavhonele a mutsho kana nyeletshedzo ya zwimela ya henefho.",
+      "ts": "Pfula matsalwa ya ximfumo ya vuprofeta bya maxelo, nhlamuselo ya data leyi pfulekeke ni swipimelo eka khadi ra Indonesia ra ndzavisiso. Swihlanganisi swa swihlovo a swi pfuri data ya vuprofeta bya maxelo kumbe switsundzuxo swa swibyariwa swa ndhawu.",
+      "messageSha256": "987676d39ac68cb2f6f1f020e43ad1fcfafa65961653eb8069a60cb7c6bcd3b0"
+    }
+  ]
+}

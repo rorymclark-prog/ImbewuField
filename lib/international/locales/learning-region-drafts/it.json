@@ -1,0 +1,834 @@
+{
+  "locale": "it",
+  "sourceSha256": "85c38bfe7d3209b39886dbf9eb70019810e1f37c6f64587df370a14587889f74",
+  "sourceCommit": null,
+  "sourceState": "hash-pinned-uncommitted-component",
+  "sourceFileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+  "preparedContractSha256": "c01ef166599f4d72e8003b5e83dbf03af790d763abcf45658bfe878dd9c7663f",
+  "targetContractSha256": "a17cdb789bb7e9a60f914fbb431664520fa1033ee78eeb20f9431d5af147582b",
+  "activeOrderSha256": "a94c76685292b49113bf70af74ea88a43e483d6ec65233fbae96ab1f3ddeba51",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "humanReview": false,
+  "targetLocales": [
+    "de",
+    "it",
+    "nl",
+    "pl"
+  ],
+  "counts": {
+    "sourceOutputBindings": 28,
+    "locales": 4,
+    "outputBindings": 112,
+    "translatablePhraseRows": 26,
+    "aiDraftPairs": 104,
+    "fixedLiteralRows": 2,
+    "copiedFixedBindings": 8
+  },
+  "sourceCampaignLocales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw"
+  ],
+  "sourceCampaignCounts": {
+    "sourceOutputBindings": 28,
+    "locales": 4,
+    "outputBindings": 112,
+    "translatablePhraseRows": 26,
+    "aiDraftPairs": 104,
+    "fixedLiteralRows": 2,
+    "copiedFixedBindings": 8,
+    "fixedLiteralKeys": [
+      "learningRegionUi014",
+      "learningRegionUi021"
+    ],
+    "fixedLiteralMeaning": "Period and DEMO prefix are exact-copy immutable literals, not meaningful translated phrases. All28 rows remain in each reduced dictionary for complete bindings; root may carry fixed literals during assembly."
+  },
+  "messages": [
+    {
+      "key": "learningRegionUi001",
+      "english": "Farming course · South African source material.",
+      "sha256": "e3b082a5f0b973a19707f8547b80337a82d5d3af1db45a704e00c26222d8537f",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "core-farming branch only: South African source material is teaching provenance, not destination suitability.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 1600,
+          "endUtf16": 1647,
+          "startByte": 1600,
+          "endByte": 1648,
+          "line": 26,
+          "column": 44,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[2]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[2]:JsxElement/forEachChild[1]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "Farming course · South African source material.",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Corso di agricoltura · materiale didattico sudafricano."
+    },
+    {
+      "key": "learningRegionUi002",
+      "english": "Design teaching preview.",
+      "sha256": "2dacb05952f648f68962f0bf56cd34bee50d9fbd6b567f213fbe02dcb9efdf35",
+      "fragment": true,
+      "contextRequired": true,
+      "contextNote": "design-preview branch; strong title precedes row003 in the same paragraph.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 1709,
+          "endUtf16": 1733,
+          "startByte": 1710,
+          "endByte": 1734,
+          "line": 27,
+          "column": 49,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[2]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[2]:JsxElement/forEachChild[1]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "Design teaching preview.",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Anteprima didattica sulla progettazione."
+    },
+    {
+      "key": "learningRegionUi003",
+      "english": " It draws on Southern African and other teaching sources.",
+      "sha256": "8f98b01121b80358ffc758fffcb33b6b726e3a784743db3b420c07db6e162964",
+      "fragment": true,
+      "contextRequired": true,
+      "contextNote": "design-preview branch; exact leading ASCII space after strong title row002; mixed Southern African and other teaching sources.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 1742,
+          "endUtf16": 1799,
+          "startByte": 1743,
+          "endByte": 1800,
+          "line": 27,
+          "column": 82,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[2]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[2]:JsxElement/forEachChild[2]:JsxText",
+          "rawSource": " It draws on Southern African and other teaching sources.",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": " Si basa su fonti didattiche dell’Africa meridionale e di altre origini."
+    },
+    {
+      "key": "learningRegionUi004",
+      "english": "Farm Finance teaching preview.",
+      "sha256": "8996c41008c3d0f506b7a41dc82a566f1aa4f0f3628bfaa2d32d7fc62b33b1a3",
+      "fragment": true,
+      "contextRequired": true,
+      "contextNote": "finance-preview branch; strong title precedes row005 in the same paragraph.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 1825,
+          "endUtf16": 1855,
+          "startByte": 1826,
+          "endByte": 1856,
+          "line": 28,
+          "column": 22,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[2]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:JsxElement/forEachChild[1]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "Farm Finance teaching preview.",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Anteprima didattica di economia agraria."
+    },
+    {
+      "key": "learningRegionUi005",
+      "english": " Classroom examples are not local prices.",
+      "sha256": "c041d637bc80e2650efe1d1728bcddd244b120460c0558df51b033f2cf39e442",
+      "fragment": true,
+      "contextRequired": true,
+      "contextNote": "finance-preview branch; exact leading ASCII space after row004. Classroom examples are not local prices; this wording supplies no geographical source region.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 1864,
+          "endUtf16": 1905,
+          "startByte": 1865,
+          "endByte": 1906,
+          "line": 28,
+          "column": 61,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[2]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:JsxElement/forEachChild[2]:JsxText",
+          "rawSource": " Classroom examples are not local prices.",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": " Gli esempi didattici non rappresentano prezzi locali."
+    },
+    {
+      "key": "learningRegionUi006",
+      "english": "Local suitability has not been assessed here. A saved country, country evidence or a translation cannot establish it.",
+      "sha256": "5f530fe5e1956a553f8e9c7bed5adde1e91d94c57cbab7843f9a4a375c3e718a",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "All scope branches; negative local-suitability statement. Country, evidence and translation do not establish suitability.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 1918,
+          "endUtf16": 2035,
+          "startByte": 1919,
+          "endByte": 2036,
+          "line": 29,
+          "column": 8,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[4]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "Local suitability has not been assessed here. A saved country, country evidence or a translation cannot establish it.",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "L’idoneità locale non è stata verificata in questa sede. Un paese salvato, documentazione sul paese o una traduzione non possono stabilirla."
+    },
+    {
+      "key": "learningRegionUi007",
+      "english": "Saved-site details are unavailable or changed. Check current saved sites and choose again.",
+      "sha256": "738f8a6e65f21b691fc859807d9e0e12e1c2010eb88d3f454af9f6689ab67d49",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "destination unavailable branch; saved details unavailable/changed, choose again. No private site data in translation input.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 2101,
+          "endUtf16": 2191,
+          "startByte": 2102,
+          "endByte": 2192,
+          "line": 30,
+          "column": 62,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[2]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "Saved-site details are unavailable or changed. Check current saved sites and choose again.",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "I dettagli del sito salvato non sono disponibili o sono stati modificati. Controlla i siti attualmente salvati e scegli di nuovo."
+    },
+    {
+      "key": "learningRegionUi008",
+      "english": "No site selected. Country and agricultural region are unknown.",
+      "sha256": "1f19cd006ee98412b614704cc4648e2dd757e2dda9141c69e80ee9d6ecf84f05",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "No resolution/no selected site branch; country and agricultural region unknown.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 2221,
+          "endUtf16": 2283,
+          "startByte": 2222,
+          "endByte": 2284,
+          "line": 31,
+          "column": 26,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[2]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "No site selected. Country and agricultural region are unknown.",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Nessun sito selezionato. Paese e regione agricola non sono noti."
+    },
+    {
+      "key": "learningRegionUi009",
+      "english": "Saved site country: ",
+      "sha256": "a92adc9aa651aed44ad601dcb631e2541c2160aadd88ff0a711f536693d99025",
+      "fragment": true,
+      "contextRequired": true,
+      "contextNote": "Confirmed context country prefix before a dynamic country code inside strong; keep final colon plus space.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 2324,
+          "endUtf16": 2344,
+          "startByte": 2325,
+          "endByte": 2345,
+          "line": 33,
+          "column": 14,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[2]:JsxFragment/forEachChild[2]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "Saved site country: ",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Paese del sito salvato: "
+    },
+    {
+      "key": "learningRegionUi010",
+      "english": " (grower’s description).",
+      "sha256": "e4d978b960c6b2b4e647f96c5f01d5398105543acf71630130212d5f70a71a9d",
+      "fragment": true,
+      "contextRequired": true,
+      "contextNote": "Confirmed context country suffix after dynamic country code; preserve exact leading ASCII space plus opening/closing parentheses and final period boundaries. Preserve grower-described meaning; internal possessive grammar and apostrophe usage follow the target language, not English.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 2382,
+          "endUtf16": 2406,
+          "startByte": 2383,
+          "endByte": 2409,
+          "line": 33,
+          "column": 72,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[2]:JsxFragment/forEachChild[2]:JsxElement/forEachChild[3]:JsxText",
+          "rawSource": " (grower’s description).",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": " (descrizione del coltivatore)."
+    },
+    {
+      "key": "learningRegionUi011",
+      "english": "Agricultural region: ",
+      "sha256": "f351f87faa43dc4baa83dbefc7b54ebcc2b02a7013f5d364d8ceb5eed07353d2",
+      "fragment": true,
+      "contextRequired": true,
+      "contextNote": "Confirmed context region prefix before dynamic region or row012 fallback; keep final colon plus space.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 2424,
+          "endUtf16": 2445,
+          "startByte": 2427,
+          "endByte": 2448,
+          "line": 34,
+          "column": 14,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[2]:JsxFragment/forEachChild[4]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "Agricultural region: ",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Regione agricola: "
+    },
+    {
+      "key": "learningRegionUi012",
+      "english": "Unknown",
+      "sha256": "b764cdc0eab7137467211272fa539f1260d1bf2e71bcf6ff3bdc960f5c16aa14",
+      "fragment": true,
+      "contextRequired": true,
+      "contextNote": "Confirmed context region fallback only when agriculturalRegionReference is null/undefined; remains inside the region sentence, not a replacement country label.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "StringLiteral",
+          "startUtf16": 2485,
+          "endUtf16": 2494,
+          "startByte": 2488,
+          "endByte": 2497,
+          "line": 34,
+          "column": 75,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[2]:JsxFragment/forEachChild[4]:JsxElement/forEachChild[2]:JsxExpression/forEachChild[0]:BinaryExpression/forEachChild[2]:StringLiteral",
+          "rawSource": "'Unknown'",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Sconosciuta"
+    },
+    {
+      "key": "learningRegionUi013",
+      "english": " (grower’s description)",
+      "sha256": "ec169b931d39cf44209aad4da026adc4b4ea8ec2a67e225c26ee843e20aedb56",
+      "fragment": true,
+      "contextRequired": true,
+      "contextNote": "Confirmed context suffix only when agriculturalRegionReference is truthy; preserve exact leading ASCII space and opening/closing parentheses boundaries; separate row014 supplies the final period. Preserve grower-described meaning; internal possessive grammar and apostrophe usage follow the target language, not English.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "StringLiteral",
+          "startUtf16": 2535,
+          "endUtf16": 2560,
+          "startByte": 2538,
+          "endByte": 2565,
+          "line": 34,
+          "column": 125,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[2]:JsxFragment/forEachChild[4]:JsxElement/forEachChild[3]:JsxExpression/forEachChild[0]:BinaryExpression/forEachChild[2]:StringLiteral",
+          "rawSource": "' (grower’s description)'",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": " (descrizione del coltivatore)"
+    },
+    {
+      "key": "learningRegionUi014",
+      "english": ".",
+      "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+      "fragment": true,
+      "contextRequired": true,
+      "contextNote": "Punctuation-only JSX boundary after dynamic agricultural region and optional row013. Keep exactly one period; no words.",
+      "translationConstraint": "exact-English-echo",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 2561,
+          "endUtf16": 2562,
+          "startByte": 2566,
+          "endByte": 2567,
+          "line": 34,
+          "column": 151,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[2]:JsxFragment/forEachChild[4]:JsxElement/forEachChild[4]:JsxText",
+          "rawSource": ".",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "."
+    },
+    {
+      "key": "learningRegionUi015",
+      "english": "No country reference dossier is listed.",
+      "sha256": "c567d74ef25b77be846104f0023debd4d61c14f45a54bcd9387b7356cc6efd8f",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "Confirmed context branch when dossier kind is not pilot; absence of reference dossier, not absence of all evidence or local approval.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 2610,
+          "endUtf16": 2649,
+          "startByte": 2615,
+          "endByte": 2654,
+          "line": 35,
+          "column": 44,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[2]:JsxFragment/forEachChild[6]:JsxExpression/forEachChild[0]:BinaryExpression/forEachChild[2]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "No country reference dossier is listed.",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Nessun dossier di riferimento per il paese è presente nell’elenco."
+    },
+    {
+      "key": "learningRegionUi016",
+      "english": "Review country reference evidence",
+      "sha256": "4c34ae37a752e72ed3d3e9e22052b6d29e44fa79ac45e1c36489028943aefe83",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "Link label only when evidenceHref exists; destination and country dossier data are dynamic and not translated inputs.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 2761,
+          "endUtf16": 2794,
+          "startByte": 2766,
+          "endByte": 2799,
+          "line": 36,
+          "column": 107,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[2]:JsxFragment/forEachChild[8]:JsxExpression/forEachChild[0]:BinaryExpression/forEachChild[2]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "Review country reference evidence",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Consulta la documentazione di riferimento per il paese"
+    },
+    {
+      "key": "learningRegionUi017",
+      "english": "Saved details for this site disagree. Country and agricultural region are unknown.",
+      "sha256": "e9ae55344e3a7cadaf6ba176c6532a7dc5dd4dd5dd13b5ddea8508cd40ee2c30",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "Conflict branch: saved details disagree; country and agricultural region unknown.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "StringLiteral",
+          "startUtf16": 2867,
+          "endUtf16": 2951,
+          "startByte": 2872,
+          "endByte": 2956,
+          "line": 37,
+          "column": 68,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:JsxElement/forEachChild[1]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[2]:StringLiteral",
+          "rawSource": "'Saved details for this site disagree. Country and agricultural region are unknown.'",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "I dettagli salvati per questo sito non concordano. Paese e regione agricola non sono noti."
+    },
+    {
+      "key": "learningRegionUi018",
+      "english": "This saved site has moved or is no longer available. Choose a current site.",
+      "sha256": "a63a9ac736da77f4cc9931721bbf73cdb8863e0a303e1d3867e05d2b5ccdee37",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "missing-site branch: site moved/no longer available, choose current site. Does not grant access or infer a destination.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "StringLiteral",
+          "startUtf16": 3003,
+          "endUtf16": 3080,
+          "startByte": 3008,
+          "endByte": 3085,
+          "line": 38,
+          "column": 52,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:JsxElement/forEachChild[1]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[2]:StringLiteral",
+          "rawSource": "'This saved site has moved or is no longer available. Choose a current site.'",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Questo sito salvato è stato spostato o non è più disponibile. Scegli un sito attuale."
+    },
+    {
+      "key": "learningRegionUi019",
+      "english": "This site’s country has not been confirmed. Country and agricultural region are unknown.",
+      "sha256": "b30d8b9e3734ab5a1c95ed6b968c5ed37e8efc7475fb41defd4d693d05955a22",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "Unconfirmed site-country branch, separate from conflict/missing-site; both country and agricultural region unknown.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "StringLiteral",
+          "startUtf16": 3095,
+          "endUtf16": 3185,
+          "startByte": 3100,
+          "endByte": 3192,
+          "line": 39,
+          "column": 15,
+          "selector": "SourceFile/forEachChild[11]:FunctionDeclaration/forEachChild[3]:Block/forEachChild[4]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:JsxElement/forEachChild[1]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[4]:ConditionalExpression/forEachChild[4]:StringLiteral",
+          "rawSource": "'This site’s country has not been confirmed. Country and agricultural region are unknown.'",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Il paese di questo sito non è stato confermato. Paese e regione agricola non sono noti."
+    },
+    {
+      "key": "learningRegionUi020",
+      "english": "Learning source and selected-site context",
+      "sha256": "9460229124b40eb33b6da4e24bf5c319eb34c4c2c0d1a4f8277ee1f89f05874c",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "Section aria-label accessibility attribute; English source and caller-selected site context, not local approval.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "StringLiteral",
+          "startUtf16": 8276,
+          "endUtf16": 8319,
+          "startByte": 8283,
+          "endByte": 8326,
+          "line": 147,
+          "column": 40,
+          "selector": "SourceFile/forEachChild[13]:FunctionDeclaration/forEachChild[4]:Block/forEachChild[19]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[0]:JsxOpeningElement/forEachChild[1]:JsxAttributes/forEachChild[1]:JsxAttribute/forEachChild[1]:StringLiteral",
+          "rawSource": "\"Learning source and selected-site context\"",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Fonte didattica e contesto del sito selezionato"
+    },
+    {
+      "key": "learningRegionUi021",
+      "english": "DEMO · ",
+      "sha256": "bd216f29b019390f6d5e0a816c0f1869e932ae3227e326fbfd8f9f29b08d395f",
+      "fragment": true,
+      "contextRequired": true,
+      "contextNote": "Sample-only heading prefix; keep DEMO token, middle dot and trailing ASCII space exactly.",
+      "translationConstraint": "exact-English-echo",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "StringLiteral",
+          "startUtf16": 8495,
+          "endUtf16": 8504,
+          "startByte": 8502,
+          "endByte": 8512,
+          "line": 148,
+          "column": 54,
+          "selector": "SourceFile/forEachChild[13]:FunctionDeclaration/forEachChild[4]:Block/forEachChild[19]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[2]:JsxElement/forEachChild[1]:JsxExpression/forEachChild[0]:ConditionalExpression/forEachChild[2]:StringLiteral",
+          "rawSource": "'DEMO · '",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "DEMO · "
+    },
+    {
+      "key": "learningRegionUi022",
+      "english": "English source · learning context",
+      "sha256": "5c0ee881c378e0efe4987c613adf102053f6eec1d1771246670b077446966d44",
+      "fragment": true,
+      "contextRequired": true,
+      "contextNote": "Heading follows optional row021 DEMO prefix; English-source notice remains true for source-only inactive drafts.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 8510,
+          "endUtf16": 8543,
+          "startByte": 8518,
+          "endByte": 8552,
+          "line": 148,
+          "column": 69,
+          "selector": "SourceFile/forEachChild[13]:FunctionDeclaration/forEachChild[4]:Block/forEachChild[19]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[2]:JsxElement/forEachChild[2]:JsxText",
+          "rawSource": "English source · learning context",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Fonte inglese · contesto didattico"
+    },
+    {
+      "key": "learningRegionUi023",
+      "english": "Saved site (optional)\n        ",
+      "sha256": "7c48fbd8cd450a1d8933ea8edbba6044d10c5f006df074e61df3ff966503f8c9",
+      "fragment": true,
+      "contextRequired": true,
+      "contextNote": "Label prefix before select control; raw JSXText has final newline plus eight ASCII spaces, preserve those exact edge bytes.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 8657,
+          "endUtf16": 8687,
+          "startByte": 8666,
+          "endByte": 8696,
+          "line": 150,
+          "column": 40,
+          "selector": "SourceFile/forEachChild[13]:FunctionDeclaration/forEachChild[4]:Block/forEachChild[19]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "Saved site (optional)\n        ",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Sito salvato (facoltativo)\n        "
+    },
+    {
+      "key": "learningRegionUi024",
+      "english": "No saved site selected",
+      "sha256": "e32969b4031c13dc32af0a7279996bcf3b25a477e8b2b501c9be704535566a90",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "Empty selection option; no saved site selected, optional context only.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 8935,
+          "endUtf16": 8957,
+          "startByte": 8944,
+          "endByte": 8966,
+          "line": 152,
+          "column": 28,
+          "selector": "SourceFile/forEachChild[13]:FunctionDeclaration/forEachChild[4]:Block/forEachChild[19]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxElement/forEachChild[2]:JsxElement/forEachChild[2]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "No saved site selected",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Nessun sito salvato selezionato"
+    },
+    {
+      "key": "learningRegionUi025",
+      "english": "Previously selected location unavailable",
+      "sha256": "87d500080885e3195897628d6f38f61856bab7e82c416d32cc460fc9fa464dc3",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "Disabled option retaining previous selected identity not currently in choices; no actual private label or ID is included.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 9050,
+          "endUtf16": 9090,
+          "startByte": 9059,
+          "endByte": 9099,
+          "line": 153,
+          "column": 84,
+          "selector": "SourceFile/forEachChild[13]:FunctionDeclaration/forEachChild[4]:Block/forEachChild[19]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[6]:JsxElement/forEachChild[2]:JsxElement/forEachChild[4]:JsxExpression/forEachChild[0]:BinaryExpression/forEachChild[2]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "Previously selected location unavailable",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Posizione precedentemente selezionata non disponibile"
+    },
+    {
+      "key": "learningRegionUi026",
+      "english": "Check current saved sites",
+      "sha256": "66e72578653a6399d96fe8e77d6765d6f389b9a758e0e0f49b66b0d0a49f5700",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "Retry/check button when started but no visible current snapshot; no new persistence or account authority.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 9538,
+          "endUtf16": 9563,
+          "startByte": 9547,
+          "endByte": 9572,
+          "line": 161,
+          "column": 41,
+          "selector": "SourceFile/forEachChild[13]:FunctionDeclaration/forEachChild[4]:Block/forEachChild[19]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[8]:JsxExpression/forEachChild[0]:BinaryExpression/forEachChild[2]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "Check current saved sites",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Controlla i siti attualmente salvati"
+    },
+    {
+      "key": "learningRegionUi027",
+      "english": "No readable saved sites are available in this device context. No destination has been inferred.",
+      "sha256": "ccb8c502ca2ab4513f5822fc0473e3cee4a80354bd160671f6cf7b229f42151e",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "Visible current snapshot but no readable choices; device-context limitation, no inferred destination.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 9632,
+          "endUtf16": 9727,
+          "startByte": 9641,
+          "endByte": 9736,
+          "line": 162,
+          "column": 59,
+          "selector": "SourceFile/forEachChild[13]:FunctionDeclaration/forEachChild[4]:Block/forEachChild[19]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[10]:JsxExpression/forEachChild[0]:BinaryExpression/forEachChild[2]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "No readable saved sites are available in this device context. No destination has been inferred.",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Nessun sito salvato leggibile è disponibile nel contesto di questo dispositivo. Nessuna destinazione è stata dedotta."
+    },
+    {
+      "key": "learningRegionUi028",
+      "english": "Temporary choice for this page. Practical app guides remain separate from farming instruction.",
+      "sha256": "be349035709311a6d5ba8c717c00d0917d4c0c88eb4a4f53216155b7e1cc2d70",
+      "fragment": false,
+      "contextRequired": false,
+      "contextNote": "All scope branches; caller-owned temporary page choice, practical app guides separate from farming instruction.",
+      "translationConstraint": "preserve-meaning-and-boundary",
+      "bindings": [
+        {
+          "file": "components/studies/LearningRegionNotice.tsx",
+          "fileSha256": "334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747",
+          "fileBytes": 9886,
+          "nodeKind": "JsxText",
+          "startUtf16": 9762,
+          "endUtf16": 9856,
+          "startByte": 9771,
+          "endByte": 9865,
+          "line": 163,
+          "column": 30,
+          "selector": "SourceFile/forEachChild[13]:FunctionDeclaration/forEachChild[4]:Block/forEachChild[19]:ReturnStatement/forEachChild[0]:JsxElement/forEachChild[12]:JsxElement/forEachChild[1]:JsxText",
+          "rawSource": "Temporary choice for this page. Practical app guides remain separate from farming instruction.",
+          "sourceCommit": null,
+          "sourceState": "hash-pinned-uncommitted-component"
+        }
+      ],
+      "translation": "Scelta temporanea per questa pagina. Le guide pratiche dell’app restano separate dalle istruzioni agricole."
+    }
+  ]
+}

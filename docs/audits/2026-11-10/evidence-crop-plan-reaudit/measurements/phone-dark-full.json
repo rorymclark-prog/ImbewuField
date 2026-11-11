@@ -1,0 +1,4381 @@
+{
+ "config": {
+  "name": "phone-dark-full",
+  "viewport": "390x844",
+  "devicePixelRatio": 1,
+  "theme": "earth dark",
+  "level": "full",
+  "lang": "en",
+  "sectionsOpened": false,
+  "countryHold": "confirmed as ZA",
+  "appTextScale": 1,
+  "url": "/facilitator/crops",
+  "site": "public sample farm",
+  "servedBuild": {
+   "branch": "claude/blissful-pasteur-1c4ne6",
+   "sha": "3303ed3"
+  },
+  "siteClimate": {
+   "locationDataStatuses": [
+    200
+   ],
+   "fruitReferenceBarsShown": true,
+   "plannerShown": true
+  }
+ },
+ "totals": {
+  "controls": 188,
+  "textRuns": 713,
+  "contrastFailures": 69,
+  "contrastFailuresConfirmedByPixels": 65,
+  "contrastFailuresNotPixelSampled": 4,
+  "contrastFailuresOnDisabledControls": 0,
+  "textUnder12px": 191,
+  "targetsUnder24_noException": 5,
+  "targetsUnder24_withException": 7,
+  "targets24to44": 61,
+  "unnamedControls": 0,
+  "clippedText": 10,
+  "h1": 0,
+  "docOverflowX": false
+ },
+ "layout": {
+  "scrollAreaTopPx": 204,
+  "scrollAreaHeightPx": 549,
+  "windowHeightPx": 844,
+  "scrollAreaShare": 0.65,
+  "calendarTopInScrollPx": 1136,
+  "pageScrollHeightPx": 11363,
+  "headerScrollWidthPx": 973,
+  "headerClientWidthPx": 390
+ },
+ "contrast": [
+  {
+   "text": "Nov",
+   "declared": {
+    "ratio": 1.72,
+    "text": "#1F4D2B",
+    "background": "#221D10",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 700,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#211D0F",
+      "shareOfBox": 0.81,
+      "ratioAgainstText": 1.73
+     },
+     {
+      "colour": "#82C844",
+      "shareOfBox": 0.08,
+      "ratioAgainstText": 4.78
+     }
+    ],
+    "worstRatio": 1.73,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "Nov",
+   "declared": {
+    "ratio": 1.91,
+    "text": "#1F4D2B",
+    "background": "#181208",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 700,
+   "boxPx": "58x18",
+   "selector": "div[data-crop-availability-columns=\"true\"] > div > button[aria-label=\"November 2026 (now) — 1 crop, \"].crop-availability-month > div.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#181208",
+      "shareOfBox": 0.86,
+      "ratioAgainstText": 1.91
+     }
+    ],
+    "worstRatio": 1.91,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "By crop",
+   "declared": {
+    "ratio": 1.91,
+    "text": "#181208",
+    "background": "#1F4D2B",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 400,
+   "boxPx": "57x23",
+   "selector": "div.rounded-2xl.p-4 > div.flex.items-center > div.flex.rounded-lg > button.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#1F4D2B",
+      "shareOfBox": 0.81,
+      "ratioAgainstText": 1.91
+     }
+    ],
+    "worstRatio": 1.91,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Lettuce",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "note": "outside the window"
+   }
+  },
+  {
+   "text": "(62%)",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.39,
+      "ratioAgainstText": 1.84
+     },
+     {
+      "colour": "#343B22",
+      "shareOfBox": 0.16,
+      "ratioAgainstText": 3.36
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "Carrots",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.48,
+      "ratioAgainstText": 1.84
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(86%)",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.48,
+      "ratioAgainstText": 1.84
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Butternut",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.53,
+      "ratioAgainstText": 1.84
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(1/1)",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.53,
+      "ratioAgainstText": 1.84
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Tomatoes",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "84x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.37,
+      "ratioAgainstText": 1.84
+     },
+     {
+      "colour": "#343B22",
+      "shareOfBox": 0.1,
+      "ratioAgainstText": 3.36
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "(75%)",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "84x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.37,
+      "ratioAgainstText": 1.84
+     },
+     {
+      "colour": "#343B22",
+      "shareOfBox": 0.1,
+      "ratioAgainstText": 3.36
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "Carrots",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "72x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.51,
+      "ratioAgainstText": 1.84
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(20%)",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "72x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.51,
+      "ratioAgainstText": 1.84
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Green beans",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "note": "outside the window"
+   }
+  },
+  {
+   "text": "(69%)",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.64,
+      "ratioAgainstText": 1.84
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Broccoli",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "76x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.38,
+      "ratioAgainstText": 1.84
+     },
+     {
+      "colour": "#343B22",
+      "shareOfBox": 0.1,
+      "ratioAgainstText": 3.36
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "(47%)",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "76x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.38,
+      "ratioAgainstText": 1.84
+     },
+     {
+      "colour": "#343B22",
+      "shareOfBox": 0.1,
+      "ratioAgainstText": 3.36
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "Sweet potato",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "note": "outside the window"
+   }
+  },
+  {
+   "text": "(46%)",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.69,
+      "ratioAgainstText": 1.84
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Maize (mielies)",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "note": "outside the window"
+   }
+  },
+  {
+   "text": "(83%)",
+   "declared": {
+    "ratio": 1.97,
+    "text": "#8C8984",
+    "background": "#4C603B",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#51653D",
+      "shareOfBox": 0.58,
+      "ratioAgainstText": 1.84
+     }
+    ],
+    "worstRatio": 1.84,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Jun",
+   "declared": {
+    "ratio": 2.04,
+    "text": "#FFFFFF",
+    "background": "#82C844",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 13,
+   "weight": 400,
+   "boxPx": "26x35",
+   "selector": "div.py-2 > div[aria-label=\"Assumed variety: Hass: Jun, Ju\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#82C844",
+      "shareOfBox": 0.86,
+      "ratioAgainstText": 2.04
+     }
+    ],
+    "worstRatio": 2.04,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Jul",
+   "declared": {
+    "ratio": 2.04,
+    "text": "#FFFFFF",
+    "background": "#82C844",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 13,
+   "weight": 400,
+   "boxPx": "26x35",
+   "selector": "div.py-2 > div[aria-label=\"Assumed variety: Hass: Jun, Ju\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#82C844",
+      "shareOfBox": 0.89,
+      "ratioAgainstText": 2.04
+     }
+    ],
+    "worstRatio": 2.04,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Aug",
+   "declared": {
+    "ratio": 2.04,
+    "text": "#FFFFFF",
+    "background": "#82C844",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 13,
+   "weight": 400,
+   "boxPx": "26x35",
+   "selector": "div.py-2 > div[aria-label=\"Assumed variety: Hass: Jun, Ju\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#82C844",
+      "shareOfBox": 0.81,
+      "ratioAgainstText": 2.04
+     }
+    ],
+    "worstRatio": 2.04,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Sep",
+   "declared": {
+    "ratio": 2.04,
+    "text": "#FFFFFF",
+    "background": "#82C844",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 13,
+   "weight": 400,
+   "boxPx": "26x35",
+   "selector": "div.py-2 > div[aria-label=\"Assumed variety: Hass: Jun, Ju\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#82C844",
+      "shareOfBox": 0.82,
+      "ratioAgainstText": 2.04
+     }
+    ],
+    "worstRatio": 2.04,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Oct",
+   "declared": {
+    "ratio": 2.04,
+    "text": "#FFFFFF",
+    "background": "#82C844",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 13,
+   "weight": 400,
+   "boxPx": "26x35",
+   "selector": "div.py-2 > div[aria-label=\"Assumed variety: Hass: Jun, Ju\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#82C844",
+      "shareOfBox": 0.83,
+      "ratioAgainstText": 2.04
+     }
+    ],
+    "worstRatio": 2.04,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Jan",
+   "declared": {
+    "ratio": 2.04,
+    "text": "#FFFFFF",
+    "background": "#82C844",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 13,
+   "weight": 400,
+   "boxPx": "26x35",
+   "selector": "div.py-2 > div[aria-label=\"Regional reference: Mango: Nov\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#82C844",
+      "shareOfBox": 0.86,
+      "ratioAgainstText": 2.04
+     }
+    ],
+    "worstRatio": 2.04,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Feb",
+   "declared": {
+    "ratio": 2.04,
+    "text": "#FFFFFF",
+    "background": "#82C844",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 13,
+   "weight": 400,
+   "boxPx": "26x35",
+   "selector": "div.py-2 > div[aria-label=\"Regional reference: Mango: Nov\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#82C844",
+      "shareOfBox": 0.83,
+      "ratioAgainstText": 2.04
+     }
+    ],
+    "worstRatio": 2.04,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Mar",
+   "declared": {
+    "ratio": 2.04,
+    "text": "#FFFFFF",
+    "background": "#82C844",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 13,
+   "weight": 400,
+   "boxPx": "26x35",
+   "selector": "div.py-2 > div[aria-label=\"Regional reference: Mango: Nov\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#82C844",
+      "shareOfBox": 0.81,
+      "ratioAgainstText": 2.04
+     }
+    ],
+    "worstRatio": 2.04,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Nov",
+   "declared": {
+    "ratio": 2.04,
+    "text": "#FFFFFF",
+    "background": "#82C844",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 13,
+   "weight": 400,
+   "boxPx": "26x35",
+   "selector": "div.py-2 > div[aria-label=\"Regional reference: Mango: Nov\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#82C844",
+      "shareOfBox": 0.83,
+      "ratioAgainstText": 2.04
+     }
+    ],
+    "worstRatio": 2.04,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Dec",
+   "declared": {
+    "ratio": 2.04,
+    "text": "#FFFFFF",
+    "background": "#82C844",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 13,
+   "weight": 400,
+   "boxPx": "26x35",
+   "selector": "div.py-2 > div[aria-label=\"Regional reference: Mango: Nov\"].my-2 > div.grid.grid-cols-12 > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#82C844",
+      "shareOfBox": 0.84,
+      "ratioAgainstText": 2.04
+     }
+    ],
+    "worstRatio": 2.04,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Lettuce",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.35,
+      "ratioAgainstText": 2.57
+     },
+     {
+      "colour": "#181208",
+      "shareOfBox": 0.13,
+      "ratioAgainstText": 18.6
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "(62%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.35,
+      "ratioAgainstText": 2.57
+     },
+     {
+      "colour": "#181208",
+      "shareOfBox": 0.13,
+      "ratioAgainstText": 18.6
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "Carrots",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.49,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(86%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.49,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Butternut",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.54,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(1/1)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "73x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.54,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Carrots",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "72x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.52,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(20%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "72x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.52,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Green beans",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "99x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.48,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(69%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "99x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.48,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Broccoli",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "76x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.38,
+      "ratioAgainstText": 2.57
+     },
+     {
+      "colour": "#181208",
+      "shareOfBox": 0.12,
+      "ratioAgainstText": 18.6
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "(47%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "76x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.38,
+      "ratioAgainstText": 2.57
+     },
+     {
+      "colour": "#181208",
+      "shareOfBox": 0.12,
+      "ratioAgainstText": 18.6
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "Sweet potato",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "103x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.52,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(46%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "103x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.52,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Maize (mielies)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "111x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.48,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(83%)",
+   "declared": {
+    "ratio": 2.57,
+    "text": "#FFFFFF",
+    "background": "#7FAE6E",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "111x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#7FAE6E",
+      "shareOfBox": 0.48,
+      "ratioAgainstText": 2.57
+     }
+    ],
+    "worstRatio": 2.57,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "From today",
+   "declared": {
+    "ratio": 2.74,
+    "text": "#F7F2E9",
+    "background": "#A8906C",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "79x25",
+   "selector": "div.rounded-2xl.p-4 > div.flex.flex-wrap > div.inline-flex.rounded-full > button.font-sans.font-semibold",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#A8906C",
+      "shareOfBox": 0.76,
+      "ratioAgainstText": 2.74
+     }
+    ],
+    "worstRatio": 2.74,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "check / transplant",
+   "declared": {
+    "ratio": 3,
+    "text": "#785D24",
+    "background": "#181208",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 9,
+   "weight": 700,
+   "boxPx": "100x16",
+   "selector": "div > div > div > button[aria-label=\"Plan to transplant Lettuce in \"].font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#1E170B",
+      "shareOfBox": 0.27,
+      "ratioAgainstText": 2.87
+     },
+     {
+      "colour": "#343B22",
+      "shareOfBox": 0.18,
+      "ratioAgainstText": 1.89
+     },
+     {
+      "colour": "#181208",
+      "shareOfBox": 0.13,
+      "ratioAgainstText": 3
+     }
+    ],
+    "worstRatio": 1.89,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "check / transplant",
+   "declared": {
+    "ratio": 3,
+    "text": "#785D24",
+    "background": "#181208",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 9,
+   "weight": 700,
+   "boxPx": "100x16",
+   "selector": "div > div > div > button[aria-label=\"Plan to transplant Tomatoes in\"].font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#343B22",
+      "shareOfBox": 0.27,
+      "ratioAgainstText": 1.89
+     },
+     {
+      "colour": "#1E170B",
+      "shareOfBox": 0.19,
+      "ratioAgainstText": 2.87
+     },
+     {
+      "colour": "#181208",
+      "shareOfBox": 0.12,
+      "ratioAgainstText": 3
+     }
+    ],
+    "worstRatio": 1.89,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "check / transplant",
+   "declared": {
+    "ratio": 3,
+    "text": "#785D24",
+    "background": "#181208",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 9,
+   "weight": 700,
+   "boxPx": "100x16",
+   "selector": "div > div > div > button[aria-label=\"Plan to transplant Broccoli in\"].font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#1E170B",
+      "shareOfBox": 0.32,
+      "ratioAgainstText": 2.87
+     },
+     {
+      "colour": "#343B22",
+      "shareOfBox": 0.26,
+      "ratioAgainstText": 1.89
+     }
+    ],
+    "worstRatio": 1.89,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "Clear all",
+   "declared": {
+    "ratio": 3.17,
+    "text": "#B33A3A",
+    "background": "#181208",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 13,
+   "weight": 600,
+   "boxPx": "100x43",
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.flex.gap-2 > button.px-4.py-2.5",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#181208",
+      "shareOfBox": 0.77,
+      "ratioAgainstText": 3.17
+     }
+    ],
+    "worstRatio": 3.17,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Onions",
+   "declared": {
+    "ratio": 3.71,
+    "text": "#FFFFFF",
+    "background": "#8C8654",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#B8934A",
+      "shareOfBox": 0.66,
+      "ratioAgainstText": 2.87
+     }
+    ],
+    "worstRatio": 2.87,
+    "agreesWithDeclared": false,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "(61%)",
+   "declared": {
+    "ratio": 3.71,
+    "text": "#FFFFFF",
+    "background": "#8C8654",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "30x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#B8934A",
+      "shareOfBox": 0.66,
+      "ratioAgainstText": 2.87
+     }
+    ],
+    "worstRatio": 2.87,
+    "agreesWithDeclared": false,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Garlic",
+   "declared": {
+    "ratio": 3.71,
+    "text": "#FFFFFF",
+    "background": "#8C8654",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "50x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#8C8654",
+      "shareOfBox": 0.38,
+      "ratioAgainstText": 3.71
+     },
+     {
+      "colour": "#B8934A",
+      "shareOfBox": 0.13,
+      "ratioAgainstText": 2.87
+     }
+    ],
+    "worstRatio": 2.87,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "(½)",
+   "declared": {
+    "ratio": 3.71,
+    "text": "#FFFFFF",
+    "background": "#8C8654",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 11,
+   "weight": 600,
+   "boxPx": "50x11",
+   "selector": "div > button.font-sans > span > span",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#8C8654",
+      "shareOfBox": 0.38,
+      "ratioAgainstText": 3.71
+     },
+     {
+      "colour": "#B8934A",
+      "shareOfBox": 0.13,
+      "ratioAgainstText": 2.87
+     }
+    ],
+    "worstRatio": 2.87,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": true
+   }
+  },
+  {
+   "text": "↻",
+   "declared": {
+    "ratio": 4.43,
+    "text": "#A08564",
+    "background": "#2D2314",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 500,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#2D2314",
+      "shareOfBox": 0.9,
+      "ratioAgainstText": 4.43
+     }
+    ],
+    "worstRatio": 4.43,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Nov",
+   "declared": {
+    "ratio": 4.43,
+    "text": "#A08564",
+    "background": "#2D2314",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 500,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#2D2314",
+      "shareOfBox": 0.9,
+      "ratioAgainstText": 4.43
+     }
+    ],
+    "worstRatio": 4.43,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Dec",
+   "declared": {
+    "ratio": 4.43,
+    "text": "#A08564",
+    "background": "#2D2314",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 500,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#2D2314",
+      "shareOfBox": 0.96,
+      "ratioAgainstText": 4.43
+     }
+    ],
+    "worstRatio": 4.43,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Jan",
+   "declared": {
+    "ratio": 4.43,
+    "text": "#A08564",
+    "background": "#2D2314",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 500,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#2D2314",
+      "shareOfBox": 0.91,
+      "ratioAgainstText": 4.43
+     }
+    ],
+    "worstRatio": 4.43,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Feb",
+   "declared": {
+    "ratio": 4.43,
+    "text": "#A08564",
+    "background": "#2D2314",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 500,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#2D2314",
+      "shareOfBox": 0.96,
+      "ratioAgainstText": 4.43
+     }
+    ],
+    "worstRatio": 4.43,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Mar",
+   "declared": {
+    "ratio": 4.43,
+    "text": "#A08564",
+    "background": "#2D2314",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 500,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#2D2314",
+      "shareOfBox": 0.96,
+      "ratioAgainstText": 4.43
+     }
+    ],
+    "worstRatio": 4.43,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Apr",
+   "declared": {
+    "ratio": 4.43,
+    "text": "#A08564",
+    "background": "#2D2314",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 500,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#2D2314",
+      "shareOfBox": 0.96,
+      "ratioAgainstText": 4.43
+     }
+    ],
+    "worstRatio": 4.43,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "May",
+   "declared": {
+    "ratio": 4.43,
+    "text": "#A08564",
+    "background": "#2D2314",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 500,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#2D2314",
+      "shareOfBox": 0.95,
+      "ratioAgainstText": 4.43
+     }
+    ],
+    "worstRatio": 4.43,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Jun",
+   "declared": {
+    "ratio": 4.43,
+    "text": "#A08564",
+    "background": "#2D2314",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 500,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#2D2314",
+      "shareOfBox": 0.97,
+      "ratioAgainstText": 4.43
+     }
+    ],
+    "worstRatio": 4.43,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Jul",
+   "declared": {
+    "ratio": 4.43,
+    "text": "#A08564",
+    "background": "#2D2314",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 500,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#2D2314",
+      "shareOfBox": 0.96,
+      "ratioAgainstText": 4.43
+     }
+    ],
+    "worstRatio": 4.43,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Aug",
+   "declared": {
+    "ratio": 4.43,
+    "text": "#A08564",
+    "background": "#2D2314",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 500,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#2D2314",
+      "shareOfBox": 0.95,
+      "ratioAgainstText": 4.43
+     }
+    ],
+    "worstRatio": 4.43,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Sep",
+   "declared": {
+    "ratio": 4.43,
+    "text": "#A08564",
+    "background": "#2D2314",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 500,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#2D2314",
+      "shareOfBox": 0.95,
+      "ratioAgainstText": 4.43
+     }
+    ],
+    "worstRatio": 4.43,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  },
+  {
+   "text": "Oct",
+   "declared": {
+    "ratio": 4.43,
+    "text": "#A08564",
+    "background": "#2D2314",
+    "opacityChain": 1,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 12,
+   "weight": 500,
+   "boxPx": "58x49",
+   "selector": "div.flex-1 > div > div[data-crop-month-header=\"true\"] > div.text-center.font-sans",
+   "disabled": false,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#2D2314",
+      "shareOfBox": 0.96,
+      "ratioAgainstText": 4.43
+     }
+    ],
+    "worstRatio": 4.43,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  }
+ ],
+ "textUnder12px": [
+  {
+   "text": "Plants and housing from your map",
+   "fontPx": 11,
+   "selector": "div.flex.flex-col > header.flex-shrink-0.flex > div.flex.flex-col > span.font-sans.truncate",
+   "count": 1
+  },
+  {
+   "text": "Bed",
+   "fontPx": 10,
+   "selector": "div.rounded-2xl.mb-5 > div.flex > div > span.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Year one — from this month",
+   "fontPx": 9.5,
+   "selector": "div.flex-1 > div > div.flex > div.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Year two — repeat crops; check plant ages",
+   "fontPx": 9.5,
+   "selector": "div.flex-1 > div > div.flex > div.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "text": "Vegetables",
+   "fontPx": 10.5,
+   "selector": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"veg\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "6.0",
+   "fontPx": 11,
+   "selector": "div > div.flex > div > div.font-mono",
+   "count": 6
+  },
+  {
+   "text": "m²",
+   "fontPx": 11,
+   "selector": "div > div.flex > div > div.font-mono",
+   "count": 11
+  },
+  {
+   "text": "Onions",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(61%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Lettuce",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(62%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "check / transplant",
+   "fontPx": 9,
+   "selector": "div > div > div > button[aria-label=\"Plan to transplant Lettuce in \"].font-sans",
+   "count": 5
+  },
+  {
+   "text": "Carrots",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 4
+  },
+  {
+   "text": "(86%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Butternut",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(1/1)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Tomatoes",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(75%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(20%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Green beans",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(69%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "8.0",
+   "fontPx": 11,
+   "selector": "div > div.flex > div > div.font-mono",
+   "count": 1
+  },
+  {
+   "text": "Garlic",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(½)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Broccoli",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(47%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Sweet potato",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(46%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Staple grain",
+   "fontPx": 10,
+   "selector": "div.flex > div > div.font-sans > span",
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "(83%)",
+   "fontPx": 11,
+   "selector": "div > button.font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "Staple crops",
+   "fontPx": 10.5,
+   "selector": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"staple\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "plot",
+   "fontPx": 8.5,
+   "selector": "div.flex > div > div.font-display.font-semibold > span.font-sans.font-semibold",
+   "count": 4
+  },
+  {
+   "text": "21.0",
+   "fontPx": 11,
+   "selector": "div > div.flex > div > div.font-mono",
+   "count": 4
+  },
+  {
+   "text": "Fruit, nuts & berries",
+   "fontPx": 10.5,
+   "selector": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"trees\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "From your map · hover or tap a bar",
+   "fontPx": 10,
+   "selector": "div > div[data-crop-calendar-produce=\"trees\"].flex > div > div.font-sans",
+   "count": 2
+  },
+  {
+   "text": "Outlined bars: sourced planning references when established. Solid bars: locally",
+   "fontPx": 11,
+   "selector": "div > div[data-crop-calendar-produce=\"trees\"].flex > div > p.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Mango",
+   "fontPx": 11,
+   "selector": "div > button[aria-label=\"Mango — fruit · 1 plant on you\"].font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "· reference",
+   "fontPx": 11,
+   "selector": "div > button[aria-label=\"Mango — fruit · 1 plant on you\"].font-sans > span > span",
+   "count": 4
+  },
+  {
+   "text": "(proposed)",
+   "fontPx": 11,
+   "selector": "div > button[aria-label=\"Mango — fruit · 1 plant on you\"].font-sans > span > span",
+   "count": 4
+  },
+  {
+   "text": "Avocado",
+   "fontPx": 11,
+   "selector": "div > button[aria-label=\"Avocado — fruit · 1 plant on y\"].font-sans > span > span",
+   "count": 2
+  },
+  {
+   "text": "On your map, with picking months to confirm: Avocado, Mango, Moringa, Num-num. T",
+   "fontPx": 11,
+   "selector": "div > div[data-crop-calendar-produce=\"trees\"].flex > div > div.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Animal products",
+   "fontPx": 10.5,
+   "selector": "div[data-crop-bed-scroll=\"true\"] > div > div[data-crop-calendar-section=\"animals\"] > div.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "These confirmations are kept on this device for this design.",
+   "fontPx": 11.5,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > p.font-sans.mb-3",
+   "count": 1
+  },
+  {
+   "text": "29.7 kg",
+   "fontPx": 11,
+   "selector": "div > div > button.grid.gap-2 > span",
+   "count": 1
+  },
+  {
+   "text": "*",
+   "fontPx": 11,
+   "selector": "div > div > button.grid.gap-2 > span",
+   "count": 10
+  },
+  {
+   "text": "48.8 kg",
+   "fontPx": 11,
+   "selector": "div > div > button.grid.gap-2 > span",
+   "count": 9
+  },
+  {
+   "text": "* Known subtotal only. Missing production is not zero. Striped ends show harvest",
+   "fontPx": 11,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > section[data-production-projection=\"true\"].mt-4.rounded-2xl > p.mt-2",
+   "count": 1
+  },
+  {
+   "text": "check / transplant",
+   "fontPx": 10,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.font-sans.mb-5 > span.font-sans",
+   "count": 1
+  },
+  {
+   "text": "marks when to start checking seedlings raised in a tray. The crop bar starts at ",
+   "fontPx": 11.5,
+   "selector": "div.flex.flex-col > div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.font-sans.mb-5",
+   "count": 1
+  },
+  {
+   "text": "How the two-year timeline works (↻, faded bars, rotation)",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.font-sans.mb-5 > details.mt-1.5 > summary.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Availability",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "Field utilization",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "Plan-cycle value",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "An established year",
+   "fontPx": 11,
+   "selector": "div.rounded-2xl.p-4 > div.flex.flex-wrap > div.inline-flex.rounded-full > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "From today",
+   "fontPx": 11,
+   "selector": "div.rounded-2xl.p-4 > div.flex.flex-wrap > div.inline-flex.rounded-full > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "text": "Follows the planting calendar from today; existing and one-off crops appear only",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.flex.flex-wrap > span.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Ready to pick",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.flex.flex-wrap > span.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "text": "Stored under named conditions",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.flex.flex-wrap > span.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "text": "fresh vegetables & staples",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div[data-year-of-food=\"true\"].rounded-2xl.p-4 > div.font-sans.flex > span.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "text": "fruit",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div[data-year-of-food=\"true\"].rounded-2xl.p-4 > div.font-sans.flex > span.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "text": "animal products",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div[data-year-of-food=\"true\"].rounded-2xl.p-4 > div.font-sans.flex > span.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "text": "in store only",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div[data-year-of-food=\"true\"].rounded-2xl.p-4 > div.font-sans.flex > span.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "text": "this month",
+   "fontPx": 10,
+   "selector": "div.rounded-2xl.p-4 > div.mb-2.5 > div.font-display.font-semibold > span.font-sans",
+   "count": 1
+  },
+  {
+   "text": "1",
+   "fontPx": 10.5,
+   "selector": "div.space-y-2 > div.rounded-xl > div.flex.items-baseline > span.font-mono",
+   "count": 4
+  },
+  {
+   "text": "job",
+   "fontPx": 10.5,
+   "selector": "div.space-y-2 > div.rounded-xl > div.flex.items-baseline > span.font-mono",
+   "count": 4
+  },
+  {
+   "text": "Bed 3",
+   "fontPx": 10.5,
+   "selector": "div.space-y-1.5.mt-1 > div > div.flex.flex-wrap > span.font-sans",
+   "count": 2
+  },
+  {
+   "text": "assess soil and drainage; use a soil test or local advice before adding amendmen",
+   "fontPx": 11.5,
+   "selector": "div.rounded-xl > div.space-y-1.5.mt-1 > div > div.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Bed 1",
+   "fontPx": 10.5,
+   "selector": "div.space-y-1.5.mt-1 > div > div.flex.flex-wrap > span.font-sans",
+   "count": 1
+  },
+  {
+   "text": "next month",
+   "fontPx": 10,
+   "selector": "div.rounded-2xl.p-4 > div.mb-2.5 > div.font-display.font-semibold > span.font-sans",
+   "count": 1
+  },
+  {
+   "text": "rows 150cm apart · 40cm apart in the row",
+   "fontPx": 11.5,
+   "selector": "div.rounded-xl > div.space-y-1.5.mt-1 > div > div.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Bed 6",
+   "fontPx": 10.5,
+   "selector": "div.space-y-1.5.mt-1 > div > div.flex.flex-wrap > span.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Published optimum-condition maturity endpoints are planning slots, not promises.",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > div.font-sans.rounded-lg",
+   "count": 1
+  },
+  {
+   "text": "Looking ahead",
+   "fontPx": 10,
+   "selector": "div.rounded-2xl.p-4 > div > button.font-sans.uppercase > span",
+   "count": 1
+  },
+  {
+   "text": "▸",
+   "fontPx": 10,
+   "selector": "div.rounded-2xl.p-4 > div > button.font-sans.uppercase > span",
+   "count": 1
+  },
+  {
+   "text": "By crop",
+   "fontPx": 11,
+   "selector": "div.rounded-2xl.p-4 > div.flex.items-center > div.flex.rounded-lg > button.font-sans",
+   "count": 1
+  },
+  {
+   "text": "By bed",
+   "fontPx": 11,
+   "selector": "div.rounded-2xl.p-4 > div.flex.items-center > div.flex.rounded-lg > button.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Conservative mapped-area comparison for one cycle of each active or planned plan",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > div.font-sans.mb-2",
+   "count": 1
+  },
+  {
+   "text": "Bar length compares crops · % is share of the",
+   "fontPx": 10.5,
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > div.font-sans.mb-1.5",
+   "count": 1
+  },
+  {
+   "text": "56.7",
+   "fontPx": 10.5,
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > div.font-sans.mb-1.5",
+   "count": 1
+  },
+  {
+   "text": "kg above",
+   "fontPx": 10.5,
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > div.font-sans.mb-1.5",
+   "count": 1
+  },
+  {
+   "text": "24",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 1
+  },
+  {
+   "text": "%",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 10
+  },
+  {
+   "text": "22",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 1
+  },
+  {
+   "text": "13",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 1
+  },
+  {
+   "text": "10",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 2
+  },
+  {
+   "text": "8",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 1
+  },
+  {
+   "text": "4",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 2
+  },
+  {
+   "text": "3",
+   "fontPx": 11,
+   "selector": "div > div > div > span.font-mono.flex-shrink-0",
+   "count": 2
+  },
+  {
+   "text": "What each file contains",
+   "fontPx": 11,
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > details.font-sans.mt-2.5 > summary",
+   "count": 1
+  },
+  {
+   "text": "The calendar file works with Google Calendar and Apple Calendar. Tasks land as w",
+   "fontPx": 11,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.rounded-2xl.p-4 > details.font-sans.mt-2.5",
+   "count": 1
+  },
+  {
+   "text": "It also has what to buy, monthly tick-off jobs and a harvest record.",
+   "fontPx": 11,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.rounded-2xl.p-4 > details.font-sans.mt-2.5",
+   "count": 1
+  },
+  {
+   "text": "Picking dates for trees and animals must be confirmed locally; plants and housin",
+   "fontPx": 11,
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.rounded-2xl.p-4 > details.font-sans.mt-2.5",
+   "count": 1
+  },
+  {
+   "text": "Grouped by the month to get it. Ready-grown seedlings are listed for the month t",
+   "fontPx": 11.5,
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.scroll-mt-24.rounded-2xl > p.font-sans.mb-2",
+   "count": 1
+  },
+  {
+   "text": "Source packet seed before the December sowing month. Sow straight into the groun",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 3",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "Buying ready-grown seedlings? Source them only when the bed and seedlings are re",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 6",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "Source packet seed before the April sowing month. Sow straight into the ground i",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 2, Bed 4",
+   "fontPx": 11,
+   "selector": "div.space-y-2 > div.pb-2 > div.font-sans.mt-0.5 > span",
+   "count": 1
+  },
+  {
+   "text": "What these quantities do and do not cover",
+   "fontPx": 11,
+   "selector": "div.grid.gap-4 > div.scroll-mt-24.rounded-2xl > details.mt-2 > summary.font-sans",
+   "count": 1
+  },
+  {
+   "text": "Every yield figure and date here is either from a published source or labelled a",
+   "fontPx": 11.5,
+   "selector": "div.rounded-2xl.p-4 > button.w-full.flex > span > span.font-sans.block",
+   "count": 1
+  },
+  {
+   "text": "Which crops count as relatives, and why that is not the same as a food group.",
+   "fontPx": 11.5,
+   "selector": "div.rounded-2xl.p-4 > button.w-full.flex > span > span.font-sans.block",
+   "count": 1
+  },
+  {
+   "text": "Planning guide only — sow windows are general. Adjust to your local rainfall, fr",
+   "fontPx": 11,
+   "selector": "div.flex.flex-col > div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.font-sans.mt-4",
+   "count": 1
+  }
+ ],
+ "targetsUnder24": [
+  {
+   "label": "check / transplant",
+   "widthPx": 100,
+   "heightPx": 16,
+   "tag": "button",
+   "exception": null,
+   "clashesWith": "Lettuce (62%)",
+   "selector": "div > div > div > button[aria-label=\"Plan to transplant Lettuce in \"].font-sans",
+   "count": 5
+  },
+  {
+   "label": "How the two-year timeline works (↻, faded bars, rotation)",
+   "widthPx": 366,
+   "heightPx": 17,
+   "tag": "summary",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.mx-auto.w-full > div.font-sans.mb-5 > details.mt-1.5 > summary.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Show 2 more months",
+   "widthPx": 118,
+   "heightPx": 18,
+   "tag": "button",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.mx-auto.w-full > div[data-year-of-food=\"true\"].rounded-2xl.p-4 > section[data-gap-fills=\"true\"] > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "LOOKING AHEAD ▸",
+   "widthPx": 332,
+   "heightPx": 15,
+   "tag": "button",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.grid.gap-4 > div.rounded-2xl.p-4 > div > button.font-sans.uppercase",
+   "count": 1
+  },
+  {
+   "label": "By crop",
+   "widthPx": 57,
+   "heightPx": 23,
+   "tag": "button",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.rounded-2xl.p-4 > div.flex.items-center > div.flex.rounded-lg > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "By bed",
+   "widthPx": 53,
+   "heightPx": 23,
+   "tag": "button",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.rounded-2xl.p-4 > div.flex.items-center > div.flex.rounded-lg > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Later in the next 12 months (1 more month)",
+   "widthPx": 306,
+   "heightPx": 19,
+   "tag": "summary",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.scroll-mt-24.rounded-2xl > div.space-y-3 > details.rounded-xl.px-3 > summary.font-display.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "What these quantities do and do not cover",
+   "widthPx": 332,
+   "heightPx": 17,
+   "tag": "summary",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.grid.gap-4 > div.scroll-mt-24.rounded-2xl > details.mt-2 > summary.font-sans",
+   "count": 1
+  }
+ ],
+ "targets24to44": [
+  {
+   "label": "Home",
+   "widthPx": 34,
+   "heightPx": 34,
+   "tag": "a",
+   "selector": "body.h-screen.overflow-hidden > div.flex.flex-col > header.flex-shrink-0.flex > a[aria-label=\"Home\"].flex-shrink-0.flex",
+   "count": 1
+  },
+  {
+   "label": "‹ Back to design",
+   "widthPx": 109,
+   "heightPx": 29,
+   "tag": "a",
+   "selector": "body.h-screen.overflow-hidden > div.flex.flex-col > header.flex-shrink-0.flex > a[aria-label=\"Back to design\"].flex-shrink-0.flex",
+   "count": 1
+  },
+  {
+   "label": "7 beds · 4 plots",
+   "widthPx": 126,
+   "heightPx": 28,
+   "tag": "button",
+   "selector": "body.h-screen.overflow-hidden > div.flex.flex-col > header.flex-shrink-0.flex > button.flex-shrink-0.inline-flex",
+   "count": 1
+  },
+  {
+   "label": "Auto-suggest a plan",
+   "widthPx": 258,
+   "heightPx": 43,
+   "tag": "button",
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.flex.gap-2 > button.flex-1.py-2.5",
+   "count": 1
+  },
+  {
+   "label": "Clear all",
+   "widthPx": 100,
+   "heightPx": 43,
+   "tag": "button",
+   "selector": "div.flex-1.overflow-y-auto > div.mx-auto.w-full > div.flex.gap-2 > button.px-4.py-2.5",
+   "count": 1
+  },
+  {
+   "label": "Onions (61%)",
+   "widthPx": 58,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "+ crop",
+   "widthPx": 56,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 11
+  },
+  {
+   "label": "Lettuce (62%)",
+   "widthPx": 290,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Lettuce (62%)",
+   "widthPx": 58,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Carrots (86%)",
+   "widthPx": 290,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Butternut (1/1)",
+   "widthPx": 348,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Tomatoes (75%)",
+   "widthPx": 406,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Carrots (20%)",
+   "widthPx": 290,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Green beans (69%)",
+   "widthPx": 174,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Green beans (69%)",
+   "widthPx": 58,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Garlic (½)",
+   "widthPx": 116,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Broccoli (47%)",
+   "widthPx": 348,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 2
+  },
+  {
+   "label": "Sweet potato (46%)",
+   "widthPx": 406,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Sweet potato (46%)",
+   "widthPx": 58,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Maize (mielies) (83%)",
+   "widthPx": 348,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Maize (mielies) (83%)",
+   "widthPx": 58,
+   "heightPx": 26,
+   "tag": "button",
+   "selector": "div > div > div > button.font-sans",
+   "count": 1
+  },
+  {
+   "label": "Mango · reference (proposed)",
+   "widthPx": 290,
+   "heightPx": 30,
+   "tag": "button",
+   "selector": "div > div > div > button[aria-label=\"Mango — fruit · 1 plant on you\"].font-sans",
+   "count": 2
+  },
+  {
+   "label": "Avocado · reference (proposed)",
+   "widthPx": 290,
+   "heightPx": 30,
+   "tag": "button",
+   "selector": "div > div > div > button[aria-label=\"Avocado — fruit · 1 plant on y\"].font-sans",
+   "count": 2
+  },
+  {
+   "label": "Avocado · 0 existing, 1 proposed · confirm picking months",
+   "widthPx": 332,
+   "heightPx": 39,
+   "tag": "summary",
+   "selector": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Mango · 0 existing, 1 proposed · confirm picking months",
+   "widthPx": 332,
+   "heightPx": 39,
+   "tag": "summary",
+   "selector": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Moringa · 0 existing, 2 proposed · confirm picking months",
+   "widthPx": 332,
+   "heightPx": 39,
+   "tag": "summary",
+   "selector": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Num-num · 0 existing, 1 proposed · confirm picking months",
+   "widthPx": 332,
+   "heightPx": 39,
+   "tag": "summary",
+   "selector": "div[data-tree-seasons=\"true\"].rounded-2xl.p-4 > div.flex.flex-col > details > summary.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Availability",
+   "widthPx": 84,
+   "heightPx": 27,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Field utilization",
+   "widthPx": 107,
+   "heightPx": 27,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Plan-cycle value",
+   "widthPx": 113,
+   "heightPx": 27,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.inline-flex.flex-wrap > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "An established year",
+   "widthPx": 123,
+   "heightPx": 25,
+   "tag": "button",
+   "selector": "div.rounded-2xl.p-4 > div.flex.flex-wrap > div.inline-flex.rounded-full > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "From today",
+   "widthPx": 79,
+   "heightPx": 25,
+   "tag": "button",
+   "selector": "div.rounded-2xl.p-4 > div.flex.flex-wrap > div.inline-flex.rounded-full > button.font-sans.font-semibold",
+   "count": 1
+  },
+  {
+   "label": "Fruit, nuts & berries shown · 4 kinds on your map",
+   "widthPx": 311,
+   "heightPx": 28,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.rounded-2xl.p-4 > div.flex.flex-wrap > button.font-sans.rounded-full",
+   "count": 1
+  },
+  {
+   "label": "Plan it",
+   "widthPx": 60,
+   "heightPx": 28,
+   "tag": "button",
+   "selector": "div[data-gap-fill-month=\"1\"] > ul > li[data-gap-fill-suggestion=\"baby-marrow\"].flex.flex-wrap > button[aria-label=\"Plan Baby marrow (courgette), \"].font-sans.font-semibold",
+   "count": 9
+  },
+  {
+   "label": "Share tasks",
+   "widthPx": 104,
+   "heightPx": 30,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > button.inline-flex.items-center",
+   "count": 1
+  },
+  {
+   "label": "Feeding your crops ▸",
+   "widthPx": 332,
+   "heightPx": 32,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > button.w-full.flex",
+   "count": 1
+  },
+  {
+   "label": "Protecting your crops ▸",
+   "widthPx": 332,
+   "heightPx": 32,
+   "tag": "button",
+   "selector": "div.mx-auto.w-full > div.grid.gap-4 > div.rounded-2xl.p-4 > button.w-full.flex",
+   "count": 1
+  }
+ ],
+ "unnamedControls": [],
+ "clippedText": [
+  {
+   "text": "Onions",
+   "shownPx": 30,
+   "neededPx": 67,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(61%)",
+   "shownPx": 30,
+   "neededPx": 67,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Lettuce",
+   "shownPx": 30,
+   "neededPx": 73,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(62%)",
+   "shownPx": 30,
+   "neededPx": 73,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Green beans",
+   "shownPx": 30,
+   "neededPx": 99,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(69%)",
+   "shownPx": 30,
+   "neededPx": 99,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Sweet potato",
+   "shownPx": 30,
+   "neededPx": 103,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(46%)",
+   "shownPx": 30,
+   "neededPx": 103,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "shownPx": 30,
+   "neededPx": 111,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  },
+  {
+   "text": "(83%)",
+   "shownPx": 30,
+   "neededPx": 111,
+   "selector": "div > button.font-sans > span > span",
+   "count": 1
+  }
+ ],
+ "headings": [
+  "H4 Saved planned nursery batches",
+  "H2 Site country and region",
+  "H2 How production changes as plants grow",
+  "H3 Nov 2026 – Oct 2027",
+  "H3 Check your farm conditions",
+  "H3 Fruit, nuts and indigenous foods",
+  "H4 Avocado",
+  "H4 Mango",
+  "H4 Moringa",
+  "H4 Num-num",
+  "H4 Water through the dry season",
+  "H4 Frost on this farm",
+  "H4 Sun and drainage"
+ ],
+ "h1Rendered": [],
+ "consoleErrors": [],
+ "textCorpus": [
+  {
+   "text": "Tour",
+   "count": 1
+  },
+  {
+   "text": "‹",
+   "count": 1
+  },
+  {
+   "text": "Back to design",
+   "count": 1
+  },
+  {
+   "text": "Production plan",
+   "count": 1
+  },
+  {
+   "text": "Plants and housing from your map",
+   "count": 1
+  },
+  {
+   "text": "7",
+   "count": 1
+  },
+  {
+   "text": "beds",
+   "count": 1
+  },
+  {
+   "text": "· 4 plots",
+   "count": 1
+  },
+  {
+   "text": "Summer rainfall · mild winter frost",
+   "count": 1
+  },
+  {
+   "text": "· satellite records for this site",
+   "count": 1
+  },
+  {
+   "text": "Vegetables and staples · Fruit, nuts & berries · Animal products. Housing is listed. Use the site survey for animal numbers and care checks.",
+   "count": 1
+  },
+  {
+   "text": "Country details are available from this device. Live account updates are unavailable.",
+   "count": 1
+  },
+  {
+   "text": "Country details saved for this sample session only.",
+   "count": 1
+  },
+  {
+   "text": "Harvest targets",
+   "count": 2
+  },
+  {
+   "text": "Your buyer-demand records",
+   "count": 1
+  },
+  {
+   "text": "Your growing estimates",
+   "count": 1
+  },
+  {
+   "text": "Automatic plan from your estimates",
+   "count": 1
+  },
+  {
+   "text": "Saved planned nursery batches",
+   "count": 1
+  },
+  {
+   "text": "Check the saved plan to review nursery batches or open the separate field seed worksheet for accepted cycles without nursery raising. Field seed sourcing does not require a nursery batch, nursery equipment or a nursery review horizon. References do not record actual sowing, available seeds or live nursery stock.",
+   "count": 1
+  },
+  {
+   "text": "DEMO — references stay in this sample session.",
+   "count": 1
+  },
+  {
+   "text": "Check saved nursery batches",
+   "count": 1
+  },
+  {
+   "text": "Check the current saved plan to load eligible planned nursery batches.",
+   "count": 1
+  },
+  {
+   "text": "Site country and region",
+   "count": 1
+  },
+  {
+   "text": "Saved country: South Africa. This is the grower’s description, not local agronomy approval.",
+   "count": 1
+  },
+  {
+   "text": "Review country evidence",
+   "count": 1
+  },
+  {
+   "text": "· Reference tools only; opening this link does not save country details or approve farming advice.",
+   "count": 1
+  },
+  {
+   "text": "Review or change country details",
+   "count": 1
+  },
+  {
+   "text": "Auto-suggest a plan",
+   "count": 1
+  },
+  {
+   "text": "Clear all",
+   "count": 1
+  },
+  {
+   "text": "Plan from weekly demand",
+   "count": 1
+  },
+  {
+   "text": "Nursery planner",
+   "count": 1
+  },
+  {
+   "text": "This site’s trays and growing surface",
+   "count": 1
+  },
+  {
+   "text": "Bed",
+   "count": 1
+  },
+  {
+   "text": "Year one — from this month",
+   "count": 1
+  },
+  {
+   "text": "Year two — repeat crops; check plant ages",
+   "count": 1
+  },
+  {
+   "text": "Nov",
+   "count": 14
+  },
+  {
+   "text": "Now",
+   "count": 2
+  },
+  {
+   "text": "Dec",
+   "count": 10
+  },
+  {
+   "text": "Jan",
+   "count": 11
+  },
+  {
+   "text": "2027",
+   "count": 2
+  },
+  {
+   "text": "Feb",
+   "count": 10
+  },
+  {
+   "text": "Mar",
+   "count": 11
+  },
+  {
+   "text": "Apr",
+   "count": 8
+  },
+  {
+   "text": "May",
+   "count": 7
+  },
+  {
+   "text": "Jun",
+   "count": 8
+  },
+  {
+   "text": "Jul",
+   "count": 7
+  },
+  {
+   "text": "Aug",
+   "count": 7
+  },
+  {
+   "text": "Sep",
+   "count": 8
+  },
+  {
+   "text": "Oct",
+   "count": 7
+  },
+  {
+   "text": "↻",
+   "count": 2
+  },
+  {
+   "text": "2028",
+   "count": 2
+  },
+  {
+   "text": "Vegetables",
+   "count": 2
+  },
+  {
+   "text": "Bed 1",
+   "count": 10
+  },
+  {
+   "text": "6.0",
+   "count": 6
+  },
+  {
+   "text": "m²",
+   "count": 11
+  },
+  {
+   "text": "Onions",
+   "count": 3
+  },
+  {
+   "text": "(61%)",
+   "count": 1
+  },
+  {
+   "text": "+ crop",
+   "count": 11
+  },
+  {
+   "text": "Bed 2",
+   "count": 1
+  },
+  {
+   "text": "Lettuce",
+   "count": 3
+  },
+  {
+   "text": "(62%)",
+   "count": 2
+  },
+  {
+   "text": "check / transplant",
+   "count": 6
+  },
+  {
+   "text": "Carrots",
+   "count": 7
+  },
+  {
+   "text": "(86%)",
+   "count": 2
+  },
+  {
+   "text": "Bed 3",
+   "count": 3
+  },
+  {
+   "text": "Butternut",
+   "count": 6
+  },
+  {
+   "text": "(1/1)",
+   "count": 2
+  },
+  {
+   "text": "Bed 4",
+   "count": 2
+  },
+  {
+   "text": "Tomatoes",
+   "count": 2
+  },
+  {
+   "text": "(75%)",
+   "count": 1
+  },
+  {
+   "text": "(20%)",
+   "count": 2
+  },
+  {
+   "text": "Bed 5",
+   "count": 1
+  },
+  {
+   "text": "Green beans",
+   "count": 4
+  },
+  {
+   "text": "(69%)",
+   "count": 2
+  },
+  {
+   "text": "Bed 6",
+   "count": 2
+  },
+  {
+   "text": "8.0",
+   "count": 1
+  },
+  {
+   "text": "Garlic",
+   "count": 3
+  },
+  {
+   "text": "(½)",
+   "count": 1
+  },
+  {
+   "text": "Broccoli",
+   "count": 4
+  },
+  {
+   "text": "(47%)",
+   "count": 2
+  },
+  {
+   "text": "Sweet potato",
+   "count": 3
+  },
+  {
+   "text": "(46%)",
+   "count": 2
+  },
+  {
+   "text": "Bed 7",
+   "count": 1
+  },
+  {
+   "text": "Staple grain",
+   "count": 1
+  },
+  {
+   "text": "Maize (mielies)",
+   "count": 3
+  },
+  {
+   "text": "(83%)",
+   "count": 2
+  },
+  {
+   "text": "Staple crops",
+   "count": 2
+  },
+  {
+   "text": "Plot 1",
+   "count": 1
+  },
+  {
+   "text": "plot",
+   "count": 4
+  },
+  {
+   "text": "21.0",
+   "count": 4
+  },
+  {
+   "text": "Plot 2",
+   "count": 1
+  },
+  {
+   "text": "Plot 3",
+   "count": 1
+  },
+  {
+   "text": "Plot 4",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts & berries",
+   "count": 2
+  },
+  {
+   "text": "Your trees & bushes",
+   "count": 1
+  },
+  {
+   "text": "From your map · hover or tap a bar",
+   "count": 2
+  },
+  {
+   "text": "Outlined bars: sourced planning references when established. Solid bars: locally confirmed picking months. New plants need time; references do not count towards food totals.",
+   "count": 1
+  },
+  {
+   "text": "Mango",
+   "count": 5
+  },
+  {
+   "text": "· reference",
+   "count": 4
+  },
+  {
+   "text": "(proposed)",
+   "count": 4
+  },
+  {
+   "text": "Avocado",
+   "count": 5
+  },
+  {
+   "text": "On your map, with picking months to confirm: Avocado, Mango, Moringa, Num-num. They stay listed on the printed plan.",
+   "count": 1
+  },
+  {
+   "text": "Animal products",
+   "count": 1
+  },
+  {
+   "text": "Your animals",
+   "count": 1
+  },
+  {
+   "text": "No locally confirmed production months yet. Hives, coops and pens on your map stay listed below and on the printed plan.",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts & berries on your map",
+   "count": 1
+  },
+  {
+   "text": "Picking months vary by place and variety. Outlined calendar marks are planning references when established. Confirm months for plants that already give food here to count them in food totals. Plants stay on the printed plan while dates are unknown.",
+   "count": 1
+  },
+  {
+   "text": "These confirmations are kept on this device for this design.",
+   "count": 1
+  },
+  {
+   "text": "·",
+   "count": 16
+  },
+  {
+   "text": "0",
+   "count": 6
+  },
+  {
+   "text": "existing",
+   "count": 4
+  },
+  {
+   "text": ", 1 proposed",
+   "count": 3
+  },
+  {
+   "text": "confirm picking months",
+   "count": 4
+  },
+  {
+   "text": "Moringa",
+   "count": 3
+  },
+  {
+   "text": ", 2 proposed",
+   "count": 1
+  },
+  {
+   "text": "Num-num",
+   "count": 3
+  },
+  {
+   "text": "How production changes as plants grow",
+   "count": 1
+  },
+  {
+   "text": "The next ten years, starting this month. Add planting dates and expected yields under each plant above. Missing yields remain visible; young trees do not receive a mature-tree yield.",
+   "count": 1
+  },
+  {
+   "text": "●",
+   "count": 2
+  },
+  {
+   "text": "Vegetables & staples",
+   "count": 1
+  },
+  {
+   "text": "Numbers are projections in kg",
+   "count": 1
+  },
+  {
+   "text": "Nov 2026",
+   "count": 1
+  },
+  {
+   "text": "29.7 kg",
+   "count": 1
+  },
+  {
+   "text": "*",
+   "count": 10
+  },
+  {
+   "text": "Nov 2027",
+   "count": 1
+  },
+  {
+   "text": "48.8 kg",
+   "count": 9
+  },
+  {
+   "text": "Nov 2028",
+   "count": 1
+  },
+  {
+   "text": "Nov 2029",
+   "count": 1
+  },
+  {
+   "text": "Nov 2030",
+   "count": 1
+  },
+  {
+   "text": "Nov 2031",
+   "count": 1
+  },
+  {
+   "text": "Nov 2032",
+   "count": 1
+  },
+  {
+   "text": "Nov 2033",
+   "count": 1
+  },
+  {
+   "text": "Nov 2034",
+   "count": 1
+  },
+  {
+   "text": "Nov 2035",
+   "count": 1
+  },
+  {
+   "text": "* Known subtotal only. Missing production is not zero. Striped ends show harvest that changes as plants age during the year.",
+   "count": 1
+  },
+  {
+   "text": "Nov 2026 – Oct 2027",
+   "count": 1
+  },
+  {
+   "text": "Vegetables & staples:",
+   "count": 1
+  },
+  {
+   "text": "29.7 kg from cycles starting harvest in this period",
+   "count": 1
+  },
+  {
+   "text": "1",
+   "count": 22
+  },
+  {
+   "text": "plant",
+   "count": 3
+  },
+  {
+   "text": "Needs information",
+   "count": 4
+  },
+  {
+   "text": "Age not recorded",
+   "count": 4
+  },
+  {
+   "text": "Add planting dates",
+   "count": 4
+  },
+  {
+   "text": "1 plants need age groups",
+   "count": 3
+  },
+  {
+   "text": "2",
+   "count": 6
+  },
+  {
+   "text": "plants",
+   "count": 1
+  },
+  {
+   "text": "2 plants need age groups",
+   "count": 1
+  },
+  {
+   "text": "What the projection assumes",
+   "count": 1
+  },
+  {
+   "text": "Check your farm conditions",
+   "count": 1
+  },
+  {
+   "text": "Update site survey",
+   "count": 1
+  },
+  {
+   "text": "Climate area:",
+   "count": 1
+  },
+  {
+   "text": "Subtropical coast or Lowveld / Bushveld",
+   "count": 1
+  },
+  {
+   "text": ".",
+   "count": 1
+  },
+  {
+   "text": "Your survey supplies the observations below.",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts and indigenous foods",
+   "count": 1
+  },
+  {
+   "text": "Bars use a labelled variety assumption or regional reference. New plants need time to produce. Only locally confirmed months enter your food totals.",
+   "count": 1
+  },
+  {
+   "text": "Assumed variety: Hass",
+   "count": 1
+  },
+  {
+   "text": "· expected when established",
+   "count": 2
+  },
+  {
+   "text": "0 existing; 1 proposed. Products: fruit.",
+   "count": 2
+  },
+  {
+   "text": "Care and what to buy",
+   "count": 4
+  },
+  {
+   "text": "Regional reference: Mango",
+   "count": 1
+  },
+  {
+   "text": "0 existing; 2 proposed. Products: Leaves and green pods; keep their records separate.",
+   "count": 1
+  },
+  {
+   "text": "0 existing; 1 proposed. Products: Ripe fruit, fresh or preserved.",
+   "count": 1
+  },
+  {
+   "text": "Water through the dry season",
+   "count": 1
+  },
+  {
+   "text": "Not recorded. Complete the site survey and confirm water before choosing an intensive plan.",
+   "count": 1
+  },
+  {
+   "text": "Frost on this farm",
+   "count": 1
+  },
+  {
+   "text": "Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates.",
+   "count": 1
+  },
+  {
+   "text": "Sun and drainage",
+   "count": 1
+  },
+  {
+   "text": "Sun: not recorded.",
+   "count": 1
+  },
+  {
+   "text": "Drainage: not recorded. Soil-test results and crop-specific needs still need checking.",
+   "count": 1
+  },
+  {
+   "text": "Crop varieties to check locally (",
+   "count": 1
+  },
+  {
+   "text": "12",
+   "count": 1
+  },
+  {
+   "text": "crops",
+   "count": 1
+  },
+  {
+   "text": ")",
+   "count": 2
+  },
+  {
+   "text": "Food, production kg and growing space graphs",
+   "count": 1
+  },
+  {
+   "text": "Use your own records or a locally checked estimate. Missing amounts stay unknown. Eggs, litres and kg are kept separate.",
+   "count": 1
+  },
+  {
+   "text": "Record expected or actual production",
+   "count": 1
+  },
+  {
+   "text": "record",
+   "count": 2
+  },
+  {
+   "text": "s",
+   "count": 2
+  },
+  {
+   "text": "Record food kept in store",
+   "count": 1
+  },
+  {
+   "text": "marks when to start checking seedlings raised in a tray. The crop bar starts at the planned transplant month; if seedlings are delayed, update the planting instead of treating the bed as occupied. Tap it (or the crop bar) for details.",
+   "count": 1
+  },
+  {
+   "text": "How the two-year timeline works (↻, faded bars, rotation)",
+   "count": 1
+  },
+  {
+   "text": "Food, field & value",
+   "count": 1
+  },
+  {
+   "text": "Availability",
+   "count": 1
+  },
+  {
+   "text": "Field utilization",
+   "count": 1
+  },
+  {
+   "text": "Plan-cycle value",
+   "count": 1
+  },
+  {
+   "text": "An established year",
+   "count": 1
+  },
+  {
+   "text": "From today",
+   "count": 1
+  },
+  {
+   "text": "Follows the planting calendar from today; existing and one-off crops appear only in their own season.",
+   "count": 1
+  },
+  {
+   "text": "Fruit, nuts & berries shown · 4 kinds on your map",
+   "count": 1
+  },
+  {
+   "text": "Vegetables and staple crops are shown in separate rows. Green means ready to pick; gold means stored under sourced conditions. The source does not provide a within-window kg curve, so this chart deliberately shows no monthly kilograms or money.",
+   "count": 1
+  },
+  {
+   "text": "Ready to pick",
+   "count": 1
+  },
+  {
+   "text": "Stored under named conditions",
+   "count": 1
+  },
+  {
+   "text": "–",
+   "count": 7
+  },
+  {
+   "text": "3",
+   "count": 5
+  },
+  {
+   "text": "4",
+   "count": 5
+  },
+  {
+   "text": "Year of food",
+   "count": 1
+  },
+  {
+   "text": "Something fresh in 6 of 12 months; nothing fresh in Jan–Mar, Jun, Sep–Oct.",
+   "count": 1
+  },
+  {
+   "text": "The next 12 months from today",
+   "count": 1
+  },
+  {
+   "text": ", beds, trees and animals together — the rows switched on in the chart above. This shows whether food comes in, not whether it is enough. Availability bars count crop kinds, not kilograms.",
+   "count": 1
+  },
+  {
+   "text": "fresh vegetables & staples",
+   "count": 1
+  },
+  {
+   "text": "fruit",
+   "count": 1
+  },
+  {
+   "text": "animal products",
+   "count": 1
+  },
+  {
+   "text": "in store only",
+   "count": 1
+  },
+  {
+   "text": "Fill the months with no fresh crop",
+   "count": 1
+  },
+  {
+   "text": "Sowings in this region's usual window",
+   "count": 1
+  },
+  {
+   "text": "that your site’s temperatures allow",
+   "count": 1
+  },
+  {
+   "text": ", on a bed with room over the crop's months. “Plan it” opens the normal planting form so you can check it first.",
+   "count": 1
+  },
+  {
+   "text": "—",
+   "count": 4
+  },
+  {
+   "text": "nothing fresh at all",
+   "count": 4
+  },
+  {
+   "text": "Baby marrow (courgette)",
+   "count": 3
+  },
+  {
+   "text": "· sow",
+   "count": 9
+  },
+  {
+   "text": "in",
+   "count": 9
+  },
+  {
+   "text": "(",
+   "count": 9
+  },
+  {
+   "text": "a third of the bed",
+   "count": 6
+  },
+  {
+   "text": ") · picking",
+   "count": 9
+  },
+  {
+   "text": "Plan it",
+   "count": 9
+  },
+  {
+   "text": "Swiss chard (spinach)",
+   "count": 1
+  },
+  {
+   "text": "a quarter of the bed",
+   "count": 1
+  },
+  {
+   "text": "Nov–Feb",
+   "count": 1
+  },
+  {
+   "text": "Beetroot",
+   "count": 2
+  },
+  {
+   "text": "Feb–Mar",
+   "count": 2
+  },
+  {
+   "text": "whole bed",
+   "count": 2
+  },
+  {
+   "text": "Cucumber",
+   "count": 1
+  },
+  {
+   "text": "No crop with sourced timing picks in this month from a sowing in this region’s window and your site’s temperatures.",
+   "count": 1
+  },
+  {
+   "text": "Show 2 more months",
+   "count": 1
+  },
+  {
+   "text": "Tasks",
+   "count": 1
+  },
+  {
+   "text": "this month",
+   "count": 1
+  },
+  {
+   "text": "Prep ground",
+   "count": 1
+  },
+  {
+   "text": "job",
+   "count": 4
+  },
+  {
+   "text": "assess soil and drainage; use a soil test or local advice before adding amendments",
+   "count": 1
+  },
+  {
+   "text": "Harvest",
+   "count": 2
+  },
+  {
+   "text": "next month",
+   "count": 1
+  },
+  {
+   "text": "Sow",
+   "count": 1
+  },
+  {
+   "text": "rows 150cm apart · 40cm apart in the row",
+   "count": 1
+  },
+  {
+   "text": "Published optimum-condition maturity endpoints are planning slots, not promises. Before any successor is sown or transplanted, confirm the previous crop is finished and the bed is actually clear; crops may mature later.",
+   "count": 1
+  },
+  {
+   "text": "Share tasks",
+   "count": 1
+  },
+  {
+   "text": "Looking ahead",
+   "count": 1
+  },
+  {
+   "text": "▸",
+   "count": 5
+  },
+  {
+   "text": "Harvest total — conservative benchmark",
+   "count": 1
+  },
+  {
+   "text": "By crop",
+   "count": 1
+  },
+  {
+   "text": "By bed",
+   "count": 1
+  },
+  {
+   "text": "56.7",
+   "count": 2
+  },
+  {
+   "text": "kg across active and planned crop cycles",
+   "count": 1
+  },
+  {
+   "text": "0.44",
+   "count": 1
+  },
+  {
+   "text": "kg/m² across",
+   "count": 1
+  },
+  {
+   "text": "128.0",
+   "count": 1
+  },
+  {
+   "text": "m² of growing space — a density figure for comparing plans, not a yield promise",
+   "count": 1
+  },
+  {
+   "text": "Conservative mapped-area comparison for one cycle of each active or planned planting; no loss allowance or within-month picking curve is applied here. A finished one-off crop is not repeated into a later year.",
+   "count": 1
+  },
+  {
+   "text": "Bar length compares crops · % is share of the",
+   "count": 1
+  },
+  {
+   "text": "kg above",
+   "count": 1
+  },
+  {
+   "text": "13.5",
+   "count": 1
+  },
+  {
+   "text": "kg",
+   "count": 10
+  },
+  {
+   "text": "24",
+   "count": 1
+  },
+  {
+   "text": "%",
+   "count": 10
+  },
+  {
+   "text": "12.7",
+   "count": 1
+  },
+  {
+   "text": "22",
+   "count": 1
+  },
+  {
+   "text": "7.2",
+   "count": 1
+  },
+  {
+   "text": "13",
+   "count": 1
+  },
+  {
+   "text": "5.5",
+   "count": 2
+  },
+  {
+   "text": "10",
+   "count": 2
+  },
+  {
+   "text": "4.4",
+   "count": 1
+  },
+  {
+   "text": "8",
+   "count": 1
+  },
+  {
+   "text": "2.4",
+   "count": 1
+  },
+  {
+   "text": "2.1",
+   "count": 1
+  },
+  {
+   "text": "1.9",
+   "count": 1
+  },
+  {
+   "text": "1.5",
+   "count": 1
+  },
+  {
+   "text": "Take this plan with you",
+   "count": 1
+  },
+  {
+   "text": "Files are made on this device. Download a copy to use away from the app.",
+   "count": 1
+  },
+  {
+   "text": "Your plan includes vegetables, fruit, nuts, berries and animal products from your map.",
+   "count": 1
+  },
+  {
+   "text": "Add 37 tasks to calendar",
+   "count": 1
+  },
+  {
+   "text": "Download the plan (PDF)",
+   "count": 1
+  },
+  {
+   "text": "Calendar & jobs",
+   "count": 1
+  },
+  {
+   "text": "Or:",
+   "count": 1
+  },
+  {
+   "text": "open it to print",
+   "count": 1
+  },
+  {
+   "text": "Future harvest PDF",
+   "count": 1
+  },
+  {
+   "text": "Detailed reference PDF",
+   "count": 1
+  },
+  {
+   "text": "What each file contains",
+   "count": 1
+  },
+  {
+   "text": "The calendar file works with Google Calendar and Apple Calendar. Tasks land as whole-day entries on the first of their month — this plan works in months, not exact days — with a reminder three days before. The printed plan shows each crop growing in its bed across the months, like the app, plus pictures of what you can pick.",
+   "count": 1
+  },
+  {
+   "text": "It also has what to buy, monthly tick-off jobs and a harvest record.",
+   "count": 1
+  },
+  {
+   "text": "Picking dates for trees and animals must be confirmed locally; plants and housing with unknown dates stay listed on the plan. The separate Future harvest PDF has the ten-year graph and age groups. Calendar & jobs gives concise wall sheets in your chosen paper size. Record animal numbers and care checks in the site survey; confirm production months in this plan. The detailed reference includes the full bed-by-bed plan, benchmarks, buying lists, guidance, monthly field sheets and harvest records.",
+   "count": 1
+  },
+  {
+   "text": "Seeds & seedlings — what to buy, and when",
+   "count": 1
+  },
+  {
+   "text": "Grouped by the month to get it. Ready-grown seedlings are listed for the month they go in the ground.",
+   "count": 1
+  },
+  {
+   "text": "packet rate needed",
+   "count": 2
+  },
+  {
+   "text": "Source packet seed before the December sowing month. Sow straight into the ground in December for about 10 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy.",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 3",
+   "count": 1
+  },
+  {
+   "text": "~11–21 seedlings positions",
+   "count": 1
+  },
+  {
+   "text": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is March–May. The mapped area holds about 11–21 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the February tray-sowing month, use its tray-sowing rate, and sow trays in February. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed.",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 6",
+   "count": 1
+  },
+  {
+   "text": "Source packet seed before the April sowing month. Sow straight into the ground in April for about 316–1 585 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy.",
+   "count": 1
+  },
+  {
+   "text": "· for Bed 2, Bed 4",
+   "count": 1
+  },
+  {
+   "text": "Later in the next 12 months (",
+   "count": 1
+  },
+  {
+   "text": "more",
+   "count": 1
+  },
+  {
+   "text": "month",
+   "count": 1
+  },
+  {
+   "text": "What these quantities do and do not cover",
+   "count": 1
+  },
+  {
+   "text": "Raising your own: seeds and equipment to source",
+   "count": 1
+  },
+  {
+   "text": "Planned crop comparison",
+   "count": 1
+  },
+  {
+   "text": "New vegetable and staple crop cycles, using published yield benchmarks. See Year of food above for picking months and gaps.",
+   "count": 1
+  },
+  {
+   "text": "For crops with a verified kg/m² benchmark, the new bed crop cycles in this comparison total about 49kg in the conservative commercial comparison. No monthly kilogram split is shown because the benchmark source does not say how yield is distributed within each fresh-picking window. This is not a household or farm-yield guarantee.",
+   "count": 1
+  },
+  {
+   "text": "Within the benchmark comparison, Tomatoes is the biggest crop-cycle total at ~14kg. Confirm the actual harvest and household demand before treating any amount as surplus to sell or preserve.",
+   "count": 1
+  },
+  {
+   "text": "What the planner can prove",
+   "count": 1
+  },
+  {
+   "text": "Every yield figure and date here is either from a published source or labelled as an estimate to confirm locally — tap for the method and the sources.",
+   "count": 1
+  },
+  {
+   "text": "Rotate by botanical family",
+   "count": 1
+  },
+  {
+   "text": "Which crops count as relatives, and why that is not the same as a food group.",
+   "count": 1
+  },
+  {
+   "text": "Growing organically",
+   "count": 1
+  },
+  {
+   "text": "This plan does not prescribe a fertiliser or pesticide programme. Soil condition, the diagnosed problem, the exact crop and the current South African label all matter; ask a local extension officer or qualified adviser where possible.",
+   "count": 1
+  },
+  {
+   "text": "Feeding your crops",
+   "count": 1
+  },
+  {
+   "text": "Protecting your crops",
+   "count": 1
+  },
+  {
+   "text": "Planning guide only — sow windows are general. Adjust to your local rainfall, frost dates and microclimate.",
+   "count": 1
+  },
+  {
+   "text": "Lima, your planting helper",
+   "count": 1
+  },
+  {
+   "text": "Ask for help",
+   "count": 1
+  },
+  {
+   "text": "Photo",
+   "count": 1
+  }
+ ]
+}

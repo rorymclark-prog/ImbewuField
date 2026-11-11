@@ -1,3 +1,4 @@
+import { withArchivedReleaseTour } from './update-ui-renderer.ts';
 import test from'node:test';import assert from'node:assert/strict';import fs from'node:fs';import{createHash}from'node:crypto';
 import{actualPhotoViewer}from'./photo-viewer-renderer.ts';import{controlT,controlLocales,type ControlLanguage}from'./control-icon-renderers.ts';import{beforePhotoViewerDictionary,beforePhotoViewerTranslations}from'./ui-dictionary-preservation.ts';
 const read=(p:string)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8'),packet=JSON.parse(read('docs/translation/four-language-completion/photo-viewer-drafts.json')),langs:ControlLanguage[]=['zu','st','ts','ve'];
@@ -20,7 +21,10 @@ test('only opted-in photographs open, observers refresh changed images, and clea
 });
 
 test('photo update and its optional Account guide stay source-bound in every language',async()=>{
+ // This positive guide case uses an explicit real archived announcement.
+ return withArchivedReleaseTour(async()=>{
  const{RELEASE_NOTES,visibleUpdateTour}=await import('../lib/release-notes.ts');const{loadUpdateCopy,updateDescription}=await import('../lib/update-copy.ts');const note=RELEASE_NOTES.find(n=>n.sha===packet.sourceSha.slice(0,8));assert.ok(note?.changes.includes(packet.releasePairs[0].english));assert.equal(note?.tour?.[0].href,'/account');for(const lang of langs)for(const pair of packet.releasePairs)assert.equal(updateDescription(await loadUpdateCopy(lang),pair.english),pair[lang]);assert.ok(visibleUpdateTour().length>=2);for(const stop of visibleUpdateTour())assert.ok(fs.existsSync(new URL('../app'+stop.href+'/page.tsx',import.meta.url)));
+});
 });
 
 test('the draft notice can switch the open viewer to English without changing the photograph',async()=>{const h=await actualPhotoViewer('ve');try{await h.fire();const before=h.renderer.root.findByType('img').props;await h.button(controlT('ve')('languageDraftNoticeEnglishToggle'));assert.equal(h.renderer.root.findByType('dialog').props['aria-label'],'Photo viewer');assert.equal(h.renderer.root.findByType('img').props.src,before.src);assert.equal(h.renderer.root.findByType('img').props.alt,before.alt);assert.equal(h.calls.show,1);}finally{await h.dispose();}});

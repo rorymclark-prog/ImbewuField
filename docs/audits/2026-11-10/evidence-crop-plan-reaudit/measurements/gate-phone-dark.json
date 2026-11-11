@@ -1,0 +1,284 @@
+{
+ "config": {
+  "name": "gate-phone-dark",
+  "viewport": "390x844",
+  "devicePixelRatio": 1,
+  "theme": "earth dark",
+  "level": "simple",
+  "lang": "en",
+  "sectionsOpened": false,
+  "countryHold": "left unconfirmed",
+  "appTextScale": 1,
+  "url": "/facilitator/crops",
+  "site": "public sample farm",
+  "servedBuild": {
+   "branch": "claude/blissful-pasteur-1c4ne6",
+   "sha": "3303ed3"
+  },
+  "siteClimate": {
+   "locationDataStatuses": [],
+   "fruitReferenceBarsShown": false,
+   "plannerShown": false
+  }
+ },
+ "totals": {
+  "controls": 19,
+  "textRuns": 43,
+  "contrastFailures": 0,
+  "contrastFailuresConfirmedByPixels": 0,
+  "contrastFailuresNotPixelSampled": 0,
+  "contrastFailuresOnDisabledControls": 1,
+  "textUnder12px": 1,
+  "targetsUnder24_noException": 0,
+  "targetsUnder24_withException": 2,
+  "targets24to44": 1,
+  "unnamedControls": 0,
+  "clippedText": 0,
+  "h1": 1,
+  "docOverflowX": false
+ },
+ "layout": null,
+ "contrast": [
+  {
+   "text": "Save country details",
+   "declared": {
+    "ratio": 1.7,
+    "text": "#8C8984",
+    "background": "#4D6D26",
+    "opacityChain": 0.5,
+    "backgroundVariants": 1
+   },
+   "required": 4.5,
+   "fontPx": 16,
+   "weight": 600,
+   "boxPx": "332x44",
+   "selector": "section[aria-label=\"Site country and region\"].mb-4.rounded-2xl > details.mt-3 > form.grid.gap-3 > button.min-h-11.rounded-xl",
+   "disabled": true,
+   "pixel": {
+    "backgrounds": [
+     {
+      "colour": "#4D6D26",
+      "shareOfBox": 0.9,
+      "ratioAgainstText": 1.71
+     }
+    ],
+    "worstRatio": 1.71,
+    "agreesWithDeclared": true,
+    "crossesTwoFills": false
+   }
+  }
+ ],
+ "textUnder12px": [
+  {
+   "text": "Plants and housing from your map",
+   "fontPx": 11,
+   "selector": "div.flex.flex-col > header.flex-shrink-0.flex > div.flex.flex-col > span.font-sans.truncate",
+   "count": 1
+  }
+ ],
+ "targetsUnder24": [
+  {
+   "label": "on",
+   "widthPx": 13,
+   "heightPx": 13,
+   "tag": "input",
+   "exception": "user-agent control",
+   "clashesWith": null,
+   "selector": "details.mt-3 > form.grid.gap-3 > label.flex.items-start > input.mt-1",
+   "count": 1
+  },
+  {
+   "label": "Review international evidence and readiness",
+   "widthPx": 287,
+   "heightPx": 16,
+   "tag": "a",
+   "exception": "spacing",
+   "clashesWith": null,
+   "selector": "div.mx-auto.w-full > section[aria-label=\"Planning support\"].mb-4.rounded-2xl > p.mt-2.text-sm > a.underline",
+   "count": 1
+  }
+ ],
+ "targets24to44": [
+  {
+   "label": "Home",
+   "widthPx": 34,
+   "heightPx": 34,
+   "tag": "a",
+   "selector": "body.h-screen.overflow-hidden > div.flex.flex-col > header.flex-shrink-0.flex > a[aria-label=\"Home\"].flex-shrink-0.flex",
+   "count": 1
+  }
+ ],
+ "unnamedControls": [],
+ "clippedText": [],
+ "headings": [
+  "H2 Site country and region",
+  "H1 Confirm the site country before crop planning",
+  "H4 Saved planned nursery batches"
+ ],
+ "h1Rendered": [
+  "Confirm the site country before crop planning"
+ ],
+ "consoleErrors": [],
+ "textCorpus": [
+  {
+   "text": "Tour",
+   "count": 1
+  },
+  {
+   "text": "Production plan",
+   "count": 1
+  },
+  {
+   "text": "Plants and housing from your map",
+   "count": 1
+  },
+  {
+   "text": "Vegetables and staples · Fruit, nuts & berries · Animal products. Housing is listed. Use the site survey for animal numbers and care checks.",
+   "count": 1
+  },
+  {
+   "text": "Country details are available from this device. Live account updates are unavailable.",
+   "count": 1
+  },
+  {
+   "text": "Site country and region",
+   "count": 1
+  },
+  {
+   "text": "The country for this site has not been confirmed. Existing plans and measured maps stay saved.",
+   "count": 1
+  },
+  {
+   "text": "Confirm country details",
+   "count": 1
+  },
+  {
+   "text": "Site country",
+   "count": 1
+  },
+  {
+   "text": "Jurisdiction reference (optional)",
+   "count": 1
+  },
+  {
+   "text": "Agricultural region reference (optional)",
+   "count": 1
+  },
+  {
+   "text": "Country, language, currency and measurement units are separate choices. These details do not select a planting calendar or approve farming advice. They travel with a site if you explicitly share that site.",
+   "count": 1
+  },
+  {
+   "text": "I confirm these details describe this mapped site.",
+   "count": 1
+  },
+  {
+   "text": "Save country details",
+   "count": 1
+  },
+  {
+   "text": "Confirm the site country before crop planning",
+   "count": 1
+  },
+  {
+   "text": "The existing automatic planner uses South African source assumptions. Country details alone cannot approve a new region. Local calendars, forecasts, crop instructions and their PDF/calendar exports are unavailable here until the planning basis is reviewed.",
+   "count": 1
+  },
+  {
+   "text": "Your saved sowing entries and mapped measurements remain stored. You can review those entries, keep actual production records and manage your own nursery equipment below. The catalogue nursery forecast is unavailable here. For a saved measured growing space, use Automatic plan from your estimates to review proposed seedling requirements from your own dates and inputs.",
+   "count": 1
+  },
+  {
+   "text": "Review international evidence and readiness",
+   "count": 1
+  },
+  {
+   "text": "Saved sowing entries ·",
+   "count": 1
+  },
+  {
+   "text": "15",
+   "count": 1
+  },
+  {
+   "text": "Harvest targets",
+   "count": 1
+  },
+  {
+   "text": "Your buyer-demand records",
+   "count": 1
+  },
+  {
+   "text": "Your growing estimates",
+   "count": 1
+  },
+  {
+   "text": "Automatic plan from your estimates",
+   "count": 1
+  },
+  {
+   "text": "Saved planned nursery batches",
+   "count": 1
+  },
+  {
+   "text": "Check the saved plan to review nursery batches or open the separate field seed worksheet for accepted cycles without nursery raising. Field seed sourcing does not require a nursery batch, nursery equipment or a nursery review horizon. References do not record actual sowing, available seeds or live nursery stock.",
+   "count": 1
+  },
+  {
+   "text": "DEMO — references stay in this sample session.",
+   "count": 1
+  },
+  {
+   "text": "Check saved nursery batches",
+   "count": 1
+  },
+  {
+   "text": "Check the current saved plan to load eligible planned nursery batches.",
+   "count": 1
+  },
+  {
+   "text": "Nursery planner",
+   "count": 1
+  },
+  {
+   "text": "This site’s trays and growing surface",
+   "count": 1
+  },
+  {
+   "text": "Use your own records or a locally checked estimate. Missing amounts stay unknown. Eggs, litres and kg are kept separate.",
+   "count": 1
+  },
+  {
+   "text": "Record expected or actual production",
+   "count": 1
+  },
+  {
+   "text": "0",
+   "count": 2
+  },
+  {
+   "text": "record",
+   "count": 2
+  },
+  {
+   "text": "s",
+   "count": 2
+  },
+  {
+   "text": "Record food kept in store",
+   "count": 1
+  },
+  {
+   "text": "Lima, your planting helper",
+   "count": 1
+  },
+  {
+   "text": "Ask for help",
+   "count": 1
+  },
+  {
+   "text": "Photo",
+   "count": 1
+  }
+ ]
+}

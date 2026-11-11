@@ -29,6 +29,7 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { DEMO_SITE } from '@/lib/demo-farm';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { monthlyTemperatureStatus } from '@/lib/climate-temperature';
 import { networkFailureMessage } from '@/lib/network-failure';
 import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
@@ -258,7 +259,7 @@ function HomeInner() {
   }, [searchKey]);
 
   const locationRequest = useRef(0);
-  const handleLocationSelect = useCallback(async (lat: number, lon: number) => {
+  const handleLocationSelect = useCallback(async (lat: number, lon: number, options?: { openDetails?: boolean }) => {
     const request = ++locationRequest.current;
     const named = loadPlaces().find(p=>designSiteIdFromLocation(p)===designSiteIdFromLocation({lat,lon}));
     setActivePlaceId(named?.id??null);setActivePlaceName(named?.name??null);
@@ -270,7 +271,9 @@ function HomeInner() {
     setMapCapture(null);
     setReportPhotoAnalysis(undefined);
     setError('');
-    setSheetOpen(true);
+    if (options?.openDetails !== false) {
+      setSheetOpen(true);
+    }
 
     // Check localStorage cache. MUST key at 5 dp (~1.1 m) to match designSiteIdFromLocation —
     // 2 dp (~1.1 km) made two different nearby sites collide on the same key, so the second
@@ -286,12 +289,14 @@ function HomeInner() {
     // farmer cannot tell the two apart and neither can this cache.
     // v5 (23 Sep): the biome fallback now uses the coldest monthly mean, so previously cached
     // Grassland answers for warm lowveld farms must be fetched again.
-    const cacheKey = `imbewu_loc_v6_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+    // v7: bump for monthly-temperature coverage; legacy display arrays cannot prove supplied months.
+    const cacheKey = `imbewu_loc_v7_${lat.toFixed(5)}_${lon.toFixed(5)}`;
     try {
       const cached = localStorage.getItem(cacheKey);
       if (cached) {
         const parsed = JSON.parse(cached);
-        if (designSiteIdFromLocation(parsed) === designSiteIdFromLocation({ lat, lon })) {
+        if (designSiteIdFromLocation(parsed) === designSiteIdFromLocation({ lat, lon })
+          && monthlyTemperatureStatus(parsed?.climate) === 'complete') {
           setData(parsed); setLoading(false); return;
         }
       }
@@ -464,6 +469,9 @@ function HomeInner() {
   // Sample mode: auto-load the real Ubhejane Creche site so the evaluator lands
   // straight on a populated map instead of an empty "tap to survey" state.
   //
+  // Automatic sample map loading initializes location data but does not itself
+  // request the Details bottom sheet to open.
+  //
   // The camera move is NOT optional. Selecting the site loads its data but
   // leaves the map wherever it was — zoom 5.2, the whole of South Africa — so
   // the flagship screen opened on Botswana and Lesotho with the farm an
@@ -472,7 +480,7 @@ function HomeInner() {
   // it is told to fly.
   useEffect(() => {
     if (isSampleMode() && !selected && !searchParams.get('site') && !reportSiteFlow) {
-      handleLocationSelect(DEMO_SITE.lat, DEMO_SITE.lon);
+      handleLocationSelect(DEMO_SITE.lat, DEMO_SITE.lon, { openDetails: false });
       const t = setTimeout(() => setJumpTo({ lat: DEMO_SITE.lat, lon: DEMO_SITE.lon }), 800);
       return () => clearTimeout(t);
     }
@@ -592,18 +600,21 @@ function HomeInner() {
               live here). Now visible ON MOBILE too: farmers on phones could not find the zones
               because this was desktop-only. The older Konva canvas at /facilitator (still hosts
               the AI producer) stays reachable via the burger menu; role switcher stays desktop-only. */}
+          {/* Historical 390px phone evidence showed this action clipped past the viewport edge in sample mode. */}
           <Link
             href={selected ? `/design?lat=${selected.lat.toFixed(5)}&lon=${selected.lon.toFixed(5)}` : '/design'}
-            className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 rounded-full font-sans font-bold transition-all flex-shrink-0"
+            aria-label={t('designStudioLabel')}
+            title={t('designStudioLabel')}
+            className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 rounded-full font-sans font-bold transition-all min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 shrink md:shrink-0"
             style={{ fontSize: 15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--color-forest-800)' }}
           >
-            <Palette size={15} aria-hidden />
+            <Palette size={15} aria-hidden className="flex-shrink-0" />
             {/* zu-04: this pill used to grow a second English line here whenever lang === 'zu'
                 ('Isitudiyo Sokuklama' / 'Uhlaka olungakabuyekezwa · English: Design Studio'),
                 turning a one-line nav pill into two. The draft disclosure now lives once, under
                 the header, in the shared <LanguageDraftNote /> (see DataPanel.tsx) — this pill is
                 just its label, in either language. */}
-            <span>{t('designStudioLabel')}</span>
+            <span className="min-w-0 truncate md:overflow-visible md:text-clip md:whitespace-normal">{t('designStudioLabel')}</span>
           </Link>
           {buildInfo?.sha && (
             <div

@@ -1,0 +1,23 @@
+{
+  "nativeAuthorship": "AGY main parser implementation and same-owner review corrections",
+  "nativeFrozenParserSha256": "d43c2762a046d1bcb9bb41f41abaf3dd531e90034cc2b1ec0883b34d3e154b1c",
+  "coordinatorCorrection": "Equivalent unambiguous decimal grammar after isolated actual long-token timeout; native source writes revoked before coordinator change",
+  "currentParserSha256": "60fd01b5277162a5ecf7e11d23630f99e75c7e140d230b0c33bbf759c67d21b1",
+  "nativeValidation": "UNKNOWN; no native commands/tests used",
+  "coordinatorValidation": {
+    "nodeMajor": 24,
+    "affectedTests": 377,
+    "files": 21,
+    "fail": 0,
+    "skip": 0,
+    "todo": 0,
+    "typecheckExit": 0,
+    "whitespaceExit": 0,
+    "releaseGateExit": 0
+  },
+  "independentLanes": "Codex parser regressions, geometry/shared-source authority, panel, delivery/actual parent regressions; coordinator final checks and actual browser",
+  "runtimeDependencyAdded": false,
+  "sourceWritesRevoked": true,
+  "fullCurrentHeadCi": "pending",
+  "productionReleased": false
+}

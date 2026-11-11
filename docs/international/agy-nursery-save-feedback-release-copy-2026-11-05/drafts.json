@@ -1,0 +1,40 @@
+{
+  "sourceSha256": "cf53a73a02b0d5a89af213fbd766497f189e119eced1b9f1b041ab8090cea49d",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "pairs": [
+    {
+      "locale": "st",
+      "key": "nurseryPlanSaveFeedbackRelease.message.01",
+      "english": "A warning about unsaved edits clears once the crop plan is saved.",
+      "messageSha256": "d5ac1037102390ff955a6692966bb1848a588cb3c124fbb8085225e820591fce",
+      "translation": "Temoso e mabapi le diphetoho tse sa bolokwang e a hlakoha hang ha moralo wa dijalo o bolokilwe."
+    },
+    {
+      "locale": "ts",
+      "key": "nurseryPlanSaveFeedbackRelease.message.01",
+      "english": "A warning about unsaved edits clears once the crop plan is saved.",
+      "messageSha256": "d5ac1037102390ff955a6692966bb1848a588cb3c124fbb8085225e820591fce",
+      "translation": "Xitsundzuxo malunghana ni ku lulamisiwa loku nga hlayisiwangiki xi hela loko pulani ya swibyariwa yi hlayisiwile."
+    },
+    {
+      "locale": "ve",
+      "key": "nurseryPlanSaveFeedbackRelease.message.01",
+      "english": "A warning about unsaved edits clears once the crop plan is saved.",
+      "messageSha256": "d5ac1037102390ff955a6692966bb1848a588cb3c124fbb8085225e820591fce",
+      "translation": "Tsevho nga ha nzudzanyo dzi songo vhulungwaho i a fhela musi pulane ya zwimela yo no vhulungwa."
+    },
+    {
+      "locale": "zu",
+      "key": "nurseryPlanSaveFeedbackRelease.message.01",
+      "english": "A warning about unsaved edits clears once the crop plan is saved.",
+      "messageSha256": "d5ac1037102390ff955a6692966bb1848a588cb3c124fbb8085225e820591fce",
+      "translation": "Isexwayiso mayelana nezinguquko ezingalondoloziwe siyaphela uma uhlelo lwezitshalo selulondoloziwe."
+    }
+  ],
+  "reviewNotes": "Four unreviewed candidate translations for save-feedback release note nurseryPlanSaveFeedbackRelease.message.01. Describes clearing the unsaved-edits notice after a confirmed local plan save, without asserting cloud confirmation, sync grants, or fluent review approval.",
+  "validation": "UNKNOWN",
+  "commandsRun": false,
+  "testsRun": false,
+  "workersActive": 0
+}

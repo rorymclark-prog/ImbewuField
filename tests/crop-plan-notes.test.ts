@@ -450,23 +450,29 @@ test('a chosen crop that actually got planted never appears in Later this year',
 test('a crop whose window is open RIGHT NOW but has no room is reported, not silently dropped', () => {
   // The 2026-08-20 gap: the old producer skipped any crop whose window
   // contained the current month, so a farmer generating in August was never
-  // told that peas (window open in August) had nowhere to go until February —
-  // the crop just vanished from both the plan and the panel.
-  const peas = cropByKey('peas')!;
-  assert.deepEqual(peas.sowMonths.summer, [2, 3, 8], 'fixture assumes the Aug window with Feb/Mar as the wrap-around fits');
+  // told that a crop with its window open in August had nowhere to go until
+  // February — the crop just vanished from both the plan and the panel.
+  //
+  // The crop in that report was peas, whose hard-frost window was then
+  // [Feb, Mar, Aug]. On 2026-11-10 that window was corrected to Jul-Sep (peas
+  // sown in February flower into frost — accuracy audit, CP-077), which leaves
+  // peas no wrap-around months to fall back on. Carrots still have exactly the
+  // shape this test needs: a window open in August and a second one in February.
+  const carrots = cropByKey('carrots')!;
+  assert.deepEqual(carrots.sowMonths.summer, [2, 3, 8, 9, 10], 'fixture assumes the Aug-Oct window with Feb/Mar as the wrap-around fits');
   const answers: AutoSuggestAnswers = {
     goal: 'family', householdSize: 'medium', groups: [],
-    cropKeys: ['peas'], rhythm: 'few-big',
+    cropKeys: ['carrots'], rhythm: 'few-big',
     rotateCrops: false, allowVinesInBeds: false, allowMixedCropsInBed: false,
     reliableIrrigation: true,
   };
   const beds: PlanBed[] = [{ id: 'b1', label: 'Bed 1', areaM2: 9, minDimM: 1.2 }];
   // Swiss chard sown July holds the only bed Jul-Dec (2 months to maturity,
-  // 3 picking months, +1), so August is full while Jan-Jun stay free.
+  // 3 picking months, +1), so August to October are full while Jan-Jun stay free.
   const proposed: Planting[] = [{ id: 'p1', bedId: 'b1', cropKey: 'swiss-chard', sowMonth: 7 }];
   const entries = recomputeLaterThisYear(answers, 'summer', beds, proposed, [], 8);
-  const entry = entries.find((later) => later.cropKey === 'peas');
-  assert.ok(entry, `peas must appear even though its window contains August: ${JSON.stringify(entries)}`);
+  const entry = entries.find((later) => later.cropKey === 'carrots');
+  assert.ok(entry, `carrots must appear even though their window contains August: ${JSON.stringify(entries)}`);
   assert.equal(entry!.nextWindowMonth, 8, 'the window that matters is the one open right now');
   assert.equal(entry!.firstFitMonth, 2, 'February is the first month of its window with room — a WRAP past December');
   assert.match(entry!.text, /sowing window is open right now/);

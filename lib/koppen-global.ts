@@ -55,6 +55,15 @@ export interface MonthlyClimate {
   precipMm: number[];
   /** Signed latitude. Only its SIGN is used — to decide which six months are summer. */
   lat: number;
+  /**
+   * Lowest hourly 2 m air temperature in the grid cell's climatological record, °C.
+   * Optional, and read ONLY by the sowing-calendar choice below — the Köppen rules
+   * never see it. It is NASA POWER's climatology T2M_MIN ("the minimum hourly air
+   * temperature at 2 meters ... in the period of interest"), taken over all twelve
+   * months, and only a caller holding a real provider reading may pass it
+   * (lib/climate-temperature.ts recordMinimumC).
+   */
+  recordMinC?: number;
 }
 
 export interface KoppenResult {
@@ -236,49 +245,218 @@ export type AtlasRainPattern = 'summer' | 'winter' | 'all-year' | 'mild-frost';
  *
  * The catalog's four columns are FROST regimes before they are rainfall regimes
  * (lib/crop-catalog.ts header): 'summer' is the hard-frost interior, 'mild-frost' is
- * KZN DARD's "warm areas / light frosts" column, 'all-year' the frost-free coast and
- * 'winter' the mild Mediterranean Cape. This bridge used to choose by rain share alone
- * and tested temperature once, backwards: a coldest month under 4 °C — the harshest
- * frost in the country — was sent to the LIGHT-frost calendar, while frost-free lowveld
- * and coast (the Mkuze demo farm, Durban, Mbombela, and the catalog's own light-frost
- * example, the Upper Highway) could only ever reach the hard-frost windows, and
- * Sutherland-type hard-frost sites with bimodal rain reached the frost-free column.
+ * KZN DARD's "warm areas / light frosts" column, 'all-year' its "hot areas / frost-free"
+ * column and 'winter' the mild Mediterranean Cape. This bridge used to choose by rain
+ * share alone and tested temperature once, backwards: a coldest month under 4 °C — the
+ * harshest frost in the country — was sent to the LIGHT-frost calendar, while frost-free
+ * lowveld and coast could only ever reach the hard-frost windows, and Sutherland-type
+ * hard-frost sites with bimodal rain reached the frost-free column.
  *
- * Coldest-month MEAN is the one temperature every caller has, so the thresholds are
- * stated on it. They lean cold on purpose: a site near a line lands in the COLDER
+ * Coldest-month MEAN is the one temperature every caller has, so the first thresholds
+ * are stated on it. They lean cold on purpose: a site near a line lands in the COLDER
  * column, whose windows wait for frost to pass.
  *   < 7 °C   hard frost (Lesotho border, Sutherland, high Karoo) — frost column always.
- *   < 11 °C  regular frost (Bloemfontein ~8, Johannesburg ~10) — frost column unless the
- *            rain is winter-dominant (the Cape's own column already waits out winter).
- *   >= 13 °C with summer-dominant rain, not arid — light frost in low pockets at most (Upper
- *            Highway, Mbombela ~14, Mkuze ~17, Durban ~17): KZN DARD's warm-area column,
- *            the only one of the four checked crop by crop. A frost-free site loses
- *            little on a light-frost calendar; a frost-prone site on a frost-free one
- *            loses its crops.
+ *   >= 13 °C light frost in low pockets at most (Upper Highway ~14) — the warm-area column.
+ *
+ * WHAT THE 10 NOVEMBER 2026 ACCURACY AUDIT CHANGED (CP-073, CP-074, CP-078).
+ * The rule was run for 44 real South African places and checked against 20 years of
+ * daily minimum temperatures and a published regional sowing guide
+ * (docs/audits/2026-11-10/crop-plan-accuracy-claude.md). Three things were wrong:
+ *
+ * 1. FROST WAS GUESSED FROM A MEAN AND AN ARIDITY CLASS. Every semi-arid summer-rain
+ *    site went to the hard-frost column, because "a desert's clear nights fall far
+ *    below its mean". True for Upington; false for Komatipoort, Phalaborwa, Musina and
+ *    Thohoyandou, which had no frost day in 20 years of the gridded record and were
+ *    shown the Highveld's season — tomatoes sown August to October where the regional
+ *    guides say January to July. The site's record minimum temperature was already
+ *    being fetched and was not read. It is read now: an arid site clears the frost
+ *    column only when its own record shows no freezing temperature.
+ * 2. NOTHING COULD REACH THE HOT-AREA COLUMN ON SUMMER RAIN. 'all-year' was reachable
+ *    only when summer rain was under 65 % of the year, so Richards Bay (64 %) got the
+ *    frost-free calendar and Durban (69 %) did not. The column is KZN DARD's "Hot
+ *    areas, frost-free": autumn, winter and spring sowing, summer closed. It is chosen
+ *    by frost and heat, not by rain timing.
+ * 3. A MILD, FROST-FREE COAST IS NOT A HOT AREA. George and Gqeberha were on the
+ *    frost-free column and agree far better with the warm-area one (their guides sow
+ *    beans October to January, not February to September). A site with rain in both
+ *    halves of the year now goes through the same frost test as a summer-rain site.
+ *
+ * THE HOT-AREA TEST, and where each number comes from. All three must hold:
+ *   - Frost-free, as far as a grid can say. Record minimum >= 2 °C, the line
+ *     lib/design-studio.ts already uses for "watch for frost". It is this rule's
+ *     working line on gridded evidence, not a measurement: a cell whose record has
+ *     touched 2 °C may hold ground that froze, and a cell above the line is not
+ *     proof that a given farm or hollow never does. With no record minimum, the
+ *     coldest-month mean must reach Köppen's tropical line (18 °C), aridity or not.
+ *   - Warm winter. Coldest-month mean >= 16 °C, the bottom of the common bean's optimum
+ *     range in FAO ECOCROP (Phaseolus vulgaris, TOPMN — the table lib/crop-climate-gate.ts
+ *     cites). The column sows bush beans from February to September, so beans must
+ *     still grow in the coldest month.
+ *   - Hot summer. Hottest-month mean >= 24 °C, the top of the optimum range (TOPMX) for
+ *     cabbage, broccoli, carrots and peas in the same table: the summer the column
+ *     closes for them. East London (17.6 °C winter, 23.4 °C summer) fails this and
+ *     stays on the warm-area column, where its regional guide fits.
+ *
+ * WHAT THIS IS NOT. Every input is a gridded estimate for a cell tens of kilometres
+ * wide, not a weather station and not the farm. Mbombela (coldest month 15.9 °C) and
+ * Tzaneen (record minimum 0.7 °C) sit just on the cold side and get the warm-area
+ * column; a frost-free farm there would be better served by the hot one. That is the
+ * lean-cold rule doing its job, and `closeCall` below is how the planner says so.
  */
 export const HARD_FROST_COLDEST_MONTH_C = 7;
-export const FROST_COLDEST_MONTH_C = 11;
 export const LIGHT_FROST_COLDEST_MONTH_C = 13;
+/**
+ * The rule's frost-free line: a gridded record minimum at or above this is TREATED as
+ * frost-free when a calendar is chosen. It is a heuristic on grid evidence, not an
+ * assurance about any farm: a grid minimum cannot rule out frost in a cold hollow.
+ * That is why a near miss is flagged (`closeCall`), why the reasons line tells the
+ * grower the records are for the wider area, and why their own frost answer and
+ * their own calendar choice both override it.
+ */
+export const FROST_FREE_RECORD_MIN_C = 2;
+/** Coldest-month mean for the hot-area column: ECOCROP TOPMN, Phaseolus vulgaris. */
+export const HOT_AREA_COLDEST_MONTH_C = 16;
+/** Hottest-month mean for the hot-area column: ECOCROP TOPMX, cabbage/broccoli/carrot/pea. */
+export const HOT_AREA_HOTTEST_MONTH_C = 24;
+/**
+ * Coldest-month mean below which frost commonly lasts into September. The hard-frost
+ * column assumes frost from May to August. In 20 years of daily minima (ERA5, 2001-2020)
+ * every audited site that frosted in September in at least 15 % of years had a coldest
+ * month of 8.6 °C or lower — Sutherland 80 % of years, Underberg 45 %, Bethlehem 25 %,
+ * Bloemfontein and Kokstad 20 %, Komani and Graaff-Reinet 15 % — and no site at 9.8 °C or
+ * above reached more than 10 % (accuracy audit, CP-081). It selects a warning, never a
+ * sowing month: a gridded record can miss frost in a cold hollow and is not a frost
+ * observation at the farm, so the grower's own last frost is what decides.
+ */
+export const LATE_FROST_COLDEST_MONTH_C = 9;
+/** Köppen's tropical line: the frost-free stand-in when no record minimum is known. */
+const TROPICAL_COLDEST_MONTH_C = 18;
+const SUMMER_RAIN_SHARE = 0.65;
+const WINTER_RAIN_SHARE = 0.35;
 
-export function rainPatternFor(c: MonthlyClimate, koppen: KoppenResult): AtlasRainPattern {
+/**
+ * How far two gridded climate records disagree about the same South African place:
+ * NASA POWER against ERA5 at the audit's 44 sites. Monthly means differed by a median
+ * 0.8–1.0 °C (upper quartile 1.2–1.4 °C), summer rain share by 0.05 or less at nine
+ * sites in ten, and the record minimum by 2 °C or less at 31 of 44. A site that would
+ * change calendar inside these tolerances is a close call, not a finding.
+ */
+const CLOSE_CALL_MEAN_C = 1;
+const CLOSE_CALL_RECORD_MIN_C = 2;
+const CLOSE_CALL_RAIN_SHARE = 0.05;
+
+/** The three frost columns from coldest to warmest. The Cape's winter-rain column is not
+ * on this ladder: it is reached by rain timing and has no warmer or colder neighbour. */
+const WARMTH_RANK: Record<AtlasRainPattern, number> = { summer: 0, 'mild-frost': 1, 'all-year': 2, winter: -1 };
+
+/** Which half of the year the rain falls in — a separate question from the frost regime. */
+export type RainSeason = 'summer' | 'winter' | 'all-year';
+
+interface CalendarFacts {
+  coldestMonthC: number;
+  hottestMonthC: number;
+  summerRainShare: number;
+  arid: boolean;
+  tropical: boolean;
+  recordMinC: number | null;
+}
+
+function calendarFromFacts(f: CalendarFacts): AtlasRainPattern {
+  // Tropical (group A) means a coldest month >= 18 °C — never a frost climate, even
+  // when a coarse grid cell puts the number on the wrong side of a threshold above.
+  if (!f.tropical && f.coldestMonthC < HARD_FROST_COLDEST_MONTH_C) return 'summer';
+  if (f.summerRainShare <= WINTER_RAIN_SHARE) return 'winter';
+
+  const frostFree = f.recordMinC !== null
+    ? f.recordMinC >= FROST_FREE_RECORD_MIN_C
+    : f.coldestMonthC >= TROPICAL_COLDEST_MONTH_C;
+  if (frostFree
+      && f.coldestMonthC >= HOT_AREA_COLDEST_MONTH_C
+      && f.hottestMonthC >= HOT_AREA_HOTTEST_MONTH_C) return 'all-year';
+
+  // Arid (group B): a desert's clear winter nights fall far below its monthly mean
+  // (Upington frosts with a coldest month near 11-13 °C), so the mean alone cannot
+  // clear it of frost. Its own record can: no freezing temperature on record is the
+  // same `<= 0` line lib/design-elements.ts uses for frost-sensitive plantings.
+  const meanClearsFrost = !f.arid || (f.recordMinC !== null && f.recordMinC > 0);
+  // A frost-free record outranks the mean it was being guessed from: a cool maritime
+  // coast (George: coldest month 12.7-13.8 °C by dataset, record minimum 3-5 °C) is a
+  // warm-area site on either reading, never a hard-frost one.
+  const lightFrostAtMost = f.tropical || frostFree
+    || (f.coldestMonthC >= LIGHT_FROST_COLDEST_MONTH_C && meanClearsFrost);
+  return lightFrostAtMost ? 'mild-frost' : 'summer';
+}
+
+export interface SowingCalendarChoice {
+  /** The catalog column this climate is read against. */
+  pattern: AtlasRainPattern;
+  /** When the rain falls. Storage sizing and rain labels read THIS, never `pattern`. */
+  rainSeason: RainSeason;
+  /**
+   * Another column this site would get if its readings moved by no more than two
+   * gridded records typically disagree — null when the choice is clear either way.
+   * Shown to the grower as "close to the line", never used to pick a month.
+   */
+  closeCall: AtlasRainPattern | null;
+  /**
+   * The next WARMER column (hard frost → light frost → hot, frost-free), when the site is
+   * within the same tolerance of it. The rule itself never moves a site there — it leans
+   * cold — but a grower who has not seen frost on their own ground can
+   * (lib/site-climate.ts calendarForGrower).
+   */
+  warmerNeighbour: AtlasRainPattern | null;
+  /** The readings the choice rests on, for the screen to show in plain numbers. */
+  coldestMonthC: number;
+  hottestMonthC: number;
+  recordMinC: number | null;
+  summerRainShare: number;
+}
+
+export function sowingCalendarFor(c: MonthlyClimate, koppen: KoppenResult): SowingCalendarChoice {
   const map = c.precipMm.reduce((s, p) => s + p, 0);
   const summer = summerMonthIndices(c.lat);
   const pSummer = summer.reduce((s, m) => s + c.precipMm[m], 0);
-  const tCold = Math.min(...c.tempC);
-  // Tropical (group A) means a coldest month >= 18 °C — never a frost climate, even
-  // when a coarse grid cell puts the number on the wrong side of a threshold above.
-  const tropical = koppen.group === 'A';
+  const recordMinC = typeof c.recordMinC === 'number' && Number.isFinite(c.recordMinC) ? c.recordMinC : null;
+  const facts: CalendarFacts = {
+    coldestMonthC: Math.min(...c.tempC),
+    hottestMonthC: Math.max(...c.tempC),
+    summerRainShare: map > 0 ? pSummer / map : 1,
+    arid: koppen.group === 'B',
+    tropical: koppen.group === 'A',
+    recordMinC,
+  };
+  const pattern = calendarFromFacts(facts);
 
-  if (!tropical && tCold < HARD_FROST_COLDEST_MONTH_C) return 'summer';
-  const summerShare = map > 0 ? pSummer / map : 1;
-  if (summerShare >= 0.65) {
-    // Arid (group B) is excluded: a desert's clear winter nights fall far below its
-    // monthly mean (Upington frosts with a coldest month near 11-13 °C), so the mean
-    // alone cannot clear it of frost.
-    const lightFrostAtMost = tropical || (koppen.group !== 'B' && tCold >= LIGHT_FROST_COLDEST_MONTH_C);
-    return lightFrostAtMost ? 'mild-frost' : 'summer';
+  // Colder and drier-side readings are tried first, so a site with two neighbours is
+  // told about the colder one.
+  const nudges: Partial<CalendarFacts>[] = [
+    { coldestMonthC: facts.coldestMonthC - CLOSE_CALL_MEAN_C },
+    ...(recordMinC === null ? [] : [{ recordMinC: recordMinC - CLOSE_CALL_RECORD_MIN_C }]),
+    { hottestMonthC: facts.hottestMonthC - CLOSE_CALL_MEAN_C },
+    { summerRainShare: facts.summerRainShare - CLOSE_CALL_RAIN_SHARE },
+    { coldestMonthC: facts.coldestMonthC + CLOSE_CALL_MEAN_C },
+    ...(recordMinC === null ? [] : [{ recordMinC: recordMinC + CLOSE_CALL_RECORD_MIN_C }]),
+    { hottestMonthC: facts.hottestMonthC + CLOSE_CALL_MEAN_C },
+    { summerRainShare: facts.summerRainShare + CLOSE_CALL_RAIN_SHARE },
+  ];
+  let closeCall: AtlasRainPattern | null = null;
+  let warmerNeighbour: AtlasRainPattern | null = null;
+  for (const nudge of nudges) {
+    const other = calendarFromFacts({ ...facts, ...nudge });
+    if (other === pattern) continue;
+    closeCall ??= other;
+    if (pattern !== 'winter' && other !== 'winter' && WARMTH_RANK[other] > WARMTH_RANK[pattern]) warmerNeighbour ??= other;
   }
-  if (summerShare <= 0.35) return 'winter';
-  if (!tropical && tCold < FROST_COLDEST_MONTH_C) return 'summer';
-  return 'all-year';
+
+  const rainSeason: RainSeason = facts.summerRainShare >= SUMMER_RAIN_SHARE ? 'summer'
+    : facts.summerRainShare <= WINTER_RAIN_SHARE ? 'winter' : 'all-year';
+  return {
+    pattern, rainSeason, closeCall, warmerNeighbour,
+    coldestMonthC: facts.coldestMonthC, hottestMonthC: facts.hottestMonthC,
+    recordMinC, summerRainShare: facts.summerRainShare,
+  };
+}
+
+export function rainPatternFor(c: MonthlyClimate, koppen: KoppenResult): AtlasRainPattern {
+  return sowingCalendarFor(c, koppen).pattern;
 }

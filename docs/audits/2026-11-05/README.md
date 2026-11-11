@@ -1,4 +1,13 @@
+# Latest international release reconciliation
+
+[Current-main, print and account-gate reconciliation](international-nursery-final-reconcile-codex.md) retains the published Sector renderer and both typography contracts. Current-head checks/output gates remain pending.
+
 # Audits — 5 November 2026
+
+- [Language review help placement](language-review-inline-help-codex.md): reproduced phone text occlusion; separate in-flow help follow-up, changed preview pending.
+- [International nursery release reconciliation](international-nursery-main-reconcile-codex.md): additive current-main history and exact existing-language description review; two original-body media-scope callers; new checks/release gates pending.
+
+- [Site survey elevation and energy — Codex](site-energy-survey-codex.md)
 
 - [Illustrated Sector graphics, stronger contours and three samples — Codex](sector-illustrated-graphics-codex.md)
 
@@ -11,5 +20,7 @@
 - [Sector typography and native release-description follow-up — Codex](sector-release-contracts-codex.md)
 
 - [Supplied-reference Sector wind/rain graphics, retaining slope and contours — Codex](sector-reference-flow-codex.md)
+
+- [Resolved save feedback and final main reconciliation](nursery-save-feedback-codex.md) — local warning correction; final current-tree/browser gates pending.
 
 - [Zones boundary authority and compact-key source audit — Codex](zones-authority-key-codex.md)

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "createdOn": "2026-11-02",
+  "status": "needs-human-review",
+  "source": "source.json",
+  "segmentsPerLocale": 97,
+  "locales": [
+    "fr",
+    "es",
+    "pt-BR",
+    "sw-KE"
+  ],
+  "executor": "AGY native workers and main coordinator",
+  "coordinatorReview": "Codex structural review; restored literal unit/demo tokens; replaced unsupported terminology assertions with review candidates",
+  "review": {
+    "status": "unreviewed",
+    "assignedReviewers": null
+  },
+  "process": {
+    "mainCli": "exited with code 2 after writing partial handoff; final clean completion not established",
+    "nativeWorkers": "reported stopped in observed AGY worker inspection; one failed handoff was recovered by AGY main"
+  },
+  "productIntegration": false,
+  "productionLanguageEnablement": false,
+  "validation": "Independent structural result is recorded separately; does not establish translation quality."
+}

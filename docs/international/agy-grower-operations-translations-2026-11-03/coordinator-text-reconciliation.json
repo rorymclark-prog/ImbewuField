@@ -1,0 +1,18 @@
+{
+  "sourceSha256": "f03dd7b45de73a2996c52478483a0ae68bdbe5081f2e8bc267641faa76b071f6",
+  "coordinatorReviewedAtUtc": "2026-11-03T01:54:33.638094+00:00",
+  "exactMessagePairsUnchanged": 31,
+  "currentFiles": [
+    {
+      "path": "components/crops/GrowerOperationsPanel.tsx",
+      "sha256": "3a280891145cfe3974cc63a497813189216d06f68ef3f8ad84ee52feb2d0afc4"
+    },
+    {
+      "path": "lib/task-board.ts",
+      "sha256": "9e72ee07dd064fb52cdc777dfee7bc8e28fc8eb222923ef58c98b87d68fdd966"
+    }
+  ],
+  "reason": "A device-only sample check moved into a mount effect after actual phone hydration failure. All31 exact English strings, keys, message hashes and placeholders remain unchanged. Frozen source packet is retained.",
+  "runtimeActivation": false,
+  "fluentReview": false
+}

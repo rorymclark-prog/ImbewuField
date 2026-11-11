@@ -1,15 +1,29 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import ChatPanel from './ChatPanel';
+import dynamic from 'next/dynamic';
 import { useSampleRole } from '@/lib/use-role-navigation';
-import { Camera, MessageCircleQuestion, X } from 'lucide-react';
+import { Camera, Loader2, MessageCircleQuestion, X } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n';
+
+// Reading a worksheet should not fetch the full chat panel. Like the floating launcher,
+// load it only when someone opens photo help; keep the native picker in its tap handler.
+const ChatPanel = dynamic(() => import('./ChatPanel'), {
+  ssr: false,
+  loading: function PhotoChatLoading() {
+    const { t } = useLanguage();
+    return <div role="status" aria-busy="true" aria-label={t('limaWhoIs')} className="flex justify-center py-10">
+      <Loader2 size={20} className="animate-spin" aria-hidden="true" />
+    </div>;
+  },
+});
 
 interface LimaBarProps {
   /** Where the ask-for-help control leads. */
   chatHref?: string;
+  /** Keep a reviewer's current filter and position while asking for help. Other pages retain their link. */
+  inPlace?: boolean;
   /** w20-08: staff Home — align with the page's px-4 content column and use the role-neutral label. */
   staff?: boolean;
 }
@@ -32,7 +46,7 @@ interface LimaBarProps {
  * the user gesture needed by iPhone Safari. The chosen photo stays in a local Lima dialog
  * until the farmer explicitly sends it.
  */
-export default function LimaBar({ chatHref = '/farmer?chat=1', staff = false }: LimaBarProps) {
+export default function LimaBar({ chatHref = '/farmer?chat=1', staff = false, inPlace = false }: LimaBarProps) {
   const { t, lang } = useLanguage();
   const sampleRole = useSampleRole();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -46,8 +60,18 @@ export default function LimaBar({ chatHref = '/farmer?chat=1', staff = false }: 
     dialogRef.current?.showModal();
   }
 
+  const askClass = 'flex-1 flex items-center justify-center gap-2 font-sans';
+  const askStyle: React.CSSProperties = {
+    minHeight: 46, borderRadius: 12, textDecoration: 'none',
+    background: 'linear-gradient(135deg, var(--brand-light), var(--brand-strong))',
+    color: 'var(--on-forest)', fontSize: 15, fontWeight: 700,
+    boxShadow: '0 2px 8px rgba(31,77,43,0.22)',
+  };
+  const askContent = <><MessageCircleQuestion size={18} strokeWidth={2} />{t('limaAskButton')}</>;
+
   return (
     <div
+      lang={lang}
       className="px-4 pt-2 pb-2.5"
       style={{ background: 'var(--bg-1)', borderTop: '1px solid var(--border)', flexShrink: 0 }}
     >
@@ -72,19 +96,9 @@ export default function LimaBar({ chatHref = '/farmer?chat=1', staff = false }: 
         </div>
 
         <div className="flex items-center gap-2">
-          <Link
-            href={chatHref}
-            className="flex-1 flex items-center justify-center gap-2 font-sans"
-            style={{
-              minHeight: 46, borderRadius: 12, textDecoration: 'none',
-              background: 'linear-gradient(135deg, var(--brand-light), var(--brand-strong))',
-              color: 'var(--on-forest)', fontSize: 15, fontWeight: 700,
-              boxShadow: '0 2px 8px rgba(31,77,43,0.22)',
-            }}
-          >
-            <MessageCircleQuestion size={18} strokeWidth={2} />
-            {t('limaAskButton')}
-          </Link>
+          {inPlace
+            ? <button type="button" onClick={() => openPhotoChat(null)} className={askClass} style={askStyle}>{askContent}</button>
+            : <Link href={chatHref} className={askClass} style={askStyle}>{askContent}</Link>}
 
           {/* The camera keeps its own control rather than hiding inside the chat, but it now says
               what it does. An unlabelled icon is a guess, and she only gets one guess. */}

@@ -1,0 +1,32 @@
+{
+  "locale": "ve",
+  "sourceSha256": "94311c252f219708622e5882d6a897e9ce74c8fec192d3b58d630beead4b9be6",
+  "reviewStatus": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "nwsSavedPoint.release.01",
+      "english": "Check an NWS reference for a saved US point.",
+      "sha256": "49e9178f608324cb7f090f611bdac10a7e3894e7445ccc0ffeeda99d75765e30",
+      "translation": "Tolani thandululo ya NWS ya tshiga tsho vhulungwaho tsha US."
+    },
+    {
+      "key": "nwsSavedPoint.release.02",
+      "english": "Send a coarsened point for a weather reference",
+      "sha256": "c665ff04a26288bcc76e4acef571bf36416f4716d0d2d04753b522800ee39896",
+      "translation": "Rhumelani tshiga tsho pfaluswaho u itela thandululo ya mutsho"
+    },
+    {
+      "key": "nwsSavedPoint.release.03",
+      "english": "Crop planner → Site country and region → NWS reference for this saved point",
+      "sha256": "46b1e54aaa4b956d4f3a0bc099f3bbe36a580cd7fa7c29ae1d24c32a63cf9d1c",
+      "translation": "Mupulani wa zwo simiwaho → Shango na luvhande lwa fhethu → Thandululo ya NWS ya hetshi tshiga tsho vhulungwaho"
+    },
+    {
+      "key": "nwsSavedPoint.release.04",
+      "english": "For a site saved with a US country description, explicitly send its coordinates rounded to four decimal places to NWS. The Washington demo stays separate. These reference values do not change crop advice or planning dates. Changing the site or account withdraws the display; a request already sent upstream may continue.",
+      "sha256": "947dd986a6c761578c7e9cd2393bfca4d18ee0fe2fa3cba5728ce83746319a96",
+      "translation": "Kha fhethu ho vhulungwaho nga thaluso ya shango ya US, rhumelani zwo livhaho zwikoordineti zwayo zwo pfaluswaho kha zwivhalo zwina zwa desimala kha NWS. Demo ya Washington i dzula yo fhambana. Hezwi zwivhalo zwa thandululo a zwi shandukisi nyeletshedzo dza zwo simiwaho kana maduvha a ndugiselelo. U shandukisa fhethu kana akhaunthu zwi dzhiela nnda nzumbululo; khumbelo yo no daho u rumelwa ntha i nga kha di bvela phanda."
+    }
+  ]
+}

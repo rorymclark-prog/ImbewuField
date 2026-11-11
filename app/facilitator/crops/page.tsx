@@ -19,12 +19,32 @@ import { Search, X, ChevronDown, Home, Shovel, Sprout, Trees, Droplets, Shopping
 import MenuButton from '@/components/MenuButton';
 import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
+import { useEscapeClose } from '@/lib/use-escape-close';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
 import ProductionAvailabilityGraphs from '@/components/crops/ProductionAvailabilityGraphs';
 import ProductionRecordsEditor from '@/components/crops/ProductionRecordsEditor';
 import HarvestTargetsPanel from '@/components/crops/HarvestTargetsPanel';
 import NurseryPlanPanel from '@/components/crops/NurseryPlanPanel';
+import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySaveContext, beginNurserySaveRequest, commitNurserySaveRequest, readNurserySaveConfirmation, createHarvestSaveContext, beginHarvestSaveRequest, commitHarvestSaveRequest, readHarvestSaveConfirmation, harvestTargetsSourceKey, type HarvestSaveContext, type HarvestSaveRequest, type HarvestSaveResult, type NurserySaveAuthority, type NurserySaveContext, type NurserySaveRequest, type NurserySaveResult } from '@/lib/nursery-save-receipt';
+import GrowerPlanningPanel from '@/components/crops/GrowerPlanningPanel';
+import GrowerAutoPlanPanel from '@/components/crops/GrowerAutoPlanPanel';
+import GrowerNurseryReviewPanel from '@/components/crops/GrowerNurseryReviewPanel';
+import SavedGrowerNurseryReviewPanel from '@/components/crops/SavedGrowerNurseryReviewPanel';
+import { useGrowerWorkflow, type GrowerWorkflowBookReceipt, type GrowerWorkflowAcceptanceCommit, type GrowerWorkflowAcceptanceResult,
+  type GrowerNurseryReferenceCommit, type GrowerNurseryReferenceCommitResult } from '@/components/crops/useGrowerWorkflow';
+import { prepareGrowerNurseryBatchReferenceChanges } from '@/lib/international/grower-nursery';
+import { hasGrowerCycleMarker, isProvenForeignGrowerCycle } from '@/lib/international/grower-cycle';
+import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
+import GrowerCycleIntent from '@/components/crops/GrowerCycleIntent';
+import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
+import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-workflow';
+import { activeAccountLocalStorageKey, activeAccountUid } from '@/lib/account-local-storage';
+import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
+import { isSampleMode } from '@/lib/sample-mode';
+import { sampleSowingCalendarFor } from '@/lib/sample-sowing-calendar';
+import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import NurseryForecastSummary from '@/components/crops/NurseryForecastSummary';
 import { sanitiseNurserySettings, type NurserySettings } from '@/lib/nursery-settings';
 import ProductionGuideCard from '@/components/crops/ProductionGuideCard';
@@ -60,24 +80,35 @@ import { animalLineText, animalsNotShownNote, calendarProduceByMonth, flowRecord
 import { buildYearOfFood, suggestGapFills, type GapFillSuggestion } from '@/lib/year-of-food';
 import { climateGateFrom } from '@/lib/crop-climate-gate';
 import { bedsFromDesignCanvas, canvasSiteIdForPlace, studioPlanChoices, type StudioPlanChoice } from '@/lib/design-beds-bridge';
-import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
+import { loadPlaces, resolveMainSite, type SavedPlace } from '@/lib/saved-places';
+import { currentPlanningSupport, resolvePlanningSupport } from '@/lib/international/planning-support';
+import { resolveWorkspacePlanningReference, replaceWorkspacePlanningReference, sanitiseWorkspacePlanningReferences, workspacePlanningIdForDesign, type WorkspacePlanningReference } from '@/lib/international/workspace-context';
+import WorkspaceReferencePanel from '@/components/international/countries/WorkspaceReferencePanel';
+import SavedSiteUpdates from '@/components/international/countries/SavedSiteUpdates';
+import { CropPlanStorageNotice } from '@/components/CropPlanStorageStatus';
+import { CROP_PLAN_STORAGE_EVENT } from '@/lib/crop-plan-storage';
+import SiteCountryPanel, { type CountrySaveNotice } from '@/components/international/countries/SiteCountryPanel';
+import PlannerSupportHold from '@/components/international/countries/PlannerSupportHold';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
 import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
-import { nearestRainfall } from '@/lib/water-calc';
-import { driestMonths, resolveSiteClimate, type SiteClimate } from '@/lib/site-climate';
+import { nearestRainfall, referenceSowingCalendar } from '@/lib/water-calc';
+import { SAMPLE_FARM_CALENDAR_REASON, SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
+import { SOWING_CALENDAR_NOTICE_HIDDEN_KEY, calendarCanJudgeSavedSowings, hiddenCalendarNoticeWrite, outOfCalendarLine, outOfCalendarSignature, parseHiddenCalendarNotices, planMayPredateCorrection, sowingsOutsideCalendar } from '@/lib/sowing-calendar-review';
+import { sowingCalendarInUse, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { growingZonesForClimate, type GrowingZoneId } from '@/lib/growing-zones';
 import { VarietyGuidance } from '@/components/crops/VarietyGuidance';
 import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, hasVerifiedSchedule, MONTHS_SHORT } from '@/lib/crop-catalog';
-import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings, BedOverlapWarning, CropTask } from '@/lib/crop-plan';
+import type { CropPlanWriteAdmission, GrowerProfileChangeRequest, PlanBed, Planting, CropPlanState, HarvestTarget, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings, BedOverlapWarning, CropTask } from '@/lib/crop-plan';
 import {
-  loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
+  loadCropPlan, loadCropPlanWithWriteAdmission, cropPlanWriteAdmissionMatches, cropPlanWriteCandidateIsLossless, createGrowerProfileChangePermit, readRawCropPlanReceipt, saveCropPlanWithReceipt, cropPlanWriteToken, sanitiseHarvestTargets, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
   isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
   buildFieldUtilizationByMonth, totalGrowingAreaM2, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
   loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, planNotesDateLabel,
-  restampEditedOnce, confirmOnceSowing,
+  restampEditedOnce, confirmOnceSowing, sowingCalendarChoiceFor, withSowingCalendarChoice,
+  CROP_PLAN_CHANGED_EVENT,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
@@ -133,6 +164,21 @@ const DISPLAY_MONTHS = 24;
 const LOOK_AHEAD_MONTHS = 15;
 const GRID_MIN_WIDTH = Math.round((760 * DISPLAY_MONTHS) / 12);
 const BED_LABEL_WIDTH = 128;
+
+// The three sheets' Close buttons draw a 16-18px icon. The hit area is 44x44 (house touch rule) and
+// the negative margins hand the extra size back, so the header keeps its height and the icon stays
+// where it was.
+const SHEET_CLOSE_STYLE: CSSProperties = {
+  background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)',
+  width: 44, height: 44, margin: '-12px -13px -12px 0', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+};
+/**
+ * Notes in the fruit and animal rows sit in the 1,520px grid. A bare maxWidth of
+ * 560–640 is wider than a phone's visible strip, so the sentence ran off the right
+ * edge mid-way ("…picking months to confirm"). Capped to what is left of the
+ * viewport after the bed-label column, as the reference note above the trees does.
+ */
+const stickyNoteMaxWidth = (max: number) => `min(${max}px, calc(100cqw - ${BED_LABEL_WIDTH + 12}px))`;
 const MONTH_COLUMNS: CSSProperties = { display: 'grid', gridTemplateColumns: `repeat(${DISPLAY_MONTHS}, minmax(0, 1fr))` };
 
 // One emoji per kind of work, so a farmer scanning the month sees the SHAPE of
@@ -415,7 +461,7 @@ const VISIBLE_BUYING_MONTHS = 3;
 function BuyingMonthBlock({ monthGroup, isNow }: { monthGroup: BuyingMonth; isNow: boolean }) {
   return (
     <div>
-      <div className="font-display font-semibold mb-1" style={{ fontSize: 13, color: isNow ? '#1F4D2B' : 'var(--text-primary)' }}>
+      <div className="font-display font-semibold mb-1" style={{ fontSize: 13, color: isNow ? 'var(--color-forest-800)' : 'var(--text-primary)' }}>
         {monthLabel(monthGroup.month)}{isNow ? ' · this month' : ''}
       </div>
       <div className="space-y-2">
@@ -538,6 +584,28 @@ function barGradient(seg: Segment, sowMonth: number, totalMonths: number, from: 
  * doesn't work out in practice.
  */
 const BAR_STYLE: 'gradient' | 'solid' = 'solid';
+
+/**
+ * Earth light declares --bg-2 as rgba(236,227,201,0.35) on purpose, so the pinned
+ * month header let bed names and "+ crop" buttons show through it while the grower
+ * scrolled. The same tint over the card's own opaque --bg-1 looks the same when
+ * nothing is behind it. Dark and slate declare an opaque --bg-2, which this
+ * leaves unchanged. Scoped here: --bg-2 itself is used app-wide and stays as is.
+ */
+const PINNED_HEADER_SURFACE = 'linear-gradient(var(--bg-2), var(--bg-2)), var(--bg-1)';
+
+/**
+ * The planting-bar fills are fixed hexes in every theme, so the label on them
+ * cannot follow the theme either: white on them measured 2.57:1 (planned),
+ * 3.71:1 (already growing) and 2.87:1 over the gold cap, and the dark theme's
+ * light --text-primary would be no better. The palette's Ink reads 6.78 / 4.68 /
+ * 7.32 / 6.05:1 on the four fills (tests/component-text-contrast.test.ts pins
+ * every pair), so change a fill and that test says whether the label survives.
+ */
+const BAR_LABEL_INK = '#20190F';
+/** [growing colour, harvest-cap colour]; already-growing stays olive so it still differs from planned. */
+const BAR_FILL_PLANNED: [string, string] = ['#7FAE6E', '#D4A017'];
+const BAR_FILL_EXISTING: [string, string] = ['#8C8654', '#B8934A'];
 
 const VIRTUAL_BED: PlanBed = { id: 'virtual-bed-1', label: 'Bed 1', areaM2: 10 };
 
@@ -664,11 +732,13 @@ function computeDesignBeds(state: FacilitatorDesignState | null): PlanBed[] {
   return beds;
 }
 
+// Labels come from lib/sowing-calendar-label.ts: the four columns are FROST regimes, and the
+// old "Summer / All-year rainfall" names told a hot Lowveld grower the wrong thing.
 const PATTERN_META: Record<RainPattern, { Icon: LucideIcon; label: string }> = {
-  summer: { Icon: Sun, label: 'Summer rainfall' },
-  winter: { Icon: CloudRain, label: 'Winter rainfall' },
-  'all-year': { Icon: Cloud, label: 'All-year rainfall' },
-  'mild-frost': { Icon: CloudSun, label: 'Summer rainfall · mild winter frost' },
+  summer: { Icon: Sun, label: SOWING_CALENDAR_LABEL.summer },
+  winter: { Icon: CloudRain, label: SOWING_CALENDAR_LABEL.winter },
+  'all-year': { Icon: Cloud, label: SOWING_CALENDAR_LABEL['all-year'] },
+  'mild-frost': { Icon: CloudSun, label: SOWING_CALENDAR_LABEL['mild-frost'] },
 };
 
 // ── Page ─────────────────────────────────────────────────────────────────
@@ -713,7 +783,9 @@ function FacilitatorCropsPageInner() {
       if (bedsFromDesignCanvas(loadCanvasState(sid)).length > 0) setFallbackCanvasSite(sid);
     } catch { /* corrupt cache — legacy behaviour stands */ }
   }, [canvasSiteParam, switchParam]);
-  const canvasSite = canvasSiteParam ?? fallbackCanvasSite;
+  const rawCanvasSite = canvasSiteParam ?? fallbackCanvasSite;
+  const canvasSite = canonicalCoordinateSiteId(rawCanvasSite);
+  const invalidCanvasSite = canvasSiteParam !== null && !canonicalCoordinateSiteId(canvasSiteParam);
 
   // The saved place's own name, for the printed plan's cover. Beds coming from
   // the Design Studio canvas carry no design title at all, so without this a
@@ -758,6 +830,21 @@ function FacilitatorCropsPageInner() {
   const [includeAnimals, setIncludeAnimals] = useState(DEFAULT_INCLUDE_ANIMALS);
   useEffect(() => { setIncludeAnimals(loadIncludeAnimals()); }, []);
   const [plan, setPlan] = useState<CropPlanState | null>(null);
+  const planWriteBase = useRef<{ owner: string | null; sample: boolean; token: string | null; planKey: string; admission: CropPlanWriteAdmission } | null>(null);
+  function rememberStoredPlan(value: CropPlanState, token: string) {
+    const loaded = loadCropPlanWithWriteAdmission();
+    const key = JSON.stringify(value);
+    const admission: CropPlanWriteAdmission = loaded.token === token ? loaded.admission
+      : { status: 'held', reasons: ['written-receipt-no-longer-current'] };
+    const owner = activeAccountUid(), sample = isSampleMode();
+    const previous = planWriteBase.current;
+    const admitted = cropPlanWriteAdmissionMatches(admission, key, token);
+    // A no-op autosave must not revoke open editors still bound to this exact book and lease.
+    if (admitted && previous?.owner === owner && previous.sample === sample && previous.token === token
+      && previous.planKey === key && cropPlanWriteAdmissionMatches(previous.admission, key, token)) return;
+    planWriteBase.current = { owner, sample, token, planKey: key, admission };
+    if (!admitted) setPlanSaveConflict(true);
+  }
   // One-level-per-action undo, mirroring FacilitatorCanvas's own pushHistory
   // pattern — mainly for undoing a whole auto-suggested batch in one tap
   // instead of deleting every planting by hand, but it covers manual
@@ -765,6 +852,20 @@ function FacilitatorCropsPageInner() {
   // functions below. Capped so it can't grow unbounded across a long session.
   const [planHistory, setPlanHistory] = useState<CropPlanState[]>([]);
   const PLAN_HISTORY_LIMIT = 10;
+  type PlanHistoryMetadata = { [K in 'rainPattern' | 'planNotes' | 'planNotesAt']: { present: boolean; value?: CropPlanState[K] } };
+  type PlanHistoryBinding = { owner: string | null; sample: boolean; scopeKey: string; authoredMetadata?: { before: string; after: string } };
+  const planHistoryContext = useRef(new WeakMap<object, PlanHistoryBinding>());
+  const suggestedPlanHistory = useRef(new WeakMap<object, { before: CropPlanState; context: PlanHistoryBinding }>());
+  useEffect(() => {
+    if (!plan) return;
+    const committed = suggestedPlanHistory.current.get(plan);
+    if (!committed) return;
+    // Updaters may be replayed or abandoned. Only a committed action receives
+    // undo authority, and deleting first makes effect replay idempotent too.
+    suggestedPlanHistory.current.delete(plan);
+    planHistoryContext.current.set(committed.before, committed.context);
+    setPlanHistory(previous => [...previous.slice(-(PLAN_HISTORY_LIMIT - 1)), committed.before]);
+  }, [plan]);
   const [mounted, setMounted] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(1);
   const [currentYear, setCurrentYear] = useState(2026);
@@ -825,7 +926,13 @@ function FacilitatorCropsPageInner() {
   const [autoGenerating, setAutoGenerating] = useState(false);
 
   function openAutoSuggest() {
-    if (beds.length === 0) return;
+    if (hasOwnRecords) return;
+    if (!currentPlanningScopeAllowed() || beds.length === 0) return;
+    const suggestionBase = planWriteBase.current;
+    if (!plan || planSaveConflict || !suggestionBase || suggestionBase.planKey !== JSON.stringify(plan)
+      || !plannerActorIsCurrent(suggestionBase.owner, suggestionBase.sample)
+      || !cropPlanWriteAdmissionMatches(suggestionBase.admission, suggestionBase.planKey, suggestionBase.token)
+      || cropPlanWriteToken() !== suggestionBase.token) return;
     setAGoal('family');
     setAFocusCount(1);
     applyGoalMix('family');
@@ -870,7 +977,14 @@ function FacilitatorCropsPageInner() {
     setACropKeys((prev) => prev.includes(cropKey) ? prev.filter((key) => key !== cropKey) : [...prev, cropKey]);
   }
   function runAutoSuggest() {
-    if (beds.length === 0) return;
+    if (hasOwnRecords) return;
+    if (!currentPlanningScopeAllowed() || beds.length === 0) return;
+    const suggestionBase = planWriteBase.current;
+    if (!plan || planSaveConflict || !suggestionBase || suggestionBase.planKey !== JSON.stringify(plan)
+      || !plannerActorIsCurrent(suggestionBase.owner, suggestionBase.sample)
+      || !cropPlanWriteAdmissionMatches(suggestionBase.admission, suggestionBase.planKey, suggestionBase.token)
+      || cropPlanWriteToken() !== suggestionBase.token) return;
+    suggestionScopeRef.current = planningScopeKey;
     const answers: AutoSuggestAnswers = {
       goal: aGoal,
       focusCropCount: aGoal !== 'family' ? aFocusCount : undefined,
@@ -893,11 +1007,15 @@ function FacilitatorCropsPageInner() {
     // per-site profile and a reference city 250 km away are different claims.
     // Resolved at generate time for BOTH branches: climate can still be loading
     // when the modal opens, so it is never precomputed.
-    const climateNote = climateSource === 'site'
-      ? `Climate derived from satellite climate records for this site: ${PATTERN_META[pattern].label}.`
+    const climateNote = calendarBasis === 'grower-choice'
+      ? `Sowing calendar chosen by the grower: ${calendarLabel}.`
+      : calendarBasis === 'sample-farm'
+      ? `Sowing calendar set for the sample farm: ${calendarLabel}.`
+      : climateSource === 'site'
+      ? `Sowing calendar from satellite climate records for this site: ${calendarLabel}.`
       : climateSource === 'reference'
-        ? `Climate from nearest reference region — ${region?.name} (fallback): ${PATTERN_META[pattern].label}.`
-        : `No mapped site — assuming ${PATTERN_META[pattern].label.toLowerCase()}.`;
+        ? `Climate from nearest reference region — ${region?.name} (fallback): ${calendarLabel}.`
+        : `No mapped site — assuming ${calendarLabel.toLowerCase()}.`;
     if (aPlanTiming === 'idealYear') {
       // Busy label first, sweep second: the 12-anchor sweep is synchronous
       // (~0.5 s on a 12-bed farm, more on a low-end phone), so the button must
@@ -905,6 +1023,7 @@ function FacilitatorCropsPageInner() {
       // guards a double tap while the sweep runs.
       setAutoGenerating(true);
       setTimeout(() => {
+        if (!currentPlanningScopeAllowed() || suggestionScopeRef.current !== planningScopeKey) return;
         const ideal = suggestIdealYearPlan(answers, pattern, beds, plantings, currentMonth, new Date().getFullYear());
         setIdealMeta(ideal);
         setAutoResult({
@@ -932,31 +1051,78 @@ function FacilitatorCropsPageInner() {
   // empty plan (nothing to undo back to).
   function pushPlanHistory() {
     if (!plan) return;
+    planHistoryContext.current.set(plan, { owner: activeAccountUid(), sample: isSampleMode(), scopeKey: planningScopeKey });
     setPlanHistory((prev) => [...prev.slice(-(PLAN_HISTORY_LIMIT - 1)), plan]);
   }
+  function planHistoryMetadataKey(value: Pick<CropPlanState, 'rainPattern' | 'planNotes' | 'planNotesAt'>): string {
+    const metadata: PlanHistoryMetadata = {
+      rainPattern: { present: Object.prototype.hasOwnProperty.call(value, 'rainPattern'), value: value.rainPattern },
+      planNotes: { present: Object.prototype.hasOwnProperty.call(value, 'planNotes'), value: value.planNotes },
+      planNotesAt: { present: Object.prototype.hasOwnProperty.call(value, 'planNotesAt'), value: value.planNotesAt },
+    };
+    return JSON.stringify(metadata);
+  }
+  function stageSuggestedPlanHistory(before: CropPlanState | null, next: CropPlanState): CropPlanState {
+    if (before) suggestedPlanHistory.current.set(next, { before,
+      context: { owner: activeAccountUid(), sample: isSampleMode(), scopeKey: planningScopeKey,
+        authoredMetadata: { before: planHistoryMetadataKey(before), after: planHistoryMetadataKey(next) } } });
+    return next;
+  }
   function undoLastChange() {
-    if (!planHistory.length) return;
-    setPlan(planHistory[planHistory.length - 1]);
-    setPlanHistory((prev) => prev.slice(0, -1));
+    if (!plan || !planHistory.length) return;
+    const base = planWriteBase.current, previous = planHistory[planHistory.length - 1];
+    const context = planHistoryContext.current.get(previous);
+    if (!base || !context || context.owner !== base.owner || context.sample !== base.sample || context.scopeKey !== planningScopeKey
+      || !plannerActorIsCurrent(base.owner, base.sample) || !currentPlanningScopeAllowed()
+      || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token) || cropPlanWriteToken() !== base.token) {
+      setPlanSaveConflict(true); return;
+    }
+    // Undo is scoped to shown legacy plantings. A later profile/target/record
+    // save may have rebased newer foreign facts, which history cannot erase.
+    const shown = new Set(beds.map(bed => bed.id));
+    const preserved = plan.plantings.filter(row => hasGrowerCycleMarker(row) || !shown.has(row.bedId));
+    const restored = previous.plantings.filter(row => !hasGrowerCycleMarker(row) && shown.has(row.bedId));
+    const plantings = [...preserved, ...restored];
+    if (new Set(plantings.map(row => row.id)).size !== plantings.length
+      || JSON.stringify(plantings) === JSON.stringify(plan.plantings)) { setPlanSaveConflict(true); return; }
+    let next = { ...plan, plantings, updatedAt: Date.now() };
+    // A suggestion's explanations belong to its own action. Restore the prior
+    // group only while all three authored values remain current; otherwise a
+    // newer explanation/date/basis must survive this older planting undo.
+    if (context.authoredMetadata && context.authoredMetadata.after === planHistoryMetadataKey(plan)) {
+      const metadata = JSON.parse(context.authoredMetadata.before) as PlanHistoryMetadata;
+      const { rainPattern: _pattern, planNotes: _notes, planNotesAt: _notesAt, ...unrelated } = next;
+      next = { ...unrelated,
+        ...(metadata.rainPattern.present ? { rainPattern: metadata.rainPattern.value } : {}),
+        ...(metadata.planNotes.present ? { planNotes: metadata.planNotes.value } : {}),
+        ...(metadata.planNotesAt.present ? { planNotesAt: metadata.planNotesAt.value } : {}) };
+    }
+    if (!cropPlanWriteCandidateIsLossless(next) || planWriteBase.current !== base || !plannerActorIsCurrent(base.owner, base.sample)
+      || cropPlanWriteToken() !== base.token) { setPlanSaveConflict(true); return; }
+    setPlan(next);
+    setPlanHistory(prev => prev.slice(0, -1));
   }
   function acceptAutoSuggest() {
-    if (!autoResult || beds.length === 0) return;
-    pushPlanHistory();
+    if (!currentPlanningScopeAllowed() || suggestionScopeRef.current !== planningScopeKey || !autoResult || beds.length === 0) return;
+    if (hasOwnRecords) return;
+    const suggestionBase = planWriteBase.current;
+    if (!plan || planSaveConflict || !suggestionBase || suggestionBase.planKey !== JSON.stringify(plan)
+      || !plannerActorIsCurrent(suggestionBase.owner, suggestionBase.sample)
+      || !cropPlanWriteAdmissionMatches(suggestionBase.admission, suggestionBase.planKey, suggestionBase.token)
+      || cropPlanWriteToken() !== suggestionBase.token) return;
+    // The reasons the farmer just read replace earlier explanations: suggestions
+    // run months apart describe different plans and cannot share one date label.
+    const authoredMetadata = { rainPattern: pattern, planNotes: autoResult.notes, planNotesAt: Date.now() };
     setPlan((prev) => {
+      if (autoResult.plantings.length === 0 || prev?.plantings.some(p => beds.some(b => b.id === p.bedId) && hasGrowerCycleMarker(p))) return prev;
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
-      return {
+      return stageSuggestedPlanHistory(prev, {
         ...base,
         version: 1,
-        rainPattern: pattern,
+        ...authoredMetadata,
         plantings: [...base.plantings, ...autoResult.plantings],
-        // The reasons the farmer just read stay with the plan. They REPLACE any
-        // earlier set rather than accumulating: two suggestions run months apart
-        // explain two different plans, and stacking them would put contradictory
-        // sentences under one date label.
-        planNotes: autoResult.notes,
-        planNotesAt: Date.now(),
         updatedAt: Date.now(),
-      };
+      });
     });
     // Clear immediately (not just close the modal) — a second click landing
     // before React re-renders would otherwise still see a non-null
@@ -1072,11 +1238,24 @@ function FacilitatorCropsPageInner() {
   const bedRowsScrollRef = useRef<HTMLDivElement>(null);
   const foodChartScrollRef = useRef<HTMLDivElement | null>(null);
   const timelineScrollLeftRef = useRef(0);
+  // The month header and the food chart can scroll less far than the bed rows (the chart's phone
+  // gutter is 120px narrower; a "check / transplant" chip overhangs the bed rows' right edge). A
+  // follower that the browser clamps then fires its own scroll event, which used to drag every
+  // other scroller back to the smallest maximum and left the last ~140px of the 24-month axis
+  // unreachable at 390px. A scroll event whose position is exactly what this function just set
+  // is that echo, not the farmer, so it is ignored.
+  const echoedScrollRef = useRef(new WeakMap<HTMLDivElement, number>());
   const syncMonthScroll = useCallback((source: HTMLDivElement) => {
     const left = source.scrollLeft;
+    if (echoedScrollRef.current.get(source) === left) { echoedScrollRef.current.delete(source); return; }
     timelineScrollLeftRef.current = left;
     for (const node of [monthHeaderScrollRef.current, bedRowsScrollRef.current, foodChartScrollRef.current]) {
-      if (node && node !== source && Math.abs(node.scrollLeft - left) > 0.5) node.scrollLeft = left;
+      if (node && node !== source && Math.abs(node.scrollLeft - left) > 0.5) {
+        const before = node.scrollLeft;
+        node.scrollLeft = left;
+        // Only a node that actually moved will fire an event to ignore.
+        if (node.scrollLeft !== before) echoedScrollRef.current.set(node, node.scrollLeft);
+      }
     }
   }, []);
   const registerFoodChartScroll = useCallback((node: HTMLDivElement | null) => {
@@ -1130,7 +1309,12 @@ function FacilitatorCropsPageInner() {
 
   useEffect(() => {
     setDesign(loadFacilitatorState());
-    setPlan(loadCropPlan());
+    const owner = activeAccountUid(), sample = isSampleMode(), loaded = loadCropPlanWithWriteAdmission();
+    const storedPlan = loaded.book;
+    const base = { owner, sample, token: loaded.token, planKey: JSON.stringify(storedPlan), admission: loaded.admission };
+    planWriteBase.current = base;
+    setPlan(storedPlan);
+    if (!plannerActorIsCurrent(owner, sample) || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) setPlanSaveConflict(true);
     setCurrentMonth(new Date().getMonth() + 1);
     setCurrentYear(new Date().getFullYear());
     setFavouriteCropKeys(loadFavouriteCropKeys());
@@ -1184,13 +1368,87 @@ function FacilitatorCropsPageInner() {
   // failure has to announce itself. A farmer whose phone is full otherwise keeps planning into
   // nothing and only finds out after a reload, by which point the session cannot be recovered.
   const [planSaveFailed, setPlanSaveFailed] = useState(false);
+  const [planSaveConflict, setPlanSaveConflict] = useState(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  function plannerActorIsCurrent(owner: string | null, sample: boolean): boolean {
+    if (activeAccountUid() !== owner || isSampleMode() !== sample) return false;
+    // Mounted storage ownership can lag Firebase during an account transition.
+    // Every writer must reject that gap, including already queued autosaves.
+    try { return sample || !isBackendConfigured() || (getFirebase()?.auth.currentUser?.uid ?? null) === owner; }
+    catch { return false; }
+  }
   useEffect(() => {
-    if (!plan) return;
+    if (!plan || planSaveConflict) return;
     if (saveTimer.current) clearTimeout(saveTimer.current);
-    saveTimer.current = setTimeout(() => setPlanSaveFailed(!saveCropPlan(plan)), 400);
+    const base = planWriteBase.current;
+    if (!base || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) { setPlanSaveConflict(true); return; }
+    saveTimer.current = setTimeout(() => {
+      if (!base || planWriteBase.current !== base || !plannerActorIsCurrent(base.owner, base.sample)) return;
+      // Local edits cannot re-authorise a stale book: compare the loaded/saved
+      // base, not whatever happens to be stored when a later timer is queued.
+      if (!cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+        || !cropPlanWriteCandidateIsLossless(plan) || base.token === null || cropPlanWriteToken() !== base.token) {
+        setPlanSaveConflict(true);
+        return;
+      }
+      if (planWriteBase.current !== base || !plannerActorIsCurrent(base.owner, base.sample)) return;
+      const receipt = saveCropPlanWithReceipt(plan);
+      setPlanSaveFailed(!receipt.saved);
+      if (receipt.saved) rememberStoredPlan(plan, receipt.token);
+    }, 400);
     return () => { if (saveTimer.current) clearTimeout(saveTimer.current); };
-  }, [plan]);
+  }, [plan, planSaveConflict]);
+
+  const [planStorageRevision, setPlanStorageRevision] = useState(0);
+  const handledPlanStorageRevision = useRef(0);
+  function refreshAdmittedStoredPlan() {
+    const base = planWriteBase.current;
+    if (!plan || !base) return;
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    // A newly acquired lease can refresh a clean view. It cannot turn edits
+    // based on an older or unreadable book into authorised current records.
+    if (!plannerActorIsCurrent(base.owner, base.sample) || !cropPlanWriteCandidateIsLossless(plan)
+      || JSON.stringify(plan) !== base.planKey) { setPlanSaveConflict(true); return; }
+    const loaded = loadCropPlanWithWriteAdmission(), fresh = loaded.book, key = JSON.stringify(fresh);
+    if (loaded.token === null || loaded.admission.status !== 'ready'
+      || !cropPlanWriteAdmissionMatches(loaded.admission, key, loaded.token)
+      || !plannerActorIsCurrent(base.owner, base.sample) || planWriteBase.current !== base
+      || cropPlanWriteToken() !== loaded.token) { setPlanSaveConflict(true); return; }
+    if (base.token !== loaded.token || base.planKey !== key
+      || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) {
+      if (base.planKey !== key) {
+        // These transient actions were reviewed against different occupancy.
+        // A clean saved-view refresh does not carry their old write intent.
+        suggestionScopeRef.current = null;
+        setAutoPhase('idle'); setAutoResult(null); setIdealMeta(null); setAutoGenerating(false);
+        setPickerBedId(null); setPickerCrop(null); setActivePlanting(null);
+        setPlanHistory([]);
+        planHistoryContext.current = new WeakMap();
+        suggestedPlanHistory.current = new WeakMap();
+      }
+      planWriteBase.current = { owner: base.owner, sample: base.sample, token: loaded.token, planKey: key, admission: loaded.admission };
+      if (JSON.stringify(plan) !== key) setPlan(fresh);
+    }
+    setPlanSaveConflict(false);
+    setPlanSaveFailed(false);
+  }
+  useEffect(() => {
+    const changed = () => {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      setPlanStorageRevision(value => value + 1);
+    };
+    const events = [CROP_PLAN_CHANGED_EVENT, CROP_PLAN_STORAGE_EVENT, 'storage', 'focus'];
+    events.forEach(event => window.addEventListener(event, changed));
+    return () => events.forEach(event => window.removeEventListener(event, changed));
+  }, []);
+  useEffect(() => {
+    if (handledPlanStorageRevision.current === planStorageRevision) return;
+    if (!plan || !planWriteBase.current) return;
+    handledPlanStorageRevision.current = planStorageRevision;
+    // A writer emits before returning its receipt. Wait for the committed
+    // React plan/base, including pending local edits, before classifying it.
+    refreshAdmittedStoredPlan();
+  }, [planStorageRevision, plan]);
 
   const designBeds = useMemo(() => computeDesignBeds(design ?? null), [design]);
   const beds = canvasSite
@@ -1209,9 +1467,7 @@ function FacilitatorCropsPageInner() {
     return Number.isFinite(lat) && Number.isFinite(lon) ? { lat, lon } : null;
   }, [canvasSite]);
 
-  const region = canvasLatLon
-    ? nearestRainfall(canvasLatLon.lat, canvasLatLon.lon)
-    : (design?.bgSite ? nearestRainfall(design.bgSite.lat, design.bgSite.lon) : null);
+
 
   // Per-site climate (Task: climatically correct plans for ANY SA site). When the
   // site has coordinates, the pattern comes from the site's OWN monthly climate —
@@ -1221,10 +1477,152 @@ function FacilitatorCropsPageInner() {
   // fallback: it put the demo farm's frost-free Mkuze-valley coordinates on
   // Durban's mild-frost profile from 255 km away, which is exactly the mistake
   // this path exists to stop.
-  const siteLat = canvasLatLon?.lat ?? design?.bgSite?.lat;
-  const siteLon = canvasLatLon?.lon ?? design?.bgSite?.lon;
+  const siteLat = invalidCanvasSite ? undefined : canvasLatLon?.lat ?? design?.bgSite?.lat;
+  const siteLon = invalidCanvasSite ? undefined : canvasLatLon?.lon ?? design?.bgSite?.lon;
   const hasSiteCoords = typeof siteLat === 'number' && typeof siteLon === 'number';
   const surveySiteId = hasSiteCoords ? canonicalCoordinateSiteId(`site:${siteLat!.toFixed(5)},${siteLon!.toFixed(5)}`) : null;
+  const [countryPlaces, setCountryPlaces] = useState<SavedPlace[]>([]);
+  const [countrySaveNotice, setCountrySaveNotice] = useState<CountrySaveNotice | null>(null);
+  const receiveCountrySaveNotice = useCallback((notice: CountrySaveNotice) => {
+    setCountrySaveNotice(previous => notice.phase === 'local' || previous?.attempt === notice.attempt ? notice : previous);
+  }, []);
+  const refreshCountryPlaces = useCallback(() => setCountryPlaces(loadPlaces()), []);
+  useEffect(() => {
+    refreshCountryPlaces();
+    window.addEventListener('permamap-places-changed', refreshCountryPlaces);
+    window.addEventListener('storage', refreshCountryPlaces);
+    return () => {
+      window.removeEventListener('permamap-places-changed', refreshCountryPlaces);
+      window.removeEventListener('storage', refreshCountryPlaces);
+    };
+  }, [refreshCountryPlaces]);
+  const planningWorkspaceId = surveySiteId || invalidCanvasSite ? null
+    : design ? workspacePlanningIdForDesign(design, chosenDesignId) : useVirtual ? 'virtual-bed' : null;
+  const growerScope = normaliseGrowerPlanningScope(surveySiteId
+    ? { kind: 'mapped-site', siteId: surveySiteId }
+    : planningWorkspaceId ? { kind: 'unmapped-workspace', workspaceId: planningWorkspaceId } : null);
+  const growerScopeKey = growerPlanningScopeKey(growerScope);
+  const growerOwner = activeAccountUid();
+  const growerSample = isSampleMode();
+  const productionSiteId = canvasSite ?? (chosenDesignId && chosenDesignId !== 'local' ? `design:${chosenDesignId}`
+    : surveySiteId ?? (design ? 'design:local' : useVirtual ? 'virtual-bed' : null));
+  const growerBookContext = useRef({ siteId: productionSiteId, owner: growerOwner, sample: growerSample, scopeKey: growerScopeKey });
+  growerBookContext.current = { siteId: productionSiteId, owner: growerOwner, sample: growerSample, scopeKey: growerScopeKey };
+  const growerWorkflow = useGrowerWorkflow({ scope: growerScope, resourceSiteId: productionSiteId, book: plan,
+    selection: canvasSite ? { kind: 'studio-canvas', sourceId: canvasSite }
+      : design ? chosenDesignId && chosenDesignId !== 'local' ? { kind: 'facilitator-cloud', sourceId: chosenDesignId }
+        : { kind: 'facilitator-local', sourceId: 'local' } : null,
+    actorIsCurrent: growerActorIsCurrent, readCurrentBook: readCurrentGrowerBook,
+    commitAcceptance: commitGrowerAcceptance, commitNurseryReferences: commitNurseryBatchReferences, createPlantingId: () => genId('grower') });
+  const selectedGrowerSource = growerWorkflow.source && growerWorkflow.source.resourceSiteId === productionSiteId
+    && growerPlanningScopeKey(growerWorkflow.source.scope) === growerScopeKey
+    && (canvasSite ? growerWorkflow.source.kind === 'studio-canvas' && growerWorkflow.source.sourceId === canvasSite
+      : chosenDesignId && chosenDesignId !== 'local' ? growerWorkflow.source.kind === 'facilitator-cloud' && growerWorkflow.source.sourceId === chosenDesignId
+        : growerWorkflow.source.kind === 'facilitator-local') ? growerWorkflow.source : null;
+  const growerWriteScope = useRef({ key: growerScopeKey, owner: growerOwner, sample: growerSample });
+  growerWriteScope.current = { key: growerScopeKey, owner: growerOwner, sample: growerSample };
+  function saveGrowerProfiles(value: GrowerPlanningProfile[], request?: GrowerProfileChangeRequest): boolean {
+    const live = growerWriteScope.current;
+    if (!plan || !growerActorIsCurrent() || planSaveConflict || !growerScopeKey || live.key !== growerScopeKey || live.owner !== growerOwner
+      || activeAccountUid() !== growerOwner || live.sample !== growerSample || isSampleMode() !== growerSample) return false;
+    const base = planWriteBase.current;
+    if (!base || base.owner !== growerOwner || base.sample !== growerSample || base.planKey !== JSON.stringify(plan)) return false;
+    if (!cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+      || !cropPlanWriteCandidateIsLossless({ ...plan, growerPlanningProfiles: value })) { setPlanSaveConflict(true); return false; }
+    const nextProfiles = normaliseGrowerPlanningProfiles(value);
+    if (nextProfiles.length !== value.length) return false;
+    const expected = normaliseGrowerPlanningProfiles(plan.growerPlanningProfiles);
+    const own = (rows: readonly GrowerPlanningProfile[]) => rows.filter(row => growerPlanningScopeKey(row.scope) === growerScopeKey);
+    const other = (rows: readonly GrowerPlanningProfile[]) => rows.filter(row => growerPlanningScopeKey(row.scope) !== growerScopeKey);
+    if (JSON.stringify(other(nextProfiles)) !== JSON.stringify(other(expected))) return false;
+    const expectedStore = cropPlanWriteToken();
+    if (expectedStore === null) return false;
+    const loaded = loadCropPlanWithWriteAdmission(), fresh = loaded.book;
+    if (loaded.token !== expectedStore || !cropPlanWriteAdmissionMatches(loaded.admission, JSON.stringify(fresh), loaded.token)) {
+      setPlanSaveConflict(true); return false;
+    }
+    // Preserve unrelated changes from another tab, but never overwrite newer
+    // assumptions for this scope or an edit still awaiting this page's autosave.
+    if (JSON.stringify(own(fresh.growerPlanningProfiles ?? [])) !== JSON.stringify(own(expected))) {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      setPlanSaveConflict(true);
+      return false;
+    }
+    if (loaded.admission.status === 'ready' && loaded.admission.source === 'present' && fresh.updatedAt < plan.updatedAt) return false;
+    const next = { ...fresh, growerPlanningProfiles: [...other(fresh.growerPlanningProfiles ?? []), ...own(nextProfiles)], updatedAt: Date.now() };
+    // The mounted owner may still be the old account after Firebase has moved.
+    // Recheck the same actor and loaded base immediately before the writer.
+    if (!cropPlanWriteCandidateIsLossless(next) || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+      || !growerActorIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== expectedStore) {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      setPlanSaveConflict(true);
+      return false;
+    }
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    const profileChange = request ? createGrowerProfileChangePermit(loaded.admission, fresh, next, request) : undefined;
+    if (request && !profileChange) { setPlanSaveConflict(true); return false; }
+    const receipt = saveCropPlanWithReceipt(next, profileChange ? { growerProfileChange: profileChange } : undefined);
+    setPlanSaveFailed(!receipt.saved);
+    if (receipt.saved) { rememberStoredPlan(next, receipt.token); setPlan(next); }
+    return receipt.saved;
+  }
+  const planningSupport = resolvePlanningSupport({ places: countryPlaces, siteId: surveySiteId,
+    workspaceId: planningWorkspaceId, workspaceReferences: plan?.workspaceReferences });
+  const siteCountry = planningSupport.siteCountry;
+  const allowCataloguePlanning = planningSupport.allowCataloguePlanning;
+  const planningGeometryKey = JSON.stringify([canvasSite, chosenDesignId, beds]);
+  const planningScopeKey = JSON.stringify([planningGeometryKey, planningSupport.fingerprint]);
+  const workspaceReference = resolveWorkspacePlanningReference(plan?.workspaceReferences, planningWorkspaceId);
+  useEffect(() => {
+    if (!hasSiteCoords && !design && resolveWorkspacePlanningReference(plan?.workspaceReferences, 'virtual-bed')) setUseVirtual(true);
+  }, [hasSiteCoords, design, plan?.workspaceReferences]);
+  function saveWorkspaceReference(reference: WorkspacePlanningReference | null): boolean {
+    if (!plan || surveySiteId || !planningWorkspaceId) return false;
+    const base = planWriteBase.current;
+    if (!base || !plannerActorIsCurrent(base.owner, base.sample) || base.planKey !== JSON.stringify(plan)) return false;
+    if (!cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token) || base.token === null || cropPlanWriteToken() !== base.token) {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      setPlanSaveConflict(true);
+      return false;
+    }
+    // A reference acknowledgement is not permission to overwrite a newer plan
+    // received from another tab while this form was open.
+    const loaded = loadCropPlanWithWriteAdmission(), fresh = loaded.book;
+    if (loaded.token !== base.token || !cropPlanWriteAdmissionMatches(loaded.admission, JSON.stringify(fresh), loaded.token)) { setPlanSaveConflict(true); return false; }
+    if (loaded.admission.status === 'ready' && loaded.admission.source === 'present' && fresh.updatedAt > plan.updatedAt) return false;
+    if (reference && !cropPlanWriteCandidateIsLossless({ ...plan, workspaceReferences: [reference] })) { setPlanSaveConflict(true); return false; }
+    const workspaceReferences = reference
+      ? replaceWorkspacePlanningReference(plan.workspaceReferences, reference)
+      : sanitiseWorkspacePlanningReferences(plan.workspaceReferences).filter(row => row.workspaceId !== planningWorkspaceId);
+    const next = { ...plan, workspaceReferences, updatedAt: Date.now() };
+    if (!cropPlanWriteCandidateIsLossless(next) || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+      || planWriteBase.current !== base || cropPlanWriteToken() !== base.token || !plannerActorIsCurrent(base.owner, base.sample)) { setPlanSaveConflict(true); return false; }
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    const receipt = saveCropPlanWithReceipt(next);
+    setPlanSaveFailed(!receipt.saved);
+    if (receipt.saved) { rememberStoredPlan(next, receipt.token); setPlan(next); }
+    return receipt.saved;
+  }
+  const planningScopeRef = useRef({ key: planningScopeKey, allowed: allowCataloguePlanning });
+  planningScopeRef.current = { key: planningScopeKey, allowed: allowCataloguePlanning };
+  const suggestionScopeRef = useRef<string | null>(null);
+  // A queued callback or a second tab can outlive the country shown when it opened.
+  // Re-read the existing site store at mutation time as well as checking this render.
+  function currentPlanningScopeAllowed() {
+    if (!planningScopeRef.current.allowed || planningScopeRef.current.key !== planningScopeKey) return false;
+    const fresh = currentPlanningSupport(surveySiteId, planningWorkspaceId);
+    return fresh.allowCataloguePlanning
+      && JSON.stringify([planningGeometryKey, fresh.fingerprint]) === planningScopeKey;
+  }
+  useEffect(() => {
+    setAutoPhase('idle'); setAutoResult(null); setIdealMeta(null); setAutoGenerating(false);
+    setPickerBedId(null); setPickerCrop(null); setActivePlanting(null);
+    suggestionScopeRef.current = null;
+  }, [planningScopeKey]);
+  const region = allowCataloguePlanning
+    ? canvasLatLon ? nearestRainfall(canvasLatLon.lat, canvasLatLon.lon)
+      : design?.bgSite ? nearestRainfall(design.bgSite.lat, design.bgSite.lon) : null
+    : null;
   const [surveySnapshot, setSurveySnapshot] = useState<{ siteId: string; survey: SiteSurvey | null } | null>(null);
   const siteSurvey = surveySnapshot?.siteId === surveySiteId ? surveySnapshot?.survey ?? null : null;
   const [siteSurveyOpen, setSiteSurveyOpen] = useState(false);
@@ -1242,9 +1640,9 @@ function FacilitatorCropsPageInner() {
   }, [surveySiteId]);
   const climateSiteKey = hasSiteCoords ? `${siteLat},${siteLon}` : null;
   const [climateSnapshot, setClimateSnapshot] = useState<{ siteKey: string; climate: SiteClimate | null } | null>(null);
-  const siteClimate = climateSnapshot?.siteKey === climateSiteKey ? climateSnapshot?.climate ?? null : null;
+  const siteClimate = allowCataloguePlanning && climateSnapshot?.siteKey === climateSiteKey ? climateSnapshot?.climate ?? null : null;
   useEffect(() => {
-    if (!climateSiteKey) { setClimateSnapshot(null); return; }
+    if (!allowCataloguePlanning || !climateSiteKey) { setClimateSnapshot(null); return; }
     let cancelled = false;
     // The render guard also blocks the old site's climate before this effect runs.
     setClimateSnapshot(null);
@@ -1252,7 +1650,7 @@ function FacilitatorCropsPageInner() {
       if (!cancelled) setClimateSnapshot({ siteKey: climateSiteKey, climate: sc });
     });
     return () => { cancelled = true; };
-  }, [climateSiteKey, siteLat, siteLon]);
+  }, [allowCataloguePlanning, climateSiteKey, siteLat, siteLon]);
 
   // ?canvasSite&auto=1 → open the auto-suggest questionnaire once, as soon as at
   // least one bed has loaded. Ref-guarded so a bed refresh (canvas-change event)
@@ -1260,17 +1658,16 @@ function FacilitatorCropsPageInner() {
   const autoParamHandled = useRef(false);
   useEffect(() => {
     if (autoParamHandled.current) return;
-    if (!mounted || autoParam !== '1' || beds.length < 1) return;
+    if (!mounted || !allowCataloguePlanning || autoParam !== '1' || beds.length < 1) return;
     autoParamHandled.current = true;
     openAutoSuggest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mounted, autoParam, beds.length]);
-  // A region flagged 'mild' frostRisk (e.g. Durban's coastal hinterland) uses
-  // KZN DARD's warm/light-frost sowing column rather than treating coast and
-  // frost-prone interior as interchangeable. This mapped result is shown to
-  // the farmer for transparency but is not turned into a rainfall quiz.
-  const mapPattern: RainPattern =
-    region?.frostRisk === 'mild' && region.pattern === 'summer' ? 'mild-frost' : (region?.pattern ?? 'summer');
+  }, [mounted, autoParam, beds.length, allowCataloguePlanning]);
+  // The reference region's `pattern` is RAIN timing, not a frost regime, so it must not be
+  // used as the sowing column: a Karoo fallback used to get the frost-free column. The
+  // calendar leans cold unless the region is flagged mild (water-calc referenceSowingCalendar).
+  // Shown to the farmer for transparency but not turned into a rainfall quiz.
+  const mapPattern: RainPattern = referenceSowingCalendar(region);
   // Climate is a site fact, not a questionnaire. Rory's field test made the
   // problem plain: many farmers do not know which rainfall label describes
   // them, while the app already has the mapped location needed to decide it.
@@ -1282,9 +1679,26 @@ function FacilitatorCropsPageInner() {
   // down, offline with nothing cached); no site at all assumes summer rain.
   // `climateSource` travels with the pattern so every surface that prints the
   // climate can say WHICH of the three it is printing.
-  const pattern: RainPattern = siteClimate?.pattern ?? mapPattern;
+  // Precedence (lib/site-climate.ts sowingCalendarInUse): the calendar the grower CHOSE, else
+  // the site climate moved by their frost answer, else the reference fallback. A grower knows
+  // whether frost reaches their beds; the grid cell does not (2026-11-10 accuracy audit:
+  // Mbombela, Tzaneen, Worcester). `calendarBasis` says which one decided; `climateSource`
+  // below still says where the AUTOMATIC calendar came from. Choosing is an optional
+  // override in Auto-suggest, never a question the grower must answer.
+  const calendarScopeId = surveySiteId ?? planningWorkspaceId ?? null;
+  const chosenCalendar = sowingCalendarChoiceFor(plan, calendarScopeId);
+  // The sample farm's calendar is declared in its sample data and never read from a live call
+  // (Rory, 10 November 2026). Outside sample mode, and for any other site, this is null.
+  const sampleCalendar = sampleSowingCalendarFor(calendarScopeId);
+  const calendarInUse = sowingCalendarInUse({ chosen: chosenCalendar, sample: sampleCalendar, site: siteClimate, observedFrost: siteSurvey?.productionConditions?.frost, reference: mapPattern });
+  const pattern: RainPattern = calendarInUse.pattern;
+  const calendarBasis: CalendarBasis = calendarInUse.basis === 'reference' ? 'site-climate' : calendarInUse.basis;
+  // Rain season for the label: the site's own, else the reference region's rain timing (which
+  // IS a rain season), else unknown with no site.
+  const calendarRainSeason = siteClimate?.rainSeason ?? region?.pattern ?? undefined;
   const climateSource: 'site' | 'reference' | 'none' = siteClimate ? 'site' : (region ? 'reference' : 'none');
   const patternMeta = PATTERN_META[pattern];
+  const calendarLabel = sowingCalendarLabel(pattern, calendarRainSeason);
   // Which of the eight growing zones this site's own climate points to — for the picker's
   // variety guidance only. Empty without a site climate: a reference city is not the site.
   const growingZones = useMemo<GrowingZoneId[]>(
@@ -1300,10 +1714,62 @@ function FacilitatorCropsPageInner() {
   // (each BedRow only ever shows plantings matching its OWN bed.id). The
   // underlying plan.plantings array is left untouched, only this derived
   // read is filtered, so nothing is actually deleted.
+  const currentBedIds = new Set([...beds.map(b => b.id), ...(selectedGrowerSource ? [
+    ...selectedGrowerSource.beds.map(b => b.id), ...selectedGrowerSource.heldBeds.map(b => b.bedId),
+  ] : [])]);
   const plantings = useMemo(() => {
-    const bedIds = new Set(beds.map((b) => b.id));
-    return (plan?.plantings ?? []).filter((p) => bedIds.has(p.bedId));
-  }, [plan, beds]);
+    return (plan?.plantings ?? []).filter(p => beds.some(b => b.id === p.bedId) || hasGrowerCycleMarker(p)
+      && !(selectedGrowerSource && isProvenForeignGrowerCycle(p, growerScope, currentBedIds)));
+  }, [plan, beds, selectedGrowerSource, growerScopeKey]);
+  // Marker evidence must reach totals and print even when its old bed is gone.
+  // Only the shared intact foreign/disjoint proof can exclude another source.
+  const legacyPlantings = useMemo(() => plantings.filter(p => !hasGrowerCycleMarker(p)), [plantings]);
+  const markedPlantings = useMemo(() => plantings.filter(hasGrowerCycleMarker), [plantings]);
+  // Sowings the site's calendar no longer offers. legacyPlantings is the right set: already
+  // limited to this page's beds, and without the grower-cycle rows whose basis is the
+  // grower's own estimates rather than the catalogue months. Nothing here moves a sowing.
+  // A mapped site whose own climate has not loaded is on a fallback guess, and a guess does
+  // not get to call a saved sowing out of season (calendarCanJudgeSavedSowings).
+  const canJudgeSavedSowings = calendarCanJudgeSavedSowings(calendarInUse.basis, hasSiteCoords);
+  const outOfCalendar = useMemo(
+    () => allowCataloguePlanning && canJudgeSavedSowings ? sowingsOutsideCalendar(legacyPlantings.filter((planting) => beds.some((bed) => bed.id === planting.bedId)), pattern, { year: currentYear, month: currentMonth }) : [],
+    [allowCataloguePlanning, canJudgeSavedSowings, legacyPlantings, beds, pattern, currentYear, currentMonth],
+  );
+  const outOfCalendarScope = calendarScopeId ?? 'no-site';
+  const outOfCalendarKey = outOfCalendarSignature(outOfCalendar, pattern);
+  // Which lists this grower hid, kept per ACCOUNT: the record names a farm and its crops, so on
+  // a shared phone it must not pass from one account to the next (the bare key did exactly
+  // that). Read after mount only: the page is server-rendered and localStorage does not exist
+  // there. A record read for one account is never applied to another.
+  const hiddenNoticeStorageKey = activeAccountLocalStorageKey(SOWING_CALENDAR_NOTICE_HIDDEN_KEY);
+  const [hiddenCalendarNotice, setHiddenCalendarNotice] = useState<{ storageKey: string; byScope: Record<string, string> }>({ storageKey: '', byScope: {} });
+  useEffect(() => {
+    let byScope: Record<string, string> = {};
+    try { byScope = parseHiddenCalendarNotices(localStorage.getItem(hiddenNoticeStorageKey)); } catch { /* private window or blocked storage: the notice simply shows */ }
+    setHiddenCalendarNotice({ storageKey: hiddenNoticeStorageKey, byScope });
+  }, [hiddenNoticeStorageKey]);
+  const hiddenForThisAccount = hiddenCalendarNotice.storageKey === hiddenNoticeStorageKey ? hiddenCalendarNotice.byScope : {};
+  function hideCalendarNotice() {
+    // This handler carries the site and the list of the render that drew it. Kept past a change
+    // of account, sample mode or site, it must write nothing: working out the new account's key
+    // here would only choose where to put the OLD render's farm. Ask the page's own admission
+    // first, and write only under the key this render was drawn for (hiddenCalendarNoticeWrite).
+    const currentStorageKey = activeAccountLocalStorageKey(SOWING_CALENDAR_NOTICE_HIDDEN_KEY);
+    const actorIsCurrent = growerActorIsCurrent() && currentPlanningScopeAllowed();
+    const readStored = () => { try { return localStorage.getItem(currentStorageKey); } catch { return null; } };
+    const write = hiddenCalendarNoticeWrite({
+      renderedStorageKey: hiddenNoticeStorageKey, currentStorageKey, actorIsCurrent,
+      scope: outOfCalendarScope, signature: outOfCalendarKey,
+      storedRaw: actorIsCurrent && currentStorageKey === hiddenNoticeStorageKey ? readStored() : null,
+    });
+    if (!write) return;
+    setHiddenCalendarNotice(write);
+    try { localStorage.setItem(write.storageKey, JSON.stringify(write.byScope)); } catch { /* the notice stays hidden for this visit only */ }
+  }
+  const hasOwnRecords = markedPlantings.length > 0;
+  const legacyAddBlocked = (bedId: string, rows = plan?.plantings ?? []) => rows.some(p => hasGrowerCycleMarker(p)
+    && (p.bedId === bedId || !currentBedIds.has(p.bedId)
+      && !(selectedGrowerSource && isProvenForeignGrowerCycle(p, growerScope, currentBedIds))));
   const productionGuide = useMemo(() => buildProductionGuide(siteSurvey, plantings, growingZones, currentMonth, { bananaCircles, trees: includeTrees ? canvasTrees : [], animals: includeAnimals ? canvasAnimals : [], animalChoices }), [siteSurvey, plantings, growingZones, currentMonth, bananaCircles, canvasTrees, canvasAnimals, animalChoices, includeTrees, includeAnimals]);
   const chickenGuide = useMemo(() => {
     const coop = canvasAnimals.find((group) => group.housing === 'chicken');
@@ -1313,8 +1779,10 @@ function FacilitatorCropsPageInner() {
   const bedAreaFor = (bedId: string) => beds.find((b) => b.id === bedId)?.areaM2 ?? 0;
 
   function addPlanting(bedId: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean, variety: string) {
+    if (!currentPlanningScopeAllowed() || legacyAddBlocked(bedId)) return;
     pushPlanHistory();
     setPlan((prev) => {
+      if (legacyAddBlocked(bedId, prev?.plantings ?? [])) return prev;
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
       const next: Planting = {
         id: genId('pl'), bedId, cropKey, sowMonth,
@@ -1325,10 +1793,25 @@ function FacilitatorCropsPageInner() {
       return { ...base, version: 1, plantings: [...base.plantings, next], updatedAt: Date.now() };
     });
   }
+  // A calendar choice rides the page's ordinary autosave (no save call here, no undo entry):
+  // it is a setting of the plan book, not an edit of a sowing.
+  function chooseSowingCalendar(calendar: RainPattern | null) {
+    // The scope id is this render's site. A handler kept past a change of account or site must
+    // not put that site into whichever plan is on screen now.
+    if (!calendarScopeId || !currentPlanningScopeAllowed() || !growerActorIsCurrent()) return;
+    setPlan((prev) => {
+      const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
+      return { ...withSowingCalendarChoice(base, calendarScopeId, calendar), version: 1 as const, updatedAt: Date.now() };
+    });
+  }
   function updatePlanting(id: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean, variety: string) {
+    if (!currentPlanningScopeAllowed()) return;
     pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
+      const matches = prev.plantings.filter(p => p.id === id), shown = legacyPlantings.find(p => p.id === id);
+      if (matches.length !== 1 || !shown || hasGrowerCycleMarker(matches[0]) || legacyAddBlocked(matches[0].bedId, prev.plantings)
+        || JSON.stringify(matches[0]) !== JSON.stringify(shown)) return prev;
       return {
         ...prev,
         version: 1,
@@ -1348,15 +1831,24 @@ function FacilitatorCropsPageInner() {
     });
   }
   function removePlanting(id: string) {
+    if (!currentPlanningScopeAllowed()) return;
     pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
-      return { ...prev, version: 1, plantings: prev.plantings.filter((p) => p.id !== id), updatedAt: Date.now() };
+      const matches = prev.plantings.filter(p => p.id === id), shown = legacyPlantings.find(p => p.id === id);
+      if (matches.length !== 1 || !shown || hasGrowerCycleMarker(matches[0]) || JSON.stringify(matches[0]) !== JSON.stringify(shown)) return prev;
+      return { ...prev, version: 1, plantings: prev.plantings.filter(p => p.id !== id), updatedAt: Date.now() };
     });
   }
   function confirmPastSowing(id: string) {
+    if (!currentPlanningScopeAllowed()) return;
     pushPlanHistory();
-    setPlan((prev) => prev ? { ...prev, plantings: prev.plantings.map((p) => p.id === id ? confirmOnceSowing(p, currentYear, currentMonth) : p), updatedAt: Date.now() } : prev);
+    setPlan((prev) => {
+      if (!prev) return prev;
+      const matches = prev.plantings.filter(p => p.id === id), shown = legacyPlantings.find(p => p.id === id);
+      if (matches.length !== 1 || !shown || hasGrowerCycleMarker(matches[0]) || JSON.stringify(matches[0]) !== JSON.stringify(shown)) return prev;
+      return { ...prev, plantings: prev.plantings.map(p => p.id === id ? confirmOnceSowing(p, currentYear, currentMonth) : p), updatedAt: Date.now() };
+    });
   }
   // Only drops plantings on beds actually shown right now (matches the
   // `plantings` derived read below) — never touches plantings parked under a
@@ -1369,13 +1861,17 @@ function FacilitatorCropsPageInner() {
   // an inline question instead — no native dialog anywhere in this flow.
   const [confirmingClear, setConfirmingClear] = useState(false);
   function clearAllPlantings() {
-    if (!plantings.length) return;
+    if (!currentPlanningScopeAllowed() || !legacyPlantings.length) return;
     setConfirmingClear(false);
     pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
-      const bedIds = new Set(beds.map((b) => b.id));
-      return { ...prev, version: 1, plantings: prev.plantings.filter((p) => !bedIds.has(p.bedId)), updatedAt: Date.now() };
+      const next = prev.plantings.filter(p => {
+        const shown = legacyPlantings.find(row => row.id === p.id);
+        return hasGrowerCycleMarker(p) || !shown || prev.plantings.filter(row => row.id === p.id).length !== 1
+          || JSON.stringify(p) !== JSON.stringify(shown);
+      });
+      return next.length === prev.plantings.length ? prev : { ...prev, version: 1, plantings: next, updatedAt: Date.now() };
     });
   }
 
@@ -1420,7 +1916,7 @@ function FacilitatorCropsPageInner() {
     () => benchmarkAreaConflictDetails(plantings, beds, currentMonth),
     [plantings, beds, currentMonth],
   );
-  const totalYieldKg = planYieldBenchmark.knownKg;
+  const totalYieldKg = hasOwnRecords ? null : planYieldBenchmark.knownKg;
   // Share of the VERIFIED kg total — the same number printed above the list, so
   // the bars and the headline cannot disagree. Null whenever there is no total to
   // be a share of (bed space in conflict, nothing planted, no verified crop), and
@@ -1537,8 +2033,8 @@ function FacilitatorCropsPageInner() {
     siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
   }, !aReliableIrrigation), [siteClimate, hasSiteCoords, siteLat, aReliableIrrigation]);
   const gapFills = useMemo(
-    () => suggestGapFills({ year: yearOfFood, beds, plantings, pattern, currentMonth, gate: yearGate, observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined }),
-    [yearOfFood, beds, plantings, pattern, currentMonth, yearGate, siteSurvey],
+    () => allowCataloguePlanning && !hasOwnRecords ? suggestGapFills({ year: yearOfFood, beds, plantings, pattern, currentMonth, gate: yearGate, observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined }) : [],
+    [allowCataloguePlanning, hasOwnRecords, yearOfFood, beds, plantings, pattern, currentMonth, yearGate, siteSurvey],
   );
   function chooseAnimalEnterprise(housing: HousingKind, enterpriseId: string | null) {
     if (!canvasSite) return;
@@ -1593,15 +2089,17 @@ function FacilitatorCropsPageInner() {
     const locationLine = climateSource === 'site'
       ? 'This site (satellite climate records)'
       : region ? `Nearest reference: ${region.name} (fallback)` : 'No site set';
+    // Paper says whose call the calendar was, as the screen does ("chosen by you").
+    const climateLine = printedSowingCalendarLine(calendarLabel, calendarBasis, climateSource);
     return {
       planTitle: (canvasSite ? placeName : null) ?? designTitle,
-      siteLine: climateSource === 'none'
-        ? `No site set · assuming ${patternMeta.label.toLowerCase()}`
-        : `${locationLine} · ${patternMeta.label}`,
+      siteLine: climateSource === 'none' && calendarBasis !== 'grower-choice' && calendarBasis !== 'sample-farm'
+        ? `No site set · assuming ${calendarLabel.toLowerCase()}`
+        : `${locationLine} · ${climateLine}`,
       // The same two facts as separate values, because the PDF needs them apart and recovering
       // them by splitting siteLine printed "Climate: Not set" for every region in the country.
       locationLine,
-      climateLine: climateSource === 'none' ? `Assuming ${patternMeta.label.toLowerCase()}` : patternMeta.label,
+      climateLine,
       // Lets the PDF flag frost-tender harvest windows that run into Jun–Jul at a light-frost site.
       rainPattern: pattern,
       bedsSummary: `${bedCount} bed${bedCount === 1 ? '' : 's'}`
@@ -1612,15 +2110,274 @@ function FacilitatorCropsPageInner() {
       lossPercent: cashflowSettings.lossPercent,
       lossAllowanceConfirmed: cashflowSettings.confirmed === true,
     };
-  }, [beds, canvasSite, placeName, designTitle, region, pattern, patternMeta, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
+  }, [beds, canvasSite, placeName, designTitle, region, pattern, calendarLabel, calendarBasis, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
 
   // One account holds several maps. A shared food name and month cannot tell us which
   // farm produced it; records without a site remain saved outside this site's totals.
-  const productionSiteId = canvasSite ?? (chosenDesignId && chosenDesignId !== 'local' ? `design:${chosenDesignId}`
-    : surveySiteId ?? (design ? 'design:local' : useVirtual ? 'virtual-bed' : null));
-  const nurseryPlanningForecast = useMemo(() => mounted && productionSiteId
+  function growerActorIsCurrent() {
+    const live = growerBookContext.current;
+    if (live.owner !== growerOwner || live.sample !== growerSample || live.siteId !== productionSiteId
+      || live.scopeKey !== growerScopeKey) return false;
+    return plannerActorIsCurrent(growerOwner, growerSample);
+  }
+  function readCurrentGrowerBook(): GrowerWorkflowBookReceipt {
+    if (!plan || !growerActorIsCurrent()) return { status: 'held', reason: 'context-changed' };
+    const base = planWriteBase.current;
+    if (!base || base.owner !== growerOwner || base.sample !== growerSample || base.planKey !== JSON.stringify(plan)) {
+      return { status: 'held', reason: 'pending-plan-edits' };
+    }
+    if (planSaveConflict || base.token === null || cropPlanWriteToken() !== base.token) return { status: 'held', reason: 'saved-plan-changed' };
+    // Review the authored whole book, not loadCropPlan's display normalizer:
+    // one corrupt row must not erase reservations into an apparently empty plan.
+    const receipt = readRawCropPlanReceipt();
+    if (receipt.status !== 'ready' || receipt.token !== base.token || !receipt.raw || typeof receipt.raw !== 'object'
+      || Array.isArray(receipt.raw) || (receipt.raw as CropPlanState).version !== 1 || !Array.isArray((receipt.raw as CropPlanState).plantings)) {
+      return { status: 'held', reason: 'saved-plan-changed' };
+    }
+    const book = receipt.raw as CropPlanState;
+    if (!growerActorIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== base.token) {
+      return { status: 'held', reason: 'saved-plan-changed' };
+    }
+    return { status: 'ready', book, token: base.token,
+      // This is revocation bound to the actual loaded base, not permission
+      // derived from a token that a later callback might happen to recapture.
+      isCurrent: () => growerActorIsCurrent() && !planSaveConflict && planWriteBase.current === base
+        && base.planKey === JSON.stringify(plan) && cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+        && cropPlanWriteToken() === base.token };
+
+  }
+  function commitGrowerAcceptance(request: GrowerWorkflowAcceptanceCommit): GrowerWorkflowAcceptanceResult {
+    const held = (reason: string): GrowerWorkflowAcceptanceResult => ({ status: 'held', reasons: [reason] });
+    let written = false;
+    try {
+      if (!plan || !growerActorIsCurrent() || planSaveConflict || !request.isCurrent()) return held('context-changed');
+      const base = planWriteBase.current;
+      if (!base || base.owner !== growerOwner || base.sample !== growerSample || base.planKey !== JSON.stringify(plan)
+        || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) return held('pending-plan-edits');
+      if (base.token !== request.expectedBookToken || cropPlanWriteToken() !== base.token) return held('saved-plan-changed');
+      if (request.source.resourceSiteId !== productionSiteId || growerPlanningScopeKey(request.source.scope) !== growerScopeKey) return held('source-changed');
+      const current = readCurrentGrowerBook();
+      if (current.status !== 'ready' || current.token !== request.expectedBookToken) return held('saved-plan-changed');
+      const admitted = loadCropPlanWithWriteAdmission();
+      if (admitted.token !== current.token || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)) {
+        setPlanSaveConflict(true); return held('saved-plan-changed');
+      }
+      // Only the hook supplies its private original data binding. The pure
+      // helper receives no functions or reconstructed display fingerprints.
+      const prepared = prepareGrowerWorkflowAcceptance({ review: request.review, binding: request.binding,
+        scope: growerScope, source: request.source, book: current.book, acceptedAt: request.acceptedAt, plantingIds: request.plantingIds });
+      if (prepared.status === 'held') return { status: 'held', reasons: prepared.reasons };
+      if (!cropPlanWriteCandidateIsLossless(prepared.book)) return held('acceptance-write-lossy');
+      if (!request.isCurrent() || !growerActorIsCurrent() || planWriteBase.current !== base
+        || base.planKey !== JSON.stringify(plan) || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+        || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)
+        || cropPlanWriteToken() !== current.token) return held('saved-plan-changed');
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      const receipt = saveCropPlanWithReceipt(prepared.book);
+      setPlanSaveFailed(!receipt.saved);
+      if (!receipt.saved) return { status: 'failed' };
+      written = true;
+      if (!growerActorIsCurrent() || planWriteBase.current !== base) { setPlanSaveConflict(true); return { status: 'superseded' }; }
+      const confirmed = loadCropPlanWithWriteAdmission(), key = JSON.stringify(confirmed.book);
+      if (confirmed.token !== receipt.token || !cropPlanWriteAdmissionMatches(confirmed.admission, key, receipt.token)
+        || !growerActorIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== receipt.token) {
+        setPlanSaveConflict(true); return { status: 'superseded' };
+      }
+      // The raw appended book can legitimately project old once-row settlement.
+      // Install that actual admitted display, bound only to this exact receipt.
+      planWriteBase.current = { owner: base.owner, sample: base.sample, token: receipt.token, planKey: key, admission: confirmed.admission };
+      setPlan(confirmed.book);
+      return { status: 'confirmed', rows: prepared.rows.length, sample: base.sample };
+    } catch {
+      if (written) { setPlanSaveConflict(true); return { status: 'superseded' }; }
+      return held('acceptance-check-failed');
+    }
+  }
+  function commitNurseryBatchReferences(request: GrowerNurseryReferenceCommit): GrowerNurseryReferenceCommitResult {
+    const held = (...reasons: string[]): GrowerNurseryReferenceCommitResult => ({ status: 'held', reasons });
+    let written = false;
+    try {
+      if (!plan || !growerActorIsCurrent() || planSaveConflict || !request.isCurrent()) return held('context-changed');
+      const base = planWriteBase.current;
+      if (!base || base.owner !== growerOwner || base.sample !== growerSample || base.planKey !== JSON.stringify(plan)
+        || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) return held('pending-plan-edits');
+      if (base.token !== request.expectedBookToken || cropPlanWriteToken() !== base.token) return held('saved-plan-changed');
+      if (request.source.resourceSiteId !== productionSiteId || growerPlanningScopeKey(request.source.scope) !== growerScopeKey) return held('source-changed');
+      const current = readCurrentGrowerBook();
+      if (current.status !== 'ready' || current.token !== request.expectedBookToken || !current.isCurrent?.()) return held('saved-plan-changed');
+      const admitted = loadCropPlanWithWriteAdmission();
+      if (admitted.token !== current.token || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)) {
+        setPlanSaveConflict(true); return held('saved-plan-changed');
+      }
+      const prepared = prepareGrowerNurseryBatchReferenceChanges({ book: current.book,
+        originalRows: request.originalRows, originalContext: request.originalContext,
+        currentContext: { scope: request.source.scope, beds: request.source.beds, geometryFingerprint: request.source.geometryFingerprint },
+        changes: request.changes });
+      if (prepared.status === 'held') return held(...prepared.reasons);
+      if (!request.isCurrent() || !request.sourceIsCurrent() || !current.isCurrent?.() || !growerActorIsCurrent()
+        || planWriteBase.current !== base || cropPlanWriteToken() !== current.token) return held('context-changed');
+      if (prepared.status === 'unchanged') return { status: 'unchanged' };
+      const next = { ...prepared.book, updatedAt: Date.now() };
+      if (!cropPlanWriteCandidateIsLossless(next)) return held('reference-write-lossy');
+      if (!request.isCurrent() || !current.isCurrent?.() || !growerActorIsCurrent() || planWriteBase.current !== base
+        || base.planKey !== JSON.stringify(plan) || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+        || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)
+        || cropPlanWriteToken() !== current.token) return held('saved-plan-changed');
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      const receipt = saveCropPlanWithReceipt(next, { writeIsCurrent: () => request.isCurrent() && request.sourceIsCurrent()
+        && growerActorIsCurrent() && planWriteBase.current === base && base.planKey === JSON.stringify(plan) });
+      setPlanSaveFailed(!receipt.saved);
+      if (!receipt.saved) return { status: 'failed' };
+      written = true;
+      if (!growerActorIsCurrent() || !request.sourceIsCurrent() || planWriteBase.current !== base) { setPlanSaveConflict(true); return { status: 'superseded' }; }
+      const confirmed = loadCropPlanWithWriteAdmission(), key = JSON.stringify(confirmed.book);
+      if (confirmed.token !== receipt.token || !cropPlanWriteAdmissionMatches(confirmed.admission, key, receipt.token)
+        || !growerActorIsCurrent() || !request.sourceIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== receipt.token) {
+        setPlanSaveConflict(true); return { status: 'superseded' };
+      }
+      const installed = { owner: base.owner, sample: base.sample, token: receipt.token, planKey: key, admission: confirmed.admission };
+      planWriteBase.current = installed; setPlan(confirmed.book);
+      return { status: 'confirmed', rows: prepared.changedPlantingIds.length, sample: base.sample,
+        readbackIsCurrent: () => growerActorIsCurrent() && request.sourceIsCurrent() && planWriteBase.current === installed
+          && cropPlanWriteToken() === receipt.token && cropPlanWriteAdmissionMatches(installed.admission, key, receipt.token) };
+    } catch {
+      if (written) { setPlanSaveConflict(true); return { status: 'superseded' }; }
+      return held('reference-save-check-failed');
+    }
+  }
+  // The parent lifecycle survives its own successful base replacement. A form
+  // still binds one original context; a later render cannot grant old drafts a
+  // fresh actor, site or source merely by passing a new settings prop.
+  // The legacy nursery names retain fixture/API compatibility; this is the
+  // single actor/site/sample/scope authority for both closed input purposes.
+  const nurseryProducerLive = useRef({ plan, conflict: planSaveConflict });
+  nurseryProducerLive.current = { plan, conflict: planSaveConflict };
+  const [nurserySaveAuthority, setNurserySaveAuthority] = useState<NurserySaveAuthority | null>(null);
+  useEffect(() => {
+    if (!productionSiteId || !growerScopeKey) { setNurserySaveAuthority(null); return; }
+    let active = true;
+    const siteId = productionSiteId, scopeKey = growerScopeKey, owner = growerOwner, sample = growerSample;
+    const authority = createNurserySaveAuthority({ siteId, scopeKey,
+      current: () => { const book = nurseryProducerLive.current.plan, base = planWriteBase.current; return book && base ? { book, base } : null; },
+      isCurrent: () => active && !nurseryProducerLive.current.conflict && plannerActorIsCurrent(owner, sample)
+        && growerBookContext.current.owner === owner && growerBookContext.current.sample === sample
+        && growerBookContext.current.siteId === siteId && growerBookContext.current.scopeKey === scopeKey });
+    setNurserySaveAuthority(authority);
+    return () => { active = false; revokeNurserySaveAuthority(authority); };
+  }, [growerOwner, growerSample, productionSiteId, growerScopeKey, planSaveConflict]);
+  const [nurserySaveContext, setNurserySaveContext] = useState<NurserySaveContext | null>(null);
+  useEffect(() => {
+    // The earlier storage-readiness effect may replace a lease/base without
+    // changing any saved values. Capture only after that actual revalidation.
+    setNurserySaveContext(createNurserySaveContext(nurserySaveAuthority));
+  }, [nurserySaveAuthority, plan, planSaveConflict, planStorageRevision]);
+  const [harvestSaveContext, setHarvestSaveContext] = useState<HarvestSaveContext | null>(null);
+  useEffect(() => {
+    setHarvestSaveContext(createHarvestSaveContext(nurserySaveAuthority));
+  }, [nurserySaveAuthority, plan, planSaveConflict, planStorageRevision]);
+  function saveHarvestTargets(value: HarvestTarget[], request?: HarvestSaveRequest): HarvestSaveResult | false {
+    if (!request) return { status: 'held', reason: 'original-context-required' };
+    return saveScopedGrowerInputs('harvestTargets', value, request);
+  }
+  function saveNurserySettings(value: NurserySettings, request?: NurserySaveRequest): NurserySaveResult | false {
+    if (!request) return { status: 'held', reason: 'original-context-required' };
+    return saveScopedGrowerInputs('nursery', value, request);
+  }
+  function saveScopedGrowerInputs(fieldName: 'harvestTargets' | 'nursery', value: HarvestTarget[] | NurserySettings): boolean;
+  function saveScopedGrowerInputs(fieldName: 'nursery', value: NurserySettings, inputRequest: NurserySaveRequest): NurserySaveResult | false;
+  function saveScopedGrowerInputs(fieldName: 'harvestTargets', value: HarvestTarget[], inputRequest: HarvestSaveRequest): HarvestSaveResult | false;
+  function saveScopedGrowerInputs(fieldName: 'harvestTargets' | 'nursery', value: HarvestTarget[] | NurserySettings, inputRequest?: NurserySaveRequest | HarvestSaveRequest): boolean | NurserySaveResult | HarvestSaveResult {
+    if (inputRequest) {
+      if (fieldName === 'nursery') {
+        if (Array.isArray(value)) return false;
+        const bound = beginNurserySaveRequest(inputRequest as NurserySaveRequest, nurserySaveContext, value);
+        if (!bound) return { status: 'held', reason: 'original-context-changed' };
+        value = bound;
+      } else {
+        if (!Array.isArray(value)) return false;
+        const bound = beginHarvestSaveRequest(inputRequest as HarvestSaveRequest, harvestSaveContext, value);
+        if (!bound) return { status: 'held', reason: 'original-context-changed' };
+        value = bound;
+      }
+    }
+    if (!plan || !productionSiteId || !growerActorIsCurrent() || planSaveConflict) return false;
+    const base = planWriteBase.current;
+    if (!base || base.owner !== growerOwner || base.sample !== growerSample || base.planKey !== JSON.stringify(plan)) return false;
+    if (!cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) { setPlanSaveConflict(true); return false; }
+    const token = cropPlanWriteToken(); if (token === null) return false;
+    const loaded = loadCropPlanWithWriteAdmission(), fresh = loaded.book;
+    if (loaded.token !== token || !cropPlanWriteAdmissionMatches(loaded.admission, JSON.stringify(fresh), loaded.token)) { setPlanSaveConflict(true); return false; }
+    if (loaded.admission.status === 'ready' && loaded.admission.source === 'present' && fresh.updatedAt < plan.updatedAt) return false;
+    let next: CropPlanState;
+    if (fieldName === 'harvestTargets') {
+      if (!Array.isArray(value)) return false;
+      if (!cropPlanWriteCandidateIsLossless({ ...fresh, harvestTargets: value })) { setPlanSaveConflict(true); return false; }
+      const rows = sanitiseHarvestTargets(value); if (rows.length !== value.length) return false;
+      if (!cropPlanWriteCandidateIsLossless({ ...fresh, harvestTargets: value }, { ...fresh, harvestTargets: rows })) { setPlanSaveConflict(true); return false; }
+      const own = (items: readonly HarvestTarget[]) => items.filter(row => row.siteId === productionSiteId);
+      const other = (items: readonly HarvestTarget[]) => items.filter(row => row.siteId !== productionSiteId);
+      const expected = plan.harvestTargets ?? [], current = fresh.harvestTargets ?? [];
+      const sameTargetData = (a: readonly HarvestTarget[], b: readonly HarvestTarget[]) => {
+        // Sample books retain authored object key order. Compare every raw
+        // value and array position without turning key order into permission.
+        const key = harvestTargetsSourceKey(productionSiteId, a);
+        return key !== null && key === harvestTargetsSourceKey(productionSiteId, b);
+      };
+      if (!sameTargetData(other(rows), other(expected))) return false;
+      if (!sameTargetData(own(current), own(expected))) { setPlanSaveConflict(true); return false; }
+      next = { ...fresh, harvestTargets: [...other(current), ...own(rows)], updatedAt: Date.now() };
+    } else {
+      if (Array.isArray(value)) return false;
+      if (!cropPlanWriteCandidateIsLossless({ ...fresh, nursery: value })) { setPlanSaveConflict(true); return false; }
+      const rows = sanitiseNurserySettings(value), expected = sanitiseNurserySettings(plan.nursery), current = sanitiseNurserySettings(fresh.nursery);
+      if (!cropPlanWriteCandidateIsLossless({ ...fresh, nursery: value }, { ...fresh, nursery: rows })) { setPlanSaveConflict(true); return false; }
+      const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+      if (!same(rows.sourceIssues, expected.sourceIssues) || !same(current.sourceIssues, expected.sourceIssues)
+        || !same(rows.heldInputs, expected.heldInputs) || !same(current.heldInputs, expected.heldInputs)) return false;
+      const merged = { ...current };
+      for (const collection of ['spaces', 'containers', 'profiles'] as const) {
+        const own = (items: readonly { siteId: string }[]) => items.filter(row => row.siteId === productionSiteId);
+        const other = (items: readonly { siteId: string }[]) => items.filter(row => row.siteId !== productionSiteId);
+        if (!same(other(rows[collection]), other(expected[collection]))) return false;
+        if (!same(own(current[collection]), own(expected[collection]))) { setPlanSaveConflict(true); return false; }
+        // Each collection retains its own schema; the guarded union only selects its namespace.
+        (merged[collection] as Array<{ siteId: string }>) = [...other(current[collection]), ...own(rows[collection])];
+      }
+      next = { ...fresh, nursery: merged, updatedAt: Date.now() };
+    }
+    if (!cropPlanWriteCandidateIsLossless(next) || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+      || !growerActorIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== token) { setPlanSaveConflict(true); return false; }
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    if (inputRequest) {
+      const result = fieldName === 'nursery'
+        ? commitNurserySaveRequest(inputRequest as NurserySaveRequest, next, token)
+        : commitHarvestSaveRequest(inputRequest as HarvestSaveRequest, next, token);
+      setPlanSaveFailed(result.status !== 'confirmed');
+      if (result.status === 'confirmed') {
+        const confirmed = fieldName === 'nursery'
+          ? readNurserySaveConfirmation(result, inputRequest as NurserySaveRequest)
+          : readHarvestSaveConfirmation(result, inputRequest as HarvestSaveRequest);
+        if (!confirmed || !growerActorIsCurrent()) {
+          setPlanSaveConflict(true); return { status: 'performed-unconfirmed', reason: 'confirmation-no-longer-current' };
+        }
+        planWriteBase.current = { owner: base.owner, sample: base.sample, token: confirmed.token,
+          planKey: JSON.stringify(confirmed.book), admission: confirmed.admission };
+        nurseryProducerLive.current = { plan: confirmed.book, conflict: false };
+        setPlan(confirmed.book);
+      } else if (result.status === 'performed-unconfirmed') {
+        setPlanSaveConflict(true);
+        nurseryProducerLive.current = { ...nurseryProducerLive.current, conflict: true };
+      }
+      return result;
+    }
+    const receipt = saveCropPlanWithReceipt(next);
+    setPlanSaveFailed(!receipt.saved);
+    if (receipt.saved) { rememberStoredPlan(next, receipt.token); setPlan(next); }
+    return receipt.saved;
+  }
+  const nurseryPlanningForecast = useMemo(() => allowCataloguePlanning && mounted && productionSiteId
     ? buildNurseryForecast(plantings, beds, productionSiteId, sanitiseNurserySettings(plan?.nursery), { year: currentYear, month: currentMonth })
-    : null, [mounted, productionSiteId, plantings, beds, plan?.nursery, currentYear, currentMonth]);
+    : null, [allowCataloguePlanning, mounted, productionSiteId, plantings, beds, plan?.nursery, currentYear, currentMonth]);
   const siteProductionRecords = useMemo(() => productionRecordsForSite(plan?.productionRecords, productionSiteId), [plan?.productionRecords, productionSiteId]);
   const sitePreservedProducts = useMemo(() => preservedFoodRecordsForSite(plan?.preservedProducts, productionSiteId), [plan?.preservedProducts, productionSiteId]);
   const unassignedProductionRecords = useMemo(() => sanitiseProductionRecords(plan?.productionRecords).filter(record => !record.siteId), [plan?.productionRecords]);
@@ -1642,6 +2399,11 @@ function FacilitatorCropsPageInner() {
   const productionAvailabilityGraphs = useMemo(() => buildProductionAvailabilityGraphs(productionGraphInput), [productionGraphInput]);
   const recordProducts = useMemo(() => {
     const options = new Map<string, { iconKey: string; label: string }>();
+    // Choosing the identity of an actual recorded crop supplies no sowing calendar,
+    // planting permission or yield assumption. New growers need not accept a plan first.
+    if (!allowCataloguePlanning) for (const crop of CROPS) {
+      options.set(`crop:${crop.key}`, { iconKey: `crop:${crop.key}`, label: crop.name });
+    }
     for (const planting of plantings) {
       const crop = cropByKey(planting.cropKey);
       if (crop && crop.yieldKgPerM2 !== 0) options.set(`crop:${crop.key}`, { iconKey: `crop:${crop.key}`, label: crop.name });
@@ -1652,7 +2414,7 @@ function FacilitatorCropsPageInner() {
       if (enterprise && HOUSING_ANIMALS[group.housing].includes(enterprise.animal) && enterprise.product !== 'wool') options.set(`animal:${enterprise.enterpriseId}`, { iconKey: `animal:${enterprise.enterpriseId}`, label: `${enterprise.name} · ${PRODUCT_LABEL[enterprise.product]}` });
     }
     return [...options.values()];
-  }, [plantings, canvasTrees, canvasAnimals, animalChoices]);
+  }, [allowCataloguePlanning, plantings, canvasTrees, canvasAnimals, animalChoices]);
   function updateProductionRecords(productionRecords: DatedProductionRecord[]) {
     if (!productionSiteId) return;
     pushPlanHistory();
@@ -1665,12 +2427,14 @@ function FacilitatorCropsPageInner() {
   }
 
   function shareTasks() {
+    if (!currentPlanningScopeAllowed()) return;
     const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\n  ${treePickingPhrase(line)}`).join('');
     const text = `🌱 Production plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}${picking(0)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}${picking(1)}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   }
 
   function openPicker(bedId: string) {
+    if (!currentPlanningScopeAllowed() || legacyAddBlocked(bedId)) return;
     setEditingPlantingId(null);
     setPickerBedId(bedId);
     setPickerSearch('');
@@ -1685,6 +2449,7 @@ function FacilitatorCropsPageInner() {
   // "pick a crop" step. confirmAdd below detects editingPlantingId and
   // updates in place instead of creating a new planting.
   function openEditPicker(p: Planting) {
+    if (!currentPlanningScopeAllowed() || hasGrowerCycleMarker(p) || legacyAddBlocked(p.bedId)) return;
     const crop = cropByKey(p.cropKey);
     if (!crop) return;
     setEditingPlantingId(p.id);
@@ -1699,6 +2464,7 @@ function FacilitatorCropsPageInner() {
   // A gap-fill suggestion opens the ordinary picker already filled in, so the farmer sees the
   // same sowing-window note and overlap warning as any other planting before it is added.
   function planGapFill(s: GapFillSuggestion) {
+    if (!currentPlanningScopeAllowed()) return;
     openPicker(s.bed.id);
     setPickerCrop(s.crop);
     setPickerMonth(s.sowMonth);
@@ -1718,8 +2484,8 @@ function FacilitatorCropsPageInner() {
     setPickerFraction(isSpaceHungry(crop) ? 1 : pickerFraction);
   }
   function confirmAdd() {
-    if (!pickerBedId || !pickerCrop) return;
-    if (pickerCrop.timingVerified === false) return;
+    if (!currentPlanningScopeAllowed() || !pickerBedId || !pickerCrop) return;
+    if (pickerCrop.timingVerified === false || legacyAddBlocked(pickerBedId)) return;
     if (editingPlantingId) {
       updatePlanting(editingPlantingId, pickerCrop.key, pickerMonth, pickerFraction, pickerExisting, pickerVariety);
     } else {
@@ -1754,6 +2520,45 @@ function FacilitatorCropsPageInner() {
   [pickerBedId, plantings, editingPlantingId]);
 
   const loading = design === undefined || plan === null || !mounted;
+  const growerPlanningPanel = <>
+    <SavedGrowerRows rows={markedPlantings} wholeBookRows={plan?.plantings ?? []} source={selectedGrowerSource} scope={growerScope} />
+    {productionSiteId && growerScope?.kind === 'mapped-site' && <HarvestTargetsPanel
+      key={`own-targets:${productionSiteId}:${growerScopeKey}`} basis="own-records" siteId={productionSiteId}
+      targets={plan?.harvestTargets ?? []} beds={beds} plantings={plantings} pattern={pattern} climate={{}}
+      saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
+      onSaveTargets={saveHarvestTargets} onAccept={() => {}} />}
+    <GrowerPlanningPanel scope={growerScope}
+      beds={selectedGrowerSource?.beds ?? (canvasSite || design ? [] : designBeds)}
+      measuredAreas={selectedGrowerSource?.measuredAreas} measurementsFingerprint={selectedGrowerSource?.geometryFingerprint ?? null}
+      measurementsRequired={!!canvasSite || !!design} measurementsReady={!!selectedGrowerSource}
+      checkingMeasurements={growerWorkflow.checking} onCheckMeasurements={growerWorkflow.onRefresh}
+      profiles={plan?.growerPlanningProfiles ?? []} onSaveProfiles={saveGrowerProfiles} />
+    <GrowerAutoPlanPanel key={`own-review:${growerScopeKey}:${productionSiteId}`} scope={growerScope}
+      source={growerWorkflow.source} sourceName={placeName || designTitle} sourceIssue={growerWorkflow.sourceIssue}
+      checking={growerWorkflow.checking} contextRevision={growerWorkflow.contextRevision}
+      targets={plan?.harvestTargets ?? []} targetSiteId={productionSiteId} profiles={plan?.growerPlanningProfiles ?? []}
+      onRefresh={growerWorkflow.onRefresh} onReview={growerWorkflow.onReview}
+      onAccept={growerWorkflow.onAccept} acceptance={growerWorkflow.acceptance}
+      nurseryReview={review => growerWorkflow.source && <GrowerNurseryReviewPanel review={review}
+        source={growerWorkflow.source} settings={plan?.nursery} contextRevision={growerWorkflow.contextRevision}
+        onCheckCurrent={growerWorkflow.onCheckCurrent} sample={growerSample} />} />
+    <SavedGrowerNurseryReviewPanel key={`saved-nursery:${growerOwner}:${growerSample}:${growerScopeKey}:${productionSiteId}`}
+      review={growerWorkflow.savedNurseryReview} checking={growerWorkflow.savedNurseryChecking}
+      settings={plan?.nursery} contextRevision={growerWorkflow.contextRevision} sample={growerSample}
+      onRefresh={growerWorkflow.onReadSavedNursery} onCheckCurrent={growerWorkflow.onCheckSavedNurseryCurrent}
+      onCheckBindingCurrent={growerWorkflow.onCheckSavedNurseryBindingCurrent}
+      onSaveReferences={growerWorkflow.onSaveNurseryBatchReferences}
+      onRecordSowing={growerWorkflow.onRecordNurserySowing}
+      onRecordProgress={growerWorkflow.onRecordNurseryProgress}
+      onRecordFieldPlanting={growerWorkflow.onRecordNurseryFieldPlanting} />
+  </>;
+
+  // The planner view had no h1. The site picker, the invalid-link notice and the country hold each
+  // render their own, so the header title is the page heading only when none of those is on screen.
+  const TitleTag = !invalidCanvasSite && !needsSitePicker && allowCataloguePlanning ? 'h1' : 'span';
+  // The global h1 rule adds tight letter-spacing and the tag brings margins; the title must look
+  // exactly as the span drew it.
+  const TITLE_RESET: CSSProperties = { margin: 0, letterSpacing: 'inherit' };
 
   return (
     // Every surface on this screen now reads the per-theme tokens (--bg-0 page,
@@ -1764,6 +2569,9 @@ function FacilitatorCropsPageInner() {
     // whatever the body happens to inherit, so it can't go invisible the way the
     // Auto-suggest crop names once did against a dark theme.
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
+      {planSaveConflict && <p role="alert" className="flex-shrink-0 border-b border-[var(--border)] bg-[var(--bg-2)] px-3 py-2 text-sm text-[var(--text-primary)]">
+        The saved plan changed or could not be checked. Its display may omit stored data. Further changes have not been saved. Reopen and review the saved records before continuing.
+      </p>}
       {/* AUTOSAVE FAILED — above the header, because everything below it is now unsaved work.
           It stays until a later autosave succeeds; there is no dismiss, since dismissing it would
           not save anything and the farmer would be back to believing the plan is stored. */}
@@ -1785,10 +2593,13 @@ function FacilitatorCropsPageInner() {
           href="/home"
           aria-label={cropUi(lang, 'Home', 'Ikhaya')}
           title={cropUi(lang, 'Home', 'Ikhaya')}
-          className="flex-shrink-0 flex items-center justify-center rounded-xl"
-          style={{ width: 34, height: 34, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--border)', color: 'var(--text-secondary)', textDecoration: 'none' }}
+          className="flex-shrink-0 flex items-center justify-center"
+          // 44x44 hit area (house touch rule) around the same 34px drawn button.
+          style={{ width: 44, height: 44, color: 'var(--text-secondary)', textDecoration: 'none' }}
         >
-          <Home size={16} strokeWidth={1.7} />
+          <span className="flex items-center justify-center rounded-xl" style={{ width: 34, height: 34, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--border)' }}>
+            <Home size={16} strokeWidth={1.7} />
+          </span>
         </Link>
         {!simple && (
           <Link
@@ -1825,6 +2636,7 @@ function FacilitatorCropsPageInner() {
         )}
         <div className="w-px h-5 flex-shrink-0" style={{ background: 'var(--border)' }} />
         {!canvasSite && myDesignsList && myDesignsList.length > 0 ? (
+          <TitleTag className="flex-shrink-0 min-w-0" style={TITLE_RESET}>
           <button
             onClick={() => setSwitchingSite(true)}
             className="flex-shrink-0 flex items-center gap-1.5 min-w-0"
@@ -1836,9 +2648,10 @@ function FacilitatorCropsPageInner() {
             </div>
             <ChevronDown size={13} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
           </button>
+          </TitleTag>
         ) : (
           <div className="flex flex-col min-w-0 flex-shrink-0">
-            <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</span>
+            <TitleTag className="font-display font-semibold" style={{ ...TITLE_RESET, fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</TitleTag>
             <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 220 }}>
               {canvasSite ? cropUi(lang, 'Plants and housing from your map', 'Izitshalo nezindlu zezilwane ezisemephini yakho') : designTitle}
             </span>
@@ -1861,13 +2674,29 @@ function FacilitatorCropsPageInner() {
           </button>
         )}
         {!simple && <LessonLink id="crops:planner" label={cropUi(lang, 'Learn', 'Funda')} />}
-        {!simple && (climateSource === 'site' ? (
+        {!simple && allowCataloguePlanning && (calendarBasis === 'sample-farm' ? (
           <span
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
-            title="Rainfall pattern derived from satellite climate records (NASA POWER / ERA5) for this site's own coordinates"
+            title="The sample farm's sowing calendar is part of the sample. It is not read from climate records."
+            style={{ fontSize: 13, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
+          >
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · set for the sample farm
+          </span>
+        ) : calendarBasis === 'grower-choice' ? (
+          <span
+            className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
+            title="You chose this sowing calendar in Auto-suggest a plan"
+            style={{ fontSize: 13, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
+          >
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · chosen by you
+          </span>
+        ) : climateSource === 'site' ? (
+          <span
+            className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
+            title="Sowing calendar derived from satellite climate records (NASA POWER / ERA5) for this site's own coordinates"
             style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
           >
-            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {patternMeta.label} · satellite records for this site
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · satellite records for this site
           </span>
         ) : region ? (
           <span
@@ -1875,11 +2704,11 @@ function FacilitatorCropsPageInner() {
             title="No per-site climate available (offline or not yet fetched) — using the nearest regional reference point instead"
             style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
           >
-            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {patternMeta.label} · nearest reference: {region.name} (fallback)
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · nearest reference: {region.name} (fallback)
           </span>
         ) : (
           <span className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans" style={{ fontSize: 12, background: 'var(--bg-2)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}>
-            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> No site set · assuming {patternMeta.label.toLowerCase()}
+            <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> No site set · assuming {calendarLabel.toLowerCase()}
           </span>
         ))}
       </header>
@@ -1923,13 +2752,23 @@ function FacilitatorCropsPageInner() {
         </div>
       )}
 
+      <SavedSiteUpdates onPlaces={refreshCountryPlaces} />
+      {countrySaveNotice?.siteId === surveySiteId && <p role={countrySaveNotice.rejected ? 'alert' : 'status'} className="flex-shrink-0 px-3 py-2 font-sans text-sm md:px-5">{countrySaveNotice.message}</p>}
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
           <span className="font-display text-sm" style={{ color: 'var(--text-muted)' }}>{cropUi(lang, 'Loading production plan…', 'Kulayishwa uhlelo lokukhiqiza…')}</span>
         </div>
+      ) : invalidCanvasSite ? (
+        <section className="flex-1 overflow-y-auto p-5 font-sans" aria-label="Invalid site link">
+          <CropPlanStorageNotice />
+          <h1 className="font-display text-xl font-semibold">This site link is not valid</h1>
+          <p className="mt-2">Open a saved mapped site to plan its crops. No other site’s planning context has been substituted.</p>
+          <Link href="/facilitator/crops?switch=1" className="mt-3 inline-block underline">Choose a saved site</Link>
+        </section>
       ) : needsSitePicker ? (
         <div className="flex-1 overflow-y-auto py-7 px-4">
           <div className="mx-auto w-full" style={{ maxWidth: 760 }}>
+            <CropPlanStorageNotice />
             <div className="flex items-start justify-between gap-3">
               <h1 className="font-display font-semibold" style={{ fontSize: 'clamp(19px, 1.7vw, 23px)', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>{cropUi(lang, 'Which site are you planning?', 'Uhlela siphi isiza?')}</h1>
               {chosenDesignId !== null && (
@@ -1995,11 +2834,36 @@ function FacilitatorCropsPageInner() {
         </div>
       // An orchard, unresolved food layout or animal housing is still a production plan.
       // Requiring a crop bed here hid its confirmation controls and printed inventory.
+      ) : !allowCataloguePlanning ? (
+        <div className="flex-1 overflow-y-auto">
+          <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
+            <CropPlanStorageNotice />
+            {surveySiteId ? <SiteCountryPanel key={planningScopeKey} resolution={siteCountry} onSaved={refreshCountryPlaces} onDelivery={receiveCountrySaveNotice} />
+              : <WorkspaceReferencePanel key={`reference:${planningWorkspaceId}`} workspaceId={planningWorkspaceId} reference={workspaceReference} onReference={saveWorkspaceReference} />}
+            {!surveySiteId && !planningWorkspaceId && <button type="button" onClick={() => setUseVirtual(true)} className="mb-4 min-h-11 rounded-xl border border-[var(--border)] bg-[var(--bg-1)] px-4 py-2 font-sans">Try a virtual reference bed</button>}
+            <PlannerSupportHold resolution={siteCountry} unmapped={!surveySiteId} beds={beds} plantings={plantings} />
+            {growerPlanningPanel}
+            {productionSiteId && <NurseryPlanPanel key={`nursery-equipment:${productionSiteId}`} siteId={productionSiteId}
+              siteName={placeName || designTitle} settings={plan?.nursery} beds={beds} plantings={plantings}
+              now={{ year: currentYear, month: currentMonth }} allowCatalogueForecast={false}
+              saveContext={nurserySaveContext} onSettings={saveNurserySettings} />}
+            <ProductionRecordsEditor key={productionSiteId ?? 'no-site'} products={productionSiteId ? recordProducts : []}
+              dates={productionGraphInput.dates} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts}
+              onProductionRecordsChange={updateProductionRecords} onPreservedProductsChange={updatePreservedProducts} />
+          </div>
+        </div>
       ) : beds.length === 0 && canvasTrees.length === 0 && unidentifiedPlants.length === 0 && canvasAnimals.length === 0 ? (
-        <EmptyState onVirtual={() => setUseVirtual(true)} designHref={designHref} />
+        <div className="flex-1 overflow-y-auto"><div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
+          <CropPlanStorageNotice />
+          {growerPlanningPanel}<EmptyState onVirtual={() => setUseVirtual(true)} designHref={designHref} />
+        </div></div>
       ) : (
         <div className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
+            <CropPlanStorageNotice />
+            {growerPlanningPanel}
+            {surveySiteId ? <SiteCountryPanel key={planningScopeKey} resolution={siteCountry} onSaved={refreshCountryPlaces} onDelivery={receiveCountrySaveNotice} />
+              : <WorkspaceReferencePanel key={`reference:${planningWorkspaceId}`} workspaceId={planningWorkspaceId} reference={workspaceReference} onReference={saveWorkspaceReference} />}
             {useVirtual && designBeds.length === 0 && (
               <div className="mb-3 px-3 py-2 rounded-xl font-sans" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold)' }}>
                 Planning without a map — one virtual 10 m² bed.{' '}
@@ -2007,13 +2871,13 @@ function FacilitatorCropsPageInner() {
               </div>
             )}
 
-            {!simple && confirmingClear && plantings.length > 0 ? (
+            {!simple && confirmingClear && legacyPlantings.length > 0 ? (
               <div
                 className="flex items-center gap-2 mb-3 px-3 py-2 rounded-xl"
                 style={{ background: 'rgba(179,58,58,0.06)', border: '1px solid rgba(179,58,58,0.3)' }}
               >
                 <span className="font-sans flex-1" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
-                  Clear all {plantings.length} planting{plantings.length > 1 ? 's' : ''} from every bed? You can undo once right after.
+                  Clear {legacyPlantings.length} catalogue planting{legacyPlantings.length > 1 ? 's' : ''} shown here? Own dated records remain saved. You can undo once right after.
                 </span>
                 <button
                   onClick={clearAllPlantings}
@@ -2034,9 +2898,10 @@ function FacilitatorCropsPageInner() {
             <div className="flex gap-2 mb-3">
               <button
                 onClick={openAutoSuggest}
-                disabled={beds.length === 0}
-                title={beds.length === 0 ? 'Add a vegetable bed or staple plot to auto-suggest crops.' : undefined}
-                className="flex-1 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                disabled={beds.length === 0 || hasOwnRecords}
+                title={hasOwnRecords ? 'Own dated records need their checked reservations in the Task Planner.' : beds.length === 0 ? 'Add a vegetable bed or staple plot to auto-suggest crops.' : undefined}
+                // min-h-11 (44px), not py-2.5: the padding made this 43px, one under the house tap rule. "Clear all" beside it stretches to match.
+                className="flex-1 min-h-11 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
                 style={{ fontSize: 14, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#F7F2E9', cursor: beds.length === 0 ? 'not-allowed' : 'pointer', opacity: beds.length === 0 ? 0.55 : 1 }}
               >
                 <Sparkles size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Auto-suggest a plan', 'Phakamisa uhlelo ngokuzenzakalelayo')}
@@ -2051,12 +2916,12 @@ function FacilitatorCropsPageInner() {
                   <Undo2 size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Undo', 'Buyisela emuva')}
                 </button>
               )}
-              {!simple && plantings.length > 0 && (
+              {!simple && legacyPlantings.length > 0 && (
                 <button
                   onClick={() => setConfirmingClear(true)}
                   className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
-                  style={{ fontSize: 13, background: 'var(--bg-1)', border: '1px solid rgba(179,58,58,0.3)', color: '#B33A3A', cursor: 'pointer' }}
-                  title={cropUi(lang, 'Clear every planting from this plan', 'Susa konke okutshalwe kulolu hlelo')}
+                  style={{ fontSize: 13, background: 'var(--bg-1)', border: '1px solid rgba(179,58,58,0.3)', color: 'var(--orange)', cursor: 'pointer' }}
+                  title="Clear catalogue plantings shown here; own dated records remain saved"
                 >
                   <Trash2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {lang === 'zu' ? <span style={{ lineHeight: 1.1 }}>Sula konke<br/><small lang="en">Clear all</small></span> : 'Clear all'}
                 </button>
@@ -2068,7 +2933,7 @@ function FacilitatorCropsPageInner() {
             </p>}
 
             {productionSiteId && beds.length > 0 && <HarvestTargetsPanel
-              key={`harvest-targets:${productionSiteId}`}
+              key={`harvest-targets:${productionSiteId}:${planningScopeKey}`}
               siteId={productionSiteId}
               targets={plan?.harvestTargets ?? []}
               nurserySettings={plan?.nursery}
@@ -2079,18 +2944,19 @@ function FacilitatorCropsPageInner() {
                 siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
                 observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined,
               }}
-              onTargets={(harvestTargets) => {
-                pushPlanHistory();
-                setPlan((previous) => ({ ...(previous ?? { version: 1 as const, plantings: [] }), harvestTargets, updatedAt: Date.now() }));
-              }}
+              saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
+              onSaveTargets={saveHarvestTargets}
               onAccept={(result) => {
-                pushPlanHistory();
+                if (!currentPlanningScopeAllowed() || hasOwnRecords) return;
+                const authoredMetadata = { rainPattern: pattern, planNotes: result.notes, planNotesAt: Date.now() };
                 setPlan((previous) => {
+                  if (previous?.plantings.some(p => beds.some(b => b.id === p.bedId) && hasGrowerCycleMarker(p))) return previous;
                   const base = previous ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
                   const savedIds = new Set(base.plantings.map((p) => p.id));
-                  return { ...base, rainPattern: pattern,
-                    plantings: [...base.plantings, ...result.plantings.filter((p) => !savedIds.has(p.id))],
-                    planNotes: result.notes, planNotesAt: Date.now(), updatedAt: Date.now() };
+                  const additions = result.plantings.filter((p) => !savedIds.has(p.id));
+                  if (additions.length === 0) return previous;
+                  return stageSuggestedPlanHistory(previous, { ...base, ...authoredMetadata,
+                    plantings: [...base.plantings, ...additions], updatedAt: Date.now() });
                 });
               }}
             />}
@@ -2103,11 +2969,28 @@ function FacilitatorCropsPageInner() {
               showBuyingCalendar={!simple}
               beds={beds} plantings={plantings}
               now={{ year: new Date().getFullYear(), month: currentMonth }}
-              onSettings={(nursery) => {
-                pushPlanHistory();
-                setPlan((previous) => ({ ...(previous ?? { version: 1 as const, plantings: [] }), nursery, updatedAt: Date.now() }));
-              }}
+              saveContext={nurserySaveContext} onSettings={saveNurserySettings}
             />}
+
+            {outOfCalendar.length > 0 && hiddenForThisAccount[outOfCalendarScope] !== outOfCalendarKey && (
+              <section aria-label="Sowings outside the sowing calendar" className="rounded-2xl px-4 py-3 mb-3 font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderLeft: '4px solid var(--gold)' }}>
+                <h2 className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>{outOfCalendar.length === 1 ? '1 planned sowing is' : `${outOfCalendar.length} planned sowings are`} outside this site&apos;s sowing months</h2>
+                {/* Say WHY these are out of season, and only what is known: the grower's own calendar
+                    choice explains it outright; otherwise a plan that may predate the correction. */}
+                {calendarBasis === 'grower-choice'
+                  ? <p style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }} className="mt-1">You chose the &quot;{SOWING_CALENDAR_LABEL[pattern]}&quot; calendar for this site. These sowings were planned on a different one.</p>
+                  : planMayPredateCorrection(plan?.planNotesAt) && <p style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }} className="mt-1">Sowing months and calendars were corrected on 10 November 2026. A plan made before then can be out of season.</p>}
+                <ul className="mt-2 space-y-1" style={{ fontSize: 14, lineHeight: 1.45, color: 'var(--text-primary)' }}>
+                  {outOfCalendar.slice(0, 6).map((row) => <li key={row.plantingId}>{outOfCalendarLine(row, beds.find((bed) => bed.id === row.bedId)?.label)}</li>)}
+                  {outOfCalendar.length > 6 && <li>and {outOfCalendar.length - 6} more.</li>}
+                </ul>
+                <p className="mt-2" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>Nothing has been changed. Move each sowing, or keep it if you know it works on your land.</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button type="button" className="min-h-11 px-4 rounded-full font-sans font-semibold" style={{ fontSize: 14, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }} onClick={openAutoSuggest}>Make a new plan</button>
+                  <button type="button" className="min-h-11 px-4 rounded-full font-sans" style={{ fontSize: 14, background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)' }} onClick={hideCalendarNotice}>Hide this list</button>
+                </div>
+              </section>
+            )}
 
             {/* Timeline. The month header and the bed-rows body are TWO
                 separate horizontal-scroll regions kept in sync by JS
@@ -2143,7 +3026,7 @@ function FacilitatorCropsPageInner() {
                   // Warm paper, not the card's own var(--bg-1): frozen chrome has to
                   // read as chrome. With both the same colour there was nothing
                   // to tell a farmer this row was pinned rather than scrolled to.
-                  background: 'var(--bg-2)',
+                  background: PINNED_HEADER_SURFACE,
                   // Content passes underneath, so say so.
                   boxShadow: '0 6px 12px -6px rgba(32,25,15,0.28)',
                   borderTopLeftRadius: 16,
@@ -2152,7 +3035,7 @@ function FacilitatorCropsPageInner() {
               >
                 {/* Same paper as the row around it — otherwise the frozen bar
                     is two-tone and the corner cell reads as a separate card. */}
-                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: 'var(--bg-2)', borderRight: '1px solid var(--border-strong)', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
+                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: PINNED_HEADER_SURFACE, borderRight: '1px solid var(--border-strong)', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
                   <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{cropUi(lang, 'Bed', 'Umbhede')}</span>
                 </div>
                 <div
@@ -2192,8 +3075,11 @@ function FacilitatorCropsPageInner() {
                         style={{
                           minWidth: 0, padding: '8px 2px', fontSize: 'clamp(12px, 0.85vw, 13px)',
                           fontWeight: i === 0 ? 700 : 500,
-                          color: i === 0 ? '#1F4D2B' : i >= 12 ? 'var(--text-muted)' : 'var(--text-muted)',
-                          background: i === 0 ? 'rgba(31,77,43,0.08)' : i >= 12 ? 'rgba(196,164,106,0.07)' : 'transparent',
+                          // Forest hardcoded here read 1.72:1 on the dark header; the token flips to leaf.
+                          color: i === 0 ? 'var(--color-forest-800)' : 'var(--text-muted)',
+                          // 0.04, not 0.07 on year two: the heavier tint lifted the dark
+                          // header under --text-muted to 4.43:1; this one is 4.66:1.
+                          background: i === 0 ? 'rgba(31,77,43,0.08)' : i >= 12 ? 'rgba(196,164,106,0.04)' : 'transparent',
                           // A month label repeats every 12 columns (no year field
                           // anywhere in this data model) — a visible seam at the
                           // 1-year mark stops "Jul" (this year) and "Jul" (next
@@ -2216,7 +3102,10 @@ function FacilitatorCropsPageInner() {
                 ref={bedRowsScrollRef}
                 onScroll={(e) => syncMonthScroll(e.currentTarget)}
                 data-crop-bed-scroll
-                style={{ overflowX: 'auto' }}
+                className="crop-plan-lanes"
+                // containerType so the notes below can size to this box: 100vw ignores the
+                // text-size slider's html zoom and ran the notes off the edge at 1.4.
+                style={{ overflowX: 'auto', containerType: 'inline-size' }}
               >
                 <div style={{ minWidth: GRID_MIN_WIDTH }}>
                   {/* Four fixed sections, each with its place whether or not anything is in
@@ -2235,9 +3124,10 @@ function FacilitatorCropsPageInner() {
                         <BedRow
                           key={bed.id}
                           bed={bed}
-                          plantings={plantings.filter((p) => p.bedId === bed.id)}
+                          plantings={legacyPlantings.filter((p) => p.bedId === bed.id)}
                           currentMonth={currentMonth}
                           onAddCrop={() => openPicker(bed.id)}
+                          ownRecordsHeld={legacyAddBlocked(bed.id)}
                           onTapPlanting={(p) => setActivePlanting(p)}
                           simple={simple}
                         />
@@ -2286,7 +3176,7 @@ function FacilitatorCropsPageInner() {
               <div className="mb-5">
                 <button
                   onClick={() => openPicker(beds[0].id)}
-                  className="w-full py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                  className="w-full min-h-11 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
                   style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}
                 >
                   <Plus size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Add a crop', 'Engeza isilimo')}
@@ -2345,7 +3235,7 @@ function FacilitatorCropsPageInner() {
             <div className="font-sans mb-5" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5, marginTop: -12, maxWidth: 820 }}>
               <span
                 className="font-sans"
-                style={{ fontWeight: 600, color: 'var(--gold)', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, padding: '0 3px', fontSize: 10 }}
+                style={{ fontWeight: 600, color: 'var(--gold-dim)', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, padding: '0 3px', fontSize: 10 }}
               >
                 <Trees size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> check / transplant
               </span>{' '}
@@ -2394,14 +3284,14 @@ function FacilitatorCropsPageInner() {
               includeAnimals={includeAnimals}
               onIncludeAnimalsChange={(next) => { setIncludeAnimals(next); saveIncludeAnimals(next); }}
             />
-            <YearOfFoodCard
+            {!hasOwnRecords && <YearOfFoodCard
               year={yearOfFood}
               gapFills={gapFills}
               yearMode={yearMode}
               hasBeds={beds.some((b) => b.kind !== 'plot')}
               climateKnown={!!yearGate?.tempC}
               onPlan={planGapFill}
-            />
+            />}
 
             {/* Tasks + harvest */}
             <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
@@ -2475,8 +3365,10 @@ function FacilitatorCropsPageInner() {
                         className="font-sans"
                         style={{
                           fontSize: 11, padding: '3px 9px', cursor: 'pointer',
-                          background: harvestBoxView === v ? '#1F4D2B' : 'transparent',
-                          color: harvestBoxView === v ? 'var(--bg-1)' : 'var(--text-secondary)',
+                          // Forest and its on-colour move together: --bg-1 on the old
+                          // hardcoded forest was 1.91:1 in dark.
+                          background: harvestBoxView === v ? 'var(--color-forest-800)' : 'transparent',
+                          color: harvestBoxView === v ? 'var(--on-forest-800)' : 'var(--text-secondary)',
                         }}
                       >
                         {v === 'crop' ? cropUi(lang, 'By crop', 'Ngesilimo') : cropUi(lang, 'By bed', 'Ngombhede')}
@@ -2487,6 +3379,8 @@ function FacilitatorCropsPageInner() {
                 <div className="font-mono font-bold mb-1" style={{ fontSize: 26, color: 'var(--color-forest-800)' }}>
                   {hasAreaConflict ? (
                     <span style={{ fontSize: 18 }}>Resolve overlapping bed space</span>
+                  ) : hasOwnRecords ? (
+                    <span style={{ fontSize: 18 }}>Own dated records · catalogue total withheld</span>
                   ) : hasKnownYield && totalYieldKg !== null ? (
                     <>{totalYieldKg.toFixed(1)} <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-muted)' }}>kg across active and planned crop cycles</span></>
                   ) : unknownYieldNames.length > 0 ? (
@@ -2605,7 +3499,7 @@ function FacilitatorCropsPageInner() {
                           </HarvestShareRow>
                         );
                       })}
-                      {plantings.length === 0 && (
+                      {legacyPlantings.length === 0 && !hasOwnRecords && (
                         <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{cropUi(lang, 'Nothing planted yet.', 'Akukho okutshalwe okwamanje.')}</div>
                       )}
                     </>
@@ -2622,7 +3516,7 @@ function FacilitatorCropsPageInner() {
                           </span>
                         </HarvestShareRow>
                       ))}
-                      {plantings.length === 0 && (
+                      {legacyPlantings.length === 0 && !hasOwnRecords && (
                         <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{cropUi(lang, 'Nothing planted yet.', 'Akukho okutshalwe okwamanje.')}</div>
                       )}
                     </>
@@ -2786,7 +3680,7 @@ function FacilitatorCropsPageInner() {
       )}
 
       {/* Crop picker modal */}
-      {pickerBedId && (
+      {allowCataloguePlanning && pickerBedId && (
         <CropPickerModal
           search={pickerSearch}
           onSearch={setPickerSearch}
@@ -2825,7 +3719,7 @@ function FacilitatorCropsPageInner() {
         onSaved={(survey) => { setSurveySnapshot({ siteId: surveySiteId, survey }); setSiteSurveyOpen(false); }}
         onClose={() => setSiteSurveyOpen(false)}
       />}
-      {activePlanting && (
+      {allowCataloguePlanning && activePlanting && !hasGrowerCycleMarker(activePlanting) && (
         <PlantingPopover
           planting={activePlanting}
           bedAreaM2={bedAreaFor(activePlanting.bedId)}
@@ -2837,7 +3731,7 @@ function FacilitatorCropsPageInner() {
       )}
 
       {/* Auto-suggest: questionnaire + review */}
-      {autoPhase !== 'idle' && beds.length > 0 && (
+      {allowCataloguePlanning && !hasOwnRecords && autoPhase !== 'idle' && beds.length > 0 && (
         <AutoSuggestModal
           phase={autoPhase}
           goal={aGoal} onGoal={chooseGoal}
@@ -2850,7 +3744,8 @@ function FacilitatorCropsPageInner() {
           planTiming={aPlanTiming} onPlanTiming={setAPlanTiming}
           generating={autoGenerating} idealMeta={idealMeta}
           hasCurrentPlantings={plantings.length > 0}
-          pattern={pattern} climateSource={climateSource} referenceName={region?.name ?? null}
+          pattern={pattern} calendarLabel={calendarLabel} calendarBasis={calendarBasis} climateSource={climateSource} referenceName={region?.name ?? null}
+          calendarChoice={chosenCalendar} automaticCalendar={calendarInUse.automatic} sampleCalendarSet={sampleCalendar !== null} canChooseCalendar={!!calendarScopeId} onCalendarChoice={chooseSowingCalendar}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
           allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
           allowMixedCropsInBed={aAllowMixedCropsInBed} onAllowMixedCropsInBed={setAAllowMixedCropsInBed}
@@ -3262,7 +4157,7 @@ function MonthLineChart({
         <div style={MONTH_COLUMNS} data-crop-chart-labels>
           {monthOrder.map((m, i) => (
             <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }} title={monthAxisTitle(axis?.[i], m)}>
-              <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)', marginTop: 4 }}>
+              <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? 'var(--color-forest-800)' : 'var(--text-muted)', marginTop: 4 }}>
                 {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
               </div>
               <MonthAxisTag slot={axis?.[i]} fontSize={9} />
@@ -3543,7 +4438,7 @@ function FoodAvailabilityChart({
         <div className="flex flex-wrap items-center gap-2 mb-3">
           <div className="inline-flex rounded-full p-0.5" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
             {([['established', 'An established year'], ['fromToday', 'From today']] as ['established' | 'fromToday', string][]).map(([nextYearMode, label]) => (
-              <button key={nextYearMode} onClick={() => onYearModeChange(nextYearMode)} className="font-sans font-semibold" style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer', background: yearMode === nextYearMode ? 'var(--text-secondary)' : 'transparent', color: yearMode === nextYearMode ? '#F7F2E9' : 'var(--text-secondary)' }}>
+              <button key={nextYearMode} onClick={() => onYearModeChange(nextYearMode)} className="font-sans font-semibold" style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer', background: yearMode === nextYearMode ? 'var(--text-secondary)' : 'transparent', color: yearMode === nextYearMode ? 'var(--bg-1)' : 'var(--text-secondary)' }}>
                 {label}
               </button>
             ))}
@@ -3644,7 +4539,7 @@ function FoodAvailabilityChart({
                           {/* Month on top, count under the bar. Rory, 2026-10-01: "change the
                               number of products with the month just switch them". The month
                               heads the column the way it heads the calendar's. */}
-                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)' }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
+                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? 'var(--color-forest-800)' : 'var(--text-muted)' }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
                           <MonthAxisTag slot={axis[i]} />
                           <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
                             {total === 0 ? <div style={{ width: '68%', height: 3, background: 'var(--border)', borderRadius: 2 }} /> : (
@@ -4160,11 +5055,11 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
           {title}
         </div>
         <div className="font-sans" style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 3, lineHeight: 1.3 }}>
-          From your map · hover or tap a bar
+          From your map · tap or click a bar
         </div>
       </div>
       <div style={{ flex: '1 1 auto', minWidth: 0, position: 'relative' }}>
-        {kind === 'trees' && lanes.some(lane => lane.planning) && <p className="font-sans" style={{ padding: '8px 12px 2px', fontSize: 11, color: 'var(--text-secondary)', position: 'sticky', left: BED_LABEL_WIDTH, width: `min(560px, calc(100vw - ${BED_LABEL_WIDTH + 40}px))` }}>Outlined bars: sourced planning references when established. Solid bars: locally confirmed picking months. New plants need time; references do not count towards food totals.</p>}
+        {kind === 'trees' && lanes.some(lane => lane.planning) && <p className="font-sans" style={{ padding: '8px 12px 2px', fontSize: 11, color: 'var(--text-secondary)', position: 'sticky', left: BED_LABEL_WIDTH, width: stickyNoteMaxWidth(560) }}>Outlined bars: sourced planning references when established. Solid bars: locally confirmed picking months. New plants need time; references do not count towards food totals.</p>}
         {lanes.length > 0 ? (
           <div style={{ position: 'relative', padding: '6px 0' }}>
             <div style={{ ...MONTH_COLUMNS, position: 'absolute', inset: 0, pointerEvents: 'none' }}>
@@ -4181,7 +5076,8 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
               ))}
             </div>
             {lanes.map((lane) => (
-              <div key={lane.key} style={{ position: 'relative', height: 34, marginBottom: 4 }}>
+              // Same touch rule as the planting lanes: 34px (30px bar) with a mouse, 48px (44px bar) on touch or a narrow window.
+              <div key={lane.key} style={{ position: 'relative', height: 'var(--crop-produce-lane-h, 34px)', marginBottom: 4 }}>
                 {lane.runs.map((run, r) => {
                   const id = `${lane.key}@${r}`;
                   // Proposed plants are faded, as the month list did; year two is quieter, as a bed's is.
@@ -4231,13 +5127,13 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
             ))}
           </div>
         ) : unmarked.length ? null : (
-          <div className="font-sans" style={{ padding: '12px 12px', fontSize: 12.5, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 560 }}>
+          <div className="font-sans" style={{ padding: '12px 12px', fontSize: 12.5, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: stickyNoteMaxWidth(560) }}>
             {emptyText}
           </div>
         )}
         {unmarked.map((line) => <UnmarkedProduceLine key={line.enterpriseId} line={line} />)}
         {footnote && (
-          <div className="font-sans" style={{ padding: '0 12px 6px', fontSize: 11, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 560 }}>
+          <div className="font-sans" style={{ padding: '0 12px 6px', fontSize: 11, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: stickyNoteMaxWidth(560) }}>
             {footnote}
           </div>
         )}
@@ -4299,7 +5195,7 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
     <div
       className="font-sans"
       data-crop-calendar-unmarked={line.enterpriseId}
-      style={{ position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 640, padding: '8px 12px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 10px', borderTop: '1px dashed var(--border)' }}
+      style={{ position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: stickyNoteMaxWidth(640), padding: '8px 12px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 10px', borderTop: '1px dashed var(--border)' }}
     >
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12.5, fontWeight: 600, color: line.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
         <TrayArt src={enterpriseProductArtUrl(line.enterpriseId) ?? animalProductArtUrl(line.product)} label={PRODUCT_LABEL[line.product]} Fallback={Icon} color="var(--gold-dim)" />
@@ -4364,12 +5260,34 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
   );
 }
 
-function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple }: {
+function SavedGrowerRows({ rows, wholeBookRows, source, scope }: {
+  rows: readonly Planting[]; wholeBookRows: readonly Planting[];
+  source: GrowerWorkflowSource | null; scope: GrowerPlanningScope | null;
+}) {
+  if (!rows.length) return null;
+  const projection = source ? projectGrowerCycles(wholeBookRows, { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint }) : null;
+  return <section aria-label="Saved own dated records" className="my-4 rounded-xl border p-4 text-sm" style={{ borderColor: 'var(--border)' }}>
+    <h2 className="font-display text-lg font-semibold">Saved own dated records</h2>
+    <p>These records remain saved. Catalogue dates, quantities and complete food or free-land coverage are withheld for them. Legacy controls cannot edit or clear them.</p>
+    {!source && <p role="status">Current saved source not checked. These records are held until their site, geometry and measured space are checked again.</p>}
+    <ul className="my-2 space-y-2">{rows.map((row, i) => {
+      const cycle = projection?.ownCycles.find(cycle => cycle.plantingId === row.id);
+      return <li key={`${row.id}:${i}`}><strong>{cropByKey(row.cropKey)?.name ?? 'Saved crop record'}</strong> · {cycle
+        ? `Own estimates: field entry ${cycle.assessment.schedule.fieldEntryDate}; next field entry ${cycle.assessment.schedule.nextFieldEntryDate}. Planned, not an observation.`
+        : 'Held: source, scope, geometry or record identity needs review. No replacement catalogue schedule is supplied.'}
+        {cycle && <GrowerCycleIntent view={cycle.origin} />}</li>;
+    })}</ul>
+    <Link href="/cropplan" className="underline">Open Task Planner</Link>
+  </section>;
+}
+
+function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple, ownRecordsHeld }: {
   bed: PlanBed;
   plantings: Planting[];
   currentMonth: number;
   onAddCrop: () => void;
   onTapPlanting: (p: Planting) => void;
+  ownRecordsHeld?: boolean;
   simple: boolean;
 }) {
   // Which food group(s) are currently in this bed — usually just one, but an
@@ -4436,10 +5354,11 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple
           <div style={{ padding: '2px 8px' }}>
             <button
               onClick={onAddCrop}
+              disabled={ownRecordsHeld}
               className="font-sans"
-              style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'rgba(31,77,43,0.08)', border: '1px dashed rgba(31,77,43,0.3)', borderRadius: 8, padding: '3px 10px', cursor: 'pointer' }}
+              style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'rgba(31,77,43,0.08)', border: '1px dashed rgba(31,77,43,0.3)', borderRadius: 8, padding: '3px 10px', cursor: 'pointer', minHeight: 'var(--crop-add-min-h, 26px)' }}
             >
-              + crop
+              {ownRecordsHeld ? 'Own dated records · check Task Planner' : '+ crop'}
             </button>
           </div>
         </div>
@@ -4449,6 +5368,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple
 }
 
 function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Planting; currentMonth: number; onTap: () => void; simple: boolean }) {
+  if (hasGrowerCycleMarker(planting)) return <p className="px-2 text-sm">Own dated record held from this catalogue calendar. Open the Task Planner.</p>;
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
   const readinessStart = bedEntryMonth(planting.sowMonth, crop);
@@ -4487,7 +5407,7 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
   // separates "already there" from "still to sow" at a glance. Each bar also
   // fades from "just sown" to a golden "ready to harvest" tone across its
   // length, so you can see how far along a planting is at a glance.
-  const [barFrom, barTo] = planting.existing ? ['#8C8654', '#B8934A'] : ['#7FAE6E', '#D4A017'];
+  const [barFrom, barTo] = planting.existing ? BAR_FILL_EXISTING : BAR_FILL_PLANNED;
   const segMonthCount = (seg: Segment) => seg.end - seg.start + 1;
   // How many of a copy's months are its "ready to pick" window. Anchored to
   // where harvest actually STARTS (that copy's OWN unclipped start + green
@@ -4517,55 +5437,122 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
     ? 'termination timing not verified'
     : crop.yieldKgPerM2 === 0 ? `cut or roll down ${harvestLabel}` : `harvest ${harvestLabel}`;
 
+  const hasTransplantChip = !simple && !!crop.transplant && (!planting.existing || !!planting.inNursery);
+  const barLabel = `${crop.name}${!simple && fLabel ? ` (${fLabel})` : ''}`;
+
   return (
-    <div style={{ position: 'relative', height: 30, marginBottom: 3 }}>
-      {instances.map((seg, i) => (
-        <button
-          key={i}
-          onClick={onTap}
-          className="font-sans"
-          style={{
-            position: 'absolute', left: `${leftPct(seg.start)}%`, width: `${widthPct(seg)}%`, top: 2, bottom: 2,
-            background: BAR_STYLE === 'gradient' ? barGradient(seg, seg.start, segMonthCount(seg), barFrom, barTo) : barFrom,
-            color: '#fff', border: 'none', borderRadius: 6,
-            fontSize: 11, fontWeight: 600, textAlign: 'left', paddingLeft: 6, paddingRight: 4,
-            overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', cursor: 'pointer',
-            // The repeat is drawn quieter than the year you are about to
-            // plant. It is the same plan coming round again, not a second,
-            // separately-decided year — and with Rotate crops on it is
-            // explicitly NOT what next season will look like. Full-strength
-            // colour on both would claim a certainty this plan doesn't have.
-            opacity: isYearTwo(seg) ? 0.5 : 1,
-          }}
-          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, ${finishLabel} · ${fLabel} bed${planting.inNursery ? ' · trays sown, not yet planted out' : planting.existing ? ' · already growing' : ''}${isYearTwo(seg) ? ' · year two, the same cycle coming round again' : ''}`}
-        >
-          {BAR_STYLE === 'solid' && (
-            // The "ready to harvest" marker — a hard colour + a line, not a
-            // blend: a solid gold cap over the crop's WHOLE fresh-harvest
-            // window (one month for a one-shot harvest, several for a
-            // cut-and-come-again crop), with a crisp divider where it meets
-            // the growing colour. Can legitimately reach 100% width (viewing
-            // a crop from partway through its own harvest window, once the
-            // growing part has scrolled off the left edge) — MUST render
-            // behind the name label below, or a wide "ready" cap blots the
-            // name out entirely.
-            <div
+    // Type set once here: the bar buttons and the name drawn beside a one-month bar inherit it.
+    <div style={{ position: 'relative', height: 'var(--crop-lane-h, 30px)', marginBottom: 3, fontSize: 11, fontWeight: 600 }}>
+      {instances.map((seg, i) => {
+        const yearTwo = isYearTwo(seg);
+        // A one-month bar is ~58px wide: the icon and padding leave room for
+        // about "Oni…", so Onions, Lettuce, Green beans and Maize (mielies)
+        // all lost their name. The bar keeps the icon and the name is drawn
+        // beside it; each planting has its own lane (30px, 48px on touch), so the space is free.
+        const nameBeside = segMonthCount(seg) === 1;
+        // Three columns, not two: the longest label ("Maize (mielies) (83%)",
+        // about 130px) is wider than the two columns that remain to the right of
+        // the 22nd and would run past the grid and add scroll width.
+        const nameOnLeft = seg.start >= DISPLAY_MONTHS - 3;
+        const barFill = BAR_STYLE === 'gradient' ? barGradient(seg, seg.start, segMonthCount(seg), barFrom, barTo) : barFrom;
+        const capShare = readyMonthsFor(seg) / segMonthCount(seg);
+        // The "ready to harvest" marker — a hard colour + a line, not a blend: a
+        // solid gold cap over the crop's WHOLE fresh-harvest window (one month for
+        // a one-shot harvest, several for a cut-and-come-again crop), with a crisp
+        // divider where it meets the growing colour. Can legitimately reach 100%
+        // width (viewing a crop from partway through its own harvest window, once
+        // the growing part has scrolled off the left edge), so it is drawn BEHIND
+        // the name or a wide cap blots the name out. Its own corner radius stands
+        // in for the clip the button no longer has.
+        const harvestCap = BAR_STYLE === 'solid' ? (
+          <span
+            aria-hidden="true"
+            style={{
+              position: 'absolute', top: 0, bottom: 0, right: 0, width: `${100 * capShare}%`,
+              background: barTo, borderLeft: '2px solid rgba(255,255,255,0.85)',
+              borderRadius: capShare >= 1 ? 6 : '0 6px 6px 0',
+            }}
+          />
+        ) : null;
+        return (
+          <Fragment key={i}>
+            <button
+              onClick={onTap}
+              className="font-sans"
+              // The visible name sits outside a one-month button, so give the
+              // button its own: an icon-only button would otherwise be unnamed.
+              aria-label={nameBeside ? barLabel : undefined}
               style={{
-                position: 'absolute', top: 0, bottom: 0, right: 0, width: `${(100 * readyMonthsFor(seg)) / segMonthCount(seg)}%`,
-                background: barTo, borderLeft: '2px solid rgba(255,255,255,0.85)',
+                position: 'absolute', left: `${leftPct(seg.start)}%`, width: `${widthPct(seg)}%`, top: 2, bottom: 2,
+                // Year one paints its fill on the button itself, so the label has
+                // the fill as its ancestor. Year two leaves the button clear and
+                // fades the fill in a layer below, so the name keeps full strength
+                // (white at 50% was 1.61:1).
+                background: yearTwo ? 'transparent' : barFill,
+                color: yearTwo ? 'var(--text-primary)' : BAR_LABEL_INK, border: 'none', borderRadius: 6,
+                fontSize: 'inherit', fontWeight: 'inherit', textAlign: 'left', padding: nameBeside ? 0 : '0 4px 0 6px',
+                display: 'flex', alignItems: 'center', justifyContent: nameBeside ? 'center' : undefined,
+                whiteSpace: 'nowrap', cursor: 'pointer',
               }}
-            />
-          )}
-          {/* Every copy carries the crop name. A repeat with no label is the
-              thing that made the far columns unreadable in the first place —
-              a farmer panning right must be able to see WHAT is in the bed
-              there without panning back a year to find out. */}
-          <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 4, height: '100%', minWidth: 0, lineHeight: 1 }}>
-            <CropIcon cropKey={crop.key} icon={crop.icon} size={14} />
-            <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{crop.name}{!simple && fLabel ? ` (${fLabel})` : ''}</span>
-          </span>
-        </button>
-      ))}
+              title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, ${finishLabel} · ${fLabel} bed${planting.inNursery ? ' · trays sown, not yet planted out' : planting.existing ? ' · already growing' : ''}${yearTwo ? ' · year two, the same cycle coming round again' : ''}`}
+            >
+              {yearTwo ? (
+                // Year two is drawn quieter than the year you are about to plant.
+                // It is the same plan coming round again, not a second, separately-
+                // decided year — and with Rotate crops on it is explicitly NOT what
+                // next season will look like. Full-strength colour on both would
+                // claim a certainty this plan doesn't have. Only these layers fade.
+                // The layer clips itself because an overflow-hidden button would
+                // become the sticky container and the name could not follow the pan.
+                <span aria-hidden="true" style={{ position: 'absolute', inset: 0, borderRadius: 6, overflow: 'hidden', opacity: 0.5, background: barFill }}>
+                  {harvestCap}
+                </span>
+              ) : harvestCap}
+              {/* Every copy carries the crop name. A repeat with no label is the
+                  thing that made the far columns unreadable in the first place —
+                  a farmer panning right must be able to see WHAT is in the bed
+                  there without panning back a year to find out. The name sticks
+                  just right of the bed labels, as the fruit rows do, so a bar
+                  that starts off-screen to the left still says what it is. */}
+              {nameBeside ? (
+                <span style={{ position: 'relative', zIndex: 1, display: 'inline-flex' }}>
+                  <CropIcon cropKey={crop.key} icon={crop.icon} size={14} />
+                </span>
+              ) : (
+                <span style={{ position: 'sticky', left: BED_LABEL_WIDTH + 4, zIndex: 1, display: 'inline-flex', alignItems: 'center', gap: 4, maxWidth: '100%', minWidth: 0, overflow: 'hidden', lineHeight: 1 }}>
+                  <CropIcon cropKey={crop.key} icon={crop.icon} size={14} />
+                  <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{barLabel}</span>
+                </span>
+              )}
+            </button>
+            {nameBeside && (
+              // Not focusable and hidden from assistive tech: the button above
+              // already carries this text as its name, so a second reading or a
+              // second tab stop would only repeat it.
+              <span
+                aria-hidden="true"
+                className="font-sans"
+                style={{
+                  position: 'absolute', top: 2, bottom: 2,
+                  ...(nameOnLeft
+                    ? { right: `calc(${100 - leftPct(seg.start)}% + 4px)` }
+                    : { left: `calc(${leftPct(seg.start) + widthPct(seg)}% + 4px)` }),
+                  display: 'flex',
+                  // The "check / transplant" chip hangs over the top edge of the
+                  // lane and, for a bar near the right edge, sits where the
+                  // name goes; dropping the name to the lower half keeps them apart.
+                  alignItems: hasTransplantChip ? 'var(--crop-chip-name-align, flex-end)' : 'center',
+                  paddingBottom: hasTransplantChip ? 'var(--crop-chip-name-pad, 2px)' : 0,
+                  lineHeight: 1, whiteSpace: 'nowrap',
+                  color: 'var(--text-primary)', pointerEvents: 'none',
+                }}
+              >
+                {barLabel}
+              </span>
+            )}
+          </Fragment>
+        );
+      })}
       {/* The transplant marker. It used to read "(tr)", which the app's own
           owner looked at and asked what it stood for — an abbreviation nobody
           can decode is not a label, it's a puzzle. It now says the word, wears
@@ -4586,16 +5573,33 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
             onClick={onTap}
             className="font-sans"
             style={{
-              position: 'absolute', left: `${leftPct(trOffset) + COL_PCT / 2}%`, top: -3, transform: 'translateX(-50%)',
-              fontSize: 9, fontWeight: 700, color: 'var(--gold)', background: 'var(--bg-1)',
-              border: '1px solid rgba(154,96,24,0.35)', padding: '0 3px', borderRadius: 4,
+              // The button is the hit area, centred where the 16px chip used to sit (its centre was
+              // 5px below the lane top); the drawn chip is the inner span. 24px tall on every
+              // screen (WCAG 2.5.8). It is NOT 44px on touch: it sits over its bar's top edge, and a
+              // taller hit area took taps from that bar and from the lane above (app/globals.css).
+              // min(): a chip centred in the last columns hung ~21px past the grid's right edge, which made the
+              // bed rows scroll further than the month header and drew the header 21px out of step at the far end.
+              position: 'absolute', left: `min(${leftPct(trOffset) + COL_PCT / 2}%, calc(100% - 52px))`, top: 5, transform: 'translate(-50%, -50%)',
+              height: 'var(--crop-chip-hit-h, 24px)', padding: 0, background: 'transparent', border: 'none',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              // --gold-dim, not --gold: 9px text on the card is 3.85:1 in --gold
+              // and 5.78:1 here. The year-two fade below touches the fill and
+              // border only; fading the whole chip took the label to 2.09:1.
+              fontSize: 9, fontWeight: 700, color: 'var(--gold-dim)',
               whiteSpace: 'nowrap', cursor: 'pointer', lineHeight: 1.5, zIndex: 2,
-              opacity: isYearTwo(seg) ? 0.5 : 1,
             }}
             title={`Plan to transplant ${crop.name.toLowerCase()} in ${monthLabel(entry)}. Start checking seedlings in ${monthLabel(readinessStart)}; if they are still not ready by ${monthLabel(latestEntry)}, update the plan instead of treating the bed as occupied.`}
             aria-label={`Plan to transplant ${crop.name} in ${monthLabel(entry)}`}
           >
-            <Trees size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> check / transplant
+            <span style={{ position: 'relative', padding: '0 3px' }}>
+              <span
+                aria-hidden="true"
+                style={{ position: 'absolute', inset: -1, background: 'var(--bg-1)', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, opacity: isYearTwo(seg) ? 0.5 : 1 }}
+              />
+              <span style={{ position: 'relative' }}>
+                <Trees size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> check / transplant
+              </span>
+            </span>
           </button>
         );
       })}
@@ -4640,6 +5644,16 @@ function CropPickerModal({
   isPlot: boolean;
 }) {
   const { lang } = useLanguage();
+  // The sheet is mounted only while open, so `true`: focus lands on the search field (data-autofocus),
+  // Tab stays inside, Escape closes, and focus goes back to the "+ crop" or bar that opened it.
+  // No `autoFocus` on the input: React applies it before effects run, so the hook would record the
+  // input as the opener and hand focus back to a field that no longer exists.
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  useDialogFocus(true, dialogRef);
+  useEscapeClose(true, onClose);
+  // "Back to list" remounts the search field; put the cursor back in it.
+  useEffect(() => { if (!crop) searchRef.current?.focus({ preventScroll: true }); }, [crop]);
   // Favourites sort to the top of whatever's currently filtered — a quick-
   // access shortlist, same idea as Tend's personal Crop Library, just
   // without per-farmer custom crop data.
@@ -4654,14 +5668,18 @@ function CropPickerModal({
     <div style={{ position: 'fixed', inset: 0, zIndex: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="crop-picker-title"
         className="rounded-2xl"
         style={{ position: 'relative', width: '100%', maxWidth: 440, maxHeight: '82vh', overflowY: 'auto', background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, background: 'var(--bg-1)', zIndex: 1 }}>
-          <span className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+          <span id="crop-picker-title" className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
             {crop ? (<><CropIcon cropKey={crop.key} icon={crop.icon} size={16} /> {crop.name}</>) : cropUi(lang, 'Add a crop', 'Engeza isilimo')}
           </span>
-          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={SHEET_CLOSE_STYLE}>
             <X size={18} />
           </button>
         </div>
@@ -4671,7 +5689,8 @@ function CropPickerModal({
             <div className="flex items-center gap-2 rounded-xl px-3 py-2 mb-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
               <Search size={14} style={{ color: 'var(--text-muted)' }} />
               <input
-                autoFocus
+                ref={searchRef}
+                data-autofocus
                 value={search}
                 onChange={(e) => onSearch(e.target.value)}
                 placeholder={cropUi(lang, 'Search crops…', 'Sesha izitshalo…')}
@@ -4714,7 +5733,7 @@ function CropPickerModal({
                     <button
                       onClick={() => onToggleFavourite(c.key)}
                       aria-label={isFav ? cropUi(lang, 'Remove from favourites', 'Susa ezintandokazini') : cropUi(lang, 'Add to favourites', 'Engeza ezintandokazini')}
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, fontSize: 16, color: isFav ? '#C07A1E' : '#D8CFBC' }}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, fontSize: 16, color: isFav ? 'var(--gold)' : '#D8CFBC' }}
                     >
                       <Star size={16} aria-hidden fill={isFav ? 'currentColor' : 'none'} />
                     </button>
@@ -4735,7 +5754,7 @@ function CropPickerModal({
               <button
                 onClick={() => onToggleFavourite(crop.key)}
                 aria-label={favouriteCropKeys.has(crop.key) ? 'Remove from favourites' : 'Add to favourites'}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, color: favouriteCropKeys.has(crop.key) ? '#C07A1E' : '#D8CFBC' }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, color: favouriteCropKeys.has(crop.key) ? 'var(--gold)' : '#D8CFBC' }}
               >
                 <Star size={18} aria-hidden fill={favouriteCropKeys.has(crop.key) ? 'currentColor' : 'none'} />
               </button>
@@ -4939,6 +5958,10 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
   // plan does not persist the farmer's original whitelist, so this screen
   // cannot safely infer which alternative food they would actually choose.
   const [confirmingRemove, setConfirmingRemove] = useState(false);
+  // Hooks sit above the early return below. Edit (the safe, primary action) takes focus on open.
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(true, dialogRef);
+  useEscapeClose(true, onClose);
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
   const harvest = harvestMonthForCrop(planting.sowMonth, crop);
@@ -4951,15 +5974,19 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
     <div style={{ position: 'fixed', inset: 0, zIndex: 61, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="planting-detail-title"
         className="rounded-2xl p-4"
         // Long transplant and storage notes pushed Edit below a phone's screen with no way to scroll.
         style={{ position: 'relative', width: '100%', maxWidth: 300, maxHeight: 'calc(100dvh - 32px)', overflowY: 'auto', overscrollBehavior: 'contain', background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-start justify-between mb-2">
-          <span className="font-display font-semibold flex items-center gap-1.5" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}>
+          <span id="planting-detail-title" className="font-display font-semibold flex items-center gap-1.5" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}>
             <CropIcon cropKey={crop.key} icon={crop.icon} size={15} /> {crop.name} <SeedBadge transplant={!!crop.transplant} />
           </span>
-          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={SHEET_CLOSE_STYLE}>
             <X size={16} />
           </button>
         </div>
@@ -5001,6 +6028,8 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
             </div>
             <div className="flex gap-2">
               <button
+                // The safe answer takes focus: Remove's button just unmounted under the pointer or key.
+                autoFocus
                 onClick={() => setConfirmingRemove(false)}
                 className="flex-1 font-display font-semibold rounded-xl py-2"
                 style={{ fontSize: 13, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}
@@ -5020,6 +6049,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
           <div className="flex gap-2">
             <button
               onClick={onEdit}
+              data-autofocus
               className="flex-1 font-display font-semibold rounded-xl py-2"
               style={{ fontSize: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
             >
@@ -5061,7 +6091,7 @@ function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
   groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, mixState, onSaveMix, onResetMix, rhythm, onRhythm,
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
-  pattern, climateSource, referenceName, rotateCrops, onRotateCrops,
+  pattern, calendarLabel, calendarBasis, climateSource, referenceName, calendarChoice, automaticCalendar, sampleCalendarSet, canChooseCalendar, onCalendarChoice, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
   siteClimate, siteObservationNotes, beds, siteId, nurserySettings, currentPlantings, now, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
@@ -5081,10 +6111,23 @@ function AutoSuggestModal({
   idealMeta: IdealYearPlan | null;
   hasCurrentPlantings: boolean;
   pattern: RainPattern;
+  /** The calendar named for the grower (lib/sowing-calendar-label.ts), rain season included. */
+  calendarLabel: string;
+  /** Whether the grower's frost answer or the site climate chose `pattern`. */
+  calendarBasis: CalendarBasis;
   /** Where the pattern came from: the site's own satellite climate, the nearest reference region, or no site at all. */
   climateSource: 'site' | 'reference' | 'none';
   /** Reference-region name when climateSource is 'reference'. */
   referenceName: string | null;
+  /** The calendar the grower chose for this site, or null when the app decides. */
+  calendarChoice: RainPattern | null;
+  /** The calendar the app would use with no choice, so the "Let the app decide" option can name it. */
+  automaticCalendar: RainPattern;
+  /** True on the sample farm, whose automatic calendar is declared in the sample data. */
+  sampleCalendarSet: boolean;
+  /** False with no site or workspace to save a choice against. */
+  canChooseCalendar: boolean;
+  onCalendarChoice: (calendar: RainPattern | null) => void;
   rotateCrops: boolean; onRotateCrops: (v: boolean) => void;
   allowVinesInBeds: boolean; onAllowVinesInBeds: (v: boolean) => void;
   allowMixedCropsInBed: boolean; onAllowMixedCropsInBed: (v: boolean) => void;
@@ -5103,6 +6146,9 @@ function AutoSuggestModal({
   onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
 }) {
   const { lang } = useLanguage();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(true, dialogRef, { initialFocus: 'container' });
+  useEscapeClose(true, onClose);
   const [cropSearch, setCropSearch] = useState('');
   const nurseryForecast = useMemo(() => siteId && result
     ? buildNurseryForecast([...currentPlantings, ...result.plantings], beds, siteId, sanitiseNurserySettings(nurserySettings), now)
@@ -5119,14 +6165,21 @@ function AutoSuggestModal({
     <div style={{ position: 'fixed', inset: 0, zIndex: 70, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
-        className="rounded-2xl"
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="auto-suggest-title"
+        // The container takes focus (not Close): the sheet is a long form and the first control is
+        // a dismiss, so Enter right after opening must not throw the questions away. It is not a
+        // control, so it draws no focus ring.
+        className="rounded-2xl outline-none"
         style={{ position: 'relative', width: '100%', maxWidth: 480, maxHeight: '86vh', overflowY: 'auto', background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, background: 'var(--bg-1)', zIndex: 1 }}>
-          <span className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
+          <span id="auto-suggest-title" className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
             <Sparkles size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {phase === 'questions' ? 'Auto-suggest a plan' : 'Suggested plan'}
           </span>
-          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={SHEET_CLOSE_STYLE}>
             <X size={18} />
           </button>
         </div>
@@ -5293,16 +6346,41 @@ function AutoSuggestModal({
             </div>
 
             <div className="rounded-xl px-3 py-2.5" style={{ background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)' }}>
-              <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: 'var(--color-forest-800)', letterSpacing: '0.08em' }}>Climate used automatically</div>
+              <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: 'var(--color-forest-800)', letterSpacing: '0.08em' }}>{calendarBasis === 'grower-choice' ? 'Sowing calendar you chose' : calendarBasis === 'sample-farm' ? 'Sample farm calendar' : 'Climate used automatically'}</div>
               <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-forest-800)' }}>
-                {(() => { const PatternIcon = PATTERN_META[pattern].Icon; return <PatternIcon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} />; })()} {PATTERN_META[pattern].label}
+                {(() => { const PatternIcon = PATTERN_META[pattern].Icon; return <PatternIcon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} />; })()} {calendarLabel}
               </div>
+              {calendarBasis === 'sample-farm' ? (
+                <p className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>{SAMPLE_FARM_CALENDAR_REASON}</p>
+              ) : siteClimate && sowingCalendarReasons(siteClimate, { pattern, basis: calendarBasis }).map((line) => (
+                <p key={line} className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>{line}</p>
+              ))}
+              {calendarBasis === 'grower-choice' && !siteClimate && (
+                <p className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>You chose this calendar yourself.</p>
+              )}
+              {canChooseCalendar && (
+                <>
+                  <label className="block font-sans mt-3" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
+                    Sowing calendar for this site
+                    <select className="mt-1 w-full rounded-lg border px-3 min-h-11 font-sans" style={{ fontSize: 14, background: 'var(--bg-0)', color: 'var(--text-primary)', borderColor: 'var(--border)' }}
+                      value={calendarChoice ?? ''} onChange={(event) => onCalendarChoice(SOWING_CALENDAR_OPTIONS.find((option) => option.value === event.target.value)?.value ?? null)}>
+                      <option value="">{sampleCalendarSet ? 'Sample farm' : 'Let the app decide'}: {SOWING_CALENDAR_LABEL[automaticCalendar]}</option>
+                      {SOWING_CALENDAR_OPTIONS.map((option) => <option key={option.value} value={option.value}>{sowingCalendarOptionText(option)}</option>)}
+                    </select>
+                  </label>
+                  <p className="font-sans mt-1" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--text-secondary)' }}>Choose one only if you know your land. The months offered for every crop change with it. Crops already on your plan stay where they are.</p>
+                </>
+              )}
               <p className="font-mono mt-1" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
-                {climateSource === 'site'
-                  ? 'Derived from satellite climate records for this site. You do not need to choose a rainfall type.'
+                {calendarBasis === 'sample-farm'
+                  ? 'Set in the sample farm itself, not read from climate records. Pick another calendar above to see the months change.'
+                  : calendarBasis === 'grower-choice'
+                  ? (sampleCalendarSet ? 'You chose this calendar. Choose "Sample farm" in the list to go back.' : 'You chose this calendar. Choose "Let the app decide" to go back to the climate records.')
+                  : climateSource === 'site'
+                  ? 'Derived from satellite climate records for this site. You do not need to choose a sowing calendar.'
                   : climateSource === 'reference'
                     ? `Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: ${referenceName ?? 'regional point'} (fallback).`
-                    : 'No mapped location is attached, so the planner is using the visible summer-rainfall fallback. Map the garden for a location-based climate profile.'}
+                    : 'No mapped location is attached, so the planner is using the cautious winter-frost fallback. Map the garden for a location-based climate profile.'}
               </p>
             </div>
 

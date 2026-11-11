@@ -1,0 +1,133 @@
+agree = share of the months the app offers that the guide also lists; cover = share of the guide's months the app offers;
+none = crops (of the 27 the guide lists) sharing no month with it. Guide: secondary, seed-industry, 2004.
+
+guide region          place              before      agree cover none   after       agree cover none
+Highveld              Bethlehem          summer        75%   79%    0   summer        78%   82%    0
+Highveld              Bloemfontein       summer        75%   79%    0   summer        78%   82%    0
+Highveld              Ermelo             summer        75%   79%    0   summer        78%   82%    0
+Highveld              Johannesburg       summer        75%   79%    0   summer        78%   82%    0
+Highveld              Mahikeng           summer        75%   79%    0   summer        78%   82%    0
+Highveld              Potchefstroom      summer        75%   79%    0   summer        78%   82%    0
+Middleveld            Lephalale          summer        79%   68%    2   mild-frost    67%   87%    0   <-- calendar changed
+Middleveld            Polokwane          summer        79%   68%    2   summer        80%   68%    2
+Middleveld            Pretoria           summer        79%   68%    2   summer        80%   68%    2
+Middleveld            Rustenburg         summer        79%   68%    2   summer        80%   68%    2
+Lowveld               Komatipoort        summer        35%   29%    8   all-year      72%   85%    0   <-- calendar changed
+Lowveld               Mbombela           summer        35%   29%    8   mild-frost    42%   52%    3   <-- calendar changed
+Lowveld               Musina             summer        35%   29%    8   all-year      72%   85%    0   <-- calendar changed
+Lowveld               Phalaborwa         summer        35%   29%    8   all-year      72%   85%    0   <-- calendar changed
+Lowveld               Thohoyandou        summer        35%   29%    8   all-year      72%   85%    0   <-- calendar changed
+Lowveld               Tzaneen            summer        35%   29%    8   mild-frost    42%   52%    3   <-- calendar changed
+N Cape & Great Karoo  Beaufort West      summer        71%   76%    0   summer        73%   78%    0
+N Cape & Great Karoo  Graaff-Reinet      summer        71%   76%    0   summer        73%   78%    0
+N Cape & Great Karoo  Kimberley          summer        71%   76%    0   summer        73%   78%    0
+N Cape & Great Karoo  Kuruman            summer        71%   76%    0   summer        73%   78%    0
+N Cape & Great Karoo  Springbok          winter        68%   59%    1   winter        67%   71%    0
+N Cape & Great Karoo  Sutherland         summer        71%   76%    0   summer        73%   78%    0
+N Cape & Great Karoo  Upington           summer        71%   76%    0   summer        73%   78%    0
+KZN Midlands          Kokstad            summer        70%   75%    1   summer        72%   76%    0
+KZN Midlands          Newcastle          summer        70%   75%    1   summer        72%   76%    0
+KZN Midlands          Pietermaritzburg   summer        70%   75%    1   summer        72%   76%    0
+KZN Midlands          Underberg          summer        70%   75%    1   summer        72%   76%    0
+KZN Midlands          Vryheid            summer        70%   75%    1   summer        72%   76%    0
+E Cape & Little Karoo East London        mild-frost    61%   90%    0   mild-frost    61%   90%    0
+E Cape & Little Karoo Gqeberha           all-year      46%   65%    1   mild-frost    61%   90%    0   <-- calendar changed
+E Cape & Little Karoo Komani             summer        75%   73%    1   summer        78%   75%    0
+E Cape & Little Karoo Mthatha            summer        75%   73%    1   summer        78%   75%    0
+E Cape & Little Karoo Oudtshoorn         summer        75%   73%    1   summer        78%   75%    0
+W Cape & South Coast  Cape Town          winter        69%   50%    0   winter        98%   87%    0
+W Cape & South Coast  Ceres              winter        69%   50%    0   winter        98%   87%    0
+W Cape & South Coast  George             all-year      56%   73%    0   mild-frost    65%   90%    1   <-- calendar changed
+W Cape & South Coast  Stellenbosch       winter        69%   50%    0   winter        98%   87%    0
+W Cape & South Coast  Vredendal          winter        69%   50%    0   winter        98%   87%    0
+W Cape & South Coast  Worcester          summer        73%   65%    0   summer        74%   66%    0
+KZN & Coast           Durban             mild-frost    42%   52%    3   all-year      72%   85%    0   <-- calendar changed
+KZN & Coast           Mkuze sample farm  mild-frost    42%   52%    3   all-year      72%   85%    0   <-- calendar changed
+KZN & Coast           Richards Bay       all-year      58%   70%    0   all-year      72%   85%    0
+
+guide region             before: agree  cover        none    after: agree  cover        none
+Highveld                           75%    79%     0 of 162           78%    82%     0 of 162
+Middleveld                         79%    68%     8 of 108           76%    73%     6 of 108
+Lowveld                            35%    29%    48 of 162           61%    74%     6 of 162
+N Cape & Great Karoo               71%    74%     1 of 189           72%    77%     0 of 189
+KZN Midlands                       70%    75%     5 of 135           72%    76%     0 of 135
+E Cape & Little Karoo              64%    75%     4 of 135           69%    81%     0 of 135
+W Cape & South Coast               67%    57%     0 of 162           86%    84%     1 of 162    (by construction: rows now come from this guide)
+KZN & Coast                        47%    58%     6 of 81            72%    85%     0 of 81
+All 42 scored places               63%    63%    72 of 1134          73%    79%    13 of 1134
+Without the W Cape                 63%    64%    72 of 972           71%    78%    12 of 972    (independent of the guide)
+not scored (region ambiguous): ['Hillcrest', 'Port St Johns']
+
+
+== Crop-and-place pairs sharing no month with the guide, BEFORE the fixes: 72 (72 outside the W Cape) ==
+guide region          crop                    calendar   app sows                      guide sows                    places
+E Cape & Little Karoo Peas                    all-year   Jan Feb Mar Apr Aug Sep       May Jun Jul                   Gqeberha
+E Cape & Little Karoo Peas                    summer     Feb Mar Aug                   May Jun Jul                   Komani, Mthatha, Oudtshoorn
+KZN & Coast           Butternut               mild-frost Oct Nov Dec                   Feb Mar Apr May Jun Jul Aug   Durban, Mkuze sample farm
+KZN & Coast           Pumpkin                 mild-frost Sep Oct Nov                   Feb Mar Apr May Jun Jul Aug   Durban, Mkuze sample farm
+KZN & Coast           Tomatoes                mild-frost Aug Sep Oct Nov Dec           Jan Feb Mar Apr May Jun Jul   Durban, Mkuze sample farm
+KZN Midlands          Peas                    summer     Feb Mar Aug                   Jun Jul                       Kokstad, Newcastle, Pietermaritzburg, Underberg, Vryheid
+Lowveld               Baby marrow (courgette) summer     Jan Sep Oct Nov Dec           Feb Mar Apr May Jun Jul Aug   Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Brinjal (eggplant)      summer     Oct Nov                       Jan Feb Mar Apr May Jun Jul Aug SepKomatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Butternut               summer     Oct Nov Dec                   Feb Mar Apr May Jun Jul Aug   Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Gem squash              summer     Jan Sep Oct Nov Dec           Feb Mar Apr May Jun Jul Aug   Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Pumpkin                 summer     Oct Nov                       Feb Mar Apr May Jun Jul Aug   Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Spanspek (sweet melon)  summer     Sep Oct Nov Dec               Jun Jul Aug                   Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Tomatoes                summer     Aug Sep Oct                   Jan Feb Mar Apr May Jun Jul   Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Lowveld               Watermelon              summer     Oct Nov Dec                   Jul Aug                       Komatipoort, Mbombela, Musina, Phalaborwa, Thohoyandou, Tzaneen
+Middleveld            Peas                    summer     Feb Mar Aug                   Apr May Jun                   Lephalale, Polokwane, Pretoria, Rustenburg
+Middleveld            Watermelon              summer     Oct Nov Dec                   Aug Sep                       Lephalale, Polokwane, Pretoria, Rustenburg
+N Cape & Great Karoo  Peas                    winter     Feb Mar Apr                   Jul Aug                       Springbok
+
+
+== Crop-and-place pairs sharing no month with the guide, AFTER the fixes: 13 (12 outside the W Cape) ==
+guide region          crop                    calendar   app sows                      guide sows                    places
+Lowveld               Butternut               mild-frost Oct Nov Dec                   Feb Mar Apr May Jun Jul Aug   Mbombela, Tzaneen
+Lowveld               Pumpkin                 mild-frost Sep Oct Nov                   Feb Mar Apr May Jun Jul Aug   Mbombela, Tzaneen
+Lowveld               Tomatoes                mild-frost Aug Sep Oct Nov Dec           Jan Feb Mar Apr May Jun Jul   Mbombela, Tzaneen
+Middleveld            Peas                    summer     Jul Aug Sep                   Apr May Jun                   Polokwane, Pretoria, Rustenburg
+Middleveld            Watermelon              summer     Oct Nov Dec                   Aug Sep                       Polokwane, Pretoria, Rustenburg
+W Cape & South Coast  Onions                  mild-frost Feb Mar                       Apr May                       George
+
+
+== Every sowing-month row that changed ==
+Green beans                hot, frost-free  was Feb Mar Apr Aug Sep Oct Nov            now Feb Mar Apr May Jun Jul Aug Sep
+Green beans                Western Cape     was Aug Sep Oct Nov                        now Jan Feb Oct Nov Dec
+Butternut                  hot, frost-free  was Aug Sep Oct Nov                        now Mar Apr May Jul Aug Sep Oct
+Pumpkin                    hot, frost-free  was Aug Sep Oct Nov                        now Mar Apr May Jul Aug Sep Oct
+Swiss chard (spinach)      Western Cape     was Feb Mar Apr Aug Sep Oct                now Mar Apr Aug Sep
+Kale                       hot, frost-free  was Jan Feb Mar Apr Aug Sep Oct Nov Dec    now Feb Mar Apr May Jun
+Cabbage                    hot, frost-free  was Jan Feb Mar Apr Aug Sep Oct            now Feb Mar Apr May Jun
+Cabbage                    Western Cape     was Jan Feb Mar Aug Sep                    now Jan Feb Mar Apr Nov Dec
+Beetroot                   hot, frost-free  was Jan Feb Mar Apr Aug Sep Oct Nov        now Feb Mar Apr May Jun Jul Aug Sep
+Onions                     Western Cape     was Feb Mar Apr                            now Apr May
+Sweet potato               hard frost       was Oct Nov                                now Nov
+Sweet potato               hot, frost-free  was Aug Sep Oct Nov                        now Jan Feb Mar Aug Sep Oct Nov Dec
+Potato                     hard frost       was Aug Sep                                now Sep Oct
+Potato                     hot, frost-free  was Feb Mar Apr May Jul Aug Sep            now Apr May
+Lettuce                    hot, frost-free  was Jan Feb Mar Apr Aug Sep Oct Nov Dec    now Feb Mar Apr May Jun Jul Aug
+Amadumbe (taro)            hot, frost-free  was Aug Sep Oct Nov                        now Mar Jul Aug Sep Oct Nov Dec
+Garlic                     hot, frost-free  was Apr May Jun                            now Apr May
+Peas                       hard frost       was Feb Mar Aug                            now Jul Aug Sep
+Peas                       hot, frost-free  was Jan Feb Mar Apr Aug Sep                now Mar Apr May
+Peas                       Western Cape     was Feb Mar Apr                            now Apr May Jun Jul Aug
+Broad beans (fava beans)   hard frost       was Mar Apr May Jun Jul                    now Apr May
+Broad beans (fava beans)   hot, frost-free  was Feb Mar Apr May Jun Jul Aug            now Apr May
+Broad beans (fava beans)   Western Cape     was Mar Apr May                            now Apr May Jun
+Broccoli                   hard frost       was Jan Feb Mar Aug                        now Jan Feb Sep Oct Nov Dec
+Broccoli                   hot, frost-free  was Jan Feb Mar Apr Aug Sep                now Feb Mar Apr May Jun
+Broccoli                   Western Cape     was Jan Feb Mar Aug                        now Jan Dec
+Cucumber                   hot, frost-free  was Aug Sep Oct Nov                        now Mar Apr May Jul Aug Sep Oct
+Watermelon                 Western Cape     was Sep Oct Nov                            now Sep Oct
+Coriander                  hot, frost-free  was Jan Feb Mar Apr Aug Sep Oct Nov        now Feb Mar Apr May Jun Jul Aug
+True spinach (English spin Western Cape     was Feb Mar Apr Aug Sep                    now Mar Apr May
+Turnips                    Western Cape     was (none)                                 now Mar Apr May Jun Jul Aug Sep Oct Nov
+Cauliflower                Western Cape     was Jan Feb Mar Aug Sep Dec                now Jan Feb Mar Apr Nov Dec
+Parsley                    Western Cape     was Jan Feb Mar Aug Sep Oct Nov Dec        now Mar Apr May Jun Jul Aug Sep Oct Nov
+Gem squash                 Western Cape     was (none)                                 now Jan Sep Oct Nov Dec
+Baby marrow (courgette)    Western Cape     was (none)                                 now Jan Sep Oct Nov Dec
+Spanspek (sweet melon)     Western Cape     was (none)                                 now Sep Oct Nov Dec
+Sweetcorn                  Western Cape     was (none)                                 now Sep Oct Nov Dec
+Cowpea (imbumba/dinawa)    light frost      was (none)                                 now Dec
+Radish                     Western Cape     was Jan Feb Mar Apr Jul Aug Sep Oct Nov Dec now Mar Apr May Jun Jul Aug Sep Oct
+39 rows changed, in 29 crops. The source row for each is in the comment above it in lib/crop-catalog.ts.

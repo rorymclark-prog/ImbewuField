@@ -105,7 +105,7 @@ export function treeAgeProjection(g: PlacedTreeGroup, choice: TreeSeasonChoices[
   const over = counts('existing') > g.existing || counts('proposed') > g.proposed;
   if (over) missing.push('Age-group counts exceed plants on the map');
   const unassigned = g.existing + g.proposed - counts('existing') - counts('proposed');
-  if (unassigned > 0) missing.push(`${unassigned} plants need age groups`);
+  if (unassigned > 0) missing.push(`${unassigned} ${unassigned === 1 ? 'plant needs' : 'plants need'} age groups`);
   if (ages.some(a => a.status === 'existing' && (plantingMonthIndex(a.planted) ?? -Infinity) > nowIndex)) missing.push('Existing plants have a future planting date');
   const projections = ages.map(a => ageGroupKg(a, start, end, choice?.bearing && a.status === 'existing' ? undefined : g.harvest.yearsToFirstCrop?.value[0]));
   for (const p of projections) if (!p.kg) missing.push(p.stage);

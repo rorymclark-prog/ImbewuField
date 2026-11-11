@@ -1,0 +1,36 @@
+{
+  "sourceFileSha256": "917e150dd6a3cd42b7a1e98eb7cc837afdc301d807525e4e91c5a29a4163465d",
+  "boundedSourceSegments": 97,
+  "sourcePlaceholderCount": 0,
+  "translationQualityOrReleaseApproval": false,
+  "locales": [
+    {
+      "locale": "fr",
+      "file": "docs/international/translation-jobs-2026-11-02/fr.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "locale": "es",
+      "file": "docs/international/translation-jobs-2026-11-02/es.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "locale": "pt-BR",
+      "file": "docs/international/translation-jobs-2026-11-02/pt-BR.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "locale": "sw-KE",
+      "file": "docs/international/translation-jobs-2026-11-02/sw-KE.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

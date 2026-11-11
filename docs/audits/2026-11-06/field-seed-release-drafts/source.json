@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Four exact field seed worksheet update descriptions; AI candidates, not fluent or human approval.",
+  "locales": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "sourceFiles": [
+    {
+      "file": "lib/release-notes.ts",
+      "sha256": "21a46899349389dbcd1ebc05b473fab43a73c4e9fdd22dce7088b4d219deb631",
+      "base": "8211eb90834d130d7a7a05a01393401670e38416",
+      "sourceState": "Actual coordinator English; later metadata-only commit stamp does not change frozen English."
+    }
+  ],
+  "messages": [
+    {
+      "key": "fieldSeedSourcing.release.01",
+      "english": "Plan seed sourcing for field cycles without nursery raising.",
+      "sha256": "2bd6dd57fdc815a53d9f32a3be1c1bfba93eb5067b2065b307863335bc624ebe"
+    },
+    {
+      "key": "fieldSeedSourcing.release.02",
+      "english": "Review field seed requirements",
+      "sha256": "d8139c3c48b421330c9ae079177bb082236d5382d7703e8d2b4b0e24f03913ec"
+    },
+    {
+      "key": "fieldSeedSourcing.release.03",
+      "english": "Crop planner → Saved planned nursery batches → Field seed sourcing",
+      "sha256": "546c0876e484d91d4e4e91fe86554ef152b3e12632268d7e47c463c86108468b"
+    },
+    {
+      "key": "fieldSeedSourcing.release.04",
+      "english": "Open the separate field worksheet for accepted cycles without a nursery phase. Declare botanical seeds, confirm your gross whole-seed requirement, group cycles that can share a supply, and enter your allocation and pack size. Blank counts stay unknown. This temporary worksheet does not record stock, place orders or save the plan.",
+      "sha256": "2044c0187c7ac25ffaf62cb6a3c2908a4d5af8605b314df8665d8634168f31c0"
+    }
+  ]
+}

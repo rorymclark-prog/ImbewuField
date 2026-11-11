@@ -1,0 +1,17 @@
+{
+  "order": "agy-seed-sourcing-release-copy-2026-11-06",
+  "status": "COMPLETED",
+  "correctionReview": "docs/international/agy-seed-sourcing-release-copy-2026-11-06/COORDINATOR-REVIEW.md",
+  "validation": "NOT RUN — coordinator-owned",
+  "runtimeActivation": false,
+  "workers": 0,
+  "workersActive": 0,
+  "outputsWritten": [
+    "docs/international/agy-seed-sourcing-release-copy-2026-11-06/zu.json",
+    "docs/international/agy-seed-sourcing-release-copy-2026-11-06/st.json",
+    "docs/international/agy-seed-sourcing-release-copy-2026-11-06/ts.json",
+    "docs/international/agy-seed-sourcing-release-copy-2026-11-06/ve.json",
+    "docs/international/agy-seed-sourcing-release-copy-2026-11-06/review-notes.md",
+    "docs/international/agy-seed-sourcing-release-copy-2026-11-06/status.json"
+  ]
+}

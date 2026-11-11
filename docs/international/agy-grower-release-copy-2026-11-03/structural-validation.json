@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "validatedOn": "2026-11-03",
+  "source": "source.json",
+  "sourceSha256": "1ac50ec10110e0323d9f0216d8f795fcdb445a03806bea685dd06ffcff9188fe",
+  "workorderSha256": "af1639df30dc7e6c65e1715e2716d9a3e5b853be9c8e409fab09f7b4efbed8fe",
+  "sourceMessages": 9,
+  "integratedEntries": 36,
+  "review": {
+    "status": "unreviewed"
+  },
+  "fluentHumanApproval": false,
+  "newLanguageEnablement": false,
+  "productionDeployment": false,
+  "scope": "Coordinator branch integration of exact source-bound AI candidates through the existing disclosed unreviewed update-copy mechanism only. No language, agronomic or fluent approval. English fallback and notices remain unchanged.",
+  "checks": {
+    "sourceKeysEnglishAndHashesExact": true,
+    "allDraftStatusesUnreviewed": true,
+    "placeholderAndNumberTokensPreserved": true,
+    "navigationArrowsAndRoutesPreserved": true,
+    "noExistingKeyCollisions": true,
+    "noUuidLikePrivateIds": true,
+    "oldChunkBytesPreserved": true,
+    "sourceAndWorkorderUnchanged": true
+  },
+  "locales": [
+    {
+      "locale": "zu",
+      "packet": "docs/international/agy-grower-release-copy-2026-11-03/zu.json",
+      "packetSha256": "c54d39c9ad2bf22d31a58540f45c6ebd424d6120ac2248535feb318ca35cb1db",
+      "runtimeFile": "lib/update-copy-locales/zu.ts",
+      "entries": 9,
+      "previousChunkSha256": "bd8d4ea3e8001cbadc7ad96fafd1f5cb09a570bf587e5d9871f4233bfdd93827",
+      "integratedChunkSha256": "7e1c92e9de7d038ca466b78fc24824c17e37702b002c412c7e9224ede56fb4eb",
+      "existingChunkBytesPreserved": true
+    },
+    {
+      "locale": "st",
+      "packet": "docs/international/agy-grower-release-copy-2026-11-03/st.json",
+      "packetSha256": "515580935f027f0e3db7f5047c15ab777bc552bd3257014075fa05390d7b6552",
+      "runtimeFile": "lib/update-copy-locales/st.ts",
+      "entries": 9,
+      "previousChunkSha256": "0d089c9674bcdc21d5369ca4557ba99bb1a2c8c52bdca7dadf45ae34fc8a79d8",
+      "integratedChunkSha256": "56981506bc38dc3c66ce12336dfad5c3a1b982da79b7b9c7a202b49d554e581c",
+      "existingChunkBytesPreserved": true
+    },
+    {
+      "locale": "ts",
+      "packet": "docs/international/agy-grower-release-copy-2026-11-03/ts.json",
+      "packetSha256": "a7bff5b45060676ae6d1c3ee70cf095cbefea44d157c9921649150d8256ef8a3",
+      "runtimeFile": "lib/update-copy-locales/ts.ts",
+      "entries": 9,
+      "previousChunkSha256": "bdb40d6790b5760dea0ae8437cf8566bffb9f3689a16a418877cf3c3cda65c00",
+      "integratedChunkSha256": "eb0426c9bd1583f78008c4407adb2f58feaed5ead005268058743a2ff8889b2f",
+      "existingChunkBytesPreserved": true
+    },
+    {
+      "locale": "ve",
+      "packet": "docs/international/agy-grower-release-copy-2026-11-03/ve.json",
+      "packetSha256": "0d19ffc95f51ff18c01e0c73258433a4c28e15622cb6ea7050b01a3ec918b4b7",
+      "runtimeFile": "lib/update-copy-locales/ve.ts",
+      "entries": 9,
+      "previousChunkSha256": "3c2dc299139bb065f838af705312fb01ba5796eff47042987b3cdba59a82f039",
+      "integratedChunkSha256": "64a71ebe266269e8e7e4992c21cb5b8a6333ed7225299e9a55d66649745e16cc",
+      "existingChunkBytesPreserved": true
+    }
+  ],
+  "negativeControls": [
+    {
+      "name": "missing-entry",
+      "rejected": true
+    },
+    {
+      "name": "duplicate-key",
+      "rejected": true
+    },
+    {
+      "name": "reordered-entries",
+      "rejected": true
+    },
+    {
+      "name": "different-source",
+      "rejected": true
+    },
+    {
+      "name": "different-source-hash",
+      "rejected": true
+    },
+    {
+      "name": "wrong-locale",
+      "rejected": true
+    },
+    {
+      "name": "claimed-fluent-review",
+      "rejected": true
+    },
+    {
+      "name": "claimed-message-review",
+      "rejected": true
+    },
+    {
+      "name": "blank-text",
+      "rejected": true
+    },
+    {
+      "name": "changed-number",
+      "rejected": true
+    },
+    {
+      "name": "missing-arrow",
+      "rejected": true
+    },
+    {
+      "name": "invented-route",
+      "rejected": true
+    },
+    {
+      "name": "private-id",
+      "rejected": true
+    },
+    {
+      "name": "existing-key-collision",
+      "rejected": true
+    }
+  ],
+  "runtimeChecks": {
+    "actualRuntimePairsEqualPackets": 36,
+    "currentBannerAndTourCoverage": [
+      {
+        "locale": "zu",
+        "currentSources": 17,
+        "currentGaps": 0,
+        "recentHistory": [
+          {
+            "days": 5,
+            "descriptions": 23,
+            "gaps": 0
+          },
+          {
+            "days": 3,
+            "descriptions": 9,
+            "gaps": 0
+          }
+        ]
+      },
+      {
+        "locale": "st",
+        "currentSources": 17,
+        "currentGaps": 0,
+        "recentHistory": [
+          {
+            "days": 5,
+            "descriptions": 23,
+            "gaps": 0
+          },
+          {
+            "days": 3,
+            "descriptions": 9,
+            "gaps": 0
+          }
+        ]
+      },
+      {
+        "locale": "ts",
+        "currentSources": 17,
+        "currentGaps": 0,
+        "recentHistory": [
+          {
+            "days": 5,
+            "descriptions": 23,
+            "gaps": 0
+          },
+          {
+            "days": 3,
+            "descriptions": 9,
+            "gaps": 0
+          }
+        ]
+      },
+      {
+        "locale": "ve",
+        "currentSources": 17,
+        "currentGaps": 0,
+        "recentHistory": [
+          {
+            "days": 5,
+            "descriptions": 23,
+            "gaps": 0
+          },
+          {
+            "days": 3,
+            "descriptions": 9,
+            "gaps": 0
+          }
+        ]
+      }
+    ],
+    "oldChunkBytesEqualCommittedHead": true,
+    "releaseAuthorityHashUnchanged": true,
+    "coreLocaleAndNoticeBytesEqualHead": true,
+    "englishFallbackAndDamagedNumberInheritedAndWrongLanguageControlsPassed": true,
+    "fluentHumanReviewPerformed": false
+  }
+}

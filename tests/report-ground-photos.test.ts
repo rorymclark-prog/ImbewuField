@@ -170,7 +170,11 @@ test('the photos are actually attached to the request, and to every batch', () =
   // note, which four photographs cannot.
   assert.match(view, /evidenceData: Object\.keys\(evidenceData\)\.length > 0/);
 
-  assert.match(route, /const groundPhotos = normaliseGroundPhotos\(body\.groundPhotos\)/);
+  // Fixed public-demo admission clears private client photos after validation;
+  // const versus let cannot decide whether the input was actually validated.
+  assert.match(route, /\b(?:const|let) groundPhotos = normaliseGroundPhotos\(body\.groundPhotos\)/);
+  const demoBranch = route.slice(route.indexOf('if (demoReference) {'), route.indexOf('const messageContent ='));
+  assert.match(demoBranch, /groundPhotos = \[\]/, 'a fixed public demo must discard private submitted photos');
   // Sheets first, photos second: the plans say what is where, the photographs say what state it is
   // in. Reversed, the model meets a close-up with no idea which bed it belongs to.
   const content = route.slice(route.indexOf('const messageContent ='), route.indexOf('const runBatch ='));

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { registerHooks } from 'node:module';
+import ts from 'typescript';
 
 // A SALE, EXPENSE OR HARVEST COULD HANG FOREVER ON A DROPPING CONNECTION.
 //
@@ -15,9 +16,10 @@ import { registerHooks } from 'node:module';
 // The SAME doc comment is why the fix is safe: the write "will be immediately created in the
 // local cache" — durably, because getFirebase() (lib/firebase/init.ts) configures
 // persistentLocalCache — so giving up on the wait is not giving up on the write. lib/db/queries.ts
-// races every add* write against WRITE_TIMEOUT_MS and rejects with WriteTimeoutError rather than
-// leaving the caller to guess; both save screens then tell the farmer the entry is safe, using the
-// SAME navigator.onLine signal app/records/page.tsx's read-side offline banner already tracks.
+// bounds cloud acknowledgement with WRITE_TIMEOUT_MS rather than leaving the caller to guess.
+// Direct production/cost writes report the queued write using the SAME navigator.onLine signal.
+// Quick sales now have a stronger local invoice receipt: their bounded cloud-sync failure keeps
+// that one invoice pending, and the form completes from its real local receipt, not a timeout.
 
 import {
   withWriteTimeout,
@@ -26,6 +28,12 @@ import {
 } from '../lib/db/queries.ts';
 
 const read = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8');
+function formDeclaration(source: string, name: string): string {
+  const tree = ts.createSourceFile('form.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const node = tree.statements.find(statement => ts.isFunctionDeclaration(statement) && statement.name?.text === name);
+  assert.ok(node, `The actual ${name} declaration must exist`);
+  return node.getText(tree);
+}
 
 /* ── withWriteTimeout: the race itself ───────────────────────────────────── */
 
@@ -160,37 +168,51 @@ test('both LogSaleForm mount points feed the shared online signal into the save 
   }
 });
 
-/* ── components/MyRecords.tsx: the harvest and sale forms get equal treatment ─ */
+/* ── components/MyRecords.tsx: distinct production and local-invoice receipts ─ */
 
-test('MyRecords imports WriteTimeoutError and both forms branch on it', () => {
+test('MyRecords bounds direct production acknowledgement while sales complete only from the guarded local invoice receipt', () => {
   const src = read('../components/MyRecords.tsx');
   assert.match(
     src,
     /import \{[\s\S]*?WriteTimeoutError[\s\S]*?\} from '@\/lib\/db\/queries'/,
   );
-  const occurrences = src.match(/err instanceof WriteTimeoutError/g) ?? [];
-  assert.equal(
-    occurrences.length,
-    2,
-    'both LogProductionForm (addProduction) and LogSaleForm (addSale) must handle the timeout — one entry point cannot be left hanging',
-  );
+  const production = formDeclaration(src, 'LogProductionForm'), sale = formDeclaration(src, 'LogSaleForm');
+  assert.equal((production.match(/err instanceof WriteTimeoutError/g) ?? []).length, 1,
+    'direct production still needs its queued-write acknowledgement branch');
+  // Sale-invoice cutover deliberately moved timeout handling below the form:
+  // pretending that any thrown timeout proves a local invoice would invent a receipt.
+  assert.doesNotMatch(sale, /err instanceof WriteTimeoutError/);
+  assert.match(sale, /const invoice = await addSale\([\s\S]*?invoiceSource\.book\)/);
+  assert.match(sale, /attempt !== saleSequence\.current \|\| !invoiceSource\.isActorCurrent\(\)/);
+  assert.match(sale, /invoiceSource\.reload\(\)/);
+  assert.match(sale, /router\.push\(`\/invoice\?view=\$\{encodeURIComponent\(invoice\.id\)\}`\)/);
+  const writer = read('../lib/sale-invoice.ts');
+  assert.match(writer, /const result = saveInvoice\(invoice, source\)/);
+  assert.match(writer, /result\.status !== 'written'[\s\S]*?throw new UserFacingError/,
+    'held or unconfirmed local effects cannot be returned as a successful sale');
+  assert.match(writer, /try \{ await sync\(stored, book\); \}[\s\S]*?catch \{[\s\S]*?invoiceBookIsCurrent\(book\)[\s\S]*?return stored;/,
+    'only the current, already-written invoice survives a failed cloud acknowledgement');
 });
 
-test('MyRecords never reports a queued write as "Failed to save"', () => {
+test('MyRecords queued production clears its fields and reports pending delivery while receipt-backed sale failures retain honest invoice-review copy', () => {
   const src = read('../components/MyRecords.tsx');
-  let from = 0;
-  for (let i = 0; i < 2; i++) {
-    const idx = src.indexOf('err instanceof WriteTimeoutError', from);
-    assert.ok(idx > 0, `expected a ${i + 1}${i === 0 ? 'st' : 'nd'} WriteTimeoutError branch`);
-    // Bound the slice to just this if-block (up to its own `return;`), not the sibling generic
-    // catch-all that follows it — that fallback legitimately still says myRecordsSaveError.
-    const returnIdx = src.indexOf('return;', idx);
-    assert.ok(returnIdx > idx, 'the WriteTimeoutError branch must return so it cannot fall through to the generic failure');
-    const branch = src.slice(idx, returnIdx);
-    assert.doesNotMatch(branch, /myRecordsSaveError/, 'the timeout branch must not reuse the generic failure copy');
-    assert.match(branch, /saveQueuedMessage\(\)/, 'the timeout branch must use the honest queued-save message');
-    from = idx + 1;
-  }
+  const production = formDeclaration(src, 'LogProductionForm'), idx = production.indexOf('err instanceof WriteTimeoutError');
+  assert.ok(idx > 0);
+  const returnIdx = production.indexOf('return;', idx);
+  assert.ok(returnIdx > idx, 'the queued branch must return before the generic failure');
+  const branch = production.slice(idx, returnIdx);
+  assert.doesNotMatch(branch, /myRecordsSaveError|Failed to save/);
+  assert.match(branch, /saveQueuedMessage\(\)/);
+  for (const name of ['crop', 'quantity', 'photoPreview']) assert.match(branch, new RegExp(`${name}: ''`),
+    'the queued production entry must not remain ready for accidental resubmission');
+  assert.match(branch, /loading: false/);
+  assert.match(branch, /fileRef\.current\.value = ''/);
+  assert.match(branch, /onSaved\(\)/);
+  const sale = formDeclaration(src, 'LogSaleForm');
+  assert.match(sale, /setForm\(\{ crop: '', cropKey: null, quantity: '', unit: 'kg', amount: '', buyer: '', loading: false, error: '' \}\)/);
+  assert.match(sale, /The sale could not be confirmed\. Check the invoice records before saving again\./);
+  assert.doesNotMatch(sale, /saveQueuedMessage\(\)/,
+    'an unconfirmed local invoice must not inherit production cache-success wording');
 });
 
 test('MyRecords does not mint a new translated i18n key for the queued-save message', () => {

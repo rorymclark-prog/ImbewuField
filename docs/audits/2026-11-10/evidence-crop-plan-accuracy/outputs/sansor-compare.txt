@@ -1,0 +1,227 @@
+region (SANSOR)          site               app column crops  app months also in guide | not in guide | guide months app lacks | crops with NO overlap
+E Cape & Little Karoo    East London        mild-frost    27  112/185 =  61%           73             12                  0
+E Cape & Little Karoo    Gqeberha           all-year      27   81/177 =  46%           96             43                  1
+E Cape & Little Karoo    Komani             summer        27   91/121 =  75%           30             33                  1
+E Cape & Little Karoo    Mthatha            summer        27   91/121 =  75%           30             33                  1
+E Cape & Little Karoo    Oudtshoorn         summer        27   91/121 =  75%           30             33                  1
+Highveld                 Bethlehem          summer        27   91/121 =  75%           30             24                  0
+Highveld                 Bloemfontein       summer        27   91/121 =  75%           30             24                  0
+Highveld                 Ermelo             summer        27   91/121 =  75%           30             24                  0
+Highveld                 Johannesburg       summer        27   91/121 =  75%           30             24                  0
+Highveld                 Mahikeng           summer        27   91/121 =  75%           30             24                  0
+Highveld                 Potchefstroom      summer        27   91/121 =  75%           30             24                  0
+KZN & Coast              Durban             mild-frost    27   77/185 =  42%          108             70                  3
+KZN & Coast              Mkuze sample farm  mild-frost    27   77/185 =  42%          108             70                  3
+KZN & Coast              Richards Bay       all-year      27  103/177 =  58%           74             44                  0
+KZN Midlands             Kokstad            summer        27   85/121 =  70%           36             29                  1
+KZN Midlands             Newcastle          summer        27   85/121 =  70%           36             29                  1
+KZN Midlands             Pietermaritzburg   summer        27   85/121 =  70%           36             29                  1
+KZN Midlands             Underberg          summer        27   85/121 =  70%           36             29                  1
+KZN Midlands             Vryheid            summer        27   85/121 =  70%           36             29                  1
+Lowveld                  Komatipoort        summer        27   42/121 =  35%           79            105                  8
+Lowveld                  Mbombela           summer        27   42/121 =  35%           79            105                  8
+Lowveld                  Musina             summer        27   42/121 =  35%           79            105                  8
+Lowveld                  Phalaborwa         summer        27   42/121 =  35%           79            105                  8
+Lowveld                  Thohoyandou        summer        27   42/121 =  35%           79            105                  8
+Lowveld                  Tzaneen            summer        27   42/121 =  35%           79            105                  8
+Middleveld               Lephalale          summer        27   96/121 =  79%           25             46                  2
+Middleveld               Polokwane          summer        27   96/121 =  79%           25             46                  2
+Middleveld               Pretoria           summer        27   96/121 =  79%           25             46                  2
+Middleveld               Rustenburg         summer        27   96/121 =  79%           25             46                  2
+N Cape & Great Karoo     Beaufort West      summer        27   86/121 =  71%           35             27                  0
+N Cape & Great Karoo     Graaff-Reinet      summer        27   86/121 =  71%           35             27                  0
+N Cape & Great Karoo     Kimberley          summer        27   86/121 =  71%           35             27                  0
+N Cape & Great Karoo     Kuruman            summer        27   86/121 =  71%           35             27                  0
+N Cape & Great Karoo     Springbok          winter        27   67/98  =  68%           31             46                  1
+N Cape & Great Karoo     Sutherland         summer        27   86/121 =  71%           35             27                  0
+N Cape & Great Karoo     Upington           summer        27   86/121 =  71%           35             27                  0
+W Cape & South Coast     Cape Town          winter        27   68/98  =  69%           30             67                  0
+W Cape & South Coast     Ceres              winter        27   68/98  =  69%           30             67                  0
+W Cape & South Coast     George             all-year      27   99/177 =  56%           78             36                  0
+W Cape & South Coast     Stellenbosch       winter        27   68/98  =  69%           30             67                  0
+W Cape & South Coast     Vredendal          winter        27   68/98  =  69%           30             67                  0
+W Cape & South Coast     Worcester          summer        27   88/121 =  73%           33             47                  0
+
+Highveld                 agreement  75% of offered months; guide months offered  79%; crop-sites with no overlap 0 of 162
+Middleveld               agreement  79% of offered months; guide months offered  68%; crop-sites with no overlap 8 of 108
+Lowveld                  agreement  35% of offered months; guide months offered  29%; crop-sites with no overlap 48 of 162
+N Cape & Great Karoo     agreement  71% of offered months; guide months offered  74%; crop-sites with no overlap 1 of 189
+KZN Midlands             agreement  70% of offered months; guide months offered  75%; crop-sites with no overlap 5 of 135
+E Cape & Little Karoo    agreement  64% of offered months; guide months offered  75%; crop-sites with no overlap 4 of 135
+W Cape & South Coast     agreement  67% of offered months; guide months offered  57%; crop-sites with no overlap 0 of 162
+KZN & Coast              agreement  47% of offered months; guide months offered  58%; crop-sites with no overlap 6 of 81
+not scored (ambiguous region): ['Hillcrest', 'Port St Johns']
+
+== Komatipoort 2 summer
+  broad-beans   app ..MAMJJ.....  guide ...AM.......  both 2 extra 3 missing 0
+  green-beans   app J.......SOND  guide .FMAMJJAS...  both 1 extra 4 missing 7
+  beetroot      app .FM....ASO..  guide .FMAMJJ.....  both 2 extra 3 missing 4
+  brinjal       app .........ON.  guide JFMAMJJAS...  both 0 extra 2 missing 9   <-- no overlap
+  broccoli      app JFM....A....  guide ............  both 0 extra 4 missing 0
+  cabbage       app JFM....AS...  guide .FMAMJ......  both 2 extra 3 missing 3
+  peppers       app .......ASO..  guide JFMA..JASO..  both 3 extra 0 missing 5
+  chilli        app .......ASO..  guide JFMA..JASO..  both 3 extra 0 missing 5
+  carrots       app .FM....ASO..  guide .FMAMJJA....  both 3 extra 2 missing 4
+  cauliflower   app JFM....AS..D  guide .FM.........  both 2 extra 4 missing 0
+  cucumber      app ........SOND  guide .FMAMJJAS...  both 1 extra 3 missing 7
+  lettuce       app .FM....ASO..  guide ..MAM.......  both 1 extra 4 missing 2
+  sweetcorn     app ........SOND  guide ......JASON.  both 3 extra 1 missing 2
+  spanspek      app ........SOND  guide .....JJA....  both 0 extra 4 missing 3   <-- no overlap
+  watermelon    app .........OND  guide ......JA....  both 0 extra 3 missing 2   <-- no overlap
+  onions        app ..MAM.......  guide .FM.........  both 1 extra 2 missing 1
+  parsley       app JFM....ASOND  guide ..MAM..AS...  both 3 extra 5 missing 2
+  peas          app .FM....A....  guide ..MAMJ......  both 1 extra 2 missing 3
+  pumpkin       app .........ON.  guide .FMAMJJA....  both 0 extra 2 missing 7   <-- no overlap
+  butternut     app .........OND  guide .FMAMJJA....  both 0 extra 3 missing 7   <-- no overlap
+  gem-squash    app J.......SOND  guide .FMAMJJA....  both 0 extra 5 missing 7   <-- no overlap
+  baby-marrow   app J.......SOND  guide .FMAMJJA....  both 0 extra 5 missing 7   <-- no overlap
+  radish        app JFMA..JASOND  guide .FMAMJJAS...  both 6 extra 4 missing 2
+  true-spinach  app .FM....ASO..  guide .FMAMJ......  both 2 extra 3 missing 3
+  swiss-chard   app .FM....ASO..  guide .FMAMJJA....  both 3 extra 2 missing 4
+  tomatoes      app .......ASO..  guide JFMAMJJ.....  both 0 extra 3 missing 7   <-- no overlap
+  turnip        app JFMA...AS...  guide .FMAMJ......  both 3 extra 3 missing 2
+
+== Durban 7 mild-frost
+  broad-beans   app ...AM.......  guide ...AM.......  both 2 extra 0 missing 0
+  green-beans   app J.......SOND  guide .FMAMJJAS...  both 1 extra 4 missing 7
+  beetroot      app JFMAMJJASOND  guide .FMAMJJ.....  both 6 extra 6 missing 0
+  brinjal       app J.......SOND  guide JFMAMJJAS...  both 2 extra 3 missing 7
+  broccoli      app JFMAMJJAS...  guide ............  both 0 extra 9 missing 0
+  cabbage       app JFMAMJJASOND  guide .FMAMJ......  both 5 extra 7 missing 0
+  peppers       app .......ASON.  guide JFMA..JASO..  both 3 extra 1 missing 5
+  chilli        app .......ASON.  guide JFMA..JASO..  both 3 extra 1 missing 5
+  carrots       app JFMAMJJASON.  guide .FMAMJJA....  both 7 extra 4 missing 0
+  cauliflower   app JFMA..JAS...  guide .FM.........  both 2 extra 5 missing 0
+  cucumber      app ........SOND  guide .FMAMJJAS...  both 1 extra 3 missing 7
+  lettuce       app JFMAMJJASOND  guide ..MAM.......  both 3 extra 9 missing 0
+  sweetcorn     app JF.....ASOND  guide ......JASON.  both 4 extra 3 missing 1
+  spanspek      app JF.....ASOND  guide .....JJA....  both 1 extra 6 missing 2
+  watermelon    app .......ASO..  guide ......JA....  both 1 extra 2 missing 1
+  onions        app .FM.........  guide .FM.........  both 2 extra 0 missing 0
+  parsley       app JFMA..JASOND  guide ..MAM..AS...  both 4 extra 6 missing 1
+  peas          app ..MAMJJA....  guide ..MAMJ......  both 4 extra 2 missing 0
+  pumpkin       app ........SON.  guide .FMAMJJA....  both 0 extra 3 missing 7   <-- no overlap
+  butternut     app .........OND  guide .FMAMJJA....  both 0 extra 3 missing 7   <-- no overlap
+  gem-squash    app JF.....ASOND  guide .FMAMJJA....  both 2 extra 5 missing 5
+  baby-marrow   app JF.....ASOND  guide .FMAMJJA....  both 2 extra 5 missing 5
+  radish        app JFMAMJJASOND  guide .FMAMJJAS...  both 8 extra 4 missing 0
+  true-spinach  app .FMAM.JAS...  guide .FMAMJ......  both 4 extra 3 missing 1
+  swiss-chard   app JFMA..JAS...  guide .FMAMJJA....  both 5 extra 2 missing 2
+  tomatoes      app .......ASOND  guide JFMAMJJ.....  both 0 extra 5 missing 7   <-- no overlap
+  turnip        app JFMAMJJASOND  guide .FMAMJ......  both 5 extra 7 missing 0
+
+== Cape Town 6 winter
+  broad-beans   app ..MAM.......  guide ...AMJ......  both 2 extra 1 missing 1
+  green-beans   app .......ASON.  guide JF.......OND  both 2 extra 2 missing 3
+  beetroot      app .FMA...ASO..  guide .FMA..JASON.  both 6 extra 0 missing 2
+  brinjal       app .........OND  guide .......ASO..  both 1 extra 2 missing 2
+  broccoli      app JFM....A....  guide J..........D  both 1 extra 3 missing 1
+  cabbage       app JFM....AS...  guide JFMA......ND  both 3 extra 2 missing 3
+  peppers       app .......ASO..  guide .......ASO..  both 3 extra 0 missing 0
+  chilli        app .......ASO..  guide .......ASO..  both 3 extra 0 missing 0
+  carrots       app .FMA...AS...  guide JFMA...ASON.  both 5 extra 0 missing 3
+  cauliflower   app JFM....AS..D  guide JFMA......ND  both 4 extra 2 missing 2
+  cucumber      app ........SON.  guide ........SON.  both 3 extra 0 missing 0
+  lettuce       app .FMA...ASO..  guide JFMAM..ASOND  both 6 extra 0 missing 4
+  sweetcorn     app ............  guide .......ASOND  both 0 extra 0 missing 5
+  spanspek      app ............  guide ........SOND  both 0 extra 0 missing 4
+  watermelon    app ........SON.  guide ........SO..  both 2 extra 1 missing 0
+  onions        app .FMA........  guide ...AM.......  both 1 extra 2 missing 1
+  parsley       app JFM....ASOND  guide ..MAMJJASON.  both 5 extra 3 missing 4
+  peas          app .FMA........  guide ...AMJJA....  both 1 extra 2 missing 4
+  pumpkin       app ........SON.  guide ........SON.  both 3 extra 0 missing 0
+  butternut     app ........SON.  guide J......ASOND  both 3 extra 0 missing 3
+  gem-squash    app ............  guide J......ASOND  both 0 extra 0 missing 6
+  baby-marrow   app ............  guide J......ASOND  both 0 extra 0 missing 6
+  radish        app JFMA..JASOND  guide ..MAMJJASO..  both 6 extra 4 missing 2
+  true-spinach  app .FMA...AS...  guide ..MAM.......  both 2 extra 3 missing 1
+  swiss-chard   app .FMA...ASO..  guide ..MA...AS...  both 4 extra 2 missing 0
+  tomatoes      app .......ASO..  guide ......JAS...  both 2 extra 1 missing 1
+  turnip        app ............  guide ..MAMJJASON.  both 0 extra 0 missing 9
+
+== Johannesburg 0 summer
+  broad-beans   app ..MAMJJ.....  guide ...AM.......  both 2 extra 3 missing 0
+  green-beans   app J.......SOND  guide J......ASOND  both 5 extra 0 missing 1
+  beetroot      app .FM....ASO..  guide JFM....ASO..  both 5 extra 0 missing 1
+  brinjal       app .........ON.  guide .......ASO..  both 1 extra 1 missing 2
+  broccoli      app JFM....A....  guide JF.........D  both 2 extra 2 missing 1
+  cabbage       app JFM....AS...  guide JF....JA..ND  both 3 extra 2 missing 3
+  peppers       app .......ASO..  guide .......ASO..  both 3 extra 0 missing 0
+  chilli        app .......ASO..  guide .......ASO..  both 3 extra 0 missing 0
+  carrots       app .FM....ASO..  guide JFM....ASO..  both 5 extra 0 missing 1
+  cauliflower   app JFM....AS..D  guide JFM.......ND  both 4 extra 2 missing 1
+  cucumber      app ........SOND  guide ........SOND  both 4 extra 0 missing 0
+  lettuce       app .FM....ASO..  guide JFM....AS...  both 4 extra 1 missing 1
+  sweetcorn     app ........SOND  guide ........SON.  both 3 extra 1 missing 0
+  spanspek      app ........SOND  guide ........SON.  both 3 extra 1 missing 0
+  watermelon    app .........OND  guide ........SON.  both 2 extra 1 missing 1
+  onions        app ..MAM.......  guide .FM.........  both 1 extra 2 missing 1
+  parsley       app JFM....ASOND  guide .FMA....SO..  both 4 extra 4 missing 1
+  peas          app .FM....A....  guide ......JAS...  both 1 extra 2 missing 2
+  pumpkin       app .........ON.  guide ........SON.  both 2 extra 0 missing 1
+  butternut     app .........OND  guide ........SON.  both 2 extra 1 missing 1
+  gem-squash    app J.......SOND  guide ........SON.  both 3 extra 2 missing 0
+  baby-marrow   app J.......SOND  guide ........SON.  both 3 extra 2 missing 0
+  radish        app JFMA..JASOND  guide .FMA...ASON.  both 7 extra 3 missing 0
+  true-spinach  app .FM....ASO..  guide JFMA...ASOND  both 5 extra 0 missing 4
+  swiss-chard   app .FM....ASO..  guide JFM....ASO..  both 5 extra 0 missing 1
+  tomatoes      app .......ASO..  guide .......ASON.  both 3 extra 0 missing 1
+  turnip        app JFMA...AS...  guide JFMA...AS...  both 6 extra 0 missing 0
+
+== Gqeberha 5 all-year
+  broad-beans   app .FMAMJJA....  guide ...AM.......  both 2 extra 5 missing 0
+  green-beans   app .FMA...ASON.  guide J........OND  both 2 extra 5 missing 2
+  beetroot      app JFMA...ASON.  guide JF....JASOND  both 6 extra 2 missing 2
+  brinjal       app JFMAMJJAS...  guide .......ASO..  both 2 extra 7 missing 1
+  broccoli      app JFMA...AS...  guide J..........D  both 1 extra 5 missing 1
+  cabbage       app JFMA...ASO..  guide JFMA...ASOND  both 7 extra 0 missing 2
+  peppers       app JFM...JASOND  guide .......ASO..  both 3 extra 6 missing 0
+  chilli        app JFM...JASOND  guide .......ASO..  both 3 extra 6 missing 0
+  carrots       app .FMAMJJAS...  guide JFMA..JASOND  both 6 extra 2 missing 4
+  cauliflower   app .FMA........  guide JFMA.......D  both 3 extra 0 missing 2
+  cucumber      app .......ASON.  guide JF....JASOND  both 4 extra 0 missing 4
+  lettuce       app JFMA...ASOND  guide JFMA..JASO..  both 7 extra 2 missing 1
+  sweetcorn     app JFM...JAS...  guide ........SOND  both 1 extra 5 missing 3
+  spanspek      app ..MAM.JASO..  guide ........SO..  both 2 extra 5 missing 0
+  watermelon    app .......ASO..  guide ........SO..  both 2 extra 1 missing 0
+  onions        app .FMA........  guide ..MAM.......  both 2 extra 1 missing 1
+  parsley       app .FMAMJJAS...  guide .......ASOND  both 2 extra 6 missing 3
+  peas          app JFMA...AS...  guide ....MJJ.....  both 0 extra 6 missing 3   <-- no overlap
+  pumpkin       app .......ASON.  guide ........SON.  both 3 extra 1 missing 0
+  butternut     app .......ASON.  guide ........SOND  both 3 extra 1 missing 1
+  gem-squash    app ..MAM.JASO..  guide ........SOND  both 2 extra 5 missing 2
+  baby-marrow   app ..MAM.JASO..  guide ........SOND  both 2 extra 5 missing 2
+  radish        app ..MAMJJASO..  guide JFMAM..ASOND  both 6 extra 2 missing 4
+  true-spinach  app ..MAMJJA....  guide .......AS...  both 1 extra 5 missing 1
+  swiss-chard   app .FMAMJJA....  guide JFM....ASO..  both 3 extra 4 missing 3
+  tomatoes      app JFM...JAS..D  guide .......ASO..  both 2 extra 5 missing 1
+  turnip        app .FMAMJJAS...  guide .FM...JA....  both 4 extra 4 missing 0
+
+== Pretoria 1 summer
+  broad-beans   app ..MAMJJ.....  guide ...AM.......  both 2 extra 3 missing 0
+  green-beans   app J.......SOND  guide JF.....ASOND  both 5 extra 0 missing 2
+  beetroot      app .FM....ASO..  guide JFMA...ASOND  both 5 extra 0 missing 4
+  brinjal       app .........ON.  guide .......ASON.  both 2 extra 0 missing 2
+  broccoli      app JFM....A....  guide JF..........  both 2 extra 2 missing 0
+  cabbage       app JFM....AS...  guide .FMA...AS...  both 4 extra 1 missing 1
+  peppers       app .......ASO..  guide .......ASO..  both 3 extra 0 missing 0
+  chilli        app .......ASO..  guide .......ASO..  both 3 extra 0 missing 0
+  carrots       app .FM....ASO..  guide JFM....ASO..  both 5 extra 0 missing 1
+  cauliflower   app JFM....AS..D  guide JFM.......ND  both 4 extra 2 missing 1
+  cucumber      app ........SOND  guide J......ASOND  both 4 extra 0 missing 2
+  lettuce       app .FM....ASO..  guide JFMAMJJAS...  both 4 extra 1 missing 5
+  sweetcorn     app ........SOND  guide .......ASOND  both 4 extra 0 missing 1
+  spanspek      app ........SOND  guide .......ASOND  both 4 extra 0 missing 1
+  watermelon    app .........OND  guide .......AS...  both 0 extra 3 missing 2   <-- no overlap
+  onions        app ..MAM.......  guide .FM.........  both 1 extra 2 missing 1
+  parsley       app JFM....ASOND  guide ..MA...ASO..  both 4 extra 4 missing 1
+  peas          app .FM....A....  guide ...AMJ......  both 0 extra 3 missing 3   <-- no overlap
+  pumpkin       app .........ON.  guide .......ASOND  both 2 extra 0 missing 3
+  butternut     app .........OND  guide J......ASOND  both 3 extra 0 missing 3
+  gem-squash    app J.......SOND  guide J......ASOND  both 5 extra 0 missing 1
+  baby-marrow   app J.......SOND  guide J......ASOND  both 5 extra 0 missing 1
+  radish        app JFMA..JASOND  guide .FM...JASO..  both 6 extra 4 missing 0
+  true-spinach  app .FM....ASO..  guide JFMA...ASOND  both 5 extra 0 missing 4
+  swiss-chard   app .FM....ASO..  guide JFMA..JASO..  both 5 extra 0 missing 3
+  tomatoes      app .......ASO..  guide ......JASOND  both 3 extra 0 missing 3
+  turnip        app JFMA...AS...  guide JFMA..JAS...  both 6 extra 0 missing 1
