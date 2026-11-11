@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '11 November 2026', sha: '7d5eda4d503b87db67b36bfa884c257dc8ae5457', changes: [
+  { when: '11 November 2026', sha: '05105b0b492181cc31957981d157f9fdc7c40297', changes: [
     'The Atlas shows the lowest recorded temperature and hides temperatures it cannot verify.',
     'A weekly harvest target now says when its crop could be ready too early.',
     'The sowing calendar page uses the crop plan\'s calendar names and can show your farm\'s.',

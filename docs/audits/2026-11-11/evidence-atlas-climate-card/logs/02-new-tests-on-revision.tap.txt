@@ -1,0 +1,181 @@
+TAP version 13
+# (node:813) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/atlas.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the display rule admits only a complete, self-consistent temperature year
+ok 1 - the display rule admits only a complete, self-consistent temperature year
+  ---
+  duration_ms: 1.125069
+  type: 'test'
+  ...
+# Subtest: the pure calendar helper keeps its narrower refusal, so its other callers are unaffected
+ok 2 - the pure calendar helper keeps its narrower refusal, so its other callers are unaffected
+  ---
+  duration_ms: 0.664707
+  type: 'test'
+  ...
+# Subtest: a year of 20 °C substitutes shows no climate type, no frost claim and no temperature (Codex FDR-01)
+ok 3 - a year of 20 °C substitutes shows no climate type, no frost claim and no temperature (Codex FDR-01)
+  ---
+  duration_ms: 9.508672
+  type: 'test'
+  ...
+# Subtest: one substituted month is enough: the real-looking months are withheld too
+ok 4 - one substituted month is enough: the real-looking months are withheld too
+  ---
+  duration_ms: 2.997866
+  type: 'test'
+  ...
+# Subtest: a payload with no coverage receipt is withheld like an incomplete one
+ok 5 - a payload with no coverage receipt is withheld like an incomplete one
+  ---
+  duration_ms: 2.413673
+  type: 'test'
+  ...
+# Subtest: complete temperatures: climate type, calendar, temperatures and the record low; no frost class
+ok 6 - complete temperatures: climate type, calendar, temperatures and the record low; no frost class
+  ---
+  duration_ms: 4.833768
+  type: 'test'
+  ...
+# Subtest: Underberg: a coldest mean of 7.37 °C no longer reads "Frost-free" beside a record low of -6.2 °C
+ok 7 - Underberg: a coldest mean of 7.37 °C no longer reads "Frost-free" beside a record low of -6.2 °C
+  ---
+  duration_ms: 12.488553
+  type: 'test'
+  ...
+# Subtest: the record low is printed only when it is a validated, source-tagged reading
+ok 8 - the record low is printed only when it is a validated, source-tagged reading
+  ---
+  duration_ms: 27.189833
+  type: 'test'
+  ...
+# Subtest: isiZulu mode: the record-low chip stays in English and is marked translation pending
+ok 9 - isiZulu mode: the record-low chip stays in English and is marked translation pending
+  ---
+  duration_ms: 8.834759
+  type: 'test'
+  ...
+# Subtest: an outage keeps its own placeholder warning and prints no temperature
+ok 10 - an outage keeps its own placeholder warning and prints no temperature
+  ---
+  duration_ms: 2.671699
+  type: 'test'
+  ...
+# Subtest: the panel source no longer derives a frost statement from a monthly mean
+ok 11 - the panel source no longer derives a frost statement from a monthly mean
+  ---
+  duration_ms: 0.606064
+  type: 'test'
+  ...
+# Subtest: the climate card paints its code, note and chips with theme tokens (CP-115)
+ok 12 - the climate card paints its code, note and chips with theme tokens (CP-115)
+  ---
+  duration_ms: 1.512314
+  type: 'test'
+  ...
+# Subtest: unusable input returns ? rather than a guess
+ok 13 - unusable input returns ? rather than a guess
+  ---
+  duration_ms: 1.247488
+  type: 'test'
+  ...
+# Subtest: the summer half-year flips with the hemisphere
+ok 14 - the summer half-year flips with the hemisphere
+  ---
+  duration_ms: 1.223035
+  type: 'test'
+  ...
+# Subtest: aridity is judged against the threshold, and outranks every other group
+ok 15 - aridity is judged against the threshold, and outranks every other group
+  ---
+  duration_ms: 0.292747
+  type: 'test'
+  ...
+# Subtest: tropical splits on the driest month, not on the annual total
+ok 16 - tropical splits on the driest month, not on the annual total
+  ---
+  duration_ms: 0.350123
+  type: 'test'
+  ...
+# Subtest: a dry season in the summer half reads differently from one in the winter half
+ok 17 - a dry season in the summer half reads differently from one in the winter half
+  ---
+  duration_ms: 0.123571
+  type: 'test'
+  ...
+# Subtest: temperate second letter distinguishes dry-summer, dry-winter and no dry season
+ok 18 - temperate second letter distinguishes dry-summer, dry-winter and no dry season
+  ---
+  duration_ms: 0.272994
+  type: 'test'
+  ...
+# Subtest: temperate third letter tracks how hot and how long the summer is
+ok 19 - temperate third letter tracks how hot and how long the summer is
+  ---
+  duration_ms: 0.191758
+  type: 'test'
+  ...
+# Subtest: cold and polar groups are separated by the coldest and warmest months
+ok 20 - cold and polar groups are separated by the coldest and warmest months
+  ---
+  duration_ms: 0.135173
+  type: 'test'
+  ...
+# Subtest: every code the classifier can emit carries a description and a grower note
+ok 21 - every code the classifier can emit carries a description and a grower note
+  ---
+  duration_ms: 0.451959
+  type: 'test'
+  ...
+# Subtest: the rainfall pattern bridge matches the planner's four patterns
+ok 22 - the rainfall pattern bridge matches the planner's four patterns
+  ---
+  duration_ms: 0.993337
+  type: 'test'
+  ...
+# Subtest: the record minimum decides frost where a mean cannot: arid sites and close calls
+ok 23 - the record minimum decides frost where a mean cannot: arid sites and close calls
+  ---
+  duration_ms: 0.318163
+  type: 'test'
+  ...
+# Subtest: the calendar choice reports rain timing separately and flags a close call
+ok 24 - the calendar choice reports rain timing separately and flags a close call
+  ---
+  duration_ms: 0.19021
+  type: 'test'
+  ...
+# Subtest: the close-call search also tries both monthly means together (Argon F-07)
+ok 25 - the close-call search also tries both monthly means together (Argon F-07)
+  ---
+  duration_ms: 1.190715
+  type: 'test'
+  ...
+# (node:814) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/koppen-global.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: no class note calls the year mild or frost light at a place with a sub-zero record low (CP-114)
+ok 26 - no class note calls the year mild or frost light at a place with a sub-zero record low (CP-114)
+  ---
+  duration_ms: 7.961571
+  type: 'test'
+  ...
+# Subtest: the three temperate notes that used to claim mildness now state the class and say it is silent on frost (CP-114)
+ok 27 - the three temperate notes that used to claim mildness now state the class and say it is silent on frost (CP-114)
+  ---
+  duration_ms: 0.504158
+  type: 'test'
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1367.777832
+exit 0

@@ -4,3 +4,5 @@
 # as the app produced them (audit evidence), so they are not text for whitespace checks or line-ending
 # conversion.
 *.ics binary
+# Raw test and server logs kept as evidence are stored exactly as captured, trailing spaces included.
+docs/audits/2026-11-11/evidence-atlas-climate-card/logs/* -whitespace
