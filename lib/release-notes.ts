@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '11 November 2026', sha: '9fc10ed7c15a87984d3150bdebe19aadb840c2fa', changes: [
+  { when: '11 November 2026', sha: '78277db35c71fcf555b4fef34038676adf0b2307', changes: [
     'Printed frost warnings follow the frost months you record, not a fixed winter window.',
     'Site data marks unknown weather and wind coverage, drops climate-based crop promises, and is clearer in dark mode.',
     'A weekly harvest target now says when its crop could be ready too early.',
