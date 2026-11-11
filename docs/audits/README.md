@@ -184,6 +184,8 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
+Latest provisional engine continuation: [Provisional global crop resolver — 11 November 2026](2026-11-11/provisional-global-crop-resolver.md). Local evidence-selection and arithmetic work; country adapters, app integration and release review remain open.
+
 Shared acceptance checks: [Crop planning checklist](CROP-PLANNING-CHECKLIST.md).
 Use this with the latest dated crop record; it is a verification checklist, not a
 claim that every check has passed or that the proposed farming fixes are deployed.
