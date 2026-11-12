@@ -346,3 +346,36 @@ test('a sample-mode transition during the final source check cancels a captured 
     assert.deepEqual(capture.names, []); assert.doesNotMatch(ui.text(), /Estimated plants:/);
   } finally { capture.dispose(); ui.dispose(); }
 });
+
+
+test('real Kenya reference is opt-in, keeps numbers unknown, and requires new consent after a context change', async () => {
+  const ui = mount({ evidence: undefined, agriculturalRegionReference: 'Central Kenya' });
+  try {
+    ui.change('Preview crop', 'cabbage'); ui.change('Preview measured bed', 'bed-1');
+    assert.match(ui.text(), /WorldVeg cabbage method reference/);
+    assert.match(ui.text(), /2024-06 \(day unknown\)/);
+    const chooseReference = () => ui.field('Use this transplant-method reference for this preview');
+    assert.equal(chooseReference().props.checked, false);
+    await ui.click();
+    assert.match(ui.text(), /Establishment method: Unknown/);
+    act(() => chooseReference().props.onChange({ target: { checked: true } }));
+    await ui.click();
+    assert.match(ui.text(), /Establishment method: transplant/);
+    assert.match(ui.text(), /Estimated plants: Unknown/);
+    assert.match(ui.text(), /Estimated harvest weight: Unknown/);
+    assert.match(ui.text(), /First harvest \(UTC\): Unknown/);
+    assert.match(ui.text(), /Rapando N/); assert.match(ui.text(), /CC BY-SA 3.0/);
+    ui.change('Plant density (plants per m²)', '2'); await ui.click();
+    assert.match(ui.text(), /Estimated plants: 21/);
+    assert.match(ui.text(), /grower-estimate/);
+    ui.update({ contextRevision: 2 });
+    assert.equal(chooseReference().props.checked, false);
+    assert.doesNotMatch(ui.text(), /Estimated plants:/);
+    ui.update({ agriculturalRegionReference: 'Nairobi' });
+    assert.equal(chooseReference().props.disabled, true);
+    await ui.click(); assert.match(ui.text(), /Establishment method: Unknown/);
+    ui.update({ countryCode: 'ZA' });
+    assert.doesNotMatch(ui.text(), /WorldVeg cabbage method reference/);
+    assert.deepEqual(ui.writes, []);
+  } finally { ui.dispose(); }
+});

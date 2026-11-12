@@ -8,6 +8,8 @@ import { downloadFile } from '@/lib/crop-export-deliver';
 import { buildProvisionalCropPreviewHtml, provisionalNumericFields as numericFields, provisionalLabels as labels, provisionalInputText as inputText, provisionalScopeText as scopeText } from '@/lib/international/provisional-crop-export';
 import { growerWorkflowResourceSiteId, type GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { resolveProvisionalCropPlan, type ProvisionalFieldCandidate, type ProvisionalDraftRequest } from '@/lib/international/provisional-crop-planning';
+import { sourcePublicationText } from '@/lib/international/countries/readiness';
+import { worldvegKenyaCabbageCandidates, worldvegKenyaCabbageReference, worldvegKenyaCabbageRegionMatches } from '@/lib/international/providers/worldveg-kenya-cabbage';
 
 export interface ProvisionalCropPreviewProps {
   ownerKey: string;
@@ -30,7 +32,7 @@ type NumericField = typeof numericFields[number][0];
 type Draft = {
   crop: string; bed: string; date: string; method: '' | 'direct' | 'transplant';
   water: '' | 'rain-fed' | 'irrigated'; variety: string;
-  values: Partial<Record<NumericField, string>>; months: number[] | null;
+  values: Partial<Record<NumericField, string>>; months: number[] | null; regionalConsent: string | null;
 };
 type Resolution = ReturnType<typeof resolveProvisionalCropPlan>;
 const control = 'min-h-11 w-full rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-sm';
@@ -57,7 +59,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
   const current = useRef(props); current.current = props;
   const active = useRef(true);
   useEffect(() => { active.current = true; return () => { active.current = false; }; }, []);
-  const [draft, setDraft] = useState<Draft>({ crop: '', bed: '', date: '', method: '', water: '', variety: '', values: {}, months: null });
+  const [draft, setDraft] = useState<Draft>({ crop: '', bed: '', date: '', method: '', water: '', variety: '', values: {}, months: null, regionalConsent: null });
   const draftLive = useRef(draft); draftLive.current = draft;
   const [preview, setPreview] = useState<{ binding: string; draft: Draft; result: Resolution; request: ProvisionalDraftRequest; bedLabel: string; receipt: { isCurrent: () => boolean } } | null>(null);
   const previewLive = useRef(preview); previewLive.current = preview;
@@ -66,6 +68,10 @@ function Editor(props: ProvisionalCropPreviewProps) {
   const pending = useRef<object | null>(null);
   const [checkingSource, setCheckingSource] = useState(false);
   const environment = binding(props);
+  const regionalReference = worldvegKenyaCabbageReference(props.countryCode, draft.crop);
+  const regionalMatch = worldvegKenyaCabbageRegionMatches(props.agriculturalRegionReference);
+  const regionalConsentKey = environment === null ? null : JSON.stringify([environment, draft.crop]);
+  const useRegionalMethod = regionalConsentKey !== null && draft.regionalConsent === regionalConsentKey && regionalMatch;
   const source = props.source;
   const sourceReady = !!source && growerWorkflowResourceSiteId(source) !== null
     && growerPlanningScopeKey(source.scope) === growerPlanningScopeKey(props.scope) && !props.checking;
@@ -115,10 +121,11 @@ function Editor(props: ProvisionalCropPreviewProps) {
       }
       if (draft.method) overrides.establishment = supplied(draft.method, 'method');
       if (draft.months !== null) overrides.allowedEntryMonths = supplied(draft.months, 'utc-months');
+      const context = { scope: props.scope, countryCode: props.countryCode, agriculturalRegionReference: props.agriculturalRegionReference,
+        establishment: draft.method || null, waterRegime: draft.water || null, varietyReference: draft.variety.trim() || null };
       const request: ProvisionalDraftRequest = structuredClone({ profileId: 'provisional-preview', cropKey: draft.crop,
-        context: { scope: props.scope, countryCode: props.countryCode, agriculturalRegionReference: props.agriculturalRegionReference,
-          establishment: draft.method || null, waterRegime: draft.water || null, varietyReference: draft.variety.trim() || null },
-        recordedAt, asOf: recordedAt.slice(0, 10), candidates: props.evidence?.candidates ?? [], overrides,
+        context, recordedAt, asOf: recordedAt.slice(0, 10),
+        candidates: [...(props.evidence?.candidates ?? []), ...worldvegKenyaCabbageCandidates(context, draft.crop, recordedAt, useRegionalMethod)], overrides,
         knownPlantingRestriction: props.evidence?.knownPlantingRestriction,
         measuredAreaM2: { state: 'provided', value: measures[0].areaM2, unit: 'm2',
           provenance: { kind: 'grower-record', recordedAt, reference: `Saved measured bed: ${draft.bed}` },
@@ -164,11 +171,11 @@ function Editor(props: ProvisionalCropPreviewProps) {
     <p className="text-sm">Preview supported counts and dates using applicable evidence and your edits. Missing values stay unknown. Nothing here saves a profile or adds a crop.</p>
     <p role="note" className="text-sm">Provisional estimates: source metadata is not verification of farming accuracy. Suitability and plant legality are not established. Density is not layout clearance.</p>
     <p className="text-sm">Country: {props.countryCode ?? 'Unknown'} · Agricultural region: {props.agriculturalRegionReference ?? 'Unknown'}</p>
-    {!props.evidence?.candidates.length && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
+    {!props.evidence?.candidates.length && !useRegionalMethod && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
     <button type="button" className={button} disabled={props.checking} onClick={refresh}>{props.checking ? 'Checking measurements…' : 'Check saved measurements'}</button>
     {!sourceReady && <p role="note">Current saved measurements are required. Previously calculated results are hidden.</p>}
     <div className="grid gap-3 sm:grid-cols-2">
-      <label className="text-sm">Preview crop<select aria-label="Preview crop" className={control} value={draft.crop} onChange={e => edit({ crop: e.target.value, values: {}, months: null })}>
+      <label className="text-sm">Preview crop<select aria-label="Preview crop" className={control} value={draft.crop} onChange={e => edit({ crop: e.target.value, values: {}, months: null, regionalConsent: null })}>
         <option value="">Choose an existing crop</option>{CROPS.map(crop => <option key={crop.key} value={crop.key}>{crop.name}</option>)}</select></label>
       <label className="text-sm">Preview measured bed<select aria-label="Preview measured bed" className={control} value={draft.bed} onChange={e => edit({ bed: e.target.value })}>
         <option value="">Choose a measured bed</option>{sourceReady && source?.beds.map(bed => <option key={bed.id} value={bed.id}>{bed.label} · {bed.areaM2} m²</option>)}</select></label>
@@ -179,6 +186,18 @@ function Editor(props: ProvisionalCropPreviewProps) {
         <option value="">Unknown</option><option value="rain-fed">Rain-fed</option><option value="irrigated">Irrigated</option></select></label>
       <label className="text-sm">Variety reference (optional)<input className={control} value={draft.variety} onChange={e => edit({ variety: e.target.value })} /></label>
     </div>
+    {regionalReference && <section aria-label="Kenya method reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
+      <h3 className="font-semibold">WorldVeg cabbage method reference</h3>
+      <p>The manual describes transplanting at 4–5 true leaves. This is a growth stage, not nursery days.</p>
+      <p>Its cabbage discussion names central Kenya as a favourable context; it does not define a boundary or certify your site. Your region description has not been independently checked.</p>
+      <p>Published: {sourcePublicationText(regionalReference)}. No numeric defaults are supplied: spacing has no named axes, and bed preparation lead time is not seedling age.</p>
+      <p><a className="underline" href={`${regionalReference.url}#page=39`} target="_blank" rel="noreferrer">Read the original WorldVeg manual, page 35</a></p>
+      <p>{regionalReference.attribution}</p><p>{regionalReference.licence.status === 'known' && regionalReference.licence.value}</p>
+      {!regionalMatch && <p role="note">The method is available only with an explicit Central Kenya region description. It is not inferred from country or coordinates.</p>}
+      <label className="flex min-h-11 items-center gap-2"><input type="checkbox" aria-label="Use WorldVeg method reference" disabled={!regionalMatch}
+        checked={useRegionalMethod} onChange={e => edit({ regionalConsent: e.target.checked ? regionalConsentKey : null })} />Use this transplant-method reference for this preview</label>
+      <p>Density, yield, nursery days and harvest dates stay unknown until supported separately. Nothing is saved.</p>
+    </section>}
     <fieldset className="space-y-3"><legend className="font-semibold">Your preview overrides</legend>
       <p className="text-sm">Entered values are your estimates. Reset restores the evidence default, if available. Clearing an edited field keeps it unknown.</p>
       <div className="grid gap-3 sm:grid-cols-2">{numericFields.map(([key, label, unit]) => <div key={key}>
@@ -215,7 +234,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
         {value.status === 'invalid-override' && <p role="alert">Invalid override. Correct or reset this field; its default has not been substituted.</p>}
         {value.defaultOptions.map(option => <p key={option.candidateId}>Default {option.candidateId}: {inputText(option.input)}{option.reportedRange ? `; reported range ${option.reportedRange.join('–')}` : ''}. Applies to {scopeText(option.scope)}.</p>)}
         {value.defaultPlanningValueBasis && <p>Default planning value: {value.defaultPlanningValueBasis}</p>}
-        {value.sourceBindings.map((item, i) => <p key={`${item.id}:${i}`} className="break-words">Source: {item.title} · {item.url}. Published: {item.publishedOn ?? 'Unknown'}; accessed: {item.accessedOn ?? 'Unknown'}; review due: {item.reviewDueOn ?? 'Unknown'}. Reuse: {item.reuseTerms}. Evidence state: {item.evidenceState}.</p>)}
+        {value.sourceBindings.map((item, i) => <div key={`${item.id}:${i}`} className="break-words"><p>Source: {item.title} · {item.url}. Published: {sourcePublicationText(item)}; accessed: {item.accessedOn ?? 'Unknown'}; review due: {item.reviewDueOn ?? 'Unknown'}. Reuse: {item.reuseTerms}. Evidence state: {item.evidenceState}.</p><p>{item.attribution}</p><p>{item.limitations}</p></div>)}
         {value.assumptions.map(item => <p key={item}>Assumption: {item}</p>)}
       </details>)}
       {!!result.rejected.length && <details><summary className="min-h-11 cursor-pointer">Evidence not used</summary><ul>{result.rejected.map((item, i) => <li key={i}>{item.id}: {item.reason}</li>)}</ul></details>}
