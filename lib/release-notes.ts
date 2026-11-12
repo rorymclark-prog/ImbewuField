@@ -41,9 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '12 November 2026', sha: 'b0974c9fac5b72c6ff8b6fecabbecc1599e741ce', changes: [
+  { when: '12 November 2026', sha: '7e116dbfa8257fbb8c4e85a7328c217c9216d96b', changes: [
     'Download a printable crop preview with your inputs, sources and unknowns.',
     'Preview controls keep working overnight. Unconfirmed save warnings stay visible.',
+    'Printable previews show when saved measurements were read.',
   ] },
   { when: '12 November 2026', sha: '8aeba000e8fbbb025a9b157174a47cd2fdd92585', changes: [
     'Preview crop counts and dates from your measured bed and your estimates.',

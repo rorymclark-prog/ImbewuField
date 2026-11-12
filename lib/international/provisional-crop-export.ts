@@ -40,7 +40,7 @@ const paragraph = (label: string, value: unknown) => `<p><strong>${escape(label)
 /** A portable view of the resolver, never another calculator or saved-plan writer.
  * The caller must freshly admit the source and actor at the actual file handoff. */
 export function buildProvisionalCropPreviewHtml(request: ProvisionalDraftRequest, metadata: {
-  bedLabel: string; sourceRevision: string; sample: boolean;
+  bedLabel: string; sample: boolean;
 }): { html: string; fingerprint: string } | null {
   const result = resolveProvisionalCropPlan(request);
   if (result.status !== 'resolved') return null;
@@ -98,7 +98,9 @@ ${paragraph('Water regime', request.context.waterRegime)}${paragraph('Variety re
 ${paragraph('Requested establishment', result.requestedEstablishment)}${paragraph('Active establishment', result.activeEstablishment)}
 ${paragraph('Measured area', provisionalInputText(snapshot.measuredAreaM2))}
 ${paragraph('Field-entry date (UTC)', provisionalInputText(snapshot.fieldEntryDate))}
-${snapshot.measuredAreaM2.state === 'provided' ? paragraph('Measurement provenance', provenanceText(snapshot.measuredAreaM2.provenance)) : ''}
+${snapshot.measuredAreaM2.state === 'provided' ? paragraph('Saved measurement source', `${snapshot.measuredAreaM2.provenance.kind}${'reference' in snapshot.measuredAreaM2.provenance ? `; reference ${snapshot.measuredAreaM2.provenance.reference}` : ''}`) : ''}
+${snapshot.measuredAreaM2.state === 'provided' ? `${paragraph('Saved measurement read at (UTC)', request.recordedAt)}
+<p>This is when the saved design was read, not when the measurement was made.</p>` : ''}
 ${snapshot.measuredAreaM2.arithmeticBasis ? paragraph('Saved rectangle arithmetic', `${snapshot.measuredAreaM2.arithmeticBasis.widthM} m × ${snapshot.measuredAreaM2.arithmeticBasis.heightM} m`) : ''}
 ${paragraph('Count arithmetic', snapshot.countArithmetic)}
 

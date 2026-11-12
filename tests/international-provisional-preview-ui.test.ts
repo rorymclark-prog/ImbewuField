@@ -177,11 +177,38 @@ function exportRequest() {
     fieldEntryDate: { state: 'provided', value: '2028-02-28', unit: 'utc-date', provenance: { kind: 'grower-estimate', recordedAt: '2026-11-12T12:00:00.000Z' } } };
 }
 
+test('the download identifies a saved-measurement read time without dating the original measurement', () => {
+  const request = exportRequest();
+  const before = JSON.stringify(request);
+  const file = buildProvisionalCropPreviewHtml(request, { bedLabel: 'Measured bed', sample: false });
+  assert.ok(file);
+  assert.match(file.html, /Saved measurement read at \(UTC\):<\/strong>\s*2026-11-12T12:00:00\.000Z/);
+  assert.match(file.html, /This is when the saved design was read, not when the measurement was made\./);
+  assert.doesNotMatch(file.html, /Measurement provenance|grower-record; recorded 2026-11-12T12:00:00\.000Z/);
+  assert.match(file.html, /Measured area:<\/strong>\s*10\.5 m²/);
+  assert.match(file.html, /26 \(ready\)/);
+  assert.equal(JSON.stringify(request), before);
+});
+
+test('a ready harvest weight is exported with one kilogram unit through the actual download', async () => {
+  const ui = mount(); const capture = downloads();
+  try {
+    ui.choose(); ui.change('Harvest weight (kg per m² per cycle)', '2'); await ui.click();
+    assert.match(ui.text(), /Estimated harvest weight: 21 kg \(ready\)/);
+    await ui.click('Download printable preview');
+    assert.equal(capture.blobs.length, 1);
+    const html = await capture.blobs[0].text();
+    assert.match(html, /<th scope="row">Estimated harvest weight<\/th><td>21 kg \(ready\)<\/td>/);
+    assert.doesNotMatch(html, /kg kg/);
+    assert.deepEqual(ui.writes, []);
+  } finally { capture.dispose(); ui.dispose(); }
+});
+
 test('printable original preserves independent results and provenance without executable source text or private fingerprints', () => {
   const request = exportRequest();
   request.candidates = candidates.map(c => ({ ...c, source: { ...citation, title: '<script>bad()</script>', url: citation.url } }));
   const before = JSON.stringify(request);
-  const file = buildProvisionalCropPreviewHtml(request, { bedLabel: '<img src=x onerror=bad()>', sourceRevision: 'revision-1', sample: true });
+  const file = buildProvisionalCropPreviewHtml(request, { bedLabel: '<img src=x onerror=bad()>', sample: true });
   assert.ok(file); assert.match(file.html, /DEMO: sample inputs/); assert.match(file.html, /26 \(ready\)/);
   assert.match(file.html, /Unknown \(missing-inputs\)/); assert.match(file.html, /2028-03-02/);
   assert.match(file.html, /&lt;script&gt;bad\(\)&lt;\/script&gt;/); assert.match(file.html, /&lt;img/);
@@ -189,13 +216,13 @@ test('printable original preserves independent results and provenance without ex
   assert.match(file.html, /Synthetic test permission/); assert.match(file.html, /Synthetic assumption retained/);
   assert.match(file.html, /2026-01-01/); assert.match(file.html, /default-src 'none'/);
   assert.equal(JSON.stringify(request), before);
-  assert.equal(buildProvisionalCropPreviewHtml({ ...request, knownPlantingRestriction: true }, { bedLabel: 'bed', sourceRevision: 'r', sample: false }), null);
+  assert.equal(buildProvisionalCropPreviewHtml({ ...request, knownPlantingRestriction: true }, { bedLabel: 'bed', sample: false }), null);
 });
 
 test('printable overrides keep conflicting defaults and invalid edits do not restore a count', () => {
   const request = { ...exportRequest(), candidates: [...candidates, candidate('plantsPerM2', 3, { id: 'conflict', reportedRange: [2, 4], planningValueBasis: 'reported-point' })],
     overrides: { plantsPerM2: { state: 'provided', value: 4, unit: 'plants/m2', provenance: { kind: 'grower-estimate', recordedAt: '2026-11-12T12:00:00.000Z' } } } };
-  const options = { bedLabel: 'bed', sourceRevision: 'r', sample: false };
+  const options = { bedLabel: 'bed', sample: false };
   const file = buildProvisionalCropPreviewHtml(request, options); assert.ok(file);
   assert.match(file.html, /42 \(ready\)/); assert.match(file.html, /Conflicting defaults remain unresolved/);
   assert.match(file.html, /reported range 2–4/); assert.match(file.html, /grower-estimate/);
@@ -293,7 +320,9 @@ test('a calculation spanning midnight is discarded and can be retried on the new
 test('printable export never embeds a serialized private source revision', () => {
   const revision = JSON.stringify({ ownerUid: 'PRIVATE-OWNER-SENTINEL', siteId: 'PRIVATE-SITE-SENTINEL',
     source: { notes: 'PRIVATE-DESIGN-SENTINEL', account: 'PRIVATE-ACCOUNT-SENTINEL' } });
-  const file = buildProvisionalCropPreviewHtml(exportRequest(), { bedLabel: 'Chosen bed', sourceRevision: revision, sample: false });
+  // Older JavaScript callers can still carry extra metadata. It must never enter the document.
+  const legacyMetadata = { bedLabel: 'Chosen bed', sourceRevision: revision, sample: false };
+  const file = buildProvisionalCropPreviewHtml(exportRequest(), legacyMetadata);
   assert.ok(file); assert.doesNotMatch(file.html, /PRIVATE-|ownerUid|siteId|Saved-source revision/);
   assert.match(file.html, /Chosen bed/); assert.match(file.html, /Synthetic test table/); assert.ok(file.fingerprint);
 });
