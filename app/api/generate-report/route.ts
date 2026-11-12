@@ -892,7 +892,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
       ...(purchasingGuidance ? [purchasingGuidance] : []),
       billOfQuantitiesMarkdown(boq,langCode),
       monitoringMarkdown(buildMonitoringPlan(facts,langCode),langCode)+(zuluClosing?`\n\n${zuluClosing.monitoringNote}`:''),
-      riskRegisterMarkdown(risks,langCode)+(zuluClosing?`\n\n${zuluClosing.riskNote}`:''),
+      riskRegisterMarkdown(risks,langCode,annualRain)+(zuluClosing?`\n\n${zuluClosing.riskNote}`:''),
       assuranceMarkdown(langCode,{soilSource:d.soil.soilSource}),
     ],
   });
