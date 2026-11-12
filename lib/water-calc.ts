@@ -114,7 +114,8 @@ export function annualHarvestLitres(
   return roofHarvestLitres(roofM2, annualMm, runoff);
 }
 
-const TANK_STEP_SIZES = [2500, 5000, 10000, 15000, 20000];
+/** Standard tank sizes, in litres; above the largest, sizes go up in 10 000 L steps. */
+export const TANK_STEP_SIZES = [2500, 5000, 10000, 15000, 20000] as const;
 export const STORAGE_SHARE_BY_PATTERN: Readonly<Record<'summer' | 'winter' | 'all-year', number>> = {
   winter: 0.35,
   summer: 0.2,

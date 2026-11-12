@@ -41,6 +41,9 @@ export const DEMO_LOCATION: LocationData = {
     maxTemp: 42.1,
     minTemp: -2.3,
     monthlyTemp: [22.72, 22.25, 20.78, 17.67, 14.78, 11.6, 11.54, 14.43, 17.92, 19.83, 21.08, 22.4],
+    // The capture predates this field. All twelve months above are POWER's own values (none is
+    // lib/nasa-power.ts's 20 °C stand-in), so the current route would mark the set complete.
+    monthlyTempCoverage: { source: 'nasa-power', status: 'complete' },
     solarRadiation: 5.3,
     koppen: 'Dwb',
     koppenDesc: 'Cold continental highland',
@@ -91,12 +94,15 @@ export const DEMO_SITE_DATA: SiteData = {
   features: [{ name: 'Home field', category: 'Field', areaHa: 0.45 }],
 };
 
+// A roof and its tank, not a dam, so the dam rule (area × average depth) does not apply: the
+// demo tank is lib/water-year.ts householdTank()'s size for this roof, this rain and the
+// app's default household of four. tests/water-year.test.ts holds the two together.
 export const DEMO_WATER_DATA: WaterData = {
   count: 1,
   areaM2: 120,
-  estVolumeKL: 180,
-  avgDepthM: 1.5,
-  features: [{ name: 'Roof + tank', category: 'Roof catchment', estVolumeKL: 180 }],
+  estVolumeKL: 10,
+  avgDepthM: 0,
+  features: [{ name: 'Roof + tank', category: 'Roof catchment', estVolumeKL: 10 }],
 };
 
 // A fully-complete site so the demo's completion donut shows 100% — this is

@@ -15,10 +15,17 @@ import { useRouter } from 'next/navigation';
 import { Eye, Sprout, Droplets, Layers, Snowflake, Mountain, AlertTriangle } from 'lucide-react';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import CompletionScore from '@/components/report/CompletionScore';
-import { DEMO_LOCATION, DEMO_SITE_DATA, DEMO_WATER_DATA, DEMO_COMPLETION } from '@/lib/demo-site';
+import { DEMO_COORDS, DEMO_LOCATION, DEMO_SITE_DATA, DEMO_WATER_DATA, DEMO_COMPLETION } from '@/lib/demo-site';
+import { siteClimateFromLocationData } from '@/lib/site-climate';
 
 import Illustration from '@/components/Illustration';
+import WaterYear from '@/components/WaterYear';
+import RainOnTerrainFilm from '@/components/RainOnTerrainFilm';
+import CropGateYear from '@/components/CropGateYear';
 import workspace from '@/components/layout/Workspace.module.css';
+
+// The example farm's climate exactly as the planner reads it (site-climate.ts), for the gate figure.
+const DEMO_CLIMATE = siteClimateFromLocationData(DEMO_LOCATION, DEMO_COORDS.lat);
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
@@ -246,6 +253,24 @@ function ExampleInner() {
             </span>
           </div>
         </div>
+
+        {/* The same year as a film: the storm on the site's real ground, then the tank month by month. */}
+        <RainOnTerrainFilm />
+
+        {/* The water year: the harvesting card's roof and this site's monthly rain, played through. */}
+        <WaterYear
+          monthlyMm={data.rainfall.monthly}
+          roofM2={water.areaM2}
+          rainSource="NASA POWER monthly averages for this point"
+        />
+
+        {/* Why not this month? The planner's climate gate on the same year, one crop at a time. */}
+        {DEMO_CLIMATE && (
+          <CropGateYear
+            site={{ monthlyRainMm: DEMO_CLIMATE.monthlyRainMm, monthlyTempC: DEMO_CLIMATE.monthlyTempC, latDeg: DEMO_COORDS.lat, pattern: DEMO_CLIMATE.pattern }}
+            climateSource="NASA POWER monthly averages for this point"
+          />
+        )}
 
         <div className={workspace.twoColumns}>
           {/* Key species */}
