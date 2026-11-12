@@ -69,7 +69,11 @@ function ExampleInner() {
   const frostLabel = data.climate.minTemp < 2 ? t('frostLikely') : data.climate.minTemp < 5 ? t('frostOccasional') : t('frostRare');
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg-0)' }}>
+    // The root layout locks <body> (h-screen overflow-hidden) for the map, so a content page must
+    // scroll itself. This one never did, and once the Water Year, the crop gate and the film made it
+    // taller than a screen, everything below the fold was out of reach (Rory, 12 Nov: "i cant
+    // scroll down on the example"). Same pattern as /contact and /community.
+    <div className="h-screen overflow-y-auto" style={{ background: 'var(--bg-0)' }}>
       {/* This page leads with the demonstration banner, not a title, so the heading that names
           it is for screen readers only — a page with no h1 gives "jump to heading 1" nowhere
           to land. Reuses the banner's own translated string rather than a new English literal. */}

@@ -187,3 +187,11 @@ test('bad input returns null rather than a figure', () => {
   assert.equal(waterYear({ monthlyMm: MM.map(() => Number.NaN), roofM2: ROOF, people: 2, tankL: 5000 }), null);
   assert.equal(waterYear({ monthlyMm: MM, roofM2: ROOF, people: 2, tankL: 5000, coefficient: 1.2 }), null);
 });
+
+test('/example scrolls itself, because the root layout locks <body>', async () => {
+  const { readFileSync } = await import('node:fs');
+  const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8');
+  const page = readFileSync(new URL('../app/example/page.tsx', import.meta.url), 'utf8');
+  assert.match(layout, /<body className="[^"]*overflow-hidden/, 'fixture: the layout still locks body; drop this test if that changes');
+  assert.match(page, /return \([\s\S]*?<div className="h-screen overflow-y-auto"/, 'the page root must be its own scroll container');
+});
