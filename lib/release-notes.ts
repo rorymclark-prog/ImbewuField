@@ -41,14 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '12 November 2026', sha: '960e5a52c', changes: [
+  { when: '12 November 2026', sha: 'a0906e1ec', changes: [
     'Preview crops from your saved measurements, source references and your own conditions.',
     'Kenya method references keep unsupported counts, yields and dates unknown.',
     'Soil and weather readings show their evidence without unsupported scores or risk ratings.',
     'Printed report tables keep their headers with their rows.',
   ] },
   { when: '12 November 2026', sha: 'fa2d646d0', changes: [
-    'Explore a year of rain, roof collection, household water use and tank storage on the example farm.',
+    'Explore rain, roof collection, household water use and tank storage on the example farm.',
     'See why the example climate checks hold a crop back in a particular sowing month.',
     'The example includes a rain-on-terrain film and scrolls on your phone.',
   ] },
@@ -74,7 +74,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'The sowing calendar page uses the crop plan\'s calendar names and can show your farm\'s.',
   ] },
   { when: '12 November 2026', sha: 'ad2cdefcf', changes: [
-    'Choose cowpea leaf production and growth habit to view the matching Kenya source reference.',
+    'Choose cowpea leaf production and growth habit to see the matching source reference.',
     'Cowpea source ranges stay separate from your density estimates and unknown harvest dates.',
     'Returning to an earlier region requires a fresh preview and source choice.',
     'Choose a sourced Kenya transplant method; unsupported numbers stay unknown.',
