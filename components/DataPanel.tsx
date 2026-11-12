@@ -1,8 +1,9 @@
 'use client';
+import { savedRainfallFields } from '@/lib/saved-places';
 
 import { numberLabel } from '@/lib/format-figures';
-import { monthlyTemperatureStatus, recordMinimumC } from '@/lib/climate-temperature';
-import { koppenClassName, koppenClassNote } from '@/lib/koppen-global';
+import { annualRainfallMm, modelledWindSpeed, monthlyTemperatureStatus, recordMinimumC } from '@/lib/climate-temperature';
+import { koppenClassName } from '@/lib/koppen-global';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
@@ -665,7 +666,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     <SiteSurveySheet
       placeId={activePlaceId}
       coords={coords}
-      annualRainfallMm={data?.rainfall.annual}
+      annualRainfallMm={annualRainfallMm(data?.rainfall) ?? undefined}
       locationData={data ?? undefined}
       onSaved={() => { setSurveySheetOpen(false); if (data) openPhotoOrReport(); }}
       onClose={() => setSurveySheetOpen(false)}
@@ -685,7 +686,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         ...nearby,
         lat: coords.lat, lon: coords.lon,
         biome: data.biome.name,
-        rainfall: data.rainfall.annual,
+        ...savedRainfallFields(data.rainfall, nearby),
         elevation: data.elevation.elevation,
       });
       setPlaceSaved(true);
@@ -698,7 +699,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       id: generateId(), name,
       lat: coords.lat, lon: coords.lon,
       biome: data.biome.name,
-      rainfall: data.rainfall.annual,
+      ...savedRainfallFields(data.rainfall),
       elevation: data.elevation.elevation,
       savedAt: new Date().toISOString(),
     });
@@ -759,6 +760,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   if (!data) return null;
 
   const temperatureStatus = monthlyTemperatureStatus(data.climate);
+  // A failed location lookup substitutes rain=600 mm and wind=3 m/s without source tags.
+  // Use each figure's own provenance, not temperature coverage, so independently supported
+  // partial wind and rainfall remain useful when the temperature year is incomplete.
+  const rainfallKnown = annualRainfallMm(data.rainfall) !== null;
+  const windKnown = modelledWindSpeed(data.climate) !== null;
   // Validated gridded record minimum (null when untagged, an outage default or a missing-value marker).
   const recordLowC = recordMinimumC(data.climate);
   const monthlyTemperatureNotice = temperatureStatus === 'complete'
@@ -781,7 +787,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     // harvesting is essential" and "check dry-season supply before planning year-round crops":
     // advice from an unsourced cut-off (finding CP-118). Not yet translated, so the isiZulu
     // summary carries the same English sentence until a reviewed translation exists.
-    const englishWater = `Modelled annual rainfall: about ${r} mm.`;
+    const englishWater = rainfallKnown ? `Modelled annual rainfall: about ${r} mm.` : 'Annual rainfall is not known for this site.';
     const zuluWater = englishWater;
     const englishSoil = translate('en', soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
     const zuluSoil = t(soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
@@ -1048,8 +1054,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
                 <Droplets size={18} style={{ color: 'var(--blue)', flexShrink: 0 }} />
                 <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('statAnnualRainfall')}</span>
-                <span className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
-                  {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-muted)' }}> mm</span>
+                <span lang="en" data-rainfall={rainfallKnown ? 'known' : 'unknown'} className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
+                  {rainfallKnown ? <>{data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-muted)' }}> mm</span></> : 'Not known'}
                 </span>
               </div>
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
@@ -1085,16 +1091,16 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 recordLowC === null
                   ? { color: 'var(--text-secondary)', text: 'The lowest temperature on record is not known for this site.' }
                   : { color: 'var(--text-secondary)', text: `Modelled record low: ${recordLowC}°C. This is a gridded figure for the wider area, not a frost record for your land.` },
-                Number.isFinite(data.climate.windSpeed) && data.climate.windSpeed > 0
-                  ? { color: 'var(--text-secondary)', text: `Modelled annual mean wind: ≈ ${(data.climate.windSpeed * 3.6).toFixed(0)} km/h.` }
-                  : null,
+                windKnown
+                  ? { color: 'var(--text-secondary)', text: `Modelled wind estimate: ≈ ${(data.climate.windSpeed * 3.6).toFixed(0)} km/h. Time coverage is not recorded.` }
+                  : { color: 'var(--text-secondary)', text: 'Wind estimate: not available.' },
                 data.soil.soilSource !== 'lab' && data.soil.soilSource !== 'soilgrids'
                   ? { color: 'var(--text-secondary)', text: appLang === 'zu' ? 'Umhlabathi awukahlolwa. Hlela ukuhlolwa ngaphambi kokuthenga izinto zokuwulungisa.' : 'Soil carbon is not measured here. Arrange a soil test before amendment purchases.' }
                   // No "low" or "reasonable" band at 1.5 %: the figure is reported as it is, with
                   // what it is (finding CP-118). Not yet translated.
                   : { color: 'var(--text-secondary)', text: `Soil organic carbon: ${data.soil.organicCarbon}% (${data.soil.soilSource === 'lab' ? 'from your soil test' : 'from the SoilGrids global model, not a test of your soil'}).` },
               ] as ({ color: string; text: string } | null)[]).filter((ins): ins is { color: string; text: string } => ins !== null).map((ins, i) => (
-                <div key={i} className="flex gap-2 items-start text-xs font-display leading-relaxed py-1.5 px-2.5 rounded-lg" style={{ background: 'color-mix(in srgb, var(--bg-1) 80%, transparent)', border: '1px solid color-mix(in srgb, var(--border) 50%, transparent)', color: '#3A2E22' }}>
+                <div key={i} className="flex gap-2 items-start text-xs font-display leading-relaxed py-1.5 px-2.5 rounded-lg" style={{ background: 'color-mix(in srgb, var(--bg-1) 80%, transparent)', border: '1px solid color-mix(in srgb, var(--border) 50%, transparent)', color: 'var(--text-primary)' }}>
                   <span className="flex-shrink-0 font-bold mt-px" style={{ color: ins.color }}>→</span>
                   <span>{ins.text}</span>
                 </div>
@@ -1108,7 +1114,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
                 </svg>
               </div>
-              <p style={{ fontSize: 12.5, lineHeight: 1.5, color: '#4A3F2E', margin: 0, flex: 1, minWidth: 0 }}>
+              <p style={{ fontSize: 12.5, lineHeight: 1.5, color: 'var(--text-primary)', margin: 0, flex: 1, minWidth: 0 }}>
                 <span className="font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>Lima · </span>
                 {lang === 'zu' ? (
                   <>
@@ -1118,7 +1124,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   </>
                 ) : limaRead}
               </p>
-              <SpeakButton text={limaRead} englishText={limaReadParts.english} size={15} color="#5C5040" />
+              <SpeakButton text={limaRead} englishText={limaReadParts.english} size={15} color="var(--text-secondary)" />
             </div>
 
                 </>
@@ -1240,25 +1246,27 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* SOIL */}
         {tab === 'Soil' && (
           <>
+            {data.soil.soilSource === 'lab' || data.soil.soilSource === 'soilgrids' ? <>
+            <p lang="en" className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+              {data.soil.soilSource === 'lab' ? 'Source: your uploaded laboratory soil test.' : 'Source: SoilGrids global model; an estimate, not a measurement of your field.'}
+            </p>
             <div className="grid grid-cols-2 gap-2.5">
               <Stat label={t('statTexture')} value={data.soil.textureClass} />
               <Stat
                 label={t('statPH')}
                 value={data.soil.ph.toString()}
-                sub={data.soil.ph < 5.5 ? t('phAcidic') : data.soil.ph > 7.5 ? t('phAlkaline') : t('phNeutral')}
-                color={data.soil.ph < 5.5 || data.soil.ph > 7.5 ? 'var(--orange)' : 'var(--color-forest-800)'}
+
               />
               <Stat
                 label={t('statOrganicCarbon')}
                 value={`${data.soil.organicCarbon}%`}
-                sub={data.soil.organicCarbon < 1.5 ? t('organicCarbonLow') : t('organicCarbonOk')}
-                color={data.soil.organicCarbon < 1.5 ? 'var(--orange)' : 'var(--color-forest-800)'}
+
               />
               {!simple && (
                 <Stat
                   label={t('statBulkDensity')}
                   value={`${data.soil.bulkDensity} g/cm³`}
-                  sub={`${data.soil.bulkDensity > 1.4 ? t('bulkDensityCompacted') : t('bulkDensityOk')} · ${t('bulkDensityExplainer')}`}
+
                 />
               )}
             </div>
@@ -1292,59 +1300,16 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </p>
             </Card>
 
-            {/* Soil health score */}
-            {(() => {
-              const ph = data.soil.ph;
-              const oc = data.soil.organicCarbon;
-              const bd = data.soil.bulkDensity;
-              const sand = data.soil.sand;
-              const clay = data.soil.clay;
-              const pHScore  = ph  >= 6   && ph  <= 7   ? 2.5 : ph  >= 5.5 && ph  <= 7.5 ? 1.5 : 0.5;
-              const ocScore  = oc  >= 2.5              ? 2.5 : oc  >= 1.5               ? 1.5 : 0.5;
-              const bdScore  = bd  <  1.2              ? 2.5 : bd  <  1.4               ? 1.5 : 0.5;
-              const texScore = (sand < 70 && clay < 40) ? 2.5 : (sand < 80 || clay < 50) ? 1.5 : 0.5;
-              const total = Math.min(10, Math.round(pHScore + ocScore + bdScore + texScore));
-              const scoreColor = total >= 8 ? 'var(--color-forest-800)' : total >= 5 ? 'var(--gold-dim)' : 'var(--danger)';
-              const scoreLabel = total >= 8 ? t('soilHealthScoreHealthy') : total >= 5 ? t('soilHealthScoreModerate') : t('soilHealthScoreDegraded');
-              const improvements: { key: string; source: string; values: Record<string, string> }[] = [];
-              if (pHScore < 2) {
-                improvements.push(ph < 6
-                  ? { key: 'soilImprovementPhAcidic', source: t('soilImprovementPhAcidic'), values: { ph: String(ph) } }
-                  : { key: 'soilImprovementPhAlkaline', source: t('soilImprovementPhAlkaline'), values: { ph: String(ph) } });
-              }
-              if (ocScore < 2) improvements.push({ key: 'soilImprovementLowCarbon', source: t('soilImprovementLowCarbon'), values: { oc: String(oc) } });
-              if (bdScore < 2) improvements.push({ key: 'soilImprovementCompacted', source: t('soilImprovementCompacted'), values: { bd: String(bd) } });
-              if (texScore < 2 && clay > 40) improvements.push({ key: 'soilImprovementHighClay', source: t('soilImprovementHighClay'), values: { clay: String(clay) } });
-              else if (texScore < 2 && sand > 70) improvements.push({ key: 'soilImprovementSandy', source: t('soilImprovementSandy'), values: { sand: String(sand) } });
-              const interpolate = (template: string, values: Record<string, string>) => template.replace(/\{([^}]+)\}/g, (_, key: string) => values[key] ?? `{${key}}`);
-              return (
-                <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid var(--border)' }}>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--text-secondary)' }}>{t('soilHealthScoreHeader')}</span>
-                    <div className="flex items-baseline gap-1">
-                      <span className="font-display font-bold" style={{ fontSize: 18, color: scoreColor, lineHeight: 1 }}>{total}</span>
-                      <span className="font-display tabular-nums" style={{ fontSize: 12, color: 'var(--text-muted)' }}>/10</span>
-                      <span className="font-sans font-semibold ml-1" style={{ fontSize: 12, color: scoreColor }}>{scoreLabel}</span>
-                    </div>
-                  </div>
-                  <div className="h-1.5 rounded-full overflow-hidden mb-3" style={{ background: 'color-mix(in srgb, var(--border) 60%, transparent)' }}>
-                    <div className="h-full rounded-full" style={{ width: `${total * 10}%`, background: scoreColor, transition: 'width 0.6s ease' }} />
-                  </div>
-                  {improvements.length > 0 && (
-                    <div className="space-y-1.5">
-                      <p className="text-xs uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)', fontSize: 'clamp(12px, 0.85vw, 13px)' }}>{t('priorityImprovementsHeader')}</p>
-                      {lang === 'zu' && <p className="text-xs leading-snug" role="note" style={{ color: 'var(--text-secondary)' }}>{t('soilImprovementZuluDraftNotice')}</p>}
-                      {improvements.slice(0, 3).map((imp, i) => (
-                        <div key={i} className="flex gap-2 text-xs font-display leading-snug" style={{ color: '#3A2E22' }}>
-                          <span className="flex-shrink-0 font-bold" style={{ color: 'var(--gold)' }}>{i + 1}.</span>
-                          <span>{lang === 'zu' ? <><span lang="zu">{interpolate(t(`${imp.key}ZuDraft`), imp.values)}</span><span lang="en" className="block text-xs text-[var(--text-muted)] opacity-80">English source: {interpolate(translate('en', imp.key), imp.values)}</span></> : interpolate(imp.source, imp.values)}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })()}
+            <Card>
+              <p lang="en" className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                These soil figures do not establish a soil health score or a compaction diagnosis.
+                Interpretation depends on the soil, sampling method and intended crop. Use a local
+                soil test and field observations before choosing amendments.
+              </p>
+            </Card>
+            </> : <Card><p lang="en" className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+              Soil measurements are not known for this site. No laboratory result or SoilGrids source is recorded. Arrange a soil test and record field observations.
+            </p></Card>}
           </>
         )}
 
@@ -1367,15 +1332,17 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           const rainMax = Math.max(...monthly, 1);
 
           const kp = data.climate.koppen;
-          // Conventional class name and neutral class sentence from the classifier (CP-117): no nicknames,
+          // Conventional class name from the classifier (CP-117): no nicknames,
           // no crop promises derived from the code.
           const zoneLabel = koppenClassName(kp) || data.climate.koppenDesc || kp;
-          const zoneSummary = koppenClassNote(kp) || 'No description is held for this climate type.';
+          // The shared class notes still contain crop-season and disease claims for some codes.
+          // Keep the conventional name; the local-conditions notice below states the limit.
 
           const patternChip = data.rainfall.pattern === 'winter' ? t('climatePatternWinter') : data.rainfall.pattern === 'summer' ? t('climatePatternSummer') : t('climatePatternYearRound');
 
-          // Wind: the record holds ONE annual mean and a Dec–Feb and a Jun–Aug direction. Nothing monthly (CP-117).
-          const annualWindKnown = Number.isFinite(data.climate.windSpeed) && data.climate.windSpeed > 0;
+          // Wind: the record holds one estimate and Dec–Feb / Jun–Aug directions. Nothing monthly (CP-117).
+          // The adapter can average fewer than twelve valid months. A positive value does not
+          // establish annual coverage; preserve the estimate without claiming a full year.
           const dirKnown = (d: unknown) => typeof d === 'string' && d.trim() !== '' && d !== '—';
           const summerDirKnown = dirKnown(data.climate.windFromSummer);
           const winterDirKnown = dirKnown(data.climate.windFromWinter);
@@ -1396,11 +1363,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
           // Shared style helpers
           const cardSt = { background: '#FBF8F1', border: '1px solid #E6DDC9', borderRadius: 16, padding: '19px 19px 17px', boxShadow: '0 1px 2px rgba(0,0,0,0.04)' };
-          const ovlSt  = { fontFamily: 'var(--font-sans)', fontWeight: 700 as const, fontSize: 12, letterSpacing: '0.13em', textTransform: 'uppercase' as const, color: 'var(--gold)' };
+          // These cards have a fixed pale surface in both themes; their text must stay dark.
+          const ovlSt  = { fontFamily: 'var(--font-sans)', fontWeight: 700 as const, fontSize: 12, letterSpacing: '0.13em', textTransform: 'uppercase' as const, color: '#8A5700' };
           const implSt = { fontFamily: 'var(--font-display)', fontWeight: 400 as const, fontSize: 13.5, fontStyle: 'italic' as const, color: '#5C5240', lineHeight: 1.45 };
           const colSt  = { flex: 1, display: 'flex', flexDirection: 'column' as const, alignItems: 'center' as const, justifyContent: 'flex-end' as const, height: '100%' };
-          const valSt  = { fontFamily: 'var(--font-sans)', fontWeight: 600 as const, fontSize: 12, color: 'var(--text-secondary)', marginBottom: 5 };
-          const monSt  = { fontFamily: 'var(--font-sans)', fontWeight: 600 as const, fontSize: 12, color: 'var(--text-muted)', marginTop: 7, textTransform: 'uppercase' as const };
+          const valSt  = { fontFamily: 'var(--font-sans)', fontWeight: 600 as const, fontSize: 12, color: '#4A4030', marginBottom: 5 };
+          const monSt  = { fontFamily: 'var(--font-sans)', fontWeight: 600 as const, fontSize: 12, color: 'var(--color-ink-muted)', marginTop: 7, textTransform: 'uppercase' as const };
           function chip(bg: string, color: string) {
             return { display: 'inline-flex' as const, alignItems: 'center' as const, gap: 6, fontFamily: 'var(--font-sans)', fontWeight: 600 as const, fontSize: 12.5, padding: '5px 11px', borderRadius: 999, background: bg, color };
           }
@@ -1413,23 +1381,22 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 <div style={{ ...ovlSt, marginBottom: 8 }}>{t('climateZone')}</div>
                 <div lang="en" style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 18, color: '#2A2317', lineHeight: 1.15 }}>{zoneLabel}</div>
                 {!simple && (
-                  <div lang="en" style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12.5, color: 'var(--text-muted)', margin: '3px 0 11px' }}>
+                  <div lang="en" style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12.5, color: 'var(--color-ink-muted)', margin: '3px 0 11px' }}>
                     {t('koppenClimateCodeLabel')} {kp} — {zoneLabel}
                   </div>
                 )}
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5, marginTop: simple ? 6 : 0 }} lang="en">{zoneSummary}</div>
                 <p lang="en" data-class-crops="withheld" style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5, margin: '10px 0 0' }}>
                   No crops are suggested from the climate type alone. A climate type does not know your water, frost or soil. Use the crop plan for sowing months checked against this site.
                 </p>
                 <div style={{ display: 'flex', gap: 8, marginTop: 13, flexWrap: 'wrap' }}>
-                  <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} {t('chipRainPerYear')}</span>
-                  <span style={chip('#EDE7DA', '#7A6A48')}>{patternChip}</span>
+                  {rainfallKnown ? <><span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} {t('chipRainPerYear')}</span>
+                  <span style={chip('#EDE7DA', '#7A6A48')}>{patternChip}</span></> : <span lang="en" style={chip('#EDE7DA', '#7A6A48')}>Rainfall: not known</span>}
                   <span data-record-low={recordLowC === null ? 'unknown' : 'known'} lang="en" style={chip('#EDE7DA', '#7A6A48')}>{recordLowC === null ? 'Record low: not known' : `Modelled record low: ${recordLowC}°C`}</span>
                 </div>
               </div>
 
               {/* 2 — Rainfall mm/month */}
-              {monthly.length === 12 && (
+              {rainfallKnown && monthly.length === 12 && (
                 <div style={cardSt}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
                     <div style={ovlSt}>{t('rainfallMmMonth')}</div>
@@ -1470,7 +1437,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     );
                   })}
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 11, fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12, color: 'var(--text-muted)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 11, fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12, color: 'var(--color-ink-muted)' }}>
                   <span lang="en">Coldest month mean ≈ {Math.round(tMin)}° ({MONTH_SHORT[temps.indexOf(tMin)]})</span>
                   <span lang="en">Hottest month mean ≈ {Math.round(tMax)}° ({MONTH_SHORT[temps.indexOf(tMax)]})</span>
                 </div>
@@ -1479,27 +1446,27 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               {/* 4 — Sunlight hours/day: the record holds one annual mean and no monthly sunshine hours (CP-117) */}
               <div style={cardSt}>
                 <div style={{ ...ovlSt, marginBottom: 10 }}>{t('sunlightHoursDay')}</div>
-                <p lang="en" data-monthly-sun="unavailable" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>
+                <p lang="en" data-monthly-sun="unavailable" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: '#4A4030', margin: 0 }}>
                   Monthly sunshine is not shown. This record holds no monthly sunshine hours for this site.
                 </p>
               </div>
 
-              {/* 5 — Wind: one annual mean and two seasonal-window directions only; no monthly series (CP-117) */}
+              {/* 5 — Wind: one estimate and two calendar-window directions only; no monthly series (CP-117) */}
               <div style={cardSt}>
                 <div style={{ ...ovlSt, marginBottom: 10 }}>{t('windKmhCard')}</div>
                 <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
                   <div style={{ flex: 1, minWidth: 180 }}>
-                    <p lang="en" data-monthly-wind="unavailable" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>
+                    <p lang="en" data-monthly-wind="unavailable" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: '#4A4030', margin: 0 }}>
                       Monthly wind is not shown. This record holds no monthly wind figures for this site.
                     </p>
-                    {annualWindKnown ? (
-                      <p lang="en" data-annual-wind="known" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0, marginTop: 8 }}>Modelled annual mean wind: ≈ {kmh} km/h.</p>
+                    {windKnown ? (
+                      <p lang="en" data-annual-wind="known" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: '#4A4030', margin: 0, marginTop: 8 }}>Modelled wind estimate: ≈ {kmh} km/h. Time coverage is not recorded.</p>
                     ) : (
-                      <p lang="en" data-annual-wind="unknown" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0, marginTop: 8 }}>Annual mean wind: not available.</p>
+                      <p lang="en" data-annual-wind="unknown" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: '#4A4030', margin: 0, marginTop: 8 }}>Wind estimate: not available.</p>
                     )}
-                    {summerDirKnown && <p lang="en" data-wind-dec-feb="known" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0, marginTop: 8 }}>December to February: from the {data.climate.windFromSummer}.</p>}
-                    {winterDirKnown && <p lang="en" data-wind-jun-aug="known" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0, marginTop: 8 }}>June to August: from the {data.climate.windFromWinter}.</p>}
-                    {!summerDirKnown && !winterDirKnown && <p lang="en" data-wind-direction="unknown" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-secondary)', margin: 0, marginTop: 8 }}>Wind direction: not available.</p>}
+                    {summerDirKnown && <p lang="en" data-wind-dec-feb="known" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: '#4A4030', margin: 0, marginTop: 8 }}>December to February: from the {data.climate.windFromSummer}.</p>}
+                    {winterDirKnown && <p lang="en" data-wind-jun-aug="known" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: '#4A4030', margin: 0, marginTop: 8 }}>June to August: from the {data.climate.windFromWinter}.</p>}
+                    {!summerDirKnown && !winterDirKnown && <p lang="en" data-wind-direction="unknown" className="font-sans" style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: '#4A4030', margin: 0, marginTop: 8 }}>Wind direction: not available.</p>}
                   </div>
                   {roseKnown && (
                     <div style={{ flexShrink: 0, width: 104, textAlign: 'center' }}>
@@ -1524,10 +1491,10 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               {/* 6 — Frost & growing season */}
               <div style={cardSt}>
                 <div style={{ ...ovlSt, marginBottom: 13 }}>{t('frostGrowingSeason')}</div>
-                <p lang="en" data-record-low={recordLowC === null ? 'unknown' : 'known'} className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>
+                <p lang="en" data-record-low={recordLowC === null ? 'unknown' : 'known'} className="font-sans" style={{ fontSize: 13, color: '#4A4030', margin: 0 }}>
                   {recordLowC === null ? 'Record low: not known.' : `Modelled record low: ${recordLowC}°C.`}
                 </p>
-                <p lang="en" className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', margin: '8px 0 0' }}>
+                <p lang="en" className="font-sans" style={{ fontSize: 13, color: '#4A4030', margin: '8px 0 0' }}>
                   Frost months are not shown. Monthly averages cannot show frost, and this record has no daily frost history for your land. The record low is a gridded figure for the wider area.
                 </p>
               </div>

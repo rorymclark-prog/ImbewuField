@@ -316,3 +316,26 @@ test('featuresForPlace returns an empty list when the open place owns nothing, s
   const features = [{ id: 'a', placeId: 'carl' }];
   assert.deepEqual(featuresForPlace(features, 'ubhejane'), []);
 });
+
+
+import { savedRainfallFields } from '../lib/saved-places.ts';
+test('a saved site round trip retains unknown rain without a sentinel and preserves prior grower values on refresh', () => {
+  fakeLocalStorage.clear();
+  const { rainfall: _discard, ...base } = place('rain-provenance', -29, 31);
+  const outage = { annual: 600, rainfallSource: undefined };
+  savePlace({ ...base, ...savedRainfallFields(outage) });
+  assert.equal(loadPlaces()[0].rainfall, undefined);
+  assert.ok(isValidSavedPlace(loadPlaces()[0]));
+  assert.equal(JSON.stringify(loadPlaces()).includes('600'), false);
+  savePlace({ ...base, ...savedRainfallFields({ annual: 0, rainfallSource: 'nasa-power' }) });
+  assert.equal(loadPlaces()[0].rainfall, 0);
+  assert.equal(loadPlaces()[0].rainfallSource, 'nasa-power');
+  const entered = { ...base, rainfall: 412, rainfallSource: 'grower-entered' };
+  savePlace(entered);
+  savePlace({ ...loadPlaces()[0], ...savedRainfallFields(outage, loadPlaces()[0]) });
+  assert.equal(loadPlaces()[0].rainfall, 412);
+  assert.equal(loadPlaces()[0].rainfallSource, 'grower-entered');
+  assert.deepEqual(savedRainfallFields({ annual: 900, rainfallSource: 'nasa-power' }, entered), { rainfall: 412, rainfallSource: 'grower-entered' });
+  // No migration or numerical guess can identify whether an old 600 was entered or a default.
+  assert.deepEqual(savedRainfallFields(outage, { rainfall: 600 }), { rainfall: 600 });
+});

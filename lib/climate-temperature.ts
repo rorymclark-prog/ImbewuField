@@ -1,3 +1,5 @@
+import { isCompassDirection16 } from './local-wind';
+import type { LocationData } from './types';
 export type MonthlyTemperatureCoverage = {
   source: 'nasa-power';
   status: 'complete' | 'incomplete';
@@ -124,4 +126,49 @@ export function recordMinimumC(climate: unknown): number | null {
   if (typeof climate !== 'object' || climate === null || Array.isArray(climate)) return null;
   const { minTemp, minTempSource } = climate as { minTemp?: unknown; minTempSource?: unknown };
   return minTempSource === 'nasa-power' ? cleanPowerValue(minTemp) : null;
+}
+
+
+/** Display defaults are not site evidence. Keep annual and monthly coverage independent:
+ * a supported annual zero is useful even when no complete monthly series is available. */
+export function annualRainfallMm(rain: { annual?: unknown; rainfallSource?: unknown } | null | undefined): number | null {
+  return rain && typeof rain.rainfallSource === 'string' && ['nasa-power', 'open-meteo', 'grower-entered'].includes(rain.rainfallSource)
+    && typeof rain.annual === 'number' && Number.isFinite(rain.annual) && rain.annual >= 0
+    ? rain.annual : null;
+}
+
+export function sourcedMonthlyRainfall(rain: { monthly?: unknown; rainfallSource?: unknown } | null | undefined): number[] | null {
+  return rain && typeof rain.rainfallSource === 'string' && ['nasa-power', 'open-meteo', 'grower-entered'].includes(rain.rainfallSource)
+    && completeMonthlyRainfallMm(rain.monthly) ? rain.monthly : null;
+}
+
+export function modelledWindSpeed(climate: { windSpeed?: unknown; windSource?: unknown } | null | undefined): number | null {
+  return climate?.windSource === 'nasa-power' && typeof climate.windSpeed === 'number'
+    && Number.isFinite(climate.windSpeed) && climate.windSpeed >= 0 ? climate.windSpeed : null;
+}
+
+
+/** Shared report facts: a record low is not a winter mean or a frost-frequency forecast.
+ * No threshold here diagnoses crop damage from wind speed, climate class or record minimum. */
+export function reportClimateEvidence(location: Partial<Pick<LocationData, 'rainfall' | 'climate'>>): string {
+  const rain = annualRainfallMm(location.rainfall);
+  const months = sourcedMonthlyRainfall(location.rainfall);
+  const climate: Partial<LocationData['climate']> = location.climate ?? {};
+  const complete = monthlyTemperatureStatus(climate) === 'complete';
+  const low = recordMinimumC(climate);
+  const wind = modelledWindSpeed(climate);
+  const high = climate.maxTempSource === 'nasa-power' ? cleanPowerValue(climate.maxTemp) : null;
+  const solar = climate.solarSource === 'nasa-power' && typeof climate.solarRadiation === 'number' && Number.isFinite(climate.solarRadiation) && climate.solarRadiation >= 0 ? climate.solarRadiation : null;
+  const direction = (value: string | undefined) => climate.windDirectionSource === 'nasa-power' && typeof value === 'string' && isCompassDirection16(value) ? value : 'not known';
+  return [
+    `Annual rainfall: ${rain === null ? 'not known' : `${rain} mm (${location.rainfall?.rainfallSource})`}.`,
+    `Monthly rainfall (January–December): ${months ? months.join(', ') + ' mm' : 'not known'}.`,
+    `Monthly mean temperatures (January–December): ${complete ? climate.monthlyTemp!.join(', ') + ' °C (NASA POWER)' : 'not known; incomplete or unrecorded model coverage'}.`,
+    `Lowest temperature on record: ${low === null ? 'not known' : `${low} °C (NASA POWER grid record low)`}. This is not a winter mean, frost frequency or a planting date.`,
+    `Modelled maximum temperature value: ${high === null ? 'not known' : `${high} °C (NASA POWER)`}.`,
+    `Wind speed estimate: ${wind === null ? 'not known' : `${wind} m/s (NASA POWER; time coverage not recorded)`}. Wind damage and windbreak need are not established by a universal speed cutoff.`,
+    `Modelled seasonal mean wind directions (not siting recommendations): December–February ${direction(climate.windFromSummer)}; June–August ${direction(climate.windFromWinter)}. Confirm local observations before siting a windbreak.`,
+    `Solar radiation: ${solar === null ? 'not known' : `${solar} kWh/m²/day (NASA POWER)`}; no panel yield or irrigation deficit has been calculated.`,
+    'Use grower-reported frost, water, wind and other farm observations separately. Unknown values are not evidence of safe conditions. A climate class alone does not establish crop suitability, frost occurrence or required amendments.',
+  ].join('\n');
 }

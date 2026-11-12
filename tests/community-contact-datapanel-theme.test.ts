@@ -50,8 +50,10 @@ test('DataPanel captions that were at 9.5px now clamp to a 12px floor', () => {
   assert.doesNotMatch(src, /fontSize:\s*9\.5/);
   // Three captions carried this clamp until 11 November 2026. One was the legend of the Overview
   // Grow / Dry / Rest strip, which is removed with its unsourced month classes (finding CP-117).
-  // The two that remain still clamp to the 12px floor; nothing fell back below it (line above).
-  assert.ok((src.match(/fontSize:\s*'clamp\(12px, 0\.85vw, 13px\)'/g) ?? []).length >= 2);
+  // The soil-score priority caption was also removed with its unsupported diagnosis (CP-119).
+  // Keep the remaining caption at the same floor, and the replacement explanation at text-xs.
+  assert.ok((src.match(/fontSize:\s*'clamp\(12px, 0\.85vw, 13px\)'/g) ?? []).length >= 1);
+  assert.match(src, /className="text-xs leading-relaxed"[\s\S]*?These soil figures do not establish/);
 });
 
 test('AtlasPanel and the contact-page subject label clear the 11px caption floor', () => {

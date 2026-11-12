@@ -1,3 +1,4 @@
+import { annualRainfallMm, sourcedMonthlyRainfall, monthlyTemperatureStatus } from './climate-temperature';
 // Report figures — the site's own saved data, drawn.
 //
 // WHY THIS EXISTS. The site report described a real piece of ground in pages of bullets and never
@@ -551,7 +552,7 @@ function paragraph(p: Pen, x: number, y: number, value: string, width: number, o
   return y;
 }
 
-const rainSourceLabel = (source: string | undefined, t: Translate) => source === 'nasa-power' ? t('NASA POWER (50 km climate grid)', 'NASA POWER (igridi yesimo sezulu engu-50 km)') : source === 'open-meteo' ? t('ERA5-Land via Open-Meteo (9 km grid)', 'ERA5-Land nge-Open-Meteo (igridi engu-9 km)') : t('climate data service', 'isevisi yedatha yesimo sezulu');
+const rainSourceLabel = (source: string | undefined, t: Translate) => source === 'nasa-power' ? t('NASA POWER (50 km climate grid)', 'NASA POWER (igridi yesimo sezulu engu-50 km)') : source === 'open-meteo' ? t('ERA5-Land via Open-Meteo (9 km grid)', 'ERA5-Land nge-Open-Meteo (igridi engu-9 km)') : source === 'grower-entered' ? 'Grower-entered rainfall' : 'Rainfall source not recorded';
 
 /** More words need more paper; a native header must never paint over the chart's first value. */
 function figureHeader(p: Pen, headline: string, detail: string, language: string, detailSize = 13): number {
@@ -585,11 +586,11 @@ function figurePhaseRange(value: string, language: string): string {
  */
 export function climateFigure(location: LocationData | null | undefined, language = 'en'): ReportFigure | null {
   const rain = location?.rainfall;
-  if (!rain || !twelve(rain.monthly) || rain.monthly.some(v => v < 0) || !rain.monthly.some(v => v > 0)) return null;
+  if (!rain || sourcedMonthlyRainfall(rain) === null) return null;
   const t = translator(language);
   const p = pen();
   const monthly = rain.monthly;
-  const annual = finite(rain.annual) && rain.annual > 0 ? rain.annual : monthly.reduce((a, b) => a + b, 0);
+  const annual = annualRainfallMm(rain) ?? monthly.reduce((a, b) => a + b, 0);
   const wettest = monthly.indexOf(Math.max(...monthly)), driest = monthly.indexOf(Math.min(...monthly));
   const left = 50, right = W - 14, slot = (right - left) / 12;
 
@@ -628,7 +629,7 @@ export function climateFigure(location: LocationData | null | undefined, languag
 
   const temps = location?.climate?.monthlyTemp;
   let tempAlt = '';
-  if (twelve(temps)) {
+  if (monthlyTemperatureStatus(location?.climate) === 'complete' && twelve(temps)) {
     const warm = temps.indexOf(Math.max(...temps)), cold = temps.indexOf(Math.min(...temps));
     const temperatureTitle = t('Average temperature each month (°C)', 'Izinga lokushisa elijwayelekile ngenyanga (°C)');
     if (nativeDraft(language)) height = paragraph(p, 14, height + 20, temperatureTitle, W - 28, { size: 14, weight: 700, fill: INK }) - 40;
@@ -667,13 +668,12 @@ export function climateFigure(location: LocationData | null | undefined, languag
  */
 export function waterBudgetFigure(facts: ReportSiteFacts | null | undefined, location: LocationData | null | undefined, language = 'en'): ReportFigure | null {
   const roof = facts?.roof?.areaM2, rain = location?.rainfall;
-  if (!finite(roof) || roof <= 0 || !rain || !twelve(rain.monthly) || rain.monthly.some(v => v < 0)) return null;
+  if (!finite(roof) || roof <= 0 || !rain || sourcedMonthlyRainfall(rain) === null) return null;
   const coefficient = WATER_SHEET_ROOF_RUNOFF_COEFFICIENT;
   const catchL = rain.monthly.map(mm => roofHarvestLitres(roof, mm, coefficient));
-  if (!catchL.some(v => v > 0)) return null;
   const t = translator(language);
   const p = pen();
-  const annualMm = finite(rain.annual) && rain.annual > 0 ? rain.annual : rain.monthly.reduce((a, b) => a + b, 0);
+  const annualMm = annualRainfallMm(rain) ?? rain.monthly.reduce((a, b) => a + b, 0);
   // The same expression lib/report-site-facts prints in the report's evidence table.
   const annualCatch = Math.round(roofHarvestLitres(roof, annualMm, coefficient));
   const daily = facts?.measurements?.dailyWaterUseL;
@@ -975,7 +975,6 @@ export function soilFigure(location: LocationData | null | undefined, language =
   const ph = known && finite(soil.ph) && soil.ph >= 3 && soil.ph <= 10 ? soil.ph : null;
   if (ph !== null) {
     p.rect(x0, phY - 7, x1 - x0, 14, { fill: TRACK, radius: 7 });
-    p.rect(phOf(6), phY - 7, phOf(7) - phOf(6), 14, { fill: p.hatch('veg', GREEN, 5, 1.3), stroke: GREEN, width: 1.2 });
     marker(phOf(Math.min(9, Math.max(4, ph))), phY);
     p.text(phOf(Math.min(9, Math.max(4, ph))), phY - 15, `pH ${figureNumber(ph, 1)}`, { size: 14, weight: 700, fill: INK, anchor: 'middle', halo: true });
   } else empty(phY);
@@ -986,16 +985,10 @@ export function soilFigure(location: LocationData | null | undefined, language =
     acid.forEach((line, at) => p.text(x0, phY + 46 + at * 17, line, { size: 12, fill: MUTED }));
     alkaline.forEach((line, at) => p.text(x1, phY + 46 + at * 17, line, { size: 12, fill: MUTED, anchor: 'end' }));
     y = phY + 46 + Math.max(acid.length, alkaline.length) * 17;
-    if (ph !== null) {
-      const lines = wrapText(t('most vegetables: 6 to 7', 'imifino eminingi: 6 kuya ku-7'), 12, x1 - x0);
-      lines.forEach((line, at) => p.text((phOf(6) + phOf(7)) / 2, y + at * 17, line, { size: 12, fill: GREEN, weight: 700, anchor: 'middle' }));
-      y += lines.length * 17;
-    }
     y += 20;
   } else {
     p.text(x0, phY + 46, t('← more acid (sour)', '← umuncu kakhulu'), { size: 12, fill: MUTED });
     p.text(x1, phY + 46, t('more alkaline →', 'une-alkali kakhulu →'), { size: 12, fill: MUTED, anchor: 'end' });
-    if (ph !== null) p.text((phOf(6) + phOf(7)) / 2, phY + 46, t('most vegetables: 6 to 7', 'imifino eminingi: 6 kuya ku-7'), { size: 12, fill: GREEN, weight: 700, anchor: 'middle' });
     y = phY + 78;
   }
 

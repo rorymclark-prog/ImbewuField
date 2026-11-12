@@ -30,6 +30,7 @@ function location(overrides: Partial<LocationData> = {}): LocationData {
     rainfall: {
       monthly: Array(12).fill(50),
       annual: 600,
+      rainfallSource: 'nasa-power',
       pattern: 'summer',
       wetSeason: 'Oct–Mar',
       drySeason: 'May–Aug',
