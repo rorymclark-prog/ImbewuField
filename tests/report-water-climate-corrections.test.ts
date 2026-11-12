@@ -58,6 +58,9 @@ function render(d: typeof DEMO_LOCATION) {
 }
 test('outage footnote withholds placeholder class and seasons and names the unknown temperature', () => {
   const d = structuredClone(DEMO_LOCATION); delete d.rainfall.rainfallSource;
+  // Current main now records complete coverage on its real demo capture. An
+  // outage fixture must withhold that evidence explicitly, not rely on its age.
+  delete d.climate.monthlyTempCoverage;
   const output = render(d);
   assert.doesNotMatch(output, new RegExp(d.climate.koppen + ' |' + d.rainfall.wetSeason));
   assert.match(output, /Köppen climate class Not known/);
@@ -65,6 +68,7 @@ test('outage footnote withholds placeholder class and seasons and names the unkn
 });
 test('complete rainfall retains its seasons independently of missing temperature coverage', () => {
   const d = structuredClone(DEMO_LOCATION);
+  delete d.climate.monthlyTempCoverage;
   const output = render(d);
   assert.ok(output.includes(d.rainfall.wetSeason));
   assert.match(output, /Köppen climate class Not known/);
@@ -72,6 +76,17 @@ test('complete rainfall retains its seasons independently of missing temperature
   const complete = render(d);
   assert.ok(complete.includes(d.climate.koppen));
   assert.ok(complete.includes(`${d.climate.meanTemp}°C`));
+});
+
+test('a rainfall outage preserves an independently supported temperature without claiming a climate class', () => {
+  const d = structuredClone(DEMO_LOCATION);
+  d.climate.monthlyTempCoverage = { source: 'nasa-power', status: 'complete' };
+  delete d.rainfall.rainfallSource;
+  const output = render(d);
+  assert.match(output, /Köppen climate class Not known/);
+  assert.ok(output.includes(`${d.climate.meanTemp}°C`));
+  assert.ok(!output.includes(d.rainfall.wetSeason));
+  assert.ok(!output.includes(d.rainfall.drySeason));
 });
 
 test('actual report prompt and header preserve partial rainfall without inventing storage adequacy', async () => {
