@@ -92,6 +92,9 @@ test('converted source endpoints preserve their original exact decimal range, an
     const file = buildProvisionalCropPreviewHtml(chosen, { bedLabel: 'Synthetic Great Lakes bed', sample: true }); assert.ok(file);
     for (const value of ['18–24 inches', '30 inches', 'USDA', 'undated', 'public-domain', '76.2', inRowCm]) assert.ok(file.html.includes(value), value);
     assert.doesNotMatch(file.html, /2–3 seeds|World Vegetable|worldveg-ke/);
+    assert.match(file.html, /The source adapter selects no point spacing/);
+    assert.match(file.html, /Grower choices are recorded separately/);
+    assert.doesNotMatch(file.html, /No point spacing or final surviving plants per station is selected/);
   }
   for (const patch of [{ rowCm: '76.20000000000000000001' }, { rowCm: '76.19999999999999999999' },
     { inRowCm: '45.71999999999999999999' }, { inRowCm: '60.96000000000000000001' }, { finalStand: '1.00000000000000000001' }]) {

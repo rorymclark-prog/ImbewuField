@@ -50,7 +50,7 @@ export function usdaGreatLakesCabbageCandidates(context: ProvisionalEvidenceCont
     source: USDA_GREAT_LAKES_CABBAGE_SOURCE, reuseReview: 'reviewed', assumptions: [
       'Grower explicitly chose cabbage bedding transplants for the declared Great Lakes States region. That declaration is not independently verified.',
       USDA_CABBAGE_SPACING.display,
-      'No point spacing or final surviving plants per station is selected. The cell-size footnote (1) is not a final stand.',
+      'The source adapter selects no point spacing or final surviving plants per station. Grower choices are recorded separately. The cell-size footnote (1) is not a final stand.',
       USDA_GREAT_LAKES_CABBAGE_SOURCE.missingDataBehavior, USDA_GREAT_LAKES_CABBAGE_SOURCE.limitations,
     ] }];
 }

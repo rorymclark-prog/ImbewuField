@@ -57,3 +57,12 @@ Complete current-head full CI and independent implementation/output review, insp
 hosted integration, and retain any resulting findings. Keep source scope, saved
 measurement semantics and agricultural validation distinct. No production release
 or automatic QuickBooks/personal-data change is part of this work.
+
+A separate Codex review of frozen5290 verified15 Git files and the full patch,
+ran31 admission and13 persistence probes, and inspected the supplied component
+images and all five original print pages. GL5290-COPY-01 identified an ambiguous
+source assumption saying no spacing/stand was selected even after grower choices
+were printed. The follow-up explicitly says the source adapter supplies no point
+and grower choices are recorded separately. It changes no numbers or admission.
+Affected export regression, actual successor print and narrow delta review are
+recorded separately;5290 review is not automatically successor approval.

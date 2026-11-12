@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '13 November 2026', sha: '59ceb8e9a', changes: [
+  { when: '13 November 2026', sha: '5290c896b', changes: [
     'Preview Great Lakes cabbage counts using an optional USDA spacing reference.',
     'Choose spacing and survivors yourself; undated evidence and unknowns stay visible.',
   ] },
