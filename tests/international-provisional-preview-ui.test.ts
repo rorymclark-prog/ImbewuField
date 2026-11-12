@@ -424,3 +424,36 @@ test('a source check begun before a region round trip cannot publish in the retu
     assert.deepEqual(ui.writes, []);
   } finally { ui.dispose(); }
 });
+
+test('cowpea purpose and habit select an actual source reference without inventing a stand, yield or date', async () => {
+  const ui = mount({ evidence: undefined }); const capture = downloads();
+  try {
+    ui.change('Preview crop', 'cowpea'); ui.change('Preview measured bed', 'bed-1');
+    const consent = () => ui.field('Use this direct-sowing reference for this preview');
+    assert.equal(consent().props.disabled, true);
+    ui.change('Cowpea harvest purpose', 'leaves'); ui.change('Cowpea growth habit', 'spreading');
+    assert.match(ui.text(), /50–75 cm between rows and 50–75 cm between plants/);
+    assert.equal(consent().props.checked, false);
+    act(() => consent().props.onChange({ target: { checked: true } })); await ui.click();
+    assert.match(ui.text(), /Establishment method: direct/);
+    assert.match(ui.text(), /Estimated plants: Unknown/); assert.match(ui.text(), /Estimated harvest weight: Unknown/);
+    assert.match(ui.text(), /First harvest \(UTC\): Unknown/);
+    await ui.click('Download printable preview');
+    assert.equal(capture.blobs.length, 1); const html = await capture.blobs[0].text();
+    assert.match(html, /leaf production and spreading/); assert.match(html, /50–75 cm between rows/);
+    assert.match(html, /2–3 seeds per hill/); assert.match(html, /not a final surviving plant count/);
+    ui.change('Cowpea growth habit', 'erect-or-semi-erect');
+    assert.equal(consent().props.checked, false); assert.doesNotMatch(ui.text(), /Estimated plants:/);
+    assert.match(ui.text(), /50 cm between rows and 15–25 cm between plants/);
+    ui.change('Cowpea growth habit', 'spreading');
+    assert.equal(consent().props.checked, false, 'A habit round trip must not revive consent');
+    act(() => consent().props.onChange({ target: { checked: true } }));
+    ui.change('Plant density (plants per m²)', '2'); await ui.click();
+    assert.match(ui.text(), /Estimated plants: 21/); assert.match(ui.text(), /grower-estimate/);
+    ui.change('Cowpea harvest purpose', 'pods-or-grain');
+    assert.equal(consent().props.disabled, true); assert.equal(consent().props.checked, false);
+    await ui.click(); assert.match(ui.text(), /Establishment method: Unknown/);
+    ui.update({ countryCode: 'ZA' }); assert.doesNotMatch(ui.text(), /WorldVeg cowpea conditions/);
+    assert.deepEqual(ui.writes, []);
+  } finally { capture.dispose(); ui.dispose(); }
+});

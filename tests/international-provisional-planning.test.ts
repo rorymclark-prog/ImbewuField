@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { CROPS } from '../lib/crop-catalog.ts';
 import { sourceEvidenceState, sourcePublicationIsKnownBy, sourcePublicationText, evaluateCountryReadiness } from '../lib/international/countries/readiness.ts';
 import { WORLDVEG_KENYA_CABBAGE_SOURCE, worldvegKenyaCabbageCandidates } from '../lib/international/providers/worldveg-kenya-cabbage.ts';
+import { worldvegKenyaCowpeaCandidates, worldvegKenyaCowpeaSpacing } from '../lib/international/providers/worldveg-kenya-cowpea.ts';
 import { buildProvisionalCropPreviewHtml } from '../lib/international/provisional-crop-export.ts';
 import type { CountrySource } from '../lib/international/countries/types.ts';
 import { resolveProvisionalCropPlan, type ProvisionalDraftRequest, type ProvisionalFieldCandidate } from '../lib/international/provisional-crop-planning.ts';
@@ -51,6 +52,37 @@ function resolved(input = request()) {
   if (result.status !== 'resolved') assert.fail(`Expected a resolved draft, got ${result.status}`);
   return result;
 }
+
+test('Kenya cowpea method binds declared leaf purpose and habit; source spacing and seed counts never become density', () => {
+  const base = request({ cropKey: 'cowpea', recordedAt: '2026-11-12T12:00:00.000Z', asOf: '2026-11-12' });
+  const context = { ...base.context, establishment: null };
+  for (const habit of ['spreading', 'erect-or-semi-erect'] as const) {
+    const conditions = { purpose: 'leaves' as const, habit };
+    const candidates = worldvegKenyaCowpeaCandidates(context, 'cowpea', base.recordedAt, true, conditions);
+    assert.deepEqual(candidates.map(c => c.field), ['establishment']);
+    const result = resolved({ ...base, context, candidates });
+    assert.deepEqual(result.fields.establishment.activeInput.state, 'provided');
+    assert.equal(result.fields.establishment.activeTier, 'local-public-evidence');
+    assert.equal(result.fields.plantsPerM2.activeInput.state, 'missing');
+    assert.equal(result.assessment.estimatedPlantCount.value, null);
+    assert.equal(result.assessment.estimatedYieldKg.value, null);
+    assert.equal(result.assessment.schedule.firstHarvestDate.value, null);
+    assert.ok(result.fields.establishment.assumptions.some(s => s.includes(worldvegKenyaCowpeaSpacing(conditions)!)));
+    const html = buildProvisionalCropPreviewHtml({ ...base, context, candidates }, { bedLabel: 'Synthetic bed', sample: true })!.html;
+    assert.match(html, /2–3 seeds per hill/); assert.match(html, /not a final surviving plant count/);
+    assert.match(html, /CC BY-SA 3.0/); assert.match(html, /2024-06 \(day unknown\)/);
+    assert.match(html, /pp21–22/); assert.match(html, /declared conditions/);
+    for (const purpose of ['', 'pods-or-grain'] as const) {
+      assert.deepEqual(worldvegKenyaCowpeaCandidates(context, 'cowpea', base.recordedAt, true, { habit, purpose }), []);
+    }
+    assert.deepEqual(worldvegKenyaCowpeaCandidates(context, 'cowpea', base.recordedAt, false, conditions), []);
+    assert.deepEqual(worldvegKenyaCowpeaCandidates({ ...context, countryCode: 'ZA' }, 'cowpea', base.recordedAt, true, conditions), []);
+    assert.deepEqual(worldvegKenyaCowpeaCandidates(context, 'cabbage', base.recordedAt, true, conditions), []);
+    const explicitMethod = resolved({ ...base, context: { ...context, establishment: 'transplant' }, candidates });
+    assert.equal(explicitMethod.fields.establishment.activeInput.state, 'missing');
+  }
+  assert.equal(worldvegKenyaCowpeaSpacing({ purpose: 'leaves', habit: '' }), null);
+});
 
 test('a source-qualified non-SA draft generates arithmetic and UTC dates without claiming agronomy approval', () => {
   const result = resolved();

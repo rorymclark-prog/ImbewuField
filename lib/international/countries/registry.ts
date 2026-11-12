@@ -1,5 +1,6 @@
 import { unknown, type CountryProfile, type CountrySource, type EvidenceCategory, type Known } from './types';
 import { WORLDVEG_KENYA_CABBAGE_SOURCE } from '../providers/worldveg-kenya-cabbage';
+import { WORLDVEG_KENYA_COWPEA_SOURCE } from '../providers/worldveg-kenya-cowpea';
 
 const DATE = '2026-11-01';
 const unreviewed = () => ({ status: 'not-reviewed' as const, regionId: null, reviewedOn: null, validThrough: null, sourceIds: [], reviewer: null });
@@ -24,6 +25,7 @@ const unavailable = (reason: string): Partial<CountrySource> => ({ verification:
 export const COUNTRY_PROFILES: readonly CountryProfile[] = [
   { code: 'KE', name: 'Kenya', stage: 'engineering-pilot', jurisdictionNote: 'National and county responsibilities require separate review; forestry, seed and phytosanitary authorities are not interchangeable.', regions: [], agronomyReview: unreviewed(), sources: [
     WORLDVEG_KENYA_CABBAGE_SOURCE,
+    WORLDVEG_KENYA_COWPEA_SOURCE,
     source('ke-kefri', 'biodiversity', 'Kenya Forestry Research Institute (KEFRI)', 'https://www.kefri.org/home.html', 'Kenya forestry research', 'The official page links forestry biodiversity research, a GBIF publishing toolkit and eco-region programmes; none is an approval to plant.'),
     source('ke-kalro', 'agricultural-extension', 'Kenya Agricultural & Livestock Research Organisation (KALRO)', 'https://kalro.ecitizen.go.ke/', 'Kenya agricultural research', 'The official eCitizen page identifies KALRO’s research and information role; services use eCitizen. No crop production guide was imported.', { accessRequirements: known('Public introduction; service applications and payments require eCitizen. No account was opened.') }),
     source('ke-kmd', 'weather-frost', 'Kenya Meteorological Department', 'https://meteo.go.ke/', 'Kenya weather and climate services', 'The official portal links forecasts, agrometeorology, climate data and stations; a frost-data contract was not verified.'),

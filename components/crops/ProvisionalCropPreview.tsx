@@ -10,6 +10,7 @@ import { growerWorkflowResourceSiteId, type GrowerWorkflowSource } from '@/lib/i
 import { resolveProvisionalCropPlan, type ProvisionalFieldCandidate, type ProvisionalDraftRequest } from '@/lib/international/provisional-crop-planning';
 import { sourcePublicationText } from '@/lib/international/countries/readiness';
 import { worldvegKenyaCabbageCandidates, worldvegKenyaCabbageReference, worldvegKenyaCabbageRegionMatches } from '@/lib/international/providers/worldveg-kenya-cabbage';
+import { worldvegKenyaCowpeaCandidates, worldvegKenyaCowpeaReference, worldvegKenyaCowpeaSpacing, type CowpeaReferenceConditions } from '@/lib/international/providers/worldveg-kenya-cowpea';
 
 export interface ProvisionalCropPreviewProps {
   ownerKey: string;
@@ -33,6 +34,7 @@ type Draft = {
   crop: string; bed: string; date: string; method: '' | 'direct' | 'transplant';
   water: '' | 'rain-fed' | 'irrigated'; variety: string;
   values: Partial<Record<NumericField, string>>; months: number[] | null; regionalConsent: string | null;
+  cowpea: CowpeaReferenceConditions; cowpeaConsent: string | null;
 };
 type Resolution = ReturnType<typeof resolveProvisionalCropPlan>;
 const control = 'min-h-11 w-full rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-sm';
@@ -59,7 +61,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
   const current = useRef(props); current.current = props;
   const active = useRef(true);
   useEffect(() => { active.current = true; return () => { active.current = false; }; }, []);
-  const [draft, setDraft] = useState<Draft>({ crop: '', bed: '', date: '', method: '', water: '', variety: '', values: {}, months: null, regionalConsent: null });
+  const [draft, setDraft] = useState<Draft>({ crop: '', bed: '', date: '', method: '', water: '', variety: '', values: {}, months: null, regionalConsent: null, cowpea: { purpose: '', habit: '' }, cowpeaConsent: null });
   const draftLive = useRef(draft); draftLive.current = draft;
   const [preview, setPreview] = useState<{ binding: string; generation: number; draft: Draft; result: Resolution; request: ProvisionalDraftRequest; bedLabel: string; receipt: { isCurrent: () => boolean } } | null>(null);
   const previewLive = useRef(preview); previewLive.current = preview;
@@ -77,6 +79,10 @@ function Editor(props: ProvisionalCropPreviewProps) {
   const regionalMatch = worldvegKenyaCabbageRegionMatches(props.agriculturalRegionReference);
   const regionalConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop]);
   const useRegionalMethod = regionalConsentKey !== null && draft.regionalConsent === regionalConsentKey && regionalMatch;
+  const cowpeaReference = worldvegKenyaCowpeaReference(props.countryCode, draft.crop);
+  const cowpeaSpacing = worldvegKenyaCowpeaSpacing(draft.cowpea);
+  const cowpeaConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.variety, draft.cowpea]);
+  const useCowpeaMethod = cowpeaConsentKey !== null && draft.cowpeaConsent === cowpeaConsentKey && cowpeaSpacing !== null;
   const source = props.source;
   const sourceReady = !!source && growerWorkflowResourceSiteId(source) !== null
     && growerPlanningScopeKey(source.scope) === growerPlanningScopeKey(props.scope) && !props.checking;
@@ -130,7 +136,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
         establishment: draft.method || null, waterRegime: draft.water || null, varietyReference: draft.variety.trim() || null };
       const request: ProvisionalDraftRequest = structuredClone({ profileId: 'provisional-preview', cropKey: draft.crop,
         context, recordedAt, asOf: recordedAt.slice(0, 10),
-        candidates: [...(props.evidence?.candidates ?? []), ...worldvegKenyaCabbageCandidates(context, draft.crop, recordedAt, useRegionalMethod)], overrides,
+        candidates: [...(props.evidence?.candidates ?? []), ...worldvegKenyaCabbageCandidates(context, draft.crop, recordedAt, useRegionalMethod),
+          ...worldvegKenyaCowpeaCandidates(context, draft.crop, recordedAt, useCowpeaMethod, draft.cowpea)], overrides,
         knownPlantingRestriction: props.evidence?.knownPlantingRestriction,
         measuredAreaM2: { state: 'provided', value: measures[0].areaM2, unit: 'm2',
           provenance: { kind: 'grower-record', recordedAt, reference: `Saved measured bed: ${draft.bed}` },
@@ -176,11 +183,11 @@ function Editor(props: ProvisionalCropPreviewProps) {
     <p className="text-sm">Preview supported counts and dates using applicable evidence and your edits. Missing values stay unknown. Nothing here saves a profile or adds a crop.</p>
     <p role="note" className="text-sm">Provisional estimates: source metadata is not verification of farming accuracy. Suitability and plant legality are not established. Density is not layout clearance.</p>
     <p className="text-sm">Country: {props.countryCode ?? 'Unknown'} · Agricultural region: {props.agriculturalRegionReference ?? 'Unknown'}</p>
-    {!props.evidence?.candidates.length && !useRegionalMethod && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
+    {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
     <button type="button" className={button} disabled={props.checking} onClick={refresh}>{props.checking ? 'Checking measurements…' : 'Check saved measurements'}</button>
     {!sourceReady && <p role="note">Current saved measurements are required. Previously calculated results are hidden.</p>}
     <div className="grid gap-3 sm:grid-cols-2">
-      <label className="text-sm">Preview crop<select aria-label="Preview crop" className={control} value={draft.crop} onChange={e => edit({ crop: e.target.value, values: {}, months: null, regionalConsent: null })}>
+      <label className="text-sm">Preview crop<select aria-label="Preview crop" className={control} value={draft.crop} onChange={e => edit({ crop: e.target.value, values: {}, months: null, regionalConsent: null, cowpea: { purpose: '', habit: '' }, cowpeaConsent: null })}>
         <option value="">Choose an existing crop</option>{CROPS.map(crop => <option key={crop.key} value={crop.key}>{crop.name}</option>)}</select></label>
       <label className="text-sm">Preview measured bed<select aria-label="Preview measured bed" className={control} value={draft.bed} onChange={e => edit({ bed: e.target.value })}>
         <option value="">Choose a measured bed</option>{sourceReady && source?.beds.map(bed => <option key={bed.id} value={bed.id}>{bed.label} · {bed.areaM2} m²</option>)}</select></label>
@@ -189,7 +196,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
         <option value="">Use evidence if available</option><option value="direct">Direct sowing</option><option value="transplant">Transplant</option></select></label>
       <label className="text-sm">Water regime<select aria-label="Water regime" className={control} value={draft.water} onChange={e => edit({ water: e.target.value as Draft['water'] })}>
         <option value="">Unknown</option><option value="rain-fed">Rain-fed</option><option value="irrigated">Irrigated</option></select></label>
-      <label className="text-sm">Variety reference (optional)<input className={control} value={draft.variety} onChange={e => edit({ variety: e.target.value })} /></label>
+      <label className="text-sm">Variety reference (optional)<input className={control} value={draft.variety} onChange={e => edit({ variety: e.target.value, cowpeaConsent: null })} /></label>
     </div>
     {regionalReference && <section aria-label="Kenya method reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
       <h3 className="font-semibold">WorldVeg cabbage method reference</h3>
@@ -202,6 +209,23 @@ function Editor(props: ProvisionalCropPreviewProps) {
       <label className="flex min-h-11 items-center gap-2"><input type="checkbox" aria-label="Use WorldVeg method reference" disabled={!regionalMatch}
         checked={useRegionalMethod} onChange={e => edit({ regionalConsent: e.target.checked ? regionalConsentKey : null })} />Use this transplant-method reference for this preview</label>
       <p>Density, yield, nursery days and harvest dates stay unknown until supported separately. Nothing is saved.</p>
+    </section>}
+    {cowpeaReference && <section aria-label="Kenya cowpea reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
+      <h3 className="font-semibold">WorldVeg cowpea conditions and method</h3>
+      <p>This Kenya manual section concerns cowpea leaves. Choose your purpose and growth habit before using its method. Neither selection verifies your variety or farm suitability.</p>
+      <label className="block">Cowpea harvest purpose<select aria-label="Cowpea harvest purpose" className={control} value={draft.cowpea.purpose}
+        onChange={e => edit({ cowpea: { ...draft.cowpea, purpose: e.target.value as CowpeaReferenceConditions['purpose'] }, cowpeaConsent: null })}>
+        <option value="">Unknown</option><option value="leaves">Leaves</option><option value="pods-or-grain">Pods or grain</option></select></label>
+      <label className="block">Cowpea growth habit<select aria-label="Cowpea growth habit" className={control} value={draft.cowpea.habit}
+        onChange={e => edit({ cowpea: { ...draft.cowpea, habit: e.target.value as CowpeaReferenceConditions['habit'] }, cowpeaConsent: null })}>
+        <option value="">Unknown</option><option value="spreading">Spreading</option><option value="erect-or-semi-erect">Erect or semi-erect</option></select></label>
+      {cowpeaSpacing ? <p>Source spacing for your selected habit: {cowpeaSpacing}. No point value is selected.</p>
+        : <p>Choose leaf production and a known growth habit to see the matching spacing reference. Pod or grain production needs separate evidence.</p>}
+      <p>The source describes direct sowing with 2–3 seeds per hill. Seeds sown do not establish the final surviving plants per station. Density, yield and dates remain unknown; separately entered numbers are your estimates.</p>
+      <p>Published: {sourcePublicationText(cowpeaReference)}. <a className="underline" href={`${cowpeaReference.url}#page=26`} target="_blank" rel="noreferrer">Read the original manual, page 22</a></p>
+      <p>{cowpeaReference.attribution}</p><p>{cowpeaReference.licence.status === 'known' && cowpeaReference.licence.value}</p>
+      <label className="flex min-h-11 items-center gap-2"><input type="checkbox" disabled={!cowpeaSpacing} checked={useCowpeaMethod}
+        onChange={e => edit({ cowpeaConsent: e.target.checked ? cowpeaConsentKey : null })} />Use this direct-sowing reference for this preview</label>
     </section>}
     <fieldset className="space-y-3"><legend className="font-semibold">Your preview overrides</legend>
       <p className="text-sm">Entered values are your estimates. Reset restores the evidence default, if available. Clearing an edited field keeps it unknown.</p>
