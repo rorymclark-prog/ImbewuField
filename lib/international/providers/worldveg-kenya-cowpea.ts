@@ -24,11 +24,29 @@ export function worldvegKenyaCowpeaReference(countryCode: string | null, cropKey
   return countryCode === 'KE' && cropKey === 'cowpea' ? WORLDVEG_KENYA_COWPEA_SOURCE : null;
 }
 
+export const WORLDVEG_COWPEA_SPACING_VERSION = 'worldveg-ke-24-1077-cowpea-spacing-v1' as const;
+export const WORLDVEG_COWPEA_PDF_SHA256 = 'd15d3279690547814b8d369337987f3a6a0893316cbe5cf7ea6afd82e790368c';
+const spacingRanges = Object.freeze({
+  spreading: Object.freeze({ rowCm: Object.freeze([50, 75] as const), inRowCm: Object.freeze([50, 75] as const) }),
+  'erect-or-semi-erect': Object.freeze({ rowCm: Object.freeze([50, 50] as const), inRowCm: Object.freeze([15, 25] as const) }),
+});
+
+/** The original says between plants. Treating this as station spacing is a
+ * separate grower declaration, never a source claim about multiple survivors. */
+export function worldvegKenyaCowpeaSpacingReference(countryCode: string | null, cropKey: string,
+  conditions: CowpeaReferenceConditions) {
+  if (!worldvegKenyaCowpeaReference(countryCode, cropKey) || conditions.purpose !== 'leaves'
+    || !Object.hasOwn(spacingRanges, conditions.habit)) return null;
+  return Object.freeze({ ...spacingRanges[conditions.habit as keyof typeof spacingRanges],
+    version: WORLDVEG_COWPEA_SPACING_VERSION, pdfSha256: WORLDVEG_COWPEA_PDF_SHA256,
+    source: WORLDVEG_KENYA_COWPEA_SOURCE });
+}
+
 export function worldvegKenyaCowpeaSpacing(conditions: CowpeaReferenceConditions): string | null {
-  if (conditions.purpose !== 'leaves') return null;
-  if (conditions.habit === 'spreading') return '50–75 cm between rows and 50–75 cm between plants';
-  if (conditions.habit === 'erect-or-semi-erect') return '50 cm between rows and 15–25 cm between plants';
-  return null;
+  const reference = worldvegKenyaCowpeaSpacingReference('KE', 'cowpea', conditions);
+  if (!reference) return null;
+  const range = ([min, max]: readonly [number, number]) => min === max ? `${min}` : `${min}–${max}`;
+  return `${range(reference.rowCm)} cm between rows and ${range(reference.inRowCm)} cm between plants`;
 }
 
 export function worldvegKenyaCowpeaCandidates(context: ProvisionalEvidenceContext, cropKey: string,

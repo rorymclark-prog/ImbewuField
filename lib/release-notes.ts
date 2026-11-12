@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '12 November 2026', sha: '79ea6a0e1', changes: [
+    'Choose cowpea spacing and surviving plants to preview a conditional plant count.',
+    'The preview keeps unknown choices and prints the spacing and area assumptions.',
+  ] },
   { when: '12 November 2026', sha: 'a0906e1ec', changes: [
     'Preview crops from your saved measurements, source references and your own conditions.',
     'Kenya method references keep unsupported counts, yields and dates unknown.',

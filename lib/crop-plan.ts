@@ -964,12 +964,13 @@ export function cropPlanWriteCandidateIsLossless(candidate: CropPlanState, prepa
   } catch { return false; }
 }
 
-function existingExactDensitySourcesPreserved(previous: CropPlanState, candidate: CropPlanState): boolean {
+function existingCountOriginsPreserved(previous: CropPlanState, candidate: CropPlanState): boolean {
   const next = candidate.growerPlanningProfiles ?? [];
   return (previous.growerPlanningProfiles ?? []).every(profile => {
-    if (!profile.exactDensitySources) return true;
+    if (!profile.exactDensitySources && !profile.plantCountOrigin) return true;
     const retained = next.find(row => row.profileId === profile.profileId);
-    return !!retained && cropPlanDataKey(retained.exactDensitySources ?? null) === cropPlanDataKey(profile.exactDensitySources);
+    return !!retained && cropPlanDataKey(retained.exactDensitySources ?? null) === cropPlanDataKey(profile.exactDensitySources ?? null)
+      && cropPlanDataKey(retained.plantCountOrigin ?? null) === cropPlanDataKey(profile.plantCountOrigin ?? null);
   });
 }
 
@@ -991,6 +992,9 @@ function growerProfileChangeIsExplicit(previous: CropPlanState, candidate: CropP
     || cropPlanDataKey(expected) !== cropPlanDataKey(prior)) return false;
   if (request.kind === 'remove') return !next;
   if (!next) return false;
+  // The existing editor has no spacing-basis switch. Even an otherwise valid
+  // edit permit cannot discard or rewrite the original denominator/area choice.
+  if (prior.plantCountOrigin && cropPlanDataKey(prior.plantCountOrigin) !== cropPlanDataKey(next.plantCountOrigin ?? null)) return false;
   // An intentional edit may replace origin with newly validated source, or
   // explicitly clear the density. A still-provided Number cannot justify
   // silently falling back from its original source digits to legacy arithmetic.
@@ -1108,7 +1112,7 @@ export function saveCropPlanWithReceipt(s: CropPlanState, options?: { readonly g
         || loaded.token !== profileChange.token || cropPlanDataKey(loaded.book) !== profileChange.loadedKey
         || cropPlanDataKey(saved) !== profileChange.candidateKey
         || !cropPlanWriteAdmissionMatches(profileChange.admission, JSON.stringify(loaded.book), profileChange.token)) return { saved: false, token: null };
-    } else if (!existingExactDensitySourcesPreserved(loaded.book, saved)) return { saved: false, token: null };
+    } else if (!existingCountOriginsPreserved(loaded.book, saved)) return { saved: false, token: null };
     if (sample) {
       const { token } = sampleCropPlanSnapshot(saved);
       if (profileChange && (profileChange.revoked || typeof window === 'undefined' || window !== profileChange.win)) return { saved: false, token: null };

@@ -1,4 +1,5 @@
-import { decimalQuantityProduct, type DecimalQuantity } from './farm-records';
+import { worldvegKenyaCowpeaSpacingReference, WORLDVEG_COWPEA_SPACING_VERSION } from './international/providers/worldveg-kenya-cowpea';
+import { addDecimalQuantity, compareDecimalQuantities, decimalQuantityProduct, type DecimalQuantity } from './farm-records';
 import {
   INTERNATIONAL_SQUARE_FOOT_IN_SQUARE_METRES,
   representableUnitValue,
@@ -153,4 +154,81 @@ export function normaliseGrowerEstimateSourceReceipt(
  * current canonical/owner comparison again; a cast or copied flag grants none. */
 export function growerEstimateSourceQuantity(receipt: GrowerEstimateSourceReceipt): Readonly<DecimalQuantity> | null {
   return sourceQuantities.get(receipt) ?? null;
+}
+
+
+/** Whole-cell area budgeting, not an inferred decimal density or a layout. */
+export interface GrowerSpacingSelectionReceipt {
+  readonly version: 1;
+  readonly conversion: 'spacing-cells-cm-v1';
+  readonly scopeKey: string;
+  readonly profileId: string;
+  readonly cropKey: string;
+  readonly bedId: string;
+  readonly areaBasisKey: string;
+  readonly referenceVersion: typeof WORLDVEG_COWPEA_SPACING_VERSION;
+  readonly countryCode: 'KE';
+  readonly regionReference: string | null;
+  readonly varietyReference: string | null;
+  readonly purpose: 'leaves';
+  readonly habit: 'spreading' | 'erect-or-semi-erect';
+  readonly rowCm: string;
+  readonly inRowCm: string;
+  readonly finalStand: string | null;
+  readonly interpretation: 'source-inrow-interpreted-as-station-spacing';
+  readonly areaUse: 'whole-current-measured-area';
+  readonly recordedAt: string;
+}
+export type GrowerSpacingOwner = Pick<GrowerEstimateSourceOwner, 'scopeKey' | 'profileId' | 'cropKey'>;
+type SpacingQuantities = Readonly<{ rowCm: Readonly<DecimalQuantity>; inRowCm: Readonly<DecimalQuantity>; finalStand: Readonly<DecimalQuantity> | null }>;
+const spacingQuantities = new WeakMap<GrowerSpacingSelectionReceipt, SpacingQuantities>();
+const spacingKeys = ['version', 'conversion', 'scopeKey', 'profileId', 'cropKey', 'bedId', 'areaBasisKey',
+  'referenceVersion', 'countryCode', 'regionReference', 'varietyReference', 'purpose', 'habit',
+  'rowCm', 'inRowCm', 'finalStand', 'interpretation', 'areaUse', 'recordedAt'];
+const spacingText = (v: unknown): v is string => typeof v === 'string' && v.trim().length > 0
+  && v.length <= 2000 && !/[\u0000-\u001f\u007f]/.test(v);
+function spacingDecimal(value: unknown): Readonly<DecimalQuantity> | null {
+  if (typeof value !== 'string' || value.length > MAX_SOURCE_DECIMAL_CHARACTERS) return null;
+  const read = parseLengthDecimal(value);
+  if (read.status !== 'ready' || read.value < 0) return null;
+  const token = value.trim().replace(',', '.').replace(/^[+-]/, '');
+  const [whole, fraction = ''] = token.split('.');
+  return Object.freeze({ digits: BigInt((whole || '0') + fraction), exponent: -fraction.length });
+}
+
+/** Revalidate code-owned source ranges and original digits on every read. A
+ * present bad receipt cannot be treated as an absent legacy density origin. */
+export function normaliseGrowerSpacingSelectionReceipt(value: unknown, owner: GrowerSpacingOwner): GrowerSpacingSelectionReceipt | null {
+  try {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+    const ds = Object.getOwnPropertyDescriptors(value);
+    if (Reflect.ownKeys(ds).length !== spacingKeys.length || !spacingKeys.every(k => ds[k]?.enumerable && 'value' in ds[k])) return null;
+    const row = Object.fromEntries(spacingKeys.map(k => [k, ds[k].value]));
+    if (!['scopeKey', 'profileId', 'cropKey'].every(k => spacingText(row[k]) && row[k] === owner[k as keyof GrowerSpacingOwner])
+      || !spacingText(row.bedId) || !spacingText(row.areaBasisKey)
+      || row.version !== 1 || row.conversion !== 'spacing-cells-cm-v1'
+      || row.referenceVersion !== WORLDVEG_COWPEA_SPACING_VERSION
+      || !(row.regionReference === null || spacingText(row.regionReference))
+      || !(row.varietyReference === null || spacingText(row.varietyReference))
+      || row.interpretation !== 'source-inrow-interpreted-as-station-spacing' || row.areaUse !== 'whole-current-measured-area'
+      || typeof row.recordedAt !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(row.recordedAt)
+      || !Number.isFinite(Date.parse(row.recordedAt)) || new Date(row.recordedAt).toISOString() !== row.recordedAt) return null;
+    const reference = worldvegKenyaCowpeaSpacingReference(row.countryCode, row.cropKey, { purpose: row.purpose, habit: row.habit });
+    if (!reference) return null;
+    const a = spacingDecimal(row.rowCm), b = spacingDecimal(row.inRowCm);
+    const within = (q: Readonly<DecimalQuantity> | null, range: readonly [number, number]) => q
+      && compareDecimalQuantities(q, addDecimalQuantity(undefined, range[0])) >= 0
+      && compareDecimalQuantities(q, addDecimalQuantity(undefined, range[1])) <= 0;
+    if (!within(a, reference.rowCm) || !within(b, reference.inRowCm)) return null;
+    const stand = row.finalStand === null ? null : spacingDecimal(row.finalStand);
+    if (row.finalStand !== null && (!stand || compareDecimalQuantities(stand, addDecimalQuantity(undefined, Number.MAX_SAFE_INTEGER)) > 0
+      || (stand.exponent < 0 && stand.digits % (BigInt(10) ** BigInt(-stand.exponent)) !== BigInt(0)))) return null;
+    const receipt = Object.freeze(row) as unknown as GrowerSpacingSelectionReceipt;
+    spacingQuantities.set(receipt, Object.freeze({ rowCm: a!, inRowCm: b!, finalStand: stand }));
+    return receipt;
+  } catch { return null; }
+}
+
+export function growerSpacingSourceQuantities(receipt: GrowerSpacingSelectionReceipt): SpacingQuantities | null {
+  return spacingQuantities.get(receipt) ?? null;
 }
