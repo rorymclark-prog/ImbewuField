@@ -1,3 +1,4 @@
+import { worldvegKenyaCowpeaSpacing } from './providers/worldveg-kenya-cowpea';
 import { sourcePublicationText } from './countries/readiness';
 import type { GrowerInputProvenance } from './grower-planning';
 import { formatDerivedMassKilograms } from '../mass-units';
@@ -53,6 +54,7 @@ export function buildProvisionalCropPreviewHtml(request: ProvisionalDraftRequest
   const value = (item: { value: unknown; status: string }, unit = '') =>
     `${item.value === null ? 'Unknown' : `${item.value}${unit}`} (${item.status})`;
   const output = [
+    ...(request.countBasis ? [['Budgeted whole stations', value(assessment.budgetedStations)]] : []),
     ['Estimated plants', value(assessment.estimatedPlantCount)],
     ['Estimated harvest weight', value({ ...assessment.estimatedYieldKg, value: assessment.estimatedYieldKg.value === null ? null : formatDerivedMassKilograms(assessment.estimatedYieldKg.value, 'kg') }, ' kg')],
     ...Object.entries(assessment.schedule).map(([key, item]) => [`${provisionalLabels[key]} (UTC)`, value(item)]),
@@ -64,7 +66,7 @@ export function buildProvisionalCropPreviewHtml(request: ProvisionalDraftRequest
     ${paragraph('Active basis', field.activeTier ?? 'Unknown')}
     ${field.activeInput.state === 'provided' ? paragraph('Input provenance', provenanceText(field.activeInput.provenance)) : ''}
     ${paragraph('Evidence default', provisionalInputText(field.baselineDefault))}
-    ${field.status === 'overridden' && field.activeInput.state === 'missing' ? '<p>Grower withheld this value. Its evidence default remains visible but is not used.</p>' : ''}
+    ${field.status === 'overridden' && field.activeInput.state === 'missing' && !(request.countBasis && key === 'plantsPerM2') ? '<p>Grower withheld this value. Its evidence default remains visible but is not used.</p>' : ''}
     ${field.defaultConflict ? '<p><strong>Conflicting defaults remain unresolved. No average was invented.</strong></p>' : ''}
     ${field.status === 'invalid-override' ? '<p><strong>Invalid override: its default has not been substituted.</strong></p>' : ''}
     ${field.defaultOptions.map(option => paragraph(`Default ${option.candidateId}`,
@@ -104,7 +106,16 @@ ${snapshot.measuredAreaM2.state === 'provided' ? paragraph('Saved measurement so
 ${snapshot.measuredAreaM2.state === 'provided' ? `${paragraph('Saved measurement read at (UTC)', request.recordedAt)}
 <p>This is when the saved design was read, not when the measurement was made.</p>` : ''}
 ${snapshot.measuredAreaM2.arithmeticBasis ? paragraph('Saved rectangle arithmetic', `${snapshot.measuredAreaM2.arithmeticBasis.widthM} m × ${snapshot.measuredAreaM2.arithmeticBasis.heightM} m`) : ''}
-${paragraph('Count arithmetic', snapshot.countArithmetic)}
+${paragraph('Count arithmetic', result.profile.plantCountOrigin?.conversion ?? snapshot.countArithmetic)}
+${request.countBasis ? `<section class="field"><h2>Conditional spacing-cell estimate</h2>
+${paragraph('Selection status', result.spacingSelection?.status)}${paragraph('Selection information', result.spacingSelection?.issue)}
+${paragraph('Source spacing range', worldvegKenyaCowpeaSpacing(request.countBasis))}
+${paragraph('Chosen row spacing (cm)', request.countBasis.rowCm || 'Unknown')}
+${paragraph('Chosen in-row spacing (cm)', request.countBasis.inRowCm || 'Unknown')}
+${paragraph('Final surviving plants per station', request.countBasis.finalStand || 'Unknown')}
+${paragraph('Source between-plants distance interpreted as station spacing', request.countBasis.interpretationConfirmed ? 'Declared by grower' : 'Not declared')}
+${paragraph('Whole measured bed treated as usable spacing-cell area', request.countBasis.wholeAreaConfirmed ? 'Declared by grower' : 'Not declared')}
+<p>Formula: floor(area in m² × 10000 / (row cm × in-row cm)) gives whole budgeted stations; multiply those whole stations by declared final survivors. Original decimal choices are retained. This is a conditional grower estimate, not a sourced density or physical layout clearance. The source’s 2–3 seeds per hill do not supply final stand. Entered/default density is not used.</p></section>` : ''}
 
 <h2>Supported results</h2>${paragraph('Entry window', assessment.entryWindow)}
 <p>An unknown window does not establish that planting on this date is suitable.</p>

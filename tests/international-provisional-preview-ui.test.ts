@@ -457,3 +457,58 @@ test('cowpea purpose and habit select an actual source reference without inventi
     assert.deepEqual(ui.writes, []);
   } finally { capture.dispose(); ui.dispose(); }
 });
+
+const stationDeclaration = 'I interpret the source’s between-plants distance as distance between stations for this estimate.';
+const areaDeclaration = 'I treat the whole selected measured bed area as usable spacing-cell area, without paths or excluded space.';
+function spacingChoices(ui: ReturnType<typeof mount>) {
+  ui.change('Preview crop', 'cowpea'); ui.change('Preview measured bed', 'bed-1');
+  ui.change('Cowpea harvest purpose', 'leaves'); ui.change('Cowpea growth habit', 'spreading');
+  act(() => ui.field('Use this direct-sowing reference for this preview').props.onChange({ target: { checked: true } }));
+  ui.change('Plant-count method', 'spacing');
+  for (const label of ['Chosen row spacing (cm)', 'Chosen in-row spacing (cm)', 'Final surviving plants per station']) assert.equal(ui.field(label).props.value, '');
+  ui.change('Chosen row spacing (cm)', '75'); ui.change('Chosen in-row spacing (cm)', '75');
+}
+function acknowledgeSpacing(ui: ReturnType<typeof mount>) {
+  for (const label of [stationDeclaration, areaDeclaration]) act(() => ui.field(label).props.onChange({ target: { checked: true } }));
+}
+
+test('mounted spacing estimate starts blank, keeps unknown stand, preserves zero and exports the actual choices', async () => {
+  const ui = mount({ evidence: undefined }); const files = downloads();
+  try {
+    spacingChoices(ui); await ui.click(); assert.match(ui.text(), /Estimated plants: Unknown/);
+    acknowledgeSpacing(ui); await ui.click(); assert.match(ui.text(), /Budgeted whole stations: 18 \(ready\)/);
+    assert.match(ui.text(), /Estimated plants: Unknown \(missing-inputs\)/);
+    for (const [stand, plants] of [['0', 0], ['2', 36]] as const) {
+      ui.change('Final surviving plants per station', stand); assert.equal(ui.field(areaDeclaration).props.checked, false);
+      acknowledgeSpacing(ui); await ui.click(); assert.match(ui.text(), new RegExp(`Estimated plants: ${plants} \\(ready\\)`));
+      await ui.click('Download printable preview');
+      const file = await files.blobs.at(-1)!.text(); assert.match(file, /Conditional spacing-cell estimate/); assert.match(file, /whole budgeted stations/);
+      assert.match(file, /CC BY-SA/); assert.match(file, /not a sourced density/); assert.doesNotMatch(file, /areaBasisKey|scopeKey/);
+    }
+    ui.change('Chosen row spacing (cm)', '75.00000000000000000001'); acknowledgeSpacing(ui); await ui.click();
+    assert.match(ui.text(), /Estimated plants: Unknown/); assert.match(ui.text(), /invalid-inputs/); assert.deepEqual(ui.writes, []);
+  } finally { files.dispose(); ui.dispose(); }
+});
+
+test('spacing choices and callbacks cannot revive through habit, bed, mode or country round trips or deliver stale downloads', async () => {
+  const second = { ...structuredClone(source), beds: [...source.beds, { ...source.beds[0], id: 'bed-2' }],
+    measuredAreas: [...source.measuredAreas, { ...source.measuredAreas[0], bedId: 'bed-2' }] };
+  const ui = mount({ source: second, evidence: undefined }); const files = downloads();
+  try {
+    spacingChoices(ui); ui.change('Final surviving plants per station', '1'); acknowledgeSpacing(ui); await ui.click();
+    const oldCalculate = ui.action('Calculate provisional preview');
+    ui.change('Preview measured bed', 'bed-2'); ui.change('Preview measured bed', 'bed-1');
+    assert.equal(ui.field(areaDeclaration).props.checked, false); await act(async () => { await oldCalculate(); }); assert.doesNotMatch(ui.text(), /Estimated plants:/);
+    acknowledgeSpacing(ui); await ui.click();
+    let finish!: (value: { isCurrent: () => boolean }) => void;
+    ui.update({ onCheckSource: () => new Promise(resolve => { finish = resolve; }) });
+    let pending!: Promise<void>; await act(async () => { pending = ui.action('Download printable preview')(); });
+    ui.change('Chosen row spacing (cm)', '74'); await act(async () => { finish({ isCurrent: () => true }); await pending; }); assert.deepEqual(files.names, []);
+    ui.change('Cowpea growth habit', 'erect-or-semi-erect'); ui.change('Cowpea growth habit', 'spreading');
+    assert.equal(ui.field('Chosen row spacing (cm)').props.value, ''); assert.equal(ui.field(areaDeclaration).props.checked, false);
+    ui.change('Plant-count method', 'density'); ui.change('Plant density (plants per m²)', '9'); ui.change('Plant-count method', 'spacing');
+    assert.equal(ui.field(areaDeclaration).props.checked, false);
+    ui.update({ countryCode: 'ZA' }); ui.update({ countryCode: 'KE' }); assert.equal(ui.field(areaDeclaration).props.checked, false);
+    assert.deepEqual(ui.writes, []);
+  } finally { files.dispose(); ui.dispose(); }
+});

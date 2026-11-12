@@ -365,6 +365,7 @@ function Editor({ scope, beds, profiles, current, sourceKey, measuredAreas, meas
     if (!draftIsCurrent()) return;
     if (!latest || !shownSignature || latest.signature !== shownSignature) { setReview(null); setError(changedSourceMessage); return; }
     const value = latest.profile;
+    if (value.plantCountOrigin) { setError('This estimate uses spacing cells. This editor cannot change that count basis; the original choices remain saved.'); return; }
     dirty(); replaceSession(value); setCropKey(value.cropKey);
     setNumbers(Object.fromEntries(numericFields.map(([name]) => [name, name === 'plantsPerM2' || name === 'yieldKgPerM2' ? '' : value.inputs[name].state === 'provided' ? String(value.inputs[name].value) : ''])) as Record<NumericKey, string>);
     commitDensity(densityPair(key, densityLive.current.choice, value.inputs.plantsPerM2.state === 'provided' ? value.inputs.plantsPerM2.value : undefined,

@@ -1,7 +1,9 @@
+import { normaliseGrowerSpacingSelectionReceipt, type GrowerSpacingSelectionReceipt } from '../grower-estimate-units';
+import { WORLDVEG_COWPEA_SPACING_VERSION, WORLDVEG_KENYA_COWPEA_SOURCE } from './providers/worldveg-kenya-cowpea';
 import { sourceEvidenceState, sourcePublicationIsKnownBy } from './countries/readiness';
 import type { CountrySource } from './countries/types';
 import {
-  assessProvisionalGrowerPlanning, growerPlanningScopeKey, isGrowerRecordedAt, isGrowerUtcDate,
+  assessProvisionalGrowerPlanning, growerPlanningScopeKey, growerCountAreaBasisKey, normaliseGrowerMeasuredAreaInput, isGrowerRecordedAt, isGrowerUtcDate,
   normaliseGrowerInput, normaliseGrowerPlanningProfile, normaliseGrowerPlanningScope,
   type GrowerPlanningInputs, type GrowerPlanningProfile, type GrowerPlanningScope,
 } from './grower-planning';
@@ -73,6 +75,18 @@ export interface ResolvedProvisionalField {
   readonly assumptions: readonly string[];
 }
 
+export interface ProvisionalSpacingCountBasis {
+  readonly kind: 'spacing-cell-budget-v1';
+  readonly bedId: string;
+  readonly purpose: '' | 'leaves' | 'pods-or-grain';
+  readonly habit: '' | 'spreading' | 'erect-or-semi-erect';
+  readonly rowCm: string;
+  readonly inRowCm: string;
+  readonly finalStand: string;
+  readonly interpretationConfirmed: boolean;
+  readonly wholeAreaConfirmed: boolean;
+}
+
 export interface ProvisionalDraftRequest {
   readonly profileId: string;
   readonly cropKey: string;
@@ -84,6 +98,7 @@ export interface ProvisionalDraftRequest {
   readonly measuredAreaM2: unknown;
   readonly fieldEntryDate: unknown;
   readonly knownPlantingRestriction?: boolean;
+  readonly countBasis?: ProvisionalSpacingCountBasis;
 }
 
 const fields: readonly Field[] = ['establishment', 'plantsPerM2', 'yieldKgPerM2', 'nurseryDays',
@@ -108,8 +123,8 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
   const scope = normaliseGrowerPlanningScope(request.context?.scope);
   const context = request.context;
   const emptyInputs = Object.fromEntries(fields.map(field => [field, unknown()]));
-  const makeProfile = (inputs: Record<string, unknown>) => normaliseGrowerPlanningProfile({
-    version: 1, profileId: request.profileId, cropKey: request.cropKey, scope, inputs,
+  const makeProfile = (inputs: Record<string, unknown>, plantCountOrigin?: GrowerSpacingSelectionReceipt) => normaliseGrowerPlanningProfile({
+    version: 1, profileId: request.profileId, cropKey: request.cropKey, scope, inputs, ...(plantCountOrigin ? { plantCountOrigin } : {}),
   });
   const base = makeProfile(emptyInputs);
   const entryDate = normaliseGrowerInput(request.fieldEntryDate, 'utc-date', isGrowerUtcDate);
@@ -275,20 +290,61 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
       establishment = null;
     }
   }
-  const profile = makeProfile(inputs);
+  let plantCountOrigin: GrowerSpacingSelectionReceipt | undefined;
+  let spacingSelection: { status: 'ready' | 'missing-inputs' | 'invalid-inputs'; issue: string } | null = null;
+  if (request.countBasis !== undefined) {
+    const selection = request.countBasis;
+    const keys = ['kind', 'bedId', 'purpose', 'habit', 'rowCm', 'inRowCm', 'finalStand', 'interpretationConfirmed', 'wholeAreaConfirmed'];
+    const descriptors: PropertyDescriptorMap = record(selection) ? Object.getOwnPropertyDescriptors(selection) : {};
+    if (Reflect.ownKeys(descriptors).length !== keys.length || !keys.every(key => descriptors[key]?.enumerable && 'value' in descriptors[key])
+      || selection.kind !== 'spacing-cell-budget-v1' || !text(selection.bedId)
+      || ![selection.rowCm, selection.inRowCm, selection.finalStand].every(v => typeof v === 'string' && v.length <= 1024)
+      || typeof selection.interpretationConfirmed !== 'boolean' || typeof selection.wholeAreaConfirmed !== 'boolean'
+      || !['', 'leaves', 'pods-or-grain'].includes(selection.purpose) || !['', 'spreading', 'erect-or-semi-erect'].includes(selection.habit)) {
+      return freeze({ status: 'invalid-context' as const, profile: null, fields: null, assessment: null, fingerprint: null });
+    }
+    // This explicit method never falls back to a retained manual/default density.
+    inputs.plantsPerM2 = unknown();
+    resolved.plantsPerM2 = { ...resolved.plantsPerM2, activeInput: unknown(), activeTier: null, status: 'overridden',
+      assumptions: [...resolved.plantsPerM2.assumptions, 'Entered/default density is not used by the selected spacing-cell count method.'] };
+    const area = normaliseGrowerMeasuredAreaInput(request.measuredAreaM2);
+    const sourceSelected = resolved.establishment.sourceBindings.some(s => s.id === WORLDVEG_KENYA_COWPEA_SOURCE.id
+      && s.evidenceState === 'available-reference');
+    if (!sourceSelected || context.countryCode !== 'KE' || request.cropKey !== 'cowpea' || establishment !== 'direct'
+      || selection.purpose !== 'leaves' || !selection.habit) spacingSelection = { status: 'missing-inputs', issue: 'Applicable leaf-production source and direct method must be selected.' };
+    else if (!selection.interpretationConfirmed || !selection.wholeAreaConfirmed || !selection.rowCm.trim() || !selection.inRowCm.trim()
+      || !area || area.state !== 'provided') spacingSelection = { status: 'missing-inputs', issue: 'Declare spacing, station interpretation and use of the whole current measured bed area.' };
+    else {
+      const origin = normaliseGrowerSpacingSelectionReceipt({ version: 1, conversion: 'spacing-cells-cm-v1',
+        scopeKey: growerPlanningScopeKey(scope), profileId: request.profileId, cropKey: request.cropKey,
+        bedId: selection.bedId, areaBasisKey: growerCountAreaBasisKey(area), referenceVersion: WORLDVEG_COWPEA_SPACING_VERSION,
+        countryCode: context.countryCode, regionReference: context.agriculturalRegionReference, varietyReference: context.varietyReference ?? null,
+        purpose: selection.purpose, habit: selection.habit, rowCm: selection.rowCm, inRowCm: selection.inRowCm,
+        finalStand: selection.finalStand.trim() ? selection.finalStand : null,
+        interpretation: 'source-inrow-interpreted-as-station-spacing', areaUse: 'whole-current-measured-area', recordedAt: request.recordedAt },
+      { scopeKey: growerPlanningScopeKey(scope)!, profileId: request.profileId, cropKey: request.cropKey });
+      if (origin) { plantCountOrigin = origin; spacingSelection = { status: origin.finalStand === null ? 'missing-inputs' : 'ready',
+        issue: origin.finalStand === null ? 'Final surviving plants per station are unknown; seeds per hill do not supply this value.' : 'Conditional grower estimate using whole spacing cells, not physical layout fit.' }; }
+      else spacingSelection = { status: 'invalid-inputs', issue: 'Spacing must lie within the source range and final stand must be a non-negative safe whole number.' };
+    }
+  }
+  const profile = makeProfile(inputs, plantCountOrigin);
   // Every resolved result promises a valid profile. Do not rely on an erased
   // non-null assertion if a future normalizer change breaks that invariant.
   if (!profile) return freeze({ status: 'invalid-context' as const,
     profile: null, fields: null, assessment: null, fingerprint: null });
-  const assessment = assessProvisionalGrowerPlanning({ profile, scope, measuredAreaM2: request.measuredAreaM2,
-    fieldEntryDate: request.fieldEntryDate });
+  const arithmetic = assessProvisionalGrowerPlanning({ profile, scope, measuredAreaM2: request.measuredAreaM2,
+    fieldEntryDate: request.fieldEntryDate, ...(request.countBasis ? { countAreaBinding: { bedId: request.countBasis.bedId } } : {}) });
+  const assessment = spacingSelection && !plantCountOrigin ? { ...arithmetic,
+    estimatedPlantCount: { status: spacingSelection.status === 'invalid-inputs' ? 'invalid-inputs' as const : 'missing-inputs' as const, value: null, issues: [spacingSelection.issue] },
+    budgetedStations: { status: spacingSelection.status === 'invalid-inputs' ? 'invalid-inputs' as const : 'missing-inputs' as const, value: null, issues: [spacingSelection.issue] } } : arithmetic;
   const canonicalContext: ProvisionalEvidenceContext = { scope, countryCode: context.countryCode,
     agriculturalRegionReference: context.agriculturalRegionReference, establishment: context.establishment, waterRegime: context.waterRegime,
     varietyReference: context.varietyReference ?? null };
   return freeze({ status: 'resolved' as const, provisional: true, sourceVerification: 'not-verified' as const,
-    densityEstimateNotLayoutClearance: true as const, profile, fields: resolved, assessment, rejected,
+    densityEstimateNotLayoutClearance: true as const, profile, fields: resolved, assessment, rejected, spacingSelection,
     countryOrRegionApproval: false as const, knownPlantLegalityEstablished: false as const,
     requestedEstablishment: context.establishment, activeEstablishment: establishment,
-    fingerprint: JSON.stringify([growerPlanningScopeKey(scope), canonicalContext, establishment, request.asOf, resolved,
+    fingerprint: JSON.stringify([growerPlanningScopeKey(scope), canonicalContext, establishment, request.asOf, resolved, request.countBasis ?? null, spacingSelection,
       [...rejected].sort((a, b) => JSON.stringify(a) < JSON.stringify(b) ? -1 : JSON.stringify(a) > JSON.stringify(b) ? 1 : 0), assessment.fingerprint]) });
 }

@@ -35,6 +35,9 @@ type Draft = {
   water: '' | 'rain-fed' | 'irrigated'; variety: string;
   values: Partial<Record<NumericField, string>>; months: number[] | null; regionalConsent: string | null;
   cowpea: CowpeaReferenceConditions; cowpeaConsent: string | null;
+  countMode: 'density' | 'spacing';
+  spacing: { rowCm: string; inRowCm: string; finalStand: string };
+  stationConsent: string | null; areaConsent: string | null;
 };
 type Resolution = ReturnType<typeof resolveProvisionalCropPlan>;
 const control = 'min-h-11 w-full rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-sm';
@@ -61,7 +64,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
   const current = useRef(props); current.current = props;
   const active = useRef(true);
   useEffect(() => { active.current = true; return () => { active.current = false; }; }, []);
-  const [draft, setDraft] = useState<Draft>({ crop: '', bed: '', date: '', method: '', water: '', variety: '', values: {}, months: null, regionalConsent: null, cowpea: { purpose: '', habit: '' }, cowpeaConsent: null });
+  const [draft, setDraft] = useState<Draft>({ crop: '', bed: '', date: '', method: '', water: '', variety: '', values: {}, months: null, regionalConsent: null, cowpea: { purpose: '', habit: '' }, cowpeaConsent: null, countMode: 'density', spacing: { rowCm: '', inRowCm: '', finalStand: '' }, stationConsent: null, areaConsent: null });
   const draftLive = useRef(draft); draftLive.current = draft;
   const [preview, setPreview] = useState<{ binding: string; generation: number; draft: Draft; result: Resolution; request: ProvisionalDraftRequest; bedLabel: string; receipt: { isCurrent: () => boolean } } | null>(null);
   const previewLive = useRef(preview); previewLive.current = preview;
@@ -83,6 +86,9 @@ function Editor(props: ProvisionalCropPreviewProps) {
   const cowpeaSpacing = worldvegKenyaCowpeaSpacing(draft.cowpea);
   const cowpeaConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.variety, draft.cowpea]);
   const useCowpeaMethod = cowpeaConsentKey !== null && draft.cowpeaConsent === cowpeaConsentKey && cowpeaSpacing !== null;
+  const spacingConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.bed, draft.variety, draft.cowpea, draft.countMode, draft.spacing]);
+  const stationConfirmed = spacingConsentKey !== null && draft.stationConsent === spacingConsentKey;
+  const wholeAreaConfirmed = spacingConsentKey !== null && draft.areaConsent === spacingConsentKey;
   const source = props.source;
   const sourceReady = !!source && growerWorkflowResourceSiteId(source) !== null
     && growerPlanningScopeKey(source.scope) === growerPlanningScopeKey(props.scope) && !props.checking;
@@ -138,6 +144,9 @@ function Editor(props: ProvisionalCropPreviewProps) {
         context, recordedAt, asOf: recordedAt.slice(0, 10),
         candidates: [...(props.evidence?.candidates ?? []), ...worldvegKenyaCabbageCandidates(context, draft.crop, recordedAt, useRegionalMethod),
           ...worldvegKenyaCowpeaCandidates(context, draft.crop, recordedAt, useCowpeaMethod, draft.cowpea)], overrides,
+        ...(draft.countMode === 'spacing' ? { countBasis: { kind: 'spacing-cell-budget-v1', bedId: draft.bed,
+          purpose: draft.cowpea.purpose, habit: draft.cowpea.habit, ...draft.spacing,
+          interpretationConfirmed: stationConfirmed, wholeAreaConfirmed } } : {}),
         knownPlantingRestriction: props.evidence?.knownPlantingRestriction,
         measuredAreaM2: { state: 'provided', value: measures[0].areaM2, unit: 'm2',
           provenance: { kind: 'grower-record', recordedAt, reference: `Saved measured bed: ${draft.bed}` },
@@ -187,16 +196,16 @@ function Editor(props: ProvisionalCropPreviewProps) {
     <button type="button" className={button} disabled={props.checking} onClick={refresh}>{props.checking ? 'Checking measurements…' : 'Check saved measurements'}</button>
     {!sourceReady && <p role="note">Current saved measurements are required. Previously calculated results are hidden.</p>}
     <div className="grid gap-3 sm:grid-cols-2">
-      <label className="text-sm">Preview crop<select aria-label="Preview crop" className={control} value={draft.crop} onChange={e => edit({ crop: e.target.value, values: {}, months: null, regionalConsent: null, cowpea: { purpose: '', habit: '' }, cowpeaConsent: null })}>
+      <label className="text-sm">Preview crop<select aria-label="Preview crop" className={control} value={draft.crop} onChange={e => edit({ crop: e.target.value, values: {}, months: null, regionalConsent: null, cowpea: { purpose: '', habit: '' }, cowpeaConsent: null, countMode: 'density', spacing: { rowCm: '', inRowCm: '', finalStand: '' }, stationConsent: null, areaConsent: null })}>
         <option value="">Choose an existing crop</option>{CROPS.map(crop => <option key={crop.key} value={crop.key}>{crop.name}</option>)}</select></label>
-      <label className="text-sm">Preview measured bed<select aria-label="Preview measured bed" className={control} value={draft.bed} onChange={e => edit({ bed: e.target.value })}>
+      <label className="text-sm">Preview measured bed<select aria-label="Preview measured bed" className={control} value={draft.bed} onChange={e => edit({ bed: e.target.value, stationConsent: null, areaConsent: null })}>
         <option value="">Choose a measured bed</option>{sourceReady && source?.beds.map(bed => <option key={bed.id} value={bed.id}>{bed.label} · {bed.areaM2} m²</option>)}</select></label>
       <label className="text-sm">Preview field-entry date (UTC)<input className={control} type="date" value={draft.date} onChange={e => edit({ date: e.target.value })} /></label>
       <label className="text-sm">Preview establishment<select aria-label="Preview establishment" className={control} value={draft.method} onChange={e => edit({ method: e.target.value as Draft['method'] })}>
         <option value="">Use evidence if available</option><option value="direct">Direct sowing</option><option value="transplant">Transplant</option></select></label>
       <label className="text-sm">Water regime<select aria-label="Water regime" className={control} value={draft.water} onChange={e => edit({ water: e.target.value as Draft['water'] })}>
         <option value="">Unknown</option><option value="rain-fed">Rain-fed</option><option value="irrigated">Irrigated</option></select></label>
-      <label className="text-sm">Variety reference (optional)<input className={control} value={draft.variety} onChange={e => edit({ variety: e.target.value, cowpeaConsent: null })} /></label>
+      <label className="text-sm">Variety reference (optional)<input className={control} value={draft.variety} onChange={e => edit({ variety: e.target.value, cowpeaConsent: null, stationConsent: null, areaConsent: null })} /></label>
     </div>
     {regionalReference && <section aria-label="Kenya method reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
       <h3 className="font-semibold">WorldVeg cabbage method reference</h3>
@@ -214,22 +223,37 @@ function Editor(props: ProvisionalCropPreviewProps) {
       <h3 className="font-semibold">WorldVeg cowpea conditions and method</h3>
       <p>This Kenya manual section concerns cowpea leaves. Choose your purpose and growth habit before using its method. Neither selection verifies your variety or farm suitability.</p>
       <label className="block">Cowpea harvest purpose<select aria-label="Cowpea harvest purpose" className={control} value={draft.cowpea.purpose}
-        onChange={e => edit({ cowpea: { ...draft.cowpea, purpose: e.target.value as CowpeaReferenceConditions['purpose'] }, cowpeaConsent: null })}>
+        onChange={e => edit({ cowpea: { ...draft.cowpea, purpose: e.target.value as CowpeaReferenceConditions['purpose'] }, cowpeaConsent: null, spacing: { rowCm: '', inRowCm: '', finalStand: '' }, stationConsent: null, areaConsent: null })}>
         <option value="">Unknown</option><option value="leaves">Leaves</option><option value="pods-or-grain">Pods or grain</option></select></label>
       <label className="block">Cowpea growth habit<select aria-label="Cowpea growth habit" className={control} value={draft.cowpea.habit}
-        onChange={e => edit({ cowpea: { ...draft.cowpea, habit: e.target.value as CowpeaReferenceConditions['habit'] }, cowpeaConsent: null })}>
+        onChange={e => edit({ cowpea: { ...draft.cowpea, habit: e.target.value as CowpeaReferenceConditions['habit'] }, cowpeaConsent: null, spacing: { rowCm: '', inRowCm: '', finalStand: '' }, stationConsent: null, areaConsent: null })}>
         <option value="">Unknown</option><option value="spreading">Spreading</option><option value="erect-or-semi-erect">Erect or semi-erect</option></select></label>
-      {cowpeaSpacing ? <p>Source spacing for your selected habit: {cowpeaSpacing}. No point value is selected.</p>
+      {cowpeaSpacing ? <p>Source spacing for your selected habit: {cowpeaSpacing}. No point value is selected by the source.</p>
         : <p>Choose leaf production and a known growth habit to see the matching spacing reference. Pod or grain production needs separate evidence.</p>}
       <p>The source describes direct sowing with 2–3 seeds per hill. Seeds sown do not establish the final surviving plants per station. Density, yield and dates remain unknown; separately entered numbers are your estimates.</p>
       <p>Published: {sourcePublicationText(cowpeaReference)}. <a className="underline" href={`${cowpeaReference.url}#page=26`} target="_blank" rel="noreferrer">Read the original manual, page 22</a></p>
       <p>{cowpeaReference.attribution}</p><p>{cowpeaReference.licence.status === 'known' && cowpeaReference.licence.value}</p>
       <label className="flex min-h-11 items-center gap-2"><input type="checkbox" disabled={!cowpeaSpacing} checked={useCowpeaMethod}
         onChange={e => edit({ cowpeaConsent: e.target.checked ? cowpeaConsentKey : null })} />Use this direct-sowing reference for this preview</label>
+      <label className="block">Plant-count method<select aria-label="Plant-count method" className={control} value={draft.countMode}
+        onChange={e => edit({ countMode: e.target.value as Draft['countMode'], stationConsent: null, areaConsent: null })}>
+        <option value="density">Entered density or evidence default</option><option value="spacing">Whole spacing-cell area estimate</option></select></label>
+      {draft.countMode === 'spacing' && <div className="space-y-3" aria-label="Spacing-cell choices">
+        <p>Choose each spacing yourself within the range above. Nothing is prefilled. Whole cells are rounded down before multiplying by surviving plants per station.</p>
+        <p>This budgets area only. It does not show rows that physically fit, edge clearance or paths. Yield and dates receive no new defaults.</p>
+        {([['rowCm', 'Chosen row spacing (cm)'], ['inRowCm', 'Chosen in-row spacing (cm)'], ['finalStand', 'Final surviving plants per station']] as const).map(([key, label]) =>
+          <label className="block" key={key}>{label}<input className={control} inputMode="decimal" value={draft.spacing[key]}
+            onChange={e => edit({ spacing: { ...draft.spacing, [key]: e.target.value }, stationConsent: null, areaConsent: null })} /></label>)}
+        <p>Leave final stand blank if unknown. Seeds per hill are not surviving plants. An explicit zero means no survivors.</p>
+        <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={stationConfirmed}
+          onChange={e => edit({ stationConsent: e.target.checked ? spacingConsentKey : null })} />I interpret the source’s between-plants distance as distance between stations for this estimate.</label>
+        <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={wholeAreaConfirmed}
+          onChange={e => edit({ areaConsent: e.target.checked ? spacingConsentKey : null })} />I treat the whole selected measured bed area as usable spacing-cell area, without paths or excluded space.</label>
+      </div>}
     </section>}
     <fieldset className="space-y-3"><legend className="font-semibold">Your preview overrides</legend>
       <p className="text-sm">Entered values are your estimates. Reset restores the evidence default, if available. Clearing an edited field keeps it unknown.</p>
-      <div className="grid gap-3 sm:grid-cols-2">{numericFields.map(([key, label, unit]) => <div key={key}>
+      <div className="grid gap-3 sm:grid-cols-2">{numericFields.filter(([key]) => draft.countMode !== 'spacing' || key !== 'plantsPerM2').map(([key, label, unit]) => <div key={key}>
         <label className="block text-sm">{label}<input className={control} type="number" step={unit === 'days' ? '1' : 'any'} value={draft.values[key] ?? ''}
           onChange={e => edit({ values: { ...draft.values, [key]: e.target.value } })} /></label>
         {Object.hasOwn(draft.values, key) && <button type="button" className={button} onClick={() => { const next = { ...draft.values }; delete next[key]; edit({ values: next }); }}>Reset {label}</button>}
@@ -249,6 +273,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
       <button type="button" className={button} disabled={checkingSource} onClick={exportPreview}>Download printable preview</button>
       {exportMessage && <p role="status">{exportMessage}</p>}
       <p>Entry window: {result.assessment.entryWindow}. An unknown window does not establish that planting on this date is suitable.</p>
+      {result.spacingSelection && <p role="note">Spacing-cell estimate: {result.spacingSelection.issue} ({result.spacingSelection.status})</p>}
+      {draft.countMode === 'spacing' && <p>Budgeted whole stations: {result.assessment.budgetedStations.value ?? 'Unknown'} ({result.assessment.budgetedStations.status}). Area budget only; physical layout fit is unassessed.</p>}
       <p>Estimated plants: {result.assessment.estimatedPlantCount.value ?? 'Unknown'} ({result.assessment.estimatedPlantCount.status})</p>
       <p>Estimated harvest weight: {result.assessment.estimatedYieldKg.value === null ? 'Unknown' : `${formatDerivedMassKilograms(result.assessment.estimatedYieldKg.value, 'kg')} kg`} ({result.assessment.estimatedYieldKg.status})</p>
       <ul>{Object.entries(result.assessment.schedule).map(([key, value]) => <li key={key}>{labels[key]} (UTC): {value.value ?? 'Unknown'} ({value.status})</li>)}</ul>

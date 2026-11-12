@@ -343,3 +343,32 @@ test('the real parent profile writer requires a confirmed operation and mints it
   const retained = crop.loadCropPlan().growerPlanningProfiles!.find(row => row.profileId === original.profileId)!;
   assert.equal(retained.exactDensitySources!.plantsPerM2!.decimal, replaced.exactDensitySources!.plantsPerM2!.decimal);
 });
+
+test('saved spacing denominators survive reload and cannot be dropped or replaced by ordinary or stale editors', async () => {
+  const base = sourceProfile();
+  const { exactDensitySources: _old, ...legacy } = base;
+  const original = normal({ ...legacy, cropKey: 'cowpea',
+    inputs: { ...legacy.inputs, plantsPerM2: { state: 'missing', reason: 'not-known' } },
+    plantCountOrigin: { version: 1, conversion: 'spacing-cells-cm-v1', scopeKey: growerPlanningScopeKey(ownScope),
+      profileId: base.profileId, cropKey: 'cowpea', bedId: 'bed-1', areaBasisKey: '[10.125,null]',
+      referenceVersion: 'worldveg-ke-24-1077-cowpea-spacing-v1', countryCode: 'KE', regionReference: null, varietyReference: null,
+      purpose: 'leaves', habit: 'spreading', rowCm: '75', inRowCm: '75', finalStand: '1',
+      interpretation: 'source-inrow-interpreted-as-station-spacing', areaUse: 'whole-current-measured-area', recordedAt: '2026-11-12T12:00:00.000Z' } });
+  const loaded = await seeded([original]);
+  assert.deepEqual(loaded.book.growerPlanningProfiles![0].plantCountOrigin, original.plantCountOrigin);
+  const untouched = { ...loaded.book, rainPattern: 'winter' as const, updatedAt: 8 };
+  assert.equal(crop.saveCropPlanWithReceipt(untouched).saved, true);
+  const fresh = crop.loadCropPlanWithWriteAdmission();
+  const { plantCountOrigin: _origin, ...without } = original;
+  for (const changed of [without, { ...without, inputs: { ...without.inputs, plantsPerM2: provided(1.7777777777777777, 'plants/m2') } },
+    normal({ ...original, plantCountOrigin: { ...original.plantCountOrigin!, rowCm: '74.99999999999999999999' } })]) {
+    const next = candidate(fresh, changed), raw = readCanonicalCropPlanFixtureRaw();
+    assert.equal(crop.saveCropPlanWithReceipt(next).saved, false);
+    assert.equal(crop.createGrowerProfileChangePermit(fresh.admission, fresh.book, next, editRequest(original)), null);
+    assert.equal(readCanonicalCropPlanFixtureRaw(), raw);
+  }
+  const next = candidate(fresh, null);
+  const removal = crop.createGrowerProfileChangePermit(fresh.admission, fresh.book, next,
+    { kind: 'remove', profileId: original.profileId, expectedProfile: original }); assert.ok(removal);
+  assert.equal(crop.saveCropPlanWithReceipt(next, { growerProfileChange: removal }).saved, true, 'explicit confirmed removal remains available');
+});

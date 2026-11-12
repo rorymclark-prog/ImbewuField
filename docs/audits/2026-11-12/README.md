@@ -1,5 +1,7 @@
 # Audits for 12 November 2026
 
+- [Conditional spacing-cell preview](spacing-cell-preview-codex.md): explicit grower choices, exact area budgeting, preserved count origins and independent arithmetic fixtures; release gates remain open.
+
 - [Combined global/report candidate](global-report-integration-codex.md): current-main integration of the global preview and soil/save/report corrections; combined verification and release gates remain pending.
 
 - [Provisional crop preview integration](provisional-preview-integration.md): actual preview consumer, fresh-source check and synthetic desktop/phone output. Public adapters, adoption/exports and release review remain open.
