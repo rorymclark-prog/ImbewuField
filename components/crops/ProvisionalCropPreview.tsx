@@ -8,6 +8,7 @@ import { downloadFile } from '@/lib/crop-export-deliver';
 import { buildProvisionalCropPreviewHtml, provisionalNumericFields as numericFields, provisionalLabels as labels, provisionalInputText as inputText, provisionalScopeText as scopeText } from '@/lib/international/provisional-crop-export';
 import { growerWorkflowResourceSiteId, type GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { resolveProvisionalCropPlan, type ProvisionalFieldCandidate, type ProvisionalDraftRequest } from '@/lib/international/provisional-crop-planning';
+import { usdaGreatLakesCabbageReference, usdaGreatLakesCabbageCandidates, usdaGreatLakesRegionMatches, USDA_CABBAGE_SPACING } from '@/lib/international/providers/usda-great-lakes-cabbage';
 import { sourcePublicationText } from '@/lib/international/countries/readiness';
 import { worldvegKenyaCabbageCandidates, worldvegKenyaCabbageReference, worldvegKenyaCabbageRegionMatches } from '@/lib/international/providers/worldveg-kenya-cabbage';
 import { worldvegKenyaCowpeaCandidates, worldvegKenyaCowpeaReference, worldvegKenyaCowpeaSpacing, type CowpeaReferenceConditions } from '@/lib/international/providers/worldveg-kenya-cowpea';
@@ -34,7 +35,7 @@ type Draft = {
   crop: string; bed: string; date: string; method: '' | 'direct' | 'transplant';
   water: '' | 'rain-fed' | 'irrigated'; variety: string;
   values: Partial<Record<NumericField, string>>; months: number[] | null; regionalConsent: string | null;
-  cowpea: CowpeaReferenceConditions; cowpeaConsent: string | null;
+  cowpea: CowpeaReferenceConditions; cowpeaConsent: string | null; usdaConsent: string | null;
   countMode: 'density' | 'spacing';
   spacing: { rowCm: string; inRowCm: string; finalStand: string };
   stationConsent: string | null; areaConsent: string | null;
@@ -64,7 +65,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
   const current = useRef(props); current.current = props;
   const active = useRef(true);
   useEffect(() => { active.current = true; return () => { active.current = false; }; }, []);
-  const [draft, setDraft] = useState<Draft>({ crop: '', bed: '', date: '', method: '', water: '', variety: '', values: {}, months: null, regionalConsent: null, cowpea: { purpose: '', habit: '' }, cowpeaConsent: null, countMode: 'density', spacing: { rowCm: '', inRowCm: '', finalStand: '' }, stationConsent: null, areaConsent: null });
+  const [draft, setDraft] = useState<Draft>({ crop: '', bed: '', date: '', method: '', water: '', variety: '', values: {}, months: null, regionalConsent: null, cowpea: { purpose: '', habit: '' }, cowpeaConsent: null, usdaConsent: null, countMode: 'density', spacing: { rowCm: '', inRowCm: '', finalStand: '' }, stationConsent: null, areaConsent: null });
   const draftLive = useRef(draft); draftLive.current = draft;
   const [preview, setPreview] = useState<{ binding: string; generation: number; draft: Draft; result: Resolution; request: ProvisionalDraftRequest; bedLabel: string; receipt: { isCurrent: () => boolean } } | null>(null);
   const previewLive = useRef(preview); previewLive.current = preview;
@@ -86,6 +87,10 @@ function Editor(props: ProvisionalCropPreviewProps) {
   const cowpeaSpacing = worldvegKenyaCowpeaSpacing(draft.cowpea);
   const cowpeaConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.variety, draft.cowpea]);
   const useCowpeaMethod = cowpeaConsentKey !== null && draft.cowpeaConsent === cowpeaConsentKey && cowpeaSpacing !== null;
+  const usdaReference = usdaGreatLakesCabbageReference(props.countryCode, draft.crop);
+  const usdaRegionMatch = usdaGreatLakesRegionMatches(props.agriculturalRegionReference);
+  const usdaConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.variety]);
+  const useUsdaMethod = usdaConsentKey !== null && draft.usdaConsent === usdaConsentKey && usdaRegionMatch;
   const spacingConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.bed, draft.variety, draft.cowpea, draft.countMode, draft.spacing]);
   const stationConfirmed = spacingConsentKey !== null && draft.stationConsent === spacingConsentKey;
   const wholeAreaConfirmed = spacingConsentKey !== null && draft.areaConsent === spacingConsentKey;
@@ -143,9 +148,10 @@ function Editor(props: ProvisionalCropPreviewProps) {
       const request: ProvisionalDraftRequest = structuredClone({ profileId: 'provisional-preview', cropKey: draft.crop,
         context, recordedAt, asOf: recordedAt.slice(0, 10),
         candidates: [...(props.evidence?.candidates ?? []), ...worldvegKenyaCabbageCandidates(context, draft.crop, recordedAt, useRegionalMethod),
-          ...worldvegKenyaCowpeaCandidates(context, draft.crop, recordedAt, useCowpeaMethod, draft.cowpea)], overrides,
+          ...worldvegKenyaCowpeaCandidates(context, draft.crop, recordedAt, useCowpeaMethod, draft.cowpea),
+          ...usdaGreatLakesCabbageCandidates(context, draft.crop, recordedAt, useUsdaMethod)], overrides,
         ...(draft.countMode === 'spacing' ? { countBasis: { kind: 'spacing-cell-budget-v1', bedId: draft.bed,
-          purpose: draft.cowpea.purpose, habit: draft.cowpea.habit, ...draft.spacing,
+          ...(usdaReference ? { purpose: 'cabbage-transplants', habit: 'not-applicable' } : draft.cowpea), ...draft.spacing,
           interpretationConfirmed: stationConfirmed, wholeAreaConfirmed } } : {}),
         knownPlantingRestriction: props.evidence?.knownPlantingRestriction,
         measuredAreaM2: { state: 'provided', value: measures[0].areaM2, unit: 'm2',
@@ -192,11 +198,11 @@ function Editor(props: ProvisionalCropPreviewProps) {
     <p className="text-sm">Preview supported counts and dates using applicable evidence and your edits. Missing values stay unknown. Nothing here saves a profile or adds a crop.</p>
     <p role="note" className="text-sm">Provisional estimates: source metadata is not verification of farming accuracy. Suitability and plant legality are not established. Density is not layout clearance.</p>
     <p className="text-sm">Country: {props.countryCode ?? 'Unknown'} · Agricultural region: {props.agriculturalRegionReference ?? 'Unknown'}</p>
-    {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
+    {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
     <button type="button" className={button} disabled={props.checking} onClick={refresh}>{props.checking ? 'Checking measurements…' : 'Check saved measurements'}</button>
     {!sourceReady && <p role="note">Current saved measurements are required. Previously calculated results are hidden.</p>}
     <div className="grid gap-3 sm:grid-cols-2">
-      <label className="text-sm">Preview crop<select aria-label="Preview crop" className={control} value={draft.crop} onChange={e => edit({ crop: e.target.value, values: {}, months: null, regionalConsent: null, cowpea: { purpose: '', habit: '' }, cowpeaConsent: null, countMode: 'density', spacing: { rowCm: '', inRowCm: '', finalStand: '' }, stationConsent: null, areaConsent: null })}>
+      <label className="text-sm">Preview crop<select aria-label="Preview crop" className={control} value={draft.crop} onChange={e => edit({ crop: e.target.value, values: {}, months: null, regionalConsent: null, cowpea: { purpose: '', habit: '' }, cowpeaConsent: null, usdaConsent: null, countMode: 'density', spacing: { rowCm: '', inRowCm: '', finalStand: '' }, stationConsent: null, areaConsent: null })}>
         <option value="">Choose an existing crop</option>{CROPS.map(crop => <option key={crop.key} value={crop.key}>{crop.name}</option>)}</select></label>
       <label className="text-sm">Preview measured bed<select aria-label="Preview measured bed" className={control} value={draft.bed} onChange={e => edit({ bed: e.target.value, stationConsent: null, areaConsent: null })}>
         <option value="">Choose a measured bed</option>{sourceReady && source?.beds.map(bed => <option key={bed.id} value={bed.id}>{bed.label} · {bed.areaM2} m²</option>)}</select></label>
@@ -205,7 +211,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
         <option value="">Use evidence if available</option><option value="direct">Direct sowing</option><option value="transplant">Transplant</option></select></label>
       <label className="text-sm">Water regime<select aria-label="Water regime" className={control} value={draft.water} onChange={e => edit({ water: e.target.value as Draft['water'] })}>
         <option value="">Unknown</option><option value="rain-fed">Rain-fed</option><option value="irrigated">Irrigated</option></select></label>
-      <label className="text-sm">Variety reference (optional)<input className={control} value={draft.variety} onChange={e => edit({ variety: e.target.value, cowpeaConsent: null, stationConsent: null, areaConsent: null })} /></label>
+      <label className="text-sm">Variety reference (optional)<input className={control} value={draft.variety} onChange={e => edit({ variety: e.target.value, cowpeaConsent: null, usdaConsent: null, stationConsent: null, areaConsent: null })} /></label>
     </div>
     {regionalReference && <section aria-label="Kenya method reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
       <h3 className="font-semibold">WorldVeg cabbage method reference</h3>
@@ -235,6 +241,20 @@ function Editor(props: ProvisionalCropPreviewProps) {
       <p>{cowpeaReference.attribution}</p><p>{cowpeaReference.licence.status === 'known' && cowpeaReference.licence.value}</p>
       <label className="flex min-h-11 items-center gap-2"><input type="checkbox" disabled={!cowpeaSpacing} checked={useCowpeaMethod}
         onChange={e => edit({ cowpeaConsent: e.target.checked ? cowpeaConsentKey : null })} />Use this direct-sowing reference for this preview</label>
+    </section>}
+    {usdaReference && <section aria-label="Great Lakes cabbage reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
+      <h3 className="font-semibold">USDA Great Lakes cabbage transplant reference</h3>
+      <p>This undated community-garden guide describes cabbage bedding plants transplanted into rows in the Great Lakes States. It is not a US-wide default or current local suitability assessment.</p>
+      <p>Source spacing: {USDA_CABBAGE_SPACING.display}</p>
+      <p>Publication and revision dates are unknown. Cultivar, head size and final surviving plants per station are unknown. The planting-cell footnote (1) describes cell size, not one survivor.</p>
+      <p><a className="underline" href={`${usdaReference.url}#page=5`} target="_blank" rel="noreferrer">Read the original USDA guide, page 5</a></p>
+      <p>{usdaReference.attribution}</p><p>{usdaReference.licence.status === 'known' && usdaReference.licence.value}</p>
+      {!usdaRegionMatch && <p role="note">Enter the explicit region description “Great Lakes States” to consider this reference. Region is declared by you; no boundary is inferred from country, state or coordinates.</p>}
+      <label className="flex min-h-11 items-center gap-2"><input type="checkbox" aria-label="Use undated USDA transplant reference" disabled={!usdaRegionMatch}
+        checked={useUsdaMethod} onChange={e => edit({ usdaConsent: e.target.checked ? usdaConsentKey : null })} />Use this undated reference for cabbage bedding transplants in my declared Great Lakes States region</label>
+      <p>Yield, nursery duration and calendar dates receive no defaults. Your separately entered estimates remain editable.</p>
+    </section>}
+    {(cowpeaReference || usdaReference) && <section aria-label="Regional spacing estimate" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
       <label className="block">Plant-count method<select aria-label="Plant-count method" className={control} value={draft.countMode}
         onChange={e => edit({ countMode: e.target.value as Draft['countMode'], stationConsent: null, areaConsent: null })}>
         <option value="density">Entered density or evidence default</option><option value="spacing">Whole spacing-cell area estimate</option></select></label>
@@ -244,7 +264,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
         {([['rowCm', 'Chosen row spacing (cm)'], ['inRowCm', 'Chosen in-row spacing (cm)'], ['finalStand', 'Final surviving plants per station']] as const).map(([key, label]) =>
           <label className="block" key={key}>{label}<input className={control} inputMode="decimal" value={draft.spacing[key]}
             onChange={e => edit({ spacing: { ...draft.spacing, [key]: e.target.value }, stationConsent: null, areaConsent: null })} /></label>)}
-        <p>Leave final stand blank if unknown. Seeds per hill are not surviving plants. An explicit zero means no survivors.</p>
+        <p>Leave final stand blank if unknown. Seeds per hill and planting-cell footnotes are not surviving plants. An explicit zero means no survivors.</p>
         <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={stationConfirmed}
           onChange={e => edit({ stationConsent: e.target.checked ? spacingConsentKey : null })} />I interpret the source’s between-plants distance as distance between stations for this estimate.</label>
         <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={wholeAreaConfirmed}
@@ -284,7 +304,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
         <summary className="min-h-11 cursor-pointer">{labels[key]}: {inputText(value.activeInput)} · {value.status}</summary>
         <p>Active basis: {value.activeTier ?? 'Unknown'}. Evidence default: {inputText(value.baselineDefault)}.</p>
         {value.activeInput.state === 'provided' && <p>Input provenance: {value.activeInput.provenance.kind}; recorded {value.activeInput.provenance.recordedAt}.</p>}
-        {value.status === 'overridden' && value.activeInput.state === 'missing' && <p>Grower withheld this value. Its evidence default remains visible but is not used.</p>}
+        {value.status === 'overridden' && value.activeInput.state === 'missing' && <p>{key === 'plantsPerM2' && draft.countMode === 'spacing' ? 'The chosen spacing method does not use an entered/default density.' : 'Grower withheld this value. Its evidence default remains visible but is not used.'}</p>}
         {value.defaultConflict && <p role="note">Conflicting defaults remain unresolved; no average was invented.</p>}
         {value.status === 'invalid-override' && <p role="alert">Invalid override. Correct or reset this field; its default has not been substituted.</p>}
         {value.defaultOptions.map(option => <p key={option.candidateId}>Default {option.candidateId}: {inputText(option.input)}{option.reportedRange ? `; reported range ${option.reportedRange.join('–')}` : ''}. Applies to {scopeText(option.scope)}.</p>)}

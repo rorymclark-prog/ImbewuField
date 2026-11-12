@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest regional spacing continuation — [Great Lakes cabbage reference — 13 November 2026](2026-11-13/great-lakes-spacing-codex.md). Explicit undated regional transfer; current-head release and local validation remain open.
+
 Latest conditional count continuation — [Spacing-cell preview — 12 November 2026](2026-11-12/spacing-cell-preview-codex.md). Grower-selected spacing and final stand remain distinct from source recommendations and physical layout fit.
 
 Latest provisional export — [Printable preview and review corrections — 12 November 2026](2026-11-12/provisional-preview-export.md). Original downloads inspected; successor CI/review, public adapters and adoption remain open.

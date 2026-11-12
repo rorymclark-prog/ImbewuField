@@ -512,3 +512,38 @@ test('spacing choices and callbacks cannot revive through habit, bed, mode or co
     assert.deepEqual(ui.writes, []);
   } finally { files.dispose(); ui.dispose(); }
 });
+
+test('Great Lakes cabbage choices remain blank and regional consent cannot revive across a country or region round trip', async () => {
+  const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', evidence: undefined });
+  const files = downloads();
+  const consent = 'Use this undated reference for cabbage bedding transplants in my declared Great Lakes States region';
+  try {
+    ui.change('Preview crop', 'cabbage'); ui.change('Preview measured bed', 'bed-1');
+    assert.match(ui.text(), /18–24 inches within rows/); assert.match(ui.text(), /Publication and revision dates are unknown/);
+    assert.equal(ui.field(consent).props.checked, false);
+    ui.change('Plant-count method', 'spacing');
+    for (const label of ['Chosen row spacing (cm)', 'Chosen in-row spacing (cm)', 'Final surviving plants per station']) assert.equal(ui.field(label).props.value, '');
+    ui.change('Chosen row spacing (cm)', '76.2'); ui.change('Chosen in-row spacing (cm)', '45.72');
+    act(() => ui.field(consent).props.onChange({ target: { checked: true } })); acknowledgeSpacing(ui);
+    await ui.click();
+    assert.match(ui.text(), /Budgeted whole stations: 30 \(ready\)/);
+    assert.match(ui.text(), /Estimated plants: Unknown/); assert.match(ui.text(), /Estimated harvest weight: Unknown/);
+    assert.match(ui.text(), /Establishment method: transplant/); assert.match(ui.text(), /climate-crop-derived/);
+    ui.change('Final surviving plants per station', '1');
+    assert.equal(ui.field(areaDeclaration).props.checked, false);
+    acknowledgeSpacing(ui); await ui.click(); assert.match(ui.text(), /Estimated plants: 30 \(ready\)/);
+    await ui.click('Download printable preview');
+    assert.equal(files.blobs.length, 1); const html = await files.blobs[0].text();
+    assert.match(html, /30 inches between rows/); assert.match(html, /18–24 inches within rows/);
+    assert.doesNotMatch(html, /World Vegetable|2–3 seeds/);
+    const oldDownload = ui.action('Download printable preview');
+    ui.update({ agriculturalRegionReference: 'Other region' });
+    assert.doesNotMatch(ui.text(), /Estimated plants:/); assert.equal(ui.field(consent).props.disabled, true);
+    ui.update({ agriculturalRegionReference: 'Great Lakes States' });
+    assert.equal(ui.field(consent).props.checked, false); assert.equal(ui.field(areaDeclaration).props.checked, false);
+    await act(async () => { await oldDownload(); }); assert.equal(files.blobs.length, 1);
+    ui.update({ countryCode: 'KE' }); assert.doesNotMatch(ui.text(), /USDA Great Lakes cabbage transplant reference/);
+    ui.update({ countryCode: 'US' }); assert.equal(ui.field(consent).props.checked, false);
+    assert.deepEqual(ui.writes, []);
+  } finally { files.dispose(); ui.dispose(); }
+});

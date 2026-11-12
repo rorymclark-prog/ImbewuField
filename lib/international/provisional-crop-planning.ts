@@ -1,5 +1,6 @@
 import { normaliseGrowerSpacingSelectionReceipt, type GrowerSpacingSelectionReceipt } from '../grower-estimate-units';
-import { WORLDVEG_COWPEA_SPACING_VERSION, WORLDVEG_KENYA_COWPEA_SOURCE } from './providers/worldveg-kenya-cowpea';
+import { regionalSpacingReference, type RegionalSpacingConditions } from './providers/regional-spacing-reference';
+import { USDA_GREAT_LAKES_CABBAGE_SOURCE } from './providers/usda-great-lakes-cabbage';
 import { sourceEvidenceState, sourcePublicationIsKnownBy } from './countries/readiness';
 import type { CountrySource } from './countries/types';
 import {
@@ -75,11 +76,9 @@ export interface ResolvedProvisionalField {
   readonly assumptions: readonly string[];
 }
 
-export interface ProvisionalSpacingCountBasis {
+export interface ProvisionalSpacingCountBasis extends RegionalSpacingConditions {
   readonly kind: 'spacing-cell-budget-v1';
   readonly bedId: string;
-  readonly purpose: '' | 'leaves' | 'pods-or-grain';
-  readonly habit: '' | 'spreading' | 'erect-or-semi-erect';
   readonly rowCm: string;
   readonly inRowCm: string;
   readonly finalStand: string;
@@ -300,7 +299,8 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
       || selection.kind !== 'spacing-cell-budget-v1' || !text(selection.bedId)
       || ![selection.rowCm, selection.inRowCm, selection.finalStand].every(v => typeof v === 'string' && v.length <= 1024)
       || typeof selection.interpretationConfirmed !== 'boolean' || typeof selection.wholeAreaConfirmed !== 'boolean'
-      || !['', 'leaves', 'pods-or-grain'].includes(selection.purpose) || !['', 'spreading', 'erect-or-semi-erect'].includes(selection.habit)) {
+      || !['', 'leaves', 'pods-or-grain', 'cabbage-transplants'].includes(selection.purpose)
+      || !['', 'spreading', 'erect-or-semi-erect', 'not-applicable'].includes(selection.habit)) {
       return freeze({ status: 'invalid-context' as const, profile: null, fields: null, assessment: null, fingerprint: null });
     }
     // This explicit method never falls back to a retained manual/default density.
@@ -308,24 +308,29 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
     resolved.plantsPerM2 = { ...resolved.plantsPerM2, activeInput: unknown(), activeTier: null, status: 'overridden',
       assumptions: [...resolved.plantsPerM2.assumptions, 'Entered/default density is not used by the selected spacing-cell count method.'] };
     const area = normaliseGrowerMeasuredAreaInput(request.measuredAreaM2);
-    const sourceSelected = resolved.establishment.sourceBindings.some(s => s.id === WORLDVEG_KENYA_COWPEA_SOURCE.id
-      && s.evidenceState === 'available-reference');
+    const reference = regionalSpacingReference(context.countryCode, request.cropKey, context.agriculturalRegionReference, selection);
+    // The accepted historical capsule may use this one undated USDA guide. No
+    // undated source is promoted to current local-public-evidence.
+    const sourceSelected = reference && resolved.establishment.sourceBindings.some(s => s.id === reference.source.id
+      && (s.evidenceState === 'available-reference' || (s.id === USDA_GREAT_LAKES_CABBAGE_SOURCE.id
+        && s.evidenceState === 'undated' && resolved.establishment.defaultOptions.some(option =>
+          option.scope.temporalScope.kind === 'historical-transfer'))));
     if (!area) spacingSelection = { status: 'invalid-inputs', issue: 'The supplied measured area or its rectangle origin is invalid; check saved measurements.' };
-    else if (!sourceSelected || context.countryCode !== 'KE' || request.cropKey !== 'cowpea' || establishment !== 'direct'
-      || selection.purpose !== 'leaves' || !selection.habit) spacingSelection = { status: 'missing-inputs', issue: 'Applicable leaf-production source and direct method must be selected.' };
+    else if (!sourceSelected || !reference || establishment !== reference.establishment)
+      spacingSelection = { status: 'missing-inputs', issue: 'An applicable regional source, crop purpose and establishment method must be selected.' };
     else if (!selection.interpretationConfirmed || !selection.wholeAreaConfirmed || !selection.rowCm.trim() || !selection.inRowCm.trim()
       || area.state !== 'provided') spacingSelection = { status: 'missing-inputs', issue: 'Declare spacing, station interpretation and use of the whole current measured bed area.' };
     else {
       const origin = normaliseGrowerSpacingSelectionReceipt({ version: 1, conversion: 'spacing-cells-cm-v1',
         scopeKey: growerPlanningScopeKey(scope), profileId: request.profileId, cropKey: request.cropKey,
-        bedId: selection.bedId, areaBasisKey: growerCountAreaBasisKey(area), referenceVersion: WORLDVEG_COWPEA_SPACING_VERSION,
+        bedId: selection.bedId, areaBasisKey: growerCountAreaBasisKey(area), referenceVersion: reference.version,
         countryCode: context.countryCode, regionReference: context.agriculturalRegionReference, varietyReference: context.varietyReference ?? null,
         purpose: selection.purpose, habit: selection.habit, rowCm: selection.rowCm, inRowCm: selection.inRowCm,
         finalStand: selection.finalStand.trim() ? selection.finalStand : null,
         interpretation: 'source-inrow-interpreted-as-station-spacing', areaUse: 'whole-current-measured-area', recordedAt: request.recordedAt },
       { scopeKey: growerPlanningScopeKey(scope)!, profileId: request.profileId, cropKey: request.cropKey });
       if (origin) { plantCountOrigin = origin; spacingSelection = { status: origin.finalStand === null ? 'missing-inputs' : 'ready',
-        issue: origin.finalStand === null ? 'Final surviving plants per station are unknown; seeds per hill do not supply this value.' : 'Conditional grower estimate using whole spacing cells, not physical layout fit.' }; }
+        issue: origin.finalStand === null ? 'Final surviving plants per station are unknown; seeds or planting-cell footnotes do not supply this value.' : 'Conditional grower estimate using whole spacing cells, not physical layout fit.' }; }
       else spacingSelection = { status: 'invalid-inputs', issue: 'Spacing must lie within the source range and final stand must be a non-negative safe whole number.' };
     }
   }

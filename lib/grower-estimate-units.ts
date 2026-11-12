@@ -1,4 +1,6 @@
-import { worldvegKenyaCowpeaSpacingReference, WORLDVEG_COWPEA_SPACING_VERSION } from './international/providers/worldveg-kenya-cowpea';
+import { WORLDVEG_COWPEA_SPACING_VERSION } from './international/providers/worldveg-kenya-cowpea';
+import { USDA_CABBAGE_SPACING_VERSION } from './international/providers/usda-great-lakes-cabbage';
+import { regionalSpacingReference } from './international/providers/regional-spacing-reference';
 import { addDecimalQuantity, compareDecimalQuantities, decimalQuantityProduct, type DecimalQuantity } from './farm-records';
 import {
   INTERNATIONAL_SQUARE_FOOT_IN_SQUARE_METRES,
@@ -166,12 +168,12 @@ export interface GrowerSpacingSelectionReceipt {
   readonly cropKey: string;
   readonly bedId: string;
   readonly areaBasisKey: string;
-  readonly referenceVersion: typeof WORLDVEG_COWPEA_SPACING_VERSION;
-  readonly countryCode: 'KE';
+  readonly referenceVersion: typeof WORLDVEG_COWPEA_SPACING_VERSION | typeof USDA_CABBAGE_SPACING_VERSION;
+  readonly countryCode: 'KE' | 'US';
   readonly regionReference: string | null;
   readonly varietyReference: string | null;
-  readonly purpose: 'leaves';
-  readonly habit: 'spreading' | 'erect-or-semi-erect';
+  readonly purpose: 'leaves' | 'cabbage-transplants';
+  readonly habit: 'spreading' | 'erect-or-semi-erect' | 'not-applicable';
   readonly rowCm: string;
   readonly inRowCm: string;
   readonly finalStand: string | null;
@@ -207,14 +209,13 @@ export function normaliseGrowerSpacingSelectionReceipt(value: unknown, owner: Gr
     if (!['scopeKey', 'profileId', 'cropKey'].every(k => spacingText(row[k]) && row[k] === owner[k as keyof GrowerSpacingOwner])
       || !spacingText(row.bedId) || !spacingText(row.areaBasisKey)
       || row.version !== 1 || row.conversion !== 'spacing-cells-cm-v1'
-      || row.referenceVersion !== WORLDVEG_COWPEA_SPACING_VERSION
       || !(row.regionReference === null || spacingText(row.regionReference))
       || !(row.varietyReference === null || spacingText(row.varietyReference))
       || row.interpretation !== 'source-inrow-interpreted-as-station-spacing' || row.areaUse !== 'whole-current-measured-area'
       || typeof row.recordedAt !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(row.recordedAt)
       || !Number.isFinite(Date.parse(row.recordedAt)) || new Date(row.recordedAt).toISOString() !== row.recordedAt) return null;
-    const reference = worldvegKenyaCowpeaSpacingReference(row.countryCode, row.cropKey, { purpose: row.purpose, habit: row.habit });
-    if (!reference) return null;
+    const reference = regionalSpacingReference(row.countryCode, row.cropKey, row.regionReference, { purpose: row.purpose, habit: row.habit });
+    if (!reference || reference.version !== row.referenceVersion) return null;
     const a = spacingDecimal(row.rowCm), b = spacingDecimal(row.inRowCm);
     const within = (q: Readonly<DecimalQuantity> | null, range: readonly [number, number]) => q
       && compareDecimalQuantities(q, addDecimalQuantity(undefined, range[0])) >= 0
