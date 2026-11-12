@@ -148,7 +148,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
     try {
       if (!await check()) { if (bound()) { setPreview(null); setError('Saved measurements changed. Recalculate before downloading.'); } return; }
       const document = buildProvisionalCropPreviewHtml(selected.request, {
-        bedLabel: selected.bedLabel, sourceRevision: source.sourceRevision, sample: props.sample === true,
+        bedLabel: selected.bedLabel, sample: props.sample === true,
       });
       if (!document || document.fingerprint !== selected.result.fingerprint || !handoff()) return;
       const delivered = await downloadFile(new Blob([document.html], { type: 'text/html;charset=utf-8' }),
