@@ -1,0 +1,1485 @@
+TAP version 13
+# Subtest: no window.confirm anywhere in app/, components/ or lib/
+ok 1 - no window.confirm anywhere in app/, components/ or lib/
+  ---
+  duration_ms: 159.99282
+  type: 'test'
+  ...
+# (node:1214) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/saved-places.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: promptNearbyUpdate: farmer confirms → the existing place comes back (same id)
+ok 2 - promptNearbyUpdate: farmer confirms → the existing place comes back (same id)
+  ---
+  duration_ms: 1.822674
+  type: 'test'
+  ...
+# Subtest: promptNearbyUpdate: farmer declines → null, caller mints a new place
+ok 3 - promptNearbyUpdate: farmer declines → null, caller mints a new place
+  ---
+  duration_ms: 0.291821
+  type: 'test'
+  ...
+# Subtest: promptNearbyUpdate: nothing saved nearby → null without ever asking
+ok 4 - promptNearbyUpdate: nothing saved nearby → null without ever asking
+  ---
+  duration_ms: 0.263171
+  type: 'test'
+  ...
+# Subtest: AppConfirmProvider is mounted in the root layout
+ok 5 - AppConfirmProvider is mounted in the root layout
+  ---
+  duration_ms: 0.195138
+  type: 'test'
+  ...
+# Subtest: every converted surface asks through useAppConfirm
+ok 6 - every converted surface asks through useAppConfirm
+  ---
+  duration_ms: 4.743565
+  type: 'test'
+  ...
+# Subtest: the dialog keeps the semantics the conversions rely on
+ok 7 - the dialog keeps the semantics the conversions rely on
+  ---
+  duration_ms: 0.219996
+  type: 'test'
+  ...
+# Subtest: code-18: ProfileSheet draws initials in var(--on-forest-800), not Leaf
+ok 8 - code-18: ProfileSheet draws initials in var(--on-forest-800), not Leaf
+  ---
+  duration_ms: 1.290099
+  type: 'test'
+  ...
+# Subtest: code-06: ProfileSheet toggle/counter ternaries route through theme tokens, not hex literals
+ok 9 - code-06: ProfileSheet toggle/counter ternaries route through theme tokens, not hex literals
+  ---
+  duration_ms: 0.387252
+  type: 'test'
+  ...
+# Subtest: code-06: PeoplePanel's border ternary no longer falls back to a literal hairline hex
+ok 10 - code-06: PeoplePanel's border ternary no longer falls back to a literal hairline hex
+  ---
+  duration_ms: 0.386271
+  type: 'test'
+  ...
+# Subtest: code-06: PhotoUpload's loading-state ternaries route through theme tokens
+ok 11 - code-06: PhotoUpload's loading-state ternaries route through theme tokens
+  ---
+  duration_ms: 0.273803
+  type: 'test'
+  ...
+# Subtest: code-10: app/community/page.tsx has no sub-12px captions left
+ok 12 - code-10: app/community/page.tsx has no sub-12px captions left
+  ---
+  duration_ms: 1.869318
+  type: 'test'
+  ...
+# Subtest: code-10: app/community/profile/page.tsx has no sub-12px captions left
+ok 13 - code-10: app/community/profile/page.tsx has no sub-12px captions left
+  ---
+  duration_ms: 0.349895
+  type: 'test'
+  ...
+# Subtest: code-10: app/contact/page.tsx has no sub-12px captions left
+ok 14 - code-10: app/contact/page.tsx has no sub-12px captions left
+  ---
+  duration_ms: 0.461916
+  type: 'test'
+  ...
+# Subtest: code-10: ConsentPanel.tsx no longer ships a Tailwind text-[10px] caption
+ok 15 - code-10: ConsentPanel.tsx no longer ships a Tailwind text-[10px] caption
+  ---
+  duration_ms: 0.237053
+  type: 'test'
+  ...
+# Subtest: community profile and messages pages no longer paint forest fill or error text as a literal hex
+ok 16 - community profile and messages pages no longer paint forest fill or error text as a literal hex
+  ---
+  duration_ms: 1.165459
+  type: 'test'
+  ...
+# Subtest: ContactInbox no longer paints cards, dark text or error notices as a literal hex
+ok 17 - ContactInbox no longer paints cards, dark text or error notices as a literal hex
+  ---
+  duration_ms: 0.452516
+  type: 'test'
+  ...
+# Subtest: DataPanel no longer paints forest fill, error text or plain dark text as the known-banned literal hexes
+ok 18 - DataPanel no longer paints forest fill, error text or plain dark text as the known-banned literal hexes
+  ---
+  duration_ms: 1.384834
+  type: 'test'
+  ...
+# Subtest: DataPanel captions that were at 9.5px now clamp to a 12px floor
+not ok 19 - DataPanel captions that were at 9.5px now clamp to a 12px floor
+  ---
+  duration_ms: 12.369239
+  type: 'test'
+  location: '/home/user/ImbewuField/tests/community-contact-datapanel-theme.test.ts:48:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok((src.match(/fontSize:\s*'clamp\(12px, 0\.85vw, 13px\)'/g) ?? []).length >= 3)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/ImbewuField/tests/community-contact-datapanel-theme.test.ts:51:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: AtlasPanel and the contact-page subject label clear the 11px caption floor
+ok 20 - AtlasPanel and the contact-page subject label clear the 11px caption floor
+  ---
+  duration_ms: 0.603721
+  type: 'test'
+  ...
+# Subtest: every text colour a farmer reads clears 4.5:1 against the card it sits on
+ok 21 - every text colour a farmer reads clears 4.5:1 against the card it sits on
+  ---
+  duration_ms: 149.299371
+  type: 'test'
+  ...
+# Subtest: the scan actually fires — a known-bad colour is caught, a known-good one is not
+ok 22 - the scan actually fires — a known-bad colour is caught, a known-good one is not
+  ---
+  duration_ms: 0.308889
+  type: 'test'
+  ...
+# Subtest: the farmer routes this test walks all exist
+ok 23 - the farmer routes this test walks all exist
+  ---
+  duration_ms: 92.646724
+  type: 'test'
+  ...
+# Subtest: crop bar labels clear 4.5:1 on every fixed bar fill, in every theme
+ok 24 - crop bar labels clear 4.5:1 on every fixed bar fill, in every theme
+  ---
+  duration_ms: 7.280773
+  type: 'test'
+  ...
+# Subtest: crop bar fills keep planned apart from already-growing
+ok 25 - crop bar fills keep planned apart from already-growing
+  ---
+  duration_ms: 4.409334
+  type: 'test'
+  ...
+# Subtest: the crop bar label is not painted white or faded with its fill
+ok 26 - the crop bar label is not painted white or faded with its fill
+  ---
+  duration_ms: 2.72291
+  type: 'test'
+  ...
+# Subtest: crop plan calendar text that follows the theme uses a token that clears 4.5:1 in earth light and dark
+ok 27 - crop plan calendar text that follows the theme uses a token that clears 4.5:1 in earth light and dark
+  ---
+  duration_ms: 2.677806
+  type: 'test'
+  ...
+# Subtest: the month strips and the age-group line keep a theme-safe pairing
+ok 28 - the month strips and the age-group line keep a theme-safe pairing
+  ---
+  duration_ms: 0.494527
+  type: 'test'
+  ...
+# Subtest: fixture a: no frost class, mildness or fixed-month claim; rainfall kept
+ok 29 - fixture a: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 50.859603
+  type: 'test'
+  ...
+# Subtest: fixture b: no frost class, mildness or fixed-month claim; rainfall kept
+ok 30 - fixture b: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 9.140919
+  type: 'test'
+  ...
+# Subtest: fixture c: no frost class, mildness or fixed-month claim; rainfall kept
+ok 31 - fixture c: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 9.878148
+  type: 'test'
+  ...
+# Subtest: fixture d: no frost class, mildness or fixed-month claim; rainfall kept
+ok 32 - fixture d: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 19.042266
+  type: 'test'
+  ...
+# Subtest: fixture e: no frost class, mildness or fixed-month claim; rainfall kept
+ok 33 - fixture e: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 14.280657
+  type: 'test'
+  ...
+# Subtest: fixture f: no frost class, mildness or fixed-month claim; rainfall kept
+ok 34 - fixture f: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 11.847311
+  type: 'test'
+  ...
+# Subtest: fixture g: no frost class, mildness or fixed-month claim; rainfall kept
+ok 35 - fixture g: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 20.531614
+  type: 'test'
+  ...
+# Subtest: fixture h: no frost class, mildness or fixed-month claim; rainfall kept
+ok 36 - fixture h: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 8.064302
+  type: 'test'
+  ...
+# Subtest: fixture i: no frost class, mildness or fixed-month claim; rainfall kept
+ok 37 - fixture i: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 15.345489
+  type: 'test'
+  ...
+# Subtest: fixture j: no frost class, mildness or fixed-month claim; rainfall kept
+ok 38 - fixture j: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 8.199145
+  type: 'test'
+  ...
+# Subtest: fixture k: no frost class, mildness or fixed-month claim; rainfall kept
+ok 39 - fixture k: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 10.045094
+  type: 'test'
+  ...
+# Subtest: fixture l: no frost class, mildness or fixed-month claim; rainfall kept
+ok 40 - fixture l: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 11.38269
+  type: 'test'
+  ...
+# Subtest: fixture m: no frost class, mildness or fixed-month claim; rainfall kept
+ok 41 - fixture m: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 9.270354
+  type: 'test'
+  ...
+# Subtest: fixture n: no frost class, mildness or fixed-month claim; rainfall kept
+ok 42 - fixture n: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 23.227445
+  type: 'test'
+  ...
+# Subtest: a and b: the validated record low is printed on Overview and Climate
+ok 43 - a and b: the validated record low is printed on Overview and Climate
+  ---
+  duration_ms: 37.222841
+  type: 'test'
+  ...
+# Subtest: c: a real zero is a reading
+ok 44 - c: a real zero is a reading
+  ---
+  duration_ms: 14.440317
+  type: 'test'
+  ...
+# Subtest: d and e: an untagged minimum and the -999 marker are not a record low
+ok 45 - d and e: an untagged minimum and the -999 marker are not a record low
+  ---
+  duration_ms: 15.790642
+  type: 'test'
+  ...
+# Subtest: f, g, h: Climate withholds interpretation; Overview still shows rainfall and the validated record low
+ok 46 - f, g, h: Climate withholds interpretation; Overview still shows rainfall and the validated record low
+  ---
+  duration_ms: 31.430977
+  type: 'test'
+  ...
+# Subtest: i: the northern footer names Jan as coldest and Jul or Aug as hottest, with no southern winter or August planting
+ok 47 - i: the northern footer names Jan as coldest and Jul or Aug as hottest, with no southern winter or August planting
+  ---
+  duration_ms: 9.014515
+  type: 'test'
+  ...
+# Subtest: a: footer, wind advice and the frost-card body are neutral
+ok 48 - a: footer, wind advice and the frost-card body are neutral
+  ---
+  duration_ms: 3.045607
+  type: 'test'
+  ...
+# Subtest: site summary: the frost-protection sentence needs a validated record low below 2 °C
+ok 49 - site summary: the frost-protection sentence needs a validated record low below 2 °C
+  ---
+  duration_ms: 24.257481
+  type: 'test'
+  ...
+# Subtest: source: the removed identifiers and strings are gone from DataPanel.tsx
+ok 50 - source: the removed identifiers and strings are gone from DataPanel.tsx
+  ---
+  duration_ms: 2.453897
+  type: 'test'
+  ...
+# Subtest: the Overview calendar strip no longer marks "Frost" months from monthly means
+ok 51 - the Overview calendar strip no longer marks "Frost" months from monthly means
+  ---
+  duration_ms: 25.033337
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture a: nothing fabricated on Overview or Climate
+ok 52 - CP-117 fixture a: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 7.204092
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture b: nothing fabricated on Overview or Climate
+ok 53 - CP-117 fixture b: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 10.753136
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture c: nothing fabricated on Overview or Climate
+ok 54 - CP-117 fixture c: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 6.306815
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture d: nothing fabricated on Overview or Climate
+ok 55 - CP-117 fixture d: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 5.567421
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture e: nothing fabricated on Overview or Climate
+ok 56 - CP-117 fixture e: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 8.723717
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture f: nothing fabricated on Overview or Climate
+ok 57 - CP-117 fixture f: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 8.166125
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture g: nothing fabricated on Overview or Climate
+ok 58 - CP-117 fixture g: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 17.101694
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture h: nothing fabricated on Overview or Climate
+ok 59 - CP-117 fixture h: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 5.443201
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture i: nothing fabricated on Overview or Climate
+ok 60 - CP-117 fixture i: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 5.026604
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture j: nothing fabricated on Overview or Climate
+ok 61 - CP-117 fixture j: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 5.550509
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture k: nothing fabricated on Overview or Climate
+ok 62 - CP-117 fixture k: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 4.538689
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture l: nothing fabricated on Overview or Climate
+ok 63 - CP-117 fixture l: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 4.322352
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture m: nothing fabricated on Overview or Climate
+ok 64 - CP-117 fixture m: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 4.728859
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture n: nothing fabricated on Overview or Climate
+ok 65 - CP-117 fixture n: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 4.508626
+  type: 'test'
+  ...
+# Subtest: j: northern wind lines use calendar months, not seasons
+ok 66 - j: northern wind lines use calendar months, not seasons
+  ---
+  duration_ms: 6.521754
+  type: 'test'
+  ...
+# Subtest: k: southern Cwb keeps the tagged record low and the neutral class note
+ok 67 - k: southern Cwb keeps the tagged record low and the neutral class note
+  ---
+  duration_ms: 5.836279
+  type: 'test'
+  ...
+# Subtest: l: zero wind and unknown directions are not printed as facts and draw no rose
+ok 68 - l: zero wind and unknown directions are not printed as facts and draw no rose
+  ---
+  duration_ms: 5.035675
+  type: 'test'
+  ...
+# Subtest: m: NaN speed and -999 sunshine print nothing; only the known June to August direction shows
+ok 69 - m: NaN speed and -999 sunshine print nothing; only the known June to August direction shows
+  ---
+  duration_ms: 4.850545
+  type: 'test'
+  ...
+# Subtest: zu render of k: the new sentences are English by design and nothing throws
+ok 70 - zu render of k: the new sentences are English by design and nothing throws
+  ---
+  duration_ms: 4.549293
+  type: 'test'
+  ...
+# Subtest: source: CP-117 identifiers and strings are gone from DataPanel.tsx outside comments
+ok 71 - source: CP-117 identifiers and strings are gone from DataPanel.tsx outside comments
+  ---
+  duration_ms: 2.528496
+  type: 'test'
+  ...
+# (node:1246) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/format-figures.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:1252) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/evidence-catalogue.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: group and item storage namespaces are unique and prefix-safe
+ok 72 - group and item storage namespaces are unique and prefix-safe
+  ---
+  duration_ms: 3.018482
+  type: 'test'
+  ...
+# Subtest: every evidence tile has complete presentation data and valid flags
+ok 73 - every evidence tile has complete presentation data and valid flags
+  ---
+  duration_ms: 0.488447
+  type: 'test'
+  ...
+# Subtest: quick numbers belong to real groups and have unique complete fields
+ok 74 - quick numbers belong to real groups and have unique complete fields
+  ---
+  duration_ms: 0.225623
+  type: 'test'
+  ...
+# Subtest: every group has honest coaching that asks for notes or entered measurements
+ok 75 - every group has honest coaching that asks for notes or entered measurements
+  ---
+  duration_ms: 0.520249
+  type: 'test'
+  ...
+# Subtest: group counts require the exact catalogue namespace, not a lookalike prefix
+ok 76 - group counts require the exact catalogue namespace, not a lookalike prefix
+  ---
+  duration_ms: 2.53927
+  type: 'test'
+  ...
+# Subtest: catalogue namespace helpers accept only keys the evidence UI can produce
+ok 77 - catalogue namespace helpers accept only keys the evidence UI can produce
+  ---
+  duration_ms: 0.672027
+  type: 'test'
+  ...
+# Subtest: only configured non-blank quick numbers can complete a report group
+ok 78 - only configured non-blank quick numbers can complete a report group
+  ---
+  duration_ms: 0.436024
+  type: 'test'
+  ...
+# Subtest: empty evidence records never count as report proof
+ok 79 - empty evidence records never count as report proof
+  ---
+  duration_ms: 0.257189
+  type: 'test'
+  ...
+# Subtest: each catalogue group can contribute evidence completeness exactly once
+ok 80 - each catalogue group can contribute evidence completeness exactly once
+  ---
+  duration_ms: 0.443862
+  type: 'test'
+  ...
+# Subtest: indigenous reference entries are uniquely identified and complete
+ok 81 - indigenous reference entries are uniquely identified and complete
+  ---
+  duration_ms: 0.472592
+  type: 'test'
+  ...
+# Subtest: the Land & legal group exists with the papers a funding application asks for
+ok 82 - the Land & legal group exists with the papers a funding application asks for
+  ---
+  duration_ms: 0.168526
+  type: 'test'
+  ...
+# Subtest: the Land & legal sheet warns the farmer this app is not a backup of their papers
+ok 83 - the Land & legal sheet warns the farmer this app is not a backup of their papers
+  ---
+  duration_ms: 1.28889
+  type: 'test'
+  ...
+# Subtest: every evidence group has an icon for the Reports tab and the evidence library
+ok 84 - every evidence group has an icon for the Reports tab and the evidence library
+  ---
+  duration_ms: 0.12139
+  type: 'test'
+  ...
+# Subtest: farmer-facing English source stays present while only isiZulu gains marked drafts
+ok 85 - farmer-facing English source stays present while only isiZulu gains marked drafts
+  ---
+  duration_ms: 12.901128
+  type: 'test'
+  ...
+# Subtest: the rewired keys (Details/Results, tap to close, panel aria-labels) were already fully translated
+ok 86 - the rewired keys (Details/Results, tap to close, panel aria-labels) were already fully translated
+  ---
+  duration_ms: 4.696345
+  type: 'test'
+  ...
+# Subtest: the remaining 29 English UI sources have marked isiZulu drafts and keep their source meaning available
+ok 87 - the remaining 29 English UI sources have marked isiZulu drafts and keep their source meaning available
+  ---
+  duration_ms: 25.622569
+  type: 'test'
+  ...
+# Subtest: a QwaQwa learner sees Latin-script Sesotho drafts and English for held study wording
+ok 88 - a QwaQwa learner sees Latin-script Sesotho drafts and English for held study wording
+  ---
+  duration_ms: 9.854313
+  type: 'test'
+  ...
+# Subtest: the small Sesotho Student and Welcome draft keeps its English sources and visible review notice
+ok 89 - the small Sesotho Student and Welcome draft keeps its English sources and visible review notice
+  ---
+  duration_ms: 1.752959
+  type: 'test'
+  ...
+# Subtest: the Design Studio pill, Details/Results toggle, and close controls read from t(), not hard-coded English
+ok 90 - the Design Studio pill, Details/Results toggle, and close controls read from t(), not hard-coded English
+  ---
+  duration_ms: 0.559323
+  type: 'test'
+  ...
+# Subtest: soil "Priority improvements" advice is built from translated fixed phrases with interpolated values, not raw template literals
+ok 91 - soil "Priority improvements" advice is built from translated fixed phrases with interpolated values, not raw template literals
+  ---
+  duration_ms: 8.191086
+  type: 'test'
+  ...
+# Subtest: new nav*/tab*/home* English keys stay sentence case, not Title Case
+ok 92 - new nav*/tab*/home* English keys stay sentence case, not Title Case
+  ---
+  duration_ms: 4.603112
+  type: 'test'
+  ...
+# Subtest: Simple shows five tabs; All tools keeps every tab
+ok 93 - Simple shows five tabs; All tools keeps every tab
+  ---
+  duration_ms: 3.485212
+  type: 'test'
+  ...
+# Subtest: Simple Overview folds the stats ledger, insights, Lima card and calendar behind one disclosure
+ok 94 - Simple Overview folds the stats ledger, insights, Lima card and calendar behind one disclosure
+  ---
+  duration_ms: 0.627975
+  type: 'test'
+  ...
+# Subtest: no ERA5 / NASA vendor pill beside annual rainfall, in either level (CLAUDE.md: no data-vendor badges)
+ok 95 - no ERA5 / NASA vendor pill beside annual rainfall, in either level (CLAUDE.md: no data-vendor badges)
+  ---
+  duration_ms: 0.36504
+  type: 'test'
+  ...
+# Subtest: ?openSurvey=1 tells a farmer with no saved site to save one first, instead of doing nothing
+ok 96 - ?openSurvey=1 tells a farmer with no saved site to save one first, instead of doing nothing
+  ---
+  duration_ms: 0.386294
+  type: 'test'
+  ...
+# Subtest: a saved-site survey stays open when location data is unavailable in sample mode
+ok 97 - a saved-site survey stays open when location data is unavailable in sample mode
+  ---
+  duration_ms: 0.582085
+  type: 'test'
+  ...
+# Subtest: the Design Studio pill and the survey photo tip use Lucide icons, not emoji
+ok 98 - the Design Studio pill and the survey photo tip use Lucide icons, not emoji
+  ---
+  duration_ms: 352.271769
+  type: 'test'
+  ...
+# Subtest: the header hairline, sheet grabber and report banner follow the theme instead of a hardcoded colour
+ok 99 - the header hairline, sheet grabber and report banner follow the theme instead of a hardcoded colour
+  ---
+  duration_ms: 0.379103
+  type: 'test'
+  ...
+# Subtest: the tree-count stepper and the map quick-guide button clear the 44px tap floor without growing their paint
+ok 100 - the tree-count stepper and the map quick-guide button clear the 44px tap floor without growing their paint
+  ---
+  duration_ms: 0.622749
+  type: 'test'
+  ...
+# Subtest: the new copy keys exist in the English dictionary
+ok 101 - the new copy keys exist in the English dictionary
+  ---
+  duration_ms: 0.72773
+  type: 'test'
+  ...
+# (node:1277) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/farm-metrics.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the money book puts harvest logging one tap from the harvested-kilogram figure
+ok 102 - the money book puts harvest logging one tap from the harvested-kilogram figure
+  ---
+  duration_ms: 2.858434
+  type: 'test'
+  ...
+# Subtest: Finance measures each crop from its own planned area and never assigns shared costs
+ok 103 - Finance measures each crop from its own planned area and never assigns shared costs
+  ---
+  duration_ms: 7.067229
+  type: 'test'
+  ...
+# Subtest: organisation summary labels unmatched harvest without inventing household use or value
+ok 104 - organisation summary labels unmatched harvest without inventing household use or value
+  ---
+  duration_ms: 0.46408
+  type: 'test'
+  ...
+# Subtest: garden gross margin includes paid invoice money that the headline includes
+ok 105 - garden gross margin includes paid invoice money that the headline includes
+  ---
+  duration_ms: 1.797211
+  type: 'test'
+  ...
+# Subtest: the season view keeps December once the calendar has crossed into the new year
+ok 106 - the season view keeps December once the calendar has crossed into the new year
+  ---
+  duration_ms: 1.120421
+  type: 'test'
+  ...
+# Subtest: cashIncomeTotal counts a paid invoice exactly once, kg lines and non-kg lines alike
+ok 107 - cashIncomeTotal counts a paid invoice exactly once, kg lines and non-kg lines alike
+  ---
+  duration_ms: 0.459301
+  type: 'test'
+  ...
+# Subtest: cashIncomeTotal never counts an unpaid invoice as money in hand
+ok 108 - cashIncomeTotal never counts an unpaid invoice as money in hand
+  ---
+  duration_ms: 0.263369
+  type: 'test'
+  ...
+# Subtest: My Records reports revenue with the shared paid-invoice-aware total, not raw sales rows alone
+ok 109 - My Records reports revenue with the shared paid-invoice-aware total, not raw sales rows alone
+  ---
+  duration_ms: 0.717658
+  type: 'test'
+  ...
+# (node:1286) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/community-time.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a stalled sheet image decode exits with an error instead of freezing exact lock forever
+ok 110 - a stalled sheet image decode exits with an error instead of freezing exact lock forever
+  ---
+  duration_ms: 5.634052
+  type: 'test'
+  ...
+# Subtest: a failed replies read on the contact screen says so and offers Retry, instead of looking like no replies
+ok 111 - a failed replies read on the contact screen says so and offers Retry, instead of looking like no replies
+  ---
+  duration_ms: 0.331315
+  type: 'test'
+  ...
+# Subtest: a failed profile read on the contact screen says so and offers Retry, instead of silently hiding the phone-contact card
+ok 112 - a failed profile read on the contact screen says so and offers Retry, instead of silently hiding the phone-contact card
+  ---
+  duration_ms: 0.401299
+  type: 'test'
+  ...
+# Subtest: a failed photo-analysis call on the design panel keeps the sheet open and says so, instead of opening a report that analysed nothing
+ok 113 - a failed photo-analysis call on the design panel keeps the sheet open and says so, instead of opening a report that analysed nothing
+  ---
+  duration_ms: 1.52252
+  type: 'test'
+  ...
+# Subtest: My Records surfaces a failed read instead of quietly showing an empty ledger
+ok 114 - My Records surfaces a failed read instead of quietly showing an empty ledger
+  ---
+  duration_ms: 1.616923
+  type: 'test'
+  ...
+# Subtest: the money book keeps the last-loaded sales/expenses/production instead of blanking them when a read fails
+ok 115 - the money book keeps the last-loaded sales/expenses/production instead of blanking them when a read fails
+  ---
+  duration_ms: 0.907006
+  type: 'test'
+  ...
+# Subtest: deleting a sale or expense that fails offline shows the error instead of vanishing silently
+ok 116 - deleting a sale or expense that fails offline shows the error instead of vanishing silently
+  ---
+  duration_ms: 1.830929
+  type: 'test'
+  ...
+# Subtest: a journal entry that fails to save when storage is full keeps the sheet open with the draft
+ok 117 - a journal entry that fails to save when storage is full keeps the sheet open with the draft
+  ---
+  duration_ms: 0.627874
+  type: 'test'
+  ...
+# Subtest: deleting a journal entry needs two taps, like the money book's SalesLedger
+ok 118 - deleting a journal entry needs two taps, like the money book's SalesLedger
+  ---
+  duration_ms: 0.500407
+  type: 'test'
+  ...
+# Subtest: community writes (board posts, threads, messages, reports) are bounded by withWriteTimeout
+ok 119 - community writes (board posts, threads, messages, reports) are bounded by withWriteTimeout
+  ---
+  duration_ms: 0.54925
+  type: 'test'
+  ...
+# Subtest: the community message listener reports a failure instead of leaving the thread silently empty
+ok 120 - the community message listener reports a failure instead of leaving the thread silently empty
+  ---
+  duration_ms: 245.347543
+  type: 'test'
+  ...
+# Subtest: contact form and inbox replies bound their writes with withWriteTimeout
+ok 121 - contact form and inbox replies bound their writes with withWriteTimeout
+  ---
+  duration_ms: 0.511374
+  type: 'test'
+  ...
+# Subtest: a failed consent read shows an error with retry instead of every sharing toggle reading as OFF
+ok 122 - a failed consent read shows an error with retry instead of every sharing toggle reading as OFF
+  ---
+  duration_ms: 0.250109
+  type: 'test'
+  ...
+# Subtest: saving the account profile cannot hang on "Saving…" forever, and a failed avatar upload is shown
+ok 123 - saving the account profile cannot hang on "Saving…" forever, and a failed avatar upload is shown
+  ---
+  duration_ms: 0.397798
+  type: 'test'
+  ...
+# Subtest: a facilitator who opens a gardener whose full profile fails to load sees an error, not a false zero
+ok 124 - a facilitator who opens a gardener whose full profile fails to load sees an error, not a false zero
+  ---
+  duration_ms: 0.386219
+  type: 'test'
+  ...
+# Subtest: fetchSoilData bounds its ISRIC request so one slow upstream cannot hang the whole location-data request forever
+ok 125 - fetchSoilData bounds its ISRIC request so one slow upstream cannot hang the whole location-data request forever
+  ---
+  duration_ms: 8.262453
+  type: 'test'
+  ...
+# Subtest: fetchVegetation bounds its SANBI request so one slow upstream cannot hang the whole location-data request forever
+ok 126 - fetchVegetation bounds its SANBI request so one slow upstream cannot hang the whole location-data request forever
+  ---
+  duration_ms: 2.803124
+  type: 'test'
+  ...
+# Subtest: Map.tsx reads Simple / All tools from lib/app-level.ts
+ok 127 - Map.tsx reads Simple / All tools from lib/app-level.ts
+  ---
+  duration_ms: 1.01353
+  type: 'test'
+  ...
+# Subtest: the expert Layers-expander toggles (offline canvas, HD imagery, contours, relief, 3D) are hidden in Simple
+ok 128 - the expert Layers-expander toggles (offline canvas, HD imagery, contours, relief, 3D) are hidden in Simple
+  ---
+  duration_ms: 0.926776
+  type: 'test'
+  ...
+# Subtest: the satellite/map basemap switch stays in both levels, not gated by simple
+ok 129 - the satellite/map basemap switch stays in both levels, not gated by simple
+  ---
+  duration_ms: 1.747998
+  type: 'test'
+  ...
+# Subtest: the native/custom edit-engine picker is hidden in Simple, and Simple never enters native editing
+ok 130 - the native/custom edit-engine picker is hidden in Simple, and Simple never enters native editing
+  ---
+  duration_ms: 0.318088
+  type: 'test'
+  ...
+# Subtest: print base map, the elevation readout, the Labels overlay pill and native-editing action bars are hidden in Simple
+ok 131 - print base map, the elevation readout, the Labels overlay pill and native-editing action bars are hidden in Simple
+  ---
+  duration_ms: 0.599181
+  type: 'test'
+  ...
+# Subtest: the Parcels section's Shapes/Hatch/Labels display-toggle row is hidden in Simple; the parcel list and boundary CTA stay
+ok 132 - the Parcels section's Shapes/Hatch/Labels display-toggle row is hidden in Simple; the parcel list and boundary CTA stay
+  ---
+  duration_ms: 0.272672
+  type: 'test'
+  ...
+# Subtest: the on-map Site Elements palette is filtered to tree + water tank in Simple; placed elements and their editor stay reachable in both levels
+ok 133 - the on-map Site Elements palette is filtered to tree + water tank in Simple; placed elements and their editor stay reachable in both levels
+  ---
+  duration_ms: 0.521174
+  type: 'test'
+  ...
+# Subtest: boundary/water/element reticle-draw and drop-mode UI, and the arm-draw/arm-element/open-add wiring, are never gated by simple
+ok 134 - boundary/water/element reticle-draw and drop-mode UI, and the arm-draw/arm-element/open-add wiring, are never gated by simple
+  ---
+  duration_ms: 0.492334
+  type: 'test'
+  ...
+# Subtest: the "+ Add" catalog reduces to boundary / new bed / tree / water tank in Simple, and app/farmer/page.tsx threads the level through
+ok 135 - the "+ Add" catalog reduces to boundary / new bed / tree / water tank in Simple, and app/farmer/page.tsx threads the level through
+  ---
+  duration_ms: 0.336317
+  type: 'test'
+  ...
+# Subtest: the deep links this track must never break stay wired: ?arm=site|water and ?openSurvey=1
+ok 136 - the deep links this track must never break stay wired: ?arm=site|water and ?openSurvey=1
+  ---
+  duration_ms: 0.335529
+  type: 'test'
+  ...
+# (node:1302) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/climate-temperature.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the actual notice distinguishes incomplete provider inputs from legacy unknown without altering values
+ok 137 - the actual notice distinguishes incomplete provider inputs from legacy unknown without altering values
+  ---
+  duration_ms: 6.77164
+  type: 'test'
+  ...
+# Subtest: the overview no longer derives growing months from monthly means at all
+ok 138 - the overview no longer derives growing months from monthly means at all
+  ---
+  duration_ms: 1.13328
+  type: 'test'
+  ...
+# Subtest: the actual climate guard withholds zone and frost-day calculations while keeping the complete path
+ok 139 - the actual climate guard withholds zone and frost-day calculations while keeping the complete path
+  ---
+  duration_ms: 0.830304
+  type: 'test'
+  ...
+# Subtest: Garden Survey opens the survey the progress bar actually reads
+ok 140 - Garden Survey opens the survey the progress bar actually reads
+  ---
+  duration_ms: 1.406052
+  type: 'test'
+  ...
+# (node:1303) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/locales/zu.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the Planting Calendar has a translated door in Farm Tools for every target language
+ok 141 - the Planting Calendar has a translated door in Farm Tools for every target language
+  ---
+  duration_ms: 230.393415
+  type: 'test'
+  ...
+# Subtest: the calendar opens its own readable context while empty or unreadable storage cannot approve farming advice
+ok 142 - the calendar opens its own readable context while empty or unreadable storage cannot approve farming advice
+  ---
+  duration_ms: 1185.415608
+  type: 'test'
+  ...
+# Subtest: the drawer has a way into the site report
+ok 143 - the drawer has a way into the site report
+  ---
+  duration_ms: 8.361699
+  type: 'test'
+  ...
+# Subtest: older report panel deep links remain supported
+ok 144 - older report panel deep links remain supported
+  ---
+  duration_ms: 2.168283
+  type: 'test'
+  ...
+# Subtest: an empty report list explains itself instead of looking broken
+ok 145 - an empty report list explains itself instead of looking broken
+  ---
+  duration_ms: 0.748687
+  type: 'test'
+  ...
+# Subtest: --on-forest-800 is declared in every theme column and reads on --color-forest-800
+ok 146 - --on-forest-800 is declared in every theme column and reads on --color-forest-800
+  ---
+  duration_ms: 1.190696
+  type: 'test'
+  ...
+# Subtest: --on-forest itself is unchanged
+ok 147 - --on-forest itself is unchanged
+  ---
+  duration_ms: 0.29591
+  type: 'test'
+  ...
+# Subtest: no line paints var(--on-forest) text on a var(--color-forest-800) background
+ok 148 - no line paints var(--on-forest) text on a var(--color-forest-800) background
+  ---
+  duration_ms: 24.091358
+  type: 'test'
+  ...
+# Subtest: w16-02: LessonLink and the Design labels paint text with the themed forest token, not the fixed green
+ok 149 - w16-02: LessonLink and the Design labels paint text with the themed forest token, not the fixed green
+  ---
+  duration_ms: 1.051268
+  type: 'test'
+  ...
+# Subtest: w17-01: no forest-800/emerald fill is paired with plain --on-forest text (all tsx + module.css)
+ok 150 - w17-01: no forest-800/emerald fill is paired with plain --on-forest text (all tsx + module.css)
+  ---
+  duration_ms: 401.337707
+  type: 'test'
+  ...
+# (node:1334) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/report-ground-photos.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the catalogue names a photo instead of handing over its storage key
+ok 151 - the catalogue names a photo instead of handing over its storage key
+  ---
+  duration_ms: 2.308437
+  type: 'test'
+  ...
+# Subtest: one photo per group before any group gets a second
+ok 152 - one photo per group before any group gets a second
+  ---
+  duration_ms: 0.609482
+  type: 'test'
+  ...
+# Subtest: soil leads, because no other input in the report carries what a soil photo carries
+ok 153 - soil leads, because no other input in the report carries what a soil photo carries
+  ---
+  duration_ms: 0.211229
+  type: 'test'
+  ...
+# Subtest: only photographs are sent, and only ones that exist
+ok 154 - only photographs are sent, and only ones that exist
+  ---
+  duration_ms: 0.324825
+  type: 'test'
+  ...
+# Subtest: the newest photo of a thing is the one that describes it now
+ok 155 - the newest photo of a thing is the one that describes it now
+  ---
+  duration_ms: 0.181263
+  type: 'test'
+  ...
+# Subtest: a photo carries its subject and the farmer's own words
+ok 156 - a photo carries its subject and the farmer's own words
+  ---
+  duration_ms: 1.840948
+  type: 'test'
+  ...
+# Subtest: a rural connection is not asked to upload more than it can
+ok 157 - a rural connection is not asked to upload more than it can
+  ---
+  duration_ms: 4.436182
+  type: 'test'
+  ...
+# Subtest: what arrives at the server is checked, never repaired
+ok 158 - what arrives at the server is checked, never repaired
+  ---
+  duration_ms: 0.664729
+  type: 'test'
+  ...
+# Subtest: the model is told a photograph is evidence of condition, and of nothing else
+ok 159 - the model is told a photograph is evidence of condition, and of nothing else
+  ---
+  duration_ms: 0.449809
+  type: 'test'
+  ...
+# Subtest: the photos are actually attached to the request, and to every batch
+ok 160 - the photos are actually attached to the request, and to every batch
+  ---
+  duration_ms: 5.179942
+  type: 'test'
+  ...
+# Subtest: a photo is filed and read back under the same site id
+ok 161 - a photo is filed and read back under the same site id
+  ---
+  duration_ms: 1.353592
+  type: 'test'
+  ...
+# Subtest: the report shows exactly the photos it read, and says how many more there are
+ok 162 - the report shows exactly the photos it read, and says how many more there are
+  ---
+  duration_ms: 0.485014
+  type: 'test'
+  ...
+# Subtest: no photos means no strip at all, not an empty one
+ok 163 - no photos means no strip at all, not an empty one
+  ---
+  duration_ms: 0.115284
+  type: 'test'
+  ...
+# Subtest: the strip and the PDF both carry the photographs
+ok 164 - the strip and the PDF both carry the photographs
+  ---
+  duration_ms: 1.468774
+  type: 'test'
+  ...
+# Subtest: a deep link to Reports survives having no site yet
+ok 165 - a deep link to Reports survives having no site yet
+  ---
+  duration_ms: 1.759262
+  type: 'test'
+  ...
+# Subtest: the saved list has one implementation, used in both places
+ok 166 - the saved list has one implementation, used in both places
+  ---
+  duration_ms: 1.693822
+  type: 'test'
+  ...
+# Subtest: generating is offered only when there is a site to generate from
+ok 167 - generating is offered only when there is a site to generate from
+  ---
+  duration_ms: 0.352283
+  type: 'test'
+  ...
+# Subtest: every translated string on these screens actually exists
+ok 168 - every translated string on these screens actually exists
+  ---
+  duration_ms: 22.134413
+  type: 'test'
+  ...
+# Subtest: the menu opens the site/report chooser and legacy report panel links remain supported
+ok 169 - the menu opens the site/report chooser and legacy report panel links remain supported
+  ---
+  duration_ms: 0.427677
+  type: 'test'
+  ...
+# Subtest: app/account/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 170 - app/account/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 4.001271
+  type: 'test'
+  ...
+# Subtest: app/community/messages/[threadId]/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 171 - app/community/messages/[threadId]/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.289988
+  type: 'test'
+  ...
+# Subtest: app/community/u/[uid]/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 172 - app/community/u/[uid]/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.204129
+  type: 'test'
+  ...
+# Subtest: app/home/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 173 - app/home/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.424778
+  type: 'test'
+  ...
+# Subtest: app/mentor/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 174 - app/mentor/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.350714
+  type: 'test'
+  ...
+# Subtest: app/network/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 175 - app/network/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.449695
+  type: 'test'
+  ...
+# Subtest: app/ngo/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 176 - app/ngo/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.338286
+  type: 'test'
+  ...
+# Subtest: app/not-found.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 177 - app/not-found.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 1.511341
+  type: 'test'
+  ...
+# Subtest: app/student/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 178 - app/student/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 1.041967
+  type: 'test'
+  ...
+# Subtest: app/vision/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 179 - app/vision/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.664779
+  type: 'test'
+  ...
+# Subtest: components/ChatPanel.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 180 - components/ChatPanel.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.276383
+  type: 'test'
+  ...
+# Subtest: components/ContactInbox.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 181 - components/ContactInbox.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.210171
+  type: 'test'
+  ...
+# Subtest: components/DataPanel.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 182 - components/DataPanel.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.75727
+  type: 'test'
+  ...
+# Subtest: components/LimaBar.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 183 - components/LimaBar.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.209318
+  type: 'test'
+  ...
+# Subtest: components/Map.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 184 - components/Map.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 1.577977
+  type: 'test'
+  ...
+# Subtest: components/NextStepCoach.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 185 - components/NextStepCoach.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.19049
+  type: 'test'
+  ...
+# Subtest: components/PhotoUpload.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 186 - components/PhotoUpload.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.20748
+  type: 'test'
+  ...
+# Subtest: components/ProfileSheet.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 187 - components/ProfileSheet.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.167602
+  type: 'test'
+  ...
+# Subtest: components/ReportView.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 188 - components/ReportView.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.713799
+  type: 'test'
+  ...
+# Subtest: components/SiteManageMenu.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 189 - components/SiteManageMenu.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.168463
+  type: 'test'
+  ...
+# Subtest: components/atlas/AtlasExplorer.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 190 - components/atlas/AtlasExplorer.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.16574
+  type: 'test'
+  ...
+# Subtest: components/community/NearbyMap.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 191 - components/community/NearbyMap.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.106798
+  type: 'test'
+  ...
+# Subtest: components/exchange/ExchangeBoard.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 192 - components/exchange/ExchangeBoard.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.183399
+  type: 'test'
+  ...
+# Subtest: components/exchange/ExchangeGuide.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 193 - components/exchange/ExchangeGuide.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.117387
+  type: 'test'
+  ...
+# Subtest: components/exchange/NewListingForm.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 194 - components/exchange/NewListingForm.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.248957
+  type: 'test'
+  ...
+# Subtest: components/funder/CohortDashboard.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 195 - components/funder/CohortDashboard.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.307665
+  type: 'test'
+  ...
+# Subtest: components/home/HomeHeroCard.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 196 - components/home/HomeHeroCard.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.198153
+  type: 'test'
+  ...
+# Subtest: components/network/NetworkMap.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 197 - components/network/NetworkMap.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.329626
+  type: 'test'
+  ...
+# Subtest: components/prices/CropPriceGuide.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 198 - components/prices/CropPriceGuide.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.183218
+  type: 'test'
+  ...
+# Subtest: app/account/page.tsx does not reintroduce the stale card hex '\#FBF6EC'
+ok 199 - app/account/page.tsx does not reintroduce the stale card hex '\#FBF6EC'
+  ---
+  duration_ms: 0.431882
+  type: 'test'
+  ...
+# Subtest: every converted file actually uses the new --on-forest token, not just a bare removal
+ok 200 - every converted file actually uses the new --on-forest token, not just a bare removal
+  ---
+  duration_ms: 10.987552
+  type: 'test'
+  ...
+# Subtest: --on-forest is declared in all four theme columns of app/globals.css
+ok 201 - --on-forest is declared in all four theme columns of app/globals.css
+  ---
+  duration_ms: 0.821164
+  type: 'test'
+  ...
+# Subtest: the crop-planner files this track must not touch are left on the literal hex
+ok 202 - the crop-planner files this track must not touch are left on the literal hex
+  ---
+  duration_ms: 2.542174
+  type: 'test'
+  ...
+# Subtest: app/global-error.tsx is left untouched — it renders outside the normal layout
+ok 203 - app/global-error.tsx is left untouched — it renders outside the normal layout
+  ---
+  duration_ms: 0.157613
+  type: 'test'
+  ...
+# Subtest: app/updates/page.tsx does not paint its page root/header/dividers with literal paper/ink hex (code-03)
+ok 204 - app/updates/page.tsx does not paint its page root/header/dividers with literal paper/ink hex (code-03)
+  ---
+  duration_ms: 0.253121
+  type: 'test'
+  ...
+# Subtest: app/atlas/page.tsx does not paint its page root/header/dividers with literal paper/ink hex (code-03)
+ok 205 - app/atlas/page.tsx does not paint its page root/header/dividers with literal paper/ink hex (code-03)
+  ---
+  duration_ms: 0.089605
+  type: 'test'
+  ...
+# Subtest: app/journal/page.tsx does not paint its page root/header/dividers with literal paper/ink hex (code-03)
+ok 206 - app/journal/page.tsx does not paint its page root/header/dividers with literal paper/ink hex (code-03)
+  ---
+  duration_ms: 0.075693
+  type: 'test'
+  ...
+# Subtest: components/HarvestReconciliation.tsx does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)
+ok 207 - components/HarvestReconciliation.tsx does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)
+  ---
+  duration_ms: 4.366858
+  type: 'test'
+  ...
+# Subtest: components/IsiZuluDraftSource.tsx does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)
+ok 208 - components/IsiZuluDraftSource.tsx does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)
+  ---
+  duration_ms: 0.195439
+  type: 'test'
+  ...
+# Subtest: components/DataPanel.tsx does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)
+ok 209 - components/DataPanel.tsx does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)
+  ---
+  duration_ms: 0.685326
+  type: 'test'
+  ...
+# Subtest: nothing a farmer has to read is set below 12px
+ok 210 - nothing a farmer has to read is set below 12px
+  ---
+  duration_ms: 56.182346
+  type: 'test'
+  ...
+# Subtest: the chart axes she cannot read are counted, not overlooked
+ok 211 - the chart axes she cannot read are counted, not overlooked
+  ---
+  duration_ms: 33.451956
+  type: 'test'
+  ...
+# Subtest: the expert tools cannot get worse, and a fix cannot go unrecorded
+not ok 212 - the expert tools cannot get worse, and a fix cannot go unrecorded
+  ---
+  duration_ms: 25.469519
+  type: 'test'
+  location: '/home/user/ImbewuField/tests/type-floor.test.ts:510:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    components/DataPanel.tsx is down to 4 sub-12px declarations from 5 — good. Lower its budget in EXPERT_SURFACES to lock the win in, or the room you just made stays open.
+    
+    4 !== 5
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 5
+  actual: 4
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/ImbewuField/tests/type-floor.test.ts:521:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: every screen reachable from a farmer or staff route has been classified
+ok 213 - every screen reachable from a farmer or staff route has been classified
+  ---
+  duration_ms: 115.130872
+  type: 'test'
+  ...
+# Subtest: the floor cannot be undercut by a named Tailwind size
+ok 214 - the floor cannot be undercut by a named Tailwind size
+  ---
+  duration_ms: 0.278165
+  type: 'test'
+  ...
+# Subtest: owned files carry no font-mono
+ok 215 - owned files carry no font-mono
+  ---
+  duration_ms: 5.215658
+  type: 'test'
+  ...
+# Subtest: outline-none is always paired with a focus-visible ring in owned files
+ok 216 - outline-none is always paired with a focus-visible ring in owned files
+  ---
+  duration_ms: 5.06742
+  type: 'test'
+  ...
+# Subtest: farmer page saved-site error names the Site reports destination
+ok 217 - farmer page saved-site error names the Site reports destination
+  ---
+  duration_ms: 0.83679
+  type: 'test'
+  ...
+# Subtest: the journal keeps older notes and photos reachable in a bounded scroll area at every screen width
+ok 218 - the journal keeps older notes and photos reachable in a bounded scroll area at every screen width
+  ---
+  duration_ms: 14.805209
+  type: 'test'
+  ...
+# Subtest: w19-01: farmer pages hide the phone TabBar at desktop
+ok 219 - w19-01: farmer pages hide the phone TabBar at desktop
+  ---
+  duration_ms: 1.331209
+  type: 'test'
+  ...
+# Subtest: w19-02: farmer error is a banner outside the header; LangSwitcher is compact
+ok 220 - w19-02: farmer error is a banner outside the header; LangSwitcher is compact
+  ---
+  duration_ms: 0.772366
+  type: 'test'
+  ...
+# Subtest: w19-03: controls and chips use sans
+ok 221 - w19-03: controls and chips use sans
+  ---
+  duration_ms: 1.023413
+  type: 'test'
+  ...
+# Subtest: w19-04: offline cards keep space-y spacing; disabled buttons look disabled
+ok 222 - w19-04: offline cards keep space-y spacing; disabled buttons look disabled
+  ---
+  duration_ms: 0.343036
+  type: 'test'
+  ...
+# Subtest: w19-05/06: inline art is exempt from the tile minimum; meta row is a two-column grid
+ok 223 - w19-05/06: inline art is exempt from the tile minimum; meta row is a two-column grid
+  ---
+  duration_ms: 1.167786
+  type: 'test'
+  ...
+# Subtest: w19-07/08: account chip follows the theme; journal rail is narrow
+ok 224 - w19-07/08: account chip follows the theme; journal rail is narrow
+  ---
+  duration_ms: 0.718642
+  type: 'test'
+  ...
+# Subtest: w19-09: staff Home uses AppHeader and drops the duplicate dashboard link
+ok 225 - w19-09: staff Home uses AppHeader and drops the duplicate dashboard link
+  ---
+  duration_ms: 0.502491
+  type: 'test'
+  ...
+# Subtest: w20-09 DataPanel completeness card uses the themed surface
+ok 226 - w20-09 DataPanel completeness card uses the themed surface
+  ---
+  duration_ms: 1.80819
+  type: 'test'
+  ...
+# Subtest: w20-10 DataPanel tabs wrap, sans, no hidden scrollbar
+ok 227 - w20-10 DataPanel tabs wrap, sans, no hidden scrollbar
+  ---
+  duration_ms: 0.779766
+  type: 'test'
+  ...
+# Subtest: w20-11 NextStepCoach uses theme tokens, no fixed greens
+ok 228 - w20-11 NextStepCoach uses theme tokens, no fixed greens
+  ---
+  duration_ms: 0.224174
+  type: 'test'
+  ...
+# Subtest: w20-12/15 records controls are sans, Invoice pill is secondary
+ok 229 - w20-12/15 records controls are sans, Invoice pill is secondary
+  ---
+  duration_ms: 1.504117
+  type: 'test'
+  ...
+# Subtest: w20-13/14 MyRecords card and sparklines follow the theme
+ok 230 - w20-13/14 MyRecords card and sparklines follow the theme
+  ---
+  duration_ms: 0.554002
+  type: 'test'
+  ...
+# Subtest: w20-26 Crèche spelling in demo data
+ok 231 - w20-26 Crèche spelling in demo data
+  ---
+  duration_ms: 2.053215
+  type: 'test'
+  ...
+# (node:1390) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/local-wind.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: COMPASS16_BEARING resolves every label aspectLabel can actually produce
+ok 232 - COMPASS16_BEARING resolves every label aspectLabel can actually produce
+  ---
+  duration_ms: 0.779011
+  type: 'test'
+  ...
+# Subtest: DataPanel's wind compass rose reads the full 16-point bearing table, not a partial 8-point one
+ok 233 - DataPanel's wind compass rose reads the full 16-point bearing table, not a partial 8-point one
+  ---
+  duration_ms: 1.155774
+  type: 'test'
+  ...
+1..233
+# tests 233
+# suites 0
+# pass 231
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5875.671974
+exit 1

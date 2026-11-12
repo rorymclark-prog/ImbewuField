@@ -1,3 +1,5 @@
+import { reportWaterEvidence } from './report-risk';
+import { annualRainfallMm, recordMinimumC, reportClimateEvidence } from './climate-temperature';
 // ── ImbewuField structured report ("ReportDoc") ──────────────────────────────
 // The 11-section, map-linked report is the product differentiator. This is the
 // durable, typed source of truth for the instant local skeleton built from data
@@ -276,8 +278,7 @@ export function buildSkeletonReportDoc(args: {
   const bruNote = location.bru
     ? ` (BRU ${location.bru.brucode}, approx. ${location.bru.nearestBrg})`
     : '';
-  const annualRainfall = finitePositive(location.rainfall?.annual);
-  const rainMm = annualRainfall !== undefined ? Math.round(annualRainfall) : 0;
+  const rainMm = annualRainfallMm(location.rainfall);
   const approved = layers.filter((l) => l.approved);
   const areaOf = (layer: DesignLayer): number => finitePositive(layer.areaM2) ?? 0;
   const boundaryM2 = approved
@@ -292,11 +293,11 @@ export function buildSkeletonReportDoc(args: {
   const roofAreaM2 = roofs.reduce((sum, layer) => sum + areaOf(layer), 0) || undefined;
   const gardenAreaM2 = gardens.reduce((sum, layer) => sum + areaOf(layer), 0) || undefined;
   const hasTreeBelt = trees.length > 0;
-  const calculatedHarvestLitres = roofAreaM2 && rainMm
+  const calculatedHarvestLitres = roofAreaM2 && rainMm !== null
     ? roofHarvestLitres(roofAreaM2, rainMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT)
     : 0;
-  const harvestKL = finitePositive(wc?.roofHarvestAnnualKL)
-    ?? (calculatedHarvestLitres > 0 ? Math.round(calculatedHarvestLitres / 1000) : null);
+  const harvestKL = rainMm === null ? null : finiteNonNegative(wc?.roofHarvestAnnualKL)
+    ?? (roofAreaM2 ? Math.round(calculatedHarvestLitres / 1000) : null);
 
   const crops = clean(survey?.existingCrops, ['nothing']).map((c) => CROP_LABELS[c] ?? c);
   const livestock = clean(survey?.livestock, ['none']).map((l) => LIVESTOCK_LABELS[l] ?? l);
@@ -310,17 +311,16 @@ export function buildSkeletonReportDoc(args: {
   if (hasTreeBelt) opportunities.push('Keep the existing tree belt as a windbreak and biodiversity buffer.');
 
   const challenges = clean(survey?.challenges);
-  const minTemp = finiteNumber(location.climate?.minTemp);
-  const maxTemp = finiteNumber(location.climate?.maxTemp);
-  if (minTemp !== undefined && minTemp < 5) challenges.push('Frost risk in the low-lying corner — keep tender crops off it.');
-  if (rainMm && rainMm < 500) challenges.push('Low/erratic rainfall — water capture and storage are the priority.');
+  const minTemp = recordMinimumC(location.climate);
+
+  if (survey?.productionConditions?.frost === 'yes') challenges.push('Frost has been observed on this farm (grower-reported); confirm affected locations and timing.');
   if (survey?.soilCondition === 'compacted') challenges.push('Compacted soil — needs aeration and organic-matter building.');
   if (!challenges.length) challenges.push('Building soil fertility and year-round food production.');
 
   const executive: ExecutiveSummary = {
-    farmOverview: `A ${sizeHa !== undefined ? `${sizeHa} ha ` : ''}site in the ${biome}${bruNote}${rainMm ? ` (~${rainMm} mm/yr)` : ''}.${goals.length ? ` The household's main goals are ${goals.join(', ')}.` : ''} This plan organises the land into permaculture zones from the house outward, captures water high in the landscape, and builds a layered, largely self-feeding system.`,
+    farmOverview: `A ${sizeHa !== undefined ? `${sizeHa} ha ` : ''}site in the ${biome}${bruNote}${rainMm !== null ? ` (~${rainMm} mm/yr)` : ''}.${goals.length ? ` The household's main goals are ${goals.join(', ')}.` : ''} This plan organises the land into permaculture zones from the house outward, captures water high in the landscape, and builds a layered, largely self-feeding system.`,
     topOpportunities: opportunities.slice(0, 5),
-    topChallenges: challenges.slice(0, 5),
+    topChallenges: [reportWaterEvidence(rainMm), ...challenges.slice(0, 5)],
     priorityActions12mo: [
       { month: 'Months 1–2', action: 'Set up compost and connect roof gutters to a tank', why: 'Fast wins: fertility + stored water before the dry season.' },
       { month: 'Months 2–3', action: 'Mark and dig the first swale on contour above the garden', why: 'Slows and sinks runoff where it is most useful.' },
@@ -333,7 +333,7 @@ export function buildSkeletonReportDoc(args: {
   // ── Existing site ──
   const existingSite: ExistingSite = {
     sizeHa: sizeHa !== undefined ? { value: sizeHa, unit: 'ha', provenance: 'measured', basis: 'traced property boundary' } : undefined,
-    climateSummary: `${biome}${bruNote}. ${rainMm ? `~${rainMm} mm/year (${location.rainfall?.pattern ?? 'seasonal'} rainfall)` : 'Rainfall unavailable'}, ${minTemp !== undefined && maxTemp !== undefined ? `${Math.round(minTemp)}–${Math.round(maxTemp)} °C` : 'temperature unavailable'}.`,
+    climateSummary: reportClimateEvidence(location),
     currentLandUses: [gardenAreaM2 ? 'vegetable garden' : '', hasTreeBelt ? 'trees / bush' : '', 'dwelling'].filter(Boolean),
     infrastructure: clean(survey?.otherInfra),
     existingCrops: crops,
@@ -344,7 +344,7 @@ export function buildSkeletonReportDoc(args: {
 
   // ── Water ──
   const water: WaterSection = {
-    rainfall: rainMm ? { value: rainMm, unit: 'mm/yr', provenance: 'measured', basis: 'NASA POWER / Open-Meteo' } : undefined,
+    rainfall: rainMm !== null ? { value: rainMm, unit: 'mm/yr', provenance: 'estimated', basis: location.rainfall.rainfallSource ?? 'Source unrecorded' } : undefined,
     pattern: location.rainfall?.pattern ?? 'seasonal',
     sources: clean(survey?.waterSource),
     storageExisting: clean(survey?.waterStorage, ['none']),
@@ -368,25 +368,26 @@ export function buildSkeletonReportDoc(args: {
   const el = location.elevation;
   const so = location.soil;
   const slopeDeg = finiteNonNegative(el?.slopeDeg);
-  const ph = finitePositive(so?.ph);
-  const organicCarbon = finiteNonNegative(so?.organicCarbon);
+  const soilKnown = so?.soilSource === 'lab' || so?.soilSource === 'soilgrids';
+  const ph = soilKnown ? finitePositive(so?.ph) : undefined;
+  const organicCarbon = soilKnown ? finiteNonNegative(so?.organicCarbon) : undefined;
   const landscapeSoil: LandscapeSoil = {
     slope: slopeDeg !== undefined ? { value: slopeDeg, unit: '°', provenance: 'estimated', basis: 'coarse elevation grid — confirm on site' } : undefined,
     aspect: el?.aspectLabel ?? 'unknown',
-    soilTexture: so?.textureClass ?? 'unknown',
+    soilTexture: soilKnown ? so?.textureClass ?? 'unknown' : 'unknown',
     // The basis has to name what was ACTUALLY consulted. When the ISRIC call fails, the
     // route substitutes Loam / pH 6.5 / 1.2% OC for every site alike, and this line used to
     // print "SoilGrids model" beside those constants — crediting a source that never
     // answered. A farmer reading "SoilGrids model" reasonably believes something looked at
     // their land, and the 45-page Ubhejane report built its whole soil section on exactly
     // that misplaced trust. See SoilData.soilSource.
-    ph: ph !== undefined ? { value: ph, provenance: 'estimated', basis: soilBasis(so, ' — confirm with a soil test') } : undefined,
-    organicMatter: organicCarbon !== undefined ? { value: organicCarbon, unit: '% OC', provenance: 'estimated', basis: soilBasis(so) } : undefined,
+    ph: ph !== undefined ? { value: ph, provenance: so?.soilSource === 'lab' ? 'measured' : 'estimated', basis: soilBasis(so, ' — confirm with a soil test') } : undefined,
+    organicMatter: organicCarbon !== undefined ? { value: organicCarbon, unit: '% OC', provenance: so?.soilSource === 'lab' ? 'measured' : 'estimated', basis: soilBasis(so) } : undefined,
     compaction: survey?.soilCondition === 'compacted' ? 'Reported compacted — aerate before planting.' : 'Assess by digging a test hole.',
     erosion: water.erosionRisk,
     improvementPlan: [
       { action: 'Add compost and mulch to build organic matter', timing: 'ongoing', provenance: 'estimated' },
-      { action: ph !== undefined && ph < 5.5 ? 'Lime to raise pH toward 6.5' : 'Maintain pH with compost', timing: 'before planting', provenance: 'estimated' },
+      { action: 'Interpret a soil test for the intended crop and field conditions before choosing amendments', timing: 'before planting', provenance: 'estimated' },
     ],
     coverCrops: ['cowpea', 'sunn hemp', 'oats/vetch (winter)'],
   };
@@ -405,7 +406,7 @@ export function buildSkeletonReportDoc(args: {
     wildlife: hasTreeBelt ? 'The tree belt is a wildlife corridor — keep a wild buffer.' : 'Leave a wild edge for beneficial wildlife.',
     security: 'Position the house with clear sightlines to the gate and garden.',
     dust: 'Screen dust from the road/driveway with a hedge.',
-    frost: minTemp !== undefined && minTemp < 5 ? 'Cold air drains to the low corner — keep tender crops above it.' : minTemp !== undefined ? 'Low frost risk.' : 'Frost data unavailable — confirm the coldest low point on site.',
+    frost: survey?.productionConditions?.frost === 'yes' ? 'Frost observed on the farm (grower-reported).' : survey?.productionConditions?.frost === 'no' ? 'No frost observed by the grower; this does not certify frost-free conditions.' : `Farm frost observations not recorded.${minTemp !== null ? ` Modelled record low ${minTemp} °C; this does not establish frost frequency.` : ''}`,
     neighbours: 'Screen overlooked edges; keep neighbourly access clear.',
     externalOpportunities: ['Roof + driveway runoff to harvest', 'Sun on the northern slope for the orchard'],
   };

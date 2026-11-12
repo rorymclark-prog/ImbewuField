@@ -11,6 +11,7 @@
 // regional calendar exactly as before.
 
 import type { CropDef } from '@/lib/crop-catalog';
+import { completeMonthlyRainfallMm, completeMonthlyTemperatures } from '@/lib/climate-temperature';
 
 /** Temperature range from FAO ECOCROP, °C.
  *
@@ -106,9 +107,6 @@ export function heatLimitOf(crop: Pick<CropDef, 'key'>): HeatLimitC | undefined 
   return ECOCROP_HEAT_LIMITS_C[crop.key];
 }
 
-const twelveFinite = (values: unknown): values is number[] =>
-  Array.isArray(values) && values.length === 12 && values.every((v) => typeof v === 'number' && Number.isFinite(v));
-
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const MID_MONTH_DAY_OF_YEAR = [15, 46, 74, 105, 135, 166, 196, 227, 258, 288, 319, 349];
 
@@ -142,19 +140,28 @@ export function thornthwaitePetMm(tempC: readonly number[], latDeg: number): num
   });
 }
 
-/** Which calendar months (index 0 = January) are rain-fed growing months:
- * rainfall at least half the potential evapotranspiration — the FAO
- * Agro-Ecological Zones definition of the growing period (FAO 1978, "Report on
- * the Agro-Ecological Zones Project", World Soil Resources Report 48/1).
- * The AEZ method also carries stored soil moisture past the end of the rains;
- * this check does not, so it can only be stricter than the FAO period. */
+/** Which calendar months (index 0 = January) pass the rain-fed WATER screen: some
+ * rain, and at least half the potential evapotranspiration — the moisture half of the
+ * FAO Agro-Ecological Zones growing period (FAO 1978, "Report on the Agro-Ecological
+ * Zones Project", World Soil Resources Report 48/1).
+ *
+ * THIS IS A WATER SCREEN, NOT A GROWING-PERIOD MODEL. The AEZ method also carries stored
+ * soil moisture past the end of the rains, which this does not, and it also requires
+ * temperatures that permit growth, which this does not check at all: there is no lower
+ * thermal limit here. Cold is handled elsewhere (the frost calendars and the grower's
+ * frost months), and only for the South African calendars the planner supports.
+ *
+ * A month with no rain is never a rain-fed month. Before 11 November 2026 a month with
+ * zero rain passed whenever its evapotranspiration was also zero (0 >= 0), so a year of
+ * 0 °C and 0 mm read as twelve rain-fed growing months (independent review, CBR-06).
+ * No temperature threshold was added to fix that; the rule is about water only. */
 export function rainFedGrowingMonths(
   monthlyRainMm: readonly number[],
   tempC: readonly number[],
   latDeg: number,
 ): boolean[] {
   const pet = thornthwaitePetMm(tempC, latDeg);
-  return monthlyRainMm.map((rain, index) => rain >= 0.5 * pet[index]);
+  return monthlyRainMm.map((rain, index) => rain > 0 && rain >= 0.5 * pet[index]);
 }
 
 export interface ClimateGate {
@@ -174,11 +181,17 @@ export interface SiteClimateAnswers {
  * it returns null when that check cannot be made (no rainfall, temperature or
  * latitude), because a rain-fed plan without it would be a guess. */
 export function climateGateFrom(answers: SiteClimateAnswers, rainFed: boolean): ClimateGate | null {
-  const tempC = twelveFinite(answers.siteMonthlyTempC) ? answers.siteMonthlyTempC : undefined;
+  // The same complete-month contract the site reading itself must meet
+  // (lib/climate-temperature.ts). This gate used its own weaker check, which took NASA
+  // POWER's -999 missing marker and a sparse month as evidence and then judged a crop
+  // "ok" on it (independent review of 11 November 2026, CBR-05). Every caller today
+  // passes a reading that already met the contract, so this changes no plan; it stops
+  // the helper vouching for a month nobody measured. A missing month means no gate.
+  const tempC = completeMonthlyTemperatures(answers.siteMonthlyTempC) ? answers.siteMonthlyTempC : undefined;
   if (!rainFed) return tempC ? { tempC } : null;
   const rain = answers.siteMonthlyRainMm;
   const lat = answers.siteLatitude;
-  if (!tempC || !twelveFinite(rain) || rain.some((v) => v < 0)) return null;
+  if (!tempC || !completeMonthlyRainfallMm(rain)) return null;
   if (typeof lat !== 'number' || !Number.isFinite(lat) || lat < -90 || lat > 90) return null;
   return { tempC, rainFedMonths: rainFedGrowingMonths(rain, tempC, lat) };
 }

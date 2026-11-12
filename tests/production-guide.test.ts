@@ -195,8 +195,14 @@ test('observed frost checks planned field occupancy without repeating an already
 test('unknown or unobserved frost does not infer a frost-free guarantee or a planned conflict', () => {
   for (const frost of [undefined, 'unknown', 'no'] as const) {
     const guide = buildProductionGuide(survey({ productionConditions: { frost, frostMonths: [6, 7] } }), [planting('tomatoes', { sowMonth: 4 })], [], 10);
-    assert.equal(guide.siteObservations.length, 3);
-    assert.doesNotMatch(JSON.stringify(guide), /Planned crops to check|safe from frost/);
+    // Until 11 November 2026 this asserted three observations in every case. Finding CP-108:
+    // a plan holding a frost-tender crop (tomatoes here) with no frost months from the grower
+    // must say that picking can extend into frost. So an unanswered or unknown frost question
+    // now adds one notice; "no" is the grower's own observation and adds none. The claim in
+    // this test's title is unchanged and still asserted: no guarantee and no planned conflict.
+    assert.equal(guide.siteObservations.length, frost === 'no' ? 3 : 4);
+    if (frost !== 'no') assert.equal(guide.siteObservations[3].title, 'Frost-tender crops: frost months not confirmed');
+    assert.doesNotMatch(JSON.stringify(guide), /Planned crops to check|safe from frost|frost-free season|will not frost/);
     assert.match(guide.siteObservations[1].lines.join(' '), frost === 'no'
       ? /does not establish that future winters will be frost-free/
       : /cannot establish first and last frost dates/);

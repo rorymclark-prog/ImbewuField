@@ -1,2 +1,16 @@
 # PDFs are binary documents even when their encoded streams contain no NUL bytes.
 *.pdf binary
+# Calendar files end every line with CR LF, as the iCalendar standard requires. Kept byte for byte
+# as the app produced them (audit evidence), so they are not text for whitespace checks or line-ending
+# conversion.
+*.ics binary
+# Raw test and server logs kept as evidence are stored exactly as captured, trailing spaces included.
+docs/audits/2026-11-11/evidence-atlas-climate-card/logs/* -whitespace
+docs/audits/2026-11-11/evidence-completion/logs/* -whitespace
+docs/audits/2026-11-11/evidence-completion/outputs/** -whitespace
+docs/audits/2026-11-11/evidence-completion/artifacts/*.txt -whitespace
+docs/audits/2026-11-11/evidence-cp117/logs/* -whitespace
+docs/audits/2026-11-11/evidence-cp117/outputs/** -whitespace
+docs/audits/2026-11-11/evidence-cp117/artifacts/*.txt -whitespace
+docs/audits/2026-11-11/evidence-cp118/logs/* -whitespace
+docs/audits/2026-11-11/evidence-cp118/outputs/** -whitespace

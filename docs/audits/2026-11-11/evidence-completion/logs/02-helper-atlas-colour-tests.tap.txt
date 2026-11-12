@@ -1,0 +1,757 @@
+TAP version 13
+# (node:1275) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/atlas.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: monthlyClimateFrom maps LocationData fields straight through, Jan-first
+ok 1 - monthlyClimateFrom maps LocationData fields straight through, Jan-first
+  ---
+  duration_ms: 1.893527
+  type: 'test'
+  ...
+# Subtest: koppenFrom is the same classifier the server runs — sane codes for known climates
+ok 2 - koppenFrom is the same classifier the server runs — sane codes for known climates
+  ---
+  duration_ms: 0.494199
+  type: 'test'
+  ...
+# Subtest: summer-rainfall subtropical climate maps to the summer pattern
+ok 3 - summer-rainfall subtropical climate maps to the summer pattern
+  ---
+  duration_ms: 0.41497
+  type: 'test'
+  ...
+# Subtest: Mediterranean winter-rainfall climate maps to the winter pattern
+ok 4 - Mediterranean winter-rainfall climate maps to the winter pattern
+  ---
+  duration_ms: 0.130114
+  type: 'test'
+  ...
+# Subtest: a hard-frost climate maps to the frost-waiting summer column regardless of rain seasonality
+ok 5 - a hard-frost climate maps to the frost-waiting summer column regardless of rain seasonality
+  ---
+  duration_ms: 0.193343
+  type: 'test'
+  ...
+# Subtest: hot, evenly wet climate maps to all-year
+ok 6 - hot, evenly wet climate maps to all-year
+  ---
+  duration_ms: 0.177973
+  type: 'test'
+  ...
+# Subtest: unusable climate data yields null, never a guessed pattern
+ok 7 - unusable climate data yields null, never a guessed pattern
+  ---
+  duration_ms: 0.104287
+  type: 'test'
+  ...
+# Subtest: a year the server filled with display substitutes gives no sowing calendar (Argon F-05)
+ok 8 - a year the server filled with display substitutes gives no sowing calendar (Argon F-05)
+  ---
+  duration_ms: 0.549642
+  type: 'test'
+  ...
+# Subtest: southern-hemisphere months pass through unshifted
+ok 9 - southern-hemisphere months pass through unshifted
+  ---
+  duration_ms: 0.325433
+  type: 'test'
+  ...
+# Subtest: northern-hemisphere months shift six months into the SA calendar
+ok 10 - northern-hemisphere months shift six months into the SA calendar
+  ---
+  duration_ms: 0.355723
+  type: 'test'
+  ...
+# Subtest: catalogMonthFor rejects out-of-range months
+ok 11 - catalogMonthFor rejects out-of-range months
+  ---
+  duration_ms: 0.405948
+  type: 'test'
+  ...
+# Subtest: sowableInMonth returns crops whose window includes the month, for that pattern only
+ok 12 - sowableInMonth returns crops whose window includes the month, for that pattern only
+  ---
+  duration_ms: 0.562054
+  type: 'test'
+  ...
+# Subtest: the descriptive crop readout keeps yield-null food crops but excludes zero-food and timing-unverified entries
+ok 13 - the descriptive crop readout keeps yield-null food crops but excludes zero-food and timing-unverified entries
+  ---
+  duration_ms: 0.158805
+  type: 'test'
+  ...
+# Subtest: coriander and kale stay visible in their sourced windows even with unverified kilograms
+ok 14 - coriander and kale stay visible in their sourced windows even with unverified kilograms
+  ---
+  duration_ms: 0.23937
+  type: 'test'
+  ...
+# Subtest: against the real catalog: every returned crop honestly lists the month, and some month is never empty
+ok 15 - against the real catalog: every returned crop honestly lists the month, and some month is never empty
+  ---
+  duration_ms: 2.387966
+  type: 'test'
+  ...
+# (node:1276) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/atlas.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the display rule admits only a complete, self-consistent temperature year
+ok 16 - the display rule admits only a complete, self-consistent temperature year
+  ---
+  duration_ms: 1.165066
+  type: 'test'
+  ...
+# Subtest: the pure calendar helper keeps its narrower refusal, so its other callers are unaffected
+ok 17 - the pure calendar helper keeps its narrower refusal, so its other callers are unaffected
+  ---
+  duration_ms: 0.78439
+  type: 'test'
+  ...
+# Subtest: a year of 20 °C substitutes shows no climate type, no frost claim and no temperature (Codex FDR-01)
+ok 18 - a year of 20 °C substitutes shows no climate type, no frost claim and no temperature (Codex FDR-01)
+  ---
+  duration_ms: 10.623537
+  type: 'test'
+  ...
+# Subtest: one substituted month is enough: the real-looking months are withheld too
+ok 19 - one substituted month is enough: the real-looking months are withheld too
+  ---
+  duration_ms: 2.73355
+  type: 'test'
+  ...
+# Subtest: a payload with no coverage receipt is withheld like an incomplete one
+ok 20 - a payload with no coverage receipt is withheld like an incomplete one
+  ---
+  duration_ms: 2.245008
+  type: 'test'
+  ...
+# Subtest: complete temperatures: climate type, calendar, temperatures and the record low; no frost class
+ok 21 - complete temperatures: climate type, calendar, temperatures and the record low; no frost class
+  ---
+  duration_ms: 4.527303
+  type: 'test'
+  ...
+# Subtest: Underberg: a coldest mean of 7.37 °C no longer reads "Frost-free" beside a record low of -6.2 °C
+ok 22 - Underberg: a coldest mean of 7.37 °C no longer reads "Frost-free" beside a record low of -6.2 °C
+  ---
+  duration_ms: 4.323748
+  type: 'test'
+  ...
+# Subtest: the record low is printed only when it is a validated, source-tagged reading
+ok 23 - the record low is printed only when it is a validated, source-tagged reading
+  ---
+  duration_ms: 31.76223
+  type: 'test'
+  ...
+# Subtest: isiZulu mode: the record-low chip stays in English and is marked translation pending
+ok 24 - isiZulu mode: the record-low chip stays in English and is marked translation pending
+  ---
+  duration_ms: 6.843324
+  type: 'test'
+  ...
+# Subtest: an outage keeps its own placeholder warning and prints no temperature
+ok 25 - an outage keeps its own placeholder warning and prints no temperature
+  ---
+  duration_ms: 2.995551
+  type: 'test'
+  ...
+# Subtest: the panel source no longer derives a frost statement from a monthly mean
+ok 26 - the panel source no longer derives a frost statement from a monthly mean
+  ---
+  duration_ms: 0.516905
+  type: 'test'
+  ...
+# Subtest: the climate card paints its code, note and chips with theme tokens (CP-115)
+ok 27 - the climate card paints its code, note and chips with theme tokens (CP-115)
+  ---
+  duration_ms: 1.52385
+  type: 'test'
+  ...
+# Subtest: outside the data bars the panel paints no fixed text colour or surface (CP-116)
+ok 28 - outside the data bars the panel paints no fixed text colour or surface (CP-116)
+  ---
+  duration_ms: 3.619418
+  type: 'test'
+  ...
+# Subtest: community profile and messages pages no longer paint forest fill or error text as a literal hex
+ok 29 - community profile and messages pages no longer paint forest fill or error text as a literal hex
+  ---
+  duration_ms: 1.103358
+  type: 'test'
+  ...
+# Subtest: ContactInbox no longer paints cards, dark text or error notices as a literal hex
+ok 30 - ContactInbox no longer paints cards, dark text or error notices as a literal hex
+  ---
+  duration_ms: 0.431682
+  type: 'test'
+  ...
+# Subtest: DataPanel no longer paints forest fill, error text or plain dark text as the known-banned literal hexes
+ok 31 - DataPanel no longer paints forest fill, error text or plain dark text as the known-banned literal hexes
+  ---
+  duration_ms: 1.463616
+  type: 'test'
+  ...
+# Subtest: DataPanel captions that were at 9.5px now clamp to a 12px floor
+ok 32 - DataPanel captions that were at 9.5px now clamp to a 12px floor
+  ---
+  duration_ms: 1.064557
+  type: 'test'
+  ...
+# Subtest: AtlasPanel and the contact-page subject label clear the 11px caption floor
+ok 33 - AtlasPanel and the contact-page subject label clear the 11px caption floor
+  ---
+  duration_ms: 2.005826
+  type: 'test'
+  ...
+# Subtest: every text colour a farmer reads clears 4.5:1 against the card it sits on
+ok 34 - every text colour a farmer reads clears 4.5:1 against the card it sits on
+  ---
+  duration_ms: 131.097412
+  type: 'test'
+  ...
+# Subtest: the scan actually fires — a known-bad colour is caught, a known-good one is not
+ok 35 - the scan actually fires — a known-bad colour is caught, a known-good one is not
+  ---
+  duration_ms: 0.269076
+  type: 'test'
+  ...
+# Subtest: the farmer routes this test walks all exist
+ok 36 - the farmer routes this test walks all exist
+  ---
+  duration_ms: 97.595886
+  type: 'test'
+  ...
+# Subtest: crop bar labels clear 4.5:1 on every fixed bar fill, in every theme
+ok 37 - crop bar labels clear 4.5:1 on every fixed bar fill, in every theme
+  ---
+  duration_ms: 7.397664
+  type: 'test'
+  ...
+# Subtest: crop bar fills keep planned apart from already-growing
+ok 38 - crop bar fills keep planned apart from already-growing
+  ---
+  duration_ms: 5.470905
+  type: 'test'
+  ...
+# Subtest: the crop bar label is not painted white or faded with its fill
+ok 39 - the crop bar label is not painted white or faded with its fill
+  ---
+  duration_ms: 2.886161
+  type: 'test'
+  ...
+# Subtest: crop plan calendar text that follows the theme uses a token that clears 4.5:1 in earth light and dark
+ok 40 - crop plan calendar text that follows the theme uses a token that clears 4.5:1 in earth light and dark
+  ---
+  duration_ms: 1.072814
+  type: 'test'
+  ...
+# Subtest: the month strips and the age-group line keep a theme-safe pairing
+ok 41 - the month strips and the age-group line keep a theme-safe pairing
+  ---
+  duration_ms: 0.28472
+  type: 'test'
+  ...
+# Subtest: --on-forest-800 is declared in every theme column and reads on --color-forest-800
+ok 42 - --on-forest-800 is declared in every theme column and reads on --color-forest-800
+  ---
+  duration_ms: 1.357109
+  type: 'test'
+  ...
+# Subtest: --on-forest itself is unchanged
+ok 43 - --on-forest itself is unchanged
+  ---
+  duration_ms: 0.242293
+  type: 'test'
+  ...
+# Subtest: no line paints var(--on-forest) text on a var(--color-forest-800) background
+ok 44 - no line paints var(--on-forest) text on a var(--color-forest-800) background
+  ---
+  duration_ms: 22.259395
+  type: 'test'
+  ...
+# Subtest: w16-02: LessonLink and the Design labels paint text with the themed forest token, not the fixed green
+ok 45 - w16-02: LessonLink and the Design labels paint text with the themed forest token, not the fixed green
+  ---
+  duration_ms: 1.734396
+  type: 'test'
+  ...
+# Subtest: w17-01: no forest-800/emerald fill is paired with plain --on-forest text (all tsx + module.css)
+ok 46 - w17-01: no forest-800/emerald fill is paired with plain --on-forest text (all tsx + module.css)
+  ---
+  duration_ms: 440.54785
+  type: 'test'
+  ...
+# Subtest: app/account/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 47 - app/account/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 3.749589
+  type: 'test'
+  ...
+# Subtest: app/community/messages/[threadId]/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 48 - app/community/messages/[threadId]/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.275555
+  type: 'test'
+  ...
+# Subtest: app/community/u/[uid]/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 49 - app/community/u/[uid]/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.191931
+  type: 'test'
+  ...
+# Subtest: app/home/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 50 - app/home/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.302825
+  type: 'test'
+  ...
+# Subtest: app/mentor/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 51 - app/mentor/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.325148
+  type: 'test'
+  ...
+# Subtest: app/network/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 52 - app/network/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.365655
+  type: 'test'
+  ...
+# Subtest: app/ngo/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 53 - app/ngo/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.183851
+  type: 'test'
+  ...
+# Subtest: app/not-found.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 54 - app/not-found.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 1.292458
+  type: 'test'
+  ...
+# Subtest: app/student/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 55 - app/student/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 1.35046
+  type: 'test'
+  ...
+# Subtest: app/vision/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 56 - app/vision/page.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.523083
+  type: 'test'
+  ...
+# Subtest: components/ChatPanel.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 57 - components/ChatPanel.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.234148
+  type: 'test'
+  ...
+# Subtest: components/ContactInbox.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 58 - components/ContactInbox.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.149326
+  type: 'test'
+  ...
+# Subtest: components/DataPanel.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 59 - components/DataPanel.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.448654
+  type: 'test'
+  ...
+# Subtest: components/LimaBar.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 60 - components/LimaBar.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.081981
+  type: 'test'
+  ...
+# Subtest: components/Map.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 61 - components/Map.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 1.945052
+  type: 'test'
+  ...
+# Subtest: components/NextStepCoach.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 62 - components/NextStepCoach.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.207355
+  type: 'test'
+  ...
+# Subtest: components/PhotoUpload.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 63 - components/PhotoUpload.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.126383
+  type: 'test'
+  ...
+# Subtest: components/ProfileSheet.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 64 - components/ProfileSheet.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.105042
+  type: 'test'
+  ...
+# Subtest: components/ReportView.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 65 - components/ReportView.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.6305
+  type: 'test'
+  ...
+# Subtest: components/SiteManageMenu.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 66 - components/SiteManageMenu.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.096046
+  type: 'test'
+  ...
+# Subtest: components/atlas/AtlasExplorer.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 67 - components/atlas/AtlasExplorer.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.083077
+  type: 'test'
+  ...
+# Subtest: components/community/NearbyMap.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 68 - components/community/NearbyMap.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.057222
+  type: 'test'
+  ...
+# Subtest: components/exchange/ExchangeBoard.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 69 - components/exchange/ExchangeBoard.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.102898
+  type: 'test'
+  ...
+# Subtest: components/exchange/ExchangeGuide.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 70 - components/exchange/ExchangeGuide.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.075658
+  type: 'test'
+  ...
+# Subtest: components/exchange/NewListingForm.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 71 - components/exchange/NewListingForm.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.137709
+  type: 'test'
+  ...
+# Subtest: components/funder/CohortDashboard.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 72 - components/funder/CohortDashboard.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.228725
+  type: 'test'
+  ...
+# Subtest: components/home/HomeHeroCard.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 73 - components/home/HomeHeroCard.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.161735
+  type: 'test'
+  ...
+# Subtest: components/network/NetworkMap.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 74 - components/network/NetworkMap.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.157751
+  type: 'test'
+  ...
+# Subtest: components/prices/CropPriceGuide.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+ok 75 - components/prices/CropPriceGuide.tsx does not reintroduce the stale paper hex '\#F7F2E9'
+  ---
+  duration_ms: 0.105926
+  type: 'test'
+  ...
+# Subtest: app/account/page.tsx does not reintroduce the stale card hex '\#FBF6EC'
+ok 76 - app/account/page.tsx does not reintroduce the stale card hex '\#FBF6EC'
+  ---
+  duration_ms: 0.3108
+  type: 'test'
+  ...
+# Subtest: every converted file actually uses the new --on-forest token, not just a bare removal
+ok 77 - every converted file actually uses the new --on-forest token, not just a bare removal
+  ---
+  duration_ms: 7.483278
+  type: 'test'
+  ...
+# Subtest: --on-forest is declared in all four theme columns of app/globals.css
+ok 78 - --on-forest is declared in all four theme columns of app/globals.css
+  ---
+  duration_ms: 0.612101
+  type: 'test'
+  ...
+# Subtest: the crop-planner files this track must not touch are left on the literal hex
+ok 79 - the crop-planner files this track must not touch are left on the literal hex
+  ---
+  duration_ms: 2.187639
+  type: 'test'
+  ...
+# Subtest: app/global-error.tsx is left untouched — it renders outside the normal layout
+ok 80 - app/global-error.tsx is left untouched — it renders outside the normal layout
+  ---
+  duration_ms: 0.163266
+  type: 'test'
+  ...
+# Subtest: app/updates/page.tsx does not paint its page root/header/dividers with literal paper/ink hex (code-03)
+ok 81 - app/updates/page.tsx does not paint its page root/header/dividers with literal paper/ink hex (code-03)
+  ---
+  duration_ms: 0.271385
+  type: 'test'
+  ...
+# Subtest: app/atlas/page.tsx does not paint its page root/header/dividers with literal paper/ink hex (code-03)
+ok 82 - app/atlas/page.tsx does not paint its page root/header/dividers with literal paper/ink hex (code-03)
+  ---
+  duration_ms: 0.083684
+  type: 'test'
+  ...
+# Subtest: app/journal/page.tsx does not paint its page root/header/dividers with literal paper/ink hex (code-03)
+ok 83 - app/journal/page.tsx does not paint its page root/header/dividers with literal paper/ink hex (code-03)
+  ---
+  duration_ms: 0.109905
+  type: 'test'
+  ...
+# Subtest: components/HarvestReconciliation.tsx does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)
+ok 84 - components/HarvestReconciliation.tsx does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)
+  ---
+  duration_ms: 0.267674
+  type: 'test'
+  ...
+# Subtest: components/IsiZuluDraftSource.tsx does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)
+ok 85 - components/IsiZuluDraftSource.tsx does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)
+  ---
+  duration_ms: 0.122664
+  type: 'test'
+  ...
+# Subtest: components/DataPanel.tsx does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)
+ok 86 - components/DataPanel.tsx does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)
+  ---
+  duration_ms: 3.286016
+  type: 'test'
+  ...
+# Subtest: every token used for a surface, text or border changes with the theme
+ok 87 - every token used for a surface, text or border changes with the theme
+  ---
+  duration_ms: 3.543553
+  type: 'test'
+  ...
+# Subtest: the :root-only tokens are still :root-only, so nobody mistakes them for theme tokens
+ok 88 - the :root-only tokens are still :root-only, so nobody mistakes them for theme tokens
+  ---
+  duration_ms: 2.530442
+  type: 'test'
+  ...
+# Subtest: the two families really do look alike in earth light — which is why this test exists
+ok 89 - the two families really do look alike in earth light — which is why this test exists
+  ---
+  duration_ms: 1.04196
+  type: 'test'
+  ...
+# Subtest: components/MelDashboard.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+ok 90 - components/MelDashboard.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+  ---
+  duration_ms: 0.6202
+  type: 'test'
+  ...
+# Subtest: components/FieldWork.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+ok 91 - components/FieldWork.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+  ---
+  duration_ms: 0.333557
+  type: 'test'
+  ...
+# Subtest: components/ProgrammeProgress.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+ok 92 - components/ProgrammeProgress.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+  ---
+  duration_ms: 0.140005
+  type: 'test'
+  ...
+# Subtest: components/ProgrammeReport.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+ok 93 - components/ProgrammeReport.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+  ---
+  duration_ms: 0.242314
+  type: 'test'
+  ...
+# Subtest: components/DashboardTabs.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+ok 94 - components/DashboardTabs.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+  ---
+  duration_ms: 0.161625
+  type: 'test'
+  ...
+# Subtest: components/SampleExperience.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+ok 95 - components/SampleExperience.module.css carries no un-themed hex colour outside its deliberate brand/print exceptions
+  ---
+  duration_ms: 0.308371
+  type: 'test'
+  ...
+# Subtest: none of this track's owned files paint a surface, border or text with a :root-only constant
+ok 96 - none of this track's owned files paint a surface, border or text with a :root-only constant
+  ---
+  duration_ms: 1.715164
+  type: 'test'
+  ...
+# Subtest: app/design/page.tsx does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+ok 97 - app/design/page.tsx does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+  ---
+  duration_ms: 2.023694
+  type: 'test'
+  ...
+# Subtest: app/design/lite/page.tsx does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+ok 98 - app/design/lite/page.tsx does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+  ---
+  duration_ms: 0.269343
+  type: 'test'
+  ...
+# Subtest: app/partners/page.tsx does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+ok 99 - app/partners/page.tsx does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+  ---
+  duration_ms: 0.167493
+  type: 'test'
+  ...
+# Subtest: app/samples/production/ProductionExample.module.css does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+ok 100 - app/samples/production/ProductionExample.module.css does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)
+  ---
+  duration_ms: 0.258625
+  type: 'test'
+  ...
+# Subtest: app/design/page.tsx keeps PAPER and GOLD_DIM paired as theme-aware tokens (ux-07/dark-05 — do not revert only one)
+ok 101 - app/design/page.tsx keeps PAPER and GOLD_DIM paired as theme-aware tokens (ux-07/dark-05 — do not revert only one)
+  ---
+  duration_ms: 1.3802
+  type: 'test'
+  ...
+# Subtest: app/partners/page.tsx no longer paints its root/sections with the bg-paper/text-ink :root-only Tailwind constants (code-08)
+ok 102 - app/partners/page.tsx no longer paints its root/sections with the bg-paper/text-ink :root-only Tailwind constants (code-08)
+  ---
+  duration_ms: 0.314061
+  type: 'test'
+  ...
+# Subtest: none of w14 dark-leftovers' owned page files paint a surface, border or text with a :root-only constant
+ok 103 - none of w14 dark-leftovers' owned page files paint a surface, border or text with a :root-only constant
+  ---
+  duration_ms: 1.459938
+  type: 'test'
+  ...
+# Subtest: app/samples/production/ProductionExample.module.css no longer paints .brandField text with raw var(--ochre) (ux-07)
+ok 104 - app/samples/production/ProductionExample.module.css no longer paints .brandField text with raw var(--ochre) (ux-07)
+  ---
+  duration_ms: 0.170811
+  type: 'test'
+  ...
+# Subtest: app/samples/production/ProductionExample.module.css does not paint a surface, border or text with the :root-only bg/surface/text family (code-17)
+ok 105 - app/samples/production/ProductionExample.module.css does not paint a surface, border or text with the :root-only bg/surface/text family (code-17)
+  ---
+  duration_ms: 0.334574
+  type: 'test'
+  ...
+# Subtest: app/samples/production/ProductionExample.module.css constrains horizontal overflow to .calendarScroll, not the whole .page (nav-12)
+ok 106 - app/samples/production/ProductionExample.module.css constrains horizontal overflow to .calendarScroll, not the whole .page (nav-12)
+  ---
+  duration_ms: 0.250126
+  type: 'test'
+  ...
+# Subtest: app/samples/production/page.tsx's hero h1 has a space between its two stacked phrases, not just a <br> (nav-12/nav-17)
+ok 107 - app/samples/production/page.tsx's hero h1 has a space between its two stacked phrases, not just a <br> (nav-12/nav-17)
+  ---
+  duration_ms: 0.215936
+  type: 'test'
+  ...
+# Subtest: components/invoice/InvoiceDocument.tsx keeps its printed sheet un-themed on purpose (dark-12 — do not theme this file)
+ok 108 - components/invoice/InvoiceDocument.tsx keeps its printed sheet un-themed on purpose (dark-12 — do not theme this file)
+  ---
+  duration_ms: 0.12318
+  type: 'test'
+  ...
+# Subtest: app/invoice/page.tsx frames the un-themed invoice preview with a themed well instead of theming the sheet (dark-12)
+ok 109 - app/invoice/page.tsx frames the un-themed invoice preview with a themed well instead of theming the sheet (dark-12)
+  ---
+  duration_ms: 0.859525
+  type: 'test'
+  ...
+# Subtest: app/invoice/page.tsx does not reintroduce the code-05 disabled/fill literals
+ok 110 - app/invoice/page.tsx does not reintroduce the code-05 disabled/fill literals
+  ---
+  duration_ms: 1.132848
+  type: 'test'
+  ...
+# Subtest: app/invoice/page.tsx pairs every outline-none with a focus-visible ring (code-15)
+ok 111 - app/invoice/page.tsx pairs every outline-none with a focus-visible ring (code-15)
+  ---
+  duration_ms: 0.817445
+  type: 'test'
+  ...
+# Subtest: app/invoice/page.tsx no longer shows a raw error.message to the farmer (copy-16)
+ok 112 - app/invoice/page.tsx no longer shows a raw error.message to the farmer (copy-16)
+  ---
+  duration_ms: 0.792398
+  type: 'test'
+  ...
+# Subtest: app/facilitator/print/page.tsx themes its print-preview surround and captions the sheet (dark-14)
+ok 113 - app/facilitator/print/page.tsx themes its print-preview surround and captions the sheet (dark-14)
+  ---
+  duration_ms: 0.49086
+  type: 'test'
+  ...
+# Subtest: components/SampleExperience.module.css's h1 matches the DESIGN.md §0 Page H1 scale (desk-16)
+ok 114 - components/SampleExperience.module.css's h1 matches the DESIGN.md §0 Page H1 scale (desk-16)
+  ---
+  duration_ms: 0.180547
+  type: 'test'
+  ...
+# Subtest: app/design/page.tsx has exactly one h1 in each of its two render states (nav-17)
+ok 115 - app/design/page.tsx has exactly one h1 in each of its two render states (nav-17)
+  ---
+  duration_ms: 1.373846
+  type: 'test'
+  ...
+# Subtest: exchange and atlas components paint no literal paper/card fill (sdesk-03)
+ok 116 - exchange and atlas components paint no literal paper/card fill (sdesk-03)
+  ---
+  duration_ms: 1.340971
+  type: 'test'
+  ...
+# Subtest: the /home next-step coach gradient and /example completeness card follow the theme
+ok 117 - the /home next-step coach gradient and /example completeness card follow the theme
+  ---
+  duration_ms: 0.669146
+  type: 'test'
+  ...
+# Subtest: the farmer charts and exchange header carry no font-mono (code-12)
+ok 118 - the farmer charts and exchange header carry no font-mono (code-12)
+  ---
+  duration_ms: 3.29762
+  type: 'test'
+  ...
+# Subtest: nothing a farmer has to read is set below 12px
+ok 119 - nothing a farmer has to read is set below 12px
+  ---
+  duration_ms: 52.579966
+  type: 'test'
+  ...
+# Subtest: the chart axes she cannot read are counted, not overlooked
+ok 120 - the chart axes she cannot read are counted, not overlooked
+  ---
+  duration_ms: 34.843725
+  type: 'test'
+  ...
+# Subtest: the expert tools cannot get worse, and a fix cannot go unrecorded
+ok 121 - the expert tools cannot get worse, and a fix cannot go unrecorded
+  ---
+  duration_ms: 93.718058
+  type: 'test'
+  ...
+# Subtest: every screen reachable from a farmer or staff route has been classified
+ok 122 - every screen reachable from a farmer or staff route has been classified
+  ---
+  duration_ms: 86.632395
+  type: 'test'
+  ...
+# Subtest: the floor cannot be undercut by a named Tailwind size
+ok 123 - the floor cannot be undercut by a named Tailwind size
+  ---
+  duration_ms: 0.317173
+  type: 'test'
+  ...
+1..123
+# tests 123
+# suites 0
+# pass 123
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1876.082908
+exit 0

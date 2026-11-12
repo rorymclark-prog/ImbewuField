@@ -49,9 +49,9 @@ const hooks = registerHooks({
     return next(specifier, context);
   },
   load(url, context, next) {
-    if (url.endsWith('/components/crops/useGrowerWorkflow.ts')) return { shortCircuit: true, format: 'module',
+    if ((url.endsWith('/components/crops/useGrowerWorkflow.ts') || url.endsWith('/components/crops/ProvisionalCropPreview.tsx'))) return { shortCircuit: true, format: 'module',
       source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
-        target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext,
+        target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
       } }).outputText };
     return next(url, context);
   },
@@ -64,6 +64,7 @@ const { isSampleMode } = await import('../lib/sample-mode.ts');
 const { CROPS } = await import('../lib/crop-catalog.ts');
 const { growerPlanningScopeKey, normaliseGrowerPlanningProfiles } = await import('../lib/international/grower-planning.ts');
 const { createWorkspacePlanningReference, replaceWorkspacePlanningReference, sanitiseWorkspacePlanningReferences } = await import('../lib/international/workspace-context.ts');
+const { default: Preview } = await import('../components/crops/ProvisionalCropPreview.tsx');
 const { useGrowerWorkflow } = await import('../components/crops/useGrowerWorkflow.ts');
 
 after(() => {
@@ -183,14 +184,18 @@ function cloudRow() {
     lines: [], sectors: [], bgSite: { lat: 0, lon: 0, name: 'Synthetic cloud fixture' } } };
 }
 function deferred<T>() { let resolve!: (value: T) => void; const promise = new Promise<T>(done => { resolve = done; }); return { promise, resolve }; }
-function mount(controller = parent()) {
+function mount(controller = parent(), withPreview = false) {
   boundary.raw = canvas();
   let renderer!: ReactTestRenderer, latest!: ReturnType<typeof useGrowerWorkflow>;
   const input: Parameters<typeof useGrowerWorkflow>[0] = { selection: { kind: 'studio-canvas', sourceId: siteId }, scope,
     resourceSiteId: siteId, book: controller.state.plan, actorIsCurrent: controller.growerActorIsCurrent, readCurrentBook: controller.readCurrentGrowerBook };
-  function Harness() { latest = useGrowerWorkflow(input); return null; }
+  function Harness() { latest = useGrowerWorkflow(input); return withPreview ? React.createElement(Preview, {
+    ownerKey: 'owner-a', scope: input.scope, source: latest.source, countryCode: 'KE', agriculturalRegionReference: null,
+    contextRevision: latest.contextRevision, actorIsCurrent: input.actorIsCurrent, checking: latest.checking,
+    onRefresh: latest.onRefresh, onCheckSource: latest.onCheckPreviewSource,
+  }) : null; }
   act(() => { renderer = create(React.createElement(Harness)); });
-  return { controller, input, get latest() { return latest; },
+  return { controller, input, get renderer() { return renderer; }, get latest() { return latest; },
     sourceNow: () => latest.source,
     update(changes: Partial<typeof input> = {}) { Object.assign(input, changes); act(() => renderer.update(React.createElement(Harness))); },
     async refresh() { await act(async () => { await latest.onRefresh(); }); },
@@ -213,6 +218,32 @@ test('real hook reads current saved geometry and book, reviews actual engine out
     assert.equal(JSON.stringify([...local.rows]), bytes); assert.equal(local.writes, writes);
     assert.ok(boundary.sourceReads >= 6, 'each delivery re-reads the source around actual hashing');
     assert.equal(await ui.current({ ...review }), false, 'a copied result has no controller review binding');
+  } finally { ui.dispose(); }
+});
+
+test('preview source check rereads saved bytes, revokes equal-area revisions and never writes a crop book', async () => {
+  const ui = mount(); try {
+    await ui.refresh(); const expected = ui.latest.source!;
+    const bytes = JSON.stringify([...local.rows]), writes = local.writes, reads = boundary.sourceReads;
+    let receipt: Awaited<ReturnType<typeof ui.latest.onCheckPreviewSource>> = null;
+    await act(async () => { receipt = await ui.latest.onCheckPreviewSource(expected); });
+    assert.ok(receipt); assert.equal((receipt as { isCurrent: () => boolean }).isCurrent(), true);
+    assert.ok(boundary.sourceReads > reads);
+    (boundary.raw as ReturnType<typeof canvas>).rev++;
+    assert.equal((receipt as { isCurrent: () => boolean }).isCurrent(), false);
+    await act(async () => { receipt = await ui.latest.onCheckPreviewSource(expected); });
+    assert.equal(receipt, null); assert.equal(ui.latest.source, null);
+    assert.equal(JSON.stringify([...local.rows]), bytes); assert.equal(local.writes, writes);
+  } finally { ui.dispose(); }
+});
+
+test('preview source receipt cannot be reused after actor revocation or with a copied source', async () => {
+  const ui = mount(); try {
+    await ui.refresh(); const expected = ui.latest.source!;
+    assert.equal(await ui.latest.onCheckPreviewSource({ ...expected }), null);
+    const receipt = await ui.latest.onCheckPreviewSource(expected); assert.ok(receipt);
+    boundary.actorUid = 'owner-b'; assert.equal(receipt.isCurrent(), false);
+    assert.equal(await ui.latest.onCheckPreviewSource(expected), null);
   } finally { ui.dispose(); }
 });
 
@@ -527,5 +558,23 @@ test('a genuinely reloaded saved crop occupation invalidates the old automatic p
     const held = await ui.review(); assert.equal(held.status, 'held');
     assert.ok(held.issues.includes('availability-bed-blocked'));
     assert.equal(cropBook.loadCropPlan().plantings[0].id, 'newly-saved-occupation');
+  } finally { ui.dispose(); }
+});
+
+test('actual preview and workflow hook share the source identity and reject changed geometry without writing', async () => {
+  const ui = mount(parent(), true);
+  try {
+    await ui.refresh(); const bytes = JSON.stringify([...local.rows]), writes = local.writes;
+    const change = (label: string, value: string) => { const element = ui.renderer.root.findAllByType('label').find(n => n.children.includes(label));
+      assert.ok(element); const input = element.findAll(n => n.type === 'input' || n.type === 'select')[0]; act(() => input.props.onChange({ target: { value } })); };
+    const button = () => ui.renderer.root.findAllByType('button').find(n => n.children.includes('Calculate provisional preview'))!;
+    change('Preview crop', CROPS[0].key); change('Preview measured bed', 'bed-a'); change('Plant density (plants per m²)', '2');
+    await act(async () => { await button().props.onClick(); });
+    assert.match(JSON.stringify(ui.renderer.toJSON()), /Estimated plants:/); assert.match(JSON.stringify(ui.renderer.toJSON()), /16/);
+    assert.equal(local.writes, writes); assert.equal(JSON.stringify([...local.rows]), bytes);
+    (boundary.raw as ReturnType<typeof canvas>).rev++; ui.update();
+    assert.doesNotMatch(JSON.stringify(ui.renderer.toJSON()), /Estimated plants:/);
+    await act(async () => { await button().props.onClick(); }); assert.equal(ui.latest.source, null);
+    assert.equal(local.writes, writes); assert.equal(JSON.stringify([...local.rows]), bytes);
   } finally { ui.dispose(); }
 });

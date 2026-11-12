@@ -29,6 +29,7 @@ import HarvestTargetsPanel from '@/components/crops/HarvestTargetsPanel';
 import NurseryPlanPanel from '@/components/crops/NurseryPlanPanel';
 import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySaveContext, beginNurserySaveRequest, commitNurserySaveRequest, readNurserySaveConfirmation, createHarvestSaveContext, beginHarvestSaveRequest, commitHarvestSaveRequest, readHarvestSaveConfirmation, harvestTargetsSourceKey, type HarvestSaveContext, type HarvestSaveRequest, type HarvestSaveResult, type NurserySaveAuthority, type NurserySaveContext, type NurserySaveRequest, type NurserySaveResult } from '@/lib/nursery-save-receipt';
 import GrowerPlanningPanel from '@/components/crops/GrowerPlanningPanel';
+import ProvisionalCropPreview from '@/components/crops/ProvisionalCropPreview';
 import GrowerAutoPlanPanel from '@/components/crops/GrowerAutoPlanPanel';
 import GrowerNurseryReviewPanel from '@/components/crops/GrowerNurseryReviewPanel';
 import SavedGrowerNurseryReviewPanel from '@/components/crops/SavedGrowerNurseryReviewPanel';
@@ -94,9 +95,9 @@ import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall, referenceSowingCalendar } from '@/lib/water-calc';
-import { SAMPLE_FARM_CALENDAR_REASON, SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
+import { SAMPLE_FARM_CALENDAR_REASON, SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, siteClimateMissingNote, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons, printedLocationLine } from '@/lib/sowing-calendar-label';
 import { SOWING_CALENDAR_NOTICE_HIDDEN_KEY, calendarCanJudgeSavedSowings, hiddenCalendarNoticeWrite, outOfCalendarLine, outOfCalendarSignature, parseHiddenCalendarNotices, planMayPredateCorrection, sowingsOutsideCalendar } from '@/lib/sowing-calendar-review';
-import { sowingCalendarInUse, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate } from '@/lib/site-climate';
+import { sowingCalendarInUse, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate, type SiteClimateMissingReason } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { growingZonesForClimate, type GrowingZoneId } from '@/lib/growing-zones';
 import { VarietyGuidance } from '@/components/crops/VarietyGuidance';
@@ -1639,15 +1640,20 @@ function FacilitatorCropsPageInner() {
     };
   }, [surveySiteId]);
   const climateSiteKey = hasSiteCoords ? `${siteLat},${siteLon}` : null;
-  const [climateSnapshot, setClimateSnapshot] = useState<{ siteKey: string; climate: SiteClimate | null } | null>(null);
-  const siteClimate = allowCataloguePlanning && climateSnapshot?.siteKey === climateSiteKey ? climateSnapshot?.climate ?? null : null;
+  const [climateSnapshot, setClimateSnapshot] = useState<{ siteKey: string; climate: SiteClimate | null; missing: SiteClimateMissingReason | null } | null>(null);
+  const climateAnswered = allowCataloguePlanning && climateSnapshot?.siteKey === climateSiteKey;
+  const siteClimate = climateAnswered ? climateSnapshot?.climate ?? null : null;
+  // Why a mapped site has no reading of its own: still loading, refused until sign-in, or
+  // not available now. The fallback's wording follows this instead of guessing (CP-096).
+  const climateMissing: SiteClimateMissingReason | 'loading' = climateAnswered ? climateSnapshot?.missing ?? 'unavailable' : 'loading';
   useEffect(() => {
     if (!allowCataloguePlanning || !climateSiteKey) { setClimateSnapshot(null); return; }
     let cancelled = false;
     // The render guard also blocks the old site's climate before this effect runs.
     setClimateSnapshot(null);
-    resolveSiteClimate(siteLat!, siteLon!).then((sc) => {
-      if (!cancelled) setClimateSnapshot({ siteKey: climateSiteKey, climate: sc });
+    let missing: SiteClimateMissingReason | null = null;
+    resolveSiteClimate(siteLat!, siteLon!, (reason) => { missing = reason; }).then((sc) => {
+      if (!cancelled) setClimateSnapshot({ siteKey: climateSiteKey, climate: sc, missing: sc ? null : missing ?? 'unavailable' });
     });
     return () => { cancelled = true; };
   }, [allowCataloguePlanning, climateSiteKey, siteLat, siteLon]);
@@ -2086,9 +2092,7 @@ function FacilitatorCropsPageInner() {
     const bedCount = beds.length - plotCount;
     // Provenance travels onto paper too: a printed plan must say whether its
     // climate is the site's own satellite-derived profile or a reference city.
-    const locationLine = climateSource === 'site'
-      ? 'This site (satellite climate records)'
-      : region ? `Nearest reference: ${region.name} (fallback)` : 'No site set';
+    const locationLine = printedLocationLine(calendarBasis, climateSource, region?.name);
     // Paper says whose call the calendar was, as the screen does ("chosen by you").
     const climateLine = printedSowingCalendarLine(calendarLabel, calendarBasis, climateSource);
     return {
@@ -2527,6 +2531,12 @@ function FacilitatorCropsPageInner() {
       targets={plan?.harvestTargets ?? []} beds={beds} plantings={plantings} pattern={pattern} climate={{}}
       saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
       onSaveTargets={saveHarvestTargets} onAccept={() => {}} />}
+    <ProvisionalCropPreview sample={growerSample} ownerKey={`${growerOwner}:${growerSample}`} scope={growerScope}
+      source={selectedGrowerSource} actorIsCurrent={growerActorIsCurrent}
+      countryCode={siteCountry.status === 'confirmed' ? siteCountry.context?.countryCode ?? null : null}
+      agriculturalRegionReference={siteCountry.status === 'confirmed' ? siteCountry.context?.agriculturalRegionReference ?? null : null}
+      contextRevision={`${growerWorkflow.contextRevision}:${planningSupport.fingerprint}`}
+      checking={growerWorkflow.checking} onRefresh={growerWorkflow.onRefresh} onCheckSource={growerWorkflow.onCheckPreviewSource} />
     <GrowerPlanningPanel scope={growerScope}
       beds={selectedGrowerSource?.beds ?? (canvasSite || design ? [] : designBeds)}
       measuredAreas={selectedGrowerSource?.measuredAreas} measurementsFingerprint={selectedGrowerSource?.geometryFingerprint ?? null}
@@ -2701,7 +2711,7 @@ function FacilitatorCropsPageInner() {
         ) : region ? (
           <span
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
-            title="No per-site climate available (offline or not yet fetched) — using the nearest regional reference point instead"
+            title={siteClimateMissingNote(climateMissing, region.name)}
             style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
           >
             <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · nearest reference: {region.name} (fallback)
@@ -3744,7 +3754,7 @@ function FacilitatorCropsPageInner() {
           planTiming={aPlanTiming} onPlanTiming={setAPlanTiming}
           generating={autoGenerating} idealMeta={idealMeta}
           hasCurrentPlantings={plantings.length > 0}
-          pattern={pattern} calendarLabel={calendarLabel} calendarBasis={calendarBasis} climateSource={climateSource} referenceName={region?.name ?? null}
+          pattern={pattern} calendarLabel={calendarLabel} calendarBasis={calendarBasis} climateSource={climateSource} climateMissing={climateMissing} referenceName={region?.name ?? null}
           calendarChoice={chosenCalendar} automaticCalendar={calendarInUse.automatic} sampleCalendarSet={sampleCalendar !== null} canChooseCalendar={!!calendarScopeId} onCalendarChoice={chooseSowingCalendar}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
           allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
@@ -6091,7 +6101,7 @@ function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
   groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, mixState, onSaveMix, onResetMix, rhythm, onRhythm,
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
-  pattern, calendarLabel, calendarBasis, climateSource, referenceName, calendarChoice, automaticCalendar, sampleCalendarSet, canChooseCalendar, onCalendarChoice, rotateCrops, onRotateCrops,
+  pattern, calendarLabel, calendarBasis, climateSource, climateMissing, referenceName, calendarChoice, automaticCalendar, sampleCalendarSet, canChooseCalendar, onCalendarChoice, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
   siteClimate, siteObservationNotes, beds, siteId, nurserySettings, currentPlantings, now, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
@@ -6117,6 +6127,8 @@ function AutoSuggestModal({
   calendarBasis: CalendarBasis;
   /** Where the pattern came from: the site's own satellite climate, the nearest reference region, or no site at all. */
   climateSource: 'site' | 'reference' | 'none';
+  /** Why a mapped site is on the fallback (read only when climateSource is 'reference'). */
+  climateMissing: SiteClimateMissingReason | 'loading';
   /** Reference-region name when climateSource is 'reference'. */
   referenceName: string | null;
   /** The calendar the grower chose for this site, or null when the app decides. */
@@ -6379,7 +6391,7 @@ function AutoSuggestModal({
                   : climateSource === 'site'
                   ? 'Derived from satellite climate records for this site. You do not need to choose a sowing calendar.'
                   : climateSource === 'reference'
-                    ? `Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: ${referenceName ?? 'regional point'} (fallback).`
+                    ? siteClimateMissingNote(climateMissing, referenceName)
                     : 'No mapped location is attached, so the planner is using the cautious winter-frost fallback. Map the garden for a location-based climate profile.'}
               </p>
             </div>

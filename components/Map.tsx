@@ -1,4 +1,5 @@
 'use client';
+import { savedRainfallFields } from '@/lib/saved-places';
 
 import { numberLabel } from '@/lib/format-figures';
 import { useRef, useState, useCallback, useEffect, useMemo, type PointerEvent as ReactPointerEvent } from 'react';
@@ -671,7 +672,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       name: placeName.trim() || target?.name || 'My place',
       lat: namingPlace.lat, lon: namingPlace.lon,
       biome: target?.biome ?? locationData?.biome?.name ?? '',
-      rainfall: target?.rainfall ?? locationData?.rainfall?.annual ?? 0,
+      ...savedRainfallFields(locationData?.rainfall, target),
       elevation: target?.elevation ?? locationData?.elevation?.elevation ?? 0,
       label: placeLabel,
       color: customPlaceColor || undefined,

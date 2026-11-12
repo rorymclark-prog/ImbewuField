@@ -289,3 +289,87 @@ test('the calendar choice reports rain timing separately and flags a close call'
   const coast = { ...seasonal({ summerTemp: 21, winterTemp: 14, summerRain: 55, winterRain: 50, lat: -34 }), recordMinC: 5 };
   assert.equal(sowingCalendarFor(coast, classifyKoppen(coast)).rainSeason, 'all-year');
 });
+
+test('the close-call search also tries both monthly means together (Argon F-07)', () => {
+  // Independent review of 11 November 2026: Argon's claim, reproduced by Codex. Eshowe reads
+  // coldest 15.1 °C (line 16) and hottest 23.9 °C (line 24) with a frost-free record. Moving
+  // either reading alone by the one-degree tolerance leaves it on the light-frost column, so
+  // the search named no neighbour; moving every month by that same degree, which is how two
+  // gridded records usually differ, reaches the hot-area column. The site's own calendar is
+  // unchanged and no line moves: only the neighbour is now named.
+  const lat = -28.89;
+  const near = { ...seasonal({ summerTemp: 23.93, winterTemp: 15.1, summerRain: 100, winterRain: 20, lat }), recordMinC: 2.9 };
+  const choice = sowingCalendarFor(near, classifyKoppen(near));
+  assert.equal(choice.pattern, 'mild-frost');
+  assert.equal(choice.closeCall, 'all-year');
+  assert.equal(choice.warmerNeighbour, 'all-year');
+  // The same site read one degree warmer in every month is on the hot-area column: the neighbour is real.
+  const warmer = { ...near, tempC: near.tempC.map((t) => t + 1) };
+  assert.equal(sowingCalendarFor(warmer, classifyKoppen(warmer)).pattern, 'all-year');
+  // Outside the tolerance on either reading there is still no such neighbour.
+  for (const [summerTemp, winterTemp] of [[22.9, 15.1], [23.93, 14.9], [22.9, 14.9]]) {
+    const far = { ...seasonal({ summerTemp, winterTemp, summerRain: 100, winterRain: 20, lat }), recordMinC: 2.9 };
+    assert.notEqual(sowingCalendarFor(far, classifyKoppen(far)).warmerNeighbour, 'all-year', `${summerTemp}/${winterTemp}`);
+  }
+  // A record minimum under the frost-free line is not cleared by any shift of the means.
+  const touchedFrost = { ...near, recordMinC: -0.5 };
+  assert.notEqual(sowingCalendarFor(touchedFrost, classifyKoppen(touchedFrost)).warmerNeighbour, 'all-year');
+  // The joint nudges come last: where one reading alone already names a neighbour, that answer stands.
+  const oneAxis = { ...seasonal({ summerTemp: 24.5, winterTemp: 15.9, summerRain: 95, winterRain: 18, lat }), recordMinC: 3.2 };
+  const oneAxisChoice = sowingCalendarFor(oneAxis, classifyKoppen(oneAxis));
+  assert.equal(oneAxisChoice.pattern, 'mild-frost');
+  assert.equal(oneAxisChoice.closeCall, 'all-year');
+  // And the colder joint nudge names a colder neighbour the single nudges miss, without making it a "warmer" one.
+  const justHot = { ...seasonal({ summerTemp: 24.6, winterTemp: 16.6, summerRain: 100, winterRain: 20, lat }), recordMinC: 5 };
+  const justHotChoice = sowingCalendarFor(justHot, classifyKoppen(justHot));
+  assert.equal(justHotChoice.pattern, 'all-year');
+  assert.equal(justHotChoice.closeCall, 'mild-frost');
+  assert.equal(justHotChoice.warmerNeighbour, null);
+});
+
+/* ── a class note may say only what its class defines (CP-114) ─────────── */
+
+test('no class note calls the year mild or frost light at a place with a sub-zero record low (CP-114)', async () => {
+  // A climate class is decided by monthly means, so its sentence cannot know how cold a
+  // night gets. Until 11 November 2026 three did claim it: Cwb "mild all year from altitude",
+  // Cwa "frost is light", Cfb "Mild and damp year-round — a long, gentle season". Johannesburg
+  // printed the first above a gridded record low of -4.8 °C.
+  // The 100 saved South African places carry a record minimum each. Every one below 0 °C is
+  // a place where such a sentence is false, whatever its class.
+  const { readFileSync } = await import('node:fs');
+  type Site = { name: string; lat: number; monthlyTempC: number[]; monthlyRainMm: number[]; recordMinC: number | null };
+  const sites: Site[] = ['sa-climate-sites-2026-11-10.json', 'sa-climate-holdout-2026-11-11.json']
+    .flatMap((f) => JSON.parse(readFileSync(new URL(`./fixtures/${f}`, import.meta.url), 'utf8')).sites);
+  assert.equal(sites.length, 100);
+  // "mild summer" is a statement about the class's summer letter and is allowed.
+  const MILDNESS = /\bmild\b(?!\s+summer)|\bgentle\b|frost is light|frost-free|no frost/i;
+  const seen = new Map<string, number>();
+  let checked = 0;
+  for (const s of sites) {
+    if (s.recordMinC === null || s.recordMinC >= 0) continue;
+    const k = classifyKoppen({ tempC: s.monthlyTempC, precipMm: s.monthlyRainMm, lat: s.lat });
+    assert.doesNotMatch(k.growerNote, MILDNESS, `${s.name} (${k.code}, record low ${s.recordMinC} °C): "${k.growerNote}"`);
+    assert.doesNotMatch(k.growerNote, /altitude/i, `${s.name}: the classifier never sees altitude`);
+    seen.set(k.code, (seen.get(k.code) ?? 0) + 1); checked++;
+  }
+  // The check must actually reach the three classes it was written for.
+  assert.ok(checked >= 50, `only ${checked} places below 0 °C were checked`);
+  for (const code of ['Cwb', 'Cwa', 'Cfb']) assert.ok((seen.get(code) ?? 0) >= 1, `no ${code} place below 0 °C was checked`);
+  assert.equal(seen.get('Cwb'), 13, 'all 13 Cwb places in the fixtures have a sub-zero record low');
+});
+
+test('the three temperate notes that used to claim mildness now state the class and say it is silent on frost (CP-114)', () => {
+  const rain = { summer: [180, 160, 140, 70, 15, 8, 8, 10, 30, 90, 150, 170], even: [80, 75, 80, 70, 65, 60, 60, 65, 70, 75, 80, 80] };
+  const warmSummer = [20, 20, 19, 16, 13, 10, 10, 13, 17, 18, 19, 20];
+  const hotSummer = [24, 24, 23, 20, 16, 13, 13, 15, 19, 21, 22, 23];
+  const cases: Array<[string, number[], number[]]> = [['Cwb', warmSummer, rain.summer], ['Cwa', hotSummer, rain.summer], ['Cfb', warmSummer, rain.even]];
+  for (const [code, tempC, precipMm] of cases) {
+    const k = classifyKoppen({ tempC, precipMm, lat: -26 });
+    assert.equal(k.code, code);
+    assert.match(k.growerNote, /This climate type alone does not tell you whether there is frost\.$/, code);
+    assert.doesNotMatch(k.growerNote, /mild all year|frost is light|year-round|gentle|altitude/i, code);
+  }
+  assert.match(classifyKoppen({ tempC: warmSummer, precipMm: rain.summer, lat: -26 }).growerNote, /^Summer rain, dry winters and summers that stay warm rather than hot\./);
+  assert.match(classifyKoppen({ tempC: hotSummer, precipMm: rain.summer, lat: -26 }).growerNote, /^Summer rain, a dry winter and hot summers\./);
+  assert.match(classifyKoppen({ tempC: warmSummer, precipMm: rain.even, lat: -26 }).growerNote, /^Rain in every month and summers that stay warm rather than hot\./);
+});

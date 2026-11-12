@@ -78,7 +78,7 @@ const doc = assembleReportDocument({
   backMatter: [
     billOfQuantitiesMarkdown(boq),
     monitoringMarkdown(buildMonitoringPlan(facts)),
-    riskRegisterMarkdown(risks),
+    riskRegisterMarkdown(risks, 'en', 628),
   ],
 });
 

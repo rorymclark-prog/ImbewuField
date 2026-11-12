@@ -1,3 +1,4 @@
+import { annualRainfallMm } from './climate-temperature';
 import {
   upsertPlace, removePlace, mergePlaces, upsertPlaceContextResult, DEFINITIVE_CONTEXT_REJECTIONS,
   type PlaceContextOutcome,
@@ -30,7 +31,8 @@ export interface SavedPlace {
   lat: number;
   lon: number;
   biome: string;
-  rainfall: number;
+  rainfall?: number;
+  rainfallSource?: string;
   elevation: number;
   savedAt: string; // ISO date
   updatedAt?: number; // ms — last edit time, drives cross-device newest-wins merge
@@ -60,7 +62,7 @@ export function isValidSavedPlace(value: unknown): value is SavedPlace {
     && typeof value.lat === 'number' && Number.isFinite(value.lat) && value.lat >= -90 && value.lat <= 90
     && typeof value.lon === 'number' && Number.isFinite(value.lon) && value.lon >= -180 && value.lon <= 180
     && typeof value.biome === 'string'
-    && typeof value.rainfall === 'number' && Number.isFinite(value.rainfall)
+    && (value.rainfall === undefined || (typeof value.rainfall === 'number' && Number.isFinite(value.rainfall)))
     && typeof value.elevation === 'number' && Number.isFinite(value.elevation)
     // Pre-sync local records used an empty timestamp. Keep them readable at timestamp zero;
     // network shares apply the stricter ISO requirement at their own trust boundary.
@@ -510,4 +512,15 @@ export function resolveMainSite(places: SavedPlace[]): SavedPlace | null {
     const newestTime = newest.updatedAt ?? Date.parse(newest.savedAt);
     return pTime > newestTime ? p : newest;
   }, places[0]);
+}
+
+
+/** A refresh must not replace a saved/entered value with an outage placeholder. Legacy values
+ * stay readable with their original provenance; this does not retrospectively certify them. */
+export function savedRainfallFields(rain: { annual?: unknown; rainfallSource?: string } | null | undefined, existing?: Pick<SavedPlace, 'rainfall' | 'rainfallSource'> | null): Pick<SavedPlace, 'rainfall' | 'rainfallSource'> {
+  if (existing && typeof existing.rainfall === 'number' && Number.isFinite(existing.rainfall)) {
+    return { rainfall: existing.rainfall, ...(existing.rainfallSource ? { rainfallSource: existing.rainfallSource } : {}) };
+  }
+  const value = annualRainfallMm(rain);
+  return value === null ? {} : { rainfall: value, rainfallSource: rain!.rainfallSource };
 }

@@ -135,8 +135,10 @@ test('the existing admitted guest demo uses the exact server-owned profile and c
   assert.doesNotMatch(text, /PRIVATE_REQUEST_SENTINEL/);
   assert.equal(probe.reads.length, 0); assert.equal(probe.metered, 1); assert.equal(probe.provider.length, 1);
   const prompt = JSON.stringify(probe.provider); assert.doesNotMatch(prompt, /PRIVATE_REQUEST_SENTINEL/);
-  assert.ok(prompt.includes(`Annual rainfall: ${DEMO_LOCATION.rainfall.annual}mm`));
-  assert.ok(prompt.includes(`Jan:${Math.round(DEMO_LOCATION.rainfall.monthly[0])}mm`));
+  // The evidence formatter now includes provenance and preserves the monthly
+  // values instead of rounding them. Every value must still be server-owned.
+  assert.ok(prompt.includes(`Annual rainfall: ${DEMO_LOCATION.rainfall.annual} mm (${DEMO_LOCATION.rainfall.rainfallSource})`));
+  assert.ok(prompt.includes(`Monthly rainfall (January–December): ${DEMO_LOCATION.rainfall.monthly.join(', ')} mm`));
 });
 
 test('a sample flag never grants general country support or replaces a different demo site with this profile', async () => {

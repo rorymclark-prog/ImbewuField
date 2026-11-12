@@ -1,0 +1,53 @@
+  ▲ Next.js 14.2.18
+  - Local:        http://localhost:4242
+  - Network:      http://0.0.0.0:4242
+
+ ✓ Starting...
+ ✓ Ready in 1757ms
+ ✓ Compiled /middleware in 187ms (115 modules)
+ ○ Compiling /farmer ...
+ ✓ Compiled /farmer in 14.8s (3612 modules)
+ GET /farmer 200 in 15710ms
+ GET /farmer?site=demo-place-ubhejane&panel=Climate 200 in 633ms
+ ○ Compiling /api/location-data ...
+ ✓ Compiled /api/location-data in 5s (1965 modules)
+ ✓ Compiled (2000 modules)
+ GET /api/build-info?update-check=1794417319921&language=en 200 in 5808ms
+ GET /api/build-info 200 in 5643ms
+ GET /api/build-info 200 in 5642ms
+ GET /api/build-info?update-check=1794417319915&language=en 200 in 5809ms
+[api-auth] /api/location-data: unauthenticated request (missing bearer token)
+ GET /sw.js 200 in 5940ms
+ ○ Compiling /home ...
+ GET /api/location-data?lat=-27.726231&lon=31.963044 200 in 7263ms
+ ✓ Compiled /home in 5s (3729 modules)
+ GET /home 200 in 5784ms
+ ○ Compiling /student ...
+ ✓ Compiled /student in 1544ms (3927 modules)
+ GET /farmer 200 in 2658ms
+ GET / 307 in 2670ms
+ GET /student 200 in 2669ms
+ GET /home 200 in 251ms
+ ○ Compiling /offline ...
+ ✓ Compiled /offline in 1405ms (3958 modules)
+ GET /offline 200 in 1937ms
+ GET /prices 200 in 1965ms
+ GET /sw.js 200 in 44ms
+ GET /home 200 in 183ms
+ GET /farmer?site=demo-place-ubhejane&panel=Climate 200 in 154ms
+ GET /api/build-info?update-check=1794417344703&language=en 200 in 214ms
+ GET /api/build-info?update-check=1794417344695&language=en 200 in 213ms
+ GET /sw.js 200 in 226ms
+ GET /api/build-info 200 in 61ms
+ GET /api/build-info 200 in 60ms
+[api-auth] /api/location-data: unauthenticated request (missing bearer token)
+ GET /home 200 in 143ms
+ GET / 307 in 411ms
+ GET /farmer 200 in 405ms
+ GET /student 200 in 407ms
+ GET /home 200 in 73ms
+ GET /prices 200 in 100ms
+ GET /offline 200 in 66ms
+ GET /sw.js 200 in 16ms
+ GET /api/location-data?lat=-27.726231&lon=31.963044 200 in 8110ms
+[?25h

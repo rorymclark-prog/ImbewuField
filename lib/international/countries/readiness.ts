@@ -7,11 +7,31 @@ function validDate(value: unknown): value is string {
   return Number.isFinite(time) && new Date(time).toISOString().slice(0, 10) === value;
 }
 
+type Publication = Pick<CountrySource, 'publishedOn' | 'publishedMonth'>;
+function validMonth(value: unknown): value is string {
+  return typeof value === 'string' && /^\d{4}-(?:0[1-9]|1[0-2])$/.test(value) && !value.startsWith('0000');
+}
+
+/** A month without a day becomes usable only after that whole month has ended.
+ * This deliberately does not claim the first day or an announcement as publication. */
+export function sourcePublicationIsKnownBy(source: Publication, asOf: string): boolean {
+  if (!validDate(asOf)) return false;
+  if (source.publishedOn !== null) return validDate(source.publishedOn) && source.publishedOn <= asOf
+    && (source.publishedMonth === undefined || source.publishedMonth === null);
+  return validMonth(source.publishedMonth) && source.publishedMonth < asOf.slice(0, 7);
+}
+
+export function sourcePublicationText(source: Publication): string {
+  if (source.publishedOn !== null && validDate(source.publishedOn)
+    && (source.publishedMonth === undefined || source.publishedMonth === null)) return source.publishedOn;
+  if (source.publishedOn === null && validMonth(source.publishedMonth)) return `${source.publishedMonth} (day unknown)`;
+  return 'Unknown';
+}
+
 export function sourceEvidenceState(source: CountrySource, asOf: string): 'available-reference' | 'missing' | 'stale' | 'undated' {
   if (!validDate(asOf)) throw new RangeError('A real assessment date is required.');
   if (source.verification !== 'content-read') return 'missing';
-  if (!validDate(source.accessedOn) || source.accessedOn > asOf || !validDate(source.publishedOn)
-    || source.publishedOn > asOf || (source.reviewDueOn !== null && !validDate(source.reviewDueOn))) return 'undated';
+  if (!validDate(source.accessedOn) || source.accessedOn > asOf || !sourcePublicationIsKnownBy(source, asOf) || (source.reviewDueOn !== null && !validDate(source.reviewDueOn))) return 'undated';
   if (source.reviewDueOn !== null && source.reviewDueOn < asOf) return 'stale';
   return 'available-reference';
 }

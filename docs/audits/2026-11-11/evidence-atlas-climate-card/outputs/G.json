@@ -1,0 +1,818 @@
+{
+ "script": "g.cjs",
+ "base": "http://localhost:4242",
+ "results": [
+  {
+   "case": "complete-phone-light",
+   "viewport": "390x844 @2x",
+   "dark": false,
+   "synthetic": null,
+   "routeAnswer": {
+    "status": 200,
+    "koppen": "Cwb",
+    "koppenNote": "Summer rain, dry winters and summers that stay warm rather than hot. This climate type alone does not tell you whether there is frost.",
+    "coverage": {
+     "source": "nasa-power",
+     "status": "complete"
+    },
+    "minTemp": -4.8,
+    "minTempSource": "nasa-power"
+   },
+   "screenshot": "G-atlas-complete-phone-light.png",
+   "capturedUtc": "2026-11-11T09:26:36.408Z",
+   "theme": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580",
+    "dataTheme": "earth"
+   },
+   "elements": [
+    {
+     "label": "climate code",
+     "found": true,
+     "text": "Cwb",
+     "color": "rgb(30, 77, 51)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "26px",
+     "fontWeight": "700",
+     "cssBox": {
+      "x": 33,
+      "y": 404,
+      "w": 53,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 66,
+      "y": 807,
+      "w": 107,
+      "h": 52
+     }
+    },
+    {
+     "label": "climate name",
+     "found": true,
+     "text": "Subtropical highland, dry winter",
+     "color": "rgb(38, 27, 16)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "16px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 94,
+      "y": 407,
+      "w": 233,
+      "h": 24
+     },
+     "pixelBox": {
+      "x": 188,
+      "y": 813,
+      "w": 466,
+      "h": 48
+     }
+    },
+    {
+     "label": "class note",
+     "found": true,
+     "text": "Summer rain, dry winters and summers that stay warm rather than hot. This climate type alone does not tell you whether there is frost.",
+     "color": "rgb(106, 80, 64)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "14.5px",
+     "fontWeight": "400",
+     "cssBox": {
+      "x": 33,
+      "y": 439,
+      "w": 326,
+      "h": 71
+     },
+     "pixelBox": {
+      "x": 66,
+      "y": 877,
+      "w": 652,
+      "h": 142
+     }
+    },
+    {
+     "label": "rain chip",
+     "found": true,
+     "text": "≈ 641 mm/yr",
+     "color": "rgb(28, 90, 158)",
+     "background": "color(srgb 0.109804 0.352941 0.619608 / 0.14)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 33,
+      "y": 521,
+      "w": 90,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 66,
+      "y": 1042,
+      "w": 180,
+      "h": 52
+     }
+    },
+    {
+     "label": "calendar chip",
+     "found": true,
+     "text": "Sowing calendar: Winter frost",
+     "color": "rgb(106, 80, 64)",
+     "background": "rgba(236, 227, 201, 0.35)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 130,
+      "y": 521,
+      "w": 188,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 259,
+      "y": 1042,
+      "w": 376,
+      "h": 52
+     }
+    },
+    {
+     "label": "record-low chip",
+     "found": true,
+     "text": "Modelled record low: -4.8°C",
+     "color": "rgb(106, 80, 64)",
+     "background": "rgba(236, 227, 201, 0.35)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 33,
+      "y": 554,
+      "w": 177,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 66,
+      "y": 1108,
+      "w": 355,
+      "h": 52
+     }
+    },
+    {
+     "label": "incomplete note",
+     "found": false
+    }
+   ],
+   "oldWording": false,
+   "overflow": false,
+   "pageErrors": 3
+  },
+  {
+   "case": "complete-phone-dark",
+   "viewport": "390x844 @2x",
+   "dark": true,
+   "synthetic": null,
+   "routeAnswer": {
+    "status": 200,
+    "koppen": "Cwb",
+    "koppenNote": "Summer rain, dry winters and summers that stay warm rather than hot. This climate type alone does not tell you whether there is frost.",
+    "coverage": {
+     "source": "nasa-power",
+     "status": "complete"
+    },
+    "minTemp": -4.8,
+    "minTempSource": "nasa-power"
+   },
+   "screenshot": "G-atlas-complete-phone-dark.png",
+   "capturedUtc": "2026-11-11T09:26:50.961Z",
+   "theme": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580 dark",
+    "dataTheme": "earth"
+   },
+   "elements": [
+    {
+     "label": "climate code",
+     "found": true,
+     "text": "Cwb",
+     "color": "rgb(130, 200, 68)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "26px",
+     "fontWeight": "700",
+     "cssBox": {
+      "x": 33,
+      "y": 404,
+      "w": 53,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 66,
+      "y": 807,
+      "w": 107,
+      "h": 52
+     }
+    },
+    {
+     "label": "climate name",
+     "found": true,
+     "text": "Subtropical highland, dry winter",
+     "color": "rgb(238, 228, 208)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "16px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 94,
+      "y": 407,
+      "w": 233,
+      "h": 24
+     },
+     "pixelBox": {
+      "x": 188,
+      "y": 813,
+      "w": 466,
+      "h": 48
+     }
+    },
+    {
+     "label": "class note",
+     "found": true,
+     "text": "Summer rain, dry winters and summers that stay warm rather than hot. This climate type alone does not tell you whether there is frost.",
+     "color": "rgb(168, 144, 108)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "14.5px",
+     "fontWeight": "400",
+     "cssBox": {
+      "x": 33,
+      "y": 439,
+      "w": 326,
+      "h": 71
+     },
+     "pixelBox": {
+      "x": 66,
+      "y": 877,
+      "w": 652,
+      "h": 142
+     }
+    },
+    {
+     "label": "rain chip",
+     "found": true,
+     "text": "≈ 641 mm/yr",
+     "color": "rgb(88, 160, 220)",
+     "background": "color(srgb 0.345098 0.627451 0.862745 / 0.14)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 33,
+      "y": 521,
+      "w": 90,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 66,
+      "y": 1042,
+      "w": 180,
+      "h": 52
+     }
+    },
+    {
+     "label": "calendar chip",
+     "found": true,
+     "text": "Sowing calendar: Winter frost",
+     "color": "rgb(168, 144, 108)",
+     "background": "rgb(34, 25, 14)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 130,
+      "y": 521,
+      "w": 188,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 259,
+      "y": 1042,
+      "w": 376,
+      "h": 52
+     }
+    },
+    {
+     "label": "record-low chip",
+     "found": true,
+     "text": "Modelled record low: -4.8°C",
+     "color": "rgb(168, 144, 108)",
+     "background": "rgb(34, 25, 14)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 33,
+      "y": 554,
+      "w": 177,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 66,
+      "y": 1108,
+      "w": 355,
+      "h": 52
+     }
+    },
+    {
+     "label": "incomplete note",
+     "found": false
+    }
+   ],
+   "oldWording": false,
+   "overflow": false,
+   "pageErrors": 3
+  },
+  {
+   "case": "complete-desktop-light",
+   "viewport": "1280x800 @1x",
+   "dark": false,
+   "synthetic": null,
+   "routeAnswer": {
+    "status": 200,
+    "koppen": "Cwb",
+    "koppenNote": "Summer rain, dry winters and summers that stay warm rather than hot. This climate type alone does not tell you whether there is frost.",
+    "coverage": {
+     "source": "nasa-power",
+     "status": "complete"
+    },
+    "minTemp": -4.8,
+    "minTempSource": "nasa-power"
+   },
+   "screenshot": "G-atlas-complete-desktop-light.png",
+   "capturedUtc": "2026-11-11T09:27:05.473Z",
+   "theme": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580",
+    "dataTheme": "earth"
+   },
+   "elements": [
+    {
+     "label": "climate code",
+     "found": true,
+     "text": "Cwb",
+     "color": "rgb(30, 77, 51)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "26px",
+     "fontWeight": "700",
+     "cssBox": {
+      "x": 894,
+      "y": 203,
+      "w": 53,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 894,
+      "y": 202,
+      "w": 54,
+      "h": 26
+     }
+    },
+    {
+     "label": "climate name",
+     "found": true,
+     "text": "Subtropical highland, dry winter",
+     "color": "rgb(38, 27, 16)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "16px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 955,
+      "y": 206,
+      "w": 233,
+      "h": 24
+     },
+     "pixelBox": {
+      "x": 955,
+      "y": 205,
+      "w": 233,
+      "h": 24
+     }
+    },
+    {
+     "label": "class note",
+     "found": true,
+     "text": "Summer rain, dry winters and summers that stay warm rather than hot. This climate type alone does not tell you whether there is frost.",
+     "color": "rgb(106, 80, 64)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "14.5px",
+     "fontWeight": "400",
+     "cssBox": {
+      "x": 894,
+      "y": 238,
+      "w": 355,
+      "h": 71
+     },
+     "pixelBox": {
+      "x": 894,
+      "y": 237,
+      "w": 355,
+      "h": 71
+     }
+    },
+    {
+     "label": "rain chip",
+     "found": true,
+     "text": "≈ 641 mm/yr",
+     "color": "rgb(28, 90, 158)",
+     "background": "color(srgb 0.109804 0.352941 0.619608 / 0.14)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 894,
+      "y": 321,
+      "w": 90,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 894,
+      "y": 320,
+      "w": 90,
+      "h": 26
+     }
+    },
+    {
+     "label": "calendar chip",
+     "found": true,
+     "text": "Sowing calendar: Winter frost",
+     "color": "rgb(106, 80, 64)",
+     "background": "rgba(236, 227, 201, 0.35)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 991,
+      "y": 321,
+      "w": 188,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 990,
+      "y": 320,
+      "w": 188,
+      "h": 26
+     }
+    },
+    {
+     "label": "record-low chip",
+     "found": true,
+     "text": "Modelled record low: -4.8°C",
+     "color": "rgb(106, 80, 64)",
+     "background": "rgba(236, 227, 201, 0.35)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 894,
+      "y": 354,
+      "w": 177,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 894,
+      "y": 353,
+      "w": 178,
+      "h": 26
+     }
+    },
+    {
+     "label": "incomplete note",
+     "found": false
+    }
+   ],
+   "oldWording": false,
+   "overflow": false,
+   "pageErrors": 3
+  },
+  {
+   "case": "complete-desktop-dark",
+   "viewport": "1280x800 @1x",
+   "dark": true,
+   "synthetic": null,
+   "routeAnswer": {
+    "status": 200,
+    "koppen": "Cwb",
+    "koppenNote": "Summer rain, dry winters and summers that stay warm rather than hot. This climate type alone does not tell you whether there is frost.",
+    "coverage": {
+     "source": "nasa-power",
+     "status": "complete"
+    },
+    "minTemp": -4.8,
+    "minTempSource": "nasa-power"
+   },
+   "screenshot": "G-atlas-complete-desktop-dark.png",
+   "capturedUtc": "2026-11-11T09:27:19.687Z",
+   "theme": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580 dark",
+    "dataTheme": "earth"
+   },
+   "elements": [
+    {
+     "label": "climate code",
+     "found": true,
+     "text": "Cwb",
+     "color": "rgb(130, 200, 68)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "26px",
+     "fontWeight": "700",
+     "cssBox": {
+      "x": 894,
+      "y": 203,
+      "w": 53,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 894,
+      "y": 202,
+      "w": 54,
+      "h": 26
+     }
+    },
+    {
+     "label": "climate name",
+     "found": true,
+     "text": "Subtropical highland, dry winter",
+     "color": "rgb(238, 228, 208)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "16px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 955,
+      "y": 206,
+      "w": 233,
+      "h": 24
+     },
+     "pixelBox": {
+      "x": 955,
+      "y": 205,
+      "w": 233,
+      "h": 24
+     }
+    },
+    {
+     "label": "class note",
+     "found": true,
+     "text": "Summer rain, dry winters and summers that stay warm rather than hot. This climate type alone does not tell you whether there is frost.",
+     "color": "rgb(168, 144, 108)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "14.5px",
+     "fontWeight": "400",
+     "cssBox": {
+      "x": 894,
+      "y": 238,
+      "w": 355,
+      "h": 71
+     },
+     "pixelBox": {
+      "x": 894,
+      "y": 237,
+      "w": 355,
+      "h": 71
+     }
+    },
+    {
+     "label": "rain chip",
+     "found": true,
+     "text": "≈ 641 mm/yr",
+     "color": "rgb(88, 160, 220)",
+     "background": "color(srgb 0.345098 0.627451 0.862745 / 0.14)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 894,
+      "y": 321,
+      "w": 90,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 894,
+      "y": 320,
+      "w": 90,
+      "h": 26
+     }
+    },
+    {
+     "label": "calendar chip",
+     "found": true,
+     "text": "Sowing calendar: Winter frost",
+     "color": "rgb(168, 144, 108)",
+     "background": "rgb(34, 25, 14)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 991,
+      "y": 321,
+      "w": 188,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 990,
+      "y": 320,
+      "w": 188,
+      "h": 26
+     }
+    },
+    {
+     "label": "record-low chip",
+     "found": true,
+     "text": "Modelled record low: -4.8°C",
+     "color": "rgb(168, 144, 108)",
+     "background": "rgb(34, 25, 14)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 894,
+      "y": 354,
+      "w": 177,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 894,
+      "y": 353,
+      "w": 178,
+      "h": 26
+     }
+    },
+    {
+     "label": "incomplete note",
+     "found": false
+    }
+   ],
+   "oldWording": false,
+   "overflow": false,
+   "pageErrors": 3
+  },
+  {
+   "case": "incomplete-phone-dark",
+   "viewport": "390x844 @2x",
+   "dark": true,
+   "synthetic": "temperature fields replaced with the incomplete-year contract",
+   "routeAnswer": {
+    "status": 200,
+    "koppen": "Cwb",
+    "koppenNote": "Summer rain, dry winters and summers that stay warm rather than hot. This climate type alone does not tell you whether there is frost.",
+    "coverage": {
+     "source": "nasa-power",
+     "status": "complete"
+    },
+    "minTemp": -4.8,
+    "minTempSource": "nasa-power"
+   },
+   "screenshot": "G-atlas-incomplete-phone-dark.png",
+   "capturedUtc": "2026-11-11T09:27:34.050Z",
+   "theme": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580 dark",
+    "dataTheme": "earth"
+   },
+   "elements": [
+    {
+     "label": "climate code",
+     "found": false
+    },
+    {
+     "label": "climate name",
+     "found": false
+    },
+    {
+     "label": "class note",
+     "found": false
+    },
+    {
+     "label": "rain chip",
+     "found": true,
+     "text": "≈ 641 mm/yr",
+     "color": "rgb(88, 160, 220)",
+     "background": "color(srgb 0.345098 0.627451 0.862745 / 0.14)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 33,
+      "y": 484,
+      "w": 90,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 66,
+      "y": 967,
+      "w": 180,
+      "h": 52
+     }
+    },
+    {
+     "label": "calendar chip",
+     "found": false
+    },
+    {
+     "label": "record-low chip",
+     "found": false
+    },
+    {
+     "label": "incomplete note",
+     "found": true,
+     "text": "Temperature records for this point are incomplete or could not be checked, so no climate type or sowing calendar is shown.",
+     "color": "rgb(168, 144, 108)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "14px",
+     "fontWeight": "400",
+     "cssBox": {
+      "x": 33,
+      "y": 404,
+      "w": 326,
+      "h": 68
+     },
+     "pixelBox": {
+      "x": 66,
+      "y": 807,
+      "w": 652,
+      "h": 137
+     }
+    }
+   ],
+   "oldWording": false,
+   "overflow": false,
+   "pageErrors": 3
+  },
+  {
+   "case": "incomplete-phone-light",
+   "viewport": "390x844 @2x",
+   "dark": false,
+   "synthetic": "temperature fields replaced with the incomplete-year contract",
+   "routeAnswer": {
+    "status": 200,
+    "koppen": "Cwb",
+    "koppenNote": "Summer rain, dry winters and summers that stay warm rather than hot. This climate type alone does not tell you whether there is frost.",
+    "coverage": {
+     "source": "nasa-power",
+     "status": "complete"
+    },
+    "minTemp": -4.8,
+    "minTempSource": "nasa-power"
+   },
+   "screenshot": "G-atlas-incomplete-phone-light.png",
+   "capturedUtc": "2026-11-11T09:27:48.455Z",
+   "theme": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580",
+    "dataTheme": "earth"
+   },
+   "elements": [
+    {
+     "label": "climate code",
+     "found": false
+    },
+    {
+     "label": "climate name",
+     "found": false
+    },
+    {
+     "label": "class note",
+     "found": false
+    },
+    {
+     "label": "rain chip",
+     "found": true,
+     "text": "≈ 641 mm/yr",
+     "color": "rgb(28, 90, 158)",
+     "background": "color(srgb 0.109804 0.352941 0.619608 / 0.14)",
+     "fontSizePx": "12px",
+     "fontWeight": "600",
+     "cssBox": {
+      "x": 33,
+      "y": 484,
+      "w": 90,
+      "h": 26
+     },
+     "pixelBox": {
+      "x": 66,
+      "y": 967,
+      "w": 180,
+      "h": 52
+     }
+    },
+    {
+     "label": "calendar chip",
+     "found": false
+    },
+    {
+     "label": "record-low chip",
+     "found": false
+    },
+    {
+     "label": "incomplete note",
+     "found": true,
+     "text": "Temperature records for this point are incomplete or could not be checked, so no climate type or sowing calendar is shown.",
+     "color": "rgb(106, 80, 64)",
+     "background": "rgba(0, 0, 0, 0)",
+     "fontSizePx": "14px",
+     "fontWeight": "400",
+     "cssBox": {
+      "x": 33,
+      "y": 404,
+      "w": 326,
+      "h": 68
+     },
+     "pixelBox": {
+      "x": 66,
+      "y": 807,
+      "w": 652,
+      "h": 137
+     }
+    }
+   ],
+   "oldWording": false,
+   "overflow": false,
+   "pageErrors": 3
+  }
+ ]
+}

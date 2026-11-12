@@ -1,0 +1,5 @@
+tests/crop-export-schedule.test.ts(884,62): error TS2345: Argument of type 'true' is not assignable to parameter of type 'PlanTableFrost | undefined'.
+tests/crop-export-schedule.test.ts(899,51): error TS2345: Argument of type 'true' is not assignable to parameter of type 'PlanTableFrost | undefined'.
+tests/frost-uncertainty.test.ts(111,68): error TS2554: Expected 2-3 arguments, but got 4.
+tests/frost-uncertainty.test.ts(122,61): error TS2554: Expected 2-3 arguments, but got 4.
+exit 2

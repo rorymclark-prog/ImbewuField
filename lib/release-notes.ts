@@ -41,6 +41,53 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '12 November 2026', sha: 'a0906e1ec', changes: [
+    'Preview crops from your saved measurements, source references and your own conditions.',
+    'Kenya method references keep unsupported counts, yields and dates unknown.',
+    'Soil and weather readings show their evidence without unsupported scores or risk ratings.',
+    'Printed report tables keep their headers with their rows.',
+  ] },
+  { when: '12 November 2026', sha: 'fa2d646d0', changes: [
+    'Explore rain, roof collection, household water use and tank storage on the example farm.',
+    'See why the example climate checks hold a crop back in a particular sowing month.',
+    'The example includes a rain-on-terrain film and scrolls on your phone.',
+  ] },
+  { when: '12 November 2026', sha: 'cd408331865da2de20777630d6ff831842db50d0', changes: [
+    'Report PDF table headers stay with their rows, including wrapped and continuing tables.',
+  ] },
+  { when: '12 November 2026', sha: 'c8c00515e97ae810b4e95d4e9c3898d82196a1ac', changes: [
+    'Reports keep zero and unknown rainfall distinct; seasonal water adequacy stays unassessed.',
+  ] },
+  { when: '12 November 2026', sha: '15aeada5782ba781a83d58387fea8194b4572ca4', changes: [
+    'Report storage figures no longer imply an uncalculated water deficit is known.',
+    'Report climate labels withhold missing evidence; zero harvest has no storage ratio.',
+  ] },
+  { when: '12 November 2026', sha: '627d114167ff4f5c486ba50130af86b43b6f5ce0', changes: [
+    'Soil readings keep their sources without an unsupported health score or diagnosis.',
+    'Saving a site keeps unknown rainfall unknown and preserves your existing figures.',
+    'Reports withhold unsourced weather values and separate record lows from farm frost.',
+  ] },
+  { when: '11 November 2026', sha: '1dd03688f9de3985d154b4a04e80e47bb1cd1c3f', changes: [
+    'Printed frost warnings follow the frost months you record, not a fixed winter window.',
+    'Site data marks unknown weather and wind coverage, with clearer dark-mode text.',
+    'A weekly harvest target now says when its crop could be ready too early.',
+    'The sowing calendar page uses the crop plan\'s calendar names and can show your farm\'s.',
+  ] },
+  { when: '12 November 2026', sha: 'ad2cdefcf', changes: [
+    'Choose cowpea leaf production and growth habit to see the matching source reference.',
+    'Cowpea source ranges stay separate from your density estimates and unknown harvest dates.',
+    'Returning to an earlier region requires a fresh preview and source choice.',
+    'Choose a sourced Kenya transplant method; unsupported numbers stay unknown.',
+    'Month-only source dates keep their unknown publication day visible.',
+    'Download a printable crop preview with your inputs, sources and unknowns.',
+    'Preview controls keep working overnight. Unconfirmed save warnings stay visible.',
+    'Printable previews show when saved measurements were read.',
+    'Each evidence section stays together when printing a crop preview.',
+  ] },
+  { when: '12 November 2026', sha: '8aeba000e8fbbb025a9b157174a47cd2fdd92585', changes: [
+    'Preview crop counts and dates from your measured bed and your estimates.',
+    'Your saved plan stays unchanged. Edit your inputs, then calculate a fresh preview.',
+  ] },
   { when: '10 November 2026', sha: '889438f66e2df0557bc1b07061b09a2e94b7f5a8', changes: [
     'Choose your own sowing calendar if you know your land better than the climate records.',
     'The crop plan lists planned sowings that are outside your sowing months.',

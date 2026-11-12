@@ -1,3 +1,4 @@
+import { annualRainfallMm } from './climate-temperature';
 import { reportDocumentText, REPORT_DOCUMENT_LANGUAGES, reportRecordedSourceLabel } from './report-localisation';
 import { recordsSeasonLabel } from './records-months';
 import { reportVisualText, reportElementDisplayName, reportRouteShortName } from './report-visuals';
@@ -665,21 +666,26 @@ export function waterPromptBlock(
 }
 
 /** The roof-catchment line. Replaces `100m² roof` — a stranger's roof on every farm on Earth. */
-export function roofCalcLine(facts: ReportSiteFacts | null | undefined, rainfallMm: number): string {
+export function roofCalcLine(facts: ReportSiteFacts | null | undefined, rainfallMm: number | null): string {
   const roof = facts?.roof;
   if (!roof || !(roof.areaM2 > 0)) {
     return '- **Roof catchment yield:** no roof has been traced or measured for this site, so there is NO roof area to calculate from. '
       + 'Say exactly that, give the rule (1m² of roof × 1mm of rain = 1L, × runoff coefficient '
       + `${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT}), and ask the farmer to trace or measure their roof. Do NOT assume a roof size.`;
   }
-  const yieldL = Math.round(roofHarvestLitres(roof.areaM2, rainfallMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT));
+  if (rainfallMm === null || !Number.isFinite(rainfallMm) || rainfallMm < 0) return `- **Roof catchment yield:** roof area ${m2(roof.areaM2)} recorded; annual rainfall is not known, so annual harvest cannot be calculated.`;
+  const harvestL = roofHarvestLitres(roof.areaM2, rainfallMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT);
+  const yieldL = Math.round(harvestL);
   const stored = facts?.water?.statedStorageLitres ?? 0;
   const storedNote = stored > 0
-    ? ` The plan's stated tank storage is ${litres(stored)} — that is ${Math.round((stored / Math.max(yieldL, 1)) * 100)}% of one year's harvest off this roof, so state plainly what the binding constraint is (storage, or catchment).`
-    : ' No tank storage is drawn yet, so this whole harvest currently runs to waste — say so.';
+    ? ` The plan's stated tank storage is ${litres(stored)}. `
+      + (harvestL > 0 ? `That is ${Math.round((stored / harvestL) * 100)}% of the unrounded annual roof-harvest scenario. `
+        : 'Its percentage of annual roof harvest is undefined because that harvest is zero. ')
+      + 'Storage adequacy is not established: capacity is not available supply, and demand, timing and losses still need evidence.'
+    : ' No tank storage capacity is stated; this does not establish what happens to runoff on the ground.';
   return `- **Roof catchment yield:** the traced roof on this site is **${m2(roof.areaM2)}** (${roof.source}). `
     + `1m² of roof × 1mm of rain = 1L, so ${group(roof.areaM2)} × ${rainfallMm}mm × reviewed runoff coefficient `
-    + `${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} = **${litres(yieldL)} usable/year**.${storedNote}`;
+    + `${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} = **${litres(yieldL)} usable/year** (map-based scenario with an assumed coefficient, not measured collection). If survey roof areas or gutter conditions differ, present both sources and resolve them before sizing storage.${storedNote}`;
 }
 
 /** Pre-filled sizes for the Irrigation Plan table, so the model supplies method not measurements. */
@@ -799,7 +805,7 @@ export interface ReportHeaderInput {
   lat: number;
   lon: number;
   dateLabel: string;
-  rainfallMm: number;
+  rainfallMm: number | null;
   rainfallSource?: string;
   wetSeason: string;
   drySeason: string;
@@ -926,9 +932,12 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   if (water?.mapPoints.length) {
     row('Water points recorded', water.mapPoints.map((p) => `${p.name}${p.category && p.category !== 'Other' ? ` [${pointCategory(p.category)}]` : ''}`).join(' · '), t('Pinned on the map by the farmer'));
   }
-  if (facts?.roof && facts.roof.areaM2 > 0) {
-    const harvest = Math.round(roofHarvestLitres(facts.roof.areaM2, input.rainfallMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT));
+  const supportedRain = annualRainfallMm({ annual: input.rainfallMm, rainfallSource: input.rainfallSource });
+  if (facts?.roof && facts.roof.areaM2 > 0 && supportedRain !== null) {
+    const harvest = Math.round(roofHarvestLitres(facts.roof.areaM2, supportedRain, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT));
     row('Roof catchment traced', t('{area} → {harvest}/yr at {coefficient} runoff',{area:m2(facts.roof.areaM2),harvest:litres(harvest),coefficient:WATER_SHEET_ROOF_RUNOFF_COEFFICIENT}), reportRecordedSourceLabel(facts.roof.source,language));
+  } else if (facts?.roof && facts.roof.areaM2 > 0) {
+    row('Roof catchment traced', `${m2(facts.roof.areaM2)} — annual harvest not calculated; rainfall not known`, reportRecordedSourceLabel(facts.roof.source, language));
   } else {
     row('Roof catchment', t('Not traced or measured'), t('No roof outline on the map'));
   }
@@ -942,7 +951,7 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
     row('Wind observed on site', t('From the {direction}',{direction:facts.measurements.localWindFrom})+(facts.measurements.localWindStrongestFrom?t(', strongest from the {direction}',{direction:facts.measurements.localWindStrongestFrom}):''), t('Farmer\'s own observation'));
   }
 
-  row('Annual rainfall', t('{rainfall} mm — wet {wet}, dry {dry}',{rainfall:input.rainfallMm,wet:recordsSeasonLabel(language,input.wetSeason),dry:recordsSeasonLabel(language,input.drySeason)}), input.rainfallSource === 'nasa-power' ? 'NASA POWER' : input.rainfallSource === 'open-meteo' ? 'Open-Meteo' : t('Climate data service'));
+  row('Annual rainfall', supportedRain === null ? 'Not known' : t('{rainfall} mm — wet {wet}, dry {dry}', { rainfall: supportedRain, wet: recordsSeasonLabel(language, input.wetSeason), dry: recordsSeasonLabel(language, input.drySeason) }), supportedRain === null ? 'No supported rainfall source recorded' : input.rainfallSource === 'nasa-power' ? 'NASA POWER' : input.rainfallSource === 'open-meteo' ? 'Open-Meteo' : 'Grower-entered');
   if (input.vegUnit) row('Natural vegetation', input.vegUnit, 'SANBI 2018 National Vegetation Map');
   if (input.bruLabel) row('Agro-ecological zone', t('Closest to {label}',{label:input.bruLabel}), t('KZN DARD bioresource units — a best-effort climate match, not a verified classification'));
   // Location responses also carry generic placeholders. The narrative and short guide already

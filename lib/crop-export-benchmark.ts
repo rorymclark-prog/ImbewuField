@@ -45,6 +45,8 @@ import {
   yieldByCrop,
 } from '@/lib/crop-plan';
 import { numberLabel } from '@/lib/format-figures';
+import { observedFrostConflictsForPlanting } from '@/lib/crop-autosuggest';
+import { FROST_UNCONFIRMED_ROW_TEXT, frostRecordedRowText, type PlanTableFrost } from '@/lib/frost-uncertainty';
 import { bedShareLabel, inSentence, MONTH_NAMES, monthShort, rollingMonths, wrapMonth } from '@/lib/crop-export-schedule';
 
 /**
@@ -75,28 +77,19 @@ function pieceLabel(cropName: string, unit: string): string {
   return unit.toLowerCase().includes(cropName.toLowerCase()) ? unit : `${cropName} ${unit}`;
 }
 
-/** SA winter — the frost risk window (Jun-Jul). Used only to raise a WARNING
- *  caveat on a frost-tender crop whose harvest window reaches it on a
- *  'mild-frost' site; this pattern's own catalog header only records "light
- *  frost in low pockets on clear winter nights" with no sourced first/last
- *  frost date for the zone, so this is never a sowing or harvest gate. */
-export const SA_WINTER_FROST_MONTHS: ReadonlySet<number> = new Set([6, 7]);
-
-const FROST_CAVEAT_TEXT = 'Frost-tender: finish picking before the first frost or cover on clear, still nights.';
-
-/** Does the inclusive month range start..end (wrapping past December) touch
- *  any month in `targets`? Capped at 12 steps — a harvest window longer than
- *  a year is not a value this planner produces. */
-function monthRangeHits(start: number, end: number, targets: ReadonlySet<number>): boolean {
-  let m = wrapMonth(start);
-  const stop = wrapMonth(end);
-  for (let i = 0; i < 12; i++) {
-    if (targets.has(m)) return true;
-    if (m === stop) return false;
-    m = wrapMonth(m + 1);
-  }
-  return false;
-}
+/**
+ * The time basis of the benchmark total, printed beside it (finding CP-112).
+ *
+ * The total adds every planned crop cycle once and looks at no date. The reference cover
+ * prints it under the plan year ("November 2026 to October 2027"), where it read as that
+ * year's harvest: a plan whose ten-year table gives 11.3 kg for the first year showed
+ * 69.1 kg on the cover, because 21 of its 27 sowings are first picked after the year ends.
+ * Both figures are right. These lines say which one this is. They change no number.
+ */
+export const BENCHMARK_TIME_BASIS_SHORT = 'every planned crop cycle counted once; not the harvest of the plan year';
+export const BENCHMARK_TIME_BASIS_LINE =
+  'This total counts every planned crop cycle once, whenever its first picking falls, including cycles first picked after the plan year shown on the cover. '
+  + 'It is not the harvest of that year. The year-by-year table groups the same crop cycles by the year of first picking.';
 
 // ── 1. Dashboard ────────────────────────────────────────────────────────────
 
@@ -203,7 +196,7 @@ export function buildPlanDashboard(
       detail: areaConflictBedLabels.length
         ? `resolve overlapping shares in ${areaConflictBedLabels.join(', ')}`
         : hasOwnRows ? 'own dated records need their checked source; catalogue total is withheld'
-          : hasKnownYield ? 'verified kg/m² crop entries only' : 'no verified kg/m² crop entry',
+          : hasKnownYield ? BENCHMARK_TIME_BASIS_SHORT : 'no verified kg/m² crop entry',
     },
     {
       // Same knownKg ÷ same areaM2 already above — never a separate estimate,
@@ -901,12 +894,17 @@ export interface PlanTableRow {
    *  year — the exact phantom-recurrence reading the `once` field exists to
    *  prevent, recreated in print. Consumers must mark these rows. */
   once: boolean;
-  /** A short WARNING for a frost-tender crop harvesting into SA's winter
-   *  (Jun-Jul) on a 'mild-frost' site — never null on a hard summer-frost or
-   *  frost-free site, since the catalog's own frost gate already keeps a
-   *  frost-tender crop out of the field there before its first harvest. Null
-   *  whenever no caveat applies. */
+  /** A short WARNING on a frost-tender crop's row, decided only by what the grower has told
+   *  the plan about frost (see buildPlanTableRows). Null whenever no caveat applies. It never
+   *  changes a month or a figure on the row. */
   frostCaveat: string | null;
+}
+
+function frostCaveatFor(planting: Planting, frostTender: boolean, pending: boolean, frost: PlanTableFrost | undefined): string | null {
+  if (!frost || !frostTender || pending || frost.kind === 'no-frost-observed') return null;
+  if (frost.kind === 'not-recorded') return FROST_UNCONFIRMED_ROW_TEXT;
+  const months = observedFrostConflictsForPlanting(planting, frost.nowMonth, frost.months);
+  return months.length ? frostRecordedRowText(months.map(monthShort)) : null;
 }
 
 /**
@@ -915,10 +913,26 @@ export interface PlanTableRow {
  * single "sow" column they used to share is what let nursery and field work
  * blur together in the first place.
  *
- * `mildFrostSite` gates the frost caveat only — it never changes what is
- * sown or when; see SA_WINTER_FROST_MONTHS.
+ * `frost` is what the GROWER has said about frost on this farm, and it alone decides the
+ * frost caveat on a frost-tender row (CP-108):
+ *   - months recorded: the row is marked when the crop still holds ground in one of them,
+ *     counted over its whole occupancy from now, picking months included, with those months
+ *     named. They are the grower's months; the plan supplies none.
+ *   - not recorded: every frost-tender row is marked, with no month named. The plan has no
+ *     frost date for the farm.
+ *   - "we have not seen frost here": no mark. It is the grower's observation.
+ *   - omitted (a caller that knows nothing about the survey): no mark, as before.
+ * Until 11 November 2026 the mark was instead given on a "mild-frost" calendar to rows whose
+ * harvest touched June or July. That window was a figure with no source (its own comment
+ * said so), it ignored an autumn or spring frost and the northern hemisphere, and it stood
+ * even when the grower had answered "no". A calendar's name is a reading of gridded climate
+ * records, not an observation, so it is no longer consulted here at all. A row for a sowing
+ * still awaiting confirmation, or for the grower's own dated record, is not marked: the
+ * production guide leaves those out of its frost check too, and the two must agree.
+ *
+ * The caveat never changes what is sown, when, or any kilogram figure.
  */
-export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[], mildFrostSite = false): PlanTableRow[] {
+export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[], frost?: PlanTableFrost): PlanTableRow[] {
   const rows: PlanTableRow[] = [];
   const unitByCrop = unitByCropKey(plantings, beds);
   for (const bed of beds) {
@@ -966,10 +980,7 @@ export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[], mildF
           : estimatedYieldKgAdjusted(p, bed.areaM2, plantings),
         once: typeof p.once === 'string',
         awaitingSowingConfirmation: pending,
-        frostCaveat: mildFrostSite && crop.frostTender && h !== null && end !== null
-          && monthRangeHits(h, end, SA_WINTER_FROST_MONTHS)
-          ? FROST_CAVEAT_TEXT
-          : null,
+        frostCaveat: frostCaveatFor(p, crop.frostTender === true, pending, frost),
       });
     });
   }

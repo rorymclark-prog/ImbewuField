@@ -2,8 +2,10 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { CROPS } from '../lib/crop-catalog.ts';
 import { resolvePlanningSupport } from '../lib/international/planning-support.ts';
+import { resolveProvisionalCropPlan, type ProvisionalDraftRequest, type ProvisionalFieldCandidate } from '../lib/international/provisional-crop-planning.ts';
+import type { CountrySource } from '../lib/international/countries/types.ts';
 import {
-  assessGrowerPlanning, isGrowerPlanningAssessmentCurrent, normaliseGrowerPlanningProfile,
+  assessGrowerPlanning, assessProvisionalGrowerPlanning, isGrowerPlanningAssessmentCurrent, normaliseGrowerPlanningProfile,
   normaliseGrowerPlanningScope, normaliseGrowerPlanningProfiles, growerPlanningScopeKey, type GrowerInput, type GrowerInputProvenance,
   type GrowerPlanningInputs, type GrowerPlanningProfile, type GrowerPlanningRequest,
   type GrowerPlanningScope,
@@ -285,4 +287,277 @@ test('complete grower arithmetic and forged approval flags never change country-
   assert.equal('countryCode' in result.snapshot.profile, false);
   assert.equal('productionPlanSupported' in result.snapshot.profile, false);
   assert.deepEqual(resolvePlanningSupport(policyInput), before);
+});
+
+
+test('a provisional date plan survives missing yield without inventing harvest kilograms', () => {
+  const input = request({ profile: profile({ yieldKgPerM2: missing }) });
+  const before = JSON.stringify(input);
+  const result = assessProvisionalGrowerPlanning(input);
+  assert.equal(result.status, 'partial-ready');
+  assert.equal(result.estimatedYieldKg.status, 'missing-inputs');
+  assert.equal(result.estimatedYieldKg.value, null);
+  assert.equal(result.estimatedPlantCount.value, 26);
+  assert.equal(result.schedule.firstHarvestDate.value, '2028-03-02');
+  assert.equal(result.schedule.nextFieldEntryDate.value, '2028-03-08');
+  assert.equal(result.sourceVerification, 'not-verified');
+  assert.equal(JSON.stringify(input), before);
+  assert.equal(assessGrowerPlanning(input).status, 'missing-inputs', 'legacy callers retain their full-input contract');
+});
+
+test('missing density leaves a supported provisional yield and date calculation available', () => {
+  const result = assessProvisionalGrowerPlanning(request({ profile: profile({ plantsPerM2: missing }) }));
+  assert.equal(result.estimatedPlantCount.value, null);
+  assert.deepEqual(result.estimatedPlantCount.issues, ['plantsPerM2']);
+  assert.equal(result.estimatedYieldKg.value, 42);
+  assert.equal(result.schedule.firstHarvestDate.value, '2028-03-02');
+});
+
+test('partial capacity does not require a fabricated crop duration or all-year window', () => {
+  const inputs: Record<string, unknown> = Object.fromEntries(Object.keys(profile().inputs).map(key => [key, missing]));
+  inputs.plantsPerM2 = provided(2.5, 'plants/m2');
+  const result = assessProvisionalGrowerPlanning(request({ profile: { ...profile(), inputs } }));
+  assert.equal(result.status, 'partial-ready');
+  assert.equal(result.estimatedPlantCount.value, 26);
+  assert.equal(result.estimatedYieldKg.value, null);
+  assert.equal(result.schedule.firstHarvestDate.value, null);
+  assert.equal(result.entryWindow, 'unknown');
+  assert.deepEqual(result.snapshot?.profile.inputs.allowedEntryMonths, missing);
+});
+
+test('valid zero area and zero entered yield remain arithmetic zeros rather than missing values', () => {
+  const zeroArea = assessProvisionalGrowerPlanning(request({ measuredAreaM2: provided(0, 'm2', observation) }));
+  assert.equal(zeroArea.estimatedPlantCount.value, 0);
+  assert.equal(zeroArea.estimatedYieldKg.value, 0);
+  const zeroYield = assessProvisionalGrowerPlanning(request({ profile: profile({ yieldKgPerM2: provided(0, 'kg/m2/cycle') }) }));
+  assert.equal(zeroYield.estimatedPlantCount.value, 26);
+  assert.equal(zeroYield.estimatedYieldKg.value, 0);
+  assert.equal(zeroYield.estimatedYieldKg.status, 'ready');
+});
+
+test('a chosen date with an unknown window stays conditional and an explicitly excluded date stays excluded', () => {
+  const conditional = assessProvisionalGrowerPlanning(request({ profile: profile({ allowedEntryMonths: missing }) }));
+  assert.equal(conditional.entryWindow, 'unknown');
+  assert.equal(conditional.status, 'partial-ready');
+  assert.ok(conditional.uncertainties.includes('entry-window-unknown'));
+  assert.equal(conditional.schedule.firstHarvestDate.value, '2028-03-02', 'offset arithmetic is conditional, not a sowing recommendation');
+  for (const months of [[], [1]]) {
+    const excluded = assessProvisionalGrowerPlanning(request({ profile: profile({ allowedEntryMonths: provided(months, 'utc-months') }) }));
+    assert.equal(excluded.entryWindow, 'excluded');
+    assert.equal(excluded.schedule.firstHarvestDate.status, 'excluded');
+    assert.equal(excluded.schedule.firstHarvestDate.value, null);
+    assert.equal(excluded.estimatedPlantCount.value, 26);
+  }
+});
+
+test('missing turnaround holds only the next entry while known contradictory occupancy is rejected', () => {
+  const partial = assessProvisionalGrowerPlanning(request({ profile: profile({ turnaroundDays: missing }) }));
+  assert.equal(partial.schedule.fieldClearDate.value, '2028-03-07');
+  assert.equal(partial.schedule.nextFieldEntryDate.value, null);
+  const contradiction = assessProvisionalGrowerPlanning(request({ profile: profile({ fieldOccupancyDays: provided(4, 'days') }) }));
+  assert.equal(contradiction.schedule.fieldClearDate.status, 'invalid-inputs');
+  assert.equal(contradiction.schedule.nextFieldEntryDate.value, null);
+  assert.equal(contradiction.estimatedPlantCount.value, 26);
+});
+
+test('scope mismatches and malformed provided values cannot produce partial planning outputs', () => {
+  const mismatch = assessProvisionalGrowerPlanning(request({ scope: mapped }));
+  assert.equal(mismatch.status, 'scope-mismatch');
+  assert.equal(mismatch.estimatedPlantCount.value, null);
+  assert.equal(mismatch.schedule.firstHarvestDate.value, null);
+  const malformed = assessProvisionalGrowerPlanning(request({ profile: profile({ yieldKgPerM2: provided(-1, 'kg/m2/cycle') }) }));
+  assert.equal(malformed.status, 'invalid-inputs');
+  assert.equal(malformed.snapshot, null);
+  assert.equal(malformed.estimatedPlantCount.value, null);
+});
+
+test('provisional snapshots and outputs are immutable and keep direct establishment free of invented nursery dates', () => {
+  const result = assessProvisionalGrowerPlanning(request({ profile: profile({ establishment: provided('direct', 'method'), nurseryDays: missing }) }));
+  assert.equal(result.schedule.nurseryStartDate.status, 'not-applicable');
+  assert.equal(result.schedule.nurseryStartDate.value, null);
+  assert.equal(result.status, 'ready');
+  assert.ok(Object.isFrozen(result));
+  assert.ok(Object.isFrozen(result.schedule));
+  assert.ok(Object.isFrozen(result.snapshot?.profile.inputs));
+});
+
+
+// Synthetic source metadata and values below exercise contracts, never regional farming advice.
+const provisionalSource: CountrySource = {
+  id: 'engineering-fixture', category: 'agricultural-extension', authority: 'Engineering fixture',
+  title: 'Synthetic evidence, not application data', url: 'https://example.org/fixture', coverage: 'Synthetic scope',
+  resolution: { status: 'unknown', reason: 'Synthetic fixture' }, units: { status: 'known', value: 'Explicit fixture units' },
+  updateCadence: { status: 'unknown', reason: 'Synthetic fixture' },
+  licence: { status: 'known', value: 'Synthetic reuse fixture; no real rights assertion' },
+  attribution: 'Engineering fixture', accessRequirements: { status: 'known', value: 'Synthetic only' },
+  missingDataBehavior: 'Unknown', verification: 'content-read', accessedOn: '2026-11-03',
+  publishedOn: '2026-01-01', reviewDueOn: '2027-01-01', verifiedClaim: 'Synthetic values only', limitations: 'Not for application use',
+};
+
+function provisionalCandidate(id: string, input: unknown = provided(2.5, 'plants/m2', external),
+  changes: Partial<ProvisionalFieldCandidate> = {}): ProvisionalFieldCandidate {
+  return { id, field: 'plantsPerM2', input, tier: 'local-public-evidence', cropKey: CROPS[0].key,
+    geography: { kind: 'country', countryCode: 'KE' }, establishment: 'any', waterRegime: 'any',
+    temporalScope: { kind: 'recurring-season' }, source: provisionalSource, reuseReview: 'reviewed', assumptions: [], ...changes };
+}
+function provisionalRequest(candidates: ProvisionalFieldCandidate[], changes: Partial<ProvisionalDraftRequest> = {}): ProvisionalDraftRequest {
+  return { profileId: 'synthetic-provisional', cropKey: CROPS[0].key, context: { scope: mapped, countryCode: 'KE',
+    agriculturalRegionReference: null, establishment: 'transplant', waterRegime: 'irrigated' },
+    recordedAt, asOf: '2026-11-10', candidates, measuredAreaM2: provided(10.5, 'm2', observation),
+    fieldEntryDate: provided('2028-02-28', 'utc-date'), ...changes };
+}
+function resolvedDraft(input: ProvisionalDraftRequest) {
+  const result = resolveProvisionalCropPlan(input);
+  assert.equal(result.status, 'resolved');
+  if (result.status !== 'resolved') throw new Error('Expected resolved provisional draft');
+  return result;
+}
+
+test('applicable local defaults outrank labelled transfers without certifying a provisional draft', () => {
+  const local = provisionalCandidate('local');
+  const transfer = provisionalCandidate('transfer', provided(3, 'plants/m2', external), { tier: 'climate-crop-derived',
+    geography: { kind: 'explicit-transfer', assumption: 'Synthetic transfer, not local evidence' }, assumptions: ['Synthetic uncertainty'] });
+  const result = resolvedDraft(provisionalRequest([transfer, local]));
+  assert.equal(result.fields.plantsPerM2.activeTier, 'local-public-evidence');
+  assert.equal(result.assessment.estimatedPlantCount.value, 26);
+  assert.equal(result.countryOrRegionApproval, false);
+  assert.equal(result.knownPlantLegalityEstablished, false);
+  assert.equal(result.sourceVerification, 'not-verified');
+  assert.equal(result.densityEstimateNotLayoutClearance, true);
+});
+
+test('a deliberate grower override is used while the original source default remains available', () => {
+  const result = resolvedDraft(provisionalRequest([provisionalCandidate('local')], {
+    overrides: { plantsPerM2: provided(5, 'plants/m2', external) },
+  }));
+  const field = result.fields.plantsPerM2;
+  assert.equal(field.status, 'overridden');
+  assert.equal(field.activeInput.state, 'provided');
+  if (field.activeInput.state === 'provided') assert.equal(field.activeInput.provenance.kind, 'grower-estimate');
+  assert.equal(field.baselineDefault?.state, 'provided');
+  if (field.baselineDefault?.state === 'provided') assert.equal(field.baselineDefault.value, 2.5);
+  assert.equal(result.assessment.estimatedPlantCount.value, 52);
+  assert.deepEqual(field.sourceReferences, ['https://example.org/fixture']);
+});
+
+test('invalid grower edits never silently restore the automatic default', () => {
+  const result = resolvedDraft(provisionalRequest([provisionalCandidate('local')], {
+    overrides: { plantsPerM2: provided(Number.NaN, 'plants/m2') },
+  }));
+  assert.equal(result.fields.plantsPerM2.status, 'invalid-override');
+  assert.equal(result.fields.plantsPerM2.baselineDefault?.state, 'provided');
+  assert.equal(result.assessment.estimatedPlantCount.value, null);
+});
+
+test('equal-priority evidence conflicts are visible and independent of source array order', () => {
+  const candidates = [provisionalCandidate('a'), provisionalCandidate('b', provided(3.5, 'plants/m2', external))];
+  const result = resolvedDraft(provisionalRequest(candidates));
+  const reversed = resolvedDraft(provisionalRequest([...candidates].reverse()));
+  assert.equal(result.fields.plantsPerM2.status, 'conflict');
+  assert.equal(result.fields.plantsPerM2.defaultConflict, true);
+  assert.equal(result.fields.plantsPerM2.defaultOptions.length, 2);
+  assert.equal(result.assessment.estimatedPlantCount.value, null);
+  assert.equal(result.fingerprint, reversed.fingerprint);
+});
+
+test('country, region, method, water and variety mismatches cannot populate automatic defaults', () => {
+  const candidates = [
+    provisionalCandidate('country', undefined, { geography: { kind: 'country', countryCode: 'GB' } }),
+    provisionalCandidate('region', undefined, { geography: { kind: 'region', countryCode: 'KE', regionReference: 'different-region' } }),
+    provisionalCandidate('method', undefined, { establishment: 'direct' }),
+    provisionalCandidate('water', undefined, { waterRegime: 'rain-fed' }),
+    provisionalCandidate('variety', undefined, { varietyReference: 'synthetic-variety-reference' }),
+  ];
+  const result = resolvedDraft(provisionalRequest(candidates));
+  assert.equal(result.assessment.estimatedPlantCount.value, null);
+  assert.equal(result.rejected.length, 5);
+  assert.ok(result.rejected.every(value => value.reason === 'scope-mismatch'));
+});
+
+test('stale sources and unreviewed reuse stay out of automatic defaults', () => {
+  for (const source of [{ ...provisionalSource, reviewDueOn: '2026-01-02' }, { ...provisionalSource, publishedOn: null }]) {
+    const result = resolvedDraft(provisionalRequest([provisionalCandidate('local', undefined, { source })]));
+    assert.equal(result.assessment.estimatedPlantCount.value, null);
+    assert.equal(result.rejected[0].reason, 'source-or-reuse-unverified');
+  }
+  const result = resolvedDraft(provisionalRequest([provisionalCandidate('local', undefined, { reuseReview: 'not-reviewed' })]));
+  assert.equal(result.rejected[0].reason, 'source-or-reuse-unverified');
+});
+
+test('exclusion-only climate evidence cannot manufacture an all-year planting window', () => {
+  const result = resolvedDraft(provisionalRequest([provisionalCandidate('window', provided([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'utc-months', external), {
+    field: 'allowedEntryMonths', tier: 'climate-crop-derived', assumptions: ['Synthetic heat exclusion only'], positiveWindowEvidence: false,
+  })]));
+  assert.equal(result.profile.inputs.allowedEntryMonths.state, 'missing');
+  assert.equal(result.rejected[0].reason, 'positive-window-evidence-missing');
+});
+
+test('known planting restrictions cannot be cleared by a grower override', () => {
+  const input = provisionalRequest([provisionalCandidate('local')], { knownPlantingRestriction: true,
+    overrides: { plantsPerM2: provided(5, 'plants/m2') } });
+  const before = JSON.stringify(input);
+  const result = resolveProvisionalCropPlan(input);
+  assert.equal(result.status, 'restricted');
+  assert.equal(result.profile, null);
+  assert.equal(JSON.stringify(input), before);
+});
+
+test('country dossiers are not a blanket gate for clearly labelled grower-derived provisional arithmetic', () => {
+  for (const countryCode of ['KE', 'GB', 'US', 'BR', 'OTHER', 'IN', 'CA']) {
+    const candidate = provisionalCandidate('grower', provided(2.5, 'plants/m2'), { tier: 'grower-estimate', source: undefined,
+      geography: { kind: 'explicit-transfer', assumption: 'Synthetic grower estimate; local suitability unknown' } });
+    const input = provisionalRequest([candidate]);
+    const result = resolvedDraft({ ...input, context: { ...input.context, countryCode } });
+    assert.equal(result.assessment.estimatedPlantCount.value, 26);
+    assert.equal(result.fields.plantsPerM2.activeTier, 'grower-estimate');
+    assert.equal(result.countryOrRegionApproval, false);
+  }
+});
+
+test('dated evidence and historical transfers retain their actual applicability limits', () => {
+  const result = resolvedDraft(provisionalRequest([provisionalCandidate('dated', undefined, {
+    temporalScope: { kind: 'dated', fromDate: '2026-01-01', throughDate: '2027-01-01' },
+  })]));
+  assert.equal(result.rejected[0].reason, 'time-scope-mismatch');
+  const historical = resolvedDraft(provisionalRequest([provisionalCandidate('historical', undefined, {
+    temporalScope: { kind: 'historical-transfer', period: 'Synthetic historical period', assumption: 'Synthetic transfer' },
+  })]));
+  assert.equal(historical.rejected[0].reason, 'historical-transfer-unjustified');
+});
+
+test('reported ranges remain visible and unsupported endpoint selection is rejected', () => {
+  const range = [2, 4] as const;
+  const candidate = provisionalCandidate('range', provided(2, 'plants/m2', external), { reportedRange: range, planningValueBasis: 'lower-bound' });
+  const result = resolvedDraft(provisionalRequest([candidate]));
+  assert.deepEqual(result.fields.plantsPerM2.defaultReportedRange, [2, 4]);
+  assert.equal(result.assessment.estimatedPlantCount.value, 21);
+  assert.equal(Object.isFrozen(range), false, 'freezing a draft must not mutate caller-owned evidence');
+  const invalid = resolvedDraft(provisionalRequest([{ ...candidate, input: provided(2.5, 'plants/m2', external) }]));
+  assert.equal(invalid.rejected[0].reason, 'range-or-selection-mismatch');
+});
+
+test('source metadata changes invalidate a provisional fingerprint even when the arithmetic value stays the same', () => {
+  const first = resolvedDraft(provisionalRequest([provisionalCandidate('local')]));
+  const second = resolvedDraft(provisionalRequest([provisionalCandidate('local', undefined, {
+    source: { ...provisionalSource, publishedOn: '2026-01-02' },
+  })]));
+  assert.equal(first.assessment.estimatedPlantCount.value, second.assessment.estimatedPlantCount.value);
+  assert.notEqual(first.fingerprint, second.fingerprint);
+  assert.equal(Object.isFrozen(first.fields.plantsPerM2.sourceBindings), true);
+});
+
+
+test('historical or undated evidence can inform a disclosed estimate without inventing a publication date', () => {
+  const candidate = provisionalCandidate('historical-estimate', undefined, { tier: 'climate-crop-derived',
+    geography: { kind: 'explicit-transfer', assumption: 'Synthetic transfer, not current local evidence' },
+    temporalScope: { kind: 'historical-transfer', period: 'Undated synthetic reference', assumption: 'Applicability remains uncertain' },
+    assumptions: ['Synthetic estimate from an undated source'], source: { ...provisionalSource, publishedOn: null } });
+  const result = resolvedDraft(provisionalRequest([candidate]));
+  assert.equal(result.assessment.estimatedPlantCount.value, 26);
+  assert.equal(result.fields.plantsPerM2.activeTier, 'climate-crop-derived');
+  assert.equal(result.fields.plantsPerM2.sourceBindings[0].publishedOn, null);
+  assert.equal(result.fields.plantsPerM2.sourceBindings[0].evidenceState, 'undated');
+  assert.ok(result.fields.plantsPerM2.assumptions.includes('Applicability remains uncertain'));
+  const future = resolvedDraft(provisionalRequest([{ ...candidate, source: { ...provisionalSource, accessedOn: '2027-01-01' } }]));
+  assert.equal(future.assessment.estimatedPlantCount.value, null);
 });
