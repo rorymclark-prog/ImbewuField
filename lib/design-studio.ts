@@ -785,7 +785,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
   const storagePieces = surveyWaterStorage.filter((s) => s !== 'none');
   const waterStorageNote = storagePieces.length
     ? `Existing storage: ${storagePieces.join(', ')}.`
-    : 'No on-site storage yet — even one 5 000 L JoJo tank makes a big difference.';
+    : 'No storage capacity is recorded. Record existing storage and available water before choosing a tank.';
 
   // Roof harvest human-readable
   const roofHarvestNote = waterCalc.roofHarvestAnnualKL != null
@@ -793,7 +793,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
     : roofOnly.length === 0 && (survey?.roofMainM2 ?? 0) === 0
       ? 'Roof area not yet mapped or surveyed — add it to calculate harvest potential.'
       : annualRainfall == null
-        ? 'Rainfall data not loaded — reload the location to get harvest estimates.'
+        ? 'Annual rainfall is not known from a supported source, so roof harvest cannot be calculated.'
         : null;
 
   const householdNeedNote = `Household need (${householdLabel} × 50 L/day): ~${waterCalc.householdDailyLitres} L/day, ~${Math.round(waterCalc.householdMonthlyLitres / 1000)} kL/month. A 90-day dry-season buffer needs ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL stored.`;
@@ -1044,7 +1044,9 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
           waterCalc.roofHarvestAnnualLitres != null && waterCalc.roofHarvestAnnualLitres > 0
             ? `To store a 90-day household buffer (${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL), you need tanks sized to that volume minimum. A 5 000 L JoJo tank costs roughly R2 000–R3 500 — compare that to what you currently pay for water or trucking.`
             : '',
-          annualRainfall === 0
+          annualRainfall === null
+            ? 'Roof-water supply is not known. Record supported rainfall and review the roof and gutters before choosing collection or storage equipment.'
+            : annualRainfall === 0
             ? 'The recorded annual rainfall gives no roof-water supply. Review the rainfall source and other available water before choosing gutters or storage.'
             : hasGutters
             ? 'Gutters in place — make sure each downpipe has a first-flush diverter (cheap to build) to keep the tank clean.'
@@ -1085,7 +1087,9 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
         title: 'Highest-return first moves',
         body: [
           'The sequence that works on almost every SA smallholding: (1) fix the water system, (2) fence a small intensive Zone 1, (3) build soil with compost, then (4) expand planting. Skipping steps wastes effort.',
-          annualRainfall === 0
+          annualRainfall === null
+            ? 'Roof-water supply is not known. Record rainfall evidence and roof measurements before deciding whether collection equipment is appropriate.'
+            : annualRainfall === 0
             ? 'The recorded annual rainfall gives no roof-water supply. Review the rainfall evidence and other available water before buying a tank.'
             : waterCalc.roofHarvestAnnualKL != null
             ? `Your roof can catch ~${numberLabel(waterCalc.roofHarvestAnnualKL)} kL/year — if you only do one thing this season, connect gutters to a tank.`
@@ -1128,7 +1132,9 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
       {
         title: 'Water infrastructure upgrades',
         body: [
-          annualRainfall === 0
+          annualRainfall === null
+            ? 'Record rainfall evidence, available water and demand before sizing storage.'
+            : annualRainfall === 0
             ? 'A tank cannot supply water from the recorded zero rainfall. Establish the available water supply before sizing storage.'
             : waterCalc.roofHarvestAnnualKL != null && waterCalc.dryBufferLitres90Day > 0
             ? `Tank sizing guide: roof harvest ~${numberLabel(waterCalc.roofHarvestAnnualKL)} kL/year, 90-day household buffer ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL. If harvest > buffer, one good rainy season fills your reserve. If not, supplement with a borehole or grey-water reuse.`

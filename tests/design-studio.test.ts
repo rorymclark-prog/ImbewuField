@@ -212,6 +212,9 @@ test('plan water harvest derives from the shared runoff authority', () => {
   );
   const unknown = generateGeometryDesignPlan(state, location({ rainfall: { annual: rainfallMm, pattern: 'summer' } }));
   assert.equal(unknown.waterCalc?.roofHarvestAnnualLitres, null);
+  assert.match(allPlanText(unknown), /Roof-water supply is not known/);
+  assert.match(allPlanText(unknown), /No storage capacity is recorded/);
+  assert.doesNotMatch(allPlanText(unknown), /weekend project that pays back|JoJo tank makes a big difference|No on-site storage yet|connect gutters to a tank|tanks sized to that volume minimum/);
   const zero = generateGeometryDesignPlan(state, location({ rainfall: { annual: 0, pattern: 'summer', rainfallSource: 'nasa-power' } }));
   assert.equal(zero.waterCalc?.roofHarvestAnnualLitres, 0);
   assert.equal(zero.waterCalc?.rainfallMmUsed, 0);
