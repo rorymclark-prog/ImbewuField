@@ -133,7 +133,7 @@ after(() => {
 
 test('source review steps distinguish absent evidence, unusable dates, overdue review and dated reference without approving advice', () => {
   const source: CountrySource = { ...structuredClone(COUNTRY_PROFILES[0].sources[0]),
-    publishedOn: '2026-10-01', accessedOn: '2026-11-01', reviewDueOn: '2026-12-01', verification: 'content-read' };
+    publishedOn: '2026-10-01', publishedMonth: null, accessedOn: '2026-11-01', reviewDueOn: '2026-12-01', verification: 'content-read' };
   const cases: Array<[Partial<CountrySource>, RegExp, RegExp]> = [
     [{}, /Dated reference evidence/, /Check the recorded coverage, units and licence/],
     [{ verification: 'unavailable' }, /Full source evidence not recorded/, /Read the full official source/],

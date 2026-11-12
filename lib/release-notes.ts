@@ -41,6 +41,21 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '12 November 2026', sha: 'ad2cdefcf', changes: [
+    'Choose cowpea leaf production and growth habit to view the matching Kenya source reference.',
+    'Cowpea source ranges stay separate from your density estimates and unknown harvest dates.',
+    'Returning to an earlier region requires a fresh preview and source choice.',
+    'Choose a sourced Kenya transplant method; unsupported numbers stay unknown.',
+    'Month-only source dates keep their unknown publication day visible.',
+    'Download a printable crop preview with your inputs, sources and unknowns.',
+    'Preview controls keep working overnight. Unconfirmed save warnings stay visible.',
+    'Printable previews show when saved measurements were read.',
+    'Each evidence section stays together when printing a crop preview.',
+  ] },
+  { when: '12 November 2026', sha: '8aeba000e8fbbb025a9b157174a47cd2fdd92585', changes: [
+    'Preview crop counts and dates from your measured bed and your estimates.',
+    'Your saved plan stays unchanged. Edit your inputs, then calculate a fresh preview.',
+  ] },
   { when: '10 November 2026', sha: '889438f66e2df0557bc1b07061b09a2e94b7f5a8', changes: [
     'Choose your own sowing calendar if you know your land better than the climate records.',
     'The crop plan lists planned sowings that are outside your sowing months.',

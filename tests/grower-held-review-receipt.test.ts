@@ -155,10 +155,11 @@ for (const completed of ['confirmed', 'superseded'] as const) test(`${completed}
   } finally { ui.dispose(); }
 });
 
-test('an explicit source refresh keeps its reset but a still-held book does not gain the no-write sentence', async () => {
+test('source refresh preserves a completed-unconfirmed write warning until the crop book is re-admitted', async () => {
   const ui = await fixture(); try {
-    await save(ui, 'superseded'); await ui.click('Check saved design'); assert.equal(ui.latest.acceptance.status, 'idle');
-    assert.doesNotMatch(ui.text(), unconfirmed); assert.equal(ui.controller.readCurrentGrowerBook().status, 'held');
+    // Refreshing measurements cannot establish the outcome of a completed crop-book write.
+    await save(ui, 'superseded'); await ui.click('Check saved design'); assert.equal(ui.latest.acceptance.status, 'superseded');
+    assert.match(ui.text(), unconfirmed); assert.equal(ui.controller.readCurrentGrowerBook().status, 'held');
     const writes = local.writes; await ui.click('Review automatic crop plan'); assert.equal(ui.lastReview?.status, 'held');
     assert.doesNotMatch(ui.text(), noWrite); assert.equal(ui.saveButton(), undefined); assert.equal(local.writes, writes);
   } finally { ui.dispose(); }
@@ -219,14 +220,14 @@ test('a held review before any write has neither a completed receipt nor an asse
   } finally { ui.dispose(); }
 });
 
-test('completed writes block retained Save and direct old acceptance while source refresh remains an explicit reset', async () => {
+test('completed writes block replay and a measurement refresh preserves unresolved write warnings', async () => {
   for (const completed of ['confirmed', 'superseded'] as const) {
     await reset(); const ui = await fixture(); try {
       const retained = ui.saveButton()!.props.onClick, original = ui.lastReview as Review;
       await save(ui, completed); const writes = local.writes, bytes = readCanonicalCropPlanFixtureRaw();
       await act(async () => { retained(); assert.equal((await ui.latest.onAccept(original)).status, 'held'); });
       assert.equal(ui.latest.acceptance.status, completed); assert.equal(local.writes, writes); assert.equal(readCanonicalCropPlanFixtureRaw(), bytes);
-      await ui.click('Check saved design'); assert.equal(ui.latest.acceptance.status, 'idle'); assert.equal(ui.saveButton(), undefined);
+      await ui.click('Check saved design'); assert.equal(ui.latest.acceptance.status, completed === 'superseded' ? 'superseded' : 'idle'); assert.equal(ui.saveButton(), undefined);
       await act(async () => retained()); assert.equal(local.writes, writes);
     } finally { ui.dispose(); }
   }

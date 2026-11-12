@@ -19,7 +19,9 @@ const AS_OF = '2026-11-01';
 function reviewedFixture(): CountryProfile {
   const profile = structuredClone(COUNTRY_PROFILES[0]);
   profile.regions = [{ id: 'test-region', name: 'Synthetic test review scope', definitionSourceId: profile.sources[0].id, status: 'reviewed' }];
-  profile.sources = profile.sources.map((source) => ({ ...source, publishedOn: '2026-10-01', accessedOn: AS_OF,
+  // This fixture replaces publication evidence; do not retain a real month-only date
+  // alongside its synthetic exact day when new sources are added to the registry.
+  profile.sources = profile.sources.map((source) => ({ ...source, publishedOn: '2026-10-01', publishedMonth: null, accessedOn: AS_OF,
     reviewDueOn: '2026-12-01', verification: 'content-read' }));
   profile.agronomyReview = { status: 'reviewed', regionId: 'test-region', reviewedOn: '2026-10-20', validThrough: '2026-12-01',
     reviewer: 'Synthetic reviewer for a test only', sourceIds: profile.sources.map((source) => source.id) };
@@ -40,7 +42,10 @@ test('all engineering pilots preserve separate evidence roles and remain unrevie
     assert.equal(profile.stage, 'engineering-pilot'); assert.equal(profile.agronomyReview.status, 'not-reviewed');
     for (const category of EVIDENCE_CATEGORIES) assert.ok(profile.sources.some((source) => source.category === category));
     for (const source of profile.sources) {
-      assert.match(source.url, /^https:\/\//); assert.equal(source.accessedOn, AS_OF);
+      assert.match(source.url, /^https:\/\//);
+      // Sources are checked on different real days; preserve valid access dates, not one frozen discovery day.
+      assert.equal(typeof source.accessedOn, 'string');
+      assert.doesNotThrow(() => sourceEvidenceState(source, source.accessedOn!));
       assert.ok(source.verifiedClaim && source.limitations && source.missingDataBehavior);
       assert.ok(['known', 'unknown'].includes(source.licence.status));
     }
