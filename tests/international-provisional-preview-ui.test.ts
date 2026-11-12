@@ -379,3 +379,48 @@ test('real Kenya reference is opt-in, keeps numbers unknown, and requires new co
     assert.deepEqual(ui.writes, []);
   } finally { ui.dispose(); }
 });
+
+
+test('returning to the same region cannot revive old consent, results or retained callbacks', async () => {
+  let checks = 0;
+  const ui = mount({ evidence: undefined, agriculturalRegionReference: 'Central Kenya',
+    onCheckSource: async () => { checks++; return { isCurrent: () => true }; } });
+  try {
+    ui.change('Preview crop', 'cabbage'); ui.change('Preview measured bed', 'bed-1');
+    const consent = () => ui.field('Use this transplant-method reference for this preview');
+    const oldConsent = consent().props.onChange;
+    act(() => oldConsent({ target: { checked: true } })); await ui.click();
+    assert.match(ui.text(), /Establishment method: transplant/);
+    const oldCalculate = ui.action('Calculate provisional preview'), oldExport = ui.action('Download printable preview');
+    ui.update({ agriculturalRegionReference: 'Nairobi' });
+    ui.update({ agriculturalRegionReference: 'Central Kenya' });
+    assert.equal(consent().props.checked, false, 'A return to equal text is a new context, not restored consent');
+    assert.doesNotMatch(ui.text(), /Provisional results/);
+    const before = checks;
+    act(() => oldConsent({ target: { checked: true } }));
+    assert.equal(consent().props.checked, false, 'Retained consent callback must be retired');
+    await act(async () => { await oldCalculate(); await oldExport(); });
+    assert.equal(checks, before, 'Retired callbacks must not start source checks or downloads');
+    await ui.click(); assert.match(ui.text(), /Establishment method: Unknown/);
+    act(() => consent().props.onChange({ target: { checked: true } })); await ui.click();
+    assert.match(ui.text(), /Establishment method: transplant/);
+    assert.deepEqual(ui.writes, []);
+  } finally { ui.dispose(); }
+});
+
+test('a source check begun before a region round trip cannot publish in the returned context', async () => {
+  let finish!: (value: { isCurrent: () => boolean }) => void;
+  const ui = mount({ evidence: undefined, agriculturalRegionReference: 'Central Kenya',
+    onCheckSource: () => new Promise(resolve => { finish = resolve; }) });
+  try {
+    ui.change('Preview crop', 'cabbage'); ui.change('Preview measured bed', 'bed-1');
+    act(() => ui.field('Use this transplant-method reference for this preview').props.onChange({ target: { checked: true } }));
+    let pending!: Promise<void>;
+    act(() => { pending = ui.action('Calculate provisional preview')(); });
+    ui.update({ agriculturalRegionReference: 'Nairobi' }); ui.update({ agriculturalRegionReference: 'Central Kenya' });
+    await act(async () => { finish({ isCurrent: () => true }); await pending; });
+    assert.doesNotMatch(ui.text(), /Provisional results/);
+    assert.equal(ui.field('Use this transplant-method reference for this preview').props.checked, false);
+    assert.deepEqual(ui.writes, []);
+  } finally { ui.dispose(); }
+});

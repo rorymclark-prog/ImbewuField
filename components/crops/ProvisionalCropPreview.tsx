@@ -61,26 +61,31 @@ function Editor(props: ProvisionalCropPreviewProps) {
   useEffect(() => { active.current = true; return () => { active.current = false; }; }, []);
   const [draft, setDraft] = useState<Draft>({ crop: '', bed: '', date: '', method: '', water: '', variety: '', values: {}, months: null, regionalConsent: null });
   const draftLive = useRef(draft); draftLive.current = draft;
-  const [preview, setPreview] = useState<{ binding: string; draft: Draft; result: Resolution; request: ProvisionalDraftRequest; bedLabel: string; receipt: { isCurrent: () => boolean } } | null>(null);
+  const [preview, setPreview] = useState<{ binding: string; generation: number; draft: Draft; result: Resolution; request: ProvisionalDraftRequest; bedLabel: string; receipt: { isCurrent: () => boolean } } | null>(null);
   const previewLive = useRef(preview); previewLive.current = preview;
   const [error, setError] = useState('');
   const [exportMessage, setExportMessage] = useState('');
   const pending = useRef<object | null>(null);
   const [checkingSource, setCheckingSource] = useState(false);
   const environment = binding(props);
+  // Equal values after a context round trip are not continuous authority. Retire
+  // consent, results and retained callbacks even when A -> B -> A looks identical.
+  const context = useRef({ environment, generation: 0 });
+  if (context.current.environment !== environment) context.current = { environment, generation: context.current.generation + 1 };
+  const generation = context.current.generation;
   const regionalReference = worldvegKenyaCabbageReference(props.countryCode, draft.crop);
   const regionalMatch = worldvegKenyaCabbageRegionMatches(props.agriculturalRegionReference);
-  const regionalConsentKey = environment === null ? null : JSON.stringify([environment, draft.crop]);
+  const regionalConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop]);
   const useRegionalMethod = regionalConsentKey !== null && draft.regionalConsent === regionalConsentKey && regionalMatch;
   const source = props.source;
   const sourceReady = !!source && growerWorkflowResourceSiteId(source) !== null
     && growerPlanningScopeKey(source.scope) === growerPlanningScopeKey(props.scope) && !props.checking;
-  const result = props.actorIsCurrent() && sourceReady && environment !== null && preview?.binding === environment
+  const result = props.actorIsCurrent() && sourceReady && environment !== null && preview?.binding === environment && preview.generation === generation
     && preview.draft === draft && preview.request.asOf === new Date().toISOString().slice(0, 10)
     && preview.receipt.isCurrent() ? preview.result : null;
   function isCurrent() {
     return active.current && current.current.actorIsCurrent() && environment !== null
-      && binding(current.current) === environment && draftLive.current === draft;
+      && context.current.generation === generation && binding(current.current) === environment && draftLive.current === draft;
   }
   function edit(next: Partial<Draft>) {
     if (!isCurrent()) return;
@@ -132,7 +137,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
           ...(measures[0].arithmeticBasis ? { arithmeticBasis: measures[0].arithmeticBasis } : {}) },
         fieldEntryDate: draft.date ? supplied(draft.date, 'utc-date') : { state: 'missing', reason: 'not-entered' } });
       const next = resolveProvisionalCropPlan(request);
-      if (isCurrent() && receipt.isCurrent()) setPreview({ binding: environment!, draft, result: next, request, bedLabel: beds[0].label, receipt });
+      if (isCurrent() && receipt.isCurrent()) setPreview({ binding: environment!, generation, draft, result: next, request, bedLabel: beds[0].label, receipt });
     } catch { if (isCurrent()) setError('Could not check this preview. Check the saved measurements and evidence again.'); }
     finally { if (pending.current === token) { pending.current = null; if (active.current) setCheckingSource(false); } }
   }
