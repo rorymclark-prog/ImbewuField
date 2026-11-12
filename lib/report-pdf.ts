@@ -478,6 +478,27 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
 
   // ── Body ───────────────────────────────────────────────────────────────────
   const blocks = parseReportMarkdown(markdown);
+  const tableLine = 11, tableGap = 4, tableClearance = 4;
+  const freshPageRoom = BOTTOM - M - 8;
+  const rowHeight = (lines: number) => lines * tableLine + tableGap;
+  const measureTable = (table: Extract<ReportBlock, { kind: 'table' }>) => {
+    const widths = layoutTableColumns(table.headers, table.rows, CW);
+    const measure = (cells: string[], bold: boolean) => {
+      const font = doc.getFont(), size = doc.getFontSize();
+      doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(8.5);
+      const wrapped = table.headers.map((_, c) =>
+        doc.splitTextToSize(cells[c] ?? '', Math.max(10, widths[c] - 8)) as string[]);
+      doc.setFont(font.fontName, font.fontStyle); doc.setFontSize(size);
+      return { wrapped, lines: Math.max(1, ...wrapped.map(cell => cell.length)) };
+    };
+    return { widths, measure, header: measure(table.headers, true) };
+  };
+  // Reserve a whole ordinary row. An oversized row must start with its header
+  // and then continue at normal type size, rather than demand an impossible fit.
+  const tableStartRoom = (headerLines: number, bodyLines: number) => {
+    const header = rowHeight(headerLines), body = bodyLines ? rowHeight(bodyLines) : 0;
+    return header + (header + body + tableClearance <= freshPageRoom ? body : bodyLines ? rowHeight(1) : 0) + tableClearance;
+  };
   /** Room the first thing under a chapter heading needs. A heading is only kept on a page when
    * its own text will start there too — never left behind by a paragraph that jumps the page. */
   const openingRoom = (from: number): number => {
@@ -488,15 +509,9 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
         const next = blocks[k];
         if (next.kind === 'h2' || next.kind === 'title') break;
         if (next.kind === 'table') {
-          const widths = layoutTableColumns(next.headers, next.rows, CW);
-          doc.setFontSize(8.5);
-          const rowRoom = (cells: string[], bold: boolean) => {
-            doc.setFont('helvetica', bold ? 'bold' : 'normal');
-            return Math.max(1, ...next.headers.map((_, column) =>
-              (doc.splitTextToSize(cells[column] ?? '', Math.max(10, widths[column] - 8)) as string[]).length,
-            )) * 11 + 8;
-          };
-          room += 16 + rowRoom(next.headers, true) + (next.rows[0] ? rowRoom(next.rows[0], false) : 0);
+          const table = measureTable(next);
+          const first = next.rows[0] ? table.measure(next.rows[0], false).lines : 0;
+          room += 8 + tableStartRoom(table.header.lines, first);
           break;
         }
         doc.setFont('helvetica', next.kind === 'h3' || next.kind === 'bold' ? 'bold' : 'normal');
@@ -596,37 +611,58 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
         break;
       }
       case 'table': {
-        const widths = layoutTableColumns(block.headers, block.rows, CW);
-        const drawRow = (cells: string[], bold: boolean) => {
-          doc.setFont('helvetica', bold ? 'bold' : 'normal');
-          doc.setFontSize(8.5);
-          const wrapped = block.headers.map((_, c) =>
-            doc.splitTextToSize(cells[c] ?? '', Math.max(10, widths[c] - 8)) as string[],
-          );
-          const tallest = Math.max(1, ...wrapped.map((w) => w.length));
-          const fullHeight = tallest * 11 + 8;
-          // Keep ordinary rows intact, then split only a row too tall for a page.
-          if (y + fullHeight > BOTTOM && y > M + 8) {
-            newPage();
-            if (!bold) drawRow(block.headers, true);
-          }
-          let offset = 0;
-          while (offset < tallest) {
-            if (BOTTOM - y < 19) { newPage(); if (!bold) drawRow(block.headers, true); }
-            const take = Math.max(1, Math.min(tallest - offset, Math.floor((BOTTOM - y - 8) / 11)));
-            doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(8.5);
-            let x = M;
-            setInk(bold ? INK.muted : INK.text);
-            wrapped.forEach((w, c) => { const chunk = w.slice(offset, offset + take); if (chunk.length) doc.text(chunk, x + 2, y); x += widths[c]; });
-            y += take * 11 + 4;
-            doc.setDrawColor(210, 215, 211); doc.line(M, y - 6, PW - M, y - 6);
-            offset += take;
-            if (offset < tallest) { newPage(); if (!bold) drawRow(block.headers, true); }
+        const { widths, measure, header } = measureTable(block);
+        type MeasuredRow = ReturnType<typeof measure>;
+        const paint = (row: MeasuredRow, offset: number, take: number, bold: boolean) => {
+          doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(8.5);
+          setInk(bold ? INK.muted : INK.text);
+          let x = M;
+          row.wrapped.forEach((cell, c) => {
+            const chunk = cell.slice(offset, offset + take);
+            if (chunk.length) doc.text(chunk, x + 2, y);
+            x += widths[c];
+          });
+          y += rowHeight(take);
+          doc.setDrawColor(210, 215, 211); doc.line(M, y - 6, PW - M, y - 6);
+        };
+        const linesHere = (reserved = 0) => Math.max(0,
+          Math.floor((BOTTOM - y - tableGap - tableClearance - reserved) / tableLine));
+        const start = (bodyLines: number) => {
+          const room = tableStartRoom(header.lines, bodyLines);
+          if (room <= freshPageRoom) {
+            // A page break may place waiting chapter pictures first. Recheck the
+            // actual space they leave instead of assuming the new page is empty.
+            while (y + room > BOTTOM) newPage();
+            paint(header, 0, header.lines, true);
+          } else {
+            // Even an exceptionally tall supplied header must retain its text.
+            // Split it without recursion, reserving a body line after its tail.
+            let offset = 0;
+            const reserve = bodyLines ? rowHeight(1) : 0;
+            while (offset < header.lines) {
+              if (!linesHere(reserve)) { newPage(); continue; }
+              const take = Math.min(header.lines - offset, linesHere(reserve));
+              paint(header, offset, take, true); offset += take;
+              if (offset < header.lines) newPage();
+            }
           }
         };
         y += 8;
-        drawRow(block.headers, true);
-        for (const row of block.rows) drawRow(row, false);
+        const rows = block.rows.map(row => measure(row, false));
+        start(rows[0]?.lines ?? 0);
+        for (const row of rows) {
+          const fitsFresh = rowHeight(header.lines) + rowHeight(row.lines) + tableClearance <= freshPageRoom;
+          if (fitsFresh && y + rowHeight(row.lines) + tableClearance > BOTTOM) {
+            newPage(); start(row.lines);
+          }
+          let offset = 0;
+          while (offset < row.lines) {
+            if (!linesHere()) { newPage(); start(row.lines - offset); }
+            const take = Math.min(row.lines - offset, linesHere());
+            paint(row, offset, take, false); offset += take;
+            if (offset < row.lines) { newPage(); start(row.lines - offset); }
+          }
+        }
         y += 8;
         break;
       }

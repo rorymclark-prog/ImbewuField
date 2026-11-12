@@ -532,3 +532,73 @@ test('the original PDF cover distinguishes unknown climate from supported zero v
  assert.doesNotMatch(missingText,/undefined|NaN|Rainfall 0/);
  assert.match(zeroText,/Rainfall 0 mm/);
 });
+
+// F01-RETAINED-PDF-HEADER: explanatory paragraphs between a chapter title and
+// its six-column table defeat heading-only lookahead. Inspect actual PDF pages.
+test('a table header following prose stays with its first wrapped row at every nearby page boundary', async () => {
+  const { buildReportPdf } = await import('../lib/report-pdf.ts');
+  for (let count = 20; count <= 40; count += 1) {
+    const filler = Array.from({ length: count }, (_, i) => `Filler ${i}. Supplied observations remain unchanged.`).join('\n\n');
+    const rows = Array.from({ length: 12 }, (_, i) => `| ROWKEEP${i} | Recorded evidence | ${'Retain the source and its limits. '.repeat(6)} | Unknown | Unassessed | Check the supplied record. |`).join('\n');
+    const markdown = `# Table boundary fixture\n\n## Contents\nSynthetic layout check.\n\n## Review\n${filler}\n\n| HEADERKEEP | Evidence | Recorded qualifications | Likelihood | Impact | Follow up |\n|---|---|---|---|---|---|\n${rows}`;
+    const blob = await buildReportPdf(markdown, { biome: 'Fixture', lat: 0, lon: 0, dateLabel: 'Fixture' });
+    const pages = pdfTextStreams(await blob.arrayBuffer());
+    const headers = pages.filter(page => page.includes('HEADERKEEP'));
+    assert.ok(headers.length > 1, 'fixture must exercise repeated headers');
+    for (const page of headers) assert.match(page, /ROWKEEP\d+/, `header without a row after ${count} paragraphs`);
+    for (let i = 0; i < 12; i += 1) {
+      assert.equal((pages.join('\n').match(new RegExp(`\\(ROWKEEP${i}\\)`, 'g')) ?? []).length, 1, 'every row appears exactly once');
+    }
+  }
+});
+
+test('oversized table rows retain every supplied token and repeat wrapped headers without shrinking text', async () => {
+  const { buildReportPdf } = await import('../lib/report-pdf.ts');
+  const tokens = Array.from({ length: 1800 }, (_, i) => `D${String(i).padStart(4, '0')}`);
+  const markdown = `# Long row fixture\n\n## Contents\nSynthetic layout check.\n\n${'Preceding paragraph.\n\n'.repeat(30)}| HEADERKEEP | A wrapped heading with recorded qualifications |\n|---|---|\n| FIRSTROW | ${tokens.join(' ')} |\n| LASTROW | Final supplied observation. |`;
+  const blob = await buildReportPdf(markdown, { biome: 'Fixture', lat: 0, lon: 0, dateLabel: 'Fixture' });
+  const pages = pdfTextStreams(await blob.arrayBuffer());
+  const bodyPages = pages.filter(page => /D\d{4}/.test(page));
+  assert.ok(bodyPages.length > 1, 'the first row must really cross pages');
+  for (const page of bodyPages) {
+    assert.match(page, /HEADERKEEP/, 'a continuing row needs its column labels');
+    for (const text of page.matchAll(/BT([\s\S]*?)ET/g)) {
+      if (/D\d{4}/.test(text[1])) {
+        assert.match(text[1], /8\.5 Tf/, 'table text must retain its normal size');
+        const pos = /[\d.]+ ([\d.]+) Td/.exec(text[1]);
+        assert.ok(pos && Number(pos[1]) >= 54, 'body text stays above the footer');
+      }
+    }
+  }
+  for (const page of pages.filter(page => page.includes('HEADERKEEP'))) {
+    assert.match(page, /D\d{4}|LASTROW/, 'no header-only page before or after a long row');
+  }
+  const output = pages.join('\n');
+  for (const token of tokens) assert.equal((output.match(new RegExp(token, 'g')) ?? []).length, 1, `${token} must survive exactly once`);
+  assert.match(output, /LASTROW/);
+});
+
+test('actual six-column monitoring and native risk tables preserve rows beneath their headers', async () => {
+  const { buildReportPdf } = await import('../lib/report-pdf.ts');
+  const { buildRiskRegister, riskRegisterMarkdown } = await import('../lib/report-risk.ts');
+  const { buildMonitoringPlan, monitoringMarkdown } = await import('../lib/report-monitoring.ts');
+  const fx = JSON.parse(readFileSync(new URL('./fixtures/report-monitoring-translation/source-cases.json', import.meta.url), 'utf8'));
+  const input = fx.risks.find((c: any) => c.name === 'all-possible').input;
+  for (const lang of ['en', 'zu', 'st', 'ts', 've']) {
+    for (const raw of [riskRegisterMarkdown(buildRiskRegister(input, lang), lang, input.rainfallMm), monitoringMarkdown(buildMonitoringPlan(input.facts, lang), lang)]) {
+      const table = parseReportMarkdown(raw).find(block => block.kind === 'table');
+      assert.ok(table?.kind === 'table'); assert.equal(table.headers.length, 6);
+      // Mark only the first cells so the page assertions survive native wrapping;
+      // all remaining authored column/row text is the actual generated table.
+      const marked = ['| HEADERKEEP | ' + table.headers.slice(1).join(' | ') + ' |', '|---|---|---|---|---|---|',
+        ...table.rows.map((row, i) => `| ROWKEEP${i} | ${row.slice(1).join(' | ')} |`)].join('\n');
+      for (const count of [23, 29, 35]) {
+        const markdown = '# Native table fixture\n\n## Contents\nSynthetic check.\n\n' + 'Explanatory paragraph.\n\n'.repeat(count) + marked;
+        const blob = await buildReportPdf(markdown, { biome: 'Fixture', lat: 0, lon: 0, dateLabel: 'Fixture', language: lang });
+        const pages = pdfTextStreams(await blob.arrayBuffer());
+        for (const page of pages.filter(page => page.includes('HEADERKEEP'))) assert.match(page, /ROWKEEP\d+/, `${lang}: detached header`);
+        for (let i = 0; i < table.rows.length; i += 1) assert.equal((pages.join('\n').match(new RegExp(`\\(ROWKEEP${i}\\)`, 'g')) ?? []).length, 1);
+      }
+    }
+  }
+});
