@@ -441,4 +441,32 @@ test('the actual location-route outage defaults never become modelled facts in O
   assert.match(shown, /1745/);
   assert.match(shown, /Soil organic carbon: 1\.9%/);
   assert.match(climate(fallback), UNAVAILABLE);
+  // Carry the actual outage producer through the saved-place codec and report consumers.
+  const { savedRainfallFields, normalisePlaces } = await import('../lib/saved-places.ts');
+  const saved = normalisePlaces(JSON.parse(JSON.stringify([{ id: 'fixture', name: 'Fixture', lat: fallback.lat, lon: fallback.lon, biome: fallback.biome.name, elevation: fallback.elevation.elevation, savedAt: '', ...savedRainfallFields(fallback.rainfall) }])));
+  assert.equal(saved.length, 1);
+  assert.equal(saved[0].rainfall, undefined);
+  const { reportClimateEvidence, annualRainfallMm } = await import('../lib/climate-temperature.ts');
+  assert.doesNotMatch(reportClimateEvidence(fallback), /600 mm|3 m\/s|28 °C|5.5 kWh/);
+});
+
+
+test('soil raw source figures remain visible without a universal score, adequacy band or compaction diagnosis', () => {
+  for (const soilSource of ['lab','soilgrids']) {
+    const data=place({ monthlyTemp: JHB, monthlyTempCoverage: COMPLETE });
+    data.soil={...data.soil,soilSource,ph:5.1,organicCarbon:0.8,bulkDensity:1.6};
+    const text=renderTab(data,'Soil');
+    assert.match(text,/5.1/); assert.match(text,/0.8/);
+    assert.doesNotMatch(text,/Soil health score<|\/10|Degraded|Priority improvements|likely compacted/i);
+    assert.match(text,/do not establish a soil health score/);
+  }
+});
+
+
+test('the soil tab cannot present outage placeholders as measured soil', () => {
+ const data=place({monthlyTemp:JHB,monthlyTempCoverage:COMPLETE});
+ data.soil={...data.soil,soilSource:'estimate',ph:6.5,organicCarbon:1.2};
+ const text=renderTab(data,'Soil');
+ assert.match(text,/Soil measurements are not known/);
+ assert.doesNotMatch(text,/6.5|1.2%|SoilGrids global model; an estimate/);
 });

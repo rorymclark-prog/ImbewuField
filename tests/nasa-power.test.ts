@@ -430,3 +430,21 @@ test('wind provenance distinguishes absent defaults from partial readings and me
     });
   }
 });
+
+
+test('independent wind directions and complete maximum/solar fields keep their actual producer provenance', async () => {
+  await withFetch(async () => response(nasaPayload({ WS2M: {}, WD10M: { JAN: 22.5 }, T2M_MAX: {}, ALLSKY_SFC_SW_DWN: {} })), async () => {
+    const result = await fetchNasaPower(-29, 31);
+    assert.equal(result.climate.windFromSummer, 'NNE');
+    assert.equal(result.climate.windFromWinter, '—');
+    assert.equal(result.climate.windDirectionSource, 'nasa-power');
+    assert.equal(result.climate.windSource, undefined);
+    assert.equal(result.climate.maxTempSource, undefined);
+    assert.equal(result.climate.solarSource, undefined);
+  });
+  await withFetch(async () => response(nasaPayload()), async () => {
+    const result = await fetchNasaPower(-29, 31);
+    assert.equal(result.climate.maxTempSource, 'nasa-power');
+    assert.equal(result.climate.solarSource, 'nasa-power');
+  });
+});

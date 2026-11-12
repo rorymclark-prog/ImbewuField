@@ -519,3 +519,16 @@ test('report headings keep the first table row even when its cells wrap', async 
     assert.equal(headingPage, rowPage, `first wrapped row separated from its section after ${count} filler paragraphs`);
   }
 });
+
+
+test('the original PDF cover distinguishes unknown climate from supported zero values', async () => {
+ const { buildReportPdf } = await import('../lib/report-pdf.ts');
+ const meta={biome:'Fixture',lat:0,lon:0,dateLabel:'Fixture'};
+ const missing=await buildReportPdf('## Evidence\nNo weather measurements recorded.',meta);
+ const zero=await buildReportPdf('## Evidence\nSupported zero values.',{...meta,rainfallMm:0,meanTempC:0});
+ const missingText=pdfTextStreams(await missing.arrayBuffer()).join('\n');
+ const zeroText=pdfTextStreams(await zero.arrayBuffer()).join('\n');
+ assert.match(missingText,/Rainfall not known/);
+ assert.doesNotMatch(missingText,/undefined|NaN|Rainfall 0/);
+ assert.match(zeroText,/Rainfall 0 mm/);
+});

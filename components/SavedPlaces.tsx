@@ -1,4 +1,5 @@
 'use client';
+import { savedRainfallFields } from '@/lib/saved-places';
 
 import { useState, useEffect } from 'react';
 import { loadPlaces, savePlace, deletePlace, generateId, promptNearbyUpdate, type SavedPlace } from '@/lib/saved-places';
@@ -68,7 +69,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
         lat: coords.lat,
         lon: coords.lon,
         biome: locationData.biome.name,
-        rainfall: locationData.rainfall.annual,
+        ...savedRainfallFields(locationData.rainfall, nearby),
         elevation: locationData.elevation.elevation,
         name: trimmedName || nearby.name,
         notes: trimmedNotes ?? nearby.notes,
@@ -87,7 +88,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
       lat: coords.lat,
       lon: coords.lon,
       biome: locationData.biome.name,
-      rainfall: locationData.rainfall.annual,
+      ...savedRainfallFields(locationData.rainfall),
       elevation: locationData.elevation.elevation,
       savedAt: new Date().toISOString(),
       notes: trimmedNotes,
@@ -194,7 +195,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
                       </span>
                     </div>
                     <div className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
-                      {place.biome} · {place.elevation}m · {place.rainfall}mm
+                      {place.biome} · {place.elevation}m · {place.rainfall === undefined ? 'Rainfall not known' : `${place.rainfall}mm`}
                     </div>
                     {place.notes && (
                       <div className="text-xs font-display mt-1 leading-relaxed" style={{ color: 'var(--text-secondary)', opacity: 0.8 }}>

@@ -1,3 +1,4 @@
+import { annualRainfallMm, sourcedMonthlyRainfall, monthlyTemperatureStatus, reportClimateEvidence } from '@/lib/climate-temperature';
 import { productContextFromItems, productPurchasingMarkdown } from '@/lib/production-product-guidance';
 import { growingZonesForClimate } from '@/lib/growing-zones';
 import { PLANTING_SUITABILITY_PROMPT, reportSectionsForGeneration } from '@/lib/report-planting-guide';
@@ -286,7 +287,15 @@ export async function POST(req: NextRequest) {
       : `\n\n📏 LENGTH — STANDARD: A focused, practical report. Cover each section usefully but stay concise — keep tables small and explanations tight.`;
 
   const d = locationData;
-  const purchasingGuidance = productPurchasingMarkdown({ ...productContextFromItems(facts?.productionItems ?? []), animalChoices: facts?.productionEnterpriseChoices }, growingZonesForClimate(d.climate.monthlyTemp, d.rainfall.monthly, d.lat), surveyData?.productionConditions,langCode);
+  const annualRain = annualRainfallMm(d.rainfall);
+  const monthlyRain = sourcedMonthlyRainfall(d.rainfall);
+  const climateEvidence = reportClimateEvidence(d);
+  const rainDescription = annualRain === null ? 'annual rainfall not known' : `${annualRain} mm annual rainfall (${d.rainfall.rainfallSource})`;
+  const rainPattern = monthlyRain ? d.rainfall.pattern : 'unrecorded';
+  const wetSeason = monthlyRain ? d.rainfall.wetSeason : 'unrecorded';
+  const drySeason = monthlyRain ? d.rainfall.drySeason : 'unrecorded';
+  const climateClass = monthlyRain && monthlyTemperatureStatus(d.climate) === 'complete' ? d.climate.koppen : 'unrecorded';
+  const purchasingGuidance = productPurchasingMarkdown({ ...productContextFromItems(facts?.productionItems ?? []), animalChoices: facts?.productionEnterpriseChoices }, monthlyRain && monthlyTemperatureStatus(d.climate) === 'complete' ? growingZonesForClimate(d.climate.monthlyTemp, monthlyRain, d.lat) : [], surveyData?.productionConditions,langCode);
   // ONE ANSWER TO "WHAT GROWS HERE" — see lib/site-ecology.ts. Before this, sections took the
   // site's name from whichever lookup was nearest: the coarse biome polygon (d.biome.name) or the
   // precise SANBI vegetation unit (d.vegetation). They disagree near boundaries, and one exported
@@ -299,7 +308,6 @@ export async function POST(req: NextRequest) {
   );
   // Real administrative area for this point (municipality / district / province)
   const admin = await reverseGeocode(d.lat, d.lon);
-  const rainStr = d.rainfall.monthly.map((v, i) => `${MONTHS[i]}:${Math.round(v)}mm`).join(' · ');
   const facingNote = d.elevation.aspectLabel.includes('N')
     ? 'north-facing (warmer/drier in southern hemisphere)'
     : d.elevation.aspectLabel.includes('S')
@@ -334,8 +342,7 @@ export async function POST(req: NextRequest) {
       ? `Sun is in the ${compassWord(solar.winter.noonSide)} sky at midday → south-facing aspects get the most sun, north-facing are shaded/cooler.`
       : `This site sits inside the tropics — the midday sun swings sides through the year (from the ${compassWord(solar.winter.noonSide)} in winter to the ${compassWord(solar.summer.noonSide)} in summer), so both north- and south-facing aspects get strong sun at different times of year.`;
   const sunData = `${sunSkyText} Noon sun elevation: ~${sunSummerNoon}° in summer (high), ~${sunWinterNoon}° in winter (low — longest shadows toward the ${winterShadowSide}). Day length: ~${dayLen(-DECL)}h summer / ~${dayLen(DECL)}h winter.`;
-  const dryMonths = drySeasonMonthIndices(d.rainfall.drySeason, d.rainfall.pattern);
-  const drySeasonRainMm = dryMonths.reduce((total, month) => total + (d.rainfall.monthly[month] ?? 0), 0);
+
   const summerSunSide = compassWord(solar.summer.noonSide);
   const winterSunSide = compassWord(solar.winter.noonSide);
   const preferredSunSide = solar.middayFrom === 'mixed'
@@ -381,12 +388,9 @@ ${admin ? `Administrative area (reverse-geocoded — use these REAL names, do no
 Elevation: ${d.elevation.elevation}m ASL · Slope: ${d.elevation.slopeDeg}° (${d.elevation.slopePct}%) · Aspect: ${d.elevation.aspectLabel} (${facingNote})
 
 CLIMATE
-Köppen: ${d.climate.koppen} (${d.climate.koppenDesc})
-Annual rainfall: ${d.rainfall.annual}mm · Pattern: ${d.rainfall.pattern}
-Wet season: ${d.rainfall.wetSeason} · Dry season: ${d.rainfall.drySeason}
-Summer max: ${d.climate.maxTemp}°C · Winter min: ${d.climate.minTemp}°C · Mean: ${d.climate.meanTemp}°C
-Solar radiation: ${d.climate.solarRadiation} kWh/m²/day · Monthly rain: ${rainStr}
-Wind: mean ${d.climate.windSpeed} m/s · prevailing FROM ${d.climate.windFromSummer} in summer, FROM ${d.climate.windFromWinter} in winter (place windbreaks on these sides)
+${climateEvidence}
+Climate class: ${climateClass}. This does not establish crop suitability.
+
 Sun: ${sunData}
 
 SOIL (0–30cm)
@@ -416,7 +420,7 @@ ${facts ? `\n${measurementsPromptBlock(facts)}` : ''}
 ${facts?.crop ? `\n${cropPlanPromptBlock(facts, true)}` : ''}
 ${photoAnalysis ? `\nSITE PHOTO ANALYSIS:\n${photoAnalysis}` : ''}
 ${marketEvidencePromptBlock(facts?.marketEvidence ?? surveyData?.marketEvidence)}
-${surveyData ? `\nSITE SURVEY (farmer-reported observations; preserve their source and uncertainty):\n${surveyToPrompt(surveyData, d.rainfall.annual, false)}` : ''}
+${surveyData ? `\nSITE SURVEY (farmer-reported observations; preserve their source and uncertainty):\n${surveyToPrompt(surveyData, annualRain, false)}` : ''}
 ${evidenceData && Object.keys(evidenceData).length > 0 ? `\nFARMER-SUPPLIED EVIDENCE (reported observations and document references; preserve their source and uncertainty):\n${
   Object.entries(evidenceData)
     .map(([key, { count, notes }]) => {
@@ -443,7 +447,7 @@ ${sections.includes('Executive Summary') ? `## Executive Summary
 ` : ''}${sections.includes('Site Conditions') ? `## Site Conditions
 
 ### Climate Profile
-[Detailed climate interpretation specific to this location. What does ${d.rainfall.annual}mm of ${d.rainfall.pattern} rainfall mean practically? What are the frost/heat risks?]
+[Detailed climate interpretation specific to this location. What does ${rainDescription} of ${rainPattern} rainfall mean practically? What are the frost/heat risks?]
 
 ### Terrain Analysis
 [What does ${d.elevation.slopeDeg}° slope on ${d.elevation.aspectLabel}-facing ground mean for water movement, sun exposure, and design? Which earthworks are indicated?]
@@ -451,12 +455,12 @@ ${sections.includes('Executive Summary') ? `## Executive Summary
 ### Soil Assessment
 | Property | Value | Interpretation |
 |----------|-------|----------------|
-| pH | ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : 'not measured'} | [acid/neutral/alkaline + what this means] |
-| Organic Carbon | ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.organicCarbon : 'not measured'}% | [low/adequate/rich + target] |
+| pH | ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : 'not measured'} | [sampling method and crop-specific interpretation needed] |
+| Organic Carbon | ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.organicCarbon : 'not measured'}% | [no universal adequacy band or target supplied] |
 | Texture | ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} | [water-holding capacity, drainage, workability] |
-| Bulk Density | ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.bulkDensity : 'not measured'} g/cm³ | [compaction status] |
+| Bulk Density | ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.bulkDensity : 'not measured'} g/cm³ | [field assessment needed; no universal compaction cutoff supplied] |
 
-[2–3 sentence synthesis of soil health and priority corrections]
+[Summarise the source-labelled soil figures and missing field evidence. Do not invent a soil-health score, universal adequacy bands or amendment rates.]
 
 ` : ''}${sections.includes('Natural Vegetation & Biome') ? `## Natural Vegetation & Biome
 
@@ -483,7 +487,7 @@ Keep the tone and length consistent with the rest of the report.
 ` : ''}${sections.includes('Water Harvesting') ? `## Water Harvesting Design
 
 ### Strategy
-[1 paragraph: the water harvesting approach for THIS site — ${d.rainfall.annual}mm, ${d.rainfall.pattern} pattern, ${d.elevation.slopeDeg}° slope, ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} soil]
+[1 paragraph: the water harvesting approach for THIS site — ${rainDescription}, ${rainPattern} pattern, ${d.elevation.slopeDeg}° slope, ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} soil]
 
 ### Recommended Earthworks (priority order)
 1. **[Earthwork name]** — [location on site, dimensions, why this first]
@@ -491,16 +495,16 @@ Keep the tone and length consistent with the rest of the report.
 3. **[Earthwork name]** — [details]
 
 ### Calculations
-${roofCalcLine(facts, d.rainfall.annual)}
-${siteAreaForCalcM2 ? `- **Rain falling on the boundary area:** ${Math.round(siteAreaForCalcM2 * d.rainfall.annual / 1000).toLocaleString()} kL/year is the rainfall volume only, NOT harvestable supply. No whole-site runoff coefficient has been measured, so do not claim a capture percentage or size storage from this number.` : '- No traced boundary: whole-site rainfall volume is unknown.'}
+${roofCalcLine(facts, annualRain)}
+${siteAreaForCalcM2 && annualRain !== null ? `- **Rain falling on the boundary area:** ${Math.round(siteAreaForCalcM2 * annualRain / 1000).toLocaleString()} kL/year is the rainfall volume only, NOT harvestable supply. No whole-site runoff coefficient has been measured, so do not claim a capture percentage or size storage from this number.` : '- Boundary area or annual rainfall is missing: whole-site rainfall volume is unknown.'}
 - **Earthwork spacing:** no generic slope-to-spacing formula is supported. Require a contour survey, soil/infiltration checks, safe overflow and local design review before giving dimensions.
-- **Dry season storage gap:** ${d.rainfall.drySeason} = ~${Math.round(drySeasonRainMm)}mm total — minimum tank size for food garden: **[X,XXX L]**
+- **Dry season storage gap:** not calculated. Use measured demand, supported monthly rainfall, catchment and losses before sizing storage; do not invent a minimum tank size.
 - **ETo vs rainfall:** solar radiation alone is not evapotranspiration. If no validated ETo series is supplied, state that the irrigation deficit has not been calculated; list the observations needed.
 ${waterData ? `- **Drawn water storage:** ${waterData.count} store(s), ~**${waterData.estVolumeKL.toLocaleString()} kL** capacity (est. ${waterData.avgDepthM}m avg depth over ${waterData.areaM2.toLocaleString()} m²). State clearly whether this covers the dry-season deficit above, and if not, how much more storage is needed.` : ''}
 ${facts?.water && facts.water.statedStorageLitres > 0 ? `- **Tank storage on the plan:** **${facts.water.statedStorageLitres.toLocaleString()} L** stated capacity (${facts.water.tanks.map((tank) => `${tank.name} x${tank.count}`).join(', ')}). Compare THIS number to the dry-season need you calculate above and say plainly whether it is enough, and if not by how much.` : ''}
 
 ### Implementation Timeline
-When to build each earthwork relative to the ${d.rainfall.wetSeason} wet season.
+When to build each earthwork relative to the ${wetSeason} wet season.
 
 ` : ''}${sections.includes('Soil Strategy') ? `## Soil Building Plan
 
@@ -525,7 +529,7 @@ The app supplies one visual sowing calendar from the saved crop plan. Do not cre
 
 ` : ''}${sections.includes('Suitable Plants for This Site') ? `${PLANTING_SUITABILITY_PROMPT}\nSOURCE-GROUNDED PURCHASING REFERENCE (translate and adapt to the reported conditions; do not extend months or invent varieties):\n${purchasingGuidance}\n` : ''}${sections.includes('Crop Rotation') ? `## Crop Rotation Plan
 
-A simple rotation to keep soil healthy and cut pests and disease WITHOUT chemicals, matched to the planting calendar and ${d.rainfall.pattern} rainfall.
+A simple rotation to keep soil healthy and cut pests and disease WITHOUT chemicals, matched to the planting calendar and ${rainPattern} rainfall.
 
 Explain the 4 rotation groups in plain words (Legumes that feed the soil → Leafy greens → Fruiting crops → Roots), then give a simple bed-by-bed plan a small plot can follow.
 
@@ -535,7 +539,7 @@ Their beds are: ${facts.design.beds.filter((bed) => bed.kind === 'bed').map((bed
 Build the rotation table with ONE COLUMN PER BED, using these EXACT bed names in this order. Do not renumber them, do not invent a bed, and do not fall back to a generic "Bed 1–4" example. Rows: one per season for a full cycle, showing which rotation group lands in which bed.${facts.design.plotCount > 0 ? ` Add one line for the staple plots, which rotate on their own longer cycle.` : ''}` : `### Example 4-bed rotation
 | Season | Bed 1 | Bed 2 | Bed 3 | Bed 4 |
 |--------|-------|-------|-------|-------|
-| ${d.rainfall.pattern === 'winter' ? 'Autumn' : 'Spring'} | [group] | [group] | [group] | [group] |
+| ${monthlyRain ? (rainPattern === 'winter' ? 'Autumn' : 'Spring') : 'Timing not established'} | [group] | [group] | [group] | [group] |
 | Next season | [shift each bed one group along] | | | |
 
 (No beds have been drawn for this site, so this is a generic example — say so.)`}
@@ -544,7 +548,7 @@ One or two short rules to remember (e.g. "never plant the same family in the sam
 
 ` : ''}${sections.includes('Irrigation Plan') ? `## Irrigation Plan — How Much Water You Need
 
-Work out the water needed to irrigate the growing areas through the dry season (${d.rainfall.drySeason}).
+Work out the water needed to irrigate the growing areas through the dry season (${drySeason}).
 - A vegetable garden needs roughly 5–6mm of water per day in dry-season heat. Rule: 1mm over 1m² = 1 litre, so 100m² × 5mm = 500 L/day.
 
 ${irrigationRowsBlock(facts)}
@@ -580,14 +584,14 @@ Small animals suited to ${siteAreaForCalcM2 ? `a ${(siteAreaForCalcM2 / 10000).t
 ${sunData}
 - **Placement:** face the house, sun-loving crops and any solar panels toward the ${preferredSunSide} sun. Keep tall trees on the side opposite the winter sun (${winterShadowSide}) so they don't shade growing areas.
 - **Winter sun:** the low ~${sunWinterNoon}° winter sun sits in the ${winterSunSide} and throws its longest shadows toward the ${winterShadowSide} — plan so winter beds stay sunny.
-- **Solar power:** at ${d.climate.solarRadiation} kWh/m²/day this site has ${d.climate.solarRadiation > 5.5 ? 'excellent' : 'good'} solar potential — roughly **${Math.round(d.climate.solarRadiation * 0.75 * 365).toLocaleString()} kWh/year per 1 kW** of panels. Good for water pumping, lights, fencing.
+- **Solar power:** use only the sourced radiation figure above, if available. Panel yield is not calculated; require equipment specifications and local exposure measurements.
 - **Summer shade:** deciduous trees on the north/west give shade in summer then drop leaves for winter sun.
 
 ` : ''}${sections.includes('Wind & Windbreaks') ? `## Wind & Windbreaks
 
-Prevailing wind is FROM the ${d.climate.windFromSummer} in summer and FROM the ${d.climate.windFromWinter} in winter, averaging ${d.climate.windSpeed} m/s.
-- **Need one?** ${d.climate.windSpeed > 4 ? 'Yes — winds here are strong enough to dry out and damage crops.' : 'Winds are moderate, but a windbreak still protects young plants and cuts water loss.'}
-- **Where:** plant on the ${d.climate.windFromSummer} and ${d.climate.windFromWinter} sides to block the main winds, without shading crops from the northern sun.
+Use the source-labelled wind speed and directions in the climate evidence above; preserve reported farm observations.
+- **Need one?** Not established by mean speed alone. Ask about exposed crops, damaging winds and local shelter before recommending one.
+- **Where:** use observed farm wind and seasonal sun paths to assess placement; do not infer a planting side when direction is unknown.
 - **What:** a permeable multi-row windbreak (slows wind, not a solid wall) — name 3–4 real species suited to ${ecology.placeName}, mixing fast shelter with useful/indigenous trees.
 - **Benefits:** less water loss, protected crops, fewer broken branches, habitat for pest-eating birds.
 
@@ -595,7 +599,7 @@ Prevailing wind is FROM the ${d.climate.windFromSummer} in summer and FROM the $
 
 - **Fire risk:** ${ecology.label} ${ecology.fireProne ? 'is fire-prone in the dry season' : 'has a lower but real dry-season fire risk'}. Rate it and say which side fire is most likely to come from (usually the dry, windward side).
 - **Firebreaks:** keep a cleared or green strip and fire-resistant plants (aloes, spekboom, vygies) between wild land and the home/crops.
-- **Other hazards:** frost (winter min ${d.climate.minTemp}°C${d.climate.minTemp < 2 ? ' — frost likely, protect tender crops' : ''}), hail, and flood/erosion in heavy rain. Biome challenges: ${ecology.biome.challenges.slice(0, 2).join(', ')}.
+- **Other hazards:** use recorded farm frost observations, hail and flooding evidence. The grid record low is not frost frequency or a winter minimum; no frost-likely claim follows from a numeric cutoff or climate code.
 - Give 2–3 practical, low-cost protections for the biggest risks.
 
 ` : ''}${sections.includes('Economic Opportunities') ? `## Economic Opportunities
@@ -612,7 +616,7 @@ Keep it realistic for a grower with limited capital.
 
 ` : ''}${sections.includes('Plant Guilds') ? `## Plant Guilds
 
-Design 3 guilds specifically for ${ecology.biomeName} biome, ${d.climate.koppen} climate, ${d.rainfall.annual}mm ${d.rainfall.pattern} rainfall. Name REAL species, indigenous first.
+Design 3 guilds specifically for ${ecology.biomeName} biome, ${climateClass} climate, ${rainDescription} ${rainPattern} rainfall. Name REAL species, indigenous first.
 
 ### Guild 1: [Descriptive Name]
 *Purpose: [what this guild does — food, nitrogen, water, habitat]*
@@ -826,7 +830,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     lat: d.lat,
     lon: d.lon,
     dateLabel,
-    rainfallMm: d.rainfall.annual,
+    rainfallMm: annualRain,
     rainfallSource: d.rainfall.rainfallSource,
     wetSeason: d.rainfall.wetSeason,
     drySeason: d.rainfall.drySeason,
@@ -870,9 +874,8 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   const boq = buildBillOfQuantities(facts,langCode);
   const risks = buildRiskRegister({
     facts,
-    rainfallMm: d.rainfall.annual,
+    rainfallMm: annualRain,
     slopeDeg: d.elevation.slopeDeg,
-    minTempC: d.climate.minTemp,
     soilSource: d.soil.soilSource,
     unpricedBoqLines: boq.unpricedCount,
   },langCode);

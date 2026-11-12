@@ -337,13 +337,13 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
   };
 }
 
-export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number, includeMarketEvidence = true): string {
+export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number | null, includeMarketEvidence = true): string {
   // Reports are a public boundary for long-lived browser data. Normalise again
   // even though load/save do it, because API callers can pass decoded JSON directly.
   s = normaliseSurvey(s, stringValue(s?.siteId) || 'site:unknown')
     ?? normaliseSurvey({}, 'site:unknown')!;
   const totalRoof = (s.roofMainM2 ?? 0) + (s.roofSecondaryM2 ?? 0);
-  const rainfallMm = Number.isFinite(annualRainfallMm) && annualRainfallMm >= 0
+  const rainfallMm = typeof annualRainfallMm === 'number' && Number.isFinite(annualRainfallMm) && annualRainfallMm >= 0
     ? annualRainfallMm
     : null;
   const efficiency = s.hasGutters ? 0.80 : 0.60;
@@ -391,12 +391,12 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number, includeM
     lines.push(`Total harvestable roof area: ${totalRoof} m²`);
     if (roofHarvestKL !== null) {
       lines.push(`Estimated annual roof harvest at ${rainfallMm} mm rainfall: ~${roofHarvestKL} kL`);
-      lines.push(`Use this figure to size storage tanks and prioritise swale / contour placement.`);
+      lines.push(`Survey-only estimate using the reported roof area and assumed collection efficiency. If map measurements differ, retain both sources and resolve the difference before choosing a catchment area or sizing storage.`);
     } else {
       lines.push('Estimated annual roof harvest: unavailable until annual rainfall is known.');
     }
   } else {
-    lines.push(`Roof area: not measured — rely on location rainfall data for water yield estimates.`);
+    lines.push(`Roof area: not measured — measure or trace the roof before calculating water yield; rainfall alone cannot supply catchment volume.`);
   }
 
   lines.push('');

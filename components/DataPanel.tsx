@@ -1,7 +1,8 @@
 'use client';
+import { savedRainfallFields } from '@/lib/saved-places';
 
 import { numberLabel } from '@/lib/format-figures';
-import { monthlyTemperatureStatus, recordMinimumC } from '@/lib/climate-temperature';
+import { annualRainfallMm, modelledWindSpeed, monthlyTemperatureStatus, recordMinimumC } from '@/lib/climate-temperature';
 import { koppenClassName } from '@/lib/koppen-global';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import dynamic from 'next/dynamic';
@@ -665,7 +666,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     <SiteSurveySheet
       placeId={activePlaceId}
       coords={coords}
-      annualRainfallMm={data?.rainfall.annual}
+      annualRainfallMm={annualRainfallMm(data?.rainfall) ?? undefined}
       locationData={data ?? undefined}
       onSaved={() => { setSurveySheetOpen(false); if (data) openPhotoOrReport(); }}
       onClose={() => setSurveySheetOpen(false)}
@@ -685,7 +686,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         ...nearby,
         lat: coords.lat, lon: coords.lon,
         biome: data.biome.name,
-        rainfall: data.rainfall.annual,
+        ...savedRainfallFields(data.rainfall, nearby),
         elevation: data.elevation.elevation,
       });
       setPlaceSaved(true);
@@ -698,7 +699,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       id: generateId(), name,
       lat: coords.lat, lon: coords.lon,
       biome: data.biome.name,
-      rainfall: data.rainfall.annual,
+      ...savedRainfallFields(data.rainfall),
       elevation: data.elevation.elevation,
       savedAt: new Date().toISOString(),
     });
@@ -762,10 +763,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   // A failed location lookup substitutes rain=600 mm and wind=3 m/s without source tags.
   // Use each figure's own provenance, not temperature coverage, so independently supported
   // partial wind and rainfall remain useful when the temperature year is incomplete.
-  const rainfallKnown = ['nasa-power', 'open-meteo'].includes(data.rainfall.rainfallSource ?? '')
-    && Number.isFinite(data.rainfall.annual) && data.rainfall.annual >= 0;
-  const windKnown = data.climate.windSource === 'nasa-power'
-    && Number.isFinite(data.climate.windSpeed) && data.climate.windSpeed >= 0;
+  const rainfallKnown = annualRainfallMm(data.rainfall) !== null;
+  const windKnown = modelledWindSpeed(data.climate) !== null;
   // Validated gridded record minimum (null when untagged, an outage default or a missing-value marker).
   const recordLowC = recordMinimumC(data.climate);
   const monthlyTemperatureNotice = temperatureStatus === 'complete'
@@ -1247,25 +1246,27 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* SOIL */}
         {tab === 'Soil' && (
           <>
+            {data.soil.soilSource === 'lab' || data.soil.soilSource === 'soilgrids' ? <>
+            <p lang="en" className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+              {data.soil.soilSource === 'lab' ? 'Source: your uploaded laboratory soil test.' : 'Source: SoilGrids global model; an estimate, not a measurement of your field.'}
+            </p>
             <div className="grid grid-cols-2 gap-2.5">
               <Stat label={t('statTexture')} value={data.soil.textureClass} />
               <Stat
                 label={t('statPH')}
                 value={data.soil.ph.toString()}
-                sub={data.soil.ph < 5.5 ? t('phAcidic') : data.soil.ph > 7.5 ? t('phAlkaline') : t('phNeutral')}
-                color={data.soil.ph < 5.5 || data.soil.ph > 7.5 ? 'var(--orange)' : 'var(--color-forest-800)'}
+
               />
               <Stat
                 label={t('statOrganicCarbon')}
                 value={`${data.soil.organicCarbon}%`}
-                sub={data.soil.organicCarbon < 1.5 ? t('organicCarbonLow') : t('organicCarbonOk')}
-                color={data.soil.organicCarbon < 1.5 ? 'var(--orange)' : 'var(--color-forest-800)'}
+
               />
               {!simple && (
                 <Stat
                   label={t('statBulkDensity')}
                   value={`${data.soil.bulkDensity} g/cm³`}
-                  sub={`${data.soil.bulkDensity > 1.4 ? t('bulkDensityCompacted') : t('bulkDensityOk')} · ${t('bulkDensityExplainer')}`}
+
                 />
               )}
             </div>
@@ -1299,59 +1300,16 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </p>
             </Card>
 
-            {/* Soil health score */}
-            {(() => {
-              const ph = data.soil.ph;
-              const oc = data.soil.organicCarbon;
-              const bd = data.soil.bulkDensity;
-              const sand = data.soil.sand;
-              const clay = data.soil.clay;
-              const pHScore  = ph  >= 6   && ph  <= 7   ? 2.5 : ph  >= 5.5 && ph  <= 7.5 ? 1.5 : 0.5;
-              const ocScore  = oc  >= 2.5              ? 2.5 : oc  >= 1.5               ? 1.5 : 0.5;
-              const bdScore  = bd  <  1.2              ? 2.5 : bd  <  1.4               ? 1.5 : 0.5;
-              const texScore = (sand < 70 && clay < 40) ? 2.5 : (sand < 80 || clay < 50) ? 1.5 : 0.5;
-              const total = Math.min(10, Math.round(pHScore + ocScore + bdScore + texScore));
-              const scoreColor = total >= 8 ? 'var(--color-forest-800)' : total >= 5 ? 'var(--gold-dim)' : 'var(--danger)';
-              const scoreLabel = total >= 8 ? t('soilHealthScoreHealthy') : total >= 5 ? t('soilHealthScoreModerate') : t('soilHealthScoreDegraded');
-              const improvements: { key: string; source: string; values: Record<string, string> }[] = [];
-              if (pHScore < 2) {
-                improvements.push(ph < 6
-                  ? { key: 'soilImprovementPhAcidic', source: t('soilImprovementPhAcidic'), values: { ph: String(ph) } }
-                  : { key: 'soilImprovementPhAlkaline', source: t('soilImprovementPhAlkaline'), values: { ph: String(ph) } });
-              }
-              if (ocScore < 2) improvements.push({ key: 'soilImprovementLowCarbon', source: t('soilImprovementLowCarbon'), values: { oc: String(oc) } });
-              if (bdScore < 2) improvements.push({ key: 'soilImprovementCompacted', source: t('soilImprovementCompacted'), values: { bd: String(bd) } });
-              if (texScore < 2 && clay > 40) improvements.push({ key: 'soilImprovementHighClay', source: t('soilImprovementHighClay'), values: { clay: String(clay) } });
-              else if (texScore < 2 && sand > 70) improvements.push({ key: 'soilImprovementSandy', source: t('soilImprovementSandy'), values: { sand: String(sand) } });
-              const interpolate = (template: string, values: Record<string, string>) => template.replace(/\{([^}]+)\}/g, (_, key: string) => values[key] ?? `{${key}}`);
-              return (
-                <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid var(--border)' }}>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--text-secondary)' }}>{t('soilHealthScoreHeader')}</span>
-                    <div className="flex items-baseline gap-1">
-                      <span className="font-display font-bold" style={{ fontSize: 18, color: scoreColor, lineHeight: 1 }}>{total}</span>
-                      <span className="font-display tabular-nums" style={{ fontSize: 12, color: 'var(--text-muted)' }}>/10</span>
-                      <span className="font-sans font-semibold ml-1" style={{ fontSize: 12, color: scoreColor }}>{scoreLabel}</span>
-                    </div>
-                  </div>
-                  <div className="h-1.5 rounded-full overflow-hidden mb-3" style={{ background: 'color-mix(in srgb, var(--border) 60%, transparent)' }}>
-                    <div className="h-full rounded-full" style={{ width: `${total * 10}%`, background: scoreColor, transition: 'width 0.6s ease' }} />
-                  </div>
-                  {improvements.length > 0 && (
-                    <div className="space-y-1.5">
-                      <p className="text-xs uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)', fontSize: 'clamp(12px, 0.85vw, 13px)' }}>{t('priorityImprovementsHeader')}</p>
-                      {lang === 'zu' && <p className="text-xs leading-snug" role="note" style={{ color: 'var(--text-secondary)' }}>{t('soilImprovementZuluDraftNotice')}</p>}
-                      {improvements.slice(0, 3).map((imp, i) => (
-                        <div key={i} className="flex gap-2 text-xs font-display leading-snug" style={{ color: '#3A2E22' }}>
-                          <span className="flex-shrink-0 font-bold" style={{ color: 'var(--gold)' }}>{i + 1}.</span>
-                          <span>{lang === 'zu' ? <><span lang="zu">{interpolate(t(`${imp.key}ZuDraft`), imp.values)}</span><span lang="en" className="block text-xs text-[var(--text-muted)] opacity-80">English source: {interpolate(translate('en', imp.key), imp.values)}</span></> : interpolate(imp.source, imp.values)}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })()}
+            <Card>
+              <p lang="en" className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                These soil figures do not establish a soil health score or a compaction diagnosis.
+                Interpretation depends on the soil, sampling method and intended crop. Use a local
+                soil test and field observations before choosing amendments.
+              </p>
+            </Card>
+            </> : <Card><p lang="en" className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+              Soil measurements are not known for this site. No laboratory result or SoilGrids source is recorded. Arrange a soil test and record field observations.
+            </p></Card>}
           </>
         )}
 

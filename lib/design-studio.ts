@@ -1,3 +1,4 @@
+import { annualRainfallMm, recordMinimumC, sourcedMonthlyRainfall } from './climate-temperature';
 'use client';
 
 import { numberLabel } from '@/lib/format-figures';
@@ -701,16 +702,16 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
   const access = approved.filter((layer) => layer.layerType === 'access');
   const treeBelts = approved.filter((layer) => layer.layerType === 'tree_belt');
 
-  const annualRainfall = nonNegativeNumber(locationData?.rainfall?.annual);
+  const annualRainfall = annualRainfallMm(locationData?.rainfall);
   const slope = nonNegativeNumber(locationData?.elevation?.slopeDeg);
   const summerWind = locationData?.climate?.windFromSummer;
   const winterWind = locationData?.climate?.windFromWinter;
   const soilTexture = locationData?.soil?.textureClass;
   const biome = locationData?.biome?.name;
-  const rainfallPattern = locationData?.rainfall?.pattern;
-  const wetSeason = locationData?.rainfall?.wetSeason;
-  const drySeason = locationData?.rainfall?.drySeason;
-  const minTemp = finiteNumber(locationData?.climate?.minTemp);
+  const rainfallPattern = sourcedMonthlyRainfall(locationData?.rainfall) ? locationData?.rainfall?.pattern : undefined;
+  const wetSeason = sourcedMonthlyRainfall(locationData?.rainfall) ? locationData?.rainfall?.wetSeason : undefined;
+  const drySeason = sourcedMonthlyRainfall(locationData?.rainfall) ? locationData?.rainfall?.drySeason : undefined;
+  const minTemp = recordMinimumC(locationData?.climate);
   const elevation = finiteNumber(locationData?.elevation?.elevation);
 
   // Load site survey by siteId. loadSurvey() also runs a one-time legacy-placeId migration
@@ -801,9 +802,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
     : '';
 
   // Frost / elevation note for sector map
-  const frostNote = (minTemp != null && minTemp < 2)
-    ? ` Watch for frost — minimum temperatures around ${minTemp.toFixed(0)}°C can damage tender plants.`
-    : '';
+  const frostNote = minTemp === null ? ' Farm frost observations are needed.' : ` Modelled record low: ${minTemp}°C; this does not establish frost frequency or a planting date.`;
 
   // Elevation note
   const elevationNote = elevation != null && elevation > 1200

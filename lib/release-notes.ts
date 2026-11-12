@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '12 November 2026', sha: '627d114167ff4f5c486ba50130af86b43b6f5ce0', changes: [
+    'Soil readings keep their sources without an unsupported health score or diagnosis.',
+    'Saving a site keeps unknown rainfall unknown and preserves your existing figures.',
+    'Reports withhold unsourced weather values and separate record lows from farm frost.',
+  ] },
   { when: '11 November 2026', sha: '1dd03688f9de3985d154b4a04e80e47bb1cd1c3f', changes: [
     'Printed frost warnings follow the frost months you record, not a fixed winter window.',
     'Site data marks unknown weather and wind coverage, with clearer dark-mode text.',

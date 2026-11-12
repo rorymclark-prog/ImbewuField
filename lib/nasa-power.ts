@@ -243,6 +243,8 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
     status: completeMonthlyTemperatures(cleanedMonthlyTemp) ? 'complete' : 'incomplete' };
   const monthlyTemp = cleanedMonthlyTemp.map((value) => value ?? 20);
   const meanTemp = parseFloat((monthlyTemp.reduce((a: number, b: number) => a + b, 0) / 12).toFixed(1));
+  const hasMaximumReading = MONTH_KEYS.every((key) => clean(asRecord(p.T2M_MAX)[key]) !== null);
+  const hasSolarReading = MONTH_KEYS.every((key) => cleanNonNegative(asRecord(p.ALLSKY_SFC_SW_DWN)[key]) !== null);
   const hotMonthTemp = reduceParam(p.T2M_MAX, (vals) => Math.max(...vals), 25);
   const minTemperatureByMonth = asRecord(p.T2M_MIN);
   const hasMinimumReading = MONTH_KEYS.every((key) => clean(minTemperatureByMonth[key]) !== null);
@@ -330,6 +332,6 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
 
   return {
     rainfall: { monthly, annual: parseFloat(annual.toFixed(0)), pattern, wetSeason, drySeason, rainfallSource },
-    climate: { meanTemp, maxTemp, minTemp, ...(hasMinimumReading ? { minTempSource: 'nasa-power' as const } : {}), monthlyTemp, monthlyTempCoverage, solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, ...(hasWindReading ? { windSource: 'nasa-power' as const } : {}), windFromSummer, windFromWinter },
+    climate: { meanTemp, maxTemp, ...(hasMaximumReading ? { maxTempSource: 'nasa-power' as const } : {}), ...(hasSolarReading ? { solarSource: 'nasa-power' as const } : {}), minTemp, ...(hasMinimumReading ? { minTempSource: 'nasa-power' as const } : {}), monthlyTemp, monthlyTempCoverage, solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, ...(hasWindReading ? { windSource: 'nasa-power' as const } : {}), ...((windFromSummer !== '—' || windFromWinter !== '—') ? { windDirectionSource: 'nasa-power' as const } : {}), windFromSummer, windFromWinter },
   };
 }

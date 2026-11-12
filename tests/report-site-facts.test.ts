@@ -652,3 +652,29 @@ test('the full report header cannot turn unsourced soil placeholders into a site
     assert.doesNotMatch(header, /Soil \(0-30 cm\) \| Not measured/);
   }
 });
+
+
+import { annualRainfallMm } from '../lib/climate-temperature.ts';
+import { climateFigure, waterBudgetFigure } from '../lib/report-figures.ts';
+import { buildRiskRegister } from '../lib/report-risk.ts';
+test('an outage cannot fabricate rainfall or roof yield in deterministic report text or original figures', () => {
+  const facts = demoFacts();
+  const location = { ...DEMO_LOCATION, rainfall: { ...DEMO_LOCATION.rainfall, annual: 600, monthly: Array(12).fill(50), rainfallSource: undefined } };
+  const visuals = siteReportVisuals(facts, location);
+  assert.ok(!visuals.metrics.some(m => m.label === 'Annual rainfall'));
+  assert.ok(!visuals.charts.some(c => c.id === 'rainfall'));
+  assert.equal(climateFigure(location), null);
+  assert.equal(waterBudgetFigure(facts, location), null);
+  assert.match(roofCalcLine(facts, annualRainfallMm(location.rainfall)), /rainfall is not known/);
+  const supported = { ...location, rainfall: { ...location.rainfall, annual: 0, monthly: Array(12).fill(0), rainfallSource: 'nasa-power' } };
+  assert.match(siteReportVisuals(facts, supported).metrics.find(m => m.label === 'Annual rainfall')!.value, /^0 mm$/);
+  assert.ok(climateFigure(supported));
+  assert.ok(waterBudgetFigure(facts, supported));
+  assert.match(roofCalcLine(facts, annualRainfallMm(supported.rainfall)), /0 L usable/);
+});
+test('a record minimum cannot assign frost likelihood in the deterministic risk register', () => {
+  for (const minTempC of [-20, 0, 4, 8, undefined]) {
+    const rows = buildRiskRegister({ facts: null, rainfallMm: null, slopeDeg: 0, minTempC, soilSource: 'lab', unpricedBoqLines: 0 });
+    assert.ok(rows.every(row => !/Frost damage/.test(row.risk)));
+  }
+});

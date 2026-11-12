@@ -192,10 +192,10 @@ export interface ReportPdfMeta {
   biome: string;
   lat: number;
   lon: number;
-  rainfallMm: number;
+  rainfallMm?: number;
   soilPh?: number;
   language?: string;
-  meanTempC: number;
+  meanTempC?: number;
   /** Already-localised date string for the cover line. */
   dateLabel: string;
   /**
@@ -466,7 +466,7 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
     );
     y += 13;
     doc.text(
-      `Rainfall ${meta.rainfallMm} mm/yr · Soil pH ${meta.soilPh ?? 'not measured'} · Mean temp ${meta.meanTempC}°C`,
+      `Rainfall ${typeof meta.rainfallMm === 'number' && Number.isFinite(meta.rainfallMm) && meta.rainfallMm >= 0 ? `${meta.rainfallMm} mm/yr` : 'not known'} · Soil pH ${meta.soilPh ?? 'not measured'} · Mean temp ${typeof meta.meanTempC === 'number' && Number.isFinite(meta.meanTempC) ? `${meta.meanTempC}°C` : 'not known'}`,
       M, y,
     );
     y += 12;

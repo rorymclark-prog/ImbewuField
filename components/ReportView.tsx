@@ -1,4 +1,5 @@
 'use client';
+import { annualRainfallMm, monthlyTemperatureStatus, reportClimateEvidence } from '@/lib/climate-temperature';
 
 import { coordinateSiteIdForPlace } from '@/lib/international/site-context';
 import { currentPlanningSupport } from '@/lib/international/planning-support';
@@ -432,7 +433,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setFacts(collectReportSiteFacts({ location: d, siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: reportPlace?.name }));
   }, [activeSaved, d, reportPlace, evidenceRevision]);
   useEffect(() => {
-    setFigureInputs(collectReportFigureInputs({ siteId: designSiteIdFromLocation(d), lat: d.lat, lon: d.lon, biome: resolveSiteEcology(d.biome, d.vegetation).placeName, rainfallMm: d.rainfall?.annual }));
+    setFigureInputs(collectReportFigureInputs({ siteId: designSiteIdFromLocation(d), lat: d.lat, lon: d.lon, biome: resolveSiteEcology(d.biome, d.vegetation).placeName, rainfallMm: annualRainfallMm(d.rainfall) ?? undefined }));
   }, [d, evidenceRevision]);
   const [bilingual, setBilingual] = useState(savedReport?.settings?.bilingual ?? false);
   const [tone, setTone] = useState<'simple' | 'professional'>(savedReport?.settings?.tone ?? 'simple');
@@ -787,7 +788,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         ? buildPhasePlan(
           canvas,
           resolveBaseLayers(canvas, { boundary: [], house: [], driveway: [] }),
-          { biome: ecology.placeName, rainfallMm: d.rainfall.annual },
+          { biome: ecology.placeName, rainfallMm: annualRainfallMm(d.rainfall) ?? undefined },
         )
         : null;
 
@@ -945,10 +946,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         biome: ecology.placeName,
         lat: d.lat,
         lon: d.lon,
-        rainfallMm: d.rainfall.annual,
+        rainfallMm: annualRainfallMm(d.rainfall) ?? undefined,
         soilPh: d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : undefined,
         language: contentLanguage,
-        meanTempC: d.climate.meanTemp,
+        meanTempC: monthlyTemperatureStatus(d.climate) === 'complete' ? d.climate.meanTemp : undefined,
         dateLabel: new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
         sheets: includeImages ? plates : [],
         loadSheetImage,
@@ -975,7 +976,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   async function shareReport() {
     if (!d || !report) return;
     const firstPara = report.split('\n').find((l) => l.trim() && !l.startsWith('#'))?.slice(0, 200) ?? '';
-    const text = `${tr('ImbewuField Site Analysis', 'Ukuhlaziywa Kwendawo kwe-ImbewuField')}\n${siteName} · ${ecology.label} | ${Math.abs(d.lat).toFixed(3)}°S ${d.lon.toFixed(3)}°E\n${tr('Rainfall', 'Imvula')}: ${d.rainfall.annual}mm/yr | ${tr('Soil pH', 'i-pH yomhlabathi')}: ${d.soil.ph} | ${tr('Mean temperature', 'Izinga lokushisa elimaphakathi')}: ${d.climate.meanTemp}°C\n\n${firstPara}...\n\n${tr('See the full report on ImbewuField', 'Bona umbiko ophelele ku-ImbewuField')} (imbewufield.vercel.app)`;
+    const text = `${tr('ImbewuField Site Analysis', 'Ukuhlaziywa Kwendawo kwe-ImbewuField')}\n${siteName} · ${ecology.label} | ${Math.abs(d.lat).toFixed(3)}°S ${d.lon.toFixed(3)}°E\n${reportClimateEvidence(d)}\n\n${firstPara}...\n\n${tr('See the full report on ImbewuField', 'Bona umbiko ophelele ku-ImbewuField')} (imbewufield.vercel.app)`;
     if (typeof navigator !== 'undefined' && navigator.share) {
       try { await navigator.share({ title: `${siteName} · ${tr('Site report', 'Umbiko wendawo')}`, text }); return; } catch { /* user cancelled */ }
     }
@@ -1383,7 +1384,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               <div className={styles.summaryGrid}>
                 {[
                   { label: label('Biome'), value: ecology.label, color: bColor },
-                  { label: label('Rainfall'), value: `${d.rainfall.annual}mm/yr`, color: 'var(--report-blue)' },
+                  { label: label('Rainfall'), value: annualRainfallMm(d.rainfall) === null ? 'Not known' : `${annualRainfallMm(d.rainfall)}mm/yr`, color: 'var(--report-blue)' },
                   { label: label('Elevation'), value: `${d.elevation.elevation}m · ${d.elevation.slopeDeg}°`, color: undefined },
                   { label: label('Soil pH'), value: d.soil.soilSource === 'estimate' || !d.soil.soilSource ? tr('Not measured — soil test needed', 'Awukahlolwa — hlola umhlabathi') : `pH ${d.soil.ph} · OC ${d.soil.organicCarbon}%`, color: 'var(--report-gold)' },
                   ...(d.vegetation ? [{ label: 'Vegetation', value: d.vegetation.vegUnit, color: bColor }] : []),
@@ -1409,7 +1410,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                   <div className="mt-3 text-xs font-sans" style={{ color: 'var(--report-muted)' }}>
                     {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · {tr('Köppen climate class', 'Uhlobo lwesimo sezulu i-Köppen')} {d.climate.koppen} ({koppenDescLabel(d.climate.koppen, d.climate.koppenDesc)}) ·
                     {' '}{rainfallPatternLabel(d.rainfall.pattern)} {tr('rainfall', 'imvula')} · {seasonRangeLabel(d.rainfall.wetSeason)} {tr('wet', 'manzi')} / {seasonRangeLabel(d.rainfall.drySeason)} {tr('dry', 'omile')} ·
-                    {' '}{d.climate.meanTemp}°C {tr('mean', 'isilinganiso')} ({d.climate.minTemp}–{d.climate.maxTemp}°C)
+                    {' '}{monthlyTemperatureStatus(d.climate) === 'complete' ? `${d.climate.meanTemp}°C` : 'Not known'}
                   </div>
 
                   {d.bru && (
