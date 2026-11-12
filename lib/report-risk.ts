@@ -2,15 +2,9 @@ import { reportDocumentText } from './report-localisation';
 /**
  * report-risk.ts — the risk register.
  *
- * ── WHY EVERY RATING STATES ITS OWN TRIGGER ─────────────────────────────────────────────────
- * A risk register normally rates likelihood High/Medium/Low, and those three words are exactly
- * the kind of confident-looking judgement this app must not manufacture. So no risk is rated by
- * feel: each one has a THRESHOLD written into the code, and the register prints the threshold
- * and this site's actual figure beside the rating. A reader who disagrees with the rating can
- * see precisely what produced it and argue with the number instead of the adjective.
- *
- * A risk whose trigger did not fire does not appear. The register lists what this site's own
- * data raises, not the standard list of things that can go wrong on a farm.
+ * Ratings retain their recorded triggers so the reader can inspect their basis.
+ * An annual rainfall total does not establish seasonal supply, crop demand or
+ * storage needs. Keep that evidence gap outside the rated rows, even at zero.
  */
 
 import type { ReportSiteFacts } from '@/lib/report-site-facts';
@@ -29,8 +23,10 @@ export interface RiskRow {
 
 export interface RiskInput {
   facts: ReportSiteFacts | null | undefined;
-  rainfallMm: number;
+  /** Retained for callers; annual rainfall alone cannot produce a risk rating. */
+  rainfallMm: number | null;
   slopeDeg: number;
+  /** Retained for old callers; a record low does not establish farm frost risk. */
   minTempC?: number;
   soilSource?: 'lab' | 'soilgrids' | 'estimate';
   /** How many BOQ lines carry a quantity but no rate. */
@@ -38,10 +34,8 @@ export interface RiskInput {
 }
 
 /** Thresholds, named so the register can print them. */
-const DRY_SITE_MM = 500;
 const STEEP_SLOPE_DEG = 10;
 const MODERATE_SLOPE_DEG = 5;
-const FROST_MIN_C = 5;
 
 export function buildRiskRegister(input: RiskInput, language = 'en'): RiskRow[] {
   const t=(source:string,values?:Record<string,string|number>)=>reportDocumentText(source,language,values);
@@ -53,15 +47,6 @@ export function buildRiskRegister(input: RiskInput, language = 'en'): RiskRow[] 
 
   // ── Water ──
   const storage = facts?.water?.statedStorageLitres ?? 0;
-  if (input.rainfallMm > 0 && input.rainfallMm < DRY_SITE_MM) {
-    add({
-      risk: t('Dry-season crop failure from insufficient stored water'),
-      trigger: t('{rainfall} mm/yr, below the {threshold} mm threshold this register uses for a water-limited site',{rainfall:input.rainfallMm,threshold:DRY_SITE_MM}),
-      likelihood: 'High',
-      impact: 'High',
-      mitigation: t('Build storage before expanding planted area. Size the tanks against the roof catchment figure in the water section, and plant the dry months from stored water only.'),
-    });
-  }
   // "Nothing to store it in" must mean genuinely NOTHING. `storage` is the sum of STATED tank
   // capacities only (FactWater.statedStorageLitres never guesses an unknown one into the total),
   // so a farm with one tank of unrecorded size also has storage === 0 — but it does have
@@ -108,15 +93,9 @@ export function buildRiskRegister(input: RiskInput, language = 'en'): RiskRow[] 
       mitigation: t('Mulch the beds and slow runoff on contour. Watch the ground after the first heavy rain and record where water actually runs.'),
     });
   }
-  if (input.minTempC !== undefined && input.minTempC < FROST_MIN_C) {
-    add({
-      risk: t('Frost damage to tender crops and young trees'),
-      trigger: t('minimum {temperature} °C, below the {threshold} °C threshold',{temperature:Math.round(input.minTempC),threshold:FROST_MIN_C}),
-      likelihood: 'Medium',
-      impact: 'Medium',
-      mitigation: t('Keep tender crops off the lowest ground, where cold air settles. Plant frost-sensitive trees after the last frost date, not before.'),
-    });
-  }
+  // Farm frost observations remain in the survey evidence. A grid record low cannot
+  // supply a likelihood rating or a last-frost date for this register.
+
 
   // ── The data the report itself stands on ──
   if (input.soilSource !== 'lab') {
@@ -161,11 +140,21 @@ export function buildRiskRegister(input: RiskInput, language = 'en'): RiskRow[] 
   return rows;
 }
 
-export function riskRegisterMarkdown(rows: RiskRow[], language = 'en'): string {
+/** Shared report evidence statement; no translated safety claim is invented here. */
+export function reportWaterEvidence(rainfallMm: number | null): string {
+  const annual = typeof rainfallMm === 'number' && Number.isFinite(rainfallMm) && rainfallMm >= 0
+    ? `${rainfallMm} mm/year` : 'unknown';
+  return `Annual rainfall: ${annual}. Crop water demand, seasonal water supply and water adequacy have not been assessed. Annual rainfall alone does not establish dry-season crop-failure risk or required storage capacity.`;
+}
+
+export function riskRegisterMarkdown(rows: RiskRow[], language = 'en', rainfallMm: number | null = null): string {
   const t=(source:string,values?:Record<string,string|number>)=>reportDocumentText(source,language,values);
-  const out: string[] = [`## ${t('Risk Register')}`, ''];
+  // The new evidence statement has no reviewed translations. Make the English
+  // fallback visible rather than reusing the retired translated risk judgement.
+  const label = language === 'en' ? 'Water evidence' : 'Water evidence (English; translation pending)';
+  const out: string[] = [`## ${t('Risk Register')}`, '', `**${label}:** ${reportWaterEvidence(rainfallMm)}`, ''];
   if (!rows.length) {
-    out.push(t('No risk in this register\'s rule set was triggered by this site\'s data. That is not the same as no risk — it means the specific thresholds this report checks (rainfall, slope, frost, soil basis, traced boundary, unpriced work, crop plan) were all clear.'));
+    out.push('No risk rows were produced from the available inputs. Missing evidence and farm frost conditions have not been assessed; this is not a finding of low risk.');
     out.push('');
     return out.join('\n');
   }

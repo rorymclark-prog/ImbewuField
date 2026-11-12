@@ -1,0 +1,59 @@
+plantings 27; beds 11; "now" 2026-11-11
+
+== not-recorded
+table frost input: {"kind":"not-recorded"}
+rows 27; with a caveat 22; every other field identical to the no-survey table: true
+  Bed 1 | Sweetcorn | harvest Apr | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 1 | Green beans | harvest Apr | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 1 | Peppers | harvest Feb-Apr | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 1 | Spanspek (sweet melon) | harvest Jan | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 2 | Green beans | harvest Apr | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 2 | Brinjal (eggplant) | harvest Jan | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 3 | Sweetcorn | harvest Apr | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 3 | Tomatoes | harvest Jan-Mar | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 3 | Gem squash | harvest Dec | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 4 | Sweetcorn | harvest Apr | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 4 | Cucumber | harvest Dec | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 4 | Green beans | harvest Nov | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 4 | Tomatoes | harvest Feb-Apr | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 5 | Green beans | harvest Apr | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 5 | Brinjal (eggplant) | harvest Feb | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 5 | Sweet potato | harvest Feb-Mar | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 5 | Cucumber | harvest Jan | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 6 | Groundnuts (peanuts) | harvest Mar | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 6 | Sweet potato | harvest Mar-Apr | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 7 | Peppers | harvest Jan-Mar | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 7 | Gem squash | harvest Jan | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+  Bed 7 | Groundnuts (peanuts) | harvest Apr | Frost-tender: picking may stop when frost arrives. Confirm your frost months.
+guide:
+  [Frost on this farm]
+    Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates.
+  [Frost-tender crops: frost months not confirmed]
+    Brinjal (eggplant), Cucumber, Gem squash, Green beans, Groundnuts (peanuts), Peppers, Spanspek (sweet melon), Sweet potato, Sweetcorn, Tomatoes.
+    Planned picking can extend into frost. Confirm your local frost months; tender crops may stop producing when frost arrives.
+    This plan has no frost dates for your farm. Record the months you see frost in the site survey, and the plan will check these crops against them.
+
+== no-frost-observed
+table frost input: {"kind":"no-frost-observed"}
+rows 27; with a caveat 0; every other field identical to the no-survey table: true
+guide:
+  [Frost on this farm]
+    Farmer reports no observed frost. This observation does not establish that future winters will be frost-free.
+
+== recorded-apr-jul-dec
+table frost input: {"kind":"months","months":[4,7,12],"nowMonth":11}
+rows 27; with a caveat 6; every other field identical to the no-survey table: true
+  Bed 1 | Sweetcorn | harvest Apr | Frost-tender: still in the ground in Apr, when you recorded frost.
+  Bed 1 | Green beans | harvest Apr | Frost-tender: still in the ground in Apr, when you recorded frost.
+  Bed 2 | Green beans | harvest Apr | Frost-tender: still in the ground in Apr, when you recorded frost.
+  Bed 3 | Sweetcorn | harvest Apr | Frost-tender: still in the ground in Apr, when you recorded frost.
+  Bed 4 | Sweetcorn | harvest Apr | Frost-tender: still in the ground in Apr, when you recorded frost.
+  Bed 5 | Green beans | harvest Apr | Frost-tender: still in the ground in Apr, when you recorded frost.
+guide:
+  [Frost on this farm]
+    Frost has been observed here in Apr, Jul, Dec. Check frost-tender crops against these observations.
+  [Planned crops to check for frost]
+    Green beans: Apr.
+    Sweetcorn: Apr.
+    These planned crops will hold ground in months when frost has been observed here. Confirm local protection or change the planting before relying on these dates.
+

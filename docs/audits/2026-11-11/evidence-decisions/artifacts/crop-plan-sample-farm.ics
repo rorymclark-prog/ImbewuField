@@ -1,0 +1,1874 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ImbewuField//Crop Plan//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:ImbewuField - Ubhejane Crèche
+X-WR-CALDESC:Ground prep\, sowing\, transplanting\, weeding and harvest for
+  this crop plan.
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-2-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20261101
+DTEND;VALUE=DATE:20261102
+SUMMARY:🧅 Harvest Onions — Bed 1
+DESCRIPTION:Harvest onions (Bed 1).\nAny time during November is fine — t
+ his plan works in whole months\, so the date on this entry is a marker for
+  the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Onions — Bed 1
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-3-maize-11-1-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20261101
+DTEND;VALUE=DATE:20261102
+SUMMARY:🌽 Prep Plot 3 for Maize (mielies)
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re cultivating or adding amendments for maize (mielies) (Plot 3).\nAny tim
+ e during November is fine — this plan works in whole months\, so the dat
+ e on this entry is a marker for the month\, not the exact day.\nFrom your 
+ ImbewuField crop plan.
+LOCATION:Plot 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Plot 3 for Maize (mielies)
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-3-maize-11-1-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20261101
+DTEND;VALUE=DATE:20261102
+SUMMARY:🌽 Sow Maize (mielies) — Plot 3
+DESCRIPTION:Sow maize (mielies) — rows 91cm apart · 25cm apart in the ro
+ w · sow 5–10cm deep (Plot 3).\nAny time during November is fine — thi
+ s plan works in whole months\, so the date on this entry is a marker for t
+ he month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Plot 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Maize (mielies) — Plot 3
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-1-sweetcorn-1-0.5-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20261201
+DTEND;VALUE=DATE:20261202
+SUMMARY:🟨 Prep Bed 1 for Sweetcorn
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for sweetcorn (Bed 1).\nAny time during December is f
+ ine — this plan works in whole months\, so the date on this entry is a m
+ arker for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 1 for Sweetcorn
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-1-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20261201
+DTEND;VALUE=DATE:20261202
+SUMMARY:🧄 Harvest Garlic — Bed 6
+DESCRIPTION:Harvest garlic (Bed 6).\nAny time during December is fine — t
+ his plan works in whole months\, so the date on this entry is a marker for
+  the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 6
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Garlic — Bed 6
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-1-green-beans-2-0.25-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270101
+DTEND;VALUE=DATE:20270102
+SUMMARY:🫛 Prep Bed 1 for Green beans
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for green beans (Bed 1).\nAny time during January is 
+ fine — this plan works in whole months\, so the date on this entry is a 
+ marker for the month\, not the exact day.\nFrom your ImbewuField crop plan
+ .
+LOCATION:Bed 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 1 for Green beans
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-1-sweetcorn-1-0.5-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270101
+DTEND;VALUE=DATE:20270102
+SUMMARY:🟨 Sow Sweetcorn — Bed 1
+DESCRIPTION:Sow sweetcorn — rows 70–80cm apart · 25–35cm apart in th
+ e row · sow 2.5–4cm deep (Bed 1).\nAny time during January is fine — 
+ this plan works in whole months\, so the date on this entry is a marker fo
+ r the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Sweetcorn — Bed 1
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-7-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270101
+DTEND;VALUE=DATE:20270102
+SUMMARY:🫛 Prep Bed 5 for Green beans
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for green beans (Bed 5).\nAny time during January is 
+ fine — this plan works in whole months\, so the date on this entry is a 
+ marker for the month\, not the exact day.\nFrom your ImbewuField crop plan
+ .
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 5 for Green beans
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-1-green-beans-2-0.25-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270202
+SUMMARY:🫛 Sow Green beans — Bed 1
+DESCRIPTION:Sow green beans — rows 45–60cm apart · 4–7cm apart in th
+ e row · sow 2–5cm deep (Bed 1).\nAny time during February is fine — t
+ his plan works in whole months\, so the date on this entry is a marker for
+  the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Green beans — Bed 1
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-3-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270202
+SUMMARY:🧡 Prep Bed 3 for Butternut
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for butternut (Bed 3).\nAny time during February is f
+ ine — this plan works in whole months\, so the date on this entry is a m
+ arker for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 3 for Butternut
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-7-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270202
+SUMMARY:🫛 Sow Green beans — Bed 5
+DESCRIPTION:Sow green beans — rows 45–60cm apart · 4–7cm apart in th
+ e row · sow 2–5cm deep (Bed 5).\nAny time during February is fine — t
+ his plan works in whole months\, so the date on this entry is a marker for
+  the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Green beans — Bed 5
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-9-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270202
+SUMMARY:🥦 Prep Bed 6 for Broccoli
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for broccoli (Bed 6).\nAny time during February is fi
+ ne — this plan works in whole months\, so the date on this entry is a ma
+ rker for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 6
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 6 for Broccoli
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-9-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270202
+SUMMARY:🥦 Sow Broccoli — Bed 6
+DESCRIPTION:Sow broccoli — start in a tray\, 1.5–2cm deep (Bed 6).\nAny
+  time during February is fine — this plan works in whole months\, so the
+  date on this entry is a marker for the month\, not the exact day.\nFrom y
+ our ImbewuField crop plan.
+LOCATION:Bed 6
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Broccoli — Bed 6
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-13-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270301
+DTEND;VALUE=DATE:20270302
+SUMMARY:🥕 Prep Bed 2 for Carrots
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for carrots (Bed 2).\nAny time during March is fine 
+ — this plan works in whole months\, so the date on this entry is a marke
+ r for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 2
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 2 for Carrots
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-3-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270301
+DTEND;VALUE=DATE:20270302
+SUMMARY:🧡 Sow Butternut — Bed 3
+DESCRIPTION:Sow butternut — rows 150cm apart · 40cm apart in the row (Be
+ d 3).\nAny time during March is fine — this plan works in whole months\,
+  so the date on this entry is a marker for the month\, not the exact day.\
+ nFrom your ImbewuField crop plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Butternut — Bed 3
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-14-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270301
+DTEND;VALUE=DATE:20270302
+SUMMARY:🥕 Prep Bed 4 for Carrots
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for carrots (Bed 4).\nAny time during March is fine 
+ — this plan works in whole months\, so the date on this entry is a marke
+ r for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 4 for Carrots
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-9-transplant@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270301
+DTEND;VALUE=DATE:20270302
+SUMMARY:🥦 Check / transplant Broccoli — Bed 6
+DESCRIPTION:Check seedlings\; transplant when ready broccoli — rows 60–
+ 70cm apart · 30–45cm apart in the row (Bed 6).\nMove the tray seedlings
+  into Bed 6 — rows 60–70cm apart · 30–45cm apart in the row · sow 
+ 1.5–2cm deep.\nAny time during March is fine — this plan works in whol
+ e months\, so the date on this entry is a marker for the month\, not the e
+ xact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 6
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Check / transplant Broccoli — Bed 6
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-1-green-beans-2-0.25-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270401
+DTEND;VALUE=DATE:20270402
+SUMMARY:🫛 Harvest Green beans — Bed 1
+DESCRIPTION:Harvest green beans (Bed 1).\nAny time during April is fine —
+  this plan works in whole months\, so the date on this entry is a marker f
+ or the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Green beans — Bed 1
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-1-sweetcorn-1-0.5-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270401
+DTEND;VALUE=DATE:20270402
+SUMMARY:🟨 Harvest Sweetcorn — Bed 1
+DESCRIPTION:Harvest sweetcorn (Bed 1).\nAny time during April is fine — t
+ his plan works in whole months\, so the date on this entry is a marker for
+  the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Sweetcorn — Bed 1
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-13-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270401
+DTEND;VALUE=DATE:20270402
+SUMMARY:🥕 Sow Carrots — Bed 2
+DESCRIPTION:Sow carrots — rows 20–40cm apart · 2–5cm apart in the ro
+ w · sow 1–2.5cm deep (Bed 2).\nAny time during April is fine — this p
+ lan works in whole months\, so the date on this entry is a marker for the 
+ month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 2
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Carrots — Bed 2
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-14-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270401
+DTEND;VALUE=DATE:20270402
+SUMMARY:🥕 Sow Carrots — Bed 4
+DESCRIPTION:Sow carrots — rows 20–40cm apart · 2–5cm apart in the ro
+ w · sow 1–2.5cm deep (Bed 4).\nAny time during April is fine — this p
+ lan works in whole months\, so the date on this entry is a marker for the 
+ month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Carrots — Bed 4
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-7-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270401
+DTEND;VALUE=DATE:20270402
+SUMMARY:🫛 Harvest Green beans — Bed 5
+DESCRIPTION:Harvest green beans (Bed 5).\nAny time during April is fine —
+  this plan works in whole months\, so the date on this entry is a marker f
+ or the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Green beans — Bed 5
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-3-maize-11-1-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270401
+DTEND;VALUE=DATE:20270402
+SUMMARY:🌽 Harvest Maize (mielies) — Plot 3
+DESCRIPTION:Harvest maize (mielies) (Plot 3).\nAny time during April is fin
+ e — this plan works in whole months\, so the date on this entry is a mar
+ ker for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Plot 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Maize (mielies) — Plot 3
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-3-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270701
+DTEND;VALUE=DATE:20270702
+SUMMARY:🧡 Harvest Butternut — Bed 3
+DESCRIPTION:Harvest butternut (Bed 3).\nAny time during July is fine — th
+ is plan works in whole months\, so the date on this entry is a marker for 
+ the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Butternut — Bed 3
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-9-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270701
+DTEND;VALUE=DATE:20270702
+SUMMARY:🥦 Harvest Broccoli — Bed 6
+DESCRIPTION:Harvest broccoli (Bed 6).\nAny time during July is fine — thi
+ s plan works in whole months\, so the date on this entry is a marker for t
+ he month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 6
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Broccoli — Bed 6
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-2-green-beans-9-0.3333333333333333-prep@imbew
+ ufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🫛 Prep Bed 2 for Green beans
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for green beans (Bed 2).\nAny time during August is f
+ ine — this plan works in whole months\, so the date on this entry is a m
+ arker for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 2
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 2 for Green beans
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-13-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🥕 Harvest Carrots — Bed 2
+DESCRIPTION:Harvest carrots (Bed 2).\nAny time during August is fine — th
+ is plan works in whole months\, so the date on this entry is a marker for 
+ the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 2
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Carrots — Bed 2
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-8-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🥗 Prep Bed 2 for Lettuce
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for lettuce (Bed 2).\nAny time during August is fine 
+ — this plan works in whole months\, so the date on this entry is a marke
+ r for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 2
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 2 for Lettuce
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-8-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🥗 Sow Lettuce — Bed 2
+DESCRIPTION:Sow lettuce — start in a tray\, 1.5–2cm deep (Bed 2).\nAny 
+ time during August is fine — this plan works in whole months\, so the da
+ te on this entry is a marker for the month\, not the exact day.\nFrom your
+  ImbewuField crop plan.
+LOCATION:Bed 2
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Lettuce — Bed 2
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-3-beetroot-9-0.3333333333333333-prep@imbewufi
+ eld.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🫜 Prep Bed 3 for Beetroot
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for beetroot (Bed 3).\nAny time during August is fine
+  — this plan works in whole months\, so the date on this entry is a mark
+ er for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 3 for Beetroot
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-3-brinjal-8-0.3333333333333333-prep@imbewufie
+ ld.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🍆 Prep Bed 3 for Brinjal (eggplant)
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for brinjal (eggplant) (Bed 3).\nAny time during Augu
+ st is fine — this plan works in whole months\, so the date on this entry
+  is a marker for the month\, not the exact day.\nFrom your ImbewuField cro
+ p plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 3 for Brinjal (eggplant)
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-3-brinjal-8-0.3333333333333333-sow@imbewufiel
+ d.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🍆 Sow Brinjal (eggplant) — Bed 3
+DESCRIPTION:Sow brinjal (eggplant) — start in a tray\, 1.5–2cm deep (Be
+ d 3).\nAny time during August is fine — this plan works in whole months\
+ , so the date on this entry is a marker for the month\, not the exact day.
+ \nFrom your ImbewuField crop plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Brinjal (eggplant) — Bed 3
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-3-carrots-9-0.3333333333333333-prep@imbewufie
+ ld.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🥕 Prep Bed 3 for Carrots
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for carrots (Bed 3).\nAny time during August is fine 
+ — this plan works in whole months\, so the date on this entry is a marke
+ r for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 3 for Carrots
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-3-harvest-1@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🧡 Harvest Butternut — Bed 3
+DESCRIPTION:Harvest butternut (Bed 3).\nAny time during August is fine — 
+ this plan works in whole months\, so the date on this entry is a marker fo
+ r the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Butternut — Bed 3
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-4-sweet-potato-9-0.25-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🍠 Prep Bed 4 for Sweet potato
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for sweet potato (Bed 4).\nAny time during August is 
+ fine — this plan works in whole months\, so the date on this entry is a 
+ marker for the month\, not the exact day.\nFrom your ImbewuField crop plan
+ .
+LOCATION:Bed 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 4 for Sweet potato
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-14-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🥕 Harvest Carrots — Bed 4
+DESCRIPTION:Harvest carrots (Bed 4).\nAny time during August is fine — th
+ is plan works in whole months\, so the date on this entry is a marker for 
+ the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Carrots — Bed 4
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-5-cucumber-9-0.25-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🥒 Prep Bed 5 for Cucumber
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for cucumber (Bed 5).\nAny time during August is fine
+  — this plan works in whole months\, so the date on this entry is a mark
+ er for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 5 for Cucumber
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-5-parsley-9-0.3333333333333333-prep@imbewufie
+ ld.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:💚 Prep Bed 5 for Parsley
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for parsley (Bed 5).\nAny time during August is fine 
+ — this plan works in whole months\, so the date on this entry is a marke
+ r for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 5 for Parsley
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-5-tomatoes-8-0.25-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🍅 Prep Bed 5 for Tomatoes
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for tomatoes (Bed 5).\nAny time during August is fine
+  — this plan works in whole months\, so the date on this entry is a mark
+ er for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 5 for Tomatoes
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-5-tomatoes-8-0.25-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🍅 Sow Tomatoes — Bed 5
+DESCRIPTION:Sow tomatoes — start in a tray\, 1cm deep (Bed 5).\nAny time 
+ during August is fine — this plan works in whole months\, so the date on
+  this entry is a marker for the month\, not the exact day.\nFrom your Imbe
+ wuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Tomatoes — Bed 5
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-9-harvest-1@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🥦 Harvest Broccoli — Bed 6
+DESCRIPTION:Harvest broccoli (Bed 6).\nAny time during August is fine — t
+ his plan works in whole months\, so the date on this entry is a marker for
+  the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 6
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Broccoli — Bed 6
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-1-butternut-9-1-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🧡 Prep Plot 1 for Butternut
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re cultivating or adding amendments for butternut (Plot 1).\nAny time duri
+ ng August is fine — this plan works in whole months\, so the date on thi
+ s entry is a marker for the month\, not the exact day.\nFrom your ImbewuFi
+ eld crop plan.
+LOCATION:Plot 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Plot 1 for Butternut
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-4-sweet-potato-9-1-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:🍠 Prep Plot 4 for Sweet potato
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re cultivating or adding amendments for sweet potato (Plot 4).\nAny time d
+ uring August is fine — this plan works in whole months\, so the date on 
+ this entry is a marker for the month\, not the exact day.\nFrom your Imbew
+ uField crop plan.
+LOCATION:Plot 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Plot 4 for Sweet potato
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-1-tomatoes-9-0.25-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🍅 Prep Bed 1 for Tomatoes
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for tomatoes (Bed 1).\nAny time during September is f
+ ine — this plan works in whole months\, so the date on this entry is a m
+ arker for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 1 for Tomatoes
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-1-tomatoes-9-0.25-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🍅 Sow Tomatoes — Bed 1
+DESCRIPTION:Sow tomatoes — start in a tray\, 1cm deep (Bed 1).\nAny time 
+ during September is fine — this plan works in whole months\, so the date
+  on this entry is a marker for the month\, not the exact day.\nFrom your I
+ mbewuField crop plan.
+LOCATION:Bed 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Tomatoes — Bed 1
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-2-green-beans-9-0.3333333333333333-sow@imbewu
+ field.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🫛 Sow Green beans — Bed 2
+DESCRIPTION:Sow green beans — rows 45–60cm apart · 4–7cm apart in th
+ e row · sow 2–5cm deep (Bed 2).\nAny time during September is fine — 
+ this plan works in whole months\, so the date on this entry is a marker fo
+ r the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 2
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Green beans — Bed 2
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-8-transplant@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🥗 Check / transplant Lettuce — Bed 2
+DESCRIPTION:Check seedlings\; transplant when ready lettuce — rows 40–5
+ 0cm apart · 25–35cm apart in the row (Bed 2).\nMove the tray seedlings 
+ into Bed 2 — rows 40–50cm apart · 25–35cm apart in the row · sow 1
+ .5–2cm deep.\nAny time during September is fine — this plan works in w
+ hole months\, so the date on this entry is a marker for the month\, not th
+ e exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 2
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Check / transplant Lettuce — Bed 2
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-3-beetroot-9-0.3333333333333333-sow@imbewufie
+ ld.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🫜 Sow Beetroot — Bed 3
+DESCRIPTION:Sow beetroot — rows 20–30cm apart · 5–7cm apart in the r
+ ow · sow 1.5–2cm deep (Bed 3).\nAny time during September is fine — t
+ his plan works in whole months\, so the date on this entry is a marker for
+  the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Beetroot — Bed 3
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-3-brinjal-8-0.3333333333333333-transplant@imb
+ ewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🍆 Check / transplant Brinjal (eggplant) — Bed 3
+DESCRIPTION:Check seedlings\; transplant when ready brinjal (eggplant) — 
+ rows 70–80cm apart · 50cm apart in the row (Bed 3).\nMove the tray seed
+ lings into Bed 3 — rows 70–80cm apart · 50cm apart in the row · sow 
+ 1.5–2cm deep.\nAny time during September is fine — this plan works in 
+ whole months\, so the date on this entry is a marker for the month\, not t
+ he exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Check / transplant Brinjal (eggplant) — Bed 3
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-3-carrots-9-0.3333333333333333-sow@imbewufiel
+ d.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🥕 Sow Carrots — Bed 3
+DESCRIPTION:Sow carrots — rows 20–40cm apart · 2–5cm apart in the ro
+ w · sow 1–2.5cm deep (Bed 3).\nAny time during September is fine — th
+ is plan works in whole months\, so the date on this entry is a marker for 
+ the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Carrots — Bed 3
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-4-sweet-potato-9-0.25-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🍠 Sow Sweet potato — Bed 4
+DESCRIPTION:Sow sweet potato — rows 90–100cm apart · 25–40cm apart i
+ n the row (Bed 4).\nAny time during September is fine — this plan works 
+ in whole months\, so the date on this entry is a marker for the month\, no
+ t the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Sweet potato — Bed 4
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-5-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🍅 Prep Bed 4 for Tomatoes
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for tomatoes (Bed 4).\nAny time during September is f
+ ine — this plan works in whole months\, so the date on this entry is a m
+ arker for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 4 for Tomatoes
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-5-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🍅 Sow Tomatoes — Bed 4
+DESCRIPTION:Sow tomatoes — start in a tray\, 1cm deep (Bed 4).\nAny time 
+ during September is fine — this plan works in whole months\, so the date
+  on this entry is a marker for the month\, not the exact day.\nFrom your I
+ mbewuField crop plan.
+LOCATION:Bed 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Tomatoes — Bed 4
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-5-cucumber-9-0.25-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🥒 Sow Cucumber — Bed 5
+DESCRIPTION:Sow cucumber — rows 120–140cm apart · 35–50cm apart in t
+ he row · sow 2–3cm deep (Bed 5).\nAny time during September is fine —
+  this plan works in whole months\, so the date on this entry is a marker f
+ or the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Cucumber — Bed 5
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-5-parsley-9-0.3333333333333333-sow@imbewufiel
+ d.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:💚 Sow Parsley — Bed 5
+DESCRIPTION:Sow parsley — rows 30cm apart · 10cm apart in the row · sow
+  1.5–2cm deep (Bed 5).\nAny time during September is fine — this plan 
+ works in whole months\, so the date on this entry is a marker for the mont
+ h\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Parsley — Bed 5
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-5-tomatoes-8-0.25-transplant@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🍅 Check / transplant Tomatoes — Bed 5
+DESCRIPTION:Check seedlings\; transplant when ready tomatoes — rows 90–
+ 120cm apart · 30–60cm apart in the row (Bed 5).\nMove the tray seedling
+ s into Bed 5 — rows 90–120cm apart · 30–60cm apart in the row · so
+ w 1cm deep.\nAny time during September is fine — this plan works in whol
+ e months\, so the date on this entry is a marker for the month\, not the e
+ xact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Check / transplant Tomatoes — Bed 5
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-10-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🍠 Prep Bed 6 for Sweet potato
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for sweet potato (Bed 6).\nAny time during September 
+ is fine — this plan works in whole months\, so the date on this entry is
+  a marker for the month\, not the exact day.\nFrom your ImbewuField crop p
+ lan.
+LOCATION:Bed 6
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 6 for Sweet potato
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-6-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🌽 Prep Bed 7 for Maize (mielies)
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re adding amendments for maize (mielies) (Bed 7).\nAny time during Septemb
+ er is fine — this plan works in whole months\, so the date on this entry
+  is a marker for the month\, not the exact day.\nFrom your ImbewuField cro
+ p plan.
+LOCATION:Bed 7
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Bed 7 for Maize (mielies)
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-1-butternut-9-1-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🧡 Sow Butternut — Plot 1
+DESCRIPTION:Sow butternut — rows 150cm apart · 40cm apart in the row (Pl
+ ot 1).\nAny time during September is fine — this plan works in whole mon
+ ths\, so the date on this entry is a marker for the month\, not the exact 
+ day.\nFrom your ImbewuField crop plan.
+LOCATION:Plot 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Butternut — Plot 1
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-2-groundnuts-10-1-prep@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🥜 Prep Plot 2 for Groundnuts (peanuts)
+DESCRIPTION:Assess soil and drainage\; use a soil test or local advice befo
+ re cultivating or adding amendments for groundnuts (peanuts) (Plot 2).\nAn
+ y time during September is fine — this plan works in whole months\, so t
+ he date on this entry is a marker for the month\, not the exact day.\nFrom
+  your ImbewuField crop plan.
+LOCATION:Plot 2
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Prep Plot 2 for Groundnuts (peanuts)
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-4-sweet-potato-9-1-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20270901
+DTEND;VALUE=DATE:20270902
+SUMMARY:🍠 Sow Sweet potato — Plot 4
+DESCRIPTION:Sow sweet potato — rows 90–100cm apart · 25–40cm apart i
+ n the row (Plot 4).\nAny time during September is fine — this plan works
+  in whole months\, so the date on this entry is a marker for the month\, n
+ ot the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Plot 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Sweet potato — Plot 4
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-1-tomatoes-9-0.25-transplant@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20271001
+DTEND;VALUE=DATE:20271002
+SUMMARY:🍅 Check / transplant Tomatoes — Bed 1
+DESCRIPTION:Check seedlings\; transplant when ready tomatoes — rows 90–
+ 120cm apart · 30–60cm apart in the row (Bed 1).\nMove the tray seedling
+ s into Bed 1 — rows 90–120cm apart · 30–60cm apart in the row · so
+ w 1cm deep.\nAny time during October is fine — this plan works in whole 
+ months\, so the date on this entry is a marker for the month\, not the exa
+ ct day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Check / transplant Tomatoes — Bed 1
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-5-transplant@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20271001
+DTEND;VALUE=DATE:20271002
+SUMMARY:🍅 Check / transplant Tomatoes — Bed 4
+DESCRIPTION:Check seedlings\; transplant when ready tomatoes — rows 90–
+ 120cm apart · 30–60cm apart in the row (Bed 4).\nMove the tray seedling
+ s into Bed 4 — rows 90–120cm apart · 30–60cm apart in the row · so
+ w 1cm deep.\nAny time during October is fine — this plan works in whole 
+ months\, so the date on this entry is a marker for the month\, not the exa
+ ct day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Check / transplant Tomatoes — Bed 4
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-10-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20271001
+DTEND;VALUE=DATE:20271002
+SUMMARY:🍠 Sow Sweet potato — Bed 6
+DESCRIPTION:Sow sweet potato — rows 90–100cm apart · 25–40cm apart i
+ n the row (Bed 6).\nAny time during October is fine — this plan works in
+  whole months\, so the date on this entry is a marker for the month\, not 
+ the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 6
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Sweet potato — Bed 6
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-6-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20271001
+DTEND;VALUE=DATE:20271002
+SUMMARY:🌽 Sow Maize (mielies) — Bed 7
+DESCRIPTION:Sow maize (mielies) — rows 91cm apart · 25cm apart in the ro
+ w · sow 5–10cm deep (Bed 7).\nAny time during October is fine — this 
+ plan works in whole months\, so the date on this entry is a marker for the
+  month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 7
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Maize (mielies) — Bed 7
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-2-groundnuts-10-1-sow@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20271001
+DTEND;VALUE=DATE:20271002
+SUMMARY:🥜 Sow Groundnuts (peanuts) — Plot 2
+DESCRIPTION:Sow groundnuts (peanuts) — rows 30–45cm apart · 5–7.5cm 
+ apart in the row · sow 5–7.5cm deep (Plot 2).\nAny time during October 
+ is fine — this plan works in whole months\, so the date on this entry is
+  a marker for the month\, not the exact day.\nFrom your ImbewuField crop p
+ lan.
+LOCATION:Plot 2
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sow Groundnuts (peanuts) — Plot 2
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-2-green-beans-9-0.3333333333333333-harvest@im
+ bewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20271101
+DTEND;VALUE=DATE:20271102
+SUMMARY:🫛 Harvest Green beans — Bed 2
+DESCRIPTION:Harvest green beans (Bed 2).\nAny time during November is fine 
+ — this plan works in whole months\, so the date on this entry is a marke
+ r for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 2
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Green beans — Bed 2
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-3-beetroot-9-0.3333333333333333-harvest@imbew
+ ufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20271201
+DTEND;VALUE=DATE:20271202
+SUMMARY:🫜 Harvest Beetroot — Bed 3
+DESCRIPTION:Harvest beetroot (Bed 3).\nAny time during December is fine —
+  this plan works in whole months\, so the date on this entry is a marker f
+ or the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Beetroot — Bed 3
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-5-cucumber-9-0.25-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20271201
+DTEND;VALUE=DATE:20271202
+SUMMARY:🥒 Harvest Cucumber — Bed 5
+DESCRIPTION:Harvest cucumber (Bed 5).\nAny time during December is fine —
+  this plan works in whole months\, so the date on this entry is a marker f
+ or the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Cucumber — Bed 5
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-5-parsley-9-0.3333333333333333-harvest@imbewu
+ field.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20271201
+DTEND;VALUE=DATE:20271202
+SUMMARY:💚 Harvest Parsley — Bed 5
+DESCRIPTION:Harvest parsley (Bed 5).\nAny time during December is fine — 
+ this plan works in whole months\, so the date on this entry is a marker fo
+ r the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Parsley — Bed 5
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-8-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280101
+DTEND;VALUE=DATE:20280102
+SUMMARY:🥗 Harvest Lettuce — Bed 2
+DESCRIPTION:Harvest lettuce (Bed 2).\nAny time during January is fine — t
+ his plan works in whole months\, so the date on this entry is a marker for
+  the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 2
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Lettuce — Bed 2
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-3-beetroot-9-0.3333333333333333-harvest-1@imb
+ ewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280101
+DTEND;VALUE=DATE:20280102
+SUMMARY:🫜 Harvest Beetroot — Bed 3
+DESCRIPTION:Harvest beetroot (Bed 3).\nAny time during January is fine — 
+ this plan works in whole months\, so the date on this entry is a marker fo
+ r the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Beetroot — Bed 3
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-3-brinjal-8-0.3333333333333333-harvest@imbewu
+ field.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280101
+DTEND;VALUE=DATE:20280102
+SUMMARY:🍆 Harvest Brinjal (eggplant) — Bed 3
+DESCRIPTION:Harvest brinjal (eggplant) (Bed 3).\nAny time during January is
+  fine — this plan works in whole months\, so the date on this entry is a
+  marker for the month\, not the exact day.\nFrom your ImbewuField crop pla
+ n.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Brinjal (eggplant) — Bed 3
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-3-carrots-9-0.3333333333333333-harvest@imbewu
+ field.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280101
+DTEND;VALUE=DATE:20280102
+SUMMARY:🥕 Harvest Carrots — Bed 3
+DESCRIPTION:Harvest carrots (Bed 3).\nAny time during January is fine — t
+ his plan works in whole months\, so the date on this entry is a marker for
+  the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 3
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Carrots — Bed 3
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-5-tomatoes-8-0.25-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280101
+DTEND;VALUE=DATE:20280102
+SUMMARY:🍅 Harvest Tomatoes — Bed 5
+DESCRIPTION:Harvest tomatoes (Bed 5).\nAny time during January is fine — 
+ this plan works in whole months\, so the date on this entry is a marker fo
+ r the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Tomatoes — Bed 5
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-1-butternut-9-1-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280101
+DTEND;VALUE=DATE:20280102
+SUMMARY:🧡 Harvest Butternut — Plot 1
+DESCRIPTION:Harvest butternut (Plot 1).\nAny time during January is fine 
+ — this plan works in whole months\, so the date on this entry is a marke
+ r for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Plot 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Butternut — Plot 1
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-1-tomatoes-9-0.25-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280201
+DTEND;VALUE=DATE:20280202
+SUMMARY:🍅 Harvest Tomatoes — Bed 1
+DESCRIPTION:Harvest tomatoes (Bed 1).\nAny time during February is fine —
+  this plan works in whole months\, so the date on this entry is a marker f
+ or the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Tomatoes — Bed 1
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-4-sweet-potato-9-0.25-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280201
+DTEND;VALUE=DATE:20280202
+SUMMARY:🍠 Harvest Sweet potato — Bed 4
+DESCRIPTION:Harvest sweet potato (Bed 4).\nAny time during February is fine
+  — this plan works in whole months\, so the date on this entry is a mark
+ er for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Sweet potato — Bed 4
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-5-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280201
+DTEND;VALUE=DATE:20280202
+SUMMARY:🍅 Harvest Tomatoes — Bed 4
+DESCRIPTION:Harvest tomatoes (Bed 4).\nAny time during February is fine —
+  this plan works in whole months\, so the date on this entry is a marker f
+ or the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Tomatoes — Bed 4
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-5-tomatoes-8-0.25-harvest-1@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280201
+DTEND;VALUE=DATE:20280202
+SUMMARY:🍅 Harvest Tomatoes — Bed 5
+DESCRIPTION:Harvest tomatoes (Bed 5).\nAny time during February is fine —
+  this plan works in whole months\, so the date on this entry is a marker f
+ or the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Tomatoes — Bed 5
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-1-butternut-9-1-harvest-1@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280201
+DTEND;VALUE=DATE:20280202
+SUMMARY:🧡 Harvest Butternut — Plot 1
+DESCRIPTION:Harvest butternut (Plot 1).\nAny time during February is fine 
+ — this plan works in whole months\, so the date on this entry is a marke
+ r for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Plot 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Butternut — Plot 1
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-4-sweet-potato-9-1-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280201
+DTEND;VALUE=DATE:20280202
+SUMMARY:🍠 Harvest Sweet potato — Plot 4
+DESCRIPTION:Harvest sweet potato (Plot 4).\nAny time during February is fin
+ e — this plan works in whole months\, so the date on this entry is a mar
+ ker for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Plot 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Sweet potato — Plot 4
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-1-tomatoes-9-0.25-harvest-1@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280301
+DTEND;VALUE=DATE:20280302
+SUMMARY:🍅 Harvest Tomatoes — Bed 1
+DESCRIPTION:Harvest tomatoes (Bed 1).\nAny time during March is fine — th
+ is plan works in whole months\, so the date on this entry is a marker for 
+ the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Tomatoes — Bed 1
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-4-sweet-potato-9-0.25-harvest-1@imbewufield.a
+ pp
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280301
+DTEND;VALUE=DATE:20280302
+SUMMARY:🍠 Harvest Sweet potato — Bed 4
+DESCRIPTION:Harvest sweet potato (Bed 4).\nAny time during March is fine 
+ — this plan works in whole months\, so the date on this entry is a marke
+ r for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Sweet potato — Bed 4
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-5-harvest-1@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280301
+DTEND;VALUE=DATE:20280302
+SUMMARY:🍅 Harvest Tomatoes — Bed 4
+DESCRIPTION:Harvest tomatoes (Bed 4).\nAny time during March is fine — th
+ is plan works in whole months\, so the date on this entry is a marker for 
+ the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Tomatoes — Bed 4
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-5-tomatoes-8-0.25-harvest-2@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280301
+DTEND;VALUE=DATE:20280302
+SUMMARY:🍅 Harvest Tomatoes — Bed 5
+DESCRIPTION:Harvest tomatoes (Bed 5).\nAny time during March is fine — th
+ is plan works in whole months\, so the date on this entry is a marker for 
+ the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 5
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Tomatoes — Bed 5
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-10-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280301
+DTEND;VALUE=DATE:20280302
+SUMMARY:🍠 Harvest Sweet potato — Bed 6
+DESCRIPTION:Harvest sweet potato (Bed 6).\nAny time during March is fine 
+ — this plan works in whole months\, so the date on this entry is a marke
+ r for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 6
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Sweet potato — Bed 6
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-6-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280301
+DTEND;VALUE=DATE:20280302
+SUMMARY:🌽 Harvest Maize (mielies) — Bed 7
+DESCRIPTION:Harvest maize (mielies) (Bed 7).\nAny time during March is fine
+  — this plan works in whole months\, so the date on this entry is a mark
+ er for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 7
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Maize (mielies) — Bed 7
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-4-sweet-potato-9-1-harvest-1@imbewufield.a
+ pp
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280301
+DTEND;VALUE=DATE:20280302
+SUMMARY:🍠 Harvest Sweet potato — Plot 4
+DESCRIPTION:Harvest sweet potato (Plot 4).\nAny time during March is fine 
+ — this plan works in whole months\, so the date on this entry is a marke
+ r for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Plot 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Sweet potato — Plot 4
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-bed-1-tomatoes-9-0.25-harvest-2@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280401
+DTEND;VALUE=DATE:20280402
+SUMMARY:🍅 Harvest Tomatoes — Bed 1
+DESCRIPTION:Harvest tomatoes (Bed 1).\nAny time during April is fine — th
+ is plan works in whole months\, so the date on this entry is a marker for 
+ the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 1
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Tomatoes — Bed 1
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-5-harvest-2@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280401
+DTEND;VALUE=DATE:20280402
+SUMMARY:🍅 Harvest Tomatoes — Bed 4
+DESCRIPTION:Harvest tomatoes (Bed 4).\nAny time during April is fine — th
+ is plan works in whole months\, so the date on this entry is a marker for 
+ the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 4
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Tomatoes — Bed 4
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-demo-planting-10-harvest-1@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280401
+DTEND;VALUE=DATE:20280402
+SUMMARY:🍠 Harvest Sweet potato — Bed 6
+DESCRIPTION:Harvest sweet potato (Bed 6).\nAny time during April is fine 
+ — this plan works in whole months\, so the date on this entry is a marke
+ r for the month\, not the exact day.\nFrom your ImbewuField crop plan.
+LOCATION:Bed 6
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Sweet potato — Bed 6
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:imbewu-crop-auto-demo-staple-2-groundnuts-10-1-harvest@imbewufield.app
+DTSTAMP:20261111T053318Z
+LAST-MODIFIED:20261111T053318Z
+DTSTART;VALUE=DATE:20280401
+DTEND;VALUE=DATE:20280402
+SUMMARY:🥜 Harvest Groundnuts (peanuts) — Plot 2
+DESCRIPTION:Harvest groundnuts (peanuts) (Plot 2).\nAny time during April i
+ s fine — this plan works in whole months\, so the date on this entry is 
+ a marker for the month\, not the exact day.\nFrom your ImbewuField crop pl
+ an.
+LOCATION:Plot 2
+CATEGORIES:ImbewuField
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Harvest Groundnuts (peanuts) — Plot 2
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+END:VCALENDAR

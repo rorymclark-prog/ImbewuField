@@ -1,0 +1,16 @@
+  country panel present -> choosing ZA
+header calendar chip: ["Hot area, no frost · summer rain · set for the sample farm"]
+calendar reason lines with a temperature: []
+accept button: Add 15 plantings to my plan
+frost notice on the page: 1
+notice text: [
+ "Frost-tender crops: frost months not confirmed",
+ "Brinjal (eggplant), Butternut, Cucumber, Green beans, Groundnuts (peanuts), Maize (mielies), Sweet potato, Sweetcorn, Tomatoes.",
+ "Planned picking can extend into frost. Confirm your local frost months; tender crops may stop producing when frost arrives.",
+ "This plan has no frost dates for your farm. Record the months you see frost in the site survey, and the plan will check these crops against them."
+]
+survey button near it: ["Update site survey"]
+phone overflow: {"sw":390,"iw":390,"over":false}
+"Frost on this farm" lines: ["Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates."]
+  saved crop-plan-sample-farm.pdf (891983 bytes) from "Download the plan (PDF)"
+ERRORS []

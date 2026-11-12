@@ -1,0 +1,6 @@
+  country panel present -> choosing ZA
+phone-light label text: Hot area, no frost · this farm’s crop plan
+  country panel present -> choosing ZA
+phone-dark label text: Hot area, no frost · this farm’s crop plan
+  country panel present -> choosing ZA
+desktop label text: Hot area, no frost · this farm’s crop plan

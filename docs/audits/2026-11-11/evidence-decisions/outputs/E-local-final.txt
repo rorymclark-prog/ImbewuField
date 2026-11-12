@@ -1,0 +1,15 @@
+HEAD 062b630408279519cc3b381248d288f226ee8928
+tree 7907684eb5dbcb0754d4562ed6d168180a326ffc
+status --porcelain (app components lib public package.json): []
+attempt 1
+  country panel present -> choosing ZA
+header calendar chip: ["Hot area, no frost · summer rain · satellite records for this site"]
+accept button: Add 27 plantings to my plan
+  saved crop-plan-local-farm.pdf (691516 bytes) from "Download the plan (PDF)"; the app named it ImbewuField-Crop-Plan-Ubhejane-Creche-garden-2026-11-11.pdf
+  saved crop-plan-local-farm.ics (70586 bytes) from "Add 99 tasks to calendar"; the app named it ImbewuField-Crop-Plan-Ubhejane-Creche-garden-2026-11-11.ics
+  calendar file: 99 events; first lines: ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//ImbewuField//Crop Plan//EN","CALSCALE:GREGORIAN"]
+  saved crop-plan-local-farm-future-harvest.pdf (16658 bytes) from "Future harvest PDF"; the app named it ImbewuField-Crop-Plan-Ubhejane-Creche-garden-future-harvest-2026-11-11.pdf
+  saved crop-plan-local-farm-reference.pdf (750662 bytes) from "Detailed reference PDF"; the app named it ImbewuField-Crop-Plan-Ubhejane-Creche-garden-reference-2026-11-11.pdf
+  saved plan keys and planting counts: {"imbewu_crop_plan_v2":0,"imbewu_crop_plan_cutover_v2":0}
+ERRORS []
+exit 0

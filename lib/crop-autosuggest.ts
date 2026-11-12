@@ -2923,7 +2923,7 @@ function firstSeasonFillNotes(
   } else if (added.length) {
     const runs = new Map<string, { cropName: string; sowMonth: number; labels: string[] }>();
     for (const entry of added) {
-      const key = `${entry.cropName} ${entry.sowMonth}`;
+      const key = `${entry.cropName}\u0000${entry.sowMonth}`;
       const run = runs.get(key) ?? { cropName: entry.cropName, sowMonth: entry.sowMonth, labels: [] };
       run.labels.push(entry.bed.label);
       runs.set(key, run);
@@ -3919,7 +3919,7 @@ function autoSuggestPlanUnderGate(
     return { plantings: [], notes: orderNotes(notes), laterThisYear: [] };
   }
   if (rainFed) {
-    notes.push(planNote('warning', 'Rain-fed plan: a crop is only sown where every month it grows gets rain of at least half the estimated evaporation (the FAO growing-period rule, using this site\'s monthly rainfall; evaporation estimated from temperature by Thornthwaite\'s method, which can under-estimate it in dry, windy places). Average rain is not every year\'s rain — water in a dry spell if you can.'));
+    notes.push(planNote('warning', 'Rain-fed plan: a crop is only sown where every month it grows gets rain of at least half the estimated evaporation (the rainfall test of the FAO growing-period method, using this site\'s monthly rainfall; evaporation estimated from temperature by Thornthwaite\'s method, which can under-estimate it in dry, windy places). Average rain is not every year\'s rain — water in a dry spell if you can.'));
   }
   if (activeObservedFrostMonths.length) {
     notes.push(planNote('basis', `Your farmer-observed frost months (${activeObservedFrostMonths.map(month => MONTHS_SHORT[month - 1]).join(', ')}) were used: frost-sensitive crops are not suggested when their field growing period crosses those months. Unrecorded months are not a promise of frost-free conditions.`));

@@ -181,10 +181,11 @@ test('risk register only raises what this site\'s data triggers', () => {
     facts: FACTS, rainfallMm: 420, slopeDeg: 12, minTempC: 2,
     soilSource: 'estimate', unpricedBoqLines: 3,
   });
-  assert.ok(dry.some((r) => /Dry-season/.test(r.risk)));
+  // Annual totals do not establish crop-failure likelihood (CSR-15A-F01).
+  assert.equal(dry.some((r) => /Dry-season/.test(r.risk)), false);
   assert.ok(dry.some((r) => /Soil loss/.test(r.risk)));
-  // Each rating prints the threshold that produced it.
-  assert.match(dry.find((r) => /Dry-season/.test(r.risk))!.trigger, /500 mm/);
+  // Retained slope ratings still expose their trigger.
+  assert.match(dry.find((r) => /Soil loss/.test(r.risk))!.trigger, /10°/);
 
   const wet = buildRiskRegister({
     facts: FACTS, rainfallMm: 900, slopeDeg: 1, minTempC: 14,

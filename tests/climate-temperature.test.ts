@@ -6,6 +6,7 @@ import {
   completeMonthlyTemperatures,
   monthlyTemperatureStatus,
   recordMinimumC,
+  completeMonthlyRainfallMm,
 } from '../lib/climate-temperature.ts';
 
 test('cleanPowerValue retains finite numbers above -900, rejects sentinels/non-numbers, and does not coerce hostile objects', () => {
@@ -257,4 +258,53 @@ test('recordMinimumC trusts only a reading tagged as NASA POWER', () => {
   const climate = { minTemp: -999, minTempSource: 'nasa-power' };
   recordMinimumC(climate);
   assert.deepEqual(climate, { minTemp: -999, minTempSource: 'nasa-power' });
+});
+
+test('completeMonthlyRainfallMm needs twelve own, present, finite, non-negative months (CBR-04)', () => {
+  const year = [128.7, 100.2, 84.6, 48.6, 18, 14.4, 15.5, 18.6, 38.7, 69.8, 111.9, 119];
+  assert.equal(completeMonthlyRainfallMm(year), true);
+  assert.equal(completeMonthlyRainfallMm(new Array(12).fill(0)), true, 'a rainless year is a reading');
+  const hole = [...year]; delete hole[0];
+  assert.equal(hole.length, 12);
+  assert.equal(hole.every((v) => typeof v === 'number' && Number.isFinite(v)), true, 'fixture: the old check skipped the hole');
+  assert.equal(completeMonthlyRainfallMm(hole), false);
+  assert.equal(completeMonthlyRainfallMm(new Array(12)), false, 'twelve holes');
+  for (const bad of [null, undefined, Number.NaN, Number.POSITIVE_INFINITY, -0.1, -999, '10', {}]) {
+    const months: unknown[] = [...year]; months[4] = bad;
+    assert.equal(completeMonthlyRainfallMm(months), false, String(bad));
+  }
+  assert.equal(completeMonthlyRainfallMm(year.slice(0, 11)), false);
+  assert.equal(completeMonthlyRainfallMm([...year, 5]), false);
+  assert.equal(completeMonthlyRainfallMm({ ...year, length: 12 }), false, 'array-like is not an array');
+  // An inherited index does not stand in for a missing month.
+  const inherited = [...year]; delete inherited[2];
+  Object.defineProperty(Array.prototype, 2, { value: 84.6, configurable: true, writable: true });
+  try { assert.equal(completeMonthlyRainfallMm(inherited), false); } finally { delete (Array.prototype as unknown as Record<number, unknown>)[2]; }
+  assert.deepEqual(year, [128.7, 100.2, 84.6, 48.6, 18, 14.4, 15.5, 18.6, 38.7, 69.8, 111.9, 119], 'the input is not changed');
+});
+
+
+import { annualRainfallMm, sourcedMonthlyRainfall, reportClimateEvidence } from '../lib/climate-temperature.ts';
+import { DEMO_LOCATION } from '../lib/demo-site.ts';
+test('outage placeholders cannot become report evidence, while independent zero and partial observations survive', () => {
+  const outage = { ...DEMO_LOCATION, rainfall: { ...DEMO_LOCATION.rainfall, annual: 600, monthly: Array(12).fill(50), rainfallSource: undefined }, climate: { ...DEMO_LOCATION.climate, windSpeed: 3, windSource: undefined, minTemp: 1, minTempSource: undefined, windFromSummer: 'NNE', windFromWinter: '—', windDirectionSource: undefined } };
+  assert.equal(annualRainfallMm(outage.rainfall), null);
+  assert.equal(sourcedMonthlyRainfall(outage.rainfall), null);
+  const missing = reportClimateEvidence(outage);
+  assert.match(missing, /Annual rainfall: not known/);
+  assert.match(missing, /Wind speed estimate: not known/);
+  assert.match(missing, /Lowest temperature on record: not known/);
+  assert.doesNotMatch(missing, /600 mm|50, 50|3 m\/s|December–February NNE/);
+  const partial = { ...outage, rainfall: { ...outage.rainfall, annual: 0, monthly: [], rainfallSource: 'nasa-power' }, climate: { ...outage.climate, windSpeed: 0, windSource: 'nasa-power' as const, windDirectionSource: 'nasa-power' as const } };
+  assert.equal(annualRainfallMm(partial.rainfall), 0);
+  assert.equal(sourcedMonthlyRainfall(partial.rainfall), null);
+  assert.match(reportClimateEvidence(partial), /Annual rainfall: 0 mm/);
+  assert.match(reportClimateEvidence(partial), /0 m\/s/);
+  assert.match(reportClimateEvidence(partial), /December–February NNE; June–August not known/);
+  const directionOnly = { ...partial, climate: { ...partial.climate, windSource: undefined } };
+  assert.match(reportClimateEvidence(directionOnly), /Wind speed estimate: not known/);
+  assert.match(reportClimateEvidence(directionOnly), /December–February NNE/);
+  assert.equal(annualRainfallMm({ annual: 1, rainfallSource: { toString: 'nasa-power' } }), null);
+  for (const bad of [-1, NaN, Infinity, '0', null]) assert.equal(annualRainfallMm({ annual: bad, rainfallSource: 'nasa-power' }), null);
+  assert.equal(sourcedMonthlyRainfall({ monthly: new Array(12), rainfallSource: 'nasa-power' }), null);
 });

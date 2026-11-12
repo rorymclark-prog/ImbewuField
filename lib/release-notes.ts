@@ -41,6 +41,27 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '12 November 2026', sha: 'cd408331865da2de20777630d6ff831842db50d0', changes: [
+    'Report PDF table headers stay with their rows, including wrapped and continuing tables.',
+  ] },
+  { when: '12 November 2026', sha: 'c8c00515e97ae810b4e95d4e9c3898d82196a1ac', changes: [
+    'Reports keep zero and unknown rainfall distinct; seasonal water adequacy stays unassessed.',
+  ] },
+  { when: '12 November 2026', sha: '15aeada5782ba781a83d58387fea8194b4572ca4', changes: [
+    'Report storage figures no longer imply an uncalculated water deficit is known.',
+    'Report climate labels withhold missing evidence; zero harvest has no storage ratio.',
+  ] },
+  { when: '12 November 2026', sha: '627d114167ff4f5c486ba50130af86b43b6f5ce0', changes: [
+    'Soil readings keep their sources without an unsupported health score or diagnosis.',
+    'Saving a site keeps unknown rainfall unknown and preserves your existing figures.',
+    'Reports withhold unsourced weather values and separate record lows from farm frost.',
+  ] },
+  { when: '11 November 2026', sha: '1dd03688f9de3985d154b4a04e80e47bb1cd1c3f', changes: [
+    'Printed frost warnings follow the frost months you record, not a fixed winter window.',
+    'Site data marks unknown weather and wind coverage, with clearer dark-mode text.',
+    'A weekly harvest target now says when its crop could be ready too early.',
+    'The sowing calendar page uses the crop plan\'s calendar names and can show your farm\'s.',
+  ] },
   { when: '12 November 2026', sha: 'ad2cdefcf', changes: [
     'Choose cowpea leaf production and growth habit to view the matching Kenya source reference.',
     'Cowpea source ranges stay separate from your density estimates and unknown harvest dates.',

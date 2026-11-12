@@ -1,0 +1,157 @@
+
+== C Durban
+CDurban CONSOLE.error Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes
+    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)
+    at L.normalizeStyleURL (webpack-internal:///(app-pag
+CDurban PAGEERROR Invalid LngLat object: (NaN, NaN)
+map-unsupported message present: 0  canvas: 1
+suggestion shown: 1
+CDurban PAGEERROR Invalid LngLat object: (NaN, NaN)
+CDurban PAGEERROR Invalid LngLat object: (NaN, NaN)
+  location-data 200
+{
+ "chipText": "Sowing calendar: Hot area, no frost",
+ "chain": [
+  {
+   "tag": "SPAN",
+   "cls": "",
+   "right": 350,
+   "left": 132,
+   "sw": 218,
+   "cw": 218
+  },
+  {
+   "tag": "DIV",
+   "cls": "",
+   "right": 359,
+   "left": 33,
+   "sw": 326,
+   "cw": 326
+  },
+  {
+   "tag": "DIV",
+   "cls": "",
+   "right": 376,
+   "left": 14,
+   "sw": 358,
+   "cw": 358
+  },
+  {
+   "tag": "DIV",
+   "cls": "space-y-3",
+   "right": 376,
+   "left": 14,
+   "sw": 362,
+   "cw": 362
+  },
+  {
+   "tag": "DIV",
+   "cls": "flex-1 overflow-y-auto px-3.5 pb-5 pt-1",
+   "right": 390,
+   "left": 0,
+   "sw": 390,
+   "cw": 390
+  },
+  {
+   "tag": "DIV",
+   "cls": "absolute inset-x-0 bottom-0 z-20 rounded",
+   "right": 390,
+   "left": 0,
+   "sw": 390,
+   "cw": 390
+  }
+ ],
+ "calendarLines": [
+  "Sowing calendar: Hot area, no frost",
+  "From our crop catalog: crops with a sowing window open in November under the hot area, no frost sowing calendar. A description of the catalog, not planting advice for this site."
+ ],
+ "grow": [
+  "From our crop catalog: crops with a sowing window open in November under the hot area, no frost sowing calendar. A description of the catalog, not planting advice for this site."
+ ],
+ "old": null
+}
+overflow {"sw":390,"iw":390,"over":false}
+
+== C Johannesburg
+CJohannesburg CONSOLE.error Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes
+    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)
+    at L.normalizeStyleURL (webpack-internal:///(app-pag
+CJohannesburg PAGEERROR Invalid LngLat object: (NaN, NaN)
+map-unsupported message present: 0  canvas: 1
+suggestion shown: 1
+CJohannesburg PAGEERROR Invalid LngLat object: (NaN, NaN)
+CJohannesburg PAGEERROR Invalid LngLat object: (NaN, NaN)
+  location-data 200
+{
+ "chipText": "Sowing calendar: Winter frost",
+ "chain": [
+  {
+   "tag": "SPAN",
+   "cls": "",
+   "right": 317,
+   "left": 130,
+   "sw": 188,
+   "cw": 188
+  },
+  {
+   "tag": "DIV",
+   "cls": "",
+   "right": 359,
+   "left": 33,
+   "sw": 326,
+   "cw": 326
+  },
+  {
+   "tag": "DIV",
+   "cls": "",
+   "right": 376,
+   "left": 14,
+   "sw": 358,
+   "cw": 358
+  },
+  {
+   "tag": "DIV",
+   "cls": "space-y-3",
+   "right": 376,
+   "left": 14,
+   "sw": 362,
+   "cw": 362
+  },
+  {
+   "tag": "DIV",
+   "cls": "flex-1 overflow-y-auto px-3.5 pb-5 pt-1",
+   "right": 390,
+   "left": 0,
+   "sw": 390,
+   "cw": 390
+  },
+  {
+   "tag": "DIV",
+   "cls": "absolute inset-x-0 bottom-0 z-20 rounded",
+   "right": 390,
+   "left": 0,
+   "sw": 390,
+   "cw": 390
+  }
+ ],
+ "calendarLines": [
+  "Sowing calendar: Winter frost",
+  "From our crop catalog: crops with a sowing window open in November under the winter frost sowing calendar. A description of the catalog, not planting advice for this site."
+ ],
+ "grow": [
+  "From our crop catalog: crops with a sowing window open in November under the winter frost sowing calendar. A description of the catalog, not planting advice for this site."
+ ],
+ "old": null
+}
+overflow {"sw":390,"iw":390,"over":false}
+
+ERRORS [
+ "CONSOLE Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes\n    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)\n    at L.normalizeStyleURL (webpack-internal:///(app-pag",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "CONSOLE Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes\n    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)\n    at L.normalizeStyleURL (webpack-internal:///(app-pag",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)"
+]

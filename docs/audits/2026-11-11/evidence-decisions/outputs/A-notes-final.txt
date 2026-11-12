@@ -1,0 +1,8 @@
+HEAD dd9c876992c6649cd738e7c23f90a139e8b02228
+status --porcelain (app components lib public package.json): []
+  country panel present -> choosing ZA
+A1 light note: Climate records for this site are read for signed-in growers only, so this uses the nearest reference: Durban / KZN coast & hinterland (fallback). Sign in, or choose your own sowing calendar. | in viewport: true
+  country panel present -> choosing ZA
+A1 dark note: Climate records for this site are read for signed-in growers only, so this uses the nearest reference: Durban / KZN coast & hinterland (fallback). Sign in, or choose your own sowing calendar. | in viewport: true
+  country panel present -> choosing ZA
+A2 light note: Climate records for this site could not be read just now (no connection, or the climate service did not answer), so this uses the nearest reference: Durban / KZN coast & hinterland (fallback). You can choose your own sowing calendar. | in viewport: true

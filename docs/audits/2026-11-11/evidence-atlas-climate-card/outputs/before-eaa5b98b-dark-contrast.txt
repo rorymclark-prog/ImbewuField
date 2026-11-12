@@ -1,0 +1,6 @@
+original screenshot: evidence-decisions/F-atlas-complete-phone-dark.png (780x1688)
+climate code                  #1F4D2B on #181208  ratio 1.91
+climate name                  #EEE4D0 on #181208  ratio 14.74
+class note (old, 2 lines)     #4A4030 on #181208  ratio 1.83
+rain chip (old place)         #3A6E92 on #E7EEF4  ratio 4.69
+calendar chip (old place)     #7A6A48 on #EDE7DA  ratio 4.28

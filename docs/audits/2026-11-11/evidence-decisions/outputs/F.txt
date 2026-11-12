@@ -1,0 +1,427 @@
+
+== F complete-phone-light
+F-complete-phone-light CONSOLE.error Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes
+    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)
+    at L.normalizeStyleURL (webpack-internal:///(app-pag
+F-complete-phone-light PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-complete-phone-light PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-complete-phone-light PAGEERROR Invalid LngLat object: (NaN, NaN)
+  location-data 200 koppen Cwb coverage {"source":"nasa-power","status":"complete"} coldest mean 9.89 minTemp -4.8
+{
+ "notes": [],
+ "recordLow": [
+  {
+   "state": "known",
+   "text": "Modelled record low: -4.8°C",
+   "left": 33,
+   "right": 210,
+   "vw": 390
+  }
+ ],
+ "frostWords": [
+  "Sowing calendar: Winter frost",
+  "From our crop catalog: crops with a sowing window open in November under the winter frost sowing calendar. A description of the catalog, not planting advice for this site."
+ ],
+ "climateType": [
+  "Cwb"
+ ],
+ "calendarChip": [
+  "Sowing calendar: Winter frost"
+ ],
+ "growCard": true,
+ "temperatureLines": [
+  "Modelled record low: -4.8°C",
+  "17.1°C",
+  "10°C",
+  "22°C",
+  "°C"
+ ],
+ "coldestHottest": [
+  "Coldest month",
+  "Hottest month"
+ ],
+ "rain": [
+  "≈ 641 mm/yr",
+  "≈ 641 mm / yr"
+ ],
+ "wetDry": [
+  "Wet: Oct–Mar",
+  "Dry: May–Aug"
+ ]
+}
+overflow {"sw":390,"iw":390,"over":false}
+
+== F complete-phone-dark
+F-complete-phone-dark CONSOLE.error Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes
+    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)
+    at L.normalizeStyleURL (webpack-internal:///(app-pag
+F-complete-phone-dark PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-complete-phone-dark PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-complete-phone-dark PAGEERROR Invalid LngLat object: (NaN, NaN)
+  location-data 200 koppen Cwb coverage {"source":"nasa-power","status":"complete"} coldest mean 9.89 minTemp -4.8
+{
+ "notes": [],
+ "recordLow": [
+  {
+   "state": "known",
+   "text": "Modelled record low: -4.8°C",
+   "left": 33,
+   "right": 210,
+   "vw": 390
+  }
+ ],
+ "frostWords": [
+  "Sowing calendar: Winter frost",
+  "From our crop catalog: crops with a sowing window open in November under the winter frost sowing calendar. A description of the catalog, not planting advice for this site."
+ ],
+ "climateType": [
+  "Cwb"
+ ],
+ "calendarChip": [
+  "Sowing calendar: Winter frost"
+ ],
+ "growCard": true,
+ "temperatureLines": [
+  "Modelled record low: -4.8°C",
+  "17.1°C",
+  "10°C",
+  "22°C",
+  "°C"
+ ],
+ "coldestHottest": [
+  "Coldest month",
+  "Hottest month"
+ ],
+ "rain": [
+  "≈ 641 mm/yr",
+  "≈ 641 mm / yr"
+ ],
+ "wetDry": [
+  "Wet: Oct–Mar",
+  "Dry: May–Aug"
+ ]
+}
+overflow {"sw":390,"iw":390,"over":false}
+
+== F incomplete-phone-light
+F-incomplete-phone-light CONSOLE.error Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes
+    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)
+    at L.normalizeStyleURL (webpack-internal:///(app-pag
+F-incomplete-phone-light PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-incomplete-phone-light PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-incomplete-phone-light PAGEERROR Invalid LngLat object: (NaN, NaN)
+  location-data 200 koppen Cwb coverage {"source":"nasa-power","status":"complete"} coldest mean 9.89 minTemp -4.8
+  -> temperature fields replaced with the incomplete-year contract; koppen label left as the server sent it
+{
+ "notes": [
+  {
+   "text": "Temperature records for this point are incomplete or could not be checked, so no climate type or sowing calendar is shown.",
+   "px": "14px",
+   "color": "rgb(106, 80, 64)",
+   "left": 33,
+   "right": 359,
+   "vw": 390
+  },
+  {
+   "text": "Not shown. The temperature records for this point are incomplete or could not be checked.",
+   "px": "14px",
+   "color": "rgb(106, 80, 64)",
+   "left": 31,
+   "right": 359,
+   "vw": 390
+  }
+ ],
+ "recordLow": [],
+ "frostWords": null,
+ "climateType": null,
+ "calendarChip": null,
+ "growCard": false,
+ "temperatureLines": null,
+ "coldestHottest": null,
+ "rain": [
+  "≈ 641 mm/yr",
+  "≈ 641 mm / yr"
+ ],
+ "wetDry": [
+  "Wet: Oct–Mar",
+  "Dry: May–Aug"
+ ]
+}
+overflow {"sw":390,"iw":390,"over":false}
+
+== F incomplete-phone-dark
+F-incomplete-phone-dark CONSOLE.error Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes
+    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)
+    at L.normalizeStyleURL (webpack-internal:///(app-pag
+F-incomplete-phone-dark PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-incomplete-phone-dark PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-incomplete-phone-dark PAGEERROR Invalid LngLat object: (NaN, NaN)
+  location-data 200 koppen Cwb coverage {"source":"nasa-power","status":"complete"} coldest mean 9.89 minTemp -4.8
+  -> temperature fields replaced with the incomplete-year contract; koppen label left as the server sent it
+{
+ "notes": [
+  {
+   "text": "Temperature records for this point are incomplete or could not be checked, so no climate type or sowing calendar is shown.",
+   "px": "14px",
+   "color": "rgb(168, 144, 108)",
+   "left": 33,
+   "right": 359,
+   "vw": 390
+  },
+  {
+   "text": "Not shown. The temperature records for this point are incomplete or could not be checked.",
+   "px": "14px",
+   "color": "rgb(168, 144, 108)",
+   "left": 31,
+   "right": 359,
+   "vw": 390
+  }
+ ],
+ "recordLow": [],
+ "frostWords": null,
+ "climateType": null,
+ "calendarChip": null,
+ "growCard": false,
+ "temperatureLines": null,
+ "coldestHottest": null,
+ "rain": [
+  "≈ 641 mm/yr",
+  "≈ 641 mm / yr"
+ ],
+ "wetDry": [
+  "Wet: Oct–Mar",
+  "Dry: May–Aug"
+ ]
+}
+overflow {"sw":390,"iw":390,"over":false}
+
+== F incomplete-desktop
+F-incomplete-desktop CONSOLE.error Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes
+    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)
+    at L.normalizeStyleURL (webpack-internal:///(app-pag
+F-incomplete-desktop PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-incomplete-desktop PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-incomplete-desktop PAGEERROR Invalid LngLat object: (NaN, NaN)
+  location-data 200 koppen Cwb coverage {"source":"nasa-power","status":"complete"} coldest mean 9.89 minTemp -4.8
+  -> temperature fields replaced with the incomplete-year contract; koppen label left as the server sent it
+{
+ "notes": [
+  {
+   "text": "Temperature records for this point are incomplete or could not be checked, so no climate type or sowing calendar is shown.",
+   "px": "14px",
+   "color": "rgb(106, 80, 64)",
+   "left": 894,
+   "right": 1249,
+   "vw": 1280
+  },
+  {
+   "text": "Not shown. The temperature records for this point are incomplete or could not be checked.",
+   "px": "14px",
+   "color": "rgb(106, 80, 64)",
+   "left": 892,
+   "right": 1249,
+   "vw": 1280
+  }
+ ],
+ "recordLow": [],
+ "frostWords": null,
+ "climateType": null,
+ "calendarChip": null,
+ "growCard": false,
+ "temperatureLines": null,
+ "coldestHottest": null,
+ "rain": [
+  "≈ 641 mm/yr",
+  "≈ 641 mm / yr"
+ ],
+ "wetDry": [
+  "Wet: Oct–Mar",
+  "Dry: May–Aug"
+ ]
+}
+overflow {"sw":1280,"iw":1280,"over":false}
+
+== F complete-desktop
+F-complete-desktop CONSOLE.error Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes
+    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)
+    at L.normalizeStyleURL (webpack-internal:///(app-pag
+F-complete-desktop PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-complete-desktop PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-complete-desktop PAGEERROR Invalid LngLat object: (NaN, NaN)
+  location-data 200 koppen Cwb coverage {"source":"nasa-power","status":"complete"} coldest mean 9.89 minTemp -4.8
+{
+ "notes": [],
+ "recordLow": [
+  {
+   "state": "known",
+   "text": "Modelled record low: -4.8°C",
+   "left": 894,
+   "right": 1071,
+   "vw": 1280
+  }
+ ],
+ "frostWords": [
+  "Sowing calendar: Winter frost",
+  "From our crop catalog: crops with a sowing window open in November under the winter frost sowing calendar. A description of the catalog, not planting advice for this site."
+ ],
+ "climateType": [
+  "Cwb"
+ ],
+ "calendarChip": [
+  "Sowing calendar: Winter frost"
+ ],
+ "growCard": true,
+ "temperatureLines": [
+  "Modelled record low: -4.8°C",
+  "17.1°C",
+  "10°C",
+  "22°C",
+  "°C"
+ ],
+ "coldestHottest": [
+  "Coldest month",
+  "Hottest month"
+ ],
+ "rain": [
+  "≈ 641 mm/yr",
+  "≈ 641 mm / yr"
+ ],
+ "wetDry": [
+  "Wet: Oct–Mar",
+  "Dry: May–Aug"
+ ]
+}
+overflow {"sw":1280,"iw":1280,"over":false}
+
+== F no-receipt-phone-light
+F-no-receipt-phone-light CONSOLE.error Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes
+    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)
+    at L.normalizeStyleURL (webpack-internal:///(app-pag
+F-no-receipt-phone-light PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-no-receipt-phone-light PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-no-receipt-phone-light PAGEERROR Invalid LngLat object: (NaN, NaN)
+  location-data 200 koppen Cwb coverage {"source":"nasa-power","status":"complete"} coldest mean 9.89 minTemp -4.8
+  -> coverage receipt removed; every number left as the server sent it
+{
+ "notes": [
+  {
+   "text": "Temperature records for this point are incomplete or could not be checked, so no climate type or sowing calendar is shown.",
+   "px": "14px",
+   "color": "rgb(106, 80, 64)",
+   "left": 33,
+   "right": 359,
+   "vw": 390
+  },
+  {
+   "text": "Not shown. The temperature records for this point are incomplete or could not be checked.",
+   "px": "14px",
+   "color": "rgb(106, 80, 64)",
+   "left": 31,
+   "right": 359,
+   "vw": 390
+  }
+ ],
+ "recordLow": [],
+ "frostWords": null,
+ "climateType": null,
+ "calendarChip": null,
+ "growCard": false,
+ "temperatureLines": null,
+ "coldestHottest": null,
+ "rain": [
+  "≈ 641 mm/yr",
+  "≈ 641 mm / yr"
+ ],
+ "wetDry": [
+  "Wet: Oct–Mar",
+  "Dry: May–Aug"
+ ]
+}
+overflow {"sw":390,"iw":390,"over":false}
+
+== F complete-untagged-low-phone-light
+F-complete-untagged-low-phone-light CONSOLE.error Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes
+    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)
+    at L.normalizeStyleURL (webpack-internal:///(app-pag
+F-complete-untagged-low-phone-light PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-complete-untagged-low-phone-light PAGEERROR Invalid LngLat object: (NaN, NaN)
+F-complete-untagged-low-phone-light PAGEERROR Invalid LngLat object: (NaN, NaN)
+  location-data 200 koppen Cwb coverage {"source":"nasa-power","status":"complete"} coldest mean 9.89 minTemp -4.8
+  -> minTempSource tag removed; every number left as the server sent it
+{
+ "notes": [],
+ "recordLow": [
+  {
+   "state": "unknown",
+   "text": "Record low: not known",
+   "left": 33,
+   "right": 180,
+   "vw": 390
+  }
+ ],
+ "frostWords": [
+  "Sowing calendar: Winter frost",
+  "From our crop catalog: crops with a sowing window open in November under the winter frost sowing calendar. A description of the catalog, not planting advice for this site."
+ ],
+ "climateType": [
+  "Cwb"
+ ],
+ "calendarChip": [
+  "Sowing calendar: Winter frost"
+ ],
+ "growCard": true,
+ "temperatureLines": [
+  "17.1°C",
+  "10°C",
+  "22°C",
+  "°C"
+ ],
+ "coldestHottest": [
+  "Coldest month",
+  "Hottest month"
+ ],
+ "rain": [
+  "≈ 641 mm/yr",
+  "≈ 641 mm / yr"
+ ],
+ "wetDry": [
+  "Wet: Oct–Mar",
+  "Dry: May–Aug"
+ ]
+}
+overflow {"sw":390,"iw":390,"over":false}
+
+ERRORS [
+ "CONSOLE Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes\n    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)\n    at L.normalizeStyleURL (webpack-internal:///(app-pag",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "CONSOLE Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes\n    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)\n    at L.normalizeStyleURL (webpack-internal:///(app-pag",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "CONSOLE Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes\n    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)\n    at L.normalizeStyleURL (webpack-internal:///(app-pag",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "CONSOLE Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes\n    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)\n    at L.normalizeStyleURL (webpack-internal:///(app-pag",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "CONSOLE Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes\n    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)\n    at L.normalizeStyleURL (webpack-internal:///(app-pag",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "CONSOLE Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes\n    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)\n    at L.normalizeStyleURL (webpack-internal:///(app-pag",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "CONSOLE Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes\n    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)\n    at L.normalizeStyleURL (webpack-internal:///(app-pag",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "CONSOLE Error: An API access token is required to use Mapbox GL. See https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes\n    at L._makeAPIURL (webpack-internal:///(app-pages-browser)/./node_modules/mapbox-gl/dist/mapbox-gl.js:20:5544)\n    at L.normalizeStyleURL (webpack-internal:///(app-pag",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)",
+ "PAGEERROR Invalid LngLat object: (NaN, NaN)"
+]

@@ -1456,12 +1456,19 @@ function benchmarkAreaConflictBeds(
     if (period && (datedStart === null || datedStart > period.endIndex - period.startIndex
       || (oneTime && datedSpan > 0 && datedStart + datedSpan - 1 < 0))) continue;
     const fraction = planting.areaFraction ?? 1;
-    // A share above a whole bed is only detectable as invalid where the
-    // rolling walk runs; the year-free walk has always let it through into the
-    // month totals instead. Keep each branch's own rule.
-    const invalidShare = nowMonth !== undefined || period
-      ? (!Number.isFinite(fraction) || fraction <= 0 || fraction > 1.0001)
-      : (!Number.isFinite(fraction) || fraction <= 0);
+    // A share above a whole bed is flagged as invalid where the rolling walk
+    // runs. The year-free walk has always let a RECURRING oversized row through
+    // into the month totals instead, which flag it there; that rule is kept.
+    // A ONE-TIME row never reaches those totals (it is skipped below), so on the
+    // year-free path nothing checked its share at all: a saved `once` row with a
+    // share of 2.5 produced no conflict and a kilogram benchmark scaled to two
+    // and a half beds, while the rolling path withheld the same plan
+    // (independent review of 11 November 2026, Argon F-09 reproduced by Codex).
+    // Its own share is therefore checked here.
+    const oversized = fraction > 1.0001;
+    const skippedByYearFreeWalk = typeof planting.once === 'string';
+    const invalidShare = !Number.isFinite(fraction) || fraction <= 0
+      || (oversized && (nowMonth !== undefined || !!period || skippedByYearFreeWalk));
     if (invalidShare) {
       const record = recordFor(bed.id);
       record.plantingIds.add(planting.id);

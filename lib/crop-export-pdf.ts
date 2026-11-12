@@ -1,3 +1,4 @@
+import type { PlanTableFrost } from '@/lib/frost-uncertainty';
 import { hasGrowerCycleMarker } from './international/grower-cycle';
 // ── Crop plan → a document each reader can actually work from ───────────────
 //
@@ -50,7 +51,7 @@ import {
 import {
   buildFieldSheet, buildOccupancyCalendar, compactPlaces, buildPlanDashboard,
   buildPlanTableRows, buildTopCrops, buildWorkloadSeries, cropAbbreviations,
-  type CalendarRow, type FieldSheetSection, type MonthCount,
+  type CalendarRow, type FieldSheetSection, type MonthCount, BENCHMARK_TIME_BASIS_LINE,
 } from '@/lib/crop-export-benchmark';
 import { cropByKey, type RainPattern } from '@/lib/crop-catalog';
 import { firstCropAgeLabel, formatRange, treePickingByMonth, treePickingPhrase, type PlacedTreeGroup, type TreeSeasonChoices } from '@/lib/perennial-harvest';
@@ -88,10 +89,10 @@ export interface CropPlanPdfMeta {
   /** The climate pattern, on its own: "Hot area, no frost · summer rain" (lib/sowing-calendar-label.ts). Empty when genuinely unknown. */
   climateLine: string;
   /**
-   * The site's rainfall/frost pattern as DATA, not the rendered climateLine text — used to gate
-   * the frost caveat on the Full Plan table. Optional and undefined for callers that have not
-   * wired it through yet; the caveat simply does not print in that case (a warning withheld is
-   * safer than one derived by re-parsing climateLine's display string).
+   * The site's sowing calendar as DATA, not the rendered climateLine text. It used to gate the
+   * frost caveat on the Full Plan table; since 11 November 2026 that caveat follows only what
+   * the grower has recorded about frost (planTableFrost below), and this field no longer
+   * decides any warning.
    */
   rainPattern?: RainPattern;
   /** "6 beds · 2 staple plots · 48.0 m² of growing space". */
@@ -649,6 +650,7 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
       + (meta.lossAllowanceConfirmed
         ? `; ${dash.netKg!.toFixed(1)} kg after the ${meta.lossPercent}% loss allowance you confirmed.`
         : '; no loss-adjusted total is calculated until an allowance is confirmed.'),
+      BENCHMARK_TIME_BASIS_LINE,
       'This is a benchmark comparison, not a household or farm-yield guarantee. Record actual harvests and losses on the monthly record sheet.',
     ]
     : [
@@ -2017,13 +2019,30 @@ function table(
 
 // ── 4. Full plan and buying schedule ────────────────────────────────────────
 
+/**
+ * What the grower has said about frost, for the bed-by-bed table (CP-108). It comes from the
+ * production guide, which is built from the site survey, so the page, the guide and the
+ * table follow one answer. The sowing calendar (meta.rainPattern) is not consulted: a
+ * calendar's name is not an observation. With no guide there is no survey to read, and the
+ * table marks nothing, as before.
+ */
+export function planTableFrost(input: Pick<CropPlanPdfInput, 'productionGuide' | 'now'>): PlanTableFrost | undefined {
+  const guide = input.productionGuide;
+  if (!guide) return undefined;
+  const observed = guide.observedFrost;
+  if (observed?.answer === 'no') return { kind: 'no-frost-observed' };
+  if (observed?.answer === 'yes' && observed.months.length) {
+    return { kind: 'months', months: observed.months, nowMonth: (input.now ?? new Date()).getMonth() + 1 };
+  }
+  return { kind: 'not-recorded' };
+}
+
 function drawFullPlan(s: Sheet, input: CropPlanPdfInput): void {
   masthead(s, 'Full plan');
   pageTitle(s, 'Full plan', 'Bed-by-bed plan',
     'Each line is one planting. Yield is a conservative benchmark comparison where a verified kg/m² entry exists; "Not verified" is never treated as 0kg.');
 
-  const mildFrostSite = input.meta.rainPattern === 'mild-frost';
-  const rows = buildPlanTableRows(input.plantings, input.beds, mildFrostSite).map((r) => ({
+  const rows = buildPlanTableRows(input.plantings, input.beds, planTableFrost(input)).map((r) => ({
     area: r.area,
     // A one-time starter has to say so on its own line. Without it the sheet a
     // farmer carries into the field reads a first-season bridge sowing as a

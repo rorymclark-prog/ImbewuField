@@ -1,0 +1,4132 @@
+
+> permamap-sa@0.1.0 test:render
+> node --import ./tests/register-alias.mjs --test tests/image-producer.test.ts tests/chrome-after-ai.test.ts tests/locked-polish-flow.test.ts tests/paid-render-gate.test.ts tests/legend-map-agreement.test.ts tests/design-export-coherence.test.ts tests/canvas-labels.test.ts tests/render-geometry.test.ts tests/plant-codes.test.ts tests/sheet-render-route.test.ts tests/sheet-export.test.ts tests/reference-presentation.test.ts tests/render-jobs.test.ts tests/sheet-store.test.ts tests/glossy-workspace.test.ts tests/ai-map-controls.test.ts tests/paper-ground-prompt.test.ts tests/oblique-render.test.ts
+
+TAP version 13
+# (node:2231) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/ai-render/access.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: organisation suspension beats every tenant grant, including legacy tester claims
+ok 1 - organisation suspension beats every tenant grant, including legacy tester claims
+  ---
+  duration_ms: 1.254447
+  type: 'test'
+  ...
+# Subtest: personal spending requires opt-in even for the master account
+ok 2 - personal spending requires opt-in even for the master account
+  ---
+  duration_ms: 0.256911
+  type: 'test'
+  ...
+# Subtest: member blocks beat role grants, and individual grants can admit only their current tenant
+ok 3 - member blocks beat role grants, and individual grants can admit only their current tenant
+  ---
+  duration_ms: 0.212147
+  type: 'test'
+  ...
+# Subtest: only the master or trusted people managers in the same organisation may delegate
+ok 4 - only the master or trusted people managers in the same organisation may delegate
+  ---
+  duration_ms: 0.441844
+  type: 'test'
+  ...
+# Subtest: the actual service refuses self-issued master privileges and cross-tenant delegation
+ok 5 - the actual service refuses self-issued master privileges and cross-tenant delegation
+  ---
+  duration_ms: 160.222538
+  type: 'test'
+  ...
+# Subtest: personal settings accept only the preference and cannot manufacture a grant
+ok 6 - personal settings accept only the preference and cannot manufacture a grant
+  ---
+  duration_ms: 76.168933
+  type: 'test'
+  ...
+# Subtest: master suspension immediately revokes access and prevents staff changing grants
+ok 7 - master suspension immediately revokes access and prevents staff changing grants
+  ---
+  duration_ms: 69.436114
+  type: 'test'
+  ...
+# Subtest: member overrides stay inside the current organization and survive personal toggles
+ok 8 - member overrides stay inside the current organization and survive personal toggles
+  ---
+  duration_ms: 54.701503
+  type: 'test'
+  ...
+# Subtest: settings never return another organization’s members to a tenant manager
+ok 9 - settings never return another organization’s members to a tenant manager
+  ---
+  duration_ms: 40.890129
+  type: 'test'
+  ...
+# Subtest: disabled accounts cannot keep master access through an old signed token
+ok 10 - disabled accounts cannot keep master access through an old signed token
+  ---
+  duration_ms: 30.032469
+  type: 'test'
+  ...
+# Subtest: the real Settings component saves personal, master and organisation switches through the service
+ok 11 - the real Settings component saves personal, master and organisation switches through the service
+  ---
+  duration_ms: 148.648608
+  type: 'test'
+  ...
+# (node:2232) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/canvas-labels.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: no two laid-out pills overlap, at the density that broke the old layout
+ok 12 - no two laid-out pills overlap, at the density that broke the old layout
+  ---
+  duration_ms: 1.548572
+  type: 'test'
+  ...
+# Subtest: every pill is unambiguous: nearest to its own icon, or carrying a leader to it
+ok 13 - every pill is unambiguous: nearest to its own icon, or carrying a leader to it
+  ---
+  duration_ms: 0.477793
+  type: 'test'
+  ...
+# Subtest: no pill covers another plant’s icon disc
+ok 14 - no pill covers another plant’s icon disc
+  ---
+  duration_ms: 0.465353
+  type: 'test'
+  ...
+# Subtest: the naive fixed-offset layout FAILS both properties — i.e. these tests can fail
+ok 15 - the naive fixed-offset layout FAILS both properties — i.e. these tests can fail
+  ---
+  duration_ms: 0.368767
+  type: 'test'
+  ...
+# Subtest: a pill only claims a leader line when de-collision really displaced it
+ok 16 - a pill only claims a leader line when de-collision really displaced it
+  ---
+  duration_ms: 0.166333
+  type: 'test'
+  ...
+# Subtest: layout is independent of the order the farmer placed things in
+ok 17 - layout is independent of the order the farmer placed things in
+  ---
+  duration_ms: 0.179449
+  type: 'test'
+  ...
+# Subtest: results come back in the caller order, so React keys stay stable
+ok 18 - results come back in the caller order, so React keys stay stable
+  ---
+  duration_ms: 1.397037
+  type: 'test'
+  ...
+# Subtest: invalid label geometry is rejected before it can become an SVG transform
+ok 19 - invalid label geometry is rejected before it can become an SVG transform
+  ---
+  duration_ms: 0.29141
+  type: 'test'
+  ...
+# Subtest: pill width estimate clears the WIDEST width actually measured in the browser
+ok 20 - pill width estimate clears the WIDEST width actually measured in the browser
+  ---
+  duration_ms: 0.367526
+  type: 'test'
+  ...
+# Subtest: pill width estimation remains finite and non-negative for malformed sizing inputs
+ok 21 - pill width estimation remains finite and non-negative for malformed sizing inputs
+  ---
+  duration_ms: 0.382043
+  type: 'test'
+  ...
+# Subtest: the update banner can never become a wall of text over the map
+ok 22 - the update banner can never become a wall of text over the map
+  ---
+  duration_ms: 0.280208
+  type: 'test'
+  ...
+# Subtest: release notes are written for the farmer, not the repo
+ok 23 - release notes are written for the farmer, not the repo
+  ---
+  duration_ms: 0.536519
+  type: 'test'
+  ...
+# Subtest: a leader lands on the ring edge, not its centroid
+ok 24 - a leader lands on the ring edge, not its centroid
+  ---
+  duration_ms: 0.218567
+  type: 'test'
+  ...
+# Subtest: the anchor stays ON the ring, never on a segment extension
+ok 25 - the anchor stays ON the ring, never on a segment extension
+  ---
+  duration_ms: 0.153247
+  type: 'test'
+  ...
+# Subtest: a boundary ring is never cut into by the areas inside it
+ok 26 - a boundary ring is never cut into by the areas inside it
+  ---
+  duration_ms: 0.232808
+  type: 'test'
+  ...
+# Subtest: seven identical bed pills become ONE "×7" pill anchored on the most central bed
+ok 27 - seven identical bed pills become ONE "×7" pill anchored on the most central bed
+  ---
+  duration_ms: 0.240034
+  type: 'test'
+  ...
+# Subtest: custom names, noted items, singletons and empty texts never merge
+ok 28 - custom names, noted items, singletons and empty texts never merge
+  ---
+  duration_ms: 0.099679
+  type: 'test'
+  ...
+# Subtest: a suppressed entry emits no pill but its icon disc still blocks other pills
+ok 29 - a suppressed entry emits no pill but its icon disc still blocks other pills
+  ---
+  duration_ms: 0.15156
+  type: 'test'
+  ...
+# Subtest: the newest release-notes block is dated, never self-declared "Latest"
+ok 30 - the newest release-notes block is dated, never self-declared "Latest"
+  ---
+  duration_ms: 0.112693
+  type: 'test'
+  ...
+# Subtest: two badges on top of each other are pushed apart
+ok 31 - two badges on top of each other are pushed apart
+  ---
+  duration_ms: 0.346981
+  type: 'test'
+  ...
+# Subtest: exactly coincident centroids still yield two readable badges
+ok 32 - exactly coincident centroids still yield two readable badges
+  ---
+  duration_ms: 0.244524
+  type: 'test'
+  ...
+# Subtest: a badge the farmer dragged is pinned — the separator moves the other one
+ok 33 - a badge the farmer dragged is pinned — the separator moves the other one
+  ---
+  duration_ms: 0.139413
+  type: 'test'
+  ...
+# Subtest: badges stay inside the sheet and a lone zone is left exactly where it is
+ok 34 - badges stay inside the sheet and a lone zone is left exactly where it is
+  ---
+  duration_ms: 0.173188
+  type: 'test'
+  ...
+# (node:2238) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/sheet-chrome-pass.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a downscaled map upload is never mistaken for a composed page
+ok 35 - a downscaled map upload is never mistaken for a composed page
+  ---
+  duration_ms: 1.926537
+  type: 'test'
+  ...
+# Subtest: a real composed page IS recognised, at every map shape the sheet builder produces
+ok 36 - a real composed page IS recognised, at every map shape the sheet builder produces
+  ---
+  duration_ms: 0.26624
+  type: 'test'
+  ...
+# Subtest: the aspect margin sits clear of both cases it separates
+ok 37 - the aspect margin sits clear of both cases it separates
+  ---
+  duration_ms: 0.195935
+  type: 'test'
+  ...
+# Subtest: an unmeasurable input assumes the current map-only contract
+ok 38 - an unmeasurable input assumes the current map-only contract
+  ---
+  duration_ms: 0.233957
+  type: 'test'
+  ...
+# Subtest: the chrome pass is decided by the committed stage, not by what happens to be fetchable
+ok 39 - the chrome pass is decided by the committed stage, not by what happens to be fetchable
+  ---
+  duration_ms: 0.134968
+  type: 'test'
+  ...
+# Subtest: the chrome pass draws every app-owned element over the model art
+ok 40 - the chrome pass draws every app-owned element over the model art
+  ---
+  duration_ms: 2.132217
+  type: 'test'
+  ...
+# Subtest: a full masterplan has one grouped inventory, not leader labels repeated in side gutters
+ok 41 - a full masterplan has one grouped inventory, not leader labels repeated in side gutters
+  ---
+  duration_ms: 0.941115
+  type: 'test'
+  ...
+# Subtest: nothing can stop the chrome pass running on a paid polish
+ok 42 - nothing can stop the chrome pass running on a paid polish
+  ---
+  duration_ms: 0.659946
+  type: 'test'
+  ...
+# Subtest: the paid-difference gate scores map against map, so the chrome cannot flatter it
+ok 43 - the paid-difference gate scores map against map, so the chrome cannot flatter it
+  ---
+  duration_ms: 1.251722
+  type: 'test'
+  ...
+# Subtest: the polish protect mask still marks only the app-owned boundary corridor
+ok 44 - the polish protect mask still marks only the app-owned boundary corridor
+  ---
+  duration_ms: 0.455782
+  type: 'test'
+  ...
+# Subtest: the design-layer polish uploads the Hybrid MAP, never the Hybrid page
+ok 45 - the design-layer polish uploads the Hybrid MAP, never the Hybrid page
+  ---
+  duration_ms: 0.621611
+  type: 'test'
+  ...
+# Subtest: Sector uploads unannotated artwork while Existing Site retains its map-only crop
+ok 46 - Sector uploads unannotated artwork while Existing Site retains its map-only crop
+  ---
+  duration_ms: 0.507211
+  type: 'test'
+  ...
+# Subtest: Phasing uploads the map column, and the schedule panel is not in the image at all
+ok 47 - Phasing uploads the map column, and the schedule panel is not in the image at all
+  ---
+  duration_ms: 1.01937
+  type: 'test'
+  ...
+# Subtest: no paid path can rebuild a page-shaped protect mask
+ok 48 - no paid path can rebuild a page-shaped protect mask
+  ---
+  duration_ms: 0.631019
+  type: 'test'
+  ...
+# Subtest: a change to what a paid sheet looks like bumps the recipe token
+ok 49 - a change to what a paid sheet looks like bumps the recipe token
+  ---
+  duration_ms: 0.598896
+  type: 'test'
+  ...
+# Subtest: the locked paid render keeps model element artwork while exact Zones remain factual
+ok 50 - the locked paid render keeps model element artwork while exact Zones remain factual
+  ---
+  duration_ms: 12.862893
+  type: 'test'
+  ...
+# Subtest: Reference Blueprint zone edges stay map lines, never wide coloured berms
+ok 51 - Reference Blueprint zone edges stay map lines, never wide coloured berms
+  ---
+  duration_ms: 0.293635
+  type: 'test'
+  ...
+# Subtest: Reference Blueprint gives a soft aerial roof a definite traced plan silhouette
+ok 52 - Reference Blueprint gives a soft aerial roof a definite traced plan silhouette
+  ---
+  duration_ms: 0.203076
+  type: 'test'
+  ...
+# (node:2255) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/use-dialog-focus.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: handleChange reports an allocated-field refusal without claiming storage failed or changing history
+ok 53 - handleChange reports an allocated-field refusal without claiming storage failed or changing history
+  ---
+  duration_ms: 346.711181
+  type: 'test'
+  ...
+# Subtest: handleUndo reports an allocated-field refusal without claiming storage failed or changing history
+ok 54 - handleUndo reports an allocated-field refusal without claiming storage failed or changing history
+  ---
+  duration_ms: 142.876761
+  type: 'test'
+  ...
+# Subtest: handleRedo reports an allocated-field refusal without claiming storage failed or changing history
+ok 55 - handleRedo reports an allocated-field refusal without claiming storage failed or changing history
+  ---
+  duration_ms: 86.301059
+  type: 'test'
+  ...
+# Subtest: render upload and start failures preserve retry guidance and roll back uploads without exposing provider details
+ok 56 - render upload and start failures preserve retry guidance and roll back uploads without exposing provider details
+  ---
+  duration_ms: 85.904387
+  type: 'test'
+  ...
+# Subtest: exportCalendar hides engine errors, keeps useful app guidance, and releases the busy state
+ok 57 - exportCalendar hides engine errors, keeps useful app guidance, and releases the busy state
+  ---
+  duration_ms: 27.481905
+  type: 'test'
+  ...
+# Subtest: withPdf hides engine errors, keeps useful app guidance, and releases the busy state
+ok 58 - withPdf hides engine errors, keeps useful app guidance, and releases the busy state
+  ---
+  duration_ms: 36.03706
+  type: 'test'
+  ...
+# Subtest: render and export catch paths never expose browser, Firebase or worker diagnostics
+ok 59 - render and export catch paths never expose browser, Firebase or worker diagnostics
+  ---
+  duration_ms: 4.856312
+  type: 'test'
+  ...
+# Subtest: Escape closes a zoom before its saved-map gallery and the next Escape clears the gallery selection
+ok 60 - Escape closes a zoom before its saved-map gallery and the next Escape clears the gallery selection
+  ---
+  duration_ms: 4.175668
+  type: 'test'
+  ...
+# Subtest: closing a zoom whose grid trigger was replaced returns focus to the surviving gallery
+ok 61 - closing a zoom whose grid trigger was replaced returns focus to the surviving gallery
+  ---
+  duration_ms: 9.143092
+  type: 'test'
+  ...
+# Subtest: printed bed-field outlines leave paths and unused ground free of whole-field crop artwork
+ok 62 - printed bed-field outlines leave paths and unused ground free of whole-field crop artwork
+  ---
+  duration_ms: 411.908422
+  type: 'test'
+  ...
+# (node:2263) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/saved-map-preview.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a new base render leaves the older saved preview before dispatch
+ok 63 - a new base render leaves the older saved preview before dispatch
+  ---
+  duration_ms: 2.471384
+  type: 'test'
+  ...
+# Subtest: a new sector render leaves the older saved preview before dispatch
+ok 64 - a new sector render leaves the older saved preview before dispatch
+  ---
+  duration_ms: 0.412952
+  type: 'test'
+  ...
+# Subtest: a new Phasing render leaves the older saved preview before dispatch
+ok 65 - a new Phasing render leaves the older saved preview before dispatch
+  ---
+  duration_ms: 0.164262
+  type: 'test'
+  ...
+# Subtest: a new Phasing AI render leaves the older saved preview before dispatch
+ok 66 - a new Phasing AI render leaves the older saved preview before dispatch
+  ---
+  duration_ms: 0.253639
+  type: 'test'
+  ...
+# Subtest: a new sector AI render leaves the older saved preview before dispatch
+ok 67 - a new sector AI render leaves the older saved preview before dispatch
+  ---
+  duration_ms: 0.118875
+  type: 'test'
+  ...
+# Subtest: a new styled render leaves the older saved preview before dispatch
+ok 68 - a new styled render leaves the older saved preview before dispatch
+  ---
+  duration_ms: 0.089854
+  type: 'test'
+  ...
+# Subtest: a new analysis render leaves the older saved preview before dispatch
+ok 69 - a new analysis render leaves the older saved preview before dispatch
+  ---
+  duration_ms: 0.142751
+  type: 'test'
+  ...
+# Subtest: a new design render leaves the older saved preview before dispatch
+ok 70 - a new design render leaves the older saved preview before dispatch
+  ---
+  duration_ms: 0.108208
+  type: 'test'
+  ...
+# Subtest: Glossy owns the whole studio width instead of inheriting the drawing rails
+ok 71 - Glossy owns the whole studio width instead of inheriting the drawing rails
+  ---
+  duration_ms: 0.907207
+  type: 'test'
+  ...
+# Subtest: the live Glossy component, not the prototype route, owns all three preview rails
+ok 72 - the live Glossy component, not the prototype route, owns all three preview rails
+  ---
+  duration_ms: 2.254302
+  type: 'test'
+  ...
+# Subtest: Preview map chooses a starting sheet without reviving the retired compact workspace
+ok 73 - Preview map chooses a starting sheet without reviving the retired compact workspace
+  ---
+  duration_ms: 0.89211
+  type: 'test'
+  ...
+# Subtest: the left rail reads as one numbered Preview & Export workflow
+ok 74 - the left rail reads as one numbered Preview & Export workflow
+  ---
+  duration_ms: 6.366443
+  type: 'test'
+  ...
+# Subtest: saved-map rail stays thumbnail-only and the centre loads at most one full image
+ok 75 - saved-map rail stays thumbnail-only and the centre loads at most one full image
+  ---
+  duration_ms: 1.636397
+  type: 'test'
+  ...
+# Subtest: All sheets uses the large centre stage instead of reducing maps to a modal grid
+ok 76 - All sheets uses the large centre stage instead of reducing maps to a modal grid
+  ---
+  duration_ms: 0.565911
+  type: 'test'
+  ...
+# Subtest: a phone never repairs legacy thumbnails beside an exact render
+ok 77 - a phone never repairs legacy thumbnails beside an exact render
+  ---
+  duration_ms: 0.415678
+  type: 'test'
+  ...
+# Subtest: saved maps can switch sites without retargeting the open design or a paid render
+ok 78 - saved maps can switch sites without retargeting the open design or a paid render
+  ---
+  duration_ms: 5.160403
+  type: 'test'
+  ...
+# Subtest: saved-map preview downloads the selected durable image and follows sheet-aware controls
+ok 79 - saved-map preview downloads the selected durable image and follows sheet-aware controls
+  ---
+  duration_ms: 7.221598
+  type: 'test'
+  ...
+# Subtest: saved-map labels from every plan-set layer select the right sheet
+ok 80 - saved-map labels from every plan-set layer select the right sheet
+  ---
+  duration_ms: 0.889049
+  type: 'test'
+  ...
+# Subtest: the newest saved map for a sheet wins without crossing into another layer
+ok 81 - the newest saved map for a sheet wins without crossing into another layer
+  ---
+  duration_ms: 0.223612
+  type: 'test'
+  ...
+# Subtest: a completed free Exact map no longer keeps saying it is building
+ok 82 - a completed free Exact map no longer keeps saying it is building
+  ---
+  duration_ms: 0.495017
+  type: 'test'
+  ...
+# Subtest: desktop, tablet and phone each have an explicit responsive layout
+ok 83 - desktop, tablet and phone each have an explicit responsive layout
+  ---
+  duration_ms: 0.268925
+  type: 'test'
+  ...
+# Subtest: map-toolbar chrome only shows controls that explain or change the preview
+ok 84 - map-toolbar chrome only shows controls that explain or change the preview
+  ---
+  duration_ms: 0.472417
+  type: 'test'
+  ...
+# Subtest: a long settings rail cannot stretch the sheet preview into a black screen
+ok 85 - a long settings rail cannot stretch the sheet preview into a black screen
+  ---
+  duration_ms: 0.316403
+  type: 'test'
+  ...
+# Subtest: the centre sheet opens full screen and has three simple ways back
+ok 86 - the centre sheet opens full screen and has three simple ways back
+  ---
+  duration_ms: 22.834281
+  type: 'test'
+  ...
+# Subtest: the full-screen sheet itself minimises, with a visible non-blocking cue
+ok 87 - the full-screen sheet itself minimises, with a visible non-blocking cue
+  ---
+  duration_ms: 0.678228
+  type: 'test'
+  ...
+# Subtest: finish choices appear before advanced options and their longer explanation
+ok 88 - finish choices appear before advanced options and their longer explanation
+  ---
+  duration_ms: 0.92427
+  type: 'test'
+  ...
+# (node:2271) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/image-producer.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: masterplan hybrid burns exact boundary corners onto the AI-painted ground
+ok 89 - masterplan hybrid burns exact boundary corners onto the AI-painted ground
+  ---
+  duration_ms: 5.676022
+  type: 'test'
+  ...
+# Subtest: masterplan restoration keeps exact corners when the AI returns a proportional resize
+ok 90 - masterplan restoration keeps exact corners when the AI returns a proportional resize
+  ---
+  duration_ms: 3.913431
+  type: 'test'
+  ...
+# Subtest: water layer hybrid burns exact boundary corners onto the AI-painted ground
+ok 91 - water layer hybrid burns exact boundary corners onto the AI-painted ground
+  ---
+  duration_ms: 1.083215
+  type: 'test'
+  ...
+# Subtest: water layer restoration keeps exact corners when the AI returns a proportional resize
+ok 92 - water layer restoration keeps exact corners when the AI returns a proportional resize
+  ---
+  duration_ms: 1.90338
+  type: 'test'
+  ...
+# Subtest: a square AI return cannot stretch a landscape source and protection mask into agreement
+ok 93 - a square AI return cannot stretch a landscape source and protection mask into agreement
+  ---
+  duration_ms: 0.880786
+  type: 'test'
+  ...
+# Subtest: a mask from a differently shaped map cannot restore pixels onto this map
+ok 94 - a mask from a differently shaped map cannot restore pixels onto this map
+  ---
+  duration_ms: 0.332311
+  type: 'test'
+  ...
+# Subtest: a fully protected mask restores the source instead of exposing the whole AI redraw
+ok 95 - a fully protected mask restores the source instead of exposing the whole AI redraw
+  ---
+  duration_ms: 5.319878
+  type: 'test'
+  ...
+# Subtest: a completed Sector job uses its frozen style even after the picker changes
+ok 96 - a completed Sector job uses its frozen style even after the picker changes
+  ---
+  duration_ms: 18.066549
+  type: 'test'
+  ...
+# Subtest: switching maps applies recommendations once and remembers manual choices without queuing a render
+ok 97 - switching maps applies recommendations once and remembers manual choices without queuing a render
+  ---
+  duration_ms: 261.567616
+  type: 'test'
+  ...
+# Subtest: a duplicate closed driveway guide stays editable while genuine paths remain in glossy inputs and briefs
+ok 98 - a duplicate closed driveway guide stays editable while genuine paths remain in glossy inputs and briefs
+  ---
+  duration_ms: 89.160415
+  type: 'test'
+  ...
+# Subtest: the AI Earthworks input uses the exact digging painter instead of green beds and blue routes at every scale
+ok 99 - the AI Earthworks input uses the exact digging painter instead of green beds and blue routes at every scale
+  ---
+  duration_ms: 279.424968
+  type: 'test'
+  ...
+# Subtest: Water, Zones and Structures show their saved planting context instead of asking the model to guess it
+ok 100 - Water, Zones and Structures show their saved planting context instead of asking the model to guess it
+  ---
+  duration_ms: 46.906858
+  type: 'test'
+  ...
+# Subtest: painted Whole removes zone photo strips and allows only saved canopy windows outside
+ok 101 - painted Whole removes zone photo strips and allows only saved canopy windows outside
+  ---
+  duration_ms: 69.900768
+  type: 'test'
+  ...
+# Subtest: a plain-input building is visible to the model without painting over a photographed roof
+ok 102 - a plain-input building is visible to the model without painting over a photographed roof
+  ---
+  duration_ms: 50.946449
+  type: 'test'
+  ...
+# Subtest: a courtyard input reads as warm paving rather than another grey roof
+ok 103 - a courtyard input reads as warm paving rather than another grey roof
+  ---
+  duration_ms: 74.945888
+  type: 'test'
+  ...
+# Subtest: boundary foreground includes tank tops and rectangular planting but respects each sheet
+ok 104 - boundary foreground includes tank tops and rectangular planting but respects each sheet
+  ---
+  duration_ms: 22.282782
+  type: 'test'
+  ...
+# Subtest: tank colour selection is local and foliage expansion rejects disconnected neighbouring trees
+ok 105 - tank colour selection is local and foliage expansion rejects disconnected neighbouring trees
+  ---
+  duration_ms: 0.870584
+  type: 'test'
+  ...
+# Subtest: canopy foreground keeps leaves but rejects soil and never escapes the saved envelope
+ok 106 - canopy foreground keeps leaves but rejects soil and never escapes the saved envelope
+  ---
+  duration_ms: 0.218438
+  type: 'test'
+  ...
+# Subtest: Photo Plan retains its source photograph or paper fallback rather than painting the exterior
+ok 107 - Photo Plan retains its source photograph or paper fallback rather than painting the exterior
+  ---
+  duration_ms: 0.12603
+  type: 'test'
+  ...
+# Subtest: painted roofs have one appearance owner while photo and paper keep their structure passes
+ok 108 - painted roofs have one appearance owner while photo and paper keep their structure passes
+  ---
+  duration_ms: 18.082284
+  type: 'test'
+  ...
+# Subtest: completed jobs recover painted photo and paper interiors from the frozen scene without flat ground stamps
+ok 109 - completed jobs recover painted photo and paper interiors from the frozen scene without flat ground stamps
+  ---
+  duration_ms: 136.159929
+  type: 'test'
+  ...
+# Subtest: plain-paper recovery uses the frozen aerial roof and excludes proposed houses without changing the crop
+ok 110 - plain-paper recovery uses the frozen aerial roof and excludes proposed houses without changing the crop
+  ---
+  duration_ms: 18.955461
+  type: 'test'
+  ...
+# Subtest: standalone paid exports cannot silently claim exact model-drawn counts
+ok 111 - standalone paid exports cannot silently claim exact model-drawn counts
+  ---
+  duration_ms: 1.195746
+  type: 'test'
+  ...
+# Subtest: reassembling a saved paid map reconnects only its existing job and clears every paid handoff
+ok 112 - reassembling a saved paid map reconnects only its existing job and clears every paid handoff
+  ---
+  duration_ms: 132.91328
+  type: 'test'
+  ...
+# Subtest: editorial composition labels a DEM height once and cannot emit a clipped edge fragment
+ok 113 - editorial composition labels a DEM height once and cannot emit a clipped edge fragment
+  ---
+  duration_ms: 30.26422
+  type: 'test'
+  ...
+# Subtest: illustrated Sector retains artwork colour, registration and the separate exact factual base
+ok 114 - illustrated Sector retains artwork colour, registration and the separate exact factual base
+  ---
+  duration_ms: 66.509251
+  type: 'test'
+  ...
+# Subtest: new Phasing artwork keeps model materials, exact phase positions and the saved source unchanged
+ok 115 - new Phasing artwork keeps model materials, exact phase positions and the saved source unchanged
+  ---
+  duration_ms: 26.764384
+  type: 'test'
+  ...
+# Subtest: Phasing model input contains unlettered feature guides and no phase pins or schedule facts
+ok 116 - Phasing model input contains unlettered feature guides and no phase pins or schedule facts
+  ---
+  duration_ms: 14.379595
+  type: 'test'
+  ...
+# Subtest: AI defaults preserve aerial evidence after plain Phasing invented a courtyard roof, while manual paper still wins
+ok 117 - AI defaults preserve aerial evidence after plain Phasing invented a courtyard roof, while manual paper still wins
+  ---
+  duration_ms: 38.443062
+  type: 'test'
+  ...
+# Subtest: Sector restoration preserves roofs and access without bringing effort-zone photo seams back
+ok 118 - Sector restoration preserves roofs and access without bringing effort-zone photo seams back
+  ---
+  duration_ms: 83.361979
+  type: 'test'
+  ...
+# Subtest: Phasing recovery uses the frozen artwork contract instead of changing old paid copies
+ok 119 - Phasing recovery uses the frozen artwork contract instead of changing old paid copies
+  ---
+  duration_ms: 26.531455
+  type: 'test'
+  ...
+# Subtest: Phasing paper styles retain a white page while illustrated property styles can paint inside it
+ok 120 - Phasing paper styles retain a white page while illustrated property styles can paint inside it
+  ---
+  duration_ms: 0.513693
+  type: 'test'
+  ...
+# Subtest: Site keeps paid painted roofs visible while Photo Plan retains its factual source materials
+ok 121 - Site keeps paid painted roofs visible while Photo Plan retains its factual source materials
+  ---
+  duration_ms: 57.231444
+  type: 'test'
+  ...
+# Subtest: the historical baseline is the byte-identical approved archive image and never attaches to a schematic sample
+ok 122 - the historical baseline is the byte-identical approved archive image and never attaches to a schematic sample
+  ---
+  duration_ms: 8.190816
+  type: 'test'
+  ...
+# Subtest: classroom control points align at both quality scales without moving any saved coordinate
+ok 123 - classroom control points align at both quality scales without moving any saved coordinate
+  ---
+  duration_ms: 1.017062
+  type: 'test'
+  ...
+# Subtest: historical coverage leaves both unphotographed tips protected instead of extending invented terrain
+ok 124 - historical coverage leaves both unphotographed tips protected instead of extending invented terrain
+  ---
+  duration_ms: 24.757962
+  type: 'test'
+  ...
+# Subtest: preparing the historical photo is cached presentation work and leaves the proposed design source intact
+ok 125 - preparing the historical photo is cached presentation work and leaves the proposed design source intact
+  ---
+  duration_ms: 14.809168
+  type: 'test'
+  ...
+# Subtest: historical photo markers follow the photograph crop instead of projecting against resized frame metadata
+ok 126 - historical photo markers follow the photograph crop instead of projecting against resized frame metadata
+  ---
+  duration_ms: 13.957988
+  type: 'test'
+  ...
+# Subtest: historical photo inventory and map use the same eight numbered landmarks without covering them with long plaques
+ok 127 - historical photo inventory and map use the same eight numbered landmarks without covering them with long plaques
+  ---
+  duration_ms: 34.377214
+  type: 'test'
+  ...
+# Subtest: the paid historical coverage mask uses the same crop as photo annotations
+ok 128 - the paid historical coverage mask uses the same crop as photo annotations
+  ---
+  duration_ms: 17.218328
+  type: 'test'
+  ...
+# Subtest: named historical areas have readable leader labels and keep the photo facts and geometry unchanged
+ok 129 - named historical areas have readable leader labels and keep the photo facts and geometry unchanged
+  ---
+  duration_ms: 16.095929
+  type: 'test'
+  ...
+# Subtest: Zones can hide fallback photo strips only when the same registered crop holds every plotted point
+ok 130 - Zones can hide fallback photo strips only when the same registered crop holds every plotted point
+  ---
+  duration_ms: 16.796784
+  type: 'test'
+  ...
+# Subtest: Zone 0 uses the case-study wording only when its saved area contains both named features
+ok 131 - Zone 0 uses the case-study wording only when its saved area contains both named features
+  ---
+  duration_ms: 26.469389
+  type: 'test'
+  ...
+# [api-auth] /api/paid: unauthenticated request (bad signature)
+# [api-auth] /api/paid: request body exceeds 5242880 bytes
+# Subtest: the Zones north arrow clears the photo matte with room for the N
+ok 132 - the Zones north arrow clears the photo matte with room for the N
+  ---
+  duration_ms: 12.395602
+  type: 'test'
+  ...
+# Subtest: the historical legend repeats callout symbols and distinguishes the photographed fence from the design extent
+ok 133 - the historical legend repeats callout symbols and distinguishes the photographed fence from the design extent
+  ---
+  duration_ms: 82.434741
+  type: 'test'
+  ...
+# Subtest: regional Sector overview does not advertise fine encoded height steps as ground accuracy
+ok 134 - regional Sector overview does not advertise fine encoded height steps as ground accuracy
+  ---
+  duration_ms: 0.47633
+  type: 'test'
+  ...
+# Subtest: regional profile plots actual contour crossings and never invents north or south endpoint heights
+ok 135 - regional profile plots actual contour crossings and never invents north or south endpoint heights
+  ---
+  duration_ms: 1.122492
+  type: 'test'
+  ...
+# Subtest: Sector contour geography uses the original saved frame and only crops the paint coordinates
+ok 136 - Sector contour geography uses the original saved frame and only crops the paint coordinates
+  ---
+  duration_ms: 44.363051
+  type: 'test'
+  ...
+# Subtest: illustrated Sector adds only raster-supported supplemental contours and falls back without pixels
+ok 137 - illustrated Sector adds only raster-supported supplemental contours and falls back without pixels
+  ---
+  duration_ms: 66.481146
+  type: 'test'
+  ...
+# Subtest: Structures recovery adds only recorded permeable shade covers while retaining painted beds and saved dimensions
+ok 138 - Structures recovery adds only recorded permeable shade covers while retaining painted beds and saved dimensions
+  ---
+  duration_ms: 17.496072
+  type: 'test'
+  ...
+# Subtest: raw terrain sampling honours pixel centres and retains a real raster peak instead of fitting a straight slope
+ok 139 - raw terrain sampling honours pixel centres and retains a real raster peak instead of fitting a straight slope
+  ---
+  duration_ms: 0.479525
+  type: 'test'
+  ...
+# Subtest: sampled section crosses both saved classrooms, plots actual varying raster values and preserves plan geometry
+ok 140 - sampled section crosses both saved classrooms, plots actual varying raster values and preserves plan geometry
+  ---
+  duration_ms: 1.868022
+  type: 'test'
+  ...
+# Subtest: profile fetch requests original-frame posted pixels and rejects contour-only or incomplete responses
+ok 141 - profile fetch requests original-frame posted pixels and rejects contour-only or incomplete responses
+  ---
+  duration_ms: 0.931893
+  type: 'test'
+  ...
+# Subtest: profile raster uses the supported unbuffered tileset and refuses unexpected tile dimensions
+ok 142 - profile raster uses the supported unbuffered tileset and refuses unexpected tile dimensions
+  ---
+  duration_ms: 16.358727
+  type: 'test'
+  ...
+# Subtest: main section follows the property-wide downhill fit separately from the two-classroom cut
+ok 143 - main section follows the property-wide downhill fit separately from the two-classroom cut
+  ---
+  duration_ms: 2.151954
+  type: 'test'
+  ...
+# Subtest: Terrain & Sections supplementary contours use the same posted grid and clip to the saved field
+ok 144 - Terrain & Sections supplementary contours use the same posted grid and clip to the saved field
+  ---
+  duration_ms: 3.621652
+  type: 'test'
+  ...
+# Subtest: terrain captions show both gradient units from that section and never invent missing endpoint heights
+ok 145 - terrain captions show both gradient units from that section and never invent missing endpoint heights
+  ---
+  duration_ms: 0.410366
+  type: 'test'
+  ...
+# Subtest: fine map boundaries retain the saved ring and draw circular post symbols instead of thick dashed borders
+ok 146 - fine map boundaries retain the saved ring and draw circular post symbols instead of thick dashed borders
+  ---
+  duration_ms: 19.042925
+  type: 'test'
+  ...
+# Subtest: terrain queries and section captions use each location instead of the Ubhejane sample values
+ok 147 - terrain queries and section captions use each location instead of the Ubhejane sample values
+  ---
+  duration_ms: 34.047128
+  type: 'test'
+  ...
+# Subtest: Earthworks callouts identify saved beds and each swale even when plant-code mode suppresses plant names
+ok 148 - Earthworks callouts identify saved beds and each swale even when plant-code mode suppresses plant names
+  ---
+  duration_ms: 28.793091
+  type: 'test'
+  ...
+# Subtest: terrain plan keeps sourced contour heights when no consistent downhill section can be supported
+ok 149 - terrain plan keeps sourced contour heights when no consistent downhill section can be supported
+  ---
+  duration_ms: 31.651639
+  type: 'test'
+  ...
+# Subtest: Sector uses available raster contours when the separate broad SRTM slope is missing
+ok 150 - Sector uses available raster contours when the separate broad SRTM slope is missing
+  ---
+  duration_ms: 19.602047
+  type: 'test'
+  ...
+# Subtest: report route, report selector, and prompt template advertise the same sections
+ok 151 - report route, report selector, and prompt template advertise the same sections
+  ---
+  duration_ms: 0.711725
+  type: 'test'
+  ...
+# Subtest: legacy planting section selections become one suitability request without mutating saved choices
+ok 152 - legacy planting section selections become one suitability request without mutating saved choices
+  ---
+  duration_ms: 0.168963
+  type: 'test'
+  ...
+# Subtest: site report candidates cannot put listed invasive plants back into the planting advice
+ok 153 - site report candidates cannot put listed invasive plants back into the planting advice
+  ---
+  duration_ms: 6.492707
+  type: 'test'
+  ...
+# Subtest: the two report purposes guide every generated batch without certifying proposed work or inventing missing evidence
+ok 154 - the two report purposes guide every generated batch without certifying proposed work or inventing missing evidence
+  ---
+  duration_ms: 0.175724
+  type: 'test'
+  ...
+# Subtest: every report batch receives market evidence and cannot demand invented local buyers or undersupply
+ok 155 - every report batch receives market evidence and cannot demand invented local buyers or undersupply
+  ---
+  duration_ms: 0.146599
+  type: 'test'
+  ...
+# Subtest: maskEditableFraction reports how much of the sheet the model may repaint
+ok 156 - maskEditableFraction reports how much of the sheet the model may repaint
+  ---
+  duration_ms: 0.12729
+  type: 'test'
+  ...
+# Subtest: registered maps may change resolution with pixel rounding, but never shape
+ok 157 - registered maps may change resolution with pixel rounding, but never shape
+  ---
+  duration_ms: 0.330168
+  type: 'test'
+  ...
+# Subtest: the paid 1744 by 1888 result is registered without weakening the source or mask guard
+ok 158 - the paid 1744 by 1888 result is registered without weakening the source or mask guard
+  ---
+  duration_ms: 0.415742
+  type: 'test'
+  ...
+# Subtest: grid registration resamples only the AI image and releases its temporary canvas
+ok 159 - grid registration resamples only the AI image and releases its temporary canvas
+  ---
+  duration_ms: 9.358166
+  type: 'test'
+  ...
+# Subtest: invalid image dimensions cannot reach a restoration canvas
+ok 160 - invalid image dimensions cannot reach a restoration canvas
+  ---
+  duration_ms: 0.464559
+  type: 'test'
+  ...
+# Subtest: blendProtectedPixels keeps the model output where the mask is transparent
+ok 161 - blendProtectedPixels keeps the model output where the mask is transparent
+  ---
+  duration_ms: 0.111267
+  type: 'test'
+  ...
+# Subtest: blendProtectedPixels restores the source where the mask is opaque
+ok 162 - blendProtectedPixels restores the source where the mask is opaque
+  ---
+  duration_ms: 0.062829
+  type: 'test'
+  ...
+# Subtest: blendProtectedPixels blends partially protected edges
+ok 163 - blendProtectedPixels blends partially protected edges
+  ---
+  duration_ms: 0.055393
+  type: 'test'
+  ...
+# Subtest: geometry lock verifies every fully protected pixel byte-for-byte
+ok 164 - geometry lock verifies every fully protected pixel byte-for-byte
+  ---
+  duration_ms: 0.692347
+  type: 'test'
+  ...
+# Subtest: pixel protection helpers reject partial RGBA pixels instead of reading missing channels
+ok 165 - pixel protection helpers reject partial RGBA pixels instead of reading missing channels
+  ---
+  duration_ms: 0.218691
+  type: 'test'
+  ...
+# Subtest: geometry lock always overrides free-form model chrome
+ok 166 - geometry lock always overrides free-form model chrome
+  ---
+  duration_ms: 0.08559
+  type: 'test'
+  ...
+# Subtest: Reference Blueprint and painted styles keep geometry and sheet chrome app-owned
+ok 167 - Reference Blueprint and painted styles keep geometry and sheet chrome app-owned
+  ---
+  duration_ms: 0.235533
+  type: 'test'
+  ...
+# Subtest: Satellite Overlay remains the explicit reversible model-authored style
+ok 168 - Satellite Overlay remains the explicit reversible model-authored style
+  ---
+  duration_ms: 0.069549
+  type: 'test'
+  ...
+# Subtest: painted styles retain a continuous illustrated property with either a photo or paper input
+ok 169 - painted styles retain a continuous illustrated property with either a photo or paper input
+  ---
+  duration_ms: 0.120104
+  type: 'test'
+  ...
+# Subtest: photo and paper Geometry Lock retain their factual background contracts
+ok 170 - photo and paper Geometry Lock retain their factual background contracts
+  ---
+  duration_ms: 0.056612
+  type: 'test'
+  ...
+# Subtest: the Geometry-Lock finisher obeys the shared composition policy
+ok 171 - the Geometry-Lock finisher obeys the shared composition policy
+  ---
+  duration_ms: 5.208159
+  type: 'test'
+  ...
+# Subtest: style-derived queue flags have exactly one render authority
+ok 172 - style-derived queue flags have exactly one render authority
+  ---
+  duration_ms: 0.205036
+  type: 'test'
+  ...
+# Subtest: exact style inputs contain no editor glyphs or model-interpreted design marks
+ok 173 - exact style inputs contain no editor glyphs or model-interpreted design marks
+  ---
+  duration_ms: 0.143128
+  type: 'test'
+  ...
+# Subtest: paid Geometry-Lock polish inputs show saved placement context without editor glyphs or a driveway edge
+ok 174 - paid Geometry-Lock polish inputs show saved placement context without editor glyphs or a driveway edge
+  ---
+  duration_ms: 0.10975
+  type: 'test'
+  ...
+# Subtest: polish input marks do not change the exact input policy
+ok 175 - polish input marks do not change the exact input policy
+  ---
+  duration_ms: 0.055035
+  type: 'test'
+  ...
+# Subtest: rendered driveways have no decorative border on any sheet
+ok 176 - rendered driveways have no decorative border on any sheet
+  ---
+  duration_ms: 0.039544
+  type: 'test'
+  ...
+# Subtest: render-only Water cleanup bridges only tiny aligned gaps of the same route type
+ok 177 - render-only Water cleanup bridges only tiny aligned gaps of the same route type
+  ---
+  duration_ms: 0.473811
+  type: 'test'
+  ...
+# Subtest: a swale keeps its saved ground width through render prep, so a sheet can draw the real earthwork
+ok 178 - a swale keeps its saved ground width through render prep, so a sheet can draw the real earthwork
+  ---
+  duration_ms: 0.293955
+  type: 'test'
+  ...
+# Subtest: render-only Water cleanup leaves large and side-by-side gaps untouched
+ok 179 - render-only Water cleanup leaves large and side-by-side gaps untouched
+  ---
+  duration_ms: 0.782368
+  type: 'test'
+  ...
+# Subtest: Water routes and small fittings stay legible over illustrated ground
+ok 180 - Water routes and small fittings stay legible over illustrated ground
+  ---
+  duration_ms: 0.357881
+  type: 'test'
+  ...
+# Subtest: Earthworks-only swales read as brown cut-and-fill while Water remains blue
+ok 181 - Earthworks-only swales read as brown cut-and-fill while Water remains blue
+  ---
+  duration_ms: 0.112337
+  type: 'test'
+  ...
+# Subtest: Water context only borrows saved tree canopies paired with saved tree basins
+ok 182 - Water context only borrows saved tree canopies paired with saved tree basins
+  ---
+  duration_ms: 0.320521
+  type: 'test'
+  ...
+# Subtest: Water sheet chrome uses one formal title and factual subsystem order
+ok 183 - Water sheet chrome uses one formal title and factual subsystem order
+  ---
+  duration_ms: 0.112835
+  type: 'test'
+  ...
+# Subtest: masterplan legend keeps blue pipe, blue drip and purple greywater distinct
+ok 184 - masterplan legend keeps blue pipe, blue drip and purple greywater distinct
+  ---
+  duration_ms: 0.241372
+  type: 'test'
+  ...
+# Subtest: remote design content cannot force the open tab back to a stale wizard step
+ok 185 - remote design content cannot force the open tab back to a stale wizard step
+  ---
+  duration_ms: 0.136604
+  type: 'test'
+  ...
+# Subtest: Precision Atlas context treatment lightens and calms satellite pixels without moving data
+ok 186 - Precision Atlas context treatment lightens and calms satellite pixels without moving data
+  ---
+  duration_ms: 0.186243
+  type: 'test'
+  ...
+# Subtest: update notifier detects a newly deployed build without false first-load prompts
+ok 187 - update notifier detects a newly deployed build without false first-load prompts
+  ---
+  duration_ms: 0.069041
+  type: 'test'
+  ...
+# Subtest: the collapsed update button names the build waiting to be installed
+ok 188 - the collapsed update button names the build waiting to be installed
+  ---
+  duration_ms: 0.197106
+  type: 'test'
+  ...
+# Subtest: buildProducerPrompt keeps the style anchor first and the geometry lock last
+ok 189 - buildProducerPrompt keeps the style anchor first and the geometry lock last
+  ---
+  duration_ms: 0.369178
+  type: 'test'
+  ...
+# Subtest: locked illustration prompt paints the whole sheet without inventing features
+ok 190 - locked illustration prompt paints the whole sheet without inventing features
+  ---
+  duration_ms: 1.2083
+  type: 'test'
+  ...
+# Subtest: locked Water prompt delegates features and map furniture to deterministic drawing
+ok 191 - locked Water prompt delegates features and map furniture to deterministic drawing
+  ---
+  duration_ms: 0.170992
+  type: 'test'
+  ...
+# Subtest: buildShowcasePrompt includes the title, labels and panel instructions
+ok 192 - buildShowcasePrompt includes the title, labels and panel instructions
+  ---
+  duration_ms: 0.42528
+  type: 'test'
+  ...
+# Subtest: the water sheet marker glossary describes only saved integrated features
+ok 193 - the water sheet marker glossary describes only saved integrated features
+  ---
+  duration_ms: 0.486602
+  type: 'test'
+  ...
+# Subtest: Reference Blueprint never briefs an absent Water route or empty subsystem
+ok 194 - Reference Blueprint never briefs an absent Water route or empty subsystem
+  ---
+  duration_ms: 0.20736
+  type: 'test'
+  ...
+# Subtest: Satellite Overlay gives a Planting-sheet Vetiver Bank its exact marker vocabulary
+ok 195 - Satellite Overlay gives a Planting-sheet Vetiver Bank its exact marker vocabulary
+  ---
+  duration_ms: 1.283838
+  type: 'test'
+  ...
+# Subtest: Satellite Overlay hybrid carries the structure register — structures are painted right the first pass
+ok 196 - Satellite Overlay hybrid carries the structure register — structures are painted right the first pass
+  ---
+  duration_ms: 1.19051
+  type: 'test'
+  ...
+# Subtest: legacy prompt remains available for rollback and A/B comparison
+ok 197 - legacy prompt remains available for rollback and A/B comparison
+  ---
+  duration_ms: 0.350742
+  type: 'test'
+  ...
+# Subtest: chatgpt atlas style is wired through the prompt builder
+ok 198 - chatgpt atlas style is wired through the prompt builder
+  ---
+  duration_ms: 0.081042
+  type: 'test'
+  ...
+# Subtest: master atlas style is wired through the prompt builder
+ok 199 - master atlas style is wired through the prompt builder
+  ---
+  duration_ms: 0.063536
+  type: 'test'
+  ...
+# Subtest: master atlas is distinct in texture and palette from precision atlas and extension blueprint
+ok 200 - master atlas is distinct in texture and palette from precision atlas and extension blueprint
+  ---
+  duration_ms: 0.089666
+  type: 'test'
+  ...
+# Subtest: satellite overlay style keeps the photo, letters its own sheet, and drops editor emoji
+ok 201 - satellite overlay style keeps the photo, letters its own sheet, and drops editor emoji
+  ---
+  duration_ms: 0.780856
+  type: 'test'
+  ...
+# Subtest: overlay icon vocabulary matches element NAMES, not headings or place suffixes
+ok 202 - overlay icon vocabulary matches element NAMES, not headings or place suffixes
+  ---
+  duration_ms: 1.440599
+  type: 'test'
+  ...
+# Subtest: drip runs are counted from the drawn lines, not from the beds
+ok 203 - drip runs are counted from the drawn lines, not from the beds
+  ---
+  duration_ms: 0.169691
+  type: 'test'
+  ...
+# Subtest: every catalog element has a unique glyph
+ok 204 - every catalog element has a unique glyph
+  ---
+  duration_ms: 0.275819
+  type: 'test'
+  ...
+# Subtest: the zones sheet tells the model that bands are areas, not element markers
+ok 205 - the zones sheet tells the model that bands are areas, not element markers
+  ---
+  duration_ms: 0.465943
+  type: 'test'
+  ...
+# Subtest: element sheets are NOT given the zone-band rule
+ok 206 - element sheets are NOT given the zone-band rule
+  ---
+  duration_ms: 0.15983
+  type: 'test'
+  ...
+# Subtest: an empty element list is refused, never sent
+ok 207 - an empty element list is refused, never sent
+  ---
+  duration_ms: 0.127418
+  type: 'test'
+  ...
+# Subtest: every AI sheet number matches the canonical plan set, none collide
+ok 208 - every AI sheet number matches the canonical plan set, none collide
+  ---
+  duration_ms: 0.077438
+  type: 'test'
+  ...
+# Subtest: no icon spec sends a rectangular element off along a line
+ok 209 - no icon spec sends a rectangular element off along a line
+  ---
+  duration_ms: 0.123083
+  type: 'test'
+  ...
+# Subtest: the boundary is positively identified as a fence, not a planted row
+ok 210 - the boundary is positively identified as a fence, not a planted row
+  ---
+  duration_ms: 0.100356
+  type: 'test'
+  ...
+# Subtest: the house is the photographed roof inside an outline, never a grey slab
+ok 211 - the house is the photographed roof inside an outline, never a grey slab
+  ---
+  duration_ms: 0.099532
+  type: 'test'
+  ...
+# Subtest: the sector restyle prompt forbids the analysis and carries no marker/legend/element-list language
+ok 212 - the sector restyle prompt forbids the analysis and carries no marker/legend/element-list language
+  ---
+  duration_ms: 0.366286
+  type: 'test'
+  ...
+# Subtest: the sector restyle never appends the geometry-lock tail
+ok 213 - the sector restyle never appends the geometry-lock tail
+  ---
+  duration_ms: 0.095132
+  type: 'test'
+  ...
+# Subtest: the sector restyle paints the whole frame, not just inside the fence
+ok 214 - the sector restyle paints the whole frame, not just inside the fence
+  ---
+  duration_ms: 0.072263
+  type: 'test'
+  ...
+# Subtest: the sector restyle still refuses to draw any analysis
+ok 215 - the sector restyle still refuses to draw any analysis
+  ---
+  duration_ms: 0.095058
+  type: 'test'
+  ...
+# Subtest: Sector polish improves the actual first-pass artwork without baking a second analysis into it
+ok 216 - Sector polish improves the actual first-pass artwork without baking a second analysis into it
+  ---
+  duration_ms: 0.184145
+  type: 'test'
+  ...
+# Subtest: the paid second pass is told it received a DRAFT, and that copying it is a failure
+ok 217 - the paid second pass is told it received a DRAFT, and that copying it is a failure
+  ---
+  duration_ms: 0.785843
+  type: 'test'
+  ...
+# Subtest: the polish pass structure register separates roofed buildings from flat ground
+ok 218 - the polish pass structure register separates roofed buildings from flat ground
+  ---
+  duration_ms: 0.167803
+  type: 'test'
+  ...
+# Subtest: the polish prompt without a register carries no empty STRUCTURE REGISTER section
+ok 219 - the polish prompt without a register carries no empty STRUCTURE REGISTER section
+  ---
+  duration_ms: 0.111502
+  type: 'test'
+  ...
+# Subtest: the access track is described as flat ground, never a slab or a roof
+ok 220 - the access track is described as flat ground, never a slab or a roof
+  ---
+  duration_ms: 9.506305
+  type: 'test'
+  ...
+# Subtest: GROUND stays silent, but what the system SERVES is named
+ok 221 - GROUND stays silent, but what the system SERVES is named
+  ---
+  duration_ms: 0.214163
+  type: 'test'
+  ...
+# Subtest: naming what the system serves always carries the add-none guard
+ok 222 - naming what the system serves always carries the add-none guard
+  ---
+  duration_ms: 0.135352
+  type: 'test'
+  ...
+# Subtest: a sheet with nothing to serve says nothing about it
+ok 223 - a sheet with nothing to serve says nothing about it
+  ---
+  duration_ms: 0.079094
+  type: 'test'
+  ...
+# Subtest: irrigation routes are described only where they can exist
+ok 224 - irrigation routes are described only where they can exist
+  ---
+  duration_ms: 0.292383
+  type: 'test'
+  ...
+# Subtest: rule 7 no longer asserts that ground and served items are absent
+ok 225 - rule 7 no longer asserts that ground and served items are absent
+  ---
+  duration_ms: 0.097583
+  type: 'test'
+  ...
+# Subtest: the icon rule never renders as an empty numbered fragment
+ok 226 - the icon rule never renders as an empty numbered fragment
+  ---
+  duration_ms: 0.102516
+  type: 'test'
+  ...
+# Subtest: a tree basin is drawn as a mound with a moat, never a tree in a dish
+ok 227 - a tree basin is drawn as a mound with a moat, never a tree in a dish
+  ---
+  duration_ms: 0.147655
+  type: 'test'
+  ...
+# Subtest: the farmer-facing tip and the drawing instruction agree on the geometry
+ok 228 - the farmer-facing tip and the drawing instruction agree on the geometry
+  ---
+  duration_ms: 0.200302
+  type: 'test'
+  ...
+# Subtest: the driveway is NAMED on every sheet, not just the masterplan
+ok 229 - the driveway is NAMED on every sheet, not just the masterplan
+  ---
+  duration_ms: 0.176801
+  type: 'test'
+  ...
+# Subtest: only the water subsystems that exist are described
+ok 230 - only the water subsystems that exist are described
+  ---
+  duration_ms: 0.274411
+  type: 'test'
+  ...
+# Subtest: tar and roof are named as different colours, so one cannot be drawn as the other
+ok 231 - tar and roof are named as different colours, so one cannot be drawn as the other
+  ---
+  duration_ms: 0.097665
+  type: 'test'
+  ...
+# Subtest: one tar colour ships everywhere
+ok 232 - one tar colour ships everywhere
+  ---
+  duration_ms: 60.410647
+  type: 'test'
+  ...
+# Subtest: the legend collapses place-suffixed variants into one row
+ok 233 - the legend collapses place-suffixed variants into one row
+  ---
+  duration_ms: 0.250657
+  type: 'test'
+  ...
+# Subtest: the map-label list is the element list with every quantity stripped
+ok 234 - the map-label list is the element list with every quantity stripped
+  ---
+  duration_ms: 0.454296
+  type: 'test'
+  ...
+# Subtest: nothing in the prompt shows a count being lettered onto the sheet
+ok 235 - nothing in the prompt shows a count being lettered onto the sheet
+  ---
+  duration_ms: 0.265269
+  type: 'test'
+  ...
+# Subtest: Water context inventory counts never become served-fixture caption spellings
+ok 236 - Water context inventory counts never become served-fixture caption spellings
+  ---
+  duration_ms: 0.141834
+  type: 'test'
+  ...
+# Subtest: Zones keep full zone names in the legend and only number badges on the map
+ok 237 - Zones keep full zone names in the legend and only number badges on the map
+  ---
+  duration_ms: 0.150686
+  type: 'test'
+  ...
+# Subtest: photo_plan forbids restyling the ground the farmer actually has
+ok 238 - photo_plan forbids restyling the ground the farmer actually has
+  ---
+  duration_ms: 0.150835
+  type: 'test'
+  ...
+# Subtest: photo_plan tells the model to write nothing, because we letter the sheet
+ok 239 - photo_plan tells the model to write nothing, because we letter the sheet
+  ---
+  duration_ms: 0.076198
+  type: 'test'
+  ...
+# Subtest: both photographic styles take the photo anchor, and every other style does not
+ok 240 - both photographic styles take the photo anchor, and every other style does not
+  ---
+  duration_ms: 0.075344
+  type: 'test'
+  ...
+# Subtest: AI prompt injects tree canopy instructions when speciesCrownForm and label are present
+ok 241 - AI prompt injects tree canopy instructions when speciesCrownForm and label are present
+  ---
+  duration_ms: 0.576275
+  type: 'test'
+  ...
+# Subtest: the Geometry Lock hybrid tells the model what a vegetable bed looks like
+ok 242 - the Geometry Lock hybrid tells the model what a vegetable bed looks like
+  ---
+  duration_ms: 0.207026
+  type: 'test'
+  ...
+# Subtest: the hybrid glossary is per-sheet, and silent when the sheet has no such marker
+ok 243 - the hybrid glossary is per-sheet, and silent when the sheet has no such marker
+  ---
+  duration_ms: 0.164635
+  type: 'test'
+  ...
+# Subtest: every prompt path that can name a vegetable bed describes it as planted, not as bare ground
+ok 244 - every prompt path that can name a vegetable bed describes it as planted, not as bare ground
+  ---
+  duration_ms: 0.400559
+  type: 'test'
+  ...
+# Subtest: a named staple mixture keeps the supplied crops without adding another one
+ok 245 - a named staple mixture keeps the supplied crops without adding another one
+  ---
+  duration_ms: 0.363393
+  type: 'test'
+  ...
+# Subtest: an unnamed staple plot gets generic cultivation rather than an invented crop or growth stage
+ok 246 - an unnamed staple plot gets generic cultivation rather than an invented crop or growth stage
+  ---
+  duration_ms: 0.357892
+  type: 'test'
+  ...
+# Subtest: existing staple ground never gains a standing crop absent from its source facts
+ok 247 - existing staple ground never gains a standing crop absent from its source facts
+  ---
+  duration_ms: 0.423281
+  type: 'test'
+  ...
+# Subtest: a sheet with no staple garden is never told to draw one
+ok 248 - a sheet with no staple garden is never told to draw one
+  ---
+  duration_ms: 0.207772
+  type: 'test'
+  ...
+# Subtest: the Geometry Lock hybrid never tells a photo-preserving style to repaint the ground
+ok 249 - the Geometry Lock hybrid never tells a photo-preserving style to repaint the ground
+  ---
+  duration_ms: 2.842168
+  type: 'test'
+  ...
+# Subtest: a painted style requires complete edge-to-edge land rather than blank open ground
+ok 250 - a painted style requires complete edge-to-edge land rather than blank open ground
+  ---
+  duration_ms: 0.314542
+  type: 'test'
+  ...
+# Subtest: the water sheet's MATERIAL SEPARATION clause is also style-gated, not just the ground clause
+ok 251 - the water sheet's MATERIAL SEPARATION clause is also style-gated, not just the ground clause
+  ---
+  duration_ms: 0.133163
+  type: 'test'
+  ...
+# Subtest: both exact render paths pass the filter through instead of enumerating sheets
+ok 252 - both exact render paths pass the filter through instead of enumerating sheets
+  ---
+  duration_ms: 6.641845
+  type: 'test'
+  ...
+# Subtest: paid API auth returns the uid from a verified bearer token
+ok 253 - paid API auth returns the uid from a verified bearer token
+  ---
+  duration_ms: 1.836548
+  type: 'test'
+  ...
+# Subtest: paid API auth is log-only by default when the verifier rejects a token
+ok 254 - paid API auth is log-only by default when the verifier rejects a token
+  ---
+  duration_ms: 0.671446
+  type: 'test'
+  ...
+# Subtest: oversized paid API bodies are rejected before parsing
+ok 255 - oversized paid API bodies are rejected before parsing
+  ---
+  duration_ms: 8.158886
+  type: 'test'
+  ...
+# Subtest: the difference measurement caps its raster at MEASURE_MAX_DIMENSION
+ok 256 - the difference measurement caps its raster at MEASURE_MAX_DIMENSION
+  ---
+  duration_ms: 16.407388
+  type: 'test'
+  ...
+# Subtest: every pixel-extraction canvas in the producer is released, not leaked
+ok 257 - every pixel-extraction canvas in the producer is released, not leaked
+  ---
+  duration_ms: 0.4872
+  type: 'test'
+  ...
+# Subtest: a saved shade tunnel requests mesh over crops rather than an uncovered bed or solid roof
+ok 258 - a saved shade tunnel requests mesh over crops rather than an uncovered bed or solid roof
+  ---
+  duration_ms: 0.356047
+  type: 'test'
+  ...
+# Subtest: Earthworks does not turn symbolic pit locations into dimensions or invent bed kerbs
+ok 259 - Earthworks does not turn symbolic pit locations into dimensions or invent bed kerbs
+  ---
+  duration_ms: 0.118183
+  type: 'test'
+  ...
+# (node:2279) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/design-elements.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: context opacity is always below the explicit full-strength legend boundary
+ok 260 - context opacity is always below the explicit full-strength legend boundary
+  ---
+  duration_ms: 1.023043
+  type: 'test'
+  ...
+# Subtest: Ubhejane demo: all nine exact sheets keep full-strength map content and legend counts in agreement
+ok 261 - Ubhejane demo: all nine exact sheets keep full-strength map content and legend counts in agreement
+  ---
+  duration_ms: 2.141238
+  type: 'test'
+  ...
+# Subtest: Ubhejane demo: AI prompt inventory and exact legend agree in both directions on all eight sheets
+ok 262 - Ubhejane demo: AI prompt inventory and exact legend agree in both directions on all eight sheets
+  ---
+  duration_ms: 4.566324
+  type: 'test'
+  ...
+# Subtest: complete catalog demo: all nine exact sheets keep full-strength map content and legend counts in agreement
+ok 263 - complete catalog demo: all nine exact sheets keep full-strength map content and legend counts in agreement
+  ---
+  duration_ms: 1.640699
+  type: 'test'
+  ...
+# Subtest: complete catalog demo: AI prompt inventory and exact legend agree in both directions on all eight sheets
+ok 264 - complete catalog demo: AI prompt inventory and exact legend agree in both directions on all eight sheets
+  ---
+  duration_ms: 2.074778
+  type: 'test'
+  ...
+# Subtest: prompt-only context is structurally context, never an unlegended content exception
+ok 265 - prompt-only context is structurally context, never an unlegended content exception
+  ---
+  duration_ms: 1.516731
+  type: 'test'
+  ...
+# Subtest: driveway uses the content channel only on the masterplan and context fabric elsewhere
+ok 266 - driveway uses the content channel only on the masterplan and context fabric elsewhere
+  ---
+  duration_ms: 0.923956
+  type: 'test'
+  ...
+# Subtest: the driveway is only ever called out on the masterplan, where the legend lists it
+ok 267 - the driveway is only ever called out on the masterplan, where the legend lists it
+  ---
+  duration_ms: 9.542616
+  type: 'test'
+  ...
+# Subtest: no driveway geometry means no driveway label on any sheet
+ok 268 - no driveway geometry means no driveway label on any sheet
+  ---
+  duration_ms: 1.726972
+  type: 'test'
+  ...
+# Subtest: Planting callouts use the same species identities as the Planting legend
+ok 269 - Planting callouts use the same species identities as the Planting legend
+  ---
+  duration_ms: 1.721922
+  type: 'test'
+  ...
+# Subtest: no sheet legends a line kind that its shared draw register excludes
+ok 270 - no sheet legends a line kind that its shared draw register excludes
+  ---
+  duration_ms: 0.459422
+  type: 'test'
+  ...
+# (node:2287) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/locked-polish-flow.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Full Treatment completion mounts the real effects and enqueues one polish job from the finished Hybrid
+ok 271 - Full Treatment completion mounts the real effects and enqueues one polish job from the finished Hybrid
+  ---
+  duration_ms: 12.965163
+  type: 'test'
+  ...
+# Subtest: a published handoff with no finished Hybrid stops with an error before spending again
+ok 272 - a published handoff with no finished Hybrid stops with an error before spending again
+  ---
+  duration_ms: 1.817918
+  type: 'test'
+  ...
+# Subtest: Hybrid-only completion stops after its one paid job
+ok 273 - Hybrid-only completion stops after its one paid job
+  ---
+  duration_ms: 1.725908
+  type: 'test'
+  ...
+# Subtest: DesignGlossy wires queue completion into the mounted handoff and queue provenance
+ok 274 - DesignGlossy wires queue completion into the mounted handoff and queue provenance
+  ---
+  duration_ms: 2.703885
+  type: 'test'
+  ...
+# Subtest: the Full Treatment handoff tolerates the cache key mode suffix
+ok 275 - the Full Treatment handoff tolerates the cache key mode suffix
+  ---
+  duration_ms: 0.561594
+  type: 'test'
+  ...
+# Subtest: Hybrid mode advances exact render -> switch to hybrid -> hybrid render, then stops
+ok 276 - Hybrid mode advances exact render -> switch to hybrid -> hybrid render, then stops
+  ---
+  duration_ms: 0.137078
+  type: 'test'
+  ...
+# Subtest: Full Treatment continues past Hybrid into a second, polish stage
+ok 277 - Full Treatment continues past Hybrid into a second, polish stage
+  ---
+  duration_ms: 0.10659
+  type: 'test'
+  ...
+# Subtest: every stage waits for a settled, non-loading state before firing
+ok 278 - every stage waits for a settled, non-loading state before firing
+  ---
+  duration_ms: 0.096996
+  type: 'test'
+  ...
+# Subtest: the declared output mode is a hard ceiling on later paid stages
+ok 279 - the declared output mode is a hard ceiling on later paid stages
+  ---
+  duration_ms: 0.271472
+  type: 'test'
+  ...
+# Subtest: Full Treatment remains the only mode allowed to enter both polish transitions
+ok 280 - Full Treatment remains the only mode allowed to enter both polish transitions
+  ---
+  duration_ms: 0.308328
+  type: 'test'
+  ...
+# Subtest: the exact master step cannot replace the chosen AI style
+ok 281 - the exact master step cannot replace the chosen AI style
+  ---
+  duration_ms: 0.101311
+  type: 'test'
+  ...
+# Subtest: the guided flow preserves every explicitly selected visual style
+ok 282 - the guided flow preserves every explicitly selected visual style
+  ---
+  duration_ms: 0.058702
+  type: 'test'
+  ...
+# Subtest: Full Treatment restores only the boundary ring, never photographic keyholes
+ok 283 - Full Treatment restores only the boundary ring, never photographic keyholes
+  ---
+  duration_ms: 0.275544
+  type: 'test'
+  ...
+# (node:2295) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/oblique-render.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Oblique exposes every style even when entered from an exact or Sector sheet
+ok 284 - Oblique exposes every style even when entered from an exact or Sector sheet
+  ---
+  duration_ms: 853.040673
+  type: 'test'
+  ...
+# Subtest: a reloaded oblique job keeps its viewpoint and style without changing legacy top-down jobs
+ok 285 - a reloaded oblique job keeps its viewpoint and style without changing legacy top-down jobs
+  ---
+  duration_ms: 0.294375
+  type: 'test'
+  ...
+# Subtest: missing or a single contour height never masquerades as a measured terrain surface
+ok 286 - missing or a single contour height never masquerades as a measured terrain surface
+  ---
+  duration_ms: 0.371126
+  type: 'test'
+  ...
+# Subtest: reference images remain complete and undistorted on the board, including very tall farms
+ok 287 - reference images remain complete and undistorted on the board, including very tall farms
+  ---
+  duration_ms: 0.430642
+  type: 'test'
+  ...
+# Subtest: the terrain panel uses actual projected contour points and labels without changing farm geometry
+ok 288 - the terrain panel uses actual projected contour points and labels without changing farm geometry
+  ---
+  duration_ms: 0.80752
+  type: 'test'
+  ...
+# Subtest: oblique instructions request one angled image using layout, photo and honest terrain roles
+ok 289 - oblique instructions request one angled image using layout, photo and honest terrain roles
+  ---
+  duration_ms: 0.368008
+  type: 'test'
+  ...
+# Subtest: an oblique job can resume through the existing owner-bound frozen scene and durable input
+ok 290 - an oblique job can resume through the existing owner-bound frozen scene and durable input
+  ---
+  duration_ms: 20.813589
+  type: 'test'
+  ...
+# Subtest: the oblique UI uses one guarded paid queue call and the saved raw-input gate before a perspective finisher
+ok 291 - the oblique UI uses one guarded paid queue call and the saved raw-input gate before a perspective finisher
+  ---
+  duration_ms: 12.761986
+  type: 'test'
+  ...
+# Subtest: every flow that enqueues a paid polish stage records what to compare against
+ok 292 - every flow that enqueues a paid polish stage records what to compare against
+  ---
+  duration_ms: 6.227651
+  type: 'test'
+  ...
+# Subtest: a polish stage is never enqueued from a flow this test does not know about
+ok 293 - a polish stage is never enqueued from a flow this test does not know about
+  ---
+  duration_ms: 1.324204
+  type: 'test'
+  ...
+# Subtest: the phasing baseline is the map artwork the model was actually handed
+ok 294 - the phasing baseline is the map artwork the model was actually handed
+  ---
+  duration_ms: 0.593773
+  type: 'test'
+  ...
+# Subtest: the gate compares against the baseline and refuses to save an unchanged pass
+ok 295 - the gate compares against the baseline and refuses to save an unchanged pass
+  ---
+  duration_ms: 1.391494
+  type: 'test'
+  ...
+# Subtest: scoring can never reject a render it merely failed to measure
+ok 296 - scoring can never reject a render it merely failed to measure
+  ---
+  duration_ms: 0.792872
+  type: 'test'
+  ...
+# Subtest: the first paid Hybrid is scored raw input-vs-output before exact content is composited back
+ok 297 - the first paid Hybrid is scored raw input-vs-output before exact content is composited back
+  ---
+  duration_ms: 0.369664
+  type: 'test'
+  ...
+# Subtest: an unchanged Hybrid is not saved, labelled, or advanced into Full Treatment polish
+ok 298 - an unchanged Hybrid is not saved, labelled, or advanced into Full Treatment polish
+  ---
+  duration_ms: 0.508726
+  type: 'test'
+  ...
+# Subtest: queued output is composed from its saved scene and cannot be filed under another farm
+ok 299 - queued output is composed from its saved scene and cannot be filed under another farm
+  ---
+  duration_ms: 2.165089
+  type: 'test'
+  ...
+# (node:2311) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/producer-prompt.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Photo Plan falls back to paper, while painted styles illustrate the saved property without a photo
+ok 300 - Photo Plan falls back to paper, while painted styles illustrate the saved property without a photo
+  ---
+  duration_ms: 1.045922
+  type: 'test'
+  ...
+# Subtest: on paper the model is told to invent no ground at all
+ok 301 - on paper the model is told to invent no ground at all
+  ---
+  duration_ms: 0.806091
+  type: 'test'
+  ...
+# Subtest: Photo Plan water on paper retains the no-invented-ground contract
+ok 302 - Photo Plan water on paper retains the no-invented-ground contract
+  ---
+  duration_ms: 0.470972
+  type: 'test'
+  ...
+# Subtest: a painted paper property is illustrated inside its boundary without claiming an absent photo
+ok 303 - a painted paper property is illustrated inside its boundary without claiming an absent photo
+  ---
+  duration_ms: 1.29407
+  type: 'test'
+  ...
+# Subtest: a painted water sheet derives its surroundings from the source instead of inventing a forest
+ok 304 - a painted water sheet derives its surroundings from the source instead of inventing a forest
+  ---
+  duration_ms: 0.157051
+  type: 'test'
+  ...
+# Subtest: the photo and painted contracts are byte-for-byte what they were
+ok 305 - the photo and painted contracts are byte-for-byte what they were
+  ---
+  duration_ms: 0.336572
+  type: 'test'
+  ...
+# Subtest: the renderer tells the prompt which ground it actually has
+ok 306 - the renderer tells the prompt which ground it actually has
+  ---
+  duration_ms: 5.661162
+  type: 'test'
+  ...
+# Subtest: the ground painter paints the whole frame, in actual white pixels
+ok 307 - the ground painter paints the whole frame, in actual white pixels
+  ---
+  duration_ms: 3.13444
+  type: 'test'
+  ...
+# Subtest: the model input builder uses the painter, and the khaki exists nowhere
+ok 308 - the model input builder uses the painter, and the khaki exists nowhere
+  ---
+  duration_ms: 5.538566
+  type: 'test'
+  ...
+# Subtest: Earthworks stays at the digging stage in both paid passes and every visual style
+ok 309 - Earthworks stays at the digging stage in both paid passes and every visual style
+  ---
+  duration_ms: 4.550595
+  type: 'test'
+  ...
+# Subtest: saved bed coordinates describe the same geometry at every print resolution without changing it
+ok 310 - saved bed coordinates describe the same geometry at every print resolution without changing it
+  ---
+  duration_ms: 1.311712
+  type: 'test'
+  ...
+# Subtest: the Phasing map-only upload never asks the model to reserve a nonexistent schedule panel
+ok 311 - the Phasing map-only upload never asks the model to reserve a nonexistent schedule panel
+  ---
+  duration_ms: 0.439276
+  type: 'test'
+  ...
+# (node:2319) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/design-elements.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: no two plants in the catalog share a code
+ok 312 - no two plants in the catalog share a code
+  ---
+  duration_ms: 1.750618
+  type: 'test'
+  ...
+# Subtest: every coded id is a real catalog plant, and carries a planting legend row
+ok 313 - every coded id is a real catalog plant, and carries a planting legend row
+  ---
+  duration_ms: 0.192281
+  type: 'test'
+  ...
+# Subtest: the catalog covers every plant that gets a planting legend row
+ok 314 - the catalog covers every plant that gets a planting legend row
+  ---
+  duration_ms: 2.166449
+  type: 'test'
+  ...
+# Subtest: a sheet never assigns one code to two plants
+ok 315 - a sheet never assigns one code to two plants
+  ---
+  duration_ms: 0.301935
+  type: 'test'
+  ...
+# Subtest: only planting takes a code — a tank or a gate is not a plant
+ok 316 - only planting takes a code — a tank or a gate is not a plant
+  ---
+  duration_ms: 0.226777
+  type: 'test'
+  ...
+# Subtest: an unknown plant still gets a usable, unique, stable code
+ok 317 - an unknown plant still gets a usable, unique, stable code
+  ---
+  duration_ms: 0.206579
+  type: 'test'
+  ...
+# Subtest: a legend row wears its code, and a row without one is left alone
+ok 318 - a legend row wears its code, and a row without one is left alone
+  ---
+  duration_ms: 0.1913
+  type: 'test'
+  ...
+# Subtest: a sheet names its plants ONE way, and the cache can tell the two apart
+ok 319 - a sheet names its plants ONE way, and the cache can tell the two apart
+  ---
+  duration_ms: 0.124611
+  type: 'test'
+  ...
+# (node:2327) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/reference-presentation.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: an empty leader band enlarges the legend without scaling or covering the map
+ok 320 - an empty leader band enlarges the legend without scaling or covering the map
+  ---
+  duration_ms: 1.231396
+  type: 'test'
+  ...
+# Subtest: actual margin leaders keep their full band and cannot land under a wider legend
+ok 321 - actual margin leaders keep their full band and cannot land under a wider legend
+  ---
+  duration_ms: 0.150792
+  type: 'test'
+  ...
+# Subtest: the compact masterplan shares the wider key at the same right paper edge
+ok 322 - the compact masterplan shares the wider key at the same right paper edge
+  ---
+  duration_ms: 0.136464
+  type: 'test'
+  ...
+# Subtest: compact properties fill the finished sheet instead of staying at the old 24% floor
+ok 323 - compact properties fill the finished sheet instead of staying at the old 24% floor
+  ---
+  duration_ms: 0.332397
+  type: 'test'
+  ...
+# Subtest: presentation crop stays inside the source image near an edge
+ok 324 - presentation crop stays inside the source image near an edge
+  ---
+  duration_ms: 0.132422
+  type: 'test'
+  ...
+# Subtest: large properties retain the original frame
+ok 325 - large properties retain the original frame
+  ---
+  duration_ms: 0.143095
+  type: 'test'
+  ...
+# Subtest: a farm of any shape lands on A-series paper with no cream band left to pad
+ok 326 - a farm of any shape lands on A-series paper with no cream band left to pad
+  ---
+  duration_ms: 0.874871
+  type: 'test'
+  ...
+# Subtest: a photo too small to cover A-series degrades to a smaller sheet, never to nothing
+ok 327 - a photo too small to cover A-series degrades to a smaller sheet, never to nothing
+  ---
+  duration_ms: 0.332183
+  type: 'test'
+  ...
+# Subtest: every derived viewport keeps one truthful metres-per-pixel scale on both axes
+ok 328 - every derived viewport keeps one truthful metres-per-pixel scale on both axes
+  ---
+  duration_ms: 0.526008
+  type: 'test'
+  ...
+# Subtest: a four-to-one wide farm is letterboxed before the complete sheet can exceed three-to-one
+ok 329 - a four-to-one wide farm is letterboxed before the complete sheet can exceed three-to-one
+  ---
+  duration_ms: 0.425444
+  type: 'test'
+  ...
+# Subtest: a one-to-four tall farm keeps the readable minimum legend width
+ok 330 - a one-to-four tall farm keeps the readable minimum legend width
+  ---
+  duration_ms: 0.132012
+  type: 'test'
+  ...
+# Subtest: sheet 08 adds the same panel column as the rest of a tall plan set
+ok 331 - sheet 08 adds the same panel column as the rest of a tall plan set
+  ---
+  duration_ms: 0.273218
+  type: 'test'
+  ...
+# Subtest: a one-to-six plot fills the paper with neighbouring ground instead of a tall letterbox
+ok 332 - a one-to-six plot fills the paper with neighbouring ground instead of a tall letterbox
+  ---
+  duration_ms: 0.171954
+  type: 'test'
+  ...
+# Subtest: every finished sheet is padded to A-series landscape, and padding only ever ADDS paper
+ok 333 - every finished sheet is padded to A-series landscape, and padding only ever ADDS paper
+  ---
+  duration_ms: 0.245811
+  type: 'test'
+  ...
+# (node:2333) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/render-geometry.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: paint-time polish reduces shallow hand jitter without moving line endpoints
+ok 334 - paint-time polish reduces shallow hand jitter without moving line endpoints
+  ---
+  duration_ms: 9.420941
+  type: 'test'
+  ...
+# Subtest: meaningful corners stay exact instead of rounding a building into a blob
+ok 335 - meaningful corners stay exact instead of rounding a building into a blob
+  ---
+  duration_ms: 0.412064
+  type: 'test'
+  ...
+# Subtest: a closed ring stays closed and never changes its point count
+ok 336 - a closed ring stays closed and never changes its point count
+  ---
+  duration_ms: 0.263305
+  type: 'test'
+  ...
+# Subtest: render polish never mutates the saved geometry it receives
+ok 337 - render polish never mutates the saved geometry it receives
+  ---
+  duration_ms: 0.201882
+  type: 'test'
+  ...
+# Subtest: every polished point obeys the caller movement cap
+ok 338 - every polished point obeys the caller movement cap
+  ---
+  duration_ms: 0.46004
+  type: 'test'
+  ...
+# Subtest: invalid options cannot manufacture non-finite render geometry
+ok 339 - invalid options cannot manufacture non-finite render geometry
+  ---
+  duration_ms: 0.232339
+  type: 'test'
+  ...
+# Subtest: a non-finite point set is refused instead of passed to a canvas path
+ok 340 - a non-finite point set is refused instead of passed to a canvas path
+  ---
+  duration_ms: 0.169953
+  type: 'test'
+  ...
+# Subtest: offsetPolyline shifts a copy to a consistent side and never touches the saved centreline
+ok 341 - offsetPolyline shifts a copy to a consistent side and never touches the saved centreline
+  ---
+  duration_ms: 96.009412
+  type: 'test'
+  ...
+# Subtest: offsetPolyline bisects a corner instead of kinking, and survives degenerate input
+ok 342 - offsetPolyline bisects a corner instead of kinking, and survives degenerate input
+  ---
+  duration_ms: 1.439046
+  type: 'test'
+  ...
+# (node:2348) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/ai-render/model.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:2348) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/functions/src/render-job-contract.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/functions/package.json.
+# Subtest: web client, worker and security rules share one sheet-count contract
+ok 343 - web client, worker and security rules share one sheet-count contract
+  ---
+  duration_ms: 2.649001
+  type: 'test'
+  ...
+# Subtest: each known sheet identity is accepted, but two copies of one sheet are rejected before upload
+ok 344 - each known sheet identity is accepted, but two copies of one sheet are rejected before upload
+  ---
+  duration_ms: 1.545931
+  type: 'test'
+  ...
+# Subtest: unknown sheets and empty prompts cannot consume quota or become paid work
+ok 345 - unknown sheets and empty prompts cannot consume quota or become paid work
+  ---
+  duration_ms: 0.162143
+  type: 'test'
+  ...
+# Subtest: the worker rejects malformed jobs before either usage counter is read or written
+ok 346 - the worker rejects malformed jobs before either usage counter is read or written
+  ---
+  duration_ms: 0.261925
+  type: 'test'
+  ...
+# Subtest: web client and worker share one render-engine contract
+ok 347 - web client and worker share one render-engine contract
+  ---
+  duration_ms: 0.216533
+  type: 'test'
+  ...
+# Subtest: both sides accept every contracted engine and reject anything else
+ok 348 - both sides accept every contracted engine and reject anything else
+  ---
+  duration_ms: 0.158513
+  type: 'test'
+  ...
+# Subtest: the worker chooses its vendor from the same field the client writes, and no other
+ok 349 - the worker chooses its vendor from the same field the client writes, and no other
+  ---
+  duration_ms: 0.922008
+  type: 'test'
+  ...
+# Subtest: completed queue results keep the durable job vendor in every user-visible attribution
+ok 350 - completed queue results keep the durable job vendor in every user-visible attribution
+  ---
+  duration_ms: 4.837768
+  type: 'test'
+  ...
+# Subtest: a locked Gemini Zones sheet burns exact saved regions and does not draw crossing leaders
+ok 351 - a locked Gemini Zones sheet burns exact saved regions and does not draw crossing leaders
+  ---
+  duration_ms: 4.489757
+  type: 'test'
+  ...
+# Subtest: a Gemini job with no server secret fails by name before any sheet is attempted
+ok 352 - a Gemini job with no server secret fails by name before any sheet is attempted
+  ---
+  duration_ms: 0.6793
+  type: 'test'
+  ...
+# Subtest: the worker derives every privileged Storage path from owner, job and sheet identity
+ok 353 - the worker derives every privileged Storage path from owner, job and sheet identity
+  ---
+  duration_ms: 0.316774
+  type: 'test'
+  ...
+# Subtest: a failed serial upload rolls back every completed artifact before job creation
+ok 354 - a failed serial upload rolls back every completed artifact before job creation
+  ---
+  duration_ms: 0.320282
+  type: 'test'
+  ...
+# Subtest: decoded data URL size handles base64 padding exactly and enforces the upload cap
+ok 355 - decoded data URL size handles base64 padding exactly and enforces the upload cap
+  ---
+  duration_ms: 154.532876
+  type: 'test'
+  ...
+# Subtest: render rollback may delete an owner-scoped upload without reading null request.resource
+ok 356 - render rollback may delete an owner-scoped upload without reading null request.resource
+  ---
+  duration_ms: 0.508622
+  type: 'test'
+  ...
+# Subtest: malformed images and conflicting rendering authorities fail before any job exists
+ok 357 - malformed images and conflicting rendering authorities fail before any job exists
+  ---
+  duration_ms: 44.170243
+  type: 'test'
+  ...
+# Subtest: malformed render metadata fails before upload and before worker quota accounting
+ok 358 - malformed render metadata fails before upload and before worker quota accounting
+  ---
+  duration_ms: 0.479758
+  type: 'test'
+  ...
+# Subtest: worker input validation is exhaustive for empty, oversized and wrong-engine jobs
+ok 359 - worker input validation is exhaustive for empty, oversized and wrong-engine jobs
+  ---
+  duration_ms: 0.197968
+  type: 'test'
+  ...
+# Subtest: a queue mask must contain both protected and editable pixels
+ok 360 - a queue mask must contain both protected and editable pixels
+  ---
+  duration_ms: 0.131353
+  type: 'test'
+  ...
+# Subtest: subscription snapshots are accepted only when every storage path belongs to that exact job
+ok 361 - subscription snapshots are accepted only when every storage path belongs to that exact job
+  ---
+  duration_ms: 0.933777
+  type: 'test'
+  ...
+# Subtest: subscription snapshots reject impossible status, authority and identity combinations
+ok 362 - subscription snapshots reject impossible status, authority and identity combinations
+  ---
+  duration_ms: 0.335742
+  type: 'test'
+  ...
+# Subtest: a paid scene survives a reload without borrowing a moved tree, changed scale or another base image
+ok 363 - a paid scene survives a reload without borrowing a moved tree, changed scale or another base image
+  ---
+  duration_ms: 19.119573
+  type: 'test'
+  ...
+# Subtest: a design revision ignores navigation and key insertion order but notices geometry, imagery and render settings
+ok 364 - a design revision ignores navigation and key insertion order but notices geometry, imagery and render settings
+  ---
+  duration_ms: 4.30097
+  type: 'test'
+  ...
+# Subtest: invalid and oversized render scenes fail before any upload or paid job can start
+ok 365 - invalid and oversized render scenes fail before any upload or paid job can start
+  ---
+  duration_ms: 7.794566
+  type: 'test'
+  ...
+# Subtest: reattachment retains paid quality and the original scene while refusing a source from another job
+ok 366 - reattachment retains paid quality and the original scene while refusing a source from another job
+  ---
+  duration_ms: 1.817451
+  type: 'test'
+  ...
+# Subtest: the quality suffix is empty at the default, so no paid sheet is orphaned
+ok 367 - the quality suffix is empty at the default, so no paid sheet is orphaned
+  ---
+  duration_ms: 0.187362
+  type: 'test'
+  ...
+# Subtest: every render quality gets a distinct cache slot
+ok 368 - every render quality gets a distinct cache slot
+  ---
+  duration_ms: 0.067242
+  type: 'test'
+  ...
+# Subtest: the queue result is filed under the JOB's quality, never the live dial
+ok 369 - the queue result is filed under the JOB's quality, never the live dial
+  ---
+  duration_ms: 0.637455
+  type: 'test'
+  ...
+# Subtest: deterministic exact sheets never carry a quality suffix
+ok 370 - deterministic exact sheets never carry a quality suffix
+  ---
+  duration_ms: 1.039387
+  type: 'test'
+  ...
+# Subtest: full-resolution render preparation runs one sheet at a time on a phone
+ok 371 - full-resolution render preparation runs one sheet at a time on a phone
+  ---
+  duration_ms: 9.459634
+  type: 'test'
+  ...
+# Subtest: resume attempts count up per site and clear back to a fresh budget
+ok 372 - resume attempts count up per site and clear back to a fresh budget
+  ---
+  duration_ms: 0.297993
+  type: 'test'
+  ...
+# Subtest: the budget allows its limit of automatic resumes and then refuses
+ok 373 - the budget allows its limit of automatic resumes and then refuses
+  ---
+  duration_ms: 0.165659
+  type: 'test'
+  ...
+# Subtest: garbage or unavailable storage behaves like a first attempt, never like exhaustion
+ok 374 - garbage or unavailable storage behaves like a first attempt, never like exhaustion
+  ---
+  duration_ms: 0.283327
+  type: 'test'
+  ...
+# Subtest: the Studio charges the budget before re-attaching and retires it on every terminal path
+ok 375 - the Studio charges the budget before re-attaching and retires it on every terminal path
+  ---
+  duration_ms: 0.478561
+  type: 'test'
+  ...
+# (node:2349) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/sheet-export.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: quality steps are ordered and preserve the sheet aspect
+ok 376 - quality steps are ordered and preserve the sheet aspect
+  ---
+  duration_ms: 0.827832
+  type: 'test'
+  ...
+# Subtest: only PDF carries a whole set in one file
+ok 377 - only PDF carries a whole set in one file
+  ---
+  duration_ms: 0.173521
+  type: 'test'
+  ...
+# Subtest: file names are safe, findable, and ordered when a set is exported
+ok 378 - file names are safe, findable, and ordered when a set is exported
+  ---
+  duration_ms: 0.640454
+  type: 'test'
+  ...
+# Subtest: image mime types match the chosen format
+ok 379 - image mime types match the chosen format
+  ---
+  duration_ms: 0.167525
+  type: 'test'
+  ...
+# (node:2351) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/sheet-render-route.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: each sheet starts with a readable purpose-specific background without claiming a photo exists
+ok 380 - each sheet starts with a readable purpose-specific background without claiming a photo exists
+  ---
+  duration_ms: 3.897966
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, exact, editorial_atlas)
+ok 381 - sheetRenderRoute(base, exact, editorial_atlas)
+  ---
+  duration_ms: 0.255159
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, exact, precision_atlas)
+ok 382 - sheetRenderRoute(base, exact, precision_atlas)
+  ---
+  duration_ms: 0.225991
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, exact, photo_plan)
+ok 383 - sheetRenderRoute(base, exact, photo_plan)
+  ---
+  duration_ms: 0.095111
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, exact, satellite_overlay (model-chrome))
+ok 384 - sheetRenderRoute(base, exact, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.085723
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, exact, field_ledger)
+ok 385 - sheetRenderRoute(base, exact, field_ledger)
+  ---
+  duration_ms: 0.094404
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, exact, homestead_storybook)
+ok 386 - sheetRenderRoute(base, exact, homestead_storybook)
+  ---
+  duration_ms: 0.157395
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, exact, extension_blueprint)
+ok 387 - sheetRenderRoute(base, exact, extension_blueprint)
+  ---
+  duration_ms: 0.094213
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, exact, karoo_folk)
+ok 388 - sheetRenderRoute(base, exact, karoo_folk)
+  ---
+  duration_ms: 0.277649
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, exact, chatgpt_atlas)
+ok 389 - sheetRenderRoute(base, exact, chatgpt_atlas)
+  ---
+  duration_ms: 0.47887
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, exact, master_atlas)
+ok 390 - sheetRenderRoute(base, exact, master_atlas)
+  ---
+  duration_ms: 0.116242
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, hybrid, editorial_atlas)
+ok 391 - sheetRenderRoute(base, hybrid, editorial_atlas)
+  ---
+  duration_ms: 1.618417
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, hybrid, precision_atlas)
+ok 392 - sheetRenderRoute(base, hybrid, precision_atlas)
+  ---
+  duration_ms: 0.089427
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, hybrid, photo_plan)
+ok 393 - sheetRenderRoute(base, hybrid, photo_plan)
+  ---
+  duration_ms: 0.045966
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, hybrid, satellite_overlay (model-chrome))
+ok 394 - sheetRenderRoute(base, hybrid, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.038504
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, hybrid, field_ledger)
+ok 395 - sheetRenderRoute(base, hybrid, field_ledger)
+  ---
+  duration_ms: 0.12484
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, hybrid, homestead_storybook)
+ok 396 - sheetRenderRoute(base, hybrid, homestead_storybook)
+  ---
+  duration_ms: 0.091556
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, hybrid, extension_blueprint)
+ok 397 - sheetRenderRoute(base, hybrid, extension_blueprint)
+  ---
+  duration_ms: 0.06428
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, hybrid, karoo_folk)
+ok 398 - sheetRenderRoute(base, hybrid, karoo_folk)
+  ---
+  duration_ms: 0.125576
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, hybrid, chatgpt_atlas)
+ok 399 - sheetRenderRoute(base, hybrid, chatgpt_atlas)
+  ---
+  duration_ms: 0.216371
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, hybrid, master_atlas)
+ok 400 - sheetRenderRoute(base, hybrid, master_atlas)
+  ---
+  duration_ms: 0.072438
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, full, editorial_atlas)
+ok 401 - sheetRenderRoute(base, full, editorial_atlas)
+  ---
+  duration_ms: 0.07658
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, full, precision_atlas)
+ok 402 - sheetRenderRoute(base, full, precision_atlas)
+  ---
+  duration_ms: 0.071729
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, full, photo_plan)
+ok 403 - sheetRenderRoute(base, full, photo_plan)
+  ---
+  duration_ms: 0.059024
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, full, satellite_overlay (model-chrome))
+ok 404 - sheetRenderRoute(base, full, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.050171
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, full, field_ledger)
+ok 405 - sheetRenderRoute(base, full, field_ledger)
+  ---
+  duration_ms: 0.070589
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, full, homestead_storybook)
+ok 406 - sheetRenderRoute(base, full, homestead_storybook)
+  ---
+  duration_ms: 0.067546
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, full, extension_blueprint)
+ok 407 - sheetRenderRoute(base, full, extension_blueprint)
+  ---
+  duration_ms: 0.062884
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, full, karoo_folk)
+ok 408 - sheetRenderRoute(base, full, karoo_folk)
+  ---
+  duration_ms: 0.047268
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, full, chatgpt_atlas)
+ok 409 - sheetRenderRoute(base, full, chatgpt_atlas)
+  ---
+  duration_ms: 0.075466
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(base, full, master_atlas)
+ok 410 - sheetRenderRoute(base, full, master_atlas)
+  ---
+  duration_ms: 0.080124
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, exact, editorial_atlas)
+ok 411 - sheetRenderRoute(sector, exact, editorial_atlas)
+  ---
+  duration_ms: 0.075364
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, exact, precision_atlas)
+ok 412 - sheetRenderRoute(sector, exact, precision_atlas)
+  ---
+  duration_ms: 0.061516
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, exact, photo_plan)
+ok 413 - sheetRenderRoute(sector, exact, photo_plan)
+  ---
+  duration_ms: 0.059454
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, exact, satellite_overlay (model-chrome))
+ok 414 - sheetRenderRoute(sector, exact, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.054449
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, exact, field_ledger)
+ok 415 - sheetRenderRoute(sector, exact, field_ledger)
+  ---
+  duration_ms: 0.057537
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, exact, homestead_storybook)
+ok 416 - sheetRenderRoute(sector, exact, homestead_storybook)
+  ---
+  duration_ms: 0.130062
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, exact, extension_blueprint)
+ok 417 - sheetRenderRoute(sector, exact, extension_blueprint)
+  ---
+  duration_ms: 0.042741
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, exact, karoo_folk)
+ok 418 - sheetRenderRoute(sector, exact, karoo_folk)
+  ---
+  duration_ms: 0.037157
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, exact, chatgpt_atlas)
+ok 419 - sheetRenderRoute(sector, exact, chatgpt_atlas)
+  ---
+  duration_ms: 0.035276
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, exact, master_atlas)
+ok 420 - sheetRenderRoute(sector, exact, master_atlas)
+  ---
+  duration_ms: 0.035854
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, hybrid, editorial_atlas)
+ok 421 - sheetRenderRoute(sector, hybrid, editorial_atlas)
+  ---
+  duration_ms: 0.04871
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, hybrid, precision_atlas)
+ok 422 - sheetRenderRoute(sector, hybrid, precision_atlas)
+  ---
+  duration_ms: 0.079542
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, hybrid, photo_plan)
+ok 423 - sheetRenderRoute(sector, hybrid, photo_plan)
+  ---
+  duration_ms: 0.075712
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, hybrid, satellite_overlay (model-chrome))
+ok 424 - sheetRenderRoute(sector, hybrid, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.810785
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, hybrid, field_ledger)
+ok 425 - sheetRenderRoute(sector, hybrid, field_ledger)
+  ---
+  duration_ms: 0.104328
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, hybrid, homestead_storybook)
+ok 426 - sheetRenderRoute(sector, hybrid, homestead_storybook)
+  ---
+  duration_ms: 0.051522
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, hybrid, extension_blueprint)
+ok 427 - sheetRenderRoute(sector, hybrid, extension_blueprint)
+  ---
+  duration_ms: 0.042036
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, hybrid, karoo_folk)
+ok 428 - sheetRenderRoute(sector, hybrid, karoo_folk)
+  ---
+  duration_ms: 0.121426
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, hybrid, chatgpt_atlas)
+ok 429 - sheetRenderRoute(sector, hybrid, chatgpt_atlas)
+  ---
+  duration_ms: 0.049504
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, hybrid, master_atlas)
+ok 430 - sheetRenderRoute(sector, hybrid, master_atlas)
+  ---
+  duration_ms: 0.040468
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, full, editorial_atlas)
+ok 431 - sheetRenderRoute(sector, full, editorial_atlas)
+  ---
+  duration_ms: 0.040858
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, full, precision_atlas)
+ok 432 - sheetRenderRoute(sector, full, precision_atlas)
+  ---
+  duration_ms: 0.037401
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, full, photo_plan)
+ok 433 - sheetRenderRoute(sector, full, photo_plan)
+  ---
+  duration_ms: 0.036555
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, full, satellite_overlay (model-chrome))
+ok 434 - sheetRenderRoute(sector, full, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.03644
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, full, field_ledger)
+ok 435 - sheetRenderRoute(sector, full, field_ledger)
+  ---
+  duration_ms: 0.036558
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, full, homestead_storybook)
+ok 436 - sheetRenderRoute(sector, full, homestead_storybook)
+  ---
+  duration_ms: 0.035479
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, full, extension_blueprint)
+ok 437 - sheetRenderRoute(sector, full, extension_blueprint)
+  ---
+  duration_ms: 0.036836
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, full, karoo_folk)
+ok 438 - sheetRenderRoute(sector, full, karoo_folk)
+  ---
+  duration_ms: 0.035895
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, full, chatgpt_atlas)
+ok 439 - sheetRenderRoute(sector, full, chatgpt_atlas)
+  ---
+  duration_ms: 0.07347
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(sector, full, master_atlas)
+ok 440 - sheetRenderRoute(sector, full, master_atlas)
+  ---
+  duration_ms: 0.045214
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, exact, editorial_atlas)
+ok 441 - sheetRenderRoute(implementation, exact, editorial_atlas)
+  ---
+  duration_ms: 0.048436
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, exact, precision_atlas)
+ok 442 - sheetRenderRoute(implementation, exact, precision_atlas)
+  ---
+  duration_ms: 0.037106
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, exact, photo_plan)
+ok 443 - sheetRenderRoute(implementation, exact, photo_plan)
+  ---
+  duration_ms: 0.035401
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, exact, satellite_overlay (model-chrome))
+ok 444 - sheetRenderRoute(implementation, exact, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.034008
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, exact, field_ledger)
+ok 445 - sheetRenderRoute(implementation, exact, field_ledger)
+  ---
+  duration_ms: 0.033545
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, exact, homestead_storybook)
+ok 446 - sheetRenderRoute(implementation, exact, homestead_storybook)
+  ---
+  duration_ms: 0.034827
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, exact, extension_blueprint)
+ok 447 - sheetRenderRoute(implementation, exact, extension_blueprint)
+  ---
+  duration_ms: 0.032957
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, exact, karoo_folk)
+ok 448 - sheetRenderRoute(implementation, exact, karoo_folk)
+  ---
+  duration_ms: 0.032594
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, exact, chatgpt_atlas)
+ok 449 - sheetRenderRoute(implementation, exact, chatgpt_atlas)
+  ---
+  duration_ms: 0.073
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, exact, master_atlas)
+ok 450 - sheetRenderRoute(implementation, exact, master_atlas)
+  ---
+  duration_ms: 0.055324
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, hybrid, editorial_atlas)
+ok 451 - sheetRenderRoute(implementation, hybrid, editorial_atlas)
+  ---
+  duration_ms: 0.040461
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, hybrid, precision_atlas)
+ok 452 - sheetRenderRoute(implementation, hybrid, precision_atlas)
+  ---
+  duration_ms: 0.036594
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, hybrid, photo_plan)
+ok 453 - sheetRenderRoute(implementation, hybrid, photo_plan)
+  ---
+  duration_ms: 0.035004
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, hybrid, satellite_overlay (model-chrome))
+ok 454 - sheetRenderRoute(implementation, hybrid, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.035972
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, hybrid, field_ledger)
+ok 455 - sheetRenderRoute(implementation, hybrid, field_ledger)
+  ---
+  duration_ms: 0.036769
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, hybrid, homestead_storybook)
+ok 456 - sheetRenderRoute(implementation, hybrid, homestead_storybook)
+  ---
+  duration_ms: 0.059813
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, hybrid, extension_blueprint)
+ok 457 - sheetRenderRoute(implementation, hybrid, extension_blueprint)
+  ---
+  duration_ms: 0.044138
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, hybrid, karoo_folk)
+ok 458 - sheetRenderRoute(implementation, hybrid, karoo_folk)
+  ---
+  duration_ms: 0.034723
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, hybrid, chatgpt_atlas)
+ok 459 - sheetRenderRoute(implementation, hybrid, chatgpt_atlas)
+  ---
+  duration_ms: 0.044932
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, hybrid, master_atlas)
+ok 460 - sheetRenderRoute(implementation, hybrid, master_atlas)
+  ---
+  duration_ms: 0.037544
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, full, editorial_atlas)
+ok 461 - sheetRenderRoute(implementation, full, editorial_atlas)
+  ---
+  duration_ms: 0.034435
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, full, precision_atlas)
+ok 462 - sheetRenderRoute(implementation, full, precision_atlas)
+  ---
+  duration_ms: 0.032457
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, full, photo_plan)
+ok 463 - sheetRenderRoute(implementation, full, photo_plan)
+  ---
+  duration_ms: 0.038417
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, full, satellite_overlay (model-chrome))
+ok 464 - sheetRenderRoute(implementation, full, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.034583
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, full, field_ledger)
+ok 465 - sheetRenderRoute(implementation, full, field_ledger)
+  ---
+  duration_ms: 1.728801
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, full, homestead_storybook)
+ok 466 - sheetRenderRoute(implementation, full, homestead_storybook)
+  ---
+  duration_ms: 0.067157
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, full, extension_blueprint)
+ok 467 - sheetRenderRoute(implementation, full, extension_blueprint)
+  ---
+  duration_ms: 0.038512
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, full, karoo_folk)
+ok 468 - sheetRenderRoute(implementation, full, karoo_folk)
+  ---
+  duration_ms: 0.034907
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, full, chatgpt_atlas)
+ok 469 - sheetRenderRoute(implementation, full, chatgpt_atlas)
+  ---
+  duration_ms: 0.037418
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(implementation, full, master_atlas)
+ok 470 - sheetRenderRoute(implementation, full, master_atlas)
+  ---
+  duration_ms: 0.033974
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, exact, editorial_atlas)
+ok 471 - sheetRenderRoute(filter:all, exact, editorial_atlas)
+  ---
+  duration_ms: 0.04226
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, exact, precision_atlas)
+ok 472 - sheetRenderRoute(filter:all, exact, precision_atlas)
+  ---
+  duration_ms: 0.035961
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, exact, photo_plan)
+ok 473 - sheetRenderRoute(filter:all, exact, photo_plan)
+  ---
+  duration_ms: 0.031677
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, exact, satellite_overlay (model-chrome))
+ok 474 - sheetRenderRoute(filter:all, exact, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.030944
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, exact, field_ledger)
+ok 475 - sheetRenderRoute(filter:all, exact, field_ledger)
+  ---
+  duration_ms: 0.033357
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, exact, homestead_storybook)
+ok 476 - sheetRenderRoute(filter:all, exact, homestead_storybook)
+  ---
+  duration_ms: 0.030652
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, exact, extension_blueprint)
+ok 477 - sheetRenderRoute(filter:all, exact, extension_blueprint)
+  ---
+  duration_ms: 0.029524
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, exact, karoo_folk)
+ok 478 - sheetRenderRoute(filter:all, exact, karoo_folk)
+  ---
+  duration_ms: 0.030699
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, exact, chatgpt_atlas)
+ok 479 - sheetRenderRoute(filter:all, exact, chatgpt_atlas)
+  ---
+  duration_ms: 0.031406
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, exact, master_atlas)
+ok 480 - sheetRenderRoute(filter:all, exact, master_atlas)
+  ---
+  duration_ms: 0.029314
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, hybrid, editorial_atlas)
+ok 481 - sheetRenderRoute(filter:all, hybrid, editorial_atlas)
+  ---
+  duration_ms: 0.03459
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, hybrid, precision_atlas)
+ok 482 - sheetRenderRoute(filter:all, hybrid, precision_atlas)
+  ---
+  duration_ms: 0.123499
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, hybrid, photo_plan)
+ok 483 - sheetRenderRoute(filter:all, hybrid, photo_plan)
+  ---
+  duration_ms: 0.052918
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, hybrid, satellite_overlay (model-chrome))
+ok 484 - sheetRenderRoute(filter:all, hybrid, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.040633
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, hybrid, field_ledger)
+ok 485 - sheetRenderRoute(filter:all, hybrid, field_ledger)
+  ---
+  duration_ms: 0.034992
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, hybrid, homestead_storybook)
+ok 486 - sheetRenderRoute(filter:all, hybrid, homestead_storybook)
+  ---
+  duration_ms: 0.033482
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, hybrid, extension_blueprint)
+ok 487 - sheetRenderRoute(filter:all, hybrid, extension_blueprint)
+  ---
+  duration_ms: 0.034023
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, hybrid, karoo_folk)
+ok 488 - sheetRenderRoute(filter:all, hybrid, karoo_folk)
+  ---
+  duration_ms: 0.033569
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, hybrid, chatgpt_atlas)
+ok 489 - sheetRenderRoute(filter:all, hybrid, chatgpt_atlas)
+  ---
+  duration_ms: 0.031315
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, hybrid, master_atlas)
+ok 490 - sheetRenderRoute(filter:all, hybrid, master_atlas)
+  ---
+  duration_ms: 0.030785
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, full, editorial_atlas)
+ok 491 - sheetRenderRoute(filter:all, full, editorial_atlas)
+  ---
+  duration_ms: 0.033448
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, full, precision_atlas)
+ok 492 - sheetRenderRoute(filter:all, full, precision_atlas)
+  ---
+  duration_ms: 0.034163
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, full, photo_plan)
+ok 493 - sheetRenderRoute(filter:all, full, photo_plan)
+  ---
+  duration_ms: 0.036055
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, full, satellite_overlay (model-chrome))
+ok 494 - sheetRenderRoute(filter:all, full, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.037576
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, full, field_ledger)
+ok 495 - sheetRenderRoute(filter:all, full, field_ledger)
+  ---
+  duration_ms: 0.034505
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, full, homestead_storybook)
+ok 496 - sheetRenderRoute(filter:all, full, homestead_storybook)
+  ---
+  duration_ms: 0.031609
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, full, extension_blueprint)
+ok 497 - sheetRenderRoute(filter:all, full, extension_blueprint)
+  ---
+  duration_ms: 0.031265
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, full, karoo_folk)
+ok 498 - sheetRenderRoute(filter:all, full, karoo_folk)
+  ---
+  duration_ms: 0.034448
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, full, chatgpt_atlas)
+ok 499 - sheetRenderRoute(filter:all, full, chatgpt_atlas)
+  ---
+  duration_ms: 0.035196
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:all, full, master_atlas)
+ok 500 - sheetRenderRoute(filter:all, full, master_atlas)
+  ---
+  duration_ms: 0.033791
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, exact, editorial_atlas)
+ok 501 - sheetRenderRoute(filter:water, exact, editorial_atlas)
+  ---
+  duration_ms: 0.061465
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, exact, precision_atlas)
+ok 502 - sheetRenderRoute(filter:water, exact, precision_atlas)
+  ---
+  duration_ms: 0.036737
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, exact, photo_plan)
+ok 503 - sheetRenderRoute(filter:water, exact, photo_plan)
+  ---
+  duration_ms: 0.032045
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, exact, satellite_overlay (model-chrome))
+ok 504 - sheetRenderRoute(filter:water, exact, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.03837
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, exact, field_ledger)
+ok 505 - sheetRenderRoute(filter:water, exact, field_ledger)
+  ---
+  duration_ms: 0.028887
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, exact, homestead_storybook)
+ok 506 - sheetRenderRoute(filter:water, exact, homestead_storybook)
+  ---
+  duration_ms: 0.029201
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, exact, extension_blueprint)
+ok 507 - sheetRenderRoute(filter:water, exact, extension_blueprint)
+  ---
+  duration_ms: 0.028844
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, exact, karoo_folk)
+ok 508 - sheetRenderRoute(filter:water, exact, karoo_folk)
+  ---
+  duration_ms: 0.031106
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, exact, chatgpt_atlas)
+ok 509 - sheetRenderRoute(filter:water, exact, chatgpt_atlas)
+  ---
+  duration_ms: 0.031039
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, exact, master_atlas)
+ok 510 - sheetRenderRoute(filter:water, exact, master_atlas)
+  ---
+  duration_ms: 0.028936
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, hybrid, editorial_atlas)
+ok 511 - sheetRenderRoute(filter:water, hybrid, editorial_atlas)
+  ---
+  duration_ms: 0.034065
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, hybrid, precision_atlas)
+ok 512 - sheetRenderRoute(filter:water, hybrid, precision_atlas)
+  ---
+  duration_ms: 0.031565
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, hybrid, photo_plan)
+ok 513 - sheetRenderRoute(filter:water, hybrid, photo_plan)
+  ---
+  duration_ms: 0.034263
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, hybrid, satellite_overlay (model-chrome))
+ok 514 - sheetRenderRoute(filter:water, hybrid, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.032368
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, hybrid, field_ledger)
+ok 515 - sheetRenderRoute(filter:water, hybrid, field_ledger)
+  ---
+  duration_ms: 0.033023
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, hybrid, homestead_storybook)
+ok 516 - sheetRenderRoute(filter:water, hybrid, homestead_storybook)
+  ---
+  duration_ms: 0.032804
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, hybrid, extension_blueprint)
+ok 517 - sheetRenderRoute(filter:water, hybrid, extension_blueprint)
+  ---
+  duration_ms: 0.031637
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, hybrid, karoo_folk)
+ok 518 - sheetRenderRoute(filter:water, hybrid, karoo_folk)
+  ---
+  duration_ms: 0.031381
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, hybrid, chatgpt_atlas)
+ok 519 - sheetRenderRoute(filter:water, hybrid, chatgpt_atlas)
+  ---
+  duration_ms: 0.033308
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, hybrid, master_atlas)
+ok 520 - sheetRenderRoute(filter:water, hybrid, master_atlas)
+  ---
+  duration_ms: 0.031667
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, full, editorial_atlas)
+ok 521 - sheetRenderRoute(filter:water, full, editorial_atlas)
+  ---
+  duration_ms: 0.031302
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, full, precision_atlas)
+ok 522 - sheetRenderRoute(filter:water, full, precision_atlas)
+  ---
+  duration_ms: 0.033507
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, full, photo_plan)
+ok 523 - sheetRenderRoute(filter:water, full, photo_plan)
+  ---
+  duration_ms: 0.044493
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, full, satellite_overlay (model-chrome))
+ok 524 - sheetRenderRoute(filter:water, full, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.033497
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, full, field_ledger)
+ok 525 - sheetRenderRoute(filter:water, full, field_ledger)
+  ---
+  duration_ms: 0.041482
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, full, homestead_storybook)
+ok 526 - sheetRenderRoute(filter:water, full, homestead_storybook)
+  ---
+  duration_ms: 0.038482
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, full, extension_blueprint)
+ok 527 - sheetRenderRoute(filter:water, full, extension_blueprint)
+  ---
+  duration_ms: 0.034055
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, full, karoo_folk)
+ok 528 - sheetRenderRoute(filter:water, full, karoo_folk)
+  ---
+  duration_ms: 0.031912
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, full, chatgpt_atlas)
+ok 529 - sheetRenderRoute(filter:water, full, chatgpt_atlas)
+  ---
+  duration_ms: 0.032747
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:water, full, master_atlas)
+ok 530 - sheetRenderRoute(filter:water, full, master_atlas)
+  ---
+  duration_ms: 0.029967
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, exact, editorial_atlas)
+ok 531 - sheetRenderRoute(filter:zones, exact, editorial_atlas)
+  ---
+  duration_ms: 0.031428
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, exact, precision_atlas)
+ok 532 - sheetRenderRoute(filter:zones, exact, precision_atlas)
+  ---
+  duration_ms: 0.028581
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, exact, photo_plan)
+ok 533 - sheetRenderRoute(filter:zones, exact, photo_plan)
+  ---
+  duration_ms: 0.027891
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, exact, satellite_overlay (model-chrome))
+ok 534 - sheetRenderRoute(filter:zones, exact, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.029204
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, exact, field_ledger)
+ok 535 - sheetRenderRoute(filter:zones, exact, field_ledger)
+  ---
+  duration_ms: 0.031444
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, exact, homestead_storybook)
+ok 536 - sheetRenderRoute(filter:zones, exact, homestead_storybook)
+  ---
+  duration_ms: 0.031535
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, exact, extension_blueprint)
+ok 537 - sheetRenderRoute(filter:zones, exact, extension_blueprint)
+  ---
+  duration_ms: 0.038995
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, exact, karoo_folk)
+ok 538 - sheetRenderRoute(filter:zones, exact, karoo_folk)
+  ---
+  duration_ms: 0.031959
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, exact, chatgpt_atlas)
+ok 539 - sheetRenderRoute(filter:zones, exact, chatgpt_atlas)
+  ---
+  duration_ms: 0.031807
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, exact, master_atlas)
+ok 540 - sheetRenderRoute(filter:zones, exact, master_atlas)
+  ---
+  duration_ms: 0.028583
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, hybrid, editorial_atlas)
+ok 541 - sheetRenderRoute(filter:zones, hybrid, editorial_atlas)
+  ---
+  duration_ms: 0.087298
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, hybrid, precision_atlas)
+ok 542 - sheetRenderRoute(filter:zones, hybrid, precision_atlas)
+  ---
+  duration_ms: 0.055085
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, hybrid, photo_plan)
+ok 543 - sheetRenderRoute(filter:zones, hybrid, photo_plan)
+  ---
+  duration_ms: 0.044035
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, hybrid, satellite_overlay (model-chrome))
+ok 544 - sheetRenderRoute(filter:zones, hybrid, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.037913
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, hybrid, field_ledger)
+ok 545 - sheetRenderRoute(filter:zones, hybrid, field_ledger)
+  ---
+  duration_ms: 0.037406
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, hybrid, homestead_storybook)
+ok 546 - sheetRenderRoute(filter:zones, hybrid, homestead_storybook)
+  ---
+  duration_ms: 0.032855
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, hybrid, extension_blueprint)
+ok 547 - sheetRenderRoute(filter:zones, hybrid, extension_blueprint)
+  ---
+  duration_ms: 0.034156
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, hybrid, karoo_folk)
+ok 548 - sheetRenderRoute(filter:zones, hybrid, karoo_folk)
+  ---
+  duration_ms: 0.032095
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, hybrid, chatgpt_atlas)
+ok 549 - sheetRenderRoute(filter:zones, hybrid, chatgpt_atlas)
+  ---
+  duration_ms: 0.03575
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, hybrid, master_atlas)
+ok 550 - sheetRenderRoute(filter:zones, hybrid, master_atlas)
+  ---
+  duration_ms: 0.034557
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, full, editorial_atlas)
+ok 551 - sheetRenderRoute(filter:zones, full, editorial_atlas)
+  ---
+  duration_ms: 0.06339
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, full, precision_atlas)
+ok 552 - sheetRenderRoute(filter:zones, full, precision_atlas)
+  ---
+  duration_ms: 0.033775
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, full, photo_plan)
+ok 553 - sheetRenderRoute(filter:zones, full, photo_plan)
+  ---
+  duration_ms: 0.035545
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, full, satellite_overlay (model-chrome))
+ok 554 - sheetRenderRoute(filter:zones, full, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.034759
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, full, field_ledger)
+ok 555 - sheetRenderRoute(filter:zones, full, field_ledger)
+  ---
+  duration_ms: 0.039065
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, full, homestead_storybook)
+ok 556 - sheetRenderRoute(filter:zones, full, homestead_storybook)
+  ---
+  duration_ms: 0.033274
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, full, extension_blueprint)
+ok 557 - sheetRenderRoute(filter:zones, full, extension_blueprint)
+  ---
+  duration_ms: 0.034688
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, full, karoo_folk)
+ok 558 - sheetRenderRoute(filter:zones, full, karoo_folk)
+  ---
+  duration_ms: 0.032963
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, full, chatgpt_atlas)
+ok 559 - sheetRenderRoute(filter:zones, full, chatgpt_atlas)
+  ---
+  duration_ms: 0.130762
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:zones, full, master_atlas)
+ok 560 - sheetRenderRoute(filter:zones, full, master_atlas)
+  ---
+  duration_ms: 0.067581
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, exact, editorial_atlas)
+ok 561 - sheetRenderRoute(filter:earthworks, exact, editorial_atlas)
+  ---
+  duration_ms: 0.035653
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, exact, precision_atlas)
+ok 562 - sheetRenderRoute(filter:earthworks, exact, precision_atlas)
+  ---
+  duration_ms: 0.030084
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, exact, photo_plan)
+ok 563 - sheetRenderRoute(filter:earthworks, exact, photo_plan)
+  ---
+  duration_ms: 0.038171
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, exact, satellite_overlay (model-chrome))
+ok 564 - sheetRenderRoute(filter:earthworks, exact, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.049776
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, exact, field_ledger)
+ok 565 - sheetRenderRoute(filter:earthworks, exact, field_ledger)
+  ---
+  duration_ms: 0.029235
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, exact, homestead_storybook)
+ok 566 - sheetRenderRoute(filter:earthworks, exact, homestead_storybook)
+  ---
+  duration_ms: 0.032227
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, exact, extension_blueprint)
+ok 567 - sheetRenderRoute(filter:earthworks, exact, extension_blueprint)
+  ---
+  duration_ms: 0.031121
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, exact, karoo_folk)
+ok 568 - sheetRenderRoute(filter:earthworks, exact, karoo_folk)
+  ---
+  duration_ms: 0.029739
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, exact, chatgpt_atlas)
+ok 569 - sheetRenderRoute(filter:earthworks, exact, chatgpt_atlas)
+  ---
+  duration_ms: 0.028353
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, exact, master_atlas)
+ok 570 - sheetRenderRoute(filter:earthworks, exact, master_atlas)
+  ---
+  duration_ms: 0.029928
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, hybrid, editorial_atlas)
+ok 571 - sheetRenderRoute(filter:earthworks, hybrid, editorial_atlas)
+  ---
+  duration_ms: 0.031756
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, hybrid, precision_atlas)
+ok 572 - sheetRenderRoute(filter:earthworks, hybrid, precision_atlas)
+  ---
+  duration_ms: 0.03154
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, hybrid, photo_plan)
+ok 573 - sheetRenderRoute(filter:earthworks, hybrid, photo_plan)
+  ---
+  duration_ms: 0.03152
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, hybrid, satellite_overlay (model-chrome))
+ok 574 - sheetRenderRoute(filter:earthworks, hybrid, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.049151
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, hybrid, field_ledger)
+ok 575 - sheetRenderRoute(filter:earthworks, hybrid, field_ledger)
+  ---
+  duration_ms: 0.032863
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, hybrid, homestead_storybook)
+ok 576 - sheetRenderRoute(filter:earthworks, hybrid, homestead_storybook)
+  ---
+  duration_ms: 0.033277
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, hybrid, extension_blueprint)
+ok 577 - sheetRenderRoute(filter:earthworks, hybrid, extension_blueprint)
+  ---
+  duration_ms: 0.033718
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, hybrid, karoo_folk)
+ok 578 - sheetRenderRoute(filter:earthworks, hybrid, karoo_folk)
+  ---
+  duration_ms: 0.032318
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, hybrid, chatgpt_atlas)
+ok 579 - sheetRenderRoute(filter:earthworks, hybrid, chatgpt_atlas)
+  ---
+  duration_ms: 0.031535
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, hybrid, master_atlas)
+ok 580 - sheetRenderRoute(filter:earthworks, hybrid, master_atlas)
+  ---
+  duration_ms: 0.037648
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, full, editorial_atlas)
+ok 581 - sheetRenderRoute(filter:earthworks, full, editorial_atlas)
+  ---
+  duration_ms: 0.044359
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, full, precision_atlas)
+ok 582 - sheetRenderRoute(filter:earthworks, full, precision_atlas)
+  ---
+  duration_ms: 0.033652
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, full, photo_plan)
+ok 583 - sheetRenderRoute(filter:earthworks, full, photo_plan)
+  ---
+  duration_ms: 0.032583
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, full, satellite_overlay (model-chrome))
+ok 584 - sheetRenderRoute(filter:earthworks, full, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.033289
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, full, field_ledger)
+ok 585 - sheetRenderRoute(filter:earthworks, full, field_ledger)
+  ---
+  duration_ms: 0.032849
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, full, homestead_storybook)
+ok 586 - sheetRenderRoute(filter:earthworks, full, homestead_storybook)
+  ---
+  duration_ms: 0.033516
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, full, extension_blueprint)
+ok 587 - sheetRenderRoute(filter:earthworks, full, extension_blueprint)
+  ---
+  duration_ms: 0.032702
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, full, karoo_folk)
+ok 588 - sheetRenderRoute(filter:earthworks, full, karoo_folk)
+  ---
+  duration_ms: 0.030062
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, full, chatgpt_atlas)
+ok 589 - sheetRenderRoute(filter:earthworks, full, chatgpt_atlas)
+  ---
+  duration_ms: 0.030546
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:earthworks, full, master_atlas)
+ok 590 - sheetRenderRoute(filter:earthworks, full, master_atlas)
+  ---
+  duration_ms: 0.03074
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, exact, editorial_atlas)
+ok 591 - sheetRenderRoute(filter:planting, exact, editorial_atlas)
+  ---
+  duration_ms: 0.029076
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, exact, precision_atlas)
+ok 592 - sheetRenderRoute(filter:planting, exact, precision_atlas)
+  ---
+  duration_ms: 0.029376
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, exact, photo_plan)
+ok 593 - sheetRenderRoute(filter:planting, exact, photo_plan)
+  ---
+  duration_ms: 0.030733
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, exact, satellite_overlay (model-chrome))
+ok 594 - sheetRenderRoute(filter:planting, exact, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.029293
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, exact, field_ledger)
+ok 595 - sheetRenderRoute(filter:planting, exact, field_ledger)
+  ---
+  duration_ms: 0.028248
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, exact, homestead_storybook)
+ok 596 - sheetRenderRoute(filter:planting, exact, homestead_storybook)
+  ---
+  duration_ms: 0.029051
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, exact, extension_blueprint)
+ok 597 - sheetRenderRoute(filter:planting, exact, extension_blueprint)
+  ---
+  duration_ms: 0.066448
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, exact, karoo_folk)
+ok 598 - sheetRenderRoute(filter:planting, exact, karoo_folk)
+  ---
+  duration_ms: 0.030171
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, exact, chatgpt_atlas)
+ok 599 - sheetRenderRoute(filter:planting, exact, chatgpt_atlas)
+  ---
+  duration_ms: 0.029029
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, exact, master_atlas)
+ok 600 - sheetRenderRoute(filter:planting, exact, master_atlas)
+  ---
+  duration_ms: 0.027861
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, hybrid, editorial_atlas)
+ok 601 - sheetRenderRoute(filter:planting, hybrid, editorial_atlas)
+  ---
+  duration_ms: 0.032497
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, hybrid, precision_atlas)
+ok 602 - sheetRenderRoute(filter:planting, hybrid, precision_atlas)
+  ---
+  duration_ms: 0.055091
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, hybrid, photo_plan)
+ok 603 - sheetRenderRoute(filter:planting, hybrid, photo_plan)
+  ---
+  duration_ms: 0.037759
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, hybrid, satellite_overlay (model-chrome))
+ok 604 - sheetRenderRoute(filter:planting, hybrid, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.031195
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, hybrid, field_ledger)
+ok 605 - sheetRenderRoute(filter:planting, hybrid, field_ledger)
+  ---
+  duration_ms: 0.037862
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, hybrid, homestead_storybook)
+ok 606 - sheetRenderRoute(filter:planting, hybrid, homestead_storybook)
+  ---
+  duration_ms: 0.037577
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, hybrid, extension_blueprint)
+ok 607 - sheetRenderRoute(filter:planting, hybrid, extension_blueprint)
+  ---
+  duration_ms: 0.041925
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, hybrid, karoo_folk)
+ok 608 - sheetRenderRoute(filter:planting, hybrid, karoo_folk)
+  ---
+  duration_ms: 0.125936
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, hybrid, chatgpt_atlas)
+ok 609 - sheetRenderRoute(filter:planting, hybrid, chatgpt_atlas)
+  ---
+  duration_ms: 0.039765
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, hybrid, master_atlas)
+ok 610 - sheetRenderRoute(filter:planting, hybrid, master_atlas)
+  ---
+  duration_ms: 0.034261
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, full, editorial_atlas)
+ok 611 - sheetRenderRoute(filter:planting, full, editorial_atlas)
+  ---
+  duration_ms: 0.034204
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, full, precision_atlas)
+ok 612 - sheetRenderRoute(filter:planting, full, precision_atlas)
+  ---
+  duration_ms: 0.032778
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, full, photo_plan)
+ok 613 - sheetRenderRoute(filter:planting, full, photo_plan)
+  ---
+  duration_ms: 0.033514
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, full, satellite_overlay (model-chrome))
+ok 614 - sheetRenderRoute(filter:planting, full, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.031261
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, full, field_ledger)
+ok 615 - sheetRenderRoute(filter:planting, full, field_ledger)
+  ---
+  duration_ms: 0.031761
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, full, homestead_storybook)
+ok 616 - sheetRenderRoute(filter:planting, full, homestead_storybook)
+  ---
+  duration_ms: 0.030181
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, full, extension_blueprint)
+ok 617 - sheetRenderRoute(filter:planting, full, extension_blueprint)
+  ---
+  duration_ms: 0.073304
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, full, karoo_folk)
+ok 618 - sheetRenderRoute(filter:planting, full, karoo_folk)
+  ---
+  duration_ms: 0.081888
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, full, chatgpt_atlas)
+ok 619 - sheetRenderRoute(filter:planting, full, chatgpt_atlas)
+  ---
+  duration_ms: 0.04792
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:planting, full, master_atlas)
+ok 620 - sheetRenderRoute(filter:planting, full, master_atlas)
+  ---
+  duration_ms: 0.039715
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, exact, editorial_atlas)
+ok 621 - sheetRenderRoute(filter:structures, exact, editorial_atlas)
+  ---
+  duration_ms: 0.053779
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, exact, precision_atlas)
+ok 622 - sheetRenderRoute(filter:structures, exact, precision_atlas)
+  ---
+  duration_ms: 0.027881
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, exact, photo_plan)
+ok 623 - sheetRenderRoute(filter:structures, exact, photo_plan)
+  ---
+  duration_ms: 0.028332
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, exact, satellite_overlay (model-chrome))
+ok 624 - sheetRenderRoute(filter:structures, exact, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.029549
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, exact, field_ledger)
+ok 625 - sheetRenderRoute(filter:structures, exact, field_ledger)
+  ---
+  duration_ms: 0.02722
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, exact, homestead_storybook)
+ok 626 - sheetRenderRoute(filter:structures, exact, homestead_storybook)
+  ---
+  duration_ms: 0.028539
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, exact, extension_blueprint)
+ok 627 - sheetRenderRoute(filter:structures, exact, extension_blueprint)
+  ---
+  duration_ms: 0.027921
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, exact, karoo_folk)
+ok 628 - sheetRenderRoute(filter:structures, exact, karoo_folk)
+  ---
+  duration_ms: 0.027022
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, exact, chatgpt_atlas)
+ok 629 - sheetRenderRoute(filter:structures, exact, chatgpt_atlas)
+  ---
+  duration_ms: 0.030213
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, exact, master_atlas)
+ok 630 - sheetRenderRoute(filter:structures, exact, master_atlas)
+  ---
+  duration_ms: 0.02751
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, hybrid, editorial_atlas)
+ok 631 - sheetRenderRoute(filter:structures, hybrid, editorial_atlas)
+  ---
+  duration_ms: 0.032575
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, hybrid, precision_atlas)
+ok 632 - sheetRenderRoute(filter:structures, hybrid, precision_atlas)
+  ---
+  duration_ms: 0.028705
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, hybrid, photo_plan)
+ok 633 - sheetRenderRoute(filter:structures, hybrid, photo_plan)
+  ---
+  duration_ms: 0.028939
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, hybrid, satellite_overlay (model-chrome))
+ok 634 - sheetRenderRoute(filter:structures, hybrid, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.031064
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, hybrid, field_ledger)
+ok 635 - sheetRenderRoute(filter:structures, hybrid, field_ledger)
+  ---
+  duration_ms: 0.028622
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, hybrid, homestead_storybook)
+ok 636 - sheetRenderRoute(filter:structures, hybrid, homestead_storybook)
+  ---
+  duration_ms: 0.029115
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, hybrid, extension_blueprint)
+ok 637 - sheetRenderRoute(filter:structures, hybrid, extension_blueprint)
+  ---
+  duration_ms: 0.027507
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, hybrid, karoo_folk)
+ok 638 - sheetRenderRoute(filter:structures, hybrid, karoo_folk)
+  ---
+  duration_ms: 0.028744
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, hybrid, chatgpt_atlas)
+ok 639 - sheetRenderRoute(filter:structures, hybrid, chatgpt_atlas)
+  ---
+  duration_ms: 0.027865
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, hybrid, master_atlas)
+ok 640 - sheetRenderRoute(filter:structures, hybrid, master_atlas)
+  ---
+  duration_ms: 0.058519
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, full, editorial_atlas)
+ok 641 - sheetRenderRoute(filter:structures, full, editorial_atlas)
+  ---
+  duration_ms: 0.036563
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, full, precision_atlas)
+ok 642 - sheetRenderRoute(filter:structures, full, precision_atlas)
+  ---
+  duration_ms: 0.031776
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, full, photo_plan)
+ok 643 - sheetRenderRoute(filter:structures, full, photo_plan)
+  ---
+  duration_ms: 0.040184
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, full, satellite_overlay (model-chrome))
+ok 644 - sheetRenderRoute(filter:structures, full, satellite_overlay (model-chrome))
+  ---
+  duration_ms: 0.030962
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, full, field_ledger)
+ok 645 - sheetRenderRoute(filter:structures, full, field_ledger)
+  ---
+  duration_ms: 0.0301
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, full, homestead_storybook)
+ok 646 - sheetRenderRoute(filter:structures, full, homestead_storybook)
+  ---
+  duration_ms: 0.029668
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, full, extension_blueprint)
+ok 647 - sheetRenderRoute(filter:structures, full, extension_blueprint)
+  ---
+  duration_ms: 0.031376
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, full, karoo_folk)
+ok 648 - sheetRenderRoute(filter:structures, full, karoo_folk)
+  ---
+  duration_ms: 0.028055
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, full, chatgpt_atlas)
+ok 649 - sheetRenderRoute(filter:structures, full, chatgpt_atlas)
+  ---
+  duration_ms: 0.030435
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute(filter:structures, full, master_atlas)
+ok 650 - sheetRenderRoute(filter:structures, full, master_atlas)
+  ---
+  duration_ms: 0.029441
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute: null selectedStyle in hybrid/full falls back to DEFAULT_PRODUCER_STYLE
+ok 651 - sheetRenderRoute: null selectedStyle in hybrid/full falls back to DEFAULT_PRODUCER_STYLE
+  ---
+  duration_ms: 0.079952
+  type: 'test'
+  ...
+# Subtest: one question, one answer: the router never disagrees with render-policy
+ok 652 - one question, one answer: the router never disagrees with render-policy
+  ---
+  duration_ms: 0.276804
+  type: 'test'
+  ...
+# Subtest: an analysis sheet never runs a model-chrome style, in either AI mode
+ok 653 - an analysis sheet never runs a model-chrome style, in either AI mode
+  ---
+  duration_ms: 0.143094
+  type: 'test'
+  ...
+# Subtest: sheetRenderRoute: base and sector both route to sector-queue (one function, kind param)
+ok 654 - sheetRenderRoute: base and sector both route to sector-queue (one function, kind param)
+  ---
+  duration_ms: 0.059966
+  type: 'test'
+  ...
+# Subtest: no engine can route a sheet away from the render queue
+ok 655 - no engine can route a sheet away from the render queue
+  ---
+  duration_ms: 114.433679
+  type: 'test'
+  ...
+# (node:2373) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/sheet-store.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: storage-disabled browsers degrade honestly without throwing
+ok 656 - storage-disabled browsers degrade honestly without throwing
+  ---
+  duration_ms: 3.560183
+  type: 'test'
+  ...
+# Subtest: saved sheets round-trip with provenance and load oldest first
+ok 657 - saved sheets round-trip with provenance and load oldest first
+  ---
+  duration_ms: 22.88715
+  type: 'test'
+  ...
+# Subtest: gallery metadata preserves render provenance and uncertainty after a reload
+ok 658 - gallery metadata preserves render provenance and uncertainty after a reload
+  ---
+  duration_ms: 16.007469
+  type: 'test'
+  ...
+# Subtest: legacy geometry-lock flags never become verified geometry on load
+ok 659 - legacy geometry-lock flags never become verified geometry on load
+  ---
+  duration_ms: 6.730778
+  type: 'test'
+  ...
+# Subtest: site reads and clear-all never cross into another farmer design
+ok 660 - site reads and clear-all never cross into another farmer design
+  ---
+  duration_ms: 40.789618
+  type: 'test'
+  ...
+# Subtest: the same site and sheet ids stay isolated between accounts on one device
+ok 661 - the same site and sheet ids stay isolated between accounts on one device
+  ---
+  duration_ms: 62.55135
+  type: 'test'
+  ...
+# Subtest: sample mode cannot read, overwrite or clear real bare IndexedDB sheets
+ok 662 - sample mode cannot read, overwrite or clear real bare IndexedDB sheets
+  ---
+  duration_ms: 44.382921
+  type: 'test'
+  ...
+# Subtest: awaiting delete means the durable row is actually gone
+ok 663 - awaiting delete means the durable row is actually gone
+  ---
+  duration_ms: 19.820722
+  type: 'test'
+  ...
+# Subtest: a failed write is reported as session-only and preserves the prior row
+ok 664 - a failed write is reported as session-only and preserves the prior row
+  ---
+  duration_ms: 41.820621
+  type: 'test'
+  ...
+# Subtest: invalid records are rejected on write before they can replace a durable sheet
+ok 665 - invalid records are rejected on write before they can replace a durable sheet
+  ---
+  duration_ms: 10.496468
+  type: 'test'
+  ...
+# Subtest: loads quarantine malformed rows while preserving valid legacy rows
+ok 666 - loads quarantine malformed rows while preserving valid legacy rows
+  ---
+  duration_ms: 2.760235
+  type: 'test'
+  ...
+# Subtest: load order follows instants rather than timestamp spelling
+ok 667 - load order follows instants rather than timestamp spelling
+  ---
+  duration_ms: 3.496139
+  type: 'test'
+  ...
+# Subtest: open failures and blocked upgrades resolve instead of hanging
+ok 668 - open failures and blocked upgrades resolve instead of hanging
+  ---
+  duration_ms: 1.255749
+  type: 'test'
+  ...
+# Subtest: base64 data URL size accounts for padding and rejects non-data text
+ok 669 - base64 data URL size accounts for padding and rejects non-data text
+  ---
+  duration_ms: 0.407256
+  type: 'test'
+  ...
+# Subtest: loadSheetMetas returns every row WITHOUT its image payload
+ok 670 - loadSheetMetas returns every row WITHOUT its image payload
+  ---
+  duration_ms: 18.967425
+  type: 'test'
+  ...
+# Subtest: loadSheetImage fetches exactly one row, and reports null for a missing one
+ok 671 - loadSheetImage fetches exactly one row, and reports null for a missing one
+  ---
+  duration_ms: 11.365948
+  type: 'test'
+  ...
+# Subtest: patchSheetThumb adds the thumbnail WITHOUT touching the image
+ok 672 - patchSheetThumb adds the thumbnail WITHOUT touching the image
+  ---
+  duration_ms: 18.232248
+  type: 'test'
+  ...
+# Subtest: patchSheetThumb REFUSES to create a row and refuses one with no image
+ok 673 - patchSheetThumb REFUSES to create a row and refuses one with no image
+  ---
+  duration_ms: 5.600106
+  type: 'test'
+  ...
+# Subtest: a saved bitmap is current only when both its plan and drawing recipe are current
+ok 674 - a saved bitmap is current only when both its plan and drawing recipe are current
+  ---
+  duration_ms: 0.337997
+  type: 'test'
+  ...
+1..674
+# tests 674
+# suites 0
+# pass 674
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8298.665279
+exit 0
