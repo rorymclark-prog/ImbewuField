@@ -1,3 +1,4 @@
+import { reportWaterEvidence } from './report-risk';
 import { annualRainfallMm, recordMinimumC, reportClimateEvidence } from './climate-temperature';
 // ── ImbewuField structured report ("ReportDoc") ──────────────────────────────
 // The 11-section, map-linked report is the product differentiator. This is the
@@ -313,14 +314,13 @@ export function buildSkeletonReportDoc(args: {
   const minTemp = recordMinimumC(location.climate);
 
   if (survey?.productionConditions?.frost === 'yes') challenges.push('Frost has been observed on this farm (grower-reported); confirm affected locations and timing.');
-  if (rainMm && rainMm < 500) challenges.push('Low/erratic rainfall — water capture and storage are the priority.');
   if (survey?.soilCondition === 'compacted') challenges.push('Compacted soil — needs aeration and organic-matter building.');
   if (!challenges.length) challenges.push('Building soil fertility and year-round food production.');
 
   const executive: ExecutiveSummary = {
     farmOverview: `A ${sizeHa !== undefined ? `${sizeHa} ha ` : ''}site in the ${biome}${bruNote}${rainMm !== null ? ` (~${rainMm} mm/yr)` : ''}.${goals.length ? ` The household's main goals are ${goals.join(', ')}.` : ''} This plan organises the land into permaculture zones from the house outward, captures water high in the landscape, and builds a layered, largely self-feeding system.`,
     topOpportunities: opportunities.slice(0, 5),
-    topChallenges: challenges.slice(0, 5),
+    topChallenges: [reportWaterEvidence(rainMm), ...challenges.slice(0, 5)],
     priorityActions12mo: [
       { month: 'Months 1–2', action: 'Set up compost and connect roof gutters to a tank', why: 'Fast wins: fertility + stored water before the dry season.' },
       { month: 'Months 2–3', action: 'Mark and dig the first swale on contour above the garden', why: 'Slows and sinks runoff where it is most useful.' },
