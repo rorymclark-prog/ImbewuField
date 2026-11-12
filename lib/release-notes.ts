@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '12 November 2026', sha: 'cd408331865da2de20777630d6ff831842db50d0', changes: [
+    'Report PDF table headers stay with their rows, including wrapped and continuing tables.',
+  ] },
   { when: '12 November 2026', sha: 'c8c00515e97ae810b4e95d4e9c3898d82196a1ac', changes: [
     'Reports keep zero and unknown rainfall distinct; seasonal water adequacy stays unassessed.',
   ] },
