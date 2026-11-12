@@ -1,4 +1,4 @@
-import { annualRainfallMm, sourcedMonthlyRainfall, monthlyTemperatureStatus, reportClimateEvidence } from '@/lib/climate-temperature';
+import { annualRainfallMm, sourcedMonthlyRainfall, monthlyTemperatureStatus, reportClimateEvidence, reportClimateLabels } from '@/lib/climate-temperature';
 import { productContextFromItems, productPurchasingMarkdown } from '@/lib/production-product-guidance';
 import { growingZonesForClimate } from '@/lib/growing-zones';
 import { PLANTING_SUITABILITY_PROMPT, reportSectionsForGeneration } from '@/lib/report-planting-guide';
@@ -291,10 +291,11 @@ export async function POST(req: NextRequest) {
   const monthlyRain = sourcedMonthlyRainfall(d.rainfall);
   const climateEvidence = reportClimateEvidence(d);
   const rainDescription = annualRain === null ? 'annual rainfall not known' : `${annualRain} mm annual rainfall (${d.rainfall.rainfallSource})`;
-  const rainPattern = monthlyRain ? d.rainfall.pattern : 'unrecorded';
-  const wetSeason = monthlyRain ? d.rainfall.wetSeason : 'unrecorded';
-  const drySeason = monthlyRain ? d.rainfall.drySeason : 'unrecorded';
-  const climateClass = monthlyRain && monthlyTemperatureStatus(d.climate) === 'complete' ? d.climate.koppen : 'unrecorded';
+  const climateLabels = reportClimateLabels(d);
+  const rainPattern = climateLabels.pattern ?? 'unrecorded';
+  const wetSeason = climateLabels.wetSeason ?? 'unrecorded';
+  const drySeason = climateLabels.drySeason ?? 'unrecorded';
+  const climateClass = climateLabels.koppen ?? 'unrecorded';
   const purchasingGuidance = productPurchasingMarkdown({ ...productContextFromItems(facts?.productionItems ?? []), animalChoices: facts?.productionEnterpriseChoices }, monthlyRain && monthlyTemperatureStatus(d.climate) === 'complete' ? growingZonesForClimate(d.climate.monthlyTemp, monthlyRain, d.lat) : [], surveyData?.productionConditions,langCode);
   // ONE ANSWER TO "WHAT GROWS HERE" — see lib/site-ecology.ts. Before this, sections took the
   // site's name from whichever lookup was nearest: the coarse biome polygon (d.biome.name) or the
@@ -500,8 +501,8 @@ ${siteAreaForCalcM2 && annualRain !== null ? `- **Rain falling on the boundary a
 - **Earthwork spacing:** no generic slope-to-spacing formula is supported. Require a contour survey, soil/infiltration checks, safe overflow and local design review before giving dimensions.
 - **Dry season storage gap:** not calculated. Use measured demand, supported monthly rainfall, catchment and losses before sizing storage; do not invent a minimum tank size.
 - **ETo vs rainfall:** solar radiation alone is not evapotranspiration. If no validated ETo series is supplied, state that the irrigation deficit has not been calculated; list the observations needed.
-${waterData ? `- **Drawn water storage:** ${waterData.count} store(s), ~**${waterData.estVolumeKL.toLocaleString()} kL** capacity (est. ${waterData.avgDepthM}m avg depth over ${waterData.areaM2.toLocaleString()} m²). State clearly whether this covers the dry-season deficit above, and if not, how much more storage is needed.` : ''}
-${facts?.water && facts.water.statedStorageLitres > 0 ? `- **Tank storage on the plan:** **${facts.water.statedStorageLitres.toLocaleString()} L** stated capacity (${facts.water.tanks.map((tank) => `${tank.name} x${tank.count}`).join(', ')}). Compare THIS number to the dry-season need you calculate above and say plainly whether it is enough, and if not by how much.` : ''}
+${waterData ? `- **Drawn water storage:** ${waterData.count} store(s), ~**${waterData.estVolumeKL.toLocaleString()} kL** capacity (est. ${waterData.avgDepthM}m avg depth over ${waterData.areaM2.toLocaleString()} m²). Report this estimated capacity separately from supply and demand. Storage adequacy, the dry-season deficit and any additional capacity required are not established by these figures.` : ''}
+${facts?.water && facts.water.statedStorageLitres > 0 ? `- **Tank storage on the plan:** **${facts.water.statedStorageLitres.toLocaleString()} L** stated capacity (${facts.water.tanks.map((tank) => `${tank.name} x${tank.count}`).join(', ')}). Keep this recorded capacity distinct from water currently available. Do not infer storage adequacy or additional tank size without a supported supply-and-demand budget.` : ''}
 
 ### Implementation Timeline
 When to build each earthwork relative to the ${wetSeason} wet season.
@@ -553,7 +554,7 @@ Work out the water needed to irrigate the growing areas through the dry season (
 
 ${irrigationRowsBlock(facts)}
 
-Recommend the cheapest effective method for this ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} soil and how to cut water use (mulch, shade, swales).${siteAreaForCalcM2 ? ` Scale to the ${(siteAreaForCalcM2 / 10000).toFixed(siteAreaForCalcM2 < 10000 ? 3 : 2)} ha site.` : ''}${waterData ? ` Compare the total need to the ~${waterData.estVolumeKL.toLocaleString()} kL of drawn storage and say if it is enough.` : ''}${facts?.water && facts.water.statedStorageLitres > 0 ? ` Compare the total daily need to the **${facts.water.statedStorageLitres.toLocaleString()} L** of tank storage on the plan and say how many days it covers.` : ''}
+Recommend the cheapest effective method for this ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} soil and how to cut water use (mulch, shade, swales).${siteAreaForCalcM2 ? ` Scale to the ${(siteAreaForCalcM2 / 10000).toFixed(siteAreaForCalcM2 < 10000 ? 3 : 2)} ha site.` : ''}${waterData ? ` The drawn storage capacity is ~${waterData.estVolumeKL.toLocaleString()} kL; this alone does not establish available water or irrigation coverage.` : ''}${facts?.water && facts.water.statedStorageLitres > 0 ? ` The plan records **${facts.water.statedStorageLitres.toLocaleString()} L** of tank capacity; days of irrigation coverage remain unknown without supported demand and available supply.` : ''}
 
 ` : ''}${sections.includes('Year-Round Food Production') ? `## All-Year-Round Food Production
 
@@ -832,8 +833,8 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     dateLabel,
     rainfallMm: annualRain,
     rainfallSource: d.rainfall.rainfallSource,
-    wetSeason: d.rainfall.wetSeason,
-    drySeason: d.rainfall.drySeason,
+    wetSeason,
+    drySeason,
     soilPh: d.soil.ph,
     soilOrganicCarbon: d.soil.organicCarbon,
     soilTexture: d.soil.textureClass,

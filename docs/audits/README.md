@@ -184,6 +184,8 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
+Latest bounded report correction: [12 November water and climate evidence](2026-11-12/report-water-climate-corrections-codex.md). Draft successor; current-head release gates remain pending.
+
 Shared acceptance checks: [Crop planning checklist](CROP-PLANNING-CHECKLIST.md).
 Use this with the latest dated crop record; it is a verification checklist, not a
 claim that every check has passed or that the proposed farming fixes are deployed.
