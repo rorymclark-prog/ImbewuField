@@ -184,6 +184,8 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
+Latest preview consumer: [Provisional crop preview integration — 12 November 2026](2026-11-12/provisional-preview-integration.md). Synthetic component and freshness checks; country adapters and independent release gates remain open.
+
 Latest provisional engine continuation: [Provisional global crop resolver — 11 November 2026](2026-11-11/provisional-global-crop-resolver.md). Local evidence-selection and arithmetic work; country adapters, app integration and release review remain open.
 
 Shared acceptance checks: [Crop planning checklist](CROP-PLANNING-CHECKLIST.md).

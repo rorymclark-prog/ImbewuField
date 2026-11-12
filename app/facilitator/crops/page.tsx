@@ -29,6 +29,7 @@ import HarvestTargetsPanel from '@/components/crops/HarvestTargetsPanel';
 import NurseryPlanPanel from '@/components/crops/NurseryPlanPanel';
 import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySaveContext, beginNurserySaveRequest, commitNurserySaveRequest, readNurserySaveConfirmation, createHarvestSaveContext, beginHarvestSaveRequest, commitHarvestSaveRequest, readHarvestSaveConfirmation, harvestTargetsSourceKey, type HarvestSaveContext, type HarvestSaveRequest, type HarvestSaveResult, type NurserySaveAuthority, type NurserySaveContext, type NurserySaveRequest, type NurserySaveResult } from '@/lib/nursery-save-receipt';
 import GrowerPlanningPanel from '@/components/crops/GrowerPlanningPanel';
+import ProvisionalCropPreview from '@/components/crops/ProvisionalCropPreview';
 import GrowerAutoPlanPanel from '@/components/crops/GrowerAutoPlanPanel';
 import GrowerNurseryReviewPanel from '@/components/crops/GrowerNurseryReviewPanel';
 import SavedGrowerNurseryReviewPanel from '@/components/crops/SavedGrowerNurseryReviewPanel';
@@ -2527,6 +2528,12 @@ function FacilitatorCropsPageInner() {
       targets={plan?.harvestTargets ?? []} beds={beds} plantings={plantings} pattern={pattern} climate={{}}
       saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
       onSaveTargets={saveHarvestTargets} onAccept={() => {}} />}
+    <ProvisionalCropPreview ownerKey={`${growerOwner}:${growerSample}`} scope={growerScope}
+      source={selectedGrowerSource} actorIsCurrent={growerActorIsCurrent}
+      countryCode={siteCountry.status === 'confirmed' ? siteCountry.context?.countryCode ?? null : null}
+      agriculturalRegionReference={siteCountry.status === 'confirmed' ? siteCountry.context?.agriculturalRegionReference ?? null : null}
+      contextRevision={`${growerWorkflow.contextRevision}:${planningSupport.fingerprint}`}
+      checking={growerWorkflow.checking} onRefresh={growerWorkflow.onRefresh} onCheckSource={growerWorkflow.onCheckPreviewSource} />
     <GrowerPlanningPanel scope={growerScope}
       beds={selectedGrowerSource?.beds ?? (canvasSite || design ? [] : designBeds)}
       measuredAreas={selectedGrowerSource?.measuredAreas} measurementsFingerprint={selectedGrowerSource?.geometryFingerprint ?? null}

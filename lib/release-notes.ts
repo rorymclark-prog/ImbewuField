@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '12 November 2026', sha: '8aeba000e8fbbb025a9b157174a47cd2fdd92585', changes: [
+    'Preview crop counts and dates from your measured bed and your estimates.',
+    'Your saved plan stays unchanged. Edit your inputs, then calculate a fresh preview.',
+  ] },
   { when: '10 November 2026', sha: '889438f66e2df0557bc1b07061b09a2e94b7f5a8', changes: [
     'Choose your own sowing calendar if you know your land better than the climate records.',
     'The crop plan lists planned sowings that are outside your sowing months.',

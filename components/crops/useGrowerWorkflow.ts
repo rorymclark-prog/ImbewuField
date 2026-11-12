@@ -304,6 +304,21 @@ export function useGrowerWorkflow(input: Inputs) {
     if (review.status === 'review') bindings.current.set(review, { draft: detachedDraft, source: fresh, recordedAt, actorIsCurrent, selectionKey: reviewedSelection });
     return review;
   }
+  async function onCheckPreviewSource(expected: GrowerWorkflowSource): Promise<{ isCurrent: () => boolean } | null> {
+    const turn = sourceEpoch.current, selection = selectionRef.current, actorIsCurrent = live.current.actorIsCurrent;
+    const current = () => mounted.current && sourceEpoch.current === turn && selectionRef.current === selection
+      && actorIsCurrent() && live.current.actorIsCurrent() && sourceRef.current === expected;
+    if (!current()) return null;
+    const checked = await readSource();
+    if (!current()) return null;
+    if (!checked || checked.source.sourceKey !== expected.sourceKey || checked.source.sourceRevision !== expected.sourceRevision
+      || checked.source.geometryFingerprint !== expected.geometryFingerprint || !checked.isCurrent()) {
+      invalidateSource('The saved source changed. Check its measurements before previewing again.'); return null;
+    }
+    // A preview uses no book or persistence authority, but must still re-read the
+    // actual saved design instead of treating a cached measurement as a fresh receipt.
+    return { isCurrent: () => current() && checked.isCurrent() };
+  }
   async function onCheckCurrent(review: Extract<GrowerWorkflowReview, { status: 'review' }>): Promise<boolean> {
     const binding = bindings.current.get(review), turn = epoch.current;
     if (!binding || !binding.actorIsCurrent() || binding.selectionKey !== selectionRef.current || !live.current.actorIsCurrent()) return false;
@@ -534,6 +549,6 @@ export function useGrowerWorkflow(input: Inputs) {
     if (context && (context.selectionKey !== selectionKey || !context.actorIsCurrent() || !input.actorIsCurrent())) visibleAcceptance = { status: 'idle' };
   } catch { visibleAcceptance = { status: 'idle' }; }
   const visibleSavedNursery = savedNursery && savedBindingIsCurrent(savedNursery) ? savedNursery : null;
-  return { source: visibleSource, sourceIssue, checking, contextRevision: revision, onRefresh, onReview, onCheckCurrent, onAccept, acceptance: visibleAcceptance,
+  return { source: visibleSource, sourceIssue, checking, contextRevision: revision, onRefresh, onReview, onCheckCurrent, onCheckPreviewSource, onAccept, acceptance: visibleAcceptance,
     savedNurseryReview: visibleSavedNursery, savedNurseryChecking, onReadSavedNursery, onCheckSavedNurseryCurrent, onCheckSavedNurseryBindingCurrent, onSaveNurseryBatchReferences, onRecordNurserySowing, onRecordNurseryProgress, onRecordNurseryFieldPlanting };
 }
