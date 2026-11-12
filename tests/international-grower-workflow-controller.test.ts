@@ -216,6 +216,32 @@ test('real hook reads current saved geometry and book, reviews actual engine out
   } finally { ui.dispose(); }
 });
 
+test('preview source check rereads saved bytes, revokes equal-area revisions and never writes a crop book', async () => {
+  const ui = mount(); try {
+    await ui.refresh(); const expected = ui.latest.source!;
+    const bytes = JSON.stringify([...local.rows]), writes = local.writes, reads = boundary.sourceReads;
+    let receipt: Awaited<ReturnType<typeof ui.latest.onCheckPreviewSource>> = null;
+    await act(async () => { receipt = await ui.latest.onCheckPreviewSource(expected); });
+    assert.ok(receipt); assert.equal((receipt as { isCurrent: () => boolean }).isCurrent(), true);
+    assert.ok(boundary.sourceReads > reads);
+    (boundary.raw as ReturnType<typeof canvas>).rev++;
+    assert.equal((receipt as { isCurrent: () => boolean }).isCurrent(), false);
+    await act(async () => { receipt = await ui.latest.onCheckPreviewSource(expected); });
+    assert.equal(receipt, null); assert.equal(ui.latest.source, null);
+    assert.equal(JSON.stringify([...local.rows]), bytes); assert.equal(local.writes, writes);
+  } finally { ui.dispose(); }
+});
+
+test('preview source receipt cannot be reused after actor revocation or with a copied source', async () => {
+  const ui = mount(); try {
+    await ui.refresh(); const expected = ui.latest.source!;
+    assert.equal(await ui.latest.onCheckPreviewSource({ ...expected }), null);
+    const receipt = await ui.latest.onCheckPreviewSource(expected); assert.ok(receipt);
+    boundary.actorUid = 'owner-b'; assert.equal(receipt.isCurrent(), false);
+    assert.equal(await ui.latest.onCheckPreviewSource(expected), null);
+  } finally { ui.dispose(); }
+});
+
 test('a successful debounced ordinary save clears its earlier pending-book warning without reopening source review', async () => {
   const ui = mount(); try {
     await ui.refresh(); const c = ui.controller;
