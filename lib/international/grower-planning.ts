@@ -5,6 +5,7 @@ import { growerEstimateSourceQuantity, normaliseGrowerEstimateSourceReceipt, typ
   type GrowerEstimateSourceField, normaliseGrowerSpacingSelectionReceipt, growerSpacingSourceQuantities, type GrowerSpacingSelectionReceipt } from '../grower-estimate-units';
 import { addDecimalQuantity, floorDecimalQuantityRatio, floorExactDecimalQuantityRatio } from '../farm-records';
 import { INTERNATIONAL_SQUARE_FOOT_IN_SQUARE_METRES } from '../length-units';
+import { regionalSpacingReference } from './providers/regional-spacing-reference';
 
 export type GrowerPlanningScope =
   | { readonly kind: 'mapped-site'; readonly siteId: string }
@@ -253,7 +254,8 @@ export function normaliseGrowerPlanningProfile(value: unknown): GrowerPlanningPr
     plantCountOrigin = normaliseGrowerSpacingSelectionReceipt(descriptor.value,
       { scopeKey: growerPlanningScopeKey(scope)!, profileId: value.profileId, cropKey: value.cropKey });
     if (!plantCountOrigin || plantsPerM2.state !== 'missing' || exactDensitySources?.plantsPerM2
-      || establishment.state !== 'provided' || establishment.value !== 'direct') return null;
+      || establishment.state !== 'provided' || establishment.value !== regionalSpacingReference(
+        plantCountOrigin.countryCode, plantCountOrigin.cropKey, plantCountOrigin.regionReference, plantCountOrigin)?.establishment) return null;
   }
   return freeze({ version: 1, profileId: value.profileId, cropKey: value.cropKey, scope,
     inputs: { plantsPerM2, yieldKgPerM2, establishment, nurseryDays, fieldEntryToFirstHarvestDays,

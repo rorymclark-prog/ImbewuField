@@ -1,4 +1,4 @@
-import { worldvegKenyaCowpeaSpacing } from './providers/worldveg-kenya-cowpea';
+import { regionalSpacingReference } from './providers/regional-spacing-reference';
 import { sourcePublicationText } from './countries/readiness';
 import type { GrowerInputProvenance } from './grower-planning';
 import { formatDerivedMassKilograms } from '../mass-units';
@@ -109,13 +109,13 @@ ${snapshot.measuredAreaM2.arithmeticBasis ? paragraph('Saved rectangle arithmeti
 ${paragraph('Count arithmetic', result.profile.plantCountOrigin?.conversion ?? snapshot.countArithmetic)}
 ${request.countBasis ? `<section class="field"><h2>Conditional spacing-cell estimate</h2>
 ${paragraph('Selection status', result.spacingSelection?.status)}${paragraph('Selection information', result.spacingSelection?.issue)}
-${paragraph('Source spacing range', worldvegKenyaCowpeaSpacing(request.countBasis))}
+${paragraph('Source spacing range', regionalSpacingReference(request.context.countryCode, request.cropKey, request.context.agriculturalRegionReference, request.countBasis)?.display)}
 ${paragraph('Chosen row spacing (cm)', request.countBasis.rowCm || 'Unknown')}
 ${paragraph('Chosen in-row spacing (cm)', request.countBasis.inRowCm || 'Unknown')}
 ${paragraph('Final surviving plants per station', request.countBasis.finalStand || 'Unknown')}
 ${paragraph('Source between-plants distance interpreted as station spacing', request.countBasis.interpretationConfirmed ? 'Declared by grower' : 'Not declared')}
 ${paragraph('Whole measured bed treated as usable spacing-cell area', request.countBasis.wholeAreaConfirmed ? 'Declared by grower' : 'Not declared')}
-<p>Formula: floor(area in m² × 10000 / (row cm × in-row cm)) gives whole budgeted stations; multiply those whole stations by declared final survivors. Original decimal choices are retained. This is a conditional grower estimate, not a sourced density or physical layout clearance. The source’s 2–3 seeds per hill do not supply final stand. Entered/default density is not used.</p></section>` : ''}
+<p>Formula: floor(area in m² × 10000 / (row cm × in-row cm)) gives whole budgeted stations; multiply those whole stations by declared final survivors. Original decimal choices are retained. This is a conditional grower estimate, not a sourced density or physical layout clearance. The source’s seeds per hill and planting-cell footnotes do not supply final stand. Entered/default density is not used.</p></section>` : ''}
 
 <h2>Supported results</h2>${paragraph('Entry window', assessment.entryWindow)}
 <p>An unknown window does not establish that planting on this date is suitable.</p>
