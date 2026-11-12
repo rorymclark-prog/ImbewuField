@@ -1,6 +1,6 @@
-import { annualRainfallMm, recordMinimumC, sourcedMonthlyRainfall } from './climate-temperature';
 'use client';
 
+import { annualRainfallMm, recordMinimumC, sourcedMonthlyRainfall } from './climate-temperature';
 import { numberLabel } from '@/lib/format-figures';
 import turfArea from '@turf/area';
 import type { Feature, FeatureCollection, Geometry, Position } from 'geojson';
