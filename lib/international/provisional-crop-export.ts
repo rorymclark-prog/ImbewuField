@@ -85,7 +85,7 @@ body{font:16px/1.5 system-ui,sans-serif;color:#17251b;background:#fff;max-width:
 h1{font-size:1.8rem}h2{margin-top:2rem}h3{margin:.3rem 0}p{margin:.5rem 0}.notice{border:2px solid #516546;padding:12px}
 table{border-collapse:collapse;width:100%}th,td{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid #b5c1b6}
 .field{border-top:1px solid #b5c1b6;padding:14px 0}.source{border-left:3px solid #b5c1b6;padding-left:12px;margin:12px 0}
-@media print{body{padding:0;font-size:10pt}h1,h2,h3{break-after:avoid}tr{break-inside:avoid}.notice{break-inside:avoid}@page{margin:16mm}}
+@media print{body{padding:0;font-size:10pt}h1,h2,h3{break-after:avoid}tr,.field,.notice{break-inside:avoid}@page{margin:16mm}}
 </style></head><body><h1>${metadata.sample ? 'DEMO · ' : ''}Provisional crop preview</h1>
 <div class="notice">${metadata.sample ? '<p><strong>DEMO: sample inputs, not a real farm plan.</strong></p>' : ''}
 <p><strong>Conditional planning estimates. Not a saved or adopted crop plan.</strong></p>
