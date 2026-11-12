@@ -2528,7 +2528,7 @@ function FacilitatorCropsPageInner() {
       targets={plan?.harvestTargets ?? []} beds={beds} plantings={plantings} pattern={pattern} climate={{}}
       saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
       onSaveTargets={saveHarvestTargets} onAccept={() => {}} />}
-    <ProvisionalCropPreview ownerKey={`${growerOwner}:${growerSample}`} scope={growerScope}
+    <ProvisionalCropPreview sample={growerSample} ownerKey={`${growerOwner}:${growerSample}`} scope={growerScope}
       source={selectedGrowerSource} actorIsCurrent={growerActorIsCurrent}
       countryCode={siteCountry.status === 'confirmed' ? siteCountry.context?.countryCode ?? null : null}
       agriculturalRegionReference={siteCountry.status === 'confirmed' ? siteCountry.context?.agriculturalRegionReference ?? null : null}

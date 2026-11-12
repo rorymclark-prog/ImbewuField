@@ -258,7 +258,8 @@ export function useGrowerWorkflow(input: Inputs) {
   async function onRefresh() {
     sourceEpoch.current++;
     const turn = ++epoch.current, actorIsCurrent = live.current.actorIsCurrent, checkedSelection = selectionRef.current;
-    setAcceptance({ status: 'idle' });
+    // A measurement refresh cannot resolve an already completed crop-book write.
+    setAcceptance(previous => previous.status === 'superseded' ? previous : { status: 'idle' });
     setChecking(true); sourceContext.current = null; sourceRef.current = null; setSource(null); setSourceIssue(null); setRevision(value => value + 1);
     try {
       const checked = await readSource(), fresh = checked?.source ?? null;

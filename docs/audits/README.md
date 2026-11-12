@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest provisional export — [Printable preview and review corrections — 12 November 2026](2026-11-12/provisional-preview-export.md). Original downloads inspected; successor CI/review, public adapters and adoption remain open.
+
 Latest country evidence continuation — [Review next steps and dated-evidence counts — 10 November 2026](2026-11-10/country-evidence-next-steps-codex.md). Affected source/React checks pass; changed-preview appearance remains unverified.
 
 Latest review warning continuation — [Mass-entry review warning contrast — 10 November 2026](2026-11-10/mass-review-warning-contrast-codex.md). A production dark-theme contrast failure is reproduced; changed-preview verification remains open.
