@@ -19,6 +19,9 @@ import type { PhasePlan } from '../lib/phasing.ts';
 const read=(path:string)=>fs.readFileSync(new URL('../'+path,import.meta.url),'utf8');
 const fixture=JSON.parse(read('tests/fixtures/report-figures-translation/source-cases.json')) as {canvas:DesignCanvasState;refs:MapRefLayers;facts:ReportSiteFacts;location:LocationData;phasePlan:PhasePlan;figures:Record<'en'|'zu',ReportFigure[]>};
 const previous=JSON.parse(read('tests/fixtures/report-climate-translation/source-pairs.json')) as {functions:Record<string,{pairs:Array<{english:string;zu:string}>}>};
+// This known-series drawing fixture predates coverage receipts. Supply an explicit
+// synthetic receipt for the complete-series layout case; the no-receipt case is tested separately.
+fixture.location.climate.monthlyTempCoverage = { source: 'nasa-power', status: 'complete' };
 const languages=['zu','st','ts','ve'] as const;
 const sources=new Map(REPORT_VISUAL_COPY.map(row=>[row.english,row]));
 const words=(svg:string)=>[...svg.matchAll(/<text[^>]*>([\s\S]*?)<\/text>/g)].map(row=>row[1].replace(/&amp;/g,'&').replace(/&apos;/g,"'").replace(/&quot;/g,'"').replace(/&lt;/g,'<').replace(/&gt;/g,'>')).join(' ').replace(/\s+/g,' ');
@@ -35,14 +38,25 @@ function audit(text:string){
 
 test('all diagram source clauses have drafts and every earlier paired isiZulu clause remains exact',()=>{
  const current=audit(read('lib/report-figures.ts'));
- for(const {pairs}of Object.values(previous.functions))for(const pair of pairs){assert.ok(current.some(p=>p.english===pair.english&&p.zu===pair.zu),pair.english);assert.equal(reportVisualText(pair.english,'zu',{},pair.zu),pair.zu);}
+ for(const {pairs}of Object.values(previous.functions))for(const pair of pairs){
+  // These two claims were deliberately withdrawn; historical translations stay
+  // byte-preserved but cannot force a universal pH target or an unnamed source back into use.
+  const withdrawn = ['most vegetables: 6 to 7', 'climate data service'].includes(pair.english);
+  assert.equal(current.some(p=>p.english===pair.english&&p.zu===pair.zu),!withdrawn,pair.english);
+  assert.equal(reportVisualText(pair.english,'zu',{},pair.zu),pair.zu);
+ }
  assert.throws(()=>audit("t('Unregistered new soil caution','okusha')"),/missing native figure source/);
  for(const language of languages){const shadow=reportVisualText('a 1 m post throws a {length} m shadow',language,{length:'2.5'});assert.ok(shadow.includes('1 m'));assert.ok(shadow.includes('2.5 m'));assert.ok(!shadow.includes('{length}'));}
 });
 
 test('all eight English drawings stay exact while every target builds all five new native drawings without mutating inputs',()=>{
  const before=JSON.stringify(fixture);const inputs={canvas:fixture.canvas,mapLayers:fixture.refs,phasePlan:fixture.phasePlan};
- assert.deepEqual(siteReportFigures(fixture.facts,fixture.location,'en',inputs),fixture.figures.en);
+ const englishFigures = siteReportFigures(fixture.facts,fixture.location,'en',inputs);
+ assert.deepEqual(englishFigures.filter(f=>f.id!=='soil'),fixture.figures.en.filter(f=>f.id!=='soil'));
+ const soil=englishFigures.find(f=>f.id==='soil')!,oldSoil=fixture.figures.en.find(f=>f.id==='soil')!;
+ assert.deepEqual({...soil,svg:undefined},{...oldSoil,svg:undefined});
+ assert.equal(words(soil.svg),words(oldSoil.svg).replace('most vegetables: 6 to 7 ','') , 'only the unsupported pH target label is withdrawn; all source readings remain');
+ assert.doesNotMatch(soil.svg,/most vegetables|pattern id="veg/);
  for(const language of languages){const native=siteReportFigures(fixture.facts,fixture.location,language,inputs);assert.deepEqual(native.map(f=>f.id),fixture.figures.en.map(f=>f.id));for(const id of ['climate','water-budget','sectors','soil','timeline']){const figure=native.find(f=>f.id===id)!,english=fixture.figures.en.find(f=>f.id===id)!;for(const key of ['title','note','source','alt']as const)assert.notEqual(figure[key],english[key],`${language}: ${id} ${key}`);assert.equal(figure.width,640);}}
  assert.equal(JSON.stringify(fixture),before,'presentation never mutates geometry, source readings, phase order or ranges');
 });
@@ -149,4 +163,15 @@ test('long native wind captions stay below the header and the cold-month value k
   const month=tags.filter(t=>t.text===recordsMonthShort(language,cold+1)).at(-1)!;
   assert.ok(Number(month.y)-Number(reading.y)>18,`${language}: cold temperature touches the month axis`);
  }
+});
+
+
+test('legacy temperature figures without a coverage receipt keep rainfall but withhold the temperature panel',()=>{
+ const {monthlyTempCoverage,...legacy}=fixture.location.climate;
+ assert.ok(monthlyTempCoverage);
+ const figure=climateFigure({...fixture.location,climate:legacy})!;
+ assert.ok(figure);
+ assert.doesNotMatch(words(figure.svg),/°C/);
+ assert.match(words(climateFigure(fixture.location)!.svg),/°C/);
+ assert.match(figure.alt,/791 mm/);
 });

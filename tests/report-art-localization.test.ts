@@ -108,6 +108,7 @@ test('native prompt headings follow existing section labels and change only sele
 
 test('the actual generator sends native selected headings with the same source facts and rejects translated topic identifiers',async()=>{
  const requests:any[]=[];
+ let englishSiteData:string[]=[];
  const originalPrompts=JSON.parse(read('tests/fixtures/report-art-translation/source-prompts.json')) as {prompts:Array<{sha256:string;headings:string[]}>};
  const canonicalByTitle=new Map(canonical.map(s=>[REPORT_PROMPT_HEADINGS[s]??s,s]));
  const module=(source:string)=>'data:text/javascript,'+encodeURIComponent(source);
@@ -128,7 +129,12 @@ test('the actual generator sends native selected headings with the same source f
    assert.equal(response.status,200);await response.text();assert.ok(requests.length>1);
    const lookup=await reportHeadingLookup(language);const sent=requests.flatMap(r=>[...String(r.messages[0].content).matchAll(/^## (.+)$/gm)].map(m=>m[1]));
    assert.deepEqual(sent,originalPrompts.prompts.flatMap(p=>p.headings).map(title=>language==='en'?title:reportUiText(canonicalByTitle.get(title)!,language,lookup!)));
-   if(language==='en')assert.deepEqual(requests.map(r=>createHash('sha256').update(r.messages[0].content).digest('hex')),originalPrompts.prompts.map(p=>p.sha256));
+   // Whole-prompt hashes pinned withdrawn farming claims. Instead require the
+   // actual source block to remain exact across languages, with explicit evidence semantics.
+   const siteData=requests.map(r=>String(r.messages[0].content).split('SITE DATA\n')[1].split('BIOME KEY SPECIES:')[0]);
+   assert.ok(siteData.every(block=>block.includes('Annual rainfall: 791 mm (nasa-power)')&&block.includes('Monthly rainfall (January–December):')));
+   assert.ok(siteData.every(block=>block.includes('Climate class: unrecorded')&&!block.includes('frost likely')));
+   if(language==='en')englishSiteData=siteData;else assert.deepEqual(siteData,englishSiteData,'translation must preserve all source facts and unknowns');
    assert.ok(requests.every(r=>String(r.messages[0].content).includes(String(DEMO_LOCATION.rainfall.annual))));
    if(language!=='en')assert.ok(requests.every(r=>String(r.messages[0].content).includes('Copy each ## section heading below exactly')));
    requests.length=0;
