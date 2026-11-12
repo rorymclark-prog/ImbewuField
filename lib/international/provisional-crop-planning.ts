@@ -310,10 +310,11 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
     const area = normaliseGrowerMeasuredAreaInput(request.measuredAreaM2);
     const sourceSelected = resolved.establishment.sourceBindings.some(s => s.id === WORLDVEG_KENYA_COWPEA_SOURCE.id
       && s.evidenceState === 'available-reference');
-    if (!sourceSelected || context.countryCode !== 'KE' || request.cropKey !== 'cowpea' || establishment !== 'direct'
+    if (!area) spacingSelection = { status: 'invalid-inputs', issue: 'The supplied measured area or its rectangle origin is invalid; check saved measurements.' };
+    else if (!sourceSelected || context.countryCode !== 'KE' || request.cropKey !== 'cowpea' || establishment !== 'direct'
       || selection.purpose !== 'leaves' || !selection.habit) spacingSelection = { status: 'missing-inputs', issue: 'Applicable leaf-production source and direct method must be selected.' };
     else if (!selection.interpretationConfirmed || !selection.wholeAreaConfirmed || !selection.rowCm.trim() || !selection.inRowCm.trim()
-      || !area || area.state !== 'provided') spacingSelection = { status: 'missing-inputs', issue: 'Declare spacing, station interpretation and use of the whole current measured bed area.' };
+      || area.state !== 'provided') spacingSelection = { status: 'missing-inputs', issue: 'Declare spacing, station interpretation and use of the whole current measured bed area.' };
     else {
       const origin = normaliseGrowerSpacingSelectionReceipt({ version: 1, conversion: 'spacing-cells-cm-v1',
         scopeKey: growerPlanningScopeKey(scope), profileId: request.profileId, cropKey: request.cropKey,

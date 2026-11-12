@@ -95,3 +95,16 @@ test('export carries original choices, source, formula and unknown stand without
     assert.ok(file.html.includes(finalStand === '' ? 'Unknown' : `station:</strong> ${finalStand}`));
   }
 });
+
+
+test('malformed present area origins remain invalid rather than becoming ordinary missing spacing inputs', () => {
+  const r = request();
+  for (const finalStand of ['0', '1']) for (const candidates of [r.candidates, []]) {
+    const result = resolved({ ...r, candidates, countBasis: { ...r.countBasis!, finalStand },
+      measuredAreaM2: { ...supplied(10.125, 'm2'), arithmeticBasis: { kind: 'saved-rectangle-metres-v1', widthM: 2, heightM: 3 } } });
+    assert.equal(result.spacingSelection?.status, 'invalid-inputs');
+    assert.equal(result.assessment.estimatedPlantCount.status, 'invalid-inputs');
+    assert.equal(result.assessment.estimatedPlantCount.value, null);
+    assert.equal(result.assessment.budgetedStations.status, 'invalid-inputs');
+  }
+});

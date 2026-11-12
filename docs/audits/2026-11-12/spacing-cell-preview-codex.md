@@ -52,3 +52,10 @@ independent code review, genuine account/device checks and applicable external
 review remain separate gates. Automatic AGY calls remain disabled under the
 account suspension; no substitute reviewer is represented as AGY or Claude.
 Broader region/crop coverage and independent agricultural validation are open.
+
+
+A subsequent root probe found that a malformed present rectangle origin stayed
+blocked but was labelled missing by the spacing resolver. The follow-up keeps
+that state invalid, even when source consent is absent or stand is zero. Its
+regression fails on79ea before the fix. This is a status correction; no numeric
+count, saved-area normalizer or successful printable layout changes.
