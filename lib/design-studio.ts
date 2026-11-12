@@ -648,7 +648,8 @@ function computeWaterCalc(
   let roofHarvestAnnualLitres: number | null = null;
   let roofHarvestAnnualKL: number | null = null;
   const rainfallMm = nonNegativeNumber(annualRainfallMm);
-  if (roofAreaM2 > 0 && rainfallMm != null && rainfallMm > 0) {
+  // A sourced zero is a calculated zero yield, not missing evidence.
+  if (roofAreaM2 > 0 && rainfallMm != null) {
     // mm × m² = litres before the shared, centrally reviewed collection loss.
     roofHarvestAnnualLitres = Math.round(roofHarvestLitres(
       roofAreaM2,
@@ -1040,10 +1041,12 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
             ? `Rainfall at this site: ${rainfallDesc}.`
             : 'Reload location data to get rainfall figures.',
           roofHarvestNote ?? '',
-          waterCalc.roofHarvestAnnualKL != null
+          waterCalc.roofHarvestAnnualLitres != null && waterCalc.roofHarvestAnnualLitres > 0
             ? `To store a 90-day household buffer (${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL), you need tanks sized to that volume minimum. A 5 000 L JoJo tank costs roughly R2 000–R3 500 — compare that to what you currently pay for water or trucking.`
             : '',
-          hasGutters
+          annualRainfall === 0
+            ? 'The recorded annual rainfall gives no roof-water supply. Review the rainfall source and other available water before choosing gutters or storage.'
+            : hasGutters
             ? 'Gutters in place — make sure each downpipe has a first-flush diverter (cheap to build) to keep the tank clean.'
             : 'No gutters yet — a simple IBR roof with 100 mm gutters and a downpipe to a JoJo is a weekend project that pays back for decades.',
         ].filter(Boolean).join(' '),
@@ -1082,7 +1085,9 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
         title: 'Highest-return first moves',
         body: [
           'The sequence that works on almost every SA smallholding: (1) fix the water system, (2) fence a small intensive Zone 1, (3) build soil with compost, then (4) expand planting. Skipping steps wastes effort.',
-          waterCalc.roofHarvestAnnualKL != null
+          annualRainfall === 0
+            ? 'The recorded annual rainfall gives no roof-water supply. Review the rainfall evidence and other available water before buying a tank.'
+            : waterCalc.roofHarvestAnnualKL != null
             ? `Your roof can catch ~${numberLabel(waterCalc.roofHarvestAnnualKL)} kL/year — if you only do one thing this season, connect gutters to a tank.`
             : 'Start with water: map your roof area in the site survey to see what harvest is possible before buying any tanks.',
           goalNote,
@@ -1123,7 +1128,9 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
       {
         title: 'Water infrastructure upgrades',
         body: [
-          waterCalc.roofHarvestAnnualKL != null && waterCalc.dryBufferLitres90Day > 0
+          annualRainfall === 0
+            ? 'A tank cannot supply water from the recorded zero rainfall. Establish the available water supply before sizing storage.'
+            : waterCalc.roofHarvestAnnualKL != null && waterCalc.dryBufferLitres90Day > 0
             ? `Tank sizing guide: roof harvest ~${numberLabel(waterCalc.roofHarvestAnnualKL)} kL/year, 90-day household buffer ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL. If harvest > buffer, one good rainy season fills your reserve. If not, supplement with a borehole or grey-water reuse.`
             : 'Complete the roof harvest estimate in the site survey to size your tanks correctly.',
           waterCalc.gardenIrrigationDrySeasonDailyLitres != null
