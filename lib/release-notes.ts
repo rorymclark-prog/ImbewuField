@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '12 November 2026', sha: '15aeada5782ba781a83d58387fea8194b4572ca4', changes: [
+    'Report storage figures no longer imply an uncalculated water deficit is known.',
+    'Report climate labels withhold missing evidence; zero harvest has no storage ratio.',
+  ] },
   { when: '12 November 2026', sha: '627d114167ff4f5c486ba50130af86b43b6f5ce0', changes: [
     'Soil readings keep their sources without an unsupported health score or diagnosis.',
     'Saving a site keeps unknown rainfall unknown and preserves your existing figures.',

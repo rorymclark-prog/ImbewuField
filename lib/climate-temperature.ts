@@ -142,6 +142,20 @@ export function sourcedMonthlyRainfall(rain: { monthly?: unknown; rainfallSource
     && completeMonthlyRainfallMm(rain.monthly) ? rain.monthly : null;
 }
 
+/** One evidence gate for report labels: annual rain alone cannot establish seasons,
+ * and placeholder temperatures cannot support a climate classification. */
+export function reportClimateLabels(location: Pick<LocationData, 'rainfall' | 'climate'>) {
+  const rainKnown = sourcedMonthlyRainfall(location.rainfall) !== null;
+  const temperaturesKnown = monthlyTemperatureStatus(location.climate) === 'complete';
+  return {
+    pattern: rainKnown ? location.rainfall.pattern : null,
+    wetSeason: rainKnown ? location.rainfall.wetSeason : null,
+    drySeason: rainKnown ? location.rainfall.drySeason : null,
+    koppen: rainKnown && temperaturesKnown ? location.climate.koppen : null,
+    meanTemp: temperaturesKnown && Number.isFinite(location.climate.meanTemp) ? location.climate.meanTemp : null,
+  };
+}
+
 export function modelledWindSpeed(climate: { windSpeed?: unknown; windSource?: unknown } | null | undefined): number | null {
   return climate?.windSource === 'nasa-power' && typeof climate.windSpeed === 'number'
     && Number.isFinite(climate.windSpeed) && climate.windSpeed >= 0 ? climate.windSpeed : null;

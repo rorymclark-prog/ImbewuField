@@ -1,5 +1,5 @@
 'use client';
-import { annualRainfallMm, monthlyTemperatureStatus, reportClimateEvidence } from '@/lib/climate-temperature';
+import { annualRainfallMm, monthlyTemperatureStatus, reportClimateEvidence, reportClimateLabels } from '@/lib/climate-temperature';
 
 import { coordinateSiteIdForPlace } from '@/lib/international/site-context';
 import { currentPlanningSupport } from '@/lib/international/planning-support';
@@ -316,6 +316,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // When viewing a saved report, its snapshot overrides the live props so charts/header match.
   const [activeSaved, setActiveSaved] = useState<SavedReport | null>(savedReport ?? null);
   const d = activeSaved?.location ?? locationData;
+  const climateLabels = reportClimateLabels(d);
   const [preparedPlace,setPreparedPlace]=useState<SavedPlace|null>(null);
   const [evidenceRevision,setEvidenceRevision]=useState(0);
   const reportPlace=preparedPlace&&designSiteIdFromLocation(preparedPlace)===designSiteIdFromLocation(d)?preparedPlace:savedPlaces?.find(p=>designSiteIdFromLocation(p)===designSiteIdFromLocation(d));
@@ -1408,9 +1409,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               ) : (
                 <>
                   <div className="mt-3 text-xs font-sans" style={{ color: 'var(--report-muted)' }}>
-                    {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · {tr('Köppen climate class', 'Uhlobo lwesimo sezulu i-Köppen')} {d.climate.koppen} ({koppenDescLabel(d.climate.koppen, d.climate.koppenDesc)}) ·
-                    {' '}{rainfallPatternLabel(d.rainfall.pattern)} {tr('rainfall', 'imvula')} · {seasonRangeLabel(d.rainfall.wetSeason)} {tr('wet', 'manzi')} / {seasonRangeLabel(d.rainfall.drySeason)} {tr('dry', 'omile')} ·
-                    {' '}{monthlyTemperatureStatus(d.climate) === 'complete' ? `${d.climate.meanTemp}°C` : 'Not known'}
+                    {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · {tr('Köppen climate class', 'Uhlobo lwesimo sezulu i-Köppen')} {climateLabels.koppen === null ? 'Not known' : `${climateLabels.koppen} (${koppenDescLabel(climateLabels.koppen, d.climate.koppenDesc)})`} ·
+                    {' '}{climateLabels.pattern === null ? 'Not known' : rainfallPatternLabel(climateLabels.pattern)} {tr('rainfall', 'imvula')} · {climateLabels.wetSeason === null ? 'Not known' : seasonRangeLabel(climateLabels.wetSeason)} {tr('wet', 'manzi')} / {climateLabels.drySeason === null ? 'Not known' : seasonRangeLabel(climateLabels.drySeason)} {tr('dry', 'omile')} ·
+                    {' '}Mean temperature: {climateLabels.meanTemp === null ? 'Not known' : `${climateLabels.meanTemp}°C`}
                   </div>
 
                   {d.bru && (

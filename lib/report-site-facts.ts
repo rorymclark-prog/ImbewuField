@@ -674,10 +674,14 @@ export function roofCalcLine(facts: ReportSiteFacts | null | undefined, rainfall
       + `${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT}), and ask the farmer to trace or measure their roof. Do NOT assume a roof size.`;
   }
   if (rainfallMm === null || !Number.isFinite(rainfallMm) || rainfallMm < 0) return `- **Roof catchment yield:** roof area ${m2(roof.areaM2)} recorded; annual rainfall is not known, so annual harvest cannot be calculated.`;
-  const yieldL = Math.round(roofHarvestLitres(roof.areaM2, rainfallMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT));
+  const harvestL = roofHarvestLitres(roof.areaM2, rainfallMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT);
+  const yieldL = Math.round(harvestL);
   const stored = facts?.water?.statedStorageLitres ?? 0;
   const storedNote = stored > 0
-    ? ` The plan's stated tank storage is ${litres(stored)} — that is ${Math.round((stored / Math.max(yieldL, 1)) * 100)}% of one year's harvest off this roof, so state plainly what the binding constraint is (storage, or catchment).`
+    ? ` The plan's stated tank storage is ${litres(stored)}. `
+      + (harvestL > 0 ? `That is ${Math.round((stored / harvestL) * 100)}% of the unrounded annual roof-harvest scenario. `
+        : 'Its percentage of annual roof harvest is undefined because that harvest is zero. ')
+      + 'Storage adequacy is not established: capacity is not available supply, and demand, timing and losses still need evidence.'
     : ' No tank storage capacity is stated; this does not establish what happens to runoff on the ground.';
   return `- **Roof catchment yield:** the traced roof on this site is **${m2(roof.areaM2)}** (${roof.source}). `
     + `1m² of roof × 1mm of rain = 1L, so ${group(roof.areaM2)} × ${rainfallMm}mm × reviewed runoff coefficient `
