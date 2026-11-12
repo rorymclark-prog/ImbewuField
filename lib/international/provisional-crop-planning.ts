@@ -1,4 +1,4 @@
-import { sourceEvidenceState } from './countries/readiness';
+import { sourceEvidenceState, sourcePublicationIsKnownBy } from './countries/readiness';
 import type { CountrySource } from './countries/types';
 import {
   assessProvisionalGrowerPlanning, growerPlanningScopeKey, isGrowerRecordedAt, isGrowerUtcDate,
@@ -64,7 +64,8 @@ export interface ResolvedProvisionalField {
   readonly sourceReferences: readonly string[];
   readonly sourceBindings: readonly {
     id: string; title: string; url: string; accessedOn: string | null;
-    publishedOn: string | null; reviewDueOn: string | null; reuseTerms: string;
+    publishedOn: string | null; publishedMonth: string | null; reviewDueOn: string | null; reuseTerms: string;
+    attribution: string; limitations: string;
     evidenceState: ReturnType<typeof sourceEvidenceState>;
   }[];
   readonly defaultReportedRange: readonly [number, number] | null;
@@ -208,7 +209,8 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
         const historicalEstimate = candidate.tier === 'climate-crop-derived' && temporal.kind === 'historical-transfer'
           && candidate.assumptions.length > 0 && source.verification === 'content-read'
           && isGrowerUtcDate(source.accessedOn) && source.accessedOn <= request.asOf
-          && (source.publishedOn === null || (isGrowerUtcDate(source.publishedOn) && source.publishedOn <= request.asOf))
+          && ((source.publishedOn === null && (source.publishedMonth === undefined || source.publishedMonth === null))
+            || sourcePublicationIsKnownBy(source, request.asOf))
           && (source.reviewDueOn === null || isGrowerUtcDate(source.reviewDueOn));
         if (state !== 'available-reference' && !historicalEstimate) { reject('source-or-reuse-unverified'); continue; }
         if (field === 'allowedEntryMonths' && candidate.positiveWindowEvidence !== true) { reject('positive-window-evidence-missing'); continue; }
@@ -240,7 +242,8 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
       const source = candidate.source;
       return candidate.tier !== 'grower-estimate' && source && source.licence.status === 'known' ? [{
         id: source.id, title: source.title, url: source.url, accessedOn: source.accessedOn,
-        publishedOn: source.publishedOn, reviewDueOn: source.reviewDueOn, reuseTerms: source.licence.value,
+        publishedOn: source.publishedOn, publishedMonth: source.publishedMonth ?? null, reviewDueOn: source.reviewDueOn, reuseTerms: source.licence.value,
+        attribution: source.attribution ?? 'Unknown', limitations: source.limitations ?? 'Unknown',
         evidenceState: sourceEvidenceState(source, request.asOf),
       }] : [];
     });

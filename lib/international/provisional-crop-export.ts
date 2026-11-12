@@ -1,3 +1,4 @@
+import { sourcePublicationText } from './countries/readiness';
 import type { GrowerInputProvenance } from './grower-planning';
 import { formatDerivedMassKilograms } from '../mass-units';
 import { CROPS } from '../crop-catalog';
@@ -70,8 +71,9 @@ export function buildProvisionalCropPreviewHtml(request: ProvisionalDraftRequest
       `${provisionalInputText(option.input)}${option.reportedRange ? `; reported range ${option.reportedRange.join('–')}` : ''}; applies to ${provisionalScopeText(option.scope)}`)).join('')}
     ${field.defaultPlanningValueBasis ? paragraph('Default planning value', field.defaultPlanningValueBasis) : ''}
     ${field.sourceBindings.map(source => `<div class="source">${paragraph('Source', `${source.title} (${source.id})`)}
-      ${paragraph('URL', source.url)}${paragraph('Published', source.publishedOn)}${paragraph('Accessed', source.accessedOn)}
-      ${paragraph('Review due', source.reviewDueOn)}${paragraph('Reuse terms', source.reuseTerms)}${paragraph('Evidence state', source.evidenceState)}</div>`).join('')}
+      ${paragraph('URL', source.url)}${paragraph('Published', sourcePublicationText(source))}${paragraph('Accessed', source.accessedOn)}
+      ${paragraph('Review due', source.reviewDueOn)}${paragraph('Reuse terms', source.reuseTerms)}
+      ${paragraph('Attribution', source.attribution)}${paragraph('Source limitations', source.limitations)}${paragraph('Evidence state', source.evidenceState)}</div>`).join('')}
     ${field.assumptions.map(item => paragraph('Assumption', item)).join('')}
   </section>`).join('');
   // Do not embed raw fingerprints: they contain account/site scope and serialized

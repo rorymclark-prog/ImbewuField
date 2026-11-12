@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { CROPS } from '../lib/crop-catalog.ts';
+import { sourceEvidenceState, sourcePublicationIsKnownBy, sourcePublicationText, evaluateCountryReadiness } from '../lib/international/countries/readiness.ts';
+import { WORLDVEG_KENYA_CABBAGE_SOURCE, worldvegKenyaCabbageCandidates } from '../lib/international/providers/worldveg-kenya-cabbage.ts';
+import { buildProvisionalCropPreviewHtml } from '../lib/international/provisional-crop-export.ts';
 import type { CountrySource } from '../lib/international/countries/types.ts';
 import { resolveProvisionalCropPlan, type ProvisionalDraftRequest, type ProvisionalFieldCandidate } from '../lib/international/provisional-crop-planning.ts';
 
@@ -308,4 +311,62 @@ test('generating a frozen draft does not mutate or freeze the caller’s origina
   assert.equal(Object.isFrozen(input.candidates[0].assumptions), false);
   assert.equal(Object.isFrozen(result), true);
   assert.equal(Object.isFrozen(result.fields), true);
+});
+
+
+test('month-only source dates stay truthful without borrowing an announcement day', () => {
+  const monthSource = { ...source, publishedOn: null, publishedMonth: '2024-06' };
+  assert.equal(sourcePublicationText(monthSource), '2024-06 (day unknown)');
+  assert.equal(sourceEvidenceState(monthSource, '2026-11-11'), 'available-reference');
+  assert.equal(sourcePublicationIsKnownBy(monthSource, '2024-06-30'), false, 'Do not invent a publication day within its known month');
+  assert.equal(sourcePublicationIsKnownBy(monthSource, '2024-07-01'), true);
+  for (const publishedMonth of ['2024-00', '2024-13', '2024-6', '0000-06', '2027-01', '2024-06-26']) {
+    assert.equal(sourceEvidenceState({ ...monthSource, publishedMonth }, '2026-11-11'), 'undated', publishedMonth);
+  }
+  assert.equal(sourcePublicationText({ publishedOn: '2024-06-26', publishedMonth: '2024-06' }), 'Unknown');
+  assert.equal(sourceEvidenceState({ ...monthSource, publishedOn: '2024-06-26' }, '2026-11-11'), 'undated');
+  assert.equal(sourceEvidenceState({ ...monthSource, reviewDueOn: '2026-01-01' }, '2026-11-11'), 'stale');
+  assert.equal(sourceEvidenceState({ ...monthSource, accessedOn: '2027-01-01' }, '2026-11-11'), 'undated');
+  assert.equal(sourceEvidenceState({ ...monthSource, verification: 'snippet-only' }, '2026-11-11'), 'missing');
+});
+
+test('WorldVeg method requires explicit choice and region, never converts seedbed preparation or spacing into numbers', () => {
+  const base = request({ cropKey: 'cabbage', recordedAt: '2026-11-12T21:00:00.000Z', asOf: '2026-11-12', candidates: [] });
+  const context = { ...base.context, agriculturalRegionReference: 'Central Kenya', establishment: null };
+  assert.deepEqual(worldvegKenyaCabbageCandidates(context, 'cabbage', base.recordedAt, false), []);
+  for (const change of [{ countryCode: 'ZA' }, { countryCode: 'OTHER' }, { countryCode: null },
+    { agriculturalRegionReference: null }, { agriculturalRegionReference: 'Kenya' }, { agriculturalRegionReference: 'Nairobi' }]) {
+    assert.deepEqual(worldvegKenyaCabbageCandidates({ ...context, ...change }, 'cabbage', base.recordedAt, true), []);
+  }
+  assert.deepEqual(worldvegKenyaCabbageCandidates(context, CROPS[0].key === 'cabbage' ? CROPS[1].key : CROPS[0].key, base.recordedAt, true), []);
+  const candidates = worldvegKenyaCabbageCandidates(context, 'cabbage', base.recordedAt, true);
+  assert.equal(candidates.length, 1);
+  const input = { ...base, context, candidates };
+  const result = resolved(input);
+  assert.equal(result.activeEstablishment, 'transplant');
+  for (const [field, value] of Object.entries(result.fields)) {
+    if (field !== 'establishment') assert.equal(value.activeInput.state, 'missing', field);
+  }
+  assert.equal(result.assessment.estimatedPlantCount.value, null);
+  assert.equal(result.assessment.estimatedYieldKg.value, null);
+  assert.equal(result.assessment.schedule.nurseryStartDate.value, null);
+  assert.equal(result.assessment.schedule.firstHarvestDate.value, null);
+  assert.equal(result.assessment.entryWindow, 'unknown');
+  assert.match(result.fields.establishment.assumptions.join(' '), /growth stage, not a number of nursery days/);
+  assert.equal(result.fields.establishment.sourceBindings[0].publishedOn, null);
+  assert.equal(result.fields.establishment.sourceBindings[0].publishedMonth, '2024-06');
+  assert.equal(result.fields.establishment.sourceBindings[0].evidenceState, 'available-reference');
+  const html = buildProvisionalCropPreviewHtml(input, { bedLabel: 'Synthetic bed', sample: true })!.html;
+  assert.match(html, /2024-06 \(day unknown\)/);
+  assert.doesNotMatch(html, /2024-06-01|2024-06-26/);
+  assert.match(html, /Rapando N/); assert.match(html, /CC BY-SA 3.0/); assert.match(html, /creativecommons.org/);
+  assert.match(html, /not an exclusive boundary or site certification/);
+  assert.match(html, /no plant density is derived/);
+  const override = resolved({ ...input, overrides: { establishment: { state: 'provided', value: 'direct', unit: 'method',
+    provenance: { kind: 'grower-estimate', recordedAt: base.recordedAt } } } });
+  assert.equal(override.activeEstablishment, 'direct');
+  assert.equal(override.fields.establishment.status, 'overridden');
+  assert.equal(override.fields.establishment.baselineDefault?.state, 'provided');
+  assert.equal(override.fields.establishment.sourceBindings[0].id, WORLDVEG_KENYA_CABBAGE_SOURCE.id);
+  assert.equal(evaluateCountryReadiness({ countryCode: 'KE' }, base.asOf).localReviewComplete, false);
 });

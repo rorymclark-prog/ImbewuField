@@ -41,7 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '12 November 2026', sha: '0024ef0af', changes: [
+  { when: '12 November 2026', sha: 'dacce0d87', changes: [
+    'Choose a sourced Kenya transplant method; unsupported numbers stay unknown.',
+    'Month-only source dates keep their unknown publication day visible.',
     'Download a printable crop preview with your inputs, sources and unknowns.',
     'Preview controls keep working overnight. Unconfirmed save warnings stay visible.',
     'Printable previews show when saved measurements were read.',
