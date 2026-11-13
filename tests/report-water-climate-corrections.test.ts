@@ -105,6 +105,7 @@ test('actual report prompt and header preserve partial rainfall without inventin
     const { POST } = await import('../app/api/generate-report/route.ts');
     for (const annual of [null, 0, 0.5, 499, 500, 791]) {
       const d = structuredClone(DEMO_LOCATION); d.rainfall.monthly = [];
+      d.elevation.slopeDeg = annual === null ? undefined as unknown as number : 10;
       d.rainfall.annual = annual ?? 791;
       if (annual === null) delete d.rainfall.rainfallSource;
       const requestStart = requests.length;
@@ -143,6 +144,8 @@ test('actual report prompt and header preserve partial rainfall without inventin
       assert.ok(!body.includes(`wet ${d.rainfall.wetSeason}`), 'header must use the same monthly gate as the prompt');
       assert.ok(body.includes(`Annual rainfall: ${annual === null ? 'unknown' : annual + ' mm/year'}.`));
       assert.match(body, /water adequacy have not been assessed/);
+      assert.ok(body.includes(`Recorded slope estimate: ${annual === null ? 'unknown' : '10°'}.`), 'actual API must pass its slope to the risk evidence builder');
+      assert.doesNotMatch(body, /at or above the 10° threshold|between the 5° and 10° thresholds/);
       assert.doesNotMatch(body, /Dry-season crop failure from insufficient stored water|below the 500 mm|Build storage before expanding/);
     }
   } finally { globalThis.fetch = oldFetch; hooks.deregister(); delete (globalThis as any)[key]; }
@@ -175,10 +178,71 @@ for (const annual of [null, 0, 0.5, 499, 500, 900]) {
       assert.doesNotMatch(markdown, /\| High \||Build storage before|below the 500/);
       assert.match(markdown, /not a finding of low risk/);
       if (lang !== 'en') assert.match(markdown, /English; translation pending/);
-      // A retained unrelated risk must not hide the evidence note either.
-      const withSlope = riskRegisterMarkdown(buildRiskRegister({ ...input, slopeDeg: 12 }, lang), lang, annual);
-      assert.ok(withSlope.includes(challenge));
-      assert.ok(withSlope.includes('| R1 |'));
+      // A retained unrelated recorded gap must not hide the evidence note either.
+      const withGap = riskRegisterMarkdown(buildRiskRegister({ ...input, unpricedBoqLines: 1 }, lang), lang, annual);
+      assert.ok(withGap.includes(challenge));
+      assert.ok(withGap.includes('| R1 |'));
     }
   });
 }
+
+// REPORT-SLOPE-EVIDENCE-01: the same raw estimate previously meant High risk
+// in the register and Low erosion in the document; missing values meant Low.
+for (const slope of [undefined, null, 0, 0.000001, 4.99, 5, 9.99, 10, 12, 90, 91, -999, NaN, Infinity, -Infinity, '10']) {
+  test(`slope evidence ${String(slope)} stays unrated in both report formats`, () => {
+    const input = { ...riskFixture.risks.find((c: any) => c.name === 'none').input, slopeDeg: slope, rainfallMm: null };
+    assert.deepEqual(buildRiskRegister(input), [], 'slope alone cannot create a rated erosion assessment');
+    const d = structuredClone(DEMO_LOCATION);
+    d.elevation.slopeDeg = slope as number;
+    const doc = buildSkeletonReportDoc({ id: 'synthetic-slope', siteId: 'synthetic-slope', location: d,
+      survey: null, layers: [], plan: null, phasePlan: { phases: [] } as any, createdAt: '2026-11-13T00:00:00Z' });
+    const water = doc.sections.water!;
+    assert.match(water.runoffRisk, /Runoff risk has not been assessed/);
+    assert.match(water.erosionRisk, /Erosion risk has not been assessed/);
+    assert.doesNotMatch(water.runoffRisk + water.erosionRisk, /Low|Moderate|High|slow it with swales|Low if ground stays covered/);
+    assert.equal(doc.sections['landscape-soil']!.erosion, water.erosionRisk);
+    const valid = typeof slope === 'number' && Number.isFinite(slope) && slope >= 0 && slope <= 90;
+    assert.equal(doc.sections['landscape-soil']!.slope?.value, valid ? slope : undefined);
+    const recorded = `Recorded slope estimate: ${valid ? slope + '°' : 'unknown'}.`;
+    assert.ok(water.runoffRisk.startsWith(recorded));
+    for (const lang of ['en', 'zu', 'st', 'ts', 've']) {
+      const markdown = riskRegisterMarkdown([], lang, null, slope);
+      assert.ok(markdown.includes(water.runoffRisk));
+      assert.ok(markdown.includes(water.erosionRisk));
+      assert.match(markdown, /not a finding of low risk/);
+      if (lang !== 'en') assert.match(markdown, /Slope evidence \(English; translation pending\)/);
+    }
+  });
+}
+
+test('slope evidence labels its English fallback in structured reports without claiming a reviewed translation', () => {
+  for (const lang of ['zu', 'st', 'ts', 've']) {
+    const doc = buildSkeletonReportDoc({ id: 'synthetic-slope', siteId: 'synthetic-slope', location: structuredClone(DEMO_LOCATION),
+      survey: null, layers: [], plan: null, phasePlan: { phases: [] } as any, lang, createdAt: '2026-11-13T00:00:00Z' });
+    assert.match(doc.sections.water!.runoffRisk, /^English; translation pending: Recorded slope estimate:/);
+    assert.match(doc.sections.water!.erosionRisk, /^English; translation pending: Erosion risk has not been assessed/);
+    assert.equal(doc.sections['landscape-soil']!.erosion, doc.sections.water!.erosionRisk);
+  }
+});
+
+test('slope evidence survives populated risk registers without changing unrelated rows or input records', () => {
+  const fixture = riskFixture.risks.find((c: any) => c.name === 'none').input;
+  for (const slope of [undefined, 0, 10]) for (const lang of ['en', 'zu', 'st', 'ts', 've']) {
+    const input = { ...structuredClone(fixture), rainfallMm: null, slopeDeg: slope, unpricedBoqLines: 1 };
+    const before = JSON.stringify(input);
+    const rows = buildRiskRegister(input, lang);
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].id, 'R1');
+    const sameGap = buildRiskRegister({ ...input, slopeDeg: 0 }, lang);
+    assert.deepEqual(rows, sameGap);
+    const markdown = riskRegisterMarkdown(rows, lang, null, slope);
+    assert.ok(markdown.includes(rows[0].risk) && markdown.includes(rows[0].trigger) && markdown.includes(rows[0].mitigation));
+    assert.match(markdown, /Water evidence/);
+    assert.match(markdown, /Slope evidence/);
+    assert.match(markdown, /Runoff risk has not been assessed/);
+    assert.match(markdown, /Erosion risk has not been assessed/);
+    assert.match(markdown, /Retained ratings are qualitative rule outputs, not measured probabilities/);
+    assert.doesNotMatch(markdown, /the figure and the threshold that produced the rating/);
+    assert.equal(JSON.stringify(input), before);
+  }
+});

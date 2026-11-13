@@ -20,19 +20,22 @@ const numbers=(s:string)=>(s.match(/(?<![\p{L}\p{N}])-?\d+(?:[.,]\d+)?/gu)??[]).
 const tokens=(s:string)=>(s.match(/\{\w+\}/g)??[]).sort();
 
 // Preserve the original translation packet. CSR-15A-F01 retires only its
-// unsupported annual-rainfall judgement; all other wording/ratings remain pinned.
-const retiredRisk = 'Dry-season crop failure from insufficient stored water';
-const retainedRows = (c:any) => c.rows.filter((r:any)=>r.risk!==retiredRisk).map((r:any,i:number)=>({...r,id:`R${i+1}`}));
+// unsupported annual-rainfall judgement. REPORT-SLOPE-EVIDENCE-01 also retires
+// the two unsupported slope ratings and threshold-based introduction; every
+// other original row, number and translated field remains pinned.
+const retiredRisks = ['Dry-season crop failure from insufficient stored water', 'Soil loss from runoff on the slope', 'Runoff carries water and topsoil off the growing area'];
+const retiredIntro = "Each row was raised by this site's own data. The trigger column prints the figure and the threshold that produced the rating, so a reader who disagrees can argue with the number rather than the adjective.";
+const retainedRows = (c:any) => c.rows.filter((r:any)=>!retiredRisks.includes(r.risk)).map((r:any,i:number)=>({...r,id:`R${i+1}`}));
 function retainedMarkdown(c:any) {
  let id=0;
- return c.markdown.split('\n').filter((line:string)=>!line.includes(`| ${retiredRisk} |`))
+ return c.markdown.replace(retiredIntro+'\n\n','').split('\n').filter((line:string)=>!retiredRisks.some(risk=>line.includes(`| ${risk} |`)))
   .map((line:string)=>line.replace(/^\| R\d+ \|/,()=>`| R${++id} |`)).join('\n');
 }
-const withoutWaterEvidence = (s:string) => s.replace(/\*\*Water evidence[^\n]+\n\n/, '');
+const withoutEvidence = (s:string) => s.replace(/\*\*Water evidence[^\n]+\n\n/, '').replace(/\*\*Slope evidence[^\n]+\n\n/, '').replace(/(?:English; translation pending: )?These rows identify recorded inputs[^\n]+\n\n/, '');
 
-test('retained source rows and English markdown stay exact after retiring the unsupported rainfall judgement',()=>{
+test('retained source rows and English markdown stay exact after retiring unsupported rainfall and slope judgements',()=>{
  assert.equal(fx.sourceSha,'013cec5286cfb6c7251e48a5907bb8548c80a25d');for(const c of fx.monitoring){assert.deepEqual(buildMonitoringPlan(c.facts),c.rows,c.name);assert.deepEqual(buildMonitoringPlan(c.facts,'af'),c.rows);assert.equal(monitoringMarkdown(buildMonitoringPlan(c.facts)),c.markdown);assert.equal(monitoringMarkdown(buildMonitoringPlan(c.facts,'af'),'af'),c.markdown);}
- for(const c of fx.risks){assert.deepEqual(buildRiskRegister(c.input),retainedRows(c),c.name);assert.deepEqual(buildRiskRegister(c.input,'af'),retainedRows(c));assert.equal(withoutWaterEvidence(riskRegisterMarkdown(buildRiskRegister(c.input))),retainedMarkdown(c));assert.equal(withoutWaterEvidence(riskRegisterMarkdown(buildRiskRegister(c.input,'af'),'af')),retainedMarkdown(c));}
+ for(const c of fx.risks){assert.deepEqual(buildRiskRegister(c.input),retainedRows(c),c.name);assert.deepEqual(buildRiskRegister(c.input,'af'),retainedRows(c));assert.equal(withoutEvidence(riskRegisterMarkdown(buildRiskRegister(c.input))),retainedMarkdown(c));assert.equal(withoutEvidence(riskRegisterMarkdown(buildRiskRegister(c.input,'af'),'af')),retainedMarkdown(c));}
  const facts=fx.monitoring.find((r:any)=>r.name==='saved-design').facts;const notes=zuluReportClosingNotes(facts,fx.location);assert.equal(notes.crop,fx.legacyZulu[0]);
  // Full shared costs supersede the earlier abbreviated native table; every measured line stays present.
  const nativeBill=buildBillOfQuantities(facts,'zu');const nativeCosts=billOfQuantitiesMarkdown(nativeBill,'zu');for(const line of nativeBill.lines)assert.ok(nativeCosts.includes(line.quantity));
@@ -85,7 +88,7 @@ test('markdown leaves externally supplied row wording intact while localising on
 
 test('the real API emits complete native monitoring and risk tables in all four languages with unchanged source decisions',async()=>{
  const url=(s:string)=>'data:text/javascript,'+encodeURIComponent(s);const hooks=registerHooks({resolve(s,c,next){if(s==='@anthropic-ai/sdk')return{url:url('export default class Anthropic{}'),shortCircuit:true};if(s==='next/server')return{url:url('export class NextRequest{}'),shortCircuit:true};if(s==='@/lib/report-country-policy')return {url:SUPPORTED_REPORT_COUNTRY_FIXTURE_URL,shortCircuit:true};if(s==='@/lib/api-auth')return{url:url('export async function guardPaidApiRequest(){return {uid:"monitoring-test"}}'),shortCircuit:true};if(s==='@/lib/metered-ai')return{url:url("export const AI_MODELS={main:'mock'};export async function meteredAi(){return {ai:{model:m=>m,messages:{create:async()=>({usage:{},stop_reason:'end_turn',content:[{type:'text',text:'## Mocked body\\nMocked body content.'}]})}}}}"),shortCircuit:true};return next(s,c);}});const old=globalThis.fetch;globalThis.fetch=async()=>new Response('{}');
- try{const{POST}=await import('../app/api/generate-report/route.ts');for(const lang of languages)for(const c of[fx.monitoring[0],fx.monitoring[1],fx.monitoring.find((r:any)=>r.name==='unknown-water')]){const boq=buildBillOfQuantities(c.facts);const d=fx.location;const input:RiskInput={facts:c.facts,rainfallMm:d.rainfall.annual,slopeDeg:d.elevation.slopeDeg,minTempC:d.climate.minTemp,soilSource:d.soil.soilSource,unpricedBoqLines:boq.unpricedCount};const response=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({language:lang,locationData:d,siteFacts:c.facts,sections:['Executive Summary']})})as any);assert.equal(response.status,200);const text=await response.text();for(const markdown of[monitoringMarkdown(buildMonitoringPlan(c.facts,lang),lang),riskRegisterMarkdown(buildRiskRegister(input,lang),lang,input.rainfallMm)]){const[label,...body]=markdown.split('\n');assert.ok(text.includes(label.slice(3)),`${lang}: native heading`);assert.ok(text.includes(body.join('\n').trim()),`${lang}: missing full native table`);}if(lang==='zu'){const notes=zuluReportClosingNotes(c.facts,d);assert.ok(text.includes(notes.monitoringNote));assert.ok(text.includes(notes.riskNote));}assert.ok(!text.includes('## Monitoring & Evaluation Plan'));assert.ok(!text.includes('## Risk Register'));}}
+ try{const{POST}=await import('../app/api/generate-report/route.ts');for(const lang of languages)for(const c of[fx.monitoring[0],fx.monitoring[1],fx.monitoring.find((r:any)=>r.name==='unknown-water')]){const boq=buildBillOfQuantities(c.facts);const d=fx.location;const input:RiskInput={facts:c.facts,rainfallMm:d.rainfall.annual,slopeDeg:d.elevation.slopeDeg,minTempC:d.climate.minTemp,soilSource:d.soil.soilSource,unpricedBoqLines:boq.unpricedCount};const response=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({language:lang,locationData:d,siteFacts:c.facts,sections:['Executive Summary']})})as any);assert.equal(response.status,200);const text=await response.text();for(const markdown of[monitoringMarkdown(buildMonitoringPlan(c.facts,lang),lang),riskRegisterMarkdown(buildRiskRegister(input,lang),lang,input.rainfallMm,input.slopeDeg)]){const[label,...body]=markdown.split('\n');assert.ok(text.includes(label.slice(3)),`${lang}: native heading`);assert.ok(text.includes(body.join('\n').trim()),`${lang}: missing full native table`);}if(lang==='zu'){const notes=zuluReportClosingNotes(c.facts,d);assert.ok(text.includes(notes.monitoringNote));assert.ok(text.includes(notes.riskNote));}assert.ok(!text.includes('## Monitoring & Evaluation Plan'));assert.ok(!text.includes('## Risk Register'));}}
  finally{hooks.deregister();globalThis.fetch=old;}
 });
 

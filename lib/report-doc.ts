@@ -1,4 +1,4 @@
-import { reportWaterEvidence } from './report-risk';
+import { reportWaterEvidence, reportSlopeEvidence } from './report-risk';
 import { annualRainfallMm, recordMinimumC, reportClimateEvidence } from './climate-temperature';
 // ── ImbewuField structured report ("ReportDoc") ──────────────────────────────
 // The 11-section, map-linked report is the product differentiator. This is the
@@ -343,13 +343,13 @@ export function buildSkeletonReportDoc(args: {
   };
 
   // ── Water ──
+  const { recordedSlope, runoffRisk, erosionRisk } = reportSlopeEvidence(location.elevation?.slopeDeg, lang);
   const water: WaterSection = {
     rainfall: rainMm !== null ? { value: rainMm, unit: 'mm/yr', provenance: 'estimated', basis: location.rainfall.rainfallSource ?? 'Source unrecorded' } : undefined,
     pattern: location.rainfall?.pattern ?? 'seasonal',
     sources: clean(survey?.waterSource),
     storageExisting: clean(survey?.waterStorage, ['none']),
-    runoffRisk: (finiteNonNegative(location.elevation?.slopeDeg) ?? 0) > 5 ? 'Moderate — slope drives runoff; slow it with swales.' : 'Low–moderate on gentle slopes.',
-    erosionRisk: (finiteNonNegative(location.elevation?.slopeDeg) ?? 0) > 10 ? 'Watch bare slopes — keep them covered.' : 'Low if ground stays covered.',
+    runoffRisk, erosionRisk,
     floodRisk: 'Observe the low corner after heavy rain (no detailed survey).',
     harvestingOpportunities: [
       harvestKL ? `Roof catchment ~${numberLabel(harvestKL)} kL/yr to tanks.` : 'Connect roof gutters to a tank.',
@@ -367,7 +367,7 @@ export function buildSkeletonReportDoc(args: {
   // ── Landscape & soil ──
   const el = location.elevation;
   const so = location.soil;
-  const slopeDeg = finiteNonNegative(el?.slopeDeg);
+  const slopeDeg = recordedSlope;
   const soilKnown = so?.soilSource === 'lab' || so?.soilSource === 'soilgrids';
   const ph = soilKnown ? finitePositive(so?.ph) : undefined;
   const organicCarbon = soilKnown ? finiteNonNegative(so?.organicCarbon) : undefined;

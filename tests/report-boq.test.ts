@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 import { buildBillOfQuantities, billOfQuantitiesMarkdown } from '../lib/report-boq';
-import { buildRiskRegister } from '../lib/report-risk';
+import { buildRiskRegister, riskRegisterMarkdown } from '../lib/report-risk';
 import { buildMonitoringPlan } from '../lib/report-monitoring';
 import { documentReference } from '../lib/report-cover';
 import { groupDigits, type ReportSiteFacts } from '../lib/report-site-facts';
@@ -183,9 +183,14 @@ test('risk register only raises what this site\'s data triggers', () => {
   });
   // Annual totals do not establish crop-failure likelihood (CSR-15A-F01).
   assert.equal(dry.some((r) => /Dry-season/.test(r.risk)), false);
-  assert.ok(dry.some((r) => /Soil loss/.test(r.risk)));
-  // Retained slope ratings still expose their trigger.
-  assert.match(dry.find((r) => /Soil loss/.test(r.risk))!.trigger, /10°/);
+  // REPORT-SLOPE-EVIDENCE-01: keep the recorded slope, not the retired
+  // unsupported High/High soil-loss rating or an instruction to dig earthworks.
+  assert.equal(dry.some((r) => /Soil loss|Runoff carries/.test(r.risk)), false);
+  const evidence = riskRegisterMarkdown(dry, 'en', 420, 12);
+  assert.match(evidence, /Recorded slope estimate: 12°/);
+  assert.match(evidence, /Runoff risk has not been assessed/);
+  assert.match(evidence, /Erosion risk has not been assessed/);
+  assert.ok(dry.some((r) => /bill of quantities/.test(r.risk)), 'unpriced-work row remains');
 
   const wet = buildRiskRegister({
     facts: FACTS, rainfallMm: 900, slopeDeg: 1, minTempC: 14,
