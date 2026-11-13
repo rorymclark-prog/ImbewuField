@@ -549,6 +549,65 @@ test('Great Lakes cabbage choices remain blank and regional consent cannot reviv
 });
 
 const saveDeclaration = 'Save these inputs, source limits and unknowns as a new profile for review. Do not add sowings.';
+
+test('tomato nursery source is opt-in, editable and preserved in actual printable and historical profile output', async () => {
+  const saved: import('../lib/international/grower-planning.ts').GrowerPlanningProfile[] = [];
+  const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', evidence: undefined,
+    onSaveProfile: profile => { saved.push(structuredClone(profile)); return { status: 'confirmed', profileId: profile.profileId }; } });
+  const files = downloads();
+  const choice = 'Use this undated tomato seed-starting reference for my declared Great Lakes States region';
+  try {
+    ui.change('Preview crop', 'tomatoes'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-01-10');
+    assert.equal(ui.field(choice).props.checked, false); await ui.click();
+    assert.match(ui.text(), /Nursery start \(UTC\): Unknown/);
+    act(() => ui.field(choice).props.onChange({ target: { checked: true } }));
+    await ui.click(); assert.match(ui.text(), /Nursery start \(UTC\): 2026-11-15 \(ready\)/);
+    assert.match(ui.text(), /56 days/); assert.match(ui.text(), /Default planning value: reported-point/);
+    assert.match(ui.text(), /Entry window: unknown/); assert.match(ui.text(), /Estimated plants: Unknown/);
+    assert.match(ui.text(), /Estimated harvest weight: Unknown/); assert.match(ui.text(), /First harvest \(UTC\): Unknown/);
+    await ui.click('Download printable preview');
+    const html = await files.blobs[0].text();
+    assert.match(html, /2026-11-15/); assert.match(html, /usda-nrcs-great-lakes-tomato/);
+    assert.match(html, /56 days/); assert.match(html, /seed-starting lead time/);
+    assert.match(html, /Undated regional guide/); assert.match(html, /Great Lakes States/);
+    act(() => ui.field(saveDeclaration).props.onChange({ target: { checked: true } }));
+    await ui.click('Save provisional profile'); assert.equal(saved.length, 1);
+    ui.update({ profiles: saved }); assert.match(ui.text(), /Saved provisional profiles/);
+    assert.match(ui.text(), /Nursery start \(UTC\): 2026-11-15/);
+    ui.change('Nursery duration (days)', '35'); await ui.click();
+    assert.match(ui.text(), /Nursery start \(UTC\): 2026-12-06/); assert.match(ui.text(), /grower-estimate/);
+    ui.change('Nursery duration (days)', ''); await ui.click();
+    assert.match(ui.text(), /Grower withheld this value/);
+    await ui.click('Reset Nursery duration (days)'); await ui.click();
+    assert.match(ui.text(), /Nursery start \(UTC\): 2026-11-15/);
+    assert.deepEqual(ui.writes, []);
+  } finally { files.dispose(); ui.dispose(); }
+});
+
+test('tomato source consent is retired by method, crop, variety, water or site changes and cannot revive after a round trip', async () => {
+  const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', evidence: undefined });
+  const choice = 'Use this undated tomato seed-starting reference for my declared Great Lakes States region';
+  try {
+    ui.change('Preview crop', 'tomatoes'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-01-10');
+    for (const [field, away, back] of [['Preview establishment', 'direct', ''], ['Variety reference (optional)', 'other', ''],
+      ['Water regime', 'irrigated', ''], ['Preview crop', 'cabbage', 'tomatoes']]) {
+      act(() => ui.field(choice).props.onChange({ target: { checked: true } }));
+      await ui.click(); assert.match(ui.text(), /Provisional results/);
+      ui.change(field, away); assert.doesNotMatch(ui.text(), /Provisional results/);
+      if (field === 'Preview establishment') assert.equal(ui.field(choice).props.disabled, true);
+      ui.change(field, back); assert.equal(ui.field(choice).props.checked, false);
+      await ui.click(); assert.match(ui.text(), /Nursery start \(UTC\): Unknown/);
+    }
+    act(() => ui.field(choice).props.onChange({ target: { checked: true } }));
+    ui.update({ agriculturalRegionReference: 'Elsewhere' }); assert.equal(ui.field(choice).props.disabled, true);
+    ui.update({ agriculturalRegionReference: 'Great Lakes States' }); assert.equal(ui.field(choice).props.checked, false);
+    ui.update({ countryCode: 'KE' }); assert.doesNotMatch(ui.text(), /Great Lakes tomato seed-starting reference/);
+    ui.update({ countryCode: 'US' }); assert.equal(ui.field(choice).props.checked, false);
+    assert.deepEqual(ui.writes, []);
+  } finally { ui.dispose(); }
+});
 test('USDA nursery duration starts unselected, retains its source bound through export and permits a separate grower override', async () => {
   const saved: import('../lib/international/grower-planning.ts').GrowerPlanningProfile[] = [];
   const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', evidence: undefined,

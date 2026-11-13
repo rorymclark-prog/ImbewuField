@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest regional source continuation — [Tomato seed-starting reference](2026-11-13/usda-tomato-nursery-codex.md). Optional undated Great Lakes lead time supports a conditional date while yield, count and suitability stay unknown; exact successor review, hosted and full CI gates remain separate.
+
 Latest global entry continuation — [Provisional planner messages](2026-11-13/provisional-entry-copy-codex.md). Country notices distinguish supported partial previews from held South African catalogue advice; exact successor visual/review/CI gates remain separate.
 
 Latest map feedback continuation — [Resolved preview warning](2026-11-13/map-preview-feedback-codex.md). Explicit own-point selection retires only obsolete preview instructions; unrelated errors and save guards remain intact. Successor hosted/CI gates remain separate.
