@@ -362,7 +362,7 @@ export async function POST(req: NextRequest) {
     ? `\nSITE BOUNDARY (traced by the farmer — measured, not estimated)
 Area: ${Math.round(boundaryFact.areaM2).toLocaleString()} m² (${(boundaryFact.areaM2 / 10000).toFixed(boundaryFact.areaM2 < 10000 ? 3 : 2)} ha)${boundaryFact.perimeterM ? `\nPerimeter: ${Math.round(boundaryFact.perimeterM).toLocaleString()} m` : ''}
 Source: ${boundaryFact.source}${boundaryFact.label ? ` — "${boundaryFact.label}"` : ''}
-Use these exact figures in all calculations and scale every recommendation to this size.${siteData && Math.abs(siteData.areaM2 - boundaryFact.areaM2) > boundaryFact.areaM2 * 0.05 ? `\nNOTE: the map also holds other traced shapes (roof, driveway) that sit INSIDE this boundary; their combined total is ${siteData.areaM2.toLocaleString()} m². Do not add them to the boundary — the property is ${Math.round(boundaryFact.areaM2).toLocaleString()} m².` : ''}`
+Use these figures for boundary-scale calculations only. They do not establish planted or irrigated area. For crop demand, use the actual drawn growing areas and supported demand inputs; if those are missing, state that the result is unknown. For roof collection, use its own recorded catchment area.${siteData && Math.abs(siteData.areaM2 - boundaryFact.areaM2) > boundaryFact.areaM2 * 0.05 ? `\nNOTE: the map also holds other traced shapes (roof, driveway) that sit INSIDE this boundary; their combined total is ${siteData.areaM2.toLocaleString()} m². Do not add them to the boundary — the property is ${Math.round(boundaryFact.areaM2).toLocaleString()} m².` : ''}`
     : siteData
     ? `\nMAPPED SITE AREA (the SUM of every shape drawn on the map — not one traced boundary)
 Total area of all drawn shapes: ${siteData.areaHa} ha (${siteData.areaM2.toLocaleString()} m²) across ${siteData.count ?? 1} shape(s)
@@ -405,7 +405,7 @@ ${boundaryBlock}
 ${waterData ? `\nWATER STORAGE POLYGONS (user-drawn on map)
 ${waterData.count} water storage feature(s) drawn — total surface area ${waterData.areaM2.toLocaleString()} m².
 Estimated capacity: ~${waterData.estVolumeKL.toLocaleString()} kL (${(waterData.estVolumeKL * 1000).toLocaleString()} L), assuming ${waterData.avgDepthM}m average depth.
-Use this existing/planned storage in the water plan: compare it to the dry-season demand and rainfall capture, and say whether it is enough or more is needed. Treat the estimate as approximate (real depth varies).` : ''}
+Treat this as an approximate capacity estimate, not available water or evidence of adequacy. Compare supply and demand only where their quantities, timing and losses are supported by the supplied evidence; otherwise state that storage adequacy and additional capacity required are unknown. Real depth may vary.` : ''}
 
 ${waterPromptBlock(facts, Boolean(waterData))}
 
@@ -549,12 +549,13 @@ One or two short rules to remember (e.g. "never plant the same family in the sam
 
 ` : ''}${sections.includes('Irrigation Plan') ? `## Irrigation Plan — How Much Water You Need
 
-Work out the water needed to irrigate the growing areas through the dry season (${drySeason}).
-- A vegetable garden needs roughly 5–6mm of water per day in dry-season heat. Rule: 1mm over 1m² = 1 litre, so 100m² × 5mm = 500 L/day.
+Assess the evidence for irrigating the growing areas through the dry season (${drySeason}).
+- Crop water demand is unknown unless the supplied evidence supports it for the crop, growth stage and period. Do not apply a universal daily watering depth or invent daily litres, dry-season totals or days of storage coverage. Name the missing demand, effective rainfall, available supply and loss information instead.
+- Unit conversion only: 1mm over 1m² = 1 litre. This does not supply a watering recommendation.
 
 ${irrigationRowsBlock(facts)}
 
-Recommend the cheapest effective method for this ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} soil and how to cut water use (mulch, shade, swales).${siteAreaForCalcM2 ? ` Scale to the ${(siteAreaForCalcM2 / 10000).toFixed(siteAreaForCalcM2 < 10000 ? 3 : 2)} ha site.` : ''}${waterData ? ` The drawn storage capacity is ~${waterData.estVolumeKL.toLocaleString()} kL; this alone does not establish available water or irrigation coverage.` : ''}${facts?.water && facts.water.statedStorageLitres > 0 ? ` The plan records **${facts.water.statedStorageLitres.toLocaleString()} L** of tank capacity; days of irrigation coverage remain unknown without supported demand and available supply.` : ''}
+Use the table's drawn growing areas, not the whole property area, for any supported crop-demand calculation. Keep unsupported demand and total cells explicitly unknown. Discuss irrigation methods to investigate for this ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} soil, with their evidence needs; do not claim a cheapest effective method without local performance and cost evidence.${waterData ? ` The drawn storage capacity is ~${waterData.estVolumeKL.toLocaleString()} kL; this alone does not establish available water or irrigation coverage.` : ''}${facts?.water && facts.water.statedStorageLitres > 0 ? ` The plan records **${facts.water.statedStorageLitres.toLocaleString()} L** of tank capacity; days of irrigation coverage remain unknown without supported demand and available supply.` : ''}
 
 ` : ''}${sections.includes('Year-Round Food Production') ? `## All-Year-Round Food Production
 

@@ -107,15 +107,37 @@ test('actual report prompt and header preserve partial rainfall without inventin
       const d = structuredClone(DEMO_LOCATION); d.rainfall.monthly = [];
       d.rainfall.annual = annual ?? 791;
       if (annual === null) delete d.rainfall.rainfallSource;
+      const requestStart = requests.length;
       const response = await POST(new Request('http://localhost/api/generate-report', { method: 'POST', body: JSON.stringify({
-        language: 'en', sections: ['Water Harvesting', 'Irrigation Plan'], locationData: d, siteFacts: facts,
+        language: 'en', sections: ['Water Harvesting', 'Irrigation Plan'], locationData: d, siteFacts: {
+          ...facts, boundary: { areaM2: 10000, source: 'Synthetic boundary' },
+          design: { beds: [{ label: 'Measured vegetable bed', areaM2: 20, kind: 'bed' }],
+            bedCount: 1, bedAreaM2: 20, plotCount: 0, plotAreaM2: 0,
+            growingAreaM2: 20, elements: [], routes: [], zones: [] },
+        },
         waterData: { count: 1, estVolumeKL: 10, avgDepthM: 1, areaM2: 10 },
       }) }) as any);
       assert.equal(response.status, 200); const body = await response.text();
-      const prompt = requests.map(r => String(r.messages[0].content)).join('\n');
+      const prompt = requests.slice(requestStart).map(r => String(r.messages[0].content)).join('\n');
       assert.ok(!body.includes(`wet ${d.rainfall.wetSeason}`), 'header must use the same monthly gate as the prompt');
       assert.match(prompt, /Drawn water storage/); assert.match(prompt, /Tank storage on the plan/);
       assert.match(prompt, /Dry season storage gap:\*\* not calculated/);
+      // Neither drawn capacity nor an annual rainfall total establishes crop demand.
+      // Check the whole actual prompt: its early storage paragraph used to contradict
+      // the later evidence caveat, then supply a universal watering depth itself.
+      const unsupportedDemand = prompt.match(/say whether it is enough or more is needed|A vegetable garden needs roughly 5–6mm of water per day|100m² × 5mm = 500 L\/day|Scale to the 1\.00 ha site|scale every recommendation to this size/g) ?? [];
+      assert.deepEqual(unsupportedDemand, [], 'the model must not be asked to invent a demand budget');
+      assert.match(prompt, /Crop water demand is unknown unless/);
+      assert.match(prompt, /Unit conversion only: 1mm over 1m² = 1 litre/);
+      assert.match(prompt, /Area: 10,000 m² \(1\.00 ha\)/);
+      assert.match(prompt, /boundary-scale calculations only/);
+      assert.match(prompt, /For roof collection, use its own recorded catchment area/);
+      // Missing rain withholds harvest, not the independently recorded roof area.
+      if (annual === null) assert.match(prompt, /roof area 100 m² recorded; annual rainfall is not known/);
+      else assert.match(prompt, /the traced roof on this site is \*\*100 m²\*\*/);
+      assert.match(prompt, /\| Measured vegetable bed \| 20 m² \|/);
+      assert.match(prompt, /not the whole property area/);
+      assert.match(prompt, /Keep unsupported demand and total cells explicitly unknown/);
       assert.doesNotMatch(prompt, /covers the dry-season deficit above|need you calculate above|say if it is enough|say how many days it covers/);
       assert.doesNotMatch(body, /wet Oct–Mar|dry Apr–Sep/);
       assert.ok(!body.includes(`wet ${d.rainfall.wetSeason}`), 'header must use the same monthly gate as the prompt');
