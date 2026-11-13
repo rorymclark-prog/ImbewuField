@@ -8,7 +8,7 @@ import { mapboxPlaceSearchUrl, readMapboxPlaceResults, type PlaceSearchArea } fr
 // These are engineering responses, not live provider or full browser evidence.
 const tree = ts.createSourceFile('Map.tsx', MAP_SOURCE, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 const component = tree.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === 'PermaMap') as ts.FunctionDeclaration;
-const expressions = new Map(component.body!.statements.flatMap(statement => ts.isVariableStatement(statement)
+const expressions = new Map([...tree.statements, ...component.body!.statements].flatMap(statement => ts.isVariableStatement(statement)
   ? statement.declarationList.declarations.flatMap(d => ts.isIdentifier(d.name) && d.initializer ? [[d.name.text, d.initializer.getText(tree)] as const] : []) : []));
 const response = (features: unknown[]) => Response.json({ features });
 const result = { place_name: 'East Lansing, Michigan, United States', center: [-84.4839, 42.7369] };
@@ -31,6 +31,8 @@ function harness(area: PlaceSearchArea = 'south-africa', fetcher: typeof fetch =
     getContainer: () => ({ clientWidth: 400, clientHeight: 800 }), unproject: () => camera };
   const context: Record<string, any> = {
     useCallback: (fn: unknown) => fn, AbortController,
+    PLACE_PREVIEW_EVIDENCE_ERROR: bind(expressions.get('PLACE_PREVIEW_EVIDENCE_ERROR') ?? 'undefined', {}),
+    PLACE_PREVIEW_SHARE_ERROR: bind(expressions.get('PLACE_PREVIEW_SHARE_ERROR') ?? 'undefined', {}),
     searchArea: area, searchAreaRef: { current: area }, searchEpoch: { current: 0 },
     placeLookup: { current: null }, placeSuggestions: { current: null }, suggestTimer: { current: null },
     placePreviewOnly: { current: false }, placePreviewShareCenter: { current: null },
@@ -54,7 +56,7 @@ function harness(area: PlaceSearchArea = 'south-africa', fetcher: typeof fetch =
     setPlacePreviewActive: (v: boolean) => { state.preview = v; },
     setSuggestions: (v: any[]) => { state.suggestions = v; },
     setWorldwideResults: (v: any[]) => { state.worldwide = v; },
-    setSearchError: (v: string) => { state.error = v; }, setSearchResult: (v: string) => { state.result = v; },
+    setSearchError: (v: string | ((old: string) => string)) => { state.error = typeof v === 'function' ? v(state.error) : v; }, setSearchResult: (v: string) => { state.result = v; },
     setSearching: (v: boolean) => { state.searching = v; }, setShowRecents: () => {}, setSearchQuery: () => {},
     setTimeout: (fn: () => unknown) => { const id = ++timerId; timers.set(id, fn); return id; },
     clearTimeout: (id: number) => { timers.delete(id); },
@@ -344,4 +346,27 @@ test('a retained new-place opening cannot name the previous point after a differ
   openNewPlace(ui);
   const fresh = ui.naming.point as { lat: number; lon: number } | null; assert.ok(fresh);
   assert.deepEqual([fresh.lat, fresh.lon], [42.7, -84.6]);
+});
+
+
+for (const action of ['save', 'share']) {
+  test(`own-point selection retires only the obsolete ${action} preview warning before fresh naming`, async () => {
+    const ui = harness('worldwide'); ownPoint(ui); await previewArea(ui);
+    if (action === 'save') ui.context.saveCurrentPlace();
+    else await ui.context.handleShare();
+    assert.match(ui.state.error, /Tap the exact farm location/);
+    ownPoint(ui, 42.7, -84.6);
+    assert.equal(ui.state.error, '', 'the now-valid point must not keep the preview-only instruction');
+    openNewPlace(ui); assert.ok(ui.naming.point, 'retiring a warning must retain the accepted fresh naming flow');
+  });
+}
+
+test('own-point selection preserves unrelated lookup, connection, imagery and similar-worded errors', () => {
+  for (const error of ['', 'Place search is unavailable. Try again or enter coordinates.',
+    'Something went wrong. Please check your connection and try again.',
+    'Map imagery is still updating for your selected farm. Please try capture again when it finishes.',
+    'Tap the exact farm location on the map before another unrelated operation.']) {
+    const ui = harness('worldwide'); ui.context.setSearchError(error); ownPoint(ui);
+    assert.equal(ui.state.error, error);
+  }
 });

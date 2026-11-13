@@ -376,6 +376,9 @@ const SIMPLE_ELEMENT_TYPES: SiteElementType[] = ['tree', 'jojo_tank'];
 const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
 const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Natal plum', 'Wild plum', 'Waterberry', 'Other tree'];
 
+const PLACE_PREVIEW_EVIDENCE_ERROR = 'Tap the exact farm location on the map before saving or capturing.';
+const PLACE_PREVIEW_SHARE_ERROR = 'Tap the exact farm location on the map before sharing.';
+
 type PlaceNamingDraft = { lat: number; lon: number; selectionGeneration: number };
 
 export default function PermaMap({ onLocationSelect: onSelectLocation, selectedLocation, loading, onMapCapture, onMapReady, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, activePlaceId, people, showPeople, onTogglePeople, onDesignPresenceChange, guided }: Props) {
@@ -423,11 +426,14 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
     }
     placePreviewOnly.current = false;
     setPlacePreviewActive(false);
+    // The selected point resolves these instructions, not unrelated search or
+    // imagery failures that still need the farmer's attention.
+    setSearchError(error => error === PLACE_PREVIEW_EVIDENCE_ERROR || error === PLACE_PREVIEW_SHARE_ERROR ? '' : error);
     onSelectLocation(lat, lon);
   }, [onSelectLocation]);
   const allowMapEvidence = useCallback(() => {
     if (!placePreviewOnly.current) return true;
-    setSearchError('Tap the exact farm location on the map before saving or capturing.');
+    setSearchError(PLACE_PREVIEW_EVIDENCE_ERROR);
     return false;
   }, []);
   const allowMapCapture = useCallback(() => {
@@ -1911,7 +1917,7 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
   }, [onLocationSelect]);
 
   const handleShare = async () => {
-    if (placePreviewOnly.current) { setSearchError('Tap the exact farm location on the map before sharing.'); return; }
+    if (placePreviewOnly.current) { setSearchError(PLACE_PREVIEW_SHARE_ERROR); return; }
     const draw = drawRef.current
     const mapInst = mapRef.current
     if (!draw || !mapInst) return
@@ -1936,7 +1942,7 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
   }
 
   const handleSharePlace = async (place: SavedPlace) => {
-    if (placePreviewOnly.current) { setSearchError('Tap the exact farm location on the map before sharing.'); return; }
+    if (placePreviewOnly.current) { setSearchError(PLACE_PREVIEW_SHARE_ERROR); return; }
     const draw = drawRef.current;
     const mapInst = mapRef.current;
     if (!draw || !mapInst) return;

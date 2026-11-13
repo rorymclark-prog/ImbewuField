@@ -1,5 +1,8 @@
 # ImbewuField audit archive
 
+Latest map feedback continuation — [Resolved preview warning](2026-11-13/map-preview-feedback-codex.md). Explicit own-point selection retires only obsolete preview instructions; unrelated errors and save guards remain intact. Successor hosted/CI gates remain separate.
+
+
 Latest new-place continuation — [Map preview naming guard](2026-11-13/map-new-place-preview-codex.md). Actual hosted failure reproduced; draft and selection validity now protect new-place saves. Successor hosted/review/CI gates remain separate.
 
 
