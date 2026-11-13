@@ -18,7 +18,11 @@ function harness(area: PlaceSearchArea = 'south-africa', fetcher: typeof fetch =
   const timers = new Map<number, () => unknown>(); let timerId = 0;
   let camera = { lng: -84.4839, lat: 42.7369 }, pixels = 'previous-camera';
   const idle: Array<{ fn: () => void; active: boolean }> = [];
-  const writes: any[] = [], captures: string[] = [];
+  const writes: any[] = [], captures: string[] = [], placeWrites: any[] = [];
+  const naming = { point: null as any, editing: null as string | null, name: '', label: 'field', color: '' };
+  let nearbyPrompt: () => Promise<any> = async () => null;
+  let beforePlaceWrite = () => {};
+  let placeAsks = 0;
   const map = { flyTo: (v: unknown) => { flights.push(v); }, getCenter: () => camera, getZoom: () => 14,
     stop: () => {}, jumpTo: (v: { center: number[] }) => { camera = { lng: v.center[0], lat: v.center[1] }; },
     getMap: () => map, once: (_: string, fn: () => void) => { idle.push({ fn, active: true }); },
@@ -31,6 +35,20 @@ function harness(area: PlaceSearchArea = 'south-africa', fetcher: typeof fetch =
     placeLookup: { current: null }, placeSuggestions: { current: null }, suggestTimer: { current: null },
     placePreviewOnly: { current: false }, placePreviewShareCenter: { current: null },
     placeCaptureFrame: { current: { generation: 0, ready: true, cleanup: null } },
+    placeSaveIntent: { current: { generation: 0, draft: null, pointKey: '' } },
+    selectedLocation: null, selectedPointKey: '', locationData: null, namingPlace: null, editingPlaceId: null,
+    placeName: '', placeLabel: 'field', customPlaceColor: '', savedPins: [],
+    placeSaveContext: { current: {} }, savedPlaceWriteContextIsCurrent: () => true,
+    setNamingPlace: (v: any) => { naming.point = v; context.namingPlace = v; },
+    setEditingPlaceId: (v: string | null) => { naming.editing = v; context.editingPlaceId = v; },
+    setPlaceName: (v: string) => { naming.name = v; context.placeName = v; },
+    setPlaceLabel: (v: string) => { naming.label = v; context.placeLabel = v; },
+    setCustomPlaceColor: (v: string) => { naming.color = v; context.customPlaceColor = v; },
+    promptNearbyUpdate: () => { placeAsks++; return nearbyPrompt(); }, appConfirm: () => {},
+    savedRainfallFields: () => ({}), setSavedPins: () => {}, setPlaceSaved: () => {},
+    savePlace: (p: any, guard: { isCurrent: () => boolean }) => {
+      beforePlaceWrite(); if (!guard.isCurrent()) return null; placeWrites.push(p); return [p];
+    },
     TOKEN: 'synthetic-public-token', mapboxPlaceSearchUrl, readMapboxPlaceResults,
     setSearchArea: (v: PlaceSearchArea) => { state.area = v; },
     setPlacePreviewActive: (v: boolean) => { state.preview = v; },
@@ -41,7 +59,7 @@ function harness(area: PlaceSearchArea = 'south-africa', fetcher: typeof fetch =
     setTimeout: (fn: () => unknown) => { const id = ++timerId; timers.set(id, fn); return id; },
     clearTimeout: (id: number) => { timers.delete(id); },
     fetch: async (...args: Parameters<typeof fetch>) => { requests.push(String(args[0])); return fetcher(...args); },
-    onSelectLocation: (lat: number, lon: number) => { selected.push([lat, lon]); },
+    onSelectLocation: (lat: number, lon: number) => { selected.push([lat, lon]); context.selectedLocation = { lat, lon }; context.selectedPointKey = `${lat},${lon}`; context.placeSaveIntent.current.pointKey = context.selectedPointKey; },
     onLocationSelect: (lat: number, lon: number) => { selected.push([lat, lon]); },
     pushRecent: (p: unknown) => { recents.push(p); }, t: (key: string) => key,
     mapRef: { current: map },
@@ -58,12 +76,13 @@ function harness(area: PlaceSearchArea = 'south-africa', fetcher: typeof fetch =
     setPlaceShareId: () => {}, setPlaceShareStatus: () => {},
     window: { location: { origin: 'https://example.invalid' } }, navigator: { clipboard: { writeText: async () => {} } },
   };
-  const names = ['onLocationSelect', 'allowMapEvidence', 'allowMapCapture', 'addPin', 'cancelPlaceLookup', 'cancelPlaceSuggestions', 'chooseSearchArea', 'previewPlaceResult', 'handleSearch', 'fetchSuggestions', 'selectSuggestion', 'handleShare', 'handleSharePlace'];
+  const names = ['onLocationSelect', 'allowMapEvidence', 'allowMapCapture', 'closePlaceNaming', 'saveCurrentPlace', 'startEditPlace', 'confirmSavePlace', 'addPin', 'cancelPlaceLookup', 'cancelPlaceSuggestions', 'chooseSearchArea', 'previewPlaceResult', 'handleSearch', 'fetchSuggestions', 'selectSuggestion', 'handleShare', 'handleSharePlace'];
   function rebind() {
     context.searchArea = state.area;
     for (const name of names) {
       const code = expressions.get(name);
       if (code) context[name] = bind(code, context);
+      else if (name === 'closePlaceNaming') context[name] = inlineContaining('setNamingPlace(null)');
       else if (!context[name]) context[name] = () => {}; // parent controls still run the old real search handler
     }
   }
@@ -81,6 +100,9 @@ function harness(area: PlaceSearchArea = 'south-africa', fetcher: typeof fetch =
     return bind(code, context);
   }
   return { state, context, requests, flights, selected, recents, shared, writes, captures, inlineContaining,
+    naming, placeWrites, placeAsks: () => placeAsks,
+    nearby(fn: () => Promise<any>) { nearbyPrompt = fn; },
+    beforePlaceWrite(fn: () => void) { beforePlaceWrite = fn; },
     pendingFrameListeners: () => idle.filter(x => x.active).length,
     unmount() {
       const effect = component.body!.statements.find(n => ts.isExpressionStatement(n) && n.getText(tree).includes('placeLookup.current?.abort(); placeSuggestions.current?.abort();')) as ts.ExpressionStatement;
@@ -226,4 +248,100 @@ test('effect cleanup/setup replay does not hold ordinary capture when no lookup 
   ui.unmount(); // React development StrictMode can replay effect cleanup on mount.
   ui.inlineContaining('onMapCapture(canvas.toDataURL')();
   assert.equal(ui.captures.length, 1);
+});
+
+
+// PLACE-NEW-SAVE-PREVIEW-CONTEXT-01: execute the actual opening, confirmation
+// and selection callbacks. No user/provider records are used in these controls.
+async function previewArea(ui: ReturnType<typeof harness>) {
+  await ui.context.handleSearch('East Lansing');
+  ui.context.selectSuggestion(ui.state.worldwide[0]);
+  ui.rebind();
+}
+function ownPoint(ui: ReturnType<typeof harness>, lat = -27, lon = 31) {
+  ui.context.onLocationSelect(lat, lon); ui.rebind();
+}
+function openNewPlace(ui: ReturnType<typeof harness>) {
+  ui.context.saveCurrentPlace(); ui.rebind();
+}
+
+test('Save place cannot name the old farm behind a temporary worldwide preview, even through a retained opening callback', async () => {
+  const ui = harness('worldwide'); ownPoint(ui);
+  const oldOpen = ui.context.saveCurrentPlace;
+  await previewArea(ui); oldOpen();
+  assert.equal(ui.naming.point, null, 'previewing another area must not open a naming sheet for the old selected farm');
+  assert.match(ui.state.error, /Tap the exact farm/);
+  assert.deepEqual(ui.placeWrites, []);
+});
+
+test('a retained new-place confirmation cannot prompt or write while previewing or after a preview-selection round trip', async () => {
+  for (const roundTrip of [false, true]) {
+    const ui = harness('worldwide'); ownPoint(ui); openNewPlace(ui);
+    const oldConfirm = ui.context.confirmSavePlace;
+    await previewArea(ui);
+    if (roundTrip) ownPoint(ui);
+    await oldConfirm();
+    assert.equal(ui.placeAsks(), 0, 'an obsolete draft must be held before asking to update a nearby place');
+    assert.deepEqual(ui.placeWrites, []);
+  }
+});
+
+for (const answer of [null, { id: 'nearby', lat: -27, lon: 31, name: 'Existing', notes: 'Keep notes' }]) {
+  for (const change of ['preview-round-trip', 'new-point', 'cancel', 'replacement', 'unmount']) {
+    test(`a deferred new-place nearby answer ${answer ? 'update' : 'new'} stays retired after ${change}`, async () => {
+      const ui = harness('worldwide'); ownPoint(ui); openNewPlace(ui);
+      let resolve!: (v: any) => void;
+      ui.nearby(() => new Promise(done => { resolve = done; }));
+      const pending = ui.context.confirmSavePlace();
+      assert.equal(ui.placeAsks(), 1);
+      if (change === 'preview-round-trip') { await previewArea(ui); ownPoint(ui); }
+      if (change === 'new-point') ownPoint(ui, 42.7, -84.6);
+      if (change === 'cancel') ui.context.closePlaceNaming();
+      if (change === 'replacement') openNewPlace(ui);
+      if (change === 'unmount') ui.unmount();
+      resolve(answer); await pending;
+      assert.deepEqual(ui.placeWrites, [], 'an old answer must not save or relabel either the old or nearby place');
+    });
+  }
+}
+
+test('after explicitly selecting an own point a fresh naming draft saves that exact point', async () => {
+  const ui = harness('worldwide'); ownPoint(ui); await previewArea(ui);
+  ownPoint(ui, 42.7, -84.6); openNewPlace(ui);
+  ui.context.setPlaceName('Chosen point'); ui.rebind();
+  await ui.context.confirmSavePlace();
+  assert.equal(ui.placeWrites.length, 1);
+  assert.deepEqual([ui.placeWrites[0].lat, ui.placeWrites[0].lon], [42.7, -84.6]);
+  assert.equal(ui.placeWrites[0].name, 'Chosen point');
+  assert.equal(ui.naming.point, null);
+});
+
+test('explicit existing-pin rename and recolour remain usable during an unrelated preview with coordinates and notes retained', async () => {
+  const ui = harness('worldwide'); ownPoint(ui); await previewArea(ui);
+  const pin = { id: 'known', lat: -27, lon: 31, name: 'Old name', notes: 'Recorded note', color: '#123456' };
+  ui.context.savedPins = [pin]; ui.context.startEditPlace(pin); ui.rebind();
+  ui.context.setPlaceName('Renamed'); ui.context.setCustomPlaceColor('#654321'); ui.rebind();
+  await ui.context.confirmSavePlace();
+  assert.equal(ui.placeAsks(), 0);
+  assert.equal(ui.placeWrites.length, 1);
+  assert.deepEqual([ui.placeWrites[0].id, ui.placeWrites[0].lat, ui.placeWrites[0].lon, ui.placeWrites[0].notes], ['known', -27, 31, 'Recorded note']);
+  assert.equal(ui.placeWrites[0].name, 'Renamed'); assert.equal(ui.placeWrites[0].color, '#654321');
+});
+
+test('the final saved-place writer guard also retires a draft changed during a re-entrant write boundary', async () => {
+  const ui = harness('worldwide'); ownPoint(ui); openNewPlace(ui);
+  ui.beforePlaceWrite(() => { ownPoint(ui, 42.7, -84.6); });
+  await ui.context.confirmSavePlace();
+  assert.deepEqual(ui.placeWrites, []);
+});
+
+
+test('a retained new-place opening cannot name the previous point after a different own-point selection', () => {
+  const ui = harness('worldwide'); ownPoint(ui);
+  const oldOpen = ui.context.saveCurrentPlace;
+  ownPoint(ui, 42.7, -84.6); oldOpen();
+  assert.equal(ui.naming.point, null);
+  openNewPlace(ui);
+  const fresh = ui.naming.point as { lat: number; lon: number } | null; assert.ok(fresh);
+  assert.deepEqual([fresh.lat, fresh.lon], [42.7, -84.6]);
 });

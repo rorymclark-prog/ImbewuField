@@ -1,5 +1,8 @@
 # Audits for 13 November 2026
 
+Latest new-place continuation — [Map preview naming guard](map-new-place-preview-codex.md). Actual hosted failure reproduced; draft and selection validity now protect new-place saves. Successor hosted/review/CI gates remain separate.
+
+
 - [Preview build memory](preview-build-memory-codex.md) — explicitly authorised two-line heap setting; actual successor verification required.
 
 - [Individual DEMO calendar identity](calendar-individual-demo-codex.md) — retained sample export finding; same guarded writer for individual and bulk delivery.
