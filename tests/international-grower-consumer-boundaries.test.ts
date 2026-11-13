@@ -1,3 +1,5 @@
+import { provisionalCalendarFixture } from './provisional-calendar-fixture.ts';
+import { buildGrowerBoardTasks, buildGrowerTasksIcs, buildTaskIcs } from '../lib/task-board.ts';
 import { initialiseCropPlanFixture, releaseCropPlanFixture, readCanonicalCropPlanFixtureRaw, replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -289,4 +291,34 @@ test('actual parent review reader retains null rows, reservations and duplicate 
    result.book.plantings.pop();assert.equal(readCanonicalCropPlanFixtureRaw(),bytes,'returned raw book is detached');
   }
  }finally{releaseCropPlanFixture();if(original)Object.defineProperty(globalThis,'window',original);else Reflect.deleteProperty(globalThis,'window');}
+});
+
+
+test('accepted provisional sources and unknowns survive both calendar writers without changing dates or exposing structural identities', async () => {
+  const f = await provisionalCalendarFixture(), before = JSON.stringify(f.row);
+  const result = buildGrowerBoardTasks([f.row], [f.context], new Date('2028-02-01T00:00:00Z'), new Set());
+  assert.equal(result.heldPlantings, 0); assert.equal(result.tasks.length, 6);
+  for (const task of result.tasks) {
+    assert.deepEqual(task.provisionalEvidenceLines, f.evidence.lines);
+    assert.match(task.subtitle, /Provisional plan/);
+  }
+  const file = buildGrowerTasksIcs(result.tasks, { now: new Date('2031-01-01T00:00:00Z'), sample: true });
+  const bodies = [...file.replace(/\r\n[ \t]/g, '').matchAll(/BEGIN:VEVENT\r\n([\s\S]*?)\r\nEND:VEVENT/g)].map(match => match[1]);
+  assert.equal(bodies.length, 6);
+  for (const body of bodies) {
+    assert.match(body, /provisional planned cycle/); assert.match(body, /not recorded work/);
+    assert.match(body, /mipmcar9781.pdf/); assert.match(body, /Great Lakes States/);
+    assert.match(body, /publication and revision date unknown/); assert.match(body, /not.*local suitability/);
+    assert.match(body, /Original evidence as of.*2026-11-12/); assert.match(body, /New evidence review as of.*2026-11-13/);
+    assert.match(body, /Variety: Unknown/);
+    assert.doesNotMatch(body, /private-calendar|private-saved|policyFingerprint|geometryFingerprint|assessmentSnapshot/);
+  }
+  for (const task of result.tasks) {
+    const single = buildTaskIcs(task, new Date('2031-01-01T00:00:00Z')).replace(/\r\n[ \t]/g, '');
+    assert.match(single, /provisional planned cycle/); assert.match(single, /mipmcar9781.pdf/);
+    assert.ok(single.includes('DTSTART;VALUE=DATE:' + task.dueDate!.replaceAll('-', '')));
+  }
+  const held = buildGrowerBoardTasks([f.row], [{ ...f.context, provisionalContext: { ...f.context.provisionalContext, countryCode: 'GB' } }], new Date(), new Set());
+  assert.equal(held.tasks.length, 0); assert.equal(held.heldPlantings, 1);
+  assert.equal(buildGrowerTasksIcs(held.tasks), ''); assert.equal(JSON.stringify(f.row), before);
 });

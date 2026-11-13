@@ -41,7 +41,8 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '13 November 2026', sha: '3047c0dae', changes: [
+  { when: '13 November 2026', sha: 'a0f4b15ef', changes: [
+    'Provisional calendar downloads keep source limits, regions and unknowns.',
     'Choose Worldwide in map search, view an area, then tap your exact farm location.',
     'Map captures wait until the selected farm location has finished loading.',
     'Great Lakes cabbage previews offer an optional sourced nursery lead-time choice.',

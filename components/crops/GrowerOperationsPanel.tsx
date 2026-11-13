@@ -210,8 +210,9 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
     // Keep only public event fields. Neither a journal link nor the source book
     // belongs in a calendar payload or a detached task snapshot.
     const tasks = Object.freeze(result.tasks.map(({ id, kind, title, subtitle, icon, dueDate, growerEventKind,
-      dueMonth, monthsAway, completed: done }) => Object.freeze({ id, kind, title, subtitle, icon, dueDate,
-      growerEventKind, dueMonth, monthsAway, completed: done })));
+      dueMonth, monthsAway, completed: done, provisionalEvidenceLines }) => Object.freeze({ id, kind, title, subtitle, icon, dueDate,
+      growerEventKind, dueMonth, monthsAway, completed: done,
+      ...(provisionalEvidenceLines ? { provisionalEvidenceLines: Object.freeze([...provisionalEvidenceLines]) } : {}) })));
     calendarPending.current = operation;
     const owned = () => calendarLifetime.current === lifetime && calendarPending.current === operation
       && generation.current === turn && live.current.state === expected && live.current.checkCurrent === checker
@@ -267,6 +268,10 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
         <p className="font-semibold">{task.title}</p>
         <p><time dateTime={task.dueDate}>{task.dueDate}</time> (UTC date)</p>
         <p>{task.subtitle}</p>
+        {task.provisionalEvidenceLines && <details lang="en" className="text-sm break-words">
+          <summary className="min-h-11 cursor-pointer">Provisional evidence and limits</summary>
+          {task.provisionalEvidenceLines.map((line, index) => <p key={index} className="mt-2">{line}</p>)}
+        </details>}
         <div className="flex flex-wrap gap-2">
           <button type="button" className={button} disabled={actionBusy} aria-pressed={task.completed}
             onClick={() => void actOnTask(task, 'complete')}>{task.completed ? 'Reopen checklist item' : 'Mark checklist item done'}</button>

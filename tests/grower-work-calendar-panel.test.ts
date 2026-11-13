@@ -1,3 +1,4 @@
+import { provisionalCalendarFixture } from './provisional-calendar-fixture.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
@@ -443,3 +444,33 @@ for (const action of ['Mark checklist item done', 'Download planned-date calenda
     });
   }
 }
+
+
+test('actual individual and detached bulk downloads retain a provisional cycle’s public evidence and current-source guards', async () => {
+  const f = await provisionalCalendarFixture(), state = { status: 'ready' as const,
+    book: { version: 1 as const, plantings: [f.row], updatedAt: 1 }, contexts: [f.context], heldSources: [] };
+  const transport = delivery(), ui = mount({ state, sample: false });
+  try {
+    assert.match(ui.text(), /Provisional evidence and limits/); assert.match(ui.text(), /mipmcar9781.pdf/);
+    await invoke(ui.handler()); assert.equal(transport.blobs.length, 1);
+    const all = await transport.blobs[0].text(); assert.equal(events(all).length, 6);
+    for (const event of events(all)) { assert.match(event.description!, /provisional planned cycle/); assert.match(event.description!, /mipmcar9781.pdf/); }
+    await invoke(ui.handler('Download planned-date calendar')); assert.equal(transport.blobs.length, 2);
+    assert.match((await transport.blobs[1].text()).replace(/\r\n[ \t]/g, ''), /mipmcar9781.pdf/);
+    ui.update({ state: { ...state, contexts: [{ ...f.context, provisionalContext: { ...f.context.provisionalContext, countryCode: 'GB' } }] } });
+    assert.doesNotMatch(ui.text(), /mipmcar9781.pdf/); assert.equal(ui.buttons(allLabel).length, 0);
+  } finally { transport.restore(); ui.dispose(); }
+});
+
+test('pending provisional calendar cannot deliver its captured evidence after a country/source round trip', async () => {
+  const f = await provisionalCalendarFixture(), state = { status: 'ready' as const,
+    book: { version: 1 as const, plantings: [f.row], updatedAt: 1 }, contexts: [f.context], heldSources: [] };
+  const gate = deferred<boolean>(), transport = delivery(), ui = mount({ state, checkCurrent: () => gate.promise });
+  try {
+    const old = ui.handler(); await invoke(old); assert.equal(transport.blobs.length, 0);
+    ui.update({ state: { ...state, contexts: [{ ...f.context, provisionalContext: { ...f.context.provisionalContext, countryCode: 'GB' } }] } });
+    ui.update({ state }); await resolveCheck(gate);
+    assert.equal(transport.blobs.length, 0); assert.equal(transport.downloads.length, 0);
+    await invoke(old); assert.equal(transport.downloads.length, 0);
+  } finally { transport.restore(); ui.dispose(); }
+});

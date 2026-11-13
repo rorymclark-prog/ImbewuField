@@ -1,3 +1,4 @@
+import { buildProvisionalCycleEvidence } from './international/provisional-crop-export';
 import { readGrowerCycleIntent, type GrowerCyclePublicIntent } from './international/grower-cycle-intent';
 import type { GrowerJournalLink } from './field-journal';
 // Home-page task board — a small, glanceable "what's due soon" list built on
@@ -60,6 +61,7 @@ const EN_TASK_BOARD_STRINGS: Record<string, string> = {
   taskGrowerPickingEnd: 'Planned picking end boundary for {crop}',
   taskGrowerFieldClear: 'Planned field-clear boundary for {crop}',
   taskGrowerNextEntry: 'Planned next-entry boundary for {crop}',
+  taskGrowerProvisionalEstimate: 'Provisional plan; check the source limits before acting.',
   taskGrowerPlannedEstimate: 'Planned from your own estimates · {date}',
   taskGrowerExclusiveBoundary: 'Exclusive end boundary · not recorded work',
   taskGrowerAvailabilityBoundary: 'Availability boundary only · not a new planting or confirmation that the bed is free',
@@ -202,6 +204,9 @@ export interface BoardTask {
   growerEventKind?: GrowerCycleEventKind;
   /** Public accepted-intent readback only; no private demand identities. */
   growerIntent?: GrowerCyclePublicIntent;
+  /** Public source/assumption readback from the validated accepted profile only.
+   * No actor, source revision, geometry or raw request belongs in a calendar. */
+  provisionalEvidenceLines?: readonly string[];
   /** Planned linkage context only. The journal separately asks what happened
    * and on which observed day; this reference grants no record or access. */
   growerJournalLink?: GrowerJournalLink;
@@ -379,6 +384,9 @@ export function buildGrowerBoardTasks(
     if (matches.length !== 1) continue;
     const context = matches[0];
     for (const cycle of projectGrowerCycles(rows, context).ownCycles) {
+      const provisional = cycle.assessment.snapshot.profile.provisionalOrigin
+        ? buildProvisionalCycleEvidence(cycle.assessment.snapshot) : undefined;
+      if (cycle.assessment.snapshot.profile.provisionalOrigin && !provisional) continue;
       projectedRows.add(cycle.rowIndex);
       const bed = context.beds.find(bed => bed.id === cycle.bedId)!;
       const bedLabel = typeof bed.label === 'string' && bed.label.trim() ? bed.label : translated('taskGrowerMeasuredBed');
@@ -390,10 +398,11 @@ export function buildGrowerBoardTasks(
           : event.endExclusive ? translated('taskGrowerExclusiveBoundary') : null;
         candidates.push({ rowIndex: cycle.rowIndex, plantingId: cycle.plantingId, kind: event.kind,
           task: { kind: 'grower-cycle', growerEventKind: event.kind, dueDate: event.date, growerIntent: intent,
+          ...(provisional ? { provisionalEvidenceLines: provisional.lines } : {}),
           growerJournalLink: { version: 1, scope: cycle.scope, plantingId: cycle.plantingId,
             bedId: cycle.bedId, eventKind: event.kind, plannedDate: event.date },
           title: translated(GROWER_VERB_KEY[event.kind], { crop: produceLabel(cycle.cropKey, lang) }),
-          subtitle: [boardBedLabel(bedLabel, translated), translated('taskGrowerPlannedEstimate', { date: event.date }), explanation, ...intent.lines].filter(Boolean).join(' · '),
+          subtitle: [boardBedLabel(bedLabel, translated), translated('taskGrowerPlannedEstimate', { date: event.date }), provisional ? translated('taskGrowerProvisionalEstimate') : null, explanation, ...intent.lines].filter(Boolean).join(' · '),
           // The dated panel uses text; crop thumbnail consumers use cropKey's artwork.
           icon: '', cropKey: cycle.cropKey, bedId: cycle.bedId, bedLabel,
           dueMonth: parts.month, monthsAway: (parts.year - now.getUTCFullYear()) * 12 + parts.month - now.getUTCMonth() - 1 } });
@@ -632,11 +641,28 @@ interface WriteTaskIcsEventOptions {
   bulk?: boolean;
 }
 
+/** Recognised public evidence must not disappear into an ordinary-looking event.
+ * Ignore unrelated metadata; never evaluate an evidence getter or array getter. */
+function calendarProvisionalLines(task: BoardTask): readonly string[] | null | undefined {
+  const field = Object.getOwnPropertyDescriptor(task, 'provisionalEvidenceLines');
+  if (!field) return 'provisionalEvidenceLines' in task ? null : undefined;
+  if (!field.enumerable || !('value' in field) || !Array.isArray(field.value) || !field.value.length) return null;
+  const lines: string[] = [];
+  for (let i = 0; i < field.value.length; i++) {
+    const item = Object.getOwnPropertyDescriptor(field.value, String(i));
+    if (!item?.enumerable || !('value' in item) || typeof item.value !== 'string' || !item.value.trim()) return null;
+    lines.push(item.value);
+  }
+  return lines;
+}
+
 function writeTaskIcsEventLines(task: BoardTask, options: WriteTaskIcsEventOptions = {}): string[] | null {
   const clock = Number.isFinite(options.now?.getTime()) ? options.now! : new Date();
   const start = resolveTaskDate(task, clock);
   if (!Number.isFinite(start.getTime())) return null;
   const own = task.kind === 'grower-cycle';
+  const provisional = own ? calendarProvisionalLines(task) : undefined;
+  if (provisional === null) return null;
   const ownEnd = own ? addGrowerUtcDays(task.dueDate!, 1) : null;
   if (own && !ownEnd) return null;
   const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1); // DTEND is exclusive for all-day events
@@ -649,10 +675,11 @@ function writeTaskIcsEventLines(task: BoardTask, options: WriteTaskIcsEventOptio
   const summary = isSample ? `DEMO · ${escape(task.title)}` : escape(task.title);
 
   const baseDesc = own
-    ? 'ImbewuField planned cycle from your own estimates; not recorded work'
+    ? provisional ? 'ImbewuField provisional planned cycle; estimates, not recorded work'
+      : 'ImbewuField planned cycle from your own estimates; not recorded work'
     : 'ImbewuField crop plan';
   const descPrefix = isSample ? 'DEMO · ' : '';
-  const description = escape(`${descPrefix}${baseDesc} — ${task.subtitle}`);
+  const description = escape(`${descPrefix}${baseDesc} — ${task.subtitle}${provisional ? '\n' + provisional.join('\n') : ''}`);
 
   const dtstamp = icsDateStamp(clock, options.bulk === true);
   const dtstart = own ? task.dueDate!.replace(/-/g, '') : icsAllDayDate(start);

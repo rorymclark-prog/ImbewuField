@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest provisional calendar continuation — [Calendar evidence — 13 November 2026](2026-11-13/provisional-calendar-evidence-codex.md). Individual/bulk events retain public provenance and limitations; current-head release gates remain separate.
+
 Latest global map entry — [Worldwide place search — 13 November 2026](2026-11-13/global-place-search-codex.md). Temporary area previews require separate farm selection; successor review and CI remain open.
 
 Latest global source continuation — [Optional cabbage nursery lead time — 13 November 2026](2026-11-13/usda-cabbage-nursery-reference-codex.md). Blank-first endpoint selection preserves source range and unknown calendar; exact successor gates remain open.
