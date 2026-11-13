@@ -1,8 +1,10 @@
 import { resolveProvisionalCropPlan, type ProvisionalDraftRequest } from './provisional-crop-planning';
 import { growerPlanningScopeKey, growerCountAreaBasisKey, normaliseGrowerMeasuredAreaInput,
-  normaliseGrowerPlanningProfile, isGrowerRecordedAt, type GrowerPlanningProfile } from './grower-planning';
+  normaliseGrowerPlanningProfile, normaliseGrowerInput, isGrowerRecordedAt, isGrowerUtcDate,
+  type GrowerPlanningProfile, type GrowerCountAreaBinding } from './grower-planning';
 import type { GrowerWorkflowSource } from './grower-workflow-source';
 import { detachJsonData } from '../lossless-json';
+import type { PlanningSupport } from './planning-policy';
 
 /** A historical review record, never a durable source-check capability. Original
  * request data lets the same resolver retain defaults, overrides and unknowns. */
@@ -19,9 +21,32 @@ export interface SavedProvisionalOrigin {
 }
 export type ProvisionalProfileSaveResult = { readonly status: 'confirmed'; readonly profileId: string }
   | { readonly status: 'held' | 'failed' | 'superseded' };
+
+/** Recorded conditions of a new arithmetic review, not a source signature or a
+ * live write capability. The controller separately binds the actual site/source. */
+export interface ProvisionalCycleContext {
+  readonly version: 1;
+  readonly asOf: string;
+  readonly reviewedAt: string;
+  readonly policyFingerprint: string;
+  readonly knownPlantingRestriction: boolean | null;
+  readonly sourceFreshness: GrowerWorkflowSource['freshness'];
+  readonly countryCode: string | null;
+  readonly agriculturalRegionReference: string | null;
+  readonly source: SavedProvisionalOrigin['source'];
+}
 const keys = ['version', 'resolver', 'profileId', 'savedAt', 'originalRequestJson', 'previewFingerprint', 'bedId', 'bedLabel', 'source'];
 const sourceKeys = ['kind', 'sourceKey', 'sourceRevision', 'geometryFingerprint'];
 const requestKeys = ['profileId', 'cropKey', 'context', 'recordedAt', 'asOf', 'candidates', 'overrides', 'measuredAreaM2', 'fieldEntryDate', 'knownPlantingRestriction', 'countBasis'];
+const cycleContextKeys = ['version', 'asOf', 'reviewedAt', 'policyFingerprint', 'knownPlantingRestriction', 'sourceFreshness', 'countryCode', 'agriculturalRegionReference', 'source'];
+export type ProvisionalSiteConditions = Pick<ProvisionalCycleContext, 'countryCode' | 'agriculturalRegionReference' | 'policyFingerprint' | 'knownPlantingRestriction'>;
+
+/** Catalogue support does not establish a legal planting clearance. */
+export function provisionalSiteConditions(support: PlanningSupport): ProvisionalSiteConditions {
+  const site = support.siteCountry.status === 'confirmed' ? support.siteCountry.context : null;
+  return Object.freeze({ countryCode: site?.countryCode ?? null, agriculturalRegionReference: site?.agriculturalRegionReference ?? null,
+    policyFingerprint: support.fingerprint, knownPlantingRestriction: null });
+}
 const text = (v: unknown): v is string => typeof v === 'string' && v.trim().length > 0 && v.length <= 2000 && !/[\u0000-\u001f\u007f]/.test(v);
 function own(value: unknown, expected: readonly string[]): Record<string, any> | null {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
@@ -115,4 +140,63 @@ export function readSavedProvisionalProfile(value: unknown) {
   const request = original(profile.provisionalOrigin)!;
   const result = resolveProvisionalCropPlan(request);
   return result.status === 'resolved' ? { profile, request, result, origin: profile.provisionalOrigin } : null;
+}
+
+export function normaliseProvisionalCycleContext(value: unknown): ProvisionalCycleContext | null {
+  try {
+    const row = own(value, cycleContextKeys), source = row && own(row.source, sourceKeys);
+    if (!row || !source || row.version !== 1 || !isGrowerUtcDate(row.asOf)
+      || !isGrowerRecordedAt(row.reviewedAt) || row.reviewedAt.slice(0, 10) !== row.asOf
+      || typeof row.policyFingerprint !== 'string' || !row.policyFingerprint.length || row.policyFingerprint.length > 262144
+      || ![null, true, false].includes(row.knownPlantingRestriction)
+      || row.sourceFreshness !== (source.kind === 'facilitator-cloud' ? 'cloud-query-copy' : 'device-saved-copy')
+      || !(row.countryCode === null || typeof row.countryCode === 'string' && /^(?:[A-Z]{2}|OTHER)$/.test(row.countryCode))
+      || !(row.agriculturalRegionReference === null || text(row.agriculturalRegionReference))
+      || !['studio-canvas', 'facilitator-cloud', 'facilitator-local'].includes(source.kind) || !text(source.sourceKey)
+      || ![source.sourceRevision, source.geometryFingerprint].every(v => typeof v === 'string' && /^[a-f0-9]{64}$/.test(v))) return null;
+    return Object.freeze({ ...row, source: Object.freeze(source) }) as unknown as ProvisionalCycleContext;
+  } catch { return null; }
+}
+
+export function createProvisionalCycleContext(source: GrowerWorkflowSource,
+  site: ProvisionalSiteConditions, reviewedAt: string): ProvisionalCycleContext | null {
+  return normaliseProvisionalCycleContext({ version: 1, asOf: reviewedAt.slice(0, 10), reviewedAt, ...site, sourceFreshness: source.freshness, source: {
+    kind: source.kind, sourceKey: source.sourceKey, sourceRevision: source.sourceRevision,
+    geometryFingerprint: source.geometryFingerprint,
+  } });
+}
+
+/** Re-run evidence selection for this cycle's actual entry date and review day.
+ * A changed active input needs a new explicit preview/profile, never an implicit
+ * edit to the saved source history. Reading an accepted snapshot uses its own day. */
+export function reviewProvisionalCycleProfile(value: unknown, suppliedContext: unknown,
+  measuredAreaM2: unknown, fieldEntryDate: unknown, binding?: GrowerCountAreaBinding) {
+  const held = (issue: string) => ({ status: 'held' as const, issue });
+  try {
+    const saved = readSavedProvisionalProfile(value), context = normaliseProvisionalCycleContext(suppliedContext);
+    if (!saved || !context) return held('saved-provisional-context-needs-review');
+    if (context.knownPlantingRestriction === true) return held('provisional-planting-restricted');
+    if (context.asOf < saved.request.asOf || context.reviewedAt < saved.origin.savedAt || context.countryCode !== saved.request.context.countryCode
+      || context.agriculturalRegionReference !== saved.request.context.agriculturalRegionReference
+      || JSON.stringify(context.source) !== JSON.stringify(saved.origin.source)) return held('provisional-context-mismatch');
+    const area = normaliseGrowerMeasuredAreaInput(measuredAreaM2), originalArea = normaliseGrowerMeasuredAreaInput(saved.request.measuredAreaM2);
+    if (binding?.bedId !== saved.origin.bedId || !area || !originalArea
+      || growerCountAreaBasisKey(area) !== growerCountAreaBasisKey(originalArea)) return held('provisional-bed-or-area-mismatch');
+    const entry = normaliseGrowerInput(fieldEntryDate, 'utc-date', isGrowerUtcDate);
+    if (!entry || entry.state !== 'provided') return held('fieldEntryDate');
+    const result = resolveProvisionalCropPlan({ ...saved.request, profileId: saved.profile.profileId,
+      asOf: context.asOf, measuredAreaM2: area, fieldEntryDate: entry });
+    if (result.status !== 'resolved') return held('provisional-evidence-needs-new-review');
+    const { provisionalOrigin: _history, ...bare } = saved.profile;
+    if (JSON.stringify(result.profile) !== JSON.stringify(bare)) {
+      const changed = Object.keys(saved.profile.inputs).filter(key =>
+        JSON.stringify(result.profile.inputs[key as keyof typeof result.profile.inputs]) !== JSON.stringify(saved.profile.inputs[key as keyof typeof saved.profile.inputs]));
+      const excludedByDate = changed.length > 0 && changed.every(key =>
+        saved.result.fields[key as keyof typeof saved.result.fields].defaultCandidateIds.some(id =>
+          result.rejected.some(row => row.id === id && row.reason === 'time-scope-mismatch')));
+      return excludedByDate ? { status: 'entry-excluded' as const, issue: 'provisional-entry-evidence-excluded' }
+        : held('provisional-evidence-needs-new-review');
+    }
+    return { status: 'ready' as const, context, result };
+  } catch { return held('provisional-evidence-needs-new-review'); }
 }

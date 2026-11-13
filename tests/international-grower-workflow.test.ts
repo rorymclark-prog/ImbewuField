@@ -4,9 +4,10 @@ import { CROPS } from '../lib/crop-catalog.ts';
 import type { CropPlanState, HarvestTarget } from '../lib/crop-plan.ts';
 import { buildDemoDesignCanvasState, buildDemoFacilitatorState } from '../lib/demo-farm.ts';
 import { createGrowerCyclePlanting } from '../lib/international/grower-cycle.ts';
+import { createSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
 import { type GrowerInput, type GrowerPlanningProfile } from '../lib/international/grower-planning.ts';
 import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
-import { assembleGrowerWorkflowReview, type AssembleGrowerWorkflowReviewInput, type GrowerWorkflowDraft } from '../lib/international/grower-workflow.ts';
+import { assembleGrowerWorkflowReview, prepareGrowerWorkflowAcceptance, type AssembleGrowerWorkflowReviewInput, type GrowerWorkflowDraft } from '../lib/international/grower-workflow.ts';
 
 // Engineering fixtures only. These short durations and quantities are not crop guidance.
 const recordedAt = '2026-11-05T12:00:00.000Z';
@@ -56,6 +57,40 @@ function accepted(input: Awaited<ReturnType<typeof fixture>>, id = 'existing-own
     geometryFingerprint: input.source.geometryFingerprint });
   assert.ok(row); return row;
 }
+
+test('the existing whole-proposal coordinator can prepare marked source-backed cycles without rewriting the saved profile or unrelated book', async () => {
+  const f = await fixture();
+  const estimate = { profileId: 'provisional-preview', cropKey: f.profile.cropKey,
+    context: { scope: f.scope, countryCode: 'DE', agriculturalRegionReference: null, establishment: 'direct' as const, waterRegime: 'irrigated' as const },
+    recordedAt, asOf: recordedAt.slice(0, 10), candidates: [], overrides: f.profile.inputs,
+    measuredAreaM2: { ...own(12, 'm2'), arithmeticBasis: f.source.measuredAreas[0].arithmeticBasis },
+    fieldEntryDate: own('2028-02-01', 'utc-date') };
+  const saved = createSavedProvisionalProfile(estimate, f.profile.profileId, '2026-11-05T12:01:00.000Z',
+    f.source, f.source.beds[0].id, f.source.beds[0].label); assert.ok(saved);
+  const book = { ...f.book, growerPlanningProfiles: [saved] }, before = JSON.stringify(book);
+  const provisionalSiteConditions = { countryCode: 'DE', agriculturalRegionReference: null, policyFingerprint: 'Synthetic Germany context', knownPlantingRestriction: null };
+  const input = { ...f, book, recordedAt: '2026-11-06T12:00:00.000Z', provisionalSiteConditions };
+  const result = review(input); assert.equal(result.proposal.status, 'ready', result.issues.join(','));
+  assert.ok(result.proposal.cycles.length > 0);
+  assert.ok(result.proposal.cycles.every(cycle => cycle.bedId === f.source.beds[0].id));
+  const acceptance = { review: result, binding: { source: f.source, draft: f.draft, recordedAt: input.recordedAt, provisionalSiteConditions },
+    provisionalSiteConditions, scope: f.scope, source: f.source, book,
+    acceptedAt: '2026-11-06T12:01:00.000Z', plantingIds: result.proposal.cycles.map((cycle, i) => ({ cycleId: cycle.cycleId, plantingId: `marked-${i}` })) };
+  const prepared = prepareGrowerWorkflowAcceptance(acceptance);
+  if (prepared.status !== 'prepared') assert.fail(prepared.reasons.join(','));
+  assert.equal(prepared.rows.length, result.proposal.cycles.length);
+  assert.deepEqual(prepared.book.growerPlanningProfiles, [saved]); assert.deepEqual(prepared.book.planNotes, book.planNotes);
+  assert.equal(JSON.stringify(book), before);
+  assert.ok(prepared.rows.every(row => row.growerCycle.assessmentSnapshot.profile.provisionalOrigin));
+  const reopened = review({ ...input, book: JSON.parse(JSON.stringify(prepared.book)) });
+  assert.equal(reopened.existingOwnCycles.length, prepared.rows.length, 'Occupancy must survive replay rather than treating accepted space as free.');
+  for (const patch of [{ acceptedAt: '2026-11-07T00:00:00.000Z' },
+    { provisionalSiteConditions: { ...provisionalSiteConditions, countryCode: 'GB' } },
+    { provisionalSiteConditions: { ...provisionalSiteConditions, policyFingerprint: 'Changed policy' } },
+    { provisionalSiteConditions: { ...provisionalSiteConditions, knownPlantingRestriction: true } }]) {
+    assert.equal(prepareGrowerWorkflowAcceptance({ ...acceptance, ...patch }).status, 'held');
+  }
+});
 
 test('explicit target/profile priority reaches the real engine with separate buyer and gross-cycle totals', async () => {
   const f = await fixture();

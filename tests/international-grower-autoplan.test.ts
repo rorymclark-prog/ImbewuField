@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { createSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
+import { createSavedProvisionalProfile, createProvisionalCycleContext, readSavedProvisionalProfile,
+  reviewProvisionalCycleProfile } from '../lib/international/provisional-profile.ts';
+import { createGrowerCyclePlanting, normaliseGrowerCycleAttachment, resolvePlantingBasis } from '../lib/international/grower-cycle.ts';
+import { projectGrowerCycles } from '../lib/international/grower-cycle-projection.ts';
+import type { ProvisionalDraftRequest } from '../lib/international/provisional-crop-planning.ts';
+import type { CountrySource } from '../lib/international/countries/types.ts';
 import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import { CROPS } from '../lib/crop-catalog.ts';
 import {
@@ -324,4 +329,160 @@ test('direct domain planning cannot accept a complete saved provisional receipt 
   assert.equal(result.status, 'missing-inputs');
   if (result.status === 'missing-inputs') assert.ok(result.issues.some(issue => issue.includes('saved-provisional-context-needs-review')));
   assert.equal(generateGrowerAutoPlan(request()).status, 'ready', 'Unmarked legacy planning remains available.');
+});
+
+function adoptionFixture(patch: Partial<ProvisionalDraftRequest> = {}) {
+  assert.ok(scope.kind === 'mapped-site');
+  const source: GrowerWorkflowSource = { status: 'ready', kind: 'studio-canvas', sourceId: scope.siteId,
+    sourceKey: `studio-canvas:${scope.siteId}`, resourceSiteId: scope.siteId, scope,
+    geometryFingerprint: 'a'.repeat(64), sourceRevision: 'b'.repeat(64), freshness: 'device-saved-copy',
+    sourceVerification: 'not-verified', beds: [bed().bed, bed('bed-z', 2).bed],
+    measuredAreas: [{ bedId: 'block-a', areaM2: 3, basis: 'explicit-saved-dimensions' },
+      { bedId: 'bed-z', areaM2: 2, basis: 'explicit-saved-dimensions' }], heldBeds: [] };
+  const original: ProvisionalDraftRequest = { profileId: 'provisional-preview', cropKey: CROPS[0].key,
+    context: { scope, countryCode: 'ZA', agriculturalRegionReference: null, establishment: 'direct', waterRegime: 'irrigated' },
+    recordedAt: requestedAt, asOf: requestedAt.slice(0, 10), candidates: [], overrides: profile().inputs,
+    measuredAreaM2: own(3, 'm2'), fieldEntryDate: own('2027-12-28', 'utc-date'), ...patch };
+  const saved = createSavedProvisionalProfile(original, 'own-profile', '2026-11-04T12:01:00.000Z', source, 'block-a', 'block-a');
+  assert.ok(saved);
+  const reviewedAt = '2026-11-05T12:00:00.000Z';
+  const site = { countryCode: original.context.countryCode, agriculturalRegionReference: original.context.agriculturalRegionReference,
+    policyFingerprint: 'Synthetic current policy context; no legal clearance', knownPlantingRestriction: null };
+  const context = createProvisionalCycleContext(source, site, reviewedAt); assert.ok(context);
+  const input = request({ requestedAt: reviewedAt, geometryFingerprint: source.geometryFingerprint,
+    profiles: [saved], provisionalContext: context, demands: [demand('buyer', 6)] });
+  return { original, source, saved, context, site, reviewedAt, input };
+}
+
+test('a complete marked estimate can produce a new dated cycle on its bound bed while retaining the original review', () => {
+  const f = adoptionFixture(), before = JSON.stringify(f.saved), result = proposal(f.input);
+  assert.equal(result.status, 'ready'); assert.equal(result.cycles.length, 1);
+  const cycle = result.cycles[0];
+  assert.equal(cycle.bedId, 'block-a', 'The unrelated bed sorts first but cannot borrow this profile.');
+  assert.equal(cycle.assessment.capacity.estimatedPlantCount, 3);
+  assert.equal(cycle.assessment.capacity.estimatedYieldKg, 6);
+  assert.deepEqual(cycle.assessment.snapshot.profile, f.saved);
+  assert.equal(JSON.stringify(f.saved), before);
+  assert.equal(cycle.assessment.snapshot.provisionalReview?.context.asOf, '2026-11-05');
+  assert.equal(readSavedProvisionalProfile(cycle.assessment.snapshot.profile)?.request.asOf, '2026-11-04');
+  const activeYield = cycle.assessment.snapshot.profile.inputs.yieldKgPerM2; assert.equal(activeYield.state, 'provided');
+  if (activeYield.state === 'provided') assert.equal(activeYield.provenance.recordedAt, requestedAt);
+  const row = createGrowerCyclePlanting(cycle, { plantingId: 'accepted-marked', acceptedAt: '2026-11-05T12:01:00.000Z',
+    geometryFingerprint: f.source.geometryFingerprint }); assert.ok(row);
+  const reloaded = JSON.parse(JSON.stringify(row));
+  assert.deepEqual(normaliseGrowerCycleAttachment(reloaded.growerCycle), row.growerCycle);
+  const context = { scope, beds: f.source.beds, geometryFingerprint: f.source.geometryFingerprint, provisionalContext: f.context };
+  const projection = projectGrowerCycles([reloaded], context);
+  assert.equal(projection.heldRows.length, 0); assert.equal(projection.ownCycles.length, 1);
+  assert.equal(projection.ownCycles[0].totalCycleKg, 6);
+  assert.deepEqual(projection.ownCycles[0].assessment, cycle.assessment);
+});
+
+test('no available bound bed means a capacity gap, never a move to the other measured bed', () => {
+  const f = adoptionFixture();
+  const result = proposal({ ...f.input, availability: [availability('bed-z')] });
+  assert.equal(result.status, 'with-gaps'); assert.equal(result.cycles.length, 0);
+  assert.equal(result.demandResults[0].unmetKg, 6);
+  const absent = generateGrowerAutoPlan({ ...f.input, beds: [bed('bed-z')], availability: [availability('bed-z')] });
+  assert.equal(absent.status, 'missing-inputs'); assert.ok(absent.issues.includes('own-profile:bound-bed-unavailable'));
+});
+
+test('current country, region, source identity, revision, geometry and planting restrictions all bind the new review', () => {
+  const f = adoptionFixture();
+  for (const context of [{ ...f.context, countryCode: 'US' }, { ...f.context, agriculturalRegionReference: 'different region' },
+    { ...f.context, knownPlantingRestriction: true }, { ...f.context, source: { ...f.context.source, sourceKey: 'another-source' } },
+    { ...f.context, source: { ...f.context.source, sourceRevision: 'c'.repeat(64) } },
+    { ...f.context, source: { ...f.context.source, geometryFingerprint: 'd'.repeat(64) } },
+    { ...f.context, version: 2 }, null, { ...f.context, allowProvisional: true }]) {
+    const result = generateGrowerAutoPlan({ ...f.input, provisionalContext: context });
+    assert.ok(['invalid-inputs', 'missing-inputs'].includes(result.status), JSON.stringify(result));
+    assert.equal(result.cycles.length, 0);
+  }
+  const unknown = adoptionFixture({ context: { ...f.original.context, countryCode: null, agriculturalRegionReference: null } });
+  assert.equal(proposal(unknown.input).status, 'ready', 'Own-estimate arithmetic must preserve unknown country without requiring catalogue support.');
+});
+
+test('a re-read source cannot make a changed active input into the old profile; dated evidence is checked for each candidate date', () => {
+  const base = adoptionFixture();
+  const { yieldKgPerM2: _override, ...overrides } = profile().inputs;
+  const f = adoptionFixture({ overrides, candidates: [{ id: 'dated-own-yield', field: 'yieldKgPerM2', cropKey: CROPS[0].key,
+    input: { state: 'provided', value: 2, unit: 'kg/m2/cycle', provenance: { kind: 'grower-estimate', recordedAt: requestedAt } }, tier: 'grower-estimate', geography: { kind: 'country', countryCode: 'ZA' },
+    establishment: 'direct', waterRegime: 'irrigated', temporalScope: { kind: 'dated', fromDate: '2027-12-28', throughDate: '2027-12-28' },
+    assumptions: ['Synthetic engineering estimate, not a farming recommendation.'] }] });
+  const input = { ...f.input, planningStart: own('2027-12-25', 'utc-date'),
+    availability: [availability('block-a', '2027-12-25', '2028-01-20')],
+    demands: [demand('buyer', 12, '2027-12-25', '2028-01-20')] };
+  const result = proposal(input);
+  assert.equal(result.status, 'with-gaps'); assert.equal(result.cycles.length, 1);
+  assert.equal(result.cycles[0].assessment.schedule.fieldEntryDate, '2027-12-28');
+  assert.equal(result.demandResults[0].unmetKg, 6);
+  assert.equal(reviewProvisionalCycleProfile(f.saved, f.context, own(3, 'm2'), own('2027-12-29', 'utc-date'), { bedId: 'block-a' }).status,
+    'entry-excluded');
+  assert.equal(proposal(base.input).status, 'ready');
+});
+
+test('recorded adoption remains replayable on a later day while operational use needs a matching current context', () => {
+  const f = adoptionFixture(), cycle = proposal(f.input).cycles[0];
+  const row = createGrowerCyclePlanting(cycle, { plantingId: 'history', acceptedAt: '2026-11-05T12:01:00.000Z', geometryFingerprint: f.source.geometryFingerprint });
+  assert.ok(row);
+  const context = { scope, beds: f.source.beds, geometryFingerprint: f.source.geometryFingerprint };
+  assert.deepEqual(resolvePlantingBasis(row, context), { kind: 'held', reasons: ['current-provisional-context-required'] });
+  const later = createProvisionalCycleContext(f.source, f.site, '2030-01-01T00:00:00.000Z'); assert.ok(later);
+  assert.equal(resolvePlantingBasis(row, { ...context, provisionalContext: later }).kind, 'grower-dated-cycle');
+  assert.equal(resolvePlantingBasis(row, { ...context, provisionalContext: { ...later, countryCode: 'GB' } }).kind, 'held');
+  for (const mutate of [(r: any) => { r.assessmentSnapshot.provisionalReview.version = 2; },
+    (r: any) => { r.assessmentSnapshot.provisionalReview.resolverFingerprint += 'changed'; },
+    (r: any) => { r.assessmentSnapshot.provisionalReview.context.asOf = '2026-11-06'; },
+    (r: any) => { r.assessmentSnapshot.countAreaBinding.bedId = 'bed-z'; },
+    (r: any) => { r.bedId = 'bed-z'; }, (r: any) => { r.acceptedAt = '2026-11-06T00:00:00.000Z'; },
+    (r: any) => { r.assessmentSnapshot.provisionalReview = null; }]) {
+    const copy = JSON.parse(JSON.stringify(row.growerCycle)); mutate(copy);
+    assert.equal(normaliseGrowerCycleAttachment(copy), null, JSON.stringify(copy));
+  }
+  assert.deepEqual(normaliseGrowerCycleAttachment(row.growerCycle), row.growerCycle);
+  for (const key of ['provisionalReview', 'countAreaBinding']) {
+    let reads = 0; const copy = JSON.parse(JSON.stringify(row.growerCycle));
+    Object.defineProperty(copy.assessmentSnapshot, key, { enumerable: true, get() { reads++; throw Error('Never read extension getters'); } });
+    assert.equal(normaliseGrowerCycleAttachment(copy), null); assert.equal(reads, 0);
+  }
+});
+
+test('a default is still current on its explicit review-due date and is held the next day without renewing source dates', () => {
+  const source: CountrySource = { id: 'synthetic-only', category: 'agricultural-extension', authority: 'Engineering fixture',
+    title: 'Synthetic default test', url: 'https://example.invalid/synthetic-source', coverage: 'Synthetic test context',
+    resolution: { status: 'unknown', reason: 'fixture' }, units: { status: 'known', value: 'kg/m2/cycle' },
+    updateCadence: { status: 'unknown', reason: 'fixture' }, licence: { status: 'known', value: 'Synthetic test permission' },
+    attribution: 'Engineering fixture', accessRequirements: { status: 'unknown', reason: 'fixture' }, missingDataBehavior: 'Leave unknown',
+    verification: 'content-read', accessedOn: '2026-11-04', publishedOn: '2026-01-01', reviewDueOn: '2026-11-05',
+    verifiedClaim: 'No real farming claim', limitations: 'Synthetic fixture only' };
+  const { yieldKgPerM2: _override, ...overrides } = profile().inputs;
+  const f = adoptionFixture({ overrides, candidates: [{ id: 'dated-default', field: 'yieldKgPerM2', cropKey: CROPS[0].key,
+    input: { state: 'provided', value: 2, unit: 'kg/m2/cycle', provenance: { kind: 'external-reference', recordedAt: requestedAt,
+      reference: 'Synthetic yield field', sourceUrl: source.url } }, tier: 'local-public-evidence', source, reuseReview: 'reviewed',
+    geography: { kind: 'country', countryCode: 'ZA' }, establishment: 'direct', waterRegime: 'irrigated',
+    temporalScope: { kind: 'recurring-season' }, assumptions: [] }] });
+  const result = proposal(f.input); assert.equal(result.status, 'ready');
+  const nextDay = createProvisionalCycleContext(f.source, f.site, '2026-11-06T00:00:00.000Z'); assert.ok(nextDay);
+  const expired = generateGrowerAutoPlan({ ...f.input, requestedAt: nextDay.reviewedAt, provisionalContext: nextDay });
+  assert.equal(expired.status, 'missing-inputs'); assert.equal(expired.cycles.length, 0);
+  assert.ok(expired.issues.some(issue => issue.endsWith(':provisional-evidence-needs-new-review')));
+  const history = readSavedProvisionalProfile(f.saved); assert.ok(history);
+  assert.equal(history.result.fields.yieldKgPerM2.sourceBindings[0].accessedOn, '2026-11-04');
+  assert.equal(history.result.fields.yieldKgPerM2.sourceBindings[0].reviewDueOn, '2026-11-05');
+  assert.equal(history.result.fields.yieldKgPerM2.sourceBindings[0].evidenceState, 'available-reference');
+});
+
+test('a complete source review never supplies a missing grower requirement or turns zero demand into a planting', () => {
+  for (const key of ['yieldKgPerM2', 'plantsPerM2', 'fieldEntryToFirstHarvestDays', 'pickingDays',
+    'fieldOccupancyDays', 'turnaroundDays', 'allowedEntryMonths'] as const) {
+    const f = adoptionFixture({ overrides: { ...profile().inputs, [key]: missing } });
+    const result = generateGrowerAutoPlan(f.input);
+    assert.equal(result.status, 'missing-inputs', key); assert.equal(result.cycles.length, 0);
+    assert.ok(result.issues.some(issue => issue.endsWith(`:${key}`)), result.issues.join(','));
+  }
+  const f = adoptionFixture();
+  const empty = proposal({ ...f.input, demands: [demand('zero', 0)] });
+  assert.equal(empty.cycles.length, 0); assert.equal(empty.demandResults[0].status, 'zero-demand');
+  assert.equal(createGrowerCyclePlanting(proposal(f.input).cycles[0], { plantingId: 'late',
+    acceptedAt: '2026-11-06T00:00:00.000Z', geometryFingerprint: f.source.geometryFingerprint }), null);
 });

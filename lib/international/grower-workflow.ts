@@ -1,3 +1,4 @@
+import { createProvisionalCycleContext, type ProvisionalSiteConditions } from './provisional-profile';
 import type { CropPlanState } from '../crop-plan';
 import { generateGrowerAutoPlan, GROWER_AUTOPLAN_MAX_ASSESSMENTS, type GrowerAutoPlanCycle, type GrowerAutoPlanRequest, type GrowerAutoPlanProposal } from './grower-autoplan';
 import { growerDemandFromHarvestTarget } from './grower-harvest-demand';
@@ -63,6 +64,7 @@ export interface AssembleGrowerWorkflowReviewInput {
   readonly draft: GrowerWorkflowDraft;
   /** Captured once by the controller; reuse unchanged for every recheck. */
   readonly recordedAt: string;
+  readonly provisionalSiteConditions?: ProvisionalSiteConditions;
 }
 
 function record(value: unknown): value is Record<string, unknown> {
@@ -102,6 +104,9 @@ export function assembleGrowerWorkflowReview(input: AssembleGrowerWorkflowReview
   };
   try {
     const scope = normaliseGrowerPlanningScope(input.scope), source = input.source, draft = input.draft, book = input.book;
+    const provisionalContext = source && input.provisionalSiteConditions
+      ? createProvisionalCycleContext(source, input.provisionalSiteConditions, input.recordedAt) : null;
+    if ('provisionalSiteConditions' in input && !provisionalContext) return hold('provisional-site-context-invalid');
     if (!scope || scope.kind !== 'mapped-site') return hold('mapped-site-required');
     if (!isGrowerRecordedAt(input.recordedAt)) return hold('review-time-invalid');
     if (!source || source.status !== 'ready') return hold('source-unavailable');
@@ -140,7 +145,7 @@ export function assembleGrowerWorkflowReview(input: AssembleGrowerWorkflowReview
     // Inspect the entire book first. Filtering a foreign/corrupt duplicate first
     // would let array order choose which canonical planting identity wins.
     if ([...counts(book.plantings, 'id').values()].some(count => count > 1)) return hold('ambiguous-planting-identities');
-    const projection = projectGrowerCycles(Array.from(book.plantings), { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint });
+    const projection = projectGrowerCycles(Array.from(book.plantings), { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint, ...(provisionalContext ? { provisionalContext } : {}) });
     existingOwnCycles = projection.ownCycles;
     for (const legacy of projection.legacyRows) if (allSourceBedIds.has(legacy.row.bedId)) block(legacy.row.bedId, ['legacy-occupancy-unresolved']);
     for (const held of projection.heldRows) {
@@ -237,6 +242,7 @@ export function assembleGrowerWorkflowReview(input: AssembleGrowerWorkflowReview
     }
     const request: GrowerAutoPlanRequest = {
       requestedAt: input.recordedAt, scope, geometryFingerprint: source.geometryFingerprint, profiles: [...selectedProfiles.values()],
+      ...([...selectedProfiles.values()].some(profile => profile.provisionalOrigin) && provisionalContext ? { provisionalContext } : {}),
       beds: source.beds.map(bed => ({ bed: { ...bed }, scope, measuredAreaM2: measuredInputs.get(bed.id)! })),
       planningStart: supplied(draft.planningStart, 'utc-date', estimate), planningEndExclusive: supplied(draft.planningEndExclusive, 'utc-date', estimate),
       availability, reserved: existingOwnCycles.map(cycle => ({ id: cycle.plantingId, bedId: cycle.bedId, scope,
@@ -255,11 +261,12 @@ export function assembleGrowerWorkflowReview(input: AssembleGrowerWorkflowReview
 export interface PrepareGrowerWorkflowAcceptanceInput {
   readonly review: Extract<GrowerWorkflowReview, { status: 'review' }>;
   /** The controller must retrieve this binding from its private review identity. */
-  readonly binding: { readonly source: GrowerWorkflowSource; readonly draft: GrowerWorkflowDraft; readonly recordedAt: string };
+  readonly binding: { readonly source: GrowerWorkflowSource; readonly draft: GrowerWorkflowDraft; readonly recordedAt: string; readonly provisionalSiteConditions?: ProvisionalSiteConditions };
   readonly scope: GrowerPlanningScope | null;
   readonly source: GrowerWorkflowSource | null;
   readonly book: CropPlanState;
   readonly acceptedAt: string;
+  readonly provisionalSiteConditions?: ProvisionalSiteConditions;
   /** Full proposal only: engine ordinals identify mappings, never persistent rows. */
   readonly plantingIds: readonly { readonly cycleId: string; readonly plantingId: string }[];
 }
@@ -338,6 +345,11 @@ export function prepareGrowerWorkflowAcceptance(input: PrepareGrowerWorkflowAcce
       || growerPlanningScopeKey(scope) !== growerPlanningScopeKey(binding.source.scope)) return held('acceptance-scope-mismatch');
     if (!source || source.status !== 'ready') return held('source-unavailable');
     if (!acceptanceEqual(source, binding.source)) return held('source-changed');
+    if (!acceptanceEqual(input.provisionalSiteConditions ?? null, binding.provisionalSiteConditions ?? null)) return held('provisional-site-context-changed');
+    const provisionalContext = binding.provisionalSiteConditions
+      ? createProvisionalCycleContext(source, binding.provisionalSiteConditions, binding.recordedAt) : null;
+    if (review.request.provisionalContext && (!provisionalContext || acceptedAt.slice(0, 10) !== provisionalContext.asOf))
+      return held('provisional-review-day-changed');
     if (!book || book.version !== 1 || !Array.isArray(book.plantings)
       || typeof book.updatedAt !== 'number' || !Number.isFinite(book.updatedAt)) return held('crop-book-invalid');
     if (book.plantings.some(row => !record(row) || !identity(row.id))) return held('planting-identity-invalid');
@@ -347,11 +359,12 @@ export function prepareGrowerWorkflowAcceptance(input: PrepareGrowerWorkflowAcce
       || !proposal.demandResults.length || proposal.demandResults.some(result => !['capacity-covered', 'zero-demand'].includes(result.status)
         || result.unmetKg !== 0)) return held('proposal-not-complete');
     if (!proposal.cycles.length) return held('no-proposed-cycles');
-    const current = assembleGrowerWorkflowReview({ scope, source, book, draft: binding.draft, recordedAt: binding.recordedAt });
+    const current = assembleGrowerWorkflowReview({ scope, source, book, draft: binding.draft, recordedAt: binding.recordedAt,
+      ...(binding.provisionalSiteConditions ? { provisionalSiteConditions: binding.provisionalSiteConditions } : {}) });
     // Ordinals repeat between proposals. Replay evidence needs the same actual
     // dated assessment and bed/demand/scope/geometry, not just "grower-cycle:1".
     const replay = book.plantings.some(row => {
-      const basis = resolvePlantingBasis(row, { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint });
+      const basis = resolvePlantingBasis(row, { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint, ...(provisionalContext ? { provisionalContext } : {}) });
       return basis.kind === 'grower-dated-cycle' && proposal.cycles.some(cycle =>
         basis.attachment.cycleId === cycle.cycleId && basis.attachment.demandId === cycle.demandId
         && basis.attachment.bedId === cycle.bedId && basis.attachment.assessmentFingerprint === cycle.assessment.fingerprint);

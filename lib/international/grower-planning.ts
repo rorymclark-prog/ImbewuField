@@ -6,7 +6,7 @@ import { growerEstimateSourceQuantity, normaliseGrowerEstimateSourceReceipt, typ
 import { addDecimalQuantity, floorDecimalQuantityRatio, floorExactDecimalQuantityRatio } from '../farm-records';
 import { INTERNATIONAL_SQUARE_FOOT_IN_SQUARE_METRES } from '../length-units';
 import { regionalSpacingReference } from './providers/regional-spacing-reference';
-import { normaliseSavedProvisionalOrigin, type SavedProvisionalOrigin } from './provisional-profile';
+import { normaliseSavedProvisionalOrigin, reviewProvisionalCycleProfile, type ProvisionalCycleContext, type SavedProvisionalOrigin } from './provisional-profile';
 
 export type GrowerPlanningScope =
   | { readonly kind: 'mapped-site'; readonly siteId: string }
@@ -65,6 +65,7 @@ export interface GrowerPlanningRequest {
   readonly measuredAreaM2: unknown;
   readonly fieldEntryDate: unknown;
   readonly countAreaBinding?: GrowerCountAreaBinding;
+  readonly provisionalContext?: unknown;
 }
 
 export const GROWER_COUNT_ARITHMETIC = 'exact-declared-decimal-v1' as const;
@@ -75,6 +76,9 @@ export interface GrowerPlanningSnapshot {
   readonly scope: GrowerPlanningScope;
   readonly measuredAreaM2: GrowerMeasuredAreaInput;
   readonly fieldEntryDate: GrowerInput<string, 'utc-date'>;
+  /** Versioned replay evidence; absent on older unmarked reviews. */
+  readonly provisionalReview?: { readonly version: 1; readonly context: ProvisionalCycleContext; readonly resolverFingerprint: string };
+  readonly countAreaBinding?: GrowerCountAreaBinding;
 }
 
 export interface GrowerCapacityEstimate {
@@ -455,15 +459,21 @@ export function assessGrowerPlanning(request: GrowerPlanningRequest): GrowerPlan
   }
   // Normalisation constructs fresh objects in canonical field order. Unordered month
   // selections are sorted; editing input values/provenance cannot mutate this review.
-  const snapshot = freeze({ countArithmetic: GROWER_COUNT_ARITHMETIC, profile, scope, measuredAreaM2, fieldEntryDate });
+  const provisional = profile.provisionalOrigin
+    ? reviewProvisionalCycleProfile(profile, request.provisionalContext, measuredAreaM2, fieldEntryDate, request.countAreaBinding) : null;
+  const snapshot: GrowerPlanningSnapshot = freeze({ countArithmetic: GROWER_COUNT_ARITHMETIC, profile, scope, measuredAreaM2, fieldEntryDate,
+    ...(profile.plantCountOrigin || profile.provisionalOrigin ? { countAreaBinding: { bedId: request.countAreaBinding?.bedId ?? '' } } : {}),
+    ...(provisional?.status === 'ready' ? { provisionalReview: { version: 1 as const, context: provisional.context,
+      resolverFingerprint: provisional.result.fingerprint } } : {}) });
   const fingerprint = JSON.stringify(snapshot);
   const held = (status: 'missing-inputs' | 'invalid-inputs' | 'scope-mismatch' | 'entry-window-excluded', issues: string[]): GrowerPlanningAssessment =>
     freeze({ ...basis, status, issues, snapshot, fingerprint });
   if (growerPlanningScopeKey(profile.scope) !== growerPlanningScopeKey(scope)) return held('scope-mismatch', ['scope']);
-  // Saving retains a historical review, not current country/source authority.
-  // The existing sowing workflow cannot revalidate that context yet. Keep this
-  // domain guard until a receipt-aware review/acceptance path supplies it.
-  if (profile.provisionalOrigin) return held('missing-inputs', ['saved-provisional-context-needs-review']);
+  if (provisional?.status === 'held') return held('missing-inputs', [provisional.issue]);
+  // Present extension data on an unmarked profile must not acquire a meaning by
+  // being silently discarded. Live permissions remain private to the controller.
+  if (!profile.provisionalOrigin && Object.hasOwn(request, 'provisionalContext') && request.provisionalContext !== undefined)
+    return held('invalid-inputs', ['unexpected-provisional-context']);
   const values = profile.inputs;
   const required: Array<[string, GrowerInput<unknown, string>]> = Object.entries(values).filter(([key]) => key !== 'nurseryDays' && !(profile.plantCountOrigin && key === 'plantsPerM2'));
   required.push(['measuredAreaM2', measuredAreaM2], ['fieldEntryDate', fieldEntryDate]);
@@ -471,6 +481,7 @@ export function assessGrowerPlanning(request: GrowerPlanningRequest): GrowerPlan
   const missing = required.filter(([, value]) => value.state === 'missing').map(([key]) => key);
   if (profile.plantCountOrigin?.finalStand === null) missing.push('spacing-final-stand');
   if (missing.length) return held('missing-inputs', missing);
+  if (provisional?.status === 'entry-excluded') return held('entry-window-excluded', [provisional.issue]);
   // All required values were checked together so callers receive the complete missing list.
   const supplied = <T, U extends string>(value: GrowerInput<T, U>): T => {
     if (value.state !== 'provided') throw new Error('Required grower input is missing');
