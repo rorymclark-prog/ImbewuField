@@ -602,3 +602,20 @@ test('actual six-column monitoring and native risk tables preserve rows beneath 
     }
   }
 });
+
+// Report footers must not override qualified evidence with a blanket demand
+// to buy another test. Inspect the actual decompressed PDF text on every page.
+test('report PDF footer asks for evidence review without mandating another soil test', async () => {
+  const { buildReportPdf } = await import('../lib/report-pdf.ts');
+  for (const language of ['en', 'st']) {
+    const blob = await buildReportPdf('# Recorded laboratory source\n\n' + 'Original report and sample correspondence remain unverified.\n\n'.repeat(80), { biome: 'Synthetic', lat: 0, lon: 0, dateLabel: 'Synthetic', language });
+    const pages = pdfTextStreams(await blob.arrayBuffer());
+    assert.ok(pages.length > 1, 'exercise repeated page footers');
+    for (const page of pages) {
+      const text = [...page.matchAll(/\(([^)]*)\)/g)].map(m => m[1]).join(' ');
+      assert.match(text, /Review existing soil evidence and field conditions/);
+      assert.doesNotMatch(text, /get a soil test before spending/);
+      if (language !== 'en') assert.match(text, /English; translation pending/);
+    }
+  }
+});

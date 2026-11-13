@@ -600,11 +600,16 @@ export function designPromptBlock(facts: ReportSiteFacts): string {
   }
 
   const proposed = d.elements.filter((g) => g.status === 'proposed');
-  const existing = d.elements.filter((g) => g.status !== 'proposed');
-  if (proposed.length && !existing.length) {
+  const existing = d.elements.filter((g) => g.status === 'existing');
+  const mixed = d.elements.filter((g) => g.status === 'mixed');
+  if (proposed.length && !existing.length && !mixed.length) {
     lines.push('· STATUS: every element above is drawn as PROPOSED — planned, not yet built. Write about them as the farmer\'s plan ("as drawn on your plan"), never as things already standing, and never as your own new idea.');
-  } else if (existing.length) {
-    lines.push(`· STATUS: already on the farm — ${existing.map((g) => g.name).join(', ')}. Everything else above is drawn as PROPOSED (planned, not yet built).`);
+  } else {
+    // A legacy mixed group has no installed/proposed quantity split. The name
+    // alone also cannot distinguish two records with different status/counts.
+    if (existing.length) lines.push(`· STATUS recorded as existing: ${existing.map((g) => `${g.name} x${g.count}`).join(', ')}.`);
+    if (mixed.length) lines.push(`· STATUS recorded as MIXED existing/proposed: ${mixed.map((g) => `${g.name} x${g.count}`).join(', ')}. Installed quantities within each mixed group are not established.`);
+    if (proposed.length) lines.push(`· STATUS recorded as PROPOSED: ${proposed.map((g) => `${g.name} x${g.count}`).join(', ')}. These are planned records, not evidence of installation or approval to build.`);
   }
   if (d.savedAt) lines.push(`· Plan last saved: ${d.savedAt}`);
   return lines.join('\n');
@@ -628,7 +633,8 @@ export function waterPromptBlock(
       const capacity = tank.statedLitres === null
         ? 'capacity not stated — do NOT assume one'
         : `${litres(tank.statedLitres)} stated capacity each`;
-      lines.push(`· ${tank.name} x${tank.count} — ${capacity}${tank.status === 'proposed' ? ' (drawn as PROPOSED — to buy/build, not yet standing)' : ''}`);
+      const recordedStatus = tank.status === 'mixed' ? 'recorded as MIXED existing/proposed; installed quantity not established' : tank.status === 'proposed' ? 'drawn as PROPOSED — not yet standing; not approval to build' : 'recorded as existing; current condition not verified here';
+      lines.push(`· ${tank.name} x${tank.count} — ${capacity} (${recordedStatus})`);
     }
     if (water.statedStorageLitres > 0) {
       lines.push(`· Total stated tank storage on the plan: ${litres(water.statedStorageLitres)}${water.tanksOfUnknownCapacity > 0 ? ` (plus ${water.tanksOfUnknownCapacity} tank(s) whose size is not stated and must not be guessed)` : ''}.`);
@@ -926,7 +932,8 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   if (water?.tanks.length) {
     const stated = water.statedStorageLitres > 0 ? litres(water.statedStorageLitres) : t('capacity not stated');
     const proposedOnly = water.tanks.every((t) => t.status === 'proposed');
-    const value=`${stated} — ${water.tanks.map((tank) => `${reportElementDisplayName(tank.name,tank.defId,language)} x${tank.count}`).join(', ')}`;
+    const variedStatus = new Set(water.tanks.map(tank => tank.status)).size > 1 || water.tanks.some(tank => tank.status === 'mixed');
+    const value=`${stated} — ${water.tanks.map((tank) => `${reportElementDisplayName(tank.name,tank.defId,language)} x${tank.count}${variedStatus ? ` (${reportEvidenceText(`recorded as ${tank.status}`, language)})` : ''}`).join(', ')}`;
     row('Water storage on the plan', proposedOnly?t('{value} (drawn as proposed)',{value}):value, t('Design Studio'));
   }
   if (water?.mapPoints.length) {

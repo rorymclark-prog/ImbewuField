@@ -16,6 +16,9 @@
 | SOIL-EARTHWORKS-CONTRACT-LAB-01 | A bare lab flag claims an uploaded, on-site measured original | Corrected in structured value basis, route preamble, header and contextual assurance. Original report, sampling depth and sample/site correspondence remain unverified. Recorded pH and genuine zero organic carbon survive. |
 | REPORT-ROOF-INVENTORY-01 | No recorded tank is treated as proven runoff loss and cheapest water | Unsupported rated row retired; header and measurement prompt identify inventory gaps without physical-absence or comparative-cost claims. Existing roof arithmetic and stated capacities remain. |
 | REPORT-TERRAIN-HEADER-OPEN | Missing runtime slope can still print `undefined` in the older deterministic terrain header | Carried open, outside this bounded soil/inventory correction. The assembled outage response exposes it; register slope evidence stays unknown. Reader/PDF fixtures explicitly supply terrain fields and do not validate terrain outages. |
+| REPORT-LAB-SAMPLING-DEPTH-01 | Lab narrative preamble still assumes0–30cm depth | Independent review requested correction; source-aware heading now reserves the model layer for SoilGrids and leaves laboratory sampling depth unverified. Successor verification pending. |
+| REPORT-RECORDED-TANK-STATUS-01 | Final prompt summary promotes mixed tank groups and loses same-name status distinctions | Independent review requested correction; design/water summaries retain each group's name/count/status, and heterogeneous/mixed header records display per-row status. Successor verification pending. |
+| REPORT-LAB-PDF-RETEST-01 | Original English report footer unconditionally requests another soil test | Independent review requested correction; report-only footer asks to review existing evidence and field conditions before treatment. Shared plan/Atlas wording and existing isiZulu footer remain unchanged; new other-language English is explicitly pending. Successor verification pending. |
 
 Source flags now distinguish model estimates, generic placeholders, recorded laboratory
 attribution and unknown sources. The soil note asks for the original results and
@@ -36,6 +39,7 @@ risk rows remain outside this finite correction and are not validated by it.
 ## Verification and actual outputs
 
 - Sequential typecheck,38 affected test files and whitespace pass. The affected pass is470/470, with zero failures, cancellations, skips or todos; release-note checks also pass.
+- The independent review of initial commita299 accepted the bounded rule removal and system correction, but requested the three retained consumer corrections above. Three targeted regressions fail against a299 for the intended prompt/status/footer claims. The corrected successor passes typecheck and472/472 affected checks across the same38 files; final outputs and delta review remain separately required.
 - On the exact base loaded read-only,12 new/expanded regressions fail for the intended unsupported claims. No import/setup failure is counted as a negative control.
 - Historical fixtures and translation packets remain unchanged. Broader testing exposed obsolete assertions for physical absence, soil provenance and mandatory roof risk. Their claims were rewritten with reasons while preserving exact unaffected rows, catalogue/custom names, source identities, original numbers and chart objects. The inherited assurance test now compares each original paragraph and title independently of route heading renumbering.
 - Six actual assembled POST responses and18 per-batch system/user requests are retained. They exercise missing/model/lab soil and null/zero/sub-litre/ordinary annual rainfall, keeping the previous water-demand and cultivation-area checks. Authentication, payment and providers are mocked; these are actual request assembly and deterministic response evidence, not generated narrative compliance.
@@ -47,8 +51,9 @@ risk rows remain outside this finite correction and are not validated by it.
 ## Remaining gates and continuation
 
 Independent Codex accepted the base correction contract, including system-prompt and
-lab-provenance consistency. That acceptance is not an implementation closure. Review
-the frozen successor source and actual outputs, then inspect its own security,
+lab-provenance consistency, then reviewed initial commita299 and requested the three
+consumer corrections recorded above. That review is not successor closure. Review
+the corrected frozen source and changed outputs, then inspect its own security,
 focused-render, preview and full CI before any merge. The base9ac push full job has
 11,070/11,070 passes; that is parent evidence, not approval for this delta.
 

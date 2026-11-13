@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '13 November 2026', sha: '9acbdba55', changes: [
+  { when: '13 November 2026', sha: 'a299362b8', changes: [
     'Reports keep missing soil and water records separate from site-risk claims.',
     'Recorded designs stay intact; unsupported works become review steps.',
   ] },

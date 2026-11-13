@@ -394,7 +394,7 @@ Climate class: ${climateClass}. This does not establish crop suitability.
 
 Sun: ${sunData}
 
-SOIL (0–30cm)
+SOIL ${d.soil.soilSource === 'soilgrids' ? '(0–30cm model layer)' : '(sampling depth not verified)'}
 ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids'
   ? `Source: ${d.soil.soilSource === 'lab' ? 'recorded laboratory attribution; original report and sample/site correspondence are not verified by this source flag' : 'ISRIC SoilGrids model, not a field measurement'}.\nTexture: ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} · pH: ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : 'not measured'} · Organic carbon: ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.organicCarbon : 'not measured'}%\nClay: ${d.soil.clay}% · Sand: ${d.soil.sand}% · Silt: ${d.soil.silt}% · Bulk density: ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.bulkDensity : 'not measured'} g/cm³`
   : 'No measured soil data is available. The app has generic placeholders, which are NOT evidence about this soil. Do not claim a soil pH, texture, fertility advantage, amendment rate or irrigation capacity. Review any existing original results and field observations; identify missing sampling evidence without assuming a duplicate test is needed.'}

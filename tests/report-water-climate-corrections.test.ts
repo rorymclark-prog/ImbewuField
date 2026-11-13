@@ -6,7 +6,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import ts from 'typescript';
 import * as climateEvidence from '../lib/climate-temperature.ts';
-import { roofCalcLine, buildReportHeaderMarkdown, assuranceMarkdown, type ReportSiteFacts } from '../lib/report-site-facts.ts';
+import { roofCalcLine, buildReportHeaderMarkdown, assuranceMarkdown, designPromptBlock, waterPromptBlock, type ReportSiteFacts } from '../lib/report-site-facts.ts';
 import { buildRiskRegister, riskRegisterMarkdown } from '../lib/report-risk.ts';
 import { buildSkeletonReportDoc } from '../lib/report-doc.ts';
 import { DEMO_LOCATION } from '../lib/demo-site.ts';
@@ -129,6 +129,12 @@ test('actual report prompt and header preserve partial rainfall without inventin
       assert.doesNotMatch(prompt, /Which earthworks are indicated|Recommended Earthworks \(priority order\)|When to build each earthwork relative|what to add, how much, why|The 5 highest-impact actions/);
       assert.match(prompt, /Earthwork proposals and missing evidence/);
       assert.match(prompt, /A laboratory label is recorded attribution/);
+      // A laboratory source flag supplies no sampling depth; keep the known model
+      // layer only for SoilGrids, independently of the displayed source qualification.
+      if (d.soil.soilSource === 'lab') {
+        assert.match(prompt, /SOIL \(sampling depth not verified\)/);
+        assert.doesNotMatch(prompt, /SOIL \(0–30cm/);
+      } else if (d.soil.soilSource === 'soilgrids') assert.match(prompt, /SOIL \(0–30cm model layer\)/);
       assert.match(prompt, /do not invent an earthwork/);
       assert.match(prompt, /construction order and dates are unknown/);
       assert.match(prompt, /Drawn water storage/); assert.match(prompt, /Tank storage on the plan/);
@@ -358,4 +364,30 @@ test('approved map footprints remain recorded geometry rather than silently veri
   assert.match(doc.sections['existing-site']!.currentLandUses.join(' '), /footprint recorded/);
   assert.doesNotMatch(doc.sections['existing-site']!.currentLandUses.join(' '), /dwelling|vegetable garden/);
   assert.equal(JSON.stringify(layers), before);
+});
+
+// A same-name installed group, a proposed group and an old mixed group must not
+// be flattened by a later status summary, even when earlier element text is correct.
+test('recorded tank groups retain their separate status and count in prompts and the visible header', () => {
+  const tanks = [
+    { name: 'Recorded tank', defId: 'jojo_5000', count: 1, statedLitres: 5000, status: 'existing' },
+    { name: 'Recorded tank', defId: 'jojo_5000', count: 2, statedLitres: 5000, status: 'proposed' },
+    { name: 'Legacy mixed tank', defId: 'jojo_5000', count: 3, statedLitres: 5000, status: 'mixed' },
+  ];
+  const facts = { water: { tanks, statedStorageLitres: 30000, tanksOfUnknownCapacity: 0, mapPoints: [], bodies: [] },
+    design: { bedCount: 0, bedAreaM2: 0, plotCount: 0, plotAreaM2: 0, growingAreaM2: 0, beds: [], routes: [], zones: [],
+      elements: tanks.map(t => ({ name: t.name, defId: t.defId, count: t.count, status: t.status, category: 'water' })) } } as ReportSiteFacts;
+  const before = JSON.stringify(facts), design = designPromptBlock(facts), water = waterPromptBlock(facts, false);
+  assert.match(design, /STATUS recorded as existing: Recorded tank x1/);
+  assert.match(design, /STATUS recorded as PROPOSED: Recorded tank x2/);
+  assert.match(design, /STATUS recorded as MIXED existing\/proposed: Legacy mixed tank x3/);
+  assert.doesNotMatch(design, /already on the farm —[^\n]*Legacy mixed tank/);
+  assert.match(water, /Legacy mixed tank x3[^\n]*MIXED existing\/proposed; installed quantity not established/);
+  assert.doesNotMatch(water, /to buy\/build/);
+  for (const language of ['en', 'zu', 'st', 'ts', 've']) {
+    const header = buildReportHeaderMarkdown({ lat: 0, lon: 0, elevationM: 0, slopeDeg: 0, aspectLabel: 'N', facts, rainfallMm: null, soilSource: 'lab', soilPh: 6.1, soilOrganicCarbon: 0, soilTexture: 'Recorded' } as any, language);
+    for (const tank of tanks) assert.ok(header.includes(`${tank.name} x${tank.count} (${language === 'en' ? '' : 'English; translation pending: '}recorded as ${tank.status})`));
+    assert.ok(header.includes('30 000 L'));
+  }
+  assert.equal(JSON.stringify(facts), before);
 });
