@@ -57,6 +57,7 @@ import { createDrawShapeAdapter, type DrawLike, type DrawShapeAdapter, type Prop
 import type { ConflictView, ResolveChoice } from '@/lib/shape-sync/protocol';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
 import { useAppLevel } from '@/lib/app-level';
+import { mapboxPlaceSearchUrl, readMapboxPlaceResults, type PlaceSearchArea } from '@/lib/place-search';
 
 
 
@@ -375,11 +376,58 @@ const SIMPLE_ELEMENT_TYPES: SiteElementType[] = ['tree', 'jojo_tank'];
 const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
 const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Natal plum', 'Wild plum', 'Waterberry', 'Other tree'];
 
-export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onMapReady, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, activePlaceId, people, showPeople, onTogglePeople, onDesignPresenceChange, guided }: Props) {
+export default function PermaMap({ onLocationSelect: onSelectLocation, selectedLocation, loading, onMapCapture, onMapReady, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, activePlaceId, people, showPeople, onTogglePeople, onDesignPresenceChange, guided }: Props) {
   const appConfirm = useAppConfirm();
   const placeSaveContext = useSavedPlaceWriteContext();
   const { t, lang } = useLanguage();
   const { user } = useAuth();
+  const placePreviewOnly = useRef(false);
+  const placeCaptureFrame = useRef<{ generation: number; ready: boolean; cleanup: (() => void) | null }>({ generation: 0, ready: true, cleanup: null });
+  const placePreviewShareCenter = useRef<{ lng: number; lat: number } | null>(null);
+  const [placePreviewActive, setPlacePreviewActive] = useState(false);
+  const onLocationSelect = useCallback((lat: number, lon: number) => {
+    // A map tap selects a farmer's own point but need not move the camera away
+    // from the temporary geocoder centre. Share the selected point thereafter.
+    if (placePreviewOnly.current || placePreviewShareCenter.current) {
+      placePreviewShareCenter.current = { lng: lon, lat };
+      // Cancel the lookup flight before an own point is used for reticle placement
+      // or site imagery. A tap alone otherwise leaves the old provider camera.
+      const map = mapRef.current;
+      placeCaptureFrame.current.cleanup?.(); placeCaptureFrame.current.cleanup = null;
+      const generation = ++placeCaptureFrame.current.generation;
+      placeCaptureFrame.current.ready = false;
+      map?.stop();
+      // jumpTo changes coordinates before the canvas is repainted. Capture must
+      // wait for this camera's completed frame, not an earlier location's idle.
+      const nativeMap = map?.getMap();
+      const ready = () => {
+        if (generation === placeCaptureFrame.current.generation && !placePreviewOnly.current) {
+          placeCaptureFrame.current.ready = true;
+          placeCaptureFrame.current.cleanup = null;
+        }
+      };
+      nativeMap?.once('idle', ready);
+      placeCaptureFrame.current.cleanup = () => { nativeMap?.off('idle', ready); };
+      map?.jumpTo({ center: [lon, lat] });
+    }
+    placePreviewOnly.current = false;
+    setPlacePreviewActive(false);
+    onSelectLocation(lat, lon);
+  }, [onSelectLocation]);
+  const allowMapEvidence = useCallback(() => {
+    if (!placePreviewOnly.current) return true;
+    setSearchError('Tap the exact farm location on the map before saving or capturing.');
+    return false;
+  }, []);
+  const allowMapCapture = useCallback(() => {
+    if (!allowMapEvidence()) return false;
+    if (!placeCaptureFrame.current.ready) {
+      setSearchError('Map imagery is still updating for your selected farm. Please try capture again when it finishes.');
+      return false;
+    }
+    setSearchError('');
+    return true;
+  }, [allowMapEvidence]);
   const isPhone = usePhoneViewport();
   // Simple / All tools (lib/app-level.ts). Simple keeps finding/choosing land, tracing the
   // boundary, a reduced Add menu, the satellite/map basemap switch, locate-me and the site
@@ -466,9 +514,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [searchQuery, setSearchQuery] = useState('');
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState('');
+  const [searchArea, setSearchArea] = useState<PlaceSearchArea>('south-africa');
+  const searchAreaRef = useRef(searchArea); searchAreaRef.current = searchArea;
+  const searchEpoch = useRef(0);
+  const placeLookup = useRef<AbortController | null>(null);
+  const placeSuggestions = useRef<AbortController | null>(null);
   // Search autofill: live suggestions as the user types (Mapbox geocoding)
-  type Place = { name: string; lon: number; lat: number };
+  type Place = { name: string; lon: number; lat: number; searchEpoch?: number };
   const [suggestions, setSuggestions] = useState<Place[]>([]);
+  const [worldwideResults, setWorldwideResults] = useState<Place[]>([]);
   const suggestTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   // Recent searches — shown when the (empty) search box is focused
   const [recents, setRecents] = useState<Place[]>([]);
@@ -1225,6 +1279,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
   // ── Reticle drawing: pan/zoom the map under a fixed crosshair, tap ＋ to drop a corner ──
   const startPinDraw = useCallback((type: 'site' | 'water') => {
+    if (!allowMapEvidence()) return;
     const draw = ensureDraw();
     // Lock every existing parcel/water shape (static mode) so panning under the
     // crosshair can't accidentally select or drag one — fixes "drawing water moved
@@ -1243,7 +1298,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setEditingFeatureId(null);
     setDraftPoints([]);
     setPinDraw(type);
-  }, [ensureDraw]);
+  }, [ensureDraw, allowMapEvidence]);
 
   // The NextStepCoach fires 'imbewu-arm-draw' to send a farmer straight into boundary
   // tracing from the report ("Trace now"). Arming the draw collapses the sheet via the
@@ -1280,6 +1335,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   };
 
   const addPin = useCallback(() => {
+    if (!allowMapEvidence()) return;
     const map = mapRef.current?.getMap();
     if (!map) return;
     // Drop at the exact crosshair pixel (screen centre), not getCenter() — they can
@@ -1287,7 +1343,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const cont = map.getContainer();
     const p = map.unproject([cont.clientWidth / 2, cont.clientHeight / 2]);
     setDraftPoints((prev) => pushCorner(prev, p.lng, p.lat));
-  }, []);
+  }, [allowMapEvidence]);
 
   // "Walk it with GPS": drop a corner at the farmer's actual position. They stand
   // on each corner of the land, tap, and walk to the next — no map-panning needed.
@@ -1641,9 +1697,44 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
   const [searchResult, setSearchResult] = useState('');
 
+  const cancelPlaceLookup = useCallback(() => {
+    placeLookup.current?.abort(); placeLookup.current = null; setSearching(false);
+  }, []);
+  const cancelPlaceSuggestions = useCallback(() => {
+    if (suggestTimer.current) clearTimeout(suggestTimer.current);
+    suggestTimer.current = null; placeSuggestions.current?.abort(); placeSuggestions.current = null;
+    setSuggestions([]);
+  }, []);
+  const chooseSearchArea = useCallback((area: PlaceSearchArea) => {
+    searchEpoch.current += 1; searchAreaRef.current = area;
+    cancelPlaceLookup(); cancelPlaceSuggestions(); setWorldwideResults([]);
+    setSearchError(''); setSearchResult(''); setShowRecents(false); setSearchArea(area);
+  }, [cancelPlaceLookup, cancelPlaceSuggestions]);
+  useEffect(() => () => {
+    placeLookup.current?.abort(); placeSuggestions.current?.abort();
+    placeCaptureFrame.current.cleanup?.();
+    ++placeCaptureFrame.current.generation;
+    if (suggestTimer.current) clearTimeout(suggestTimer.current);
+  }, []);
+  const previewPlaceResult = useCallback((place: Place) => {
+    if (place.searchEpoch !== searchEpoch.current) return;
+    ++searchEpoch.current; cancelPlaceLookup(); cancelPlaceSuggestions(); setWorldwideResults([]);
+    placeCaptureFrame.current.cleanup?.(); placeCaptureFrame.current.cleanup = null;
+    ++placeCaptureFrame.current.generation; placeCaptureFrame.current.ready = false;
+    placePreviewOnly.current = true; setPlacePreviewActive(true);
+    setSearchQuery(place.name.split(',').slice(0, 2).join(',')); setShowRecents(false); setSearchError('');
+    mapRef.current?.flyTo({ center: [place.lon, place.lat], zoom: 14, duration: 1600 });
+    setSearchResult(place.name);
+  }, [cancelPlaceLookup, cancelPlaceSuggestions]);
+
   const handleSearch = useCallback(async (query: string) => {
     const q = query.trim();
-    if (!q) return;
+    if (!q || searchAreaRef.current !== searchArea) return;
+    cancelPlaceLookup(); cancelPlaceSuggestions(); setWorldwideResults([]);
+    const epoch = ++searchEpoch.current, request = new AbortController();
+    placeLookup.current = request;
+    const current = () => placeLookup.current === request && !request.signal.aborted
+      && searchEpoch.current === epoch && searchAreaRef.current === searchArea;
     setSearching(true);
     setSearchError('');
     setSearchResult('');
@@ -1672,6 +1763,23 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       return;
     }
 
+    // Temporary geocoder results only move the camera. The grower selects the
+    // actual farm with a separate map tap; do not copy these results to recents,
+    // saved places, country confirmations or crop-planning permissions.
+    if (searchArea === 'worldwide') {
+      try {
+        if (!TOKEN) throw new Error('Map search unavailable');
+        const response = await fetch(mapboxPlaceSearchUrl(q, TOKEN, searchArea, false), { signal: request.signal });
+        if (!response.ok) throw new Error('Map search unavailable');
+        const list = readMapboxPlaceResults(await response.json());
+        if (!current()) return;
+        setWorldwideResults(list.map(place => ({ ...place, searchEpoch: epoch })));
+        if (!list.length) setSearchError('No matching places. Add a country or enter coordinates.');
+      } catch { if (current()) setSearchError('Place search is unavailable. Try again or enter coordinates.'); }
+      finally { if (current()) setSearching(false); }
+      return;
+    }
+
     const flyAndSelect = (lat: number, lon: number, name: string) => {
       mapRef.current?.flyTo({ center: [lon, lat], zoom: 13, duration: 1600 });
       onLocationSelect(lat, lon);
@@ -1690,75 +1798,74 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         const nmRes = await fetch(
           `https://nominatim.openstreetmap.org/search?` +
           `q=${encodeURIComponent(q)}&format=json&limit=1&addressdetails=0&${params}`,
-          { headers: { 'Accept-Language': 'en', 'User-Agent': 'ImbewuField/1.0' } }
+          { headers: { 'Accept-Language': 'en', 'User-Agent': 'ImbewuField/1.0' }, signal: request.signal }
         );
         const nmJson = await nmRes.json();
+        if (!current()) return;
         if (nmJson[0]) { place = nmJson[0]; break; }
       }
-      if (place) {
+      if (place && current()) {
         const lat = parseFloat(place.lat);
         const lon = parseFloat(place.lon);
         flyAndSelect(lat, lon, place.display_name?.split(',').slice(0, 2).join(',') ?? q);
         setSearching(false);
         return;
       }
-    } catch { /* fall through to Mapbox */ }
+    } catch { if (!current()) return; /* fall through to Mapbox */ }
 
     // 3. Mapbox fallback — better for urban addresses, street numbers
     try {
-      const mbRes = await fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(q)}.json` +
-        `?access_token=${TOKEN}&limit=3&language=en` +
-        `&country=ZA` + // restrict to South Africa
-        `&proximity=25,-29` + // centre-of-SA tie-breaking
-        `&types=poi,place,locality,district,region,address,neighborhood`
-      );
+      const mbRes = await fetch(mapboxPlaceSearchUrl(q, TOKEN, searchArea, false), { signal: request.signal });
       const mbJson = await mbRes.json();
-      const mbFeature = mbJson.features?.[0];
+      if (!current()) return;
+      const mbFeature = readMapboxPlaceResults(mbJson)[0];
       if (mbFeature) {
-        const [lon, lat] = mbFeature.center as [number, number];
-        flyAndSelect(lat, lon, mbFeature.place_name ?? mbFeature.text);
-        setSearching(false);
+        previewPlaceResult({ ...mbFeature, searchEpoch: epoch });
         return;
       }
-    } catch { /* fall through */ }
+    } catch { if (!current()) return; /* fall through */ }
 
+    if (!current()) return;
     setSearchError(t('searchErrorNotFound'));
     setSearching(false);
-  }, [onLocationSelect, t]);
+  }, [onLocationSelect, t, searchArea, cancelPlaceLookup, cancelPlaceSuggestions, pushRecent, previewPlaceResult]);
 
   // ── Autofill: debounced place suggestions while typing (Mapbox geocoding) ──
   const fetchSuggestions = useCallback((q: string) => {
-    if (suggestTimer.current) clearTimeout(suggestTimer.current);
+    cancelPlaceSuggestions();
+    if (searchAreaRef.current !== searchArea) return;
     const query = q.trim();
+    const epoch = searchEpoch.current;
     // Don't suggest for very short or coordinate-looking input
-    if (query.length < 3 || /^-?\d/.test(query)) { setSuggestions([]); return; }
+    if (!TOKEN || query.length < 3 || /^-?\d/.test(query)) { setSuggestions([]); return; }
     suggestTimer.current = setTimeout(async () => {
+      const request = new AbortController(); placeSuggestions.current = request;
+      const current = () => placeSuggestions.current === request && !request.signal.aborted
+        && searchEpoch.current === epoch && searchAreaRef.current === searchArea;
       try {
-        const res = await fetch(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json` +
-          `?access_token=${TOKEN}&autocomplete=true&limit=5&language=en&country=ZA&proximity=25,-29` +
-          `&types=place,locality,district,region,address,neighborhood,poi`
-        );
+        const res = await fetch(mapboxPlaceSearchUrl(query, TOKEN, searchArea, true), { signal: request.signal });
+        if (!res.ok) throw new Error('Place suggestions unavailable');
         const json = await res.json();
-        const list = (json.features ?? []).map((f: { place_name?: string; text?: string; center: [number, number] }) => ({
-          name: f.place_name ?? f.text ?? '',
-          lon: f.center[0], lat: f.center[1],
-        }));
-        setSuggestions(list);
-      } catch { setSuggestions([]); }
+        if (current()) setSuggestions(readMapboxPlaceResults(json).map(place => ({ ...place, searchEpoch: epoch })));
+      } catch { if (current()) setSuggestions([]); }
     }, 250);
-  }, []);
+  }, [searchArea, cancelPlaceSuggestions]);
 
-  const selectSuggestion = useCallback((s: { name: string; lon: number; lat: number }) => {
+  const selectSuggestion = useCallback((s: Place) => {
+    if (searchAreaRef.current !== searchArea || (s.searchEpoch !== undefined && s.searchEpoch !== searchEpoch.current)) return;
+    if (s.searchEpoch !== undefined) { previewPlaceResult(s); return; }
+    // Only previously saved recents reach this branch. Fresh Mapbox responses
+    // are temporary in both scopes and use the preview path above.
+    if (searchArea === 'worldwide') return;
+    ++searchEpoch.current; cancelPlaceLookup(); cancelPlaceSuggestions(); setWorldwideResults([]);
     setSearchQuery(s.name.split(',').slice(0, 2).join(','));
     setSuggestions([]);
     setShowRecents(false);
     setSearchError('');
-    pushRecent({ name: s.name.split(',').slice(0, 2).join(','), lon: s.lon, lat: s.lat });
     mapRef.current?.flyTo({ center: [s.lon, s.lat], zoom: 14, duration: 1600 });
+    pushRecent({ name: s.name.split(',').slice(0, 2).join(','), lon: s.lon, lat: s.lat });
     onLocationSelect(s.lat, s.lon);
-  }, [onLocationSelect, pushRecent]);
+  }, [onLocationSelect, pushRecent, searchArea, cancelPlaceLookup, cancelPlaceSuggestions, previewPlaceResult]);
 
   const goToMyLocation = useCallback(() => {
     if (!navigator.geolocation) return;
@@ -1776,12 +1883,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }, [onLocationSelect]);
 
   const handleShare = async () => {
+    if (placePreviewOnly.current) { setSearchError('Tap the exact farm location on the map before sharing.'); return; }
     const draw = drawRef.current
     const mapInst = mapRef.current
     if (!draw || !mapInst) return
     setShareState('saving')
     try {
-      const center = mapInst.getCenter()
+      const center = placePreviewShareCenter.current ?? mapInst.getCenter()
       const code = await saveSharedSite({
         geojson: draw.getAll() as GeoJSON.FeatureCollection,
         places: loadPlaces(),
@@ -1800,6 +1908,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }
 
   const handleSharePlace = async (place: SavedPlace) => {
+    if (placePreviewOnly.current) { setSearchError('Tap the exact farm location on the map before sharing.'); return; }
     const draw = drawRef.current;
     const mapInst = mapRef.current;
     if (!draw || !mapInst) return;
@@ -1811,7 +1920,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       );
       const geojson: GeoJSON.FeatureCollection = { type: 'FeatureCollection', features: allFeatures };
       const waterPoints = loadWaterPoints().filter(() => true); // include all for now
-      const center = mapInst.getCenter();
+      const center = placePreviewShareCenter.current ? { lng: place.lon, lat: place.lat } : mapInst.getCenter();
       const code = await saveSharedSite({
         geojson,
         places: [place],
@@ -2906,6 +3015,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <X size={15} />Cancel
             </button>
             <button onClick={() => {
+              if (!allowMapEvidence()) return;
               const map = mapRef.current?.getMap();
               if (!map) return;
               const center = map.getCenter();
@@ -2963,6 +3073,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <X size={15} />Cancel
             </button>
             <button onClick={() => {
+              if (!allowMapEvidence()) return;
               const map = mapRef.current?.getMap();
               if (!map || !droppingElement) return;
               const center = map.getCenter();
@@ -3205,6 +3316,16 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
         {/* Search row */}
         <div className="relative">
+        <label lang="en" className="flex items-center gap-2 font-sans" style={{ minHeight: 44, marginBottom: 6, color: '#EAF3E2', fontSize: 14 }}>
+          Search area
+          <select aria-label="Place search area" value={searchArea}
+            onChange={e => chooseSearchArea(e.target.value as PlaceSearchArea)}
+            style={{ flex: 1, minWidth: 0, minHeight: 44, padding: '8px', borderRadius: 9,
+              border: '1px solid rgba(234,243,226,0.3)', background: '#12311f', color: '#EAF3E2', fontSize: 14 }}>
+            <option value="south-africa">South Africa</option>
+            <option value="worldwide">Worldwide</option>
+          </select>
+        </label>
         <form onSubmit={(e) => { e.preventDefault(); setSuggestions([]); handleSearch(searchQuery); }}
           className="flex items-center gap-2.5"
           style={{ height: 50, padding: '0 8px 0 15px', borderRadius: 13,
@@ -3214,9 +3335,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => { const v = e.target.value; setSearchQuery(v); setSearchError(''); setSearchResult(''); setShowRecents(false); fetchSuggestions(v); }}
-            onFocus={() => { if (!searchQuery.trim() && recents.length) setShowRecents(true); }}
-            onBlur={() => setTimeout(() => { setSuggestions([]); setShowRecents(false); }, 150)}
+            onChange={(e) => { const v = e.target.value; ++searchEpoch.current; cancelPlaceLookup(); setWorldwideResults([]); setSearchQuery(v); setSearchError(''); setSearchResult(''); setShowRecents(false); fetchSuggestions(v); }}
+            onFocus={() => { if (searchArea === 'south-africa' && !searchQuery.trim() && recents.length) setShowRecents(true); }}
+            onBlur={() => setTimeout(() => { cancelPlaceSuggestions(); setShowRecents(false); }, 150)}
             placeholder={t('searchPlaceholder')}
             className="map-search-input flex-1 font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] min-w-0"
             style={{ background: 'transparent', border: 'none', color: '#e8f0e6', fontSize: 15 }}
@@ -3250,7 +3371,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </div>
         )}
         {/* Recent searches — shown when the empty search box is focused */}
-        {showRecents && suggestions.length === 0 && recents.length > 0 && (
+        {searchArea === 'south-africa' && showRecents && suggestions.length === 0 && recents.length > 0 && (
           <div className="absolute left-0 right-0 rounded-lg overflow-hidden z-50"
             style={{ top: 'calc(100% + 4px)', background: 'rgba(6,16,10,0.97)', border: '1px solid rgba(58,104,48,0.6)', boxShadow: '0 8px 28px rgba(0,0,0,0.55)' }}>
             <div style={{ padding: '8px 12px', fontSize: 12, color: 'rgba(232,240,230,0.55)', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid rgba(58,104,48,0.25)' }}>{t('recentSearchesHeader')}</div>
@@ -3267,7 +3388,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </div>
         )}
         </div>
-        {searchError && <p className="text-xs font-sans" style={{ color: 'var(--orange)', marginTop: -4 }}>{searchError}</p>}
+        {(searchArea === 'worldwide' || placePreviewActive) && <div lang="en" className="font-sans" style={{ color: '#EAF3E2', fontSize: 12, lineHeight: 1.4 }}>
+          <p>Search for a place, view the area, then tap your exact farm location. Confirm the site country separately.</p>
+          {worldwideResults.length > 0 && <section aria-label="Worldwide place results" style={{ maxHeight: 184, overflowY: 'auto', marginTop: 8 }}>
+            {worldwideResults.map((place, i) => <button key={i} type="button" onClick={() => selectSuggestion(place)}
+              style={{ display: 'block', width: '100%', minHeight: 44, padding: 10, textAlign: 'left',
+                background: 'rgba(247,242,233,0.1)', color: '#EAF3E2', border: '1px solid rgba(234,243,226,0.16)', fontSize: 14 }}>
+              View area: {place.name}
+            </button>)}
+          </section>}
+        </div>}
+        {searchError && <p lang={searchArea === 'worldwide' ? 'en' : undefined} className="text-xs font-sans" style={{ color: 'var(--orange)', marginTop: -4 }}>{searchError}</p>}
         {searchResult && <p className="text-xs font-sans truncate" style={{ color: 'var(--teal)', marginTop: -4 }}>↳ {searchResult}</p>}
 
         {/* Layers expander — keeps the rarely-changed map-view toggles tucked away
@@ -3879,6 +4010,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           {onMapCapture && selectedLocation && (
             <button
               onClick={() => {
+                if (!allowMapCapture()) return;
                 const canvas = mapRef.current?.getCanvas();
                 if (!canvas) return;
                 try { onMapCapture(canvas.toDataURL('image/jpeg', 0.88).split(',')[1]); }
