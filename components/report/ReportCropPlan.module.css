@@ -24,3 +24,11 @@
 .notes ul { list-style: disc; padding-left: 22px; }
 @media (max-width: 650px) { .calendar { display: none; } .mobileMonths { display: block; } .mobileMonths > div { padding: 12px 0; border-bottom: 1px solid var(--report-border); } .mobileMonths p { margin: 4px 0 0; } }
 @media print { .controls, .notes { display: none; } .calendar { display: block; overflow: visible; } .mobileMonths { display: none; } .calendar table { min-width: 0; font-size: 9px; } .calendar tbody th { min-width: 0; } .calendar tr { break-inside: avoid; } }
+
+/* Evidence is part of the record, unlike optional working-plan notes. Keep it
+   in browser prints even when the screen disclosure was never opened. */
+.evidence { margin: 16px 0; }
+.evidence summary { cursor: pointer; min-height: 44px; }
+.evidence p, .evidencePrint p { overflow-wrap: anywhere; white-space: pre-wrap; }
+.evidencePrint { display: none; }
+@media print { .evidence { display: none; } .evidencePrint { display: block; } }
