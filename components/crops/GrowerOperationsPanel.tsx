@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CropPlanState } from '@/lib/crop-plan';
 import type { GrowerCycleContext } from '@/lib/international/grower-cycle';
-import { buildGrowerBoardTasks, buildGrowerTasksIcs, downloadTaskIcs, loadCompletedTaskIds, setCompletedTaskState, type BoardTask } from '@/lib/task-board';
+import { buildGrowerBoardTasks, buildGrowerTasksIcs, loadCompletedTaskIds, setCompletedTaskState, type BoardTask } from '@/lib/task-board';
 import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 import { isJournalDate, MAX_NOTES_LEN } from '@/lib/field-journal';
 import type { GrowerFieldObservationInput, GrowerFieldObservationResult } from '@/lib/grower-field-observation';
@@ -177,6 +177,9 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
     }
   }
   async function actOnTask(task: BoardTask, action: 'complete' | 'calendar') {
+    // An individual demo date needs the same identity and source lease as the
+    // full calendar; the generic Home task downloader has no sample context.
+    if (action === 'calendar') { await downloadAllPlannedDates(task); return; }
     if (calendarPending.current || observationPending.current) return;
     const turn = ++generation.current, expected = state;
     setBusy(true); setMessage('');
@@ -188,30 +191,28 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
       if (!checked || !live.current.isCurrent()) {
         setMessage('The saved plan or design changed. Check its current records before continuing.'); return;
       }
-      if (action === 'calendar') {
-        setMessage(downloadTaskIcs(task) ? 'Calendar file prepared from this checked planned date.' : 'The calendar file could not be prepared.');
-      } else {
-        const next = setCompletedTaskState(task.id, !task.completed);
-        setCompleted(next);
-        setMessage(next.has(task.id) === !task.completed ? 'Checklist updated. Production and stock records have not changed.'
-          : 'The checklist could not be saved.');
-      }
+      const next = setCompletedTaskState(task.id, !task.completed);
+      setCompleted(next);
+      setMessage(next.has(task.id) === !task.completed ? 'Checklist updated. Production and stock records have not changed.'
+        : 'The checklist could not be saved.');
     } catch {
       if (turn === generation.current) setMessage('Could not check the current saved records. Try checking them again.');
     } finally { if (turn === generation.current) setBusy(false); }
   }
-  async function downloadAllPlannedDates() {
+  async function downloadAllPlannedDates(selectedTask?: BoardTask) {
     if (currentCalendarRender.current !== calendarRender || !calendarLifetime.current || calendarPending.current
       || observationPending.current || actionBusy || state !== live.current.state || state.status !== 'ready'
-      || !state.book || !result.tasks.length || result.heldPlantings || state.heldSources.length) return;
+      || !state.book || !result.tasks.length
+      || (selectedTask ? !result.tasks.includes(selectedTask) : result.heldPlantings || state.heldSources.length)) return;
     const expected = state, checker = props.checkCurrent, sourceCurrent = props.isCurrent;
     const propSample = props.sample, deviceSample = isSampleMode(), demo = propSample === true || deviceSample;
     const lifetime = calendarLifetime.current, operation = {}, turn = ++generation.current;
     // Keep only public event fields. Neither a journal link nor the source book
     // belongs in a calendar payload or a detached task snapshot.
-    const tasks = Object.freeze(result.tasks.map(({ id, kind, title, subtitle, icon, dueDate, growerEventKind,
-      dueMonth, monthsAway, completed: done }) => Object.freeze({ id, kind, title, subtitle, icon, dueDate,
-      growerEventKind, dueMonth, monthsAway, completed: done })));
+    const tasks = Object.freeze((selectedTask ? [selectedTask] : result.tasks).map(({ id, kind, title, subtitle, icon, dueDate, growerEventKind,
+      dueMonth, monthsAway, completed: done, provisionalEvidenceLines }) => Object.freeze({ id, kind, title, subtitle, icon, dueDate,
+      growerEventKind, dueMonth, monthsAway, completed: done,
+      ...(provisionalEvidenceLines ? { provisionalEvidenceLines: Object.freeze([...provisionalEvidenceLines]) } : {}) })));
     calendarPending.current = operation;
     const owned = () => calendarLifetime.current === lifetime && calendarPending.current === operation
       && generation.current === turn && live.current.state === expected && live.current.checkCurrent === checker
@@ -231,7 +232,8 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
       const content = buildGrowerTasksIcs(tasks, { sample: demo });
       if (!current()) return;
       const downloaded = downloadCheckedCalendar(content, demo, current);
-      if (current()) setMessage(downloaded ? 'Calendar file prepared from all represented checked planned dates. It records no observed work.'
+      if (current()) setMessage(downloaded ? selectedTask ? 'Calendar file prepared from this checked planned date. It records no observed work.'
+        : 'Calendar file prepared from all represented checked planned dates. It records no observed work.'
         : 'The complete calendar file could not be prepared. No partial calendar was downloaded.');
     } catch {
       if (owned()) setMessage('Could not prepare all checked planned dates. Check the saved records and try again.');
@@ -267,6 +269,10 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
         <p className="font-semibold">{task.title}</p>
         <p><time dateTime={task.dueDate}>{task.dueDate}</time> (UTC date)</p>
         <p>{task.subtitle}</p>
+        {task.provisionalEvidenceLines && <details lang="en" className="text-sm break-words">
+          <summary className="min-h-11 cursor-pointer">Provisional evidence and limits</summary>
+          {task.provisionalEvidenceLines.map((line, index) => <p key={index} className="mt-2">{line}</p>)}
+        </details>}
         <div className="flex flex-wrap gap-2">
           <button type="button" className={button} disabled={actionBusy} aria-pressed={task.completed}
             onClick={() => void actOnTask(task, 'complete')}>{task.completed ? 'Reopen checklist item' : 'Mark checklist item done'}</button>
