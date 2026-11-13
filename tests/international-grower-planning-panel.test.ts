@@ -224,3 +224,19 @@ test('legacy estimate editing cannot relabel a source-backed saved preview that 
     assert.deepEqual(ui.profiles[0], profile);
   } finally { ui.dispose(); }
 });
+
+test('a bare positive-only profile cannot be converted into a closed grower window by loading the estimate editor', () => {
+  const at = '2026-11-13T12:00:00.000Z';
+  const missing = { state: 'missing', reason: 'not-known' } as const;
+  const profile: GrowerPlanningProfile = { version: 2, entryMonthCoverage: 'positive-only', profileId: 'positive-fixture', cropKey: crop.key, scope,
+    inputs: { establishment: missing, plantsPerM2: missing, yieldKgPerM2: missing, nurseryDays: missing,
+      fieldEntryToFirstHarvestDays: missing, pickingDays: missing, fieldOccupancyDays: missing, turnaroundDays: missing,
+      allowedEntryMonths: { state: 'provided', value: [2], unit: 'utc-months', provenance: { kind: 'external-reference',
+        recordedAt: at, sourceUrl: 'https://example.invalid/positive-months', reference: 'Synthetic fixture' } } } };
+  const ui = mount([profile]);
+  try {
+    ui.click(`Edit ${crop.name}`); assert.match(ui.text(), /cannot convert its source evidence/);
+    assert.equal(ui.attempts.length, 0); assert.deepEqual(ui.profiles[0], profile);
+    assert.equal(ui.field('I specify the allowed field-entry months').props.checked, false);
+  } finally { ui.dispose(); }
+});

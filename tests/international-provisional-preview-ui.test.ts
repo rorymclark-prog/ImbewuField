@@ -88,6 +88,23 @@ test('mounted preview retains source evidence and independent counts/dates with 
   } finally { ui.dispose(); }
 });
 
+test('positive-only source months show conditional dates and unknown omissions; an empty grower override stays distinct from reset', async () => {
+  const ui = mount({ evidence: { revision: 'positive-month-fixture', candidates: [...candidates,
+    candidate('allowedEntryMonths', [2], { entryMonthCoverage: 'positive-only' })] } });
+  try {
+    ui.choose(); await ui.click();
+    assert.match(ui.text(), /Source reports this month/); assert.match(ui.text(), /other months remain unknown/);
+    assert.match(ui.text(), /conditional calculations/); assert.match(ui.text(), /2028-03-02/);
+    ui.change('Preview field-entry date (UTC)', '2028-03-15'); await ui.click();
+    assert.match(ui.text(), /Entry window: unknown/); assert.match(ui.text(), /2028-03-18/);
+    const toggle = ui.field('I specify preview field-entry months');
+    act(() => toggle.props.onChange({ target: { checked: true } })); await ui.click();
+    assert.match(ui.text(), /Entry window: excluded/); assert.match(ui.text(), /Source default reports positive months only/);
+    act(() => ui.field('I specify preview field-entry months').props.onChange({ target: { checked: false } })); await ui.click();
+    assert.match(ui.text(), /Entry window: unknown/); assert.match(ui.text(), /2028-03-18/);
+  } finally { ui.dispose(); }
+});
+
 test('conflicting density stays unknown, explicit override retains both defaults, invalid edit never restores one', async () => {
   const ui = mount({ evidence: { revision: 'conflict', candidates: [...candidates,
     candidate('plantsPerM2', 3, { id: 'other-density', reportedRange: [2, 4], planningValueBasis: 'reported-point' })] } });
@@ -715,6 +732,26 @@ test('explicit save keeps partial source evidence, consumes duplicate clicks and
   try { assert.match(ui.text(), /Saved provisional profiles/); assert.match(ui.text(), /76.2 cm between rows/); assert.match(ui.text(), /Current applicability has not been checked/);
     assert.match(ui.text(), /Saved measured area: 10.5 m²/); assert.match(ui.text(), /Saved budgeted whole stations: 30 \(ready\)/); }
   finally { ui.dispose(); }
+});
+
+test('positive-only month meaning remains visible after an actual profile save and remount', async () => {
+  const rows: import('../lib/international/grower-planning.ts').GrowerPlanningProfile[] = [];
+  const evidence = { revision: 'positive-save-fixture', candidates: [...candidates, candidate('allowedEntryMonths', [2], { entryMonthCoverage: 'positive-only' })] };
+  let ui = mount({ evidence, profiles: rows, onSaveProfile: (p, current) => {
+    assert.equal(current(), true); rows.push(p); return { status: 'confirmed', profileId: p.profileId };
+  } });
+  try {
+    ui.choose(); await ui.click();
+    act(() => ui.field(saveDeclaration).props.onChange({ target: { checked: true } }));
+    await ui.click('Save provisional profile'); assert.equal(rows.length, 1); assert.equal(rows[0].version, 2);
+  } finally { ui.dispose(); }
+  ui = mount({ evidence, profiles: rows });
+  try {
+    assert.match(ui.text(), /Saved entry window: Source reports this month/);
+    assert.match(ui.text(), /Saved date offsets are conditional calculations/);
+    assert.match(ui.text(), /Source default reports positive months only/);
+    assert.match(ui.text(), /2028-03-02/);
+  } finally { ui.dispose(); }
 });
 
 test('pending save cannot survive draft edits, actor loss or country and scope round trips', async () => {
