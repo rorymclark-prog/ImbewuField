@@ -202,6 +202,7 @@ export function normaliseGrowerCycleAttachment(value: unknown): GrowerCycleAttac
     }
     const assessment = reassess(value.assessmentSnapshot);
     if (!assessment || assessment.fingerprint !== value.assessmentFingerprint) return null;
+    if (assessment.snapshot.countAreaBinding && assessment.snapshot.countAreaBinding.bedId !== value.bedId) return null;
     const adoption = assessment.snapshot.provisionalReview;
     if (adoption && (assessment.snapshot.countAreaBinding?.bedId !== value.bedId
       || adoption.context.source.geometryFingerprint !== value.geometryFingerprint

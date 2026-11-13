@@ -9,6 +9,7 @@ import ts from 'typescript';
 import type { CropPlanState, HarvestTarget } from '../lib/crop-plan.ts';
 import type { GrowerPlanningProfile } from '../lib/international/grower-planning.ts';
 import type { GrowerWorkflowDraft, GrowerWorkflowReview } from '../lib/international/grower-workflow.ts';
+import { createSavedProvisionalProfile, type ProvisionalSiteConditions } from '../lib/international/provisional-profile.ts';
 
 class MemoryStorage {
   rows = new Map<string, string>(); failWrites = false; writes = 0;
@@ -210,6 +211,74 @@ async function readyReview(ui: ReturnType<typeof mount>) {
   if (result.status !== 'review') throw Error('Ready engineering fixture held');
   assert.equal(result.proposal.status, 'ready'); assert.ok(result.proposal.cycles.length > 0); return result;
 }
+
+async function markedController() {
+  const ui = mount(); await ui.refresh(); const source = ui.latest.source; assert.ok(source);
+  const saved = createSavedProvisionalProfile({ profileId: 'provisional-preview', cropKey: profile().cropKey,
+    context: { scope, countryCode: 'DE', agriculturalRegionReference: null, establishment: 'direct', waterRegime: 'irrigated' },
+    recordedAt, asOf: recordedAt.slice(0, 10), candidates: [], overrides: profile().inputs,
+    measuredAreaM2: { ...own(8, 'm2'), arithmeticBasis: source.measuredAreas[0].arithmeticBasis },
+    fieldEntryDate: own('2028-12-01', 'utc-date') }, 'marked-profile', '2026-11-04T12:01:00.000Z', source, source.beds[0].id, source.beds[0].label);
+  assert.ok(saved); const initial = cropBook.loadCropPlanWithWriteAdmission();
+  const next = { ...initial.book, growerPlanningProfiles: [...initial.book.growerPlanningProfiles!, saved] };
+  const permit = cropBook.createGrowerProfileChangePermit(initial.admission, initial.book, next,
+    { kind: 'edit', profileId: saved.profileId, expectedProfile: null }); assert.ok(permit);
+  act(() => { assert.equal(cropBook.saveCropPlanWithReceipt(next, { growerProfileChange: permit }).saved, true); });
+  const loaded = cropBook.loadCropPlanWithWriteAdmission(), c = ui.controller;
+  c.state.plan = loaded.book; c.state.planWriteBase.current = { ...c.state.planWriteBase.current,
+    token: loaded.token, planKey: JSON.stringify(loaded.book), admission: loaded.admission };
+  const conditions: ProvisionalSiteConditions = { countryCode: 'DE', agriculturalRegionReference: null,
+    policyFingerprint: 'Synthetic current country/policy conditions', knownPlantingRestriction: null };
+  let currentConditions = conditions;
+  ui.update({ book: loaded.book, provisionalSiteConditions: conditions, readCurrentProvisionalSiteConditions: () => currentConditions });
+  await ui.refresh();
+  const request = { ...draft(), targetProfiles: [{ targetId: 'own-target', profileId: saved.profileId }] };
+  const review = async () => {
+    let result!: GrowerWorkflowReview; await act(async () => { result = await ui.latest.onReview(request); });
+    assert.equal(result.status, 'review', result.issues.join(',')); if (result.status !== 'review') throw Error('Marked fixture held');
+    assert.equal(result.proposal.status, 'ready', result.issues.join(',')); return result;
+  };
+  return { ui, saved, conditions, review, setCurrentConditions(value: ProvisionalSiteConditions) { currentConditions = value; } };
+}
+
+test('the mounted controller supplies new review conditions without rewriting original source history or acquiring implicit save permission', async () => {
+  const f = await markedController(); try {
+    const writes = local.writes, before = JSON.stringify([...local.rows]), result = await f.review();
+    assert.equal(result.request.provisionalContext?.asOf, new Date().toISOString().slice(0, 10));
+    assert.equal(await f.ui.current(result), true);
+    assert.deepEqual(result.proposal.cycles[0].assessment.snapshot.profile, f.saved);
+    assert.equal(result.proposal.cycles[0].assessment.snapshot.provisionalReview?.context.countryCode, 'DE');
+    f.ui.update({ commitAcceptance: () => { assert.fail('No declaration was supplied'); }, createPlantingId: () => 'never-written' });
+    let accepted!: Awaited<ReturnType<typeof f.ui.latest.onAccept>>;
+    await act(async () => { accepted = await f.ui.latest.onAccept(result); });
+    assert.equal(accepted.status, 'held'); assert.equal(local.writes, writes); assert.equal(JSON.stringify([...local.rows]), before);
+  } finally { f.ui.dispose(); }
+});
+
+test('an observed current-country mismatch retires an old review permanently even if the country returns before a render', async () => {
+  const f = await markedController(); try {
+    const result = await f.review(), writes = local.writes;
+    f.setCurrentConditions({ ...f.conditions, countryCode: 'GB' });
+    assert.equal(await f.ui.current(result), false);
+    f.setCurrentConditions(f.conditions);
+    assert.equal(await f.ui.current(result), false, 'A -> B -> A must not revive the original private generation.');
+    await f.ui.refresh(); const next = await f.review(); assert.equal(await f.ui.current(next), true);
+    assert.equal(local.writes, writes);
+  } finally { f.ui.dispose(); }
+});
+
+test('a current-review UTC day expires at midnight and a fresh next-day review preserves the historical profile', async t => {
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-11-13T23:59:59.900Z') });
+  const f = await markedController(); try {
+    const result = await f.review(), writes = local.writes;
+    assert.equal(result.request.provisionalContext?.asOf, '2026-11-13');
+    t.mock.timers.tick(1000);
+    assert.equal(await f.ui.current(result), false);
+    const next = await f.review(); assert.equal(next.request.provisionalContext?.asOf, '2026-11-14');
+    assert.equal(await f.ui.current(next), true); assert.notEqual(next.proposal.fingerprint, result.proposal.fingerprint);
+    assert.deepEqual(next.proposal.cycles[0].assessment.snapshot.profile, f.saved); assert.equal(local.writes, writes);
+  } finally { f.ui.dispose(); }
+});
 
 test('real hook reads current saved geometry and book, reviews actual engine output and rechecks the same snapshot without writing', async () => {
   const ui = mount(); try {

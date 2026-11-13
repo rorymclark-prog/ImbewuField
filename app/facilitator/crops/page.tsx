@@ -30,7 +30,7 @@ import NurseryPlanPanel from '@/components/crops/NurseryPlanPanel';
 import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySaveContext, beginNurserySaveRequest, commitNurserySaveRequest, readNurserySaveConfirmation, createHarvestSaveContext, beginHarvestSaveRequest, commitHarvestSaveRequest, readHarvestSaveConfirmation, harvestTargetsSourceKey, type HarvestSaveContext, type HarvestSaveRequest, type HarvestSaveResult, type NurserySaveAuthority, type NurserySaveContext, type NurserySaveRequest, type NurserySaveResult } from '@/lib/nursery-save-receipt';
 import GrowerPlanningPanel from '@/components/crops/GrowerPlanningPanel';
 import ProvisionalCropPreview from '@/components/crops/ProvisionalCropPreview';
-import type { ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
+import { provisionalSiteConditions, type ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
 import GrowerAutoPlanPanel from '@/components/crops/GrowerAutoPlanPanel';
 import GrowerNurseryReviewPanel from '@/components/crops/GrowerNurseryReviewPanel';
 import SavedGrowerNurseryReviewPanel from '@/components/crops/SavedGrowerNurseryReviewPanel';
@@ -2199,7 +2199,8 @@ function FacilitatorCropsPageInner() {
     const held = (reason: string): GrowerWorkflowAcceptanceResult => ({ status: 'held', reasons: [reason] });
     let written = false;
     try {
-      if (!plan || !growerActorIsCurrent() || planSaveConflict || !request.isCurrent()) return held('context-changed');
+      if (!plan || !growerActorIsCurrent() || planSaveConflict || !request.isCurrent()
+        || (request.sourceIsCurrent ? !request.sourceIsCurrent() : !!request.review.request.provisionalContext)) return held('context-changed');
       const base = planWriteBase.current;
       if (!base || base.owner !== growerOwner || base.sample !== growerSample || base.planKey !== JSON.stringify(plan)
         || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) return held('pending-plan-edits');
@@ -2214,7 +2215,8 @@ function FacilitatorCropsPageInner() {
       // Only the hook supplies its private original data binding. The pure
       // helper receives no functions or reconstructed display fingerprints.
       const prepared = prepareGrowerWorkflowAcceptance({ review: request.review, binding: request.binding,
-        scope: growerScope, source: request.source, book: current.book, acceptedAt: request.acceptedAt, plantingIds: request.plantingIds });
+        scope: growerScope, source: request.source, book: current.book, acceptedAt: request.acceptedAt, plantingIds: request.plantingIds,
+        ...(request.binding.provisionalSiteConditions ? { provisionalSiteConditions: provisionalSiteConditions(currentPlanningSupport(surveySiteId, planningWorkspaceId)) } : {}) });
       if (prepared.status === 'held') return { status: 'held', reasons: prepared.reasons };
       if (!cropPlanWriteCandidateIsLossless(prepared.book)) return held('acceptance-write-lossy');
       if (!request.isCurrent() || !growerActorIsCurrent() || planWriteBase.current !== base
@@ -2222,14 +2224,19 @@ function FacilitatorCropsPageInner() {
         || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)
         || cropPlanWriteToken() !== current.token) return held('saved-plan-changed');
       if (saveTimer.current) clearTimeout(saveTimer.current);
-      const receipt = saveCropPlanWithReceipt(prepared.book);
+      const receipt = saveCropPlanWithReceipt(prepared.book, { writeIsCurrent: () => request.isCurrent()
+        && (request.sourceIsCurrent?.() ?? true) && growerActorIsCurrent()
+        && cropPlanWriteToken() === current.token && planWriteBase.current === base });
+      // Retain the actual write before state callbacks or readback can fail.
+      if (receipt.saved) written = true;
       setPlanSaveFailed(!receipt.saved);
-      if (!receipt.saved) return { status: 'failed' };
-      written = true;
-      if (!growerActorIsCurrent() || planWriteBase.current !== base) { setPlanSaveConflict(true); return { status: 'superseded' }; }
+      if (!receipt.saved) return !request.isCurrent() || !(request.sourceIsCurrent?.() ?? true)
+        ? held('context-changed') : { status: 'failed' };
+      if (!(request.sourceIsCurrent?.() ?? true) || !growerActorIsCurrent() || planWriteBase.current !== base) { setPlanSaveConflict(true); return { status: 'superseded' }; }
       const confirmed = loadCropPlanWithWriteAdmission(), key = JSON.stringify(confirmed.book);
       if (confirmed.token !== receipt.token || !cropPlanWriteAdmissionMatches(confirmed.admission, key, receipt.token)
-        || !growerActorIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== receipt.token) {
+        || cropPlanWriteToken() !== receipt.token || !(request.sourceIsCurrent?.() ?? true)
+        || !growerActorIsCurrent() || planWriteBase.current !== base) {
         setPlanSaveConflict(true); return { status: 'superseded' };
       }
       // The raw appended book can legitimately project old once-row settlement.

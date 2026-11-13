@@ -191,9 +191,19 @@ export function reviewProvisionalCycleProfile(value: unknown, suppliedContext: u
     if (JSON.stringify(result.profile) !== JSON.stringify(bare)) {
       const changed = Object.keys(saved.profile.inputs).filter(key =>
         JSON.stringify(result.profile.inputs[key as keyof typeof result.profile.inputs]) !== JSON.stringify(saved.profile.inputs[key as keyof typeof saved.profile.inputs]));
+      const rejected = (id: string, reason: string) => result.rejected.some(row => row.id === id && row.reason === reason);
+      const datedMethod = changed.includes('establishment') && saved.result.activeEstablishment !== null
+        && result.activeEstablishment !== saved.result.activeEstablishment
+        && saved.result.fields.establishment.defaultCandidateIds.some(id => rejected(id, 'time-scope-mismatch'));
+      // Establishment is resolved first. When its date window excludes it,
+      // otherwise recurring method-specific fields become scope-excluded too.
+      // Classify only that causal exclusion; every eventual ready date must
+      // still reproduce the complete original profile without substituting it.
       const excludedByDate = changed.length > 0 && changed.every(key =>
         saved.result.fields[key as keyof typeof saved.result.fields].defaultCandidateIds.some(id =>
-          result.rejected.some(row => row.id === id && row.reason === 'time-scope-mismatch')));
+          rejected(id, 'time-scope-mismatch') || datedMethod && key !== 'establishment' && rejected(id, 'scope-mismatch')
+            && saved.request.candidates.some(candidate => candidate.id === id && candidate.field === key
+              && candidate.establishment === saved.result.activeEstablishment)));
       return excludedByDate ? { status: 'entry-excluded' as const, issue: 'provisional-entry-evidence-excluded' }
         : held('provisional-evidence-needs-new-review');
     }

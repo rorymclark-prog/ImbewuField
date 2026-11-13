@@ -76,6 +76,22 @@ test('a complete saved spacing profile budgets whole cells on its bed through pr
   const held = generateGrowerAutoPlan({ ...input, profiles: [unknown], demands: [{ ...input.demands[0], profileId: unknown.profileId }] });
   assert.equal(held.status, 'missing-inputs'); assert.equal(held.cycles.length, 0);
   assert.ok(held.issues.some(issue => issue.endsWith(':spacing-final-stand')));
+
+  // ADOPT-E15-01: the same area on another bed cannot move a legitimate
+  // spacing-only attachment, even without a provisional-history extension.
+  const bare = resolved(complete).profile, { provisionalContext: _review, ...ordinaryRequest } = input;
+  const twins = source.beds.map(bed => ({ ...bed, areaM2: 10.125 }));
+  const bareProposal = generateGrowerAutoPlan({ ...ordinaryRequest, profiles: [bare],
+    beds: twins.map(bed => ({ bed, scope, measuredAreaM2: supplied(bed.areaM2, 'm2') })),
+    demands: [{ ...input.demands[0], profileId: bare.profileId }] });
+  assert.equal(bareProposal.status, 'ready'); const bareCycle = bareProposal.cycles[0];
+  const options = { plantingId: 'spacing-only', acceptedAt: '2026-11-13T00:01:00.000Z', geometryFingerprint: source.geometryFingerprint };
+  const bareRow = createGrowerCyclePlanting(bareCycle, options); assert.ok(bareRow);
+  assert.deepEqual(normaliseGrowerCycleAttachment(JSON.parse(JSON.stringify(bareRow.growerCycle))), bareRow.growerCycle);
+  assert.equal(createGrowerCyclePlanting({ ...bareCycle, bedId: 'other' }, options), null, 'ADOPT-E15-01: creation must retain the assessed bed.');
+  const moved = JSON.parse(JSON.stringify(bareRow)); moved.bedId = 'other'; moved.growerCycle.bedId = 'other';
+  assert.equal(normaliseGrowerCycleAttachment(moved.growerCycle), null, 'ADOPT-E15-01: copied outer and attachment bed IDs must not rebind spacing.');
+  assert.equal(resolvePlantingBasis(moved, { scope, beds: twins, geometryFingerprint: source.geometryFingerprint }).kind, 'held');
 });
 
 test('undated Great Lakes transplant spacing supports a conditional count without inventing stand, local currency or yield', () => {

@@ -76,3 +76,47 @@ producers, and retain per-member public evidence through saved views and exports
 Exercise positive actual app/writer/reopen/export flows plus stale-action negatives,
 inspect originals, obtain independent review of the exact finished delta, then push
 and wait for its required current-head CI. The full global milestone remains active.
+
+## Independent core findings and controller continuation
+
+The independent Codex reviewer inspected exacte15c862/treeaca856c and requested
+changes. It did not run tests or inspect the app. Both counterexamples were then
+reproduced with the actual core functions: two failing assertions, no import errors.
+
+| ID | Independent finding | Correction and current evidence |
+| --- | --- | --- |
+| ADOPT-E15-01 (P2) | A spacing-only attachment without provisional history could move to an equal-area bed while retaining its original assessment binding | Attachment normalization now checks every recorded count-area binding against its bed, independently of the provisional-review extension. Correct original attachment/reload passes; moved creation and moved outer/attachment IDs hold. Independent closure pending. |
+| ADOPT-E15-02 (P2) | An out-of-date establishment default made dependent recurring method fields scope-excluded and stopped preflight before the later valid date | Temporal classification follows that recorded establishment dependency. The existing resolver still owns the final inputs; only a date reproducing the entire saved profile can schedule. The dependency case reaches its supported date; genuinely missing yield holds. Independent closure pending. |
+
+The hook now captures current site conditions with a private monotonic generation
+and rechecks the actual supplied store reader after awaits. Observed country/policy
+mismatch retires the old generation even before a React render, including A-B-A.
+Current reviews expire at UTC midnight; historical profile timestamps remain exact.
+Marked acceptance requires the explicit displayed-action guard rather than the
+legacy implicit default. A separate source/site/day revocation guard survives the
+writer's own crop-book event.
+
+The actual page acceptance callback independently re-reads current planning support,
+passes the final revocation check into the shared raw writer, latches a completed
+receipt before fallible state callbacks, and checks current source/actor/base after
+readback and the final token read. Completed-but-revoked writes report superseded
+without installing stale plan/base state; they cannot automatically replay.
+
+- Typecheck: clean before this successor's affected run.
+- Affected checks: 1,512 pass across the same87 registered files; zero failures,
+  cancellations, skips or todos. The earlier1,504 count remains historical.
+- Added actual mounted controller/page/shared-writer checks cover marked adoption
+  and raw readback, one write/duplicate refusal, original-history retention,
+  country A-B-A, UTC rollover during source hashing, UTC rollover at the final
+  raw-write boundary, and source revocation during a completed write.
+- Source expiry also checks a changed active fallback: the old profile holds;
+  an explicitly saved successor may use the new estimate without rewriting history.
+- Whitespace: clean before checkpoint commit.
+- App route props, new evidence/consent controls, current-source discovery,
+  per-member nursery/export provenance and original browser/PDF inspection remain
+  unfinished. A mounted controller/parent test does not establish those surfaces.
+- The older59ce CI job131541137905 finished:10,931 tests,10,920 passes and11 failures,
+  zero skips/cancellations/todos. Failure names match the seven editor harness,
+  three report contracts and one type-floor findings corrected on31818f. The
+ 31818f full job131599439757 was still live when checked. Neither is approval of
+  this local successor. No production merge or AGY/provider retry occurred.

@@ -421,6 +421,31 @@ test('a re-read source cannot make a changed active input into the old profile; 
   assert.equal(proposal(base.input).status, 'ready');
 });
 
+test('a dated establishment default can exclude dependent method fields before the later complete supported date', () => {
+  // ADOPT-E15-02: yield is recurring, but cannot match the method until its
+  // dated establishment default becomes eligible. These are synthetic estimates.
+  const { establishment: _method, yieldKgPerM2: _yield, ...overrides } = profile().inputs;
+  const ownDefault = <T, U extends string>(value: T, unit: U) => ({ state: 'provided' as const, value, unit,
+    provenance: { kind: 'grower-estimate' as const, recordedAt: requestedAt } });
+  const f = adoptionFixture({ context: { ...adoptionFixture().original.context, establishment: null }, overrides,
+    candidates: [{ id: 'dated-method', field: 'establishment', cropKey: CROPS[0].key, input: ownDefault('direct', 'method'), tier: 'grower-estimate',
+      geography: { kind: 'country', countryCode: 'ZA' }, establishment: 'direct', waterRegime: 'irrigated',
+      temporalScope: { kind: 'dated', fromDate: '2027-12-28', throughDate: '2027-12-28' }, assumptions: ['Synthetic method fixture.'] },
+    { id: 'recurring-method-yield', field: 'yieldKgPerM2', cropKey: CROPS[0].key, input: ownDefault(2, 'kg/m2/cycle'), tier: 'grower-estimate',
+      geography: { kind: 'country', countryCode: 'ZA' }, establishment: 'direct', waterRegime: 'irrigated',
+      temporalScope: { kind: 'recurring-season' }, assumptions: ['Synthetic yield fixture.'] }] });
+  const input = { ...f.input, planningStart: own('2027-12-25', 'utc-date'), availability: [availability('block-a', '2027-12-25', '2028-01-20')],
+    demands: [demand('buyer', 6, '2027-12-25', '2028-01-20')] };
+  const result = generateGrowerAutoPlan(input);
+  assert.equal(result.status, 'ready', `ADOPT-E15-02: ${result.issues.join(',')}`);
+  assert.equal(result.cycles.length, 1); assert.equal(result.cycles[0].assessment.schedule.fieldEntryDate, '2027-12-28');
+  assert.deepEqual(result.cycles[0].assessment.snapshot.profile, f.saved);
+  const missingYield = adoptionFixture({ ...f.original, candidates: [f.original.candidates[0]] });
+  const held = generateGrowerAutoPlan({ ...input, profiles: [missingYield.saved] });
+  assert.equal(held.status, 'missing-inputs'); assert.ok(held.issues.some(issue => issue.endsWith(':yieldKgPerM2')));
+  assert.equal(held.cycles.length, 0);
+});
+
 test('recorded adoption remains replayable on a later day while operational use needs a matching current context', () => {
   const f = adoptionFixture(), cycle = proposal(f.input).cycles[0];
   const row = createGrowerCyclePlanting(cycle, { plantingId: 'history', acceptedAt: '2026-11-05T12:01:00.000Z', geometryFingerprint: f.source.geometryFingerprint });
@@ -460,7 +485,11 @@ test('a default is still current on its explicit review-due date and is held the
     input: { state: 'provided', value: 2, unit: 'kg/m2/cycle', provenance: { kind: 'external-reference', recordedAt: requestedAt,
       reference: 'Synthetic yield field', sourceUrl: source.url } }, tier: 'local-public-evidence', source, reuseReview: 'reviewed',
     geography: { kind: 'country', countryCode: 'ZA' }, establishment: 'direct', waterRegime: 'irrigated',
-    temporalScope: { kind: 'recurring-season' }, assumptions: [] }] });
+      temporalScope: { kind: 'recurring-season' }, assumptions: [] },
+    { id: 'synthetic-fallback', field: 'yieldKgPerM2', cropKey: CROPS[0].key,
+      input: { state: 'provided', value: 3, unit: 'kg/m2/cycle', provenance: { kind: 'grower-estimate', recordedAt: requestedAt } },
+      tier: 'grower-estimate', geography: { kind: 'country', countryCode: 'ZA' }, establishment: 'direct', waterRegime: 'irrigated',
+      temporalScope: { kind: 'recurring-season' }, assumptions: ['Synthetic fallback, not a source recommendation.'] }] });
   const result = proposal(f.input); assert.equal(result.status, 'ready');
   const nextDay = createProvisionalCycleContext(f.source, f.site, '2026-11-06T00:00:00.000Z'); assert.ok(nextDay);
   const expired = generateGrowerAutoPlan({ ...f.input, requestedAt: nextDay.reviewedAt, provisionalContext: nextDay });
@@ -470,6 +499,15 @@ test('a default is still current on its explicit review-due date and is held the
   assert.equal(history.result.fields.yieldKgPerM2.sourceBindings[0].accessedOn, '2026-11-04');
   assert.equal(history.result.fields.yieldKgPerM2.sourceBindings[0].reviewDueOn, '2026-11-05');
   assert.equal(history.result.fields.yieldKgPerM2.sourceBindings[0].evidenceState, 'available-reference');
+  const renewedRequest = { ...f.original, asOf: '2026-11-06', recordedAt: '2026-11-06T00:00:00.000Z' };
+  const renewed = createSavedProvisionalProfile(renewedRequest, 'new-explicit-profile', '2026-11-06T00:01:00.000Z',
+    f.source, 'block-a', 'block-a'); assert.ok(renewed);
+  const newContext = createProvisionalCycleContext(f.source, f.site, '2026-11-06T00:02:00.000Z'); assert.ok(newContext);
+  const newResult = proposal({ ...f.input, profiles: [renewed], requestedAt: newContext.reviewedAt, provisionalContext: newContext,
+    demands: [{ ...f.input.demands[0], profileId: renewed.profileId }] });
+  assert.equal(newResult.status, 'ready'); assert.equal(newResult.cycles[0].assessment.capacity.estimatedYieldKg, 9);
+  assert.equal(readSavedProvisionalProfile(renewed)?.result.fields.yieldKgPerM2.activeTier, 'grower-estimate');
+  assert.deepEqual(readSavedProvisionalProfile(f.saved)?.result, history.result, 'A successor must leave the original source history intact.');
 });
 
 test('a complete source review never supplies a missing grower requirement or turns zero demand into a planting', () => {
