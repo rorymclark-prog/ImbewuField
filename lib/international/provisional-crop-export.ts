@@ -1,3 +1,4 @@
+import { canadaCabbageResultQualifier } from './providers/aafc-canada-cabbage';
 import { regionalSpacingReference } from './providers/regional-spacing-reference';
 import { sourcePublicationText } from './countries/readiness';
 import { assessGrowerPlanning, type GrowerInputProvenance, type GrowerPlanningSnapshot } from './grower-planning';
@@ -74,6 +75,9 @@ export function buildAdoptedProvisionalCycleHtml(value: unknown, metadata: { bed
     { bedLabel: metadata.bedLabel, sample: metadata.sample }, { acceptedAt: attachment.acceptedAt,
       originalSavedAt: saved.origin.savedAt, originalAsOf: saved.request.asOf, reviewedAt: review.context.reviewedAt });
 }
+export function provisionalEvidenceTierText(tier: string | null): string {
+  return tier === 'historical-public-reference' ? 'Historical public reference (explicit transfer)' : tier ?? 'Unknown';
+}
 function renderProvisionalCropDocument(request: ProvisionalDraftRequest, metadata: { bedLabel: string; sample: boolean; placeLabel?: string }, record?: AcceptedRecordMetadata): { html: string; fingerprint: string } | null {
   const result = resolveProvisionalCropPlan(request);
   if (result.status !== 'resolved') return null;
@@ -94,7 +98,7 @@ function renderProvisionalCropDocument(request: ProvisionalDraftRequest, metadat
     <h3>${escape(provisionalLabels[key])}</h3>
     ${paragraph('Status', field.status)}
     ${paragraph('Active input', provisionalInputText(field.activeInput))}
-    ${paragraph('Active basis', field.activeTier ?? 'Unknown')}
+    ${paragraph('Active basis', provisionalEvidenceTierText(field.activeTier))}
     ${field.activeInput.state === 'provided' ? paragraph('Input provenance', provenanceText(field.activeInput.provenance)) : ''}
     ${paragraph('Evidence default', provisionalInputText(field.baselineDefault))}
     ${field.defaultEntryMonthCoverage === 'positive-only' ? '<p>Source default reports positive months only; other months are unknown. A grower override replaces the active window, not this source record.</p>' : ''}
@@ -152,6 +156,7 @@ ${paragraph('Whole measured bed treated as usable spacing-cell area', request.co
 <p>Formula: floor(area in m² × 10000 / (row cm × in-row cm)) gives whole budgeted stations; multiply those whole stations by declared final survivors. Original decimal choices are retained. This is a conditional grower estimate, not a sourced density or physical layout clearance. The source’s seeds per hill and planting-cell footnotes do not supply final stand. Entered/default density is not used.</p></section>` : ''}
 
 <h2>Supported results</h2>${paragraph('Entry window', provisionalEntryWindowText(assessment.entryWindow))}
+${canadaCabbageResultQualifier(result.fields) ? paragraph('Canadian source conditions', canadaCabbageResultQualifier(result.fields)) : ''}
 ${result.profile.version === 2 ? '<p>Source reports these months; other months remain unknown. Date offsets are conditional calculations, not planting recommendations. Specify your own field-entry window before automatic planning or adoption.</p>' : ''}
 <p>An unknown window does not establish that planting on this date is suitable.</p>
 <table><thead><tr><th>Output</th><th>Value and status</th></tr></thead><tbody>
@@ -202,10 +207,12 @@ export function buildProvisionalCycleEvidence(snapshot: GrowerPlanningSnapshot):
     const spacing = snapshot.profile.plantCountOrigin;
     if (spacing) lines.push(`Chosen spacing: row ${spacing.rowCm} cm; in-row ${spacing.inRowCm} cm. Final surviving plants per station: ${spacing.finalStand ?? 'Unknown'}. Whole measured area and station interpretation declared by grower; not physical layout clearance.`,
       'Whole stations are floored before multiplying by final surviving plants. Source seed counts do not establish final stand.');
+    const canadaQualifier = canadaCabbageResultQualifier(current.result.fields);
+    if (canadaQualifier) lines.push(canadaQualifier);
     if (current.result.temperatureComparison) lines.push(...provisionalTemperatureLines(current.result.temperatureComparison));
     for (const [key, field] of Object.entries(current.result.fields)) {
       const label = provisionalLabels[key];
-      lines.push(`${label}: ${provisionalInputText(field.activeInput)}; ${field.status}; basis ${field.activeTier ?? 'Unknown'}. Evidence default: ${provisionalInputText(field.baselineDefault)}.`);
+      lines.push(`${label}: ${provisionalInputText(field.activeInput)}; ${field.status}; basis ${provisionalEvidenceTierText(field.activeTier)}. Evidence default: ${provisionalInputText(field.baselineDefault)}.`);
       if (field.activeInput.state === 'provided') lines.push(`${label} input provenance: ${field.activeInput.provenance.kind}; recorded ${field.activeInput.provenance.recordedAt}.`);
       if (field.defaultConflict) lines.push(`${label}: conflicting defaults; no average supplied.`);
       for (const option of field.defaultOptions) lines.push(`${label} default option: ${provisionalInputText(option.input)}${option.reportedRange ? `; reported range ${option.reportedRange.join('–')}` : ''}; applies to ${provisionalScopeText(option.scope)}.`);

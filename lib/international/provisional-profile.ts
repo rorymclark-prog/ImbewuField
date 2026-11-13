@@ -170,7 +170,10 @@ export function normaliseProvisionalCycleContext(value: unknown): ProvisionalCyc
 }
 
 export function createProvisionalCycleContext(source: GrowerWorkflowSource,
-  site: ProvisionalSiteConditions, reviewedAt: string): ProvisionalCycleContext | null {
+  site: ProvisionalSiteConditions | null | undefined, reviewedAt: string): ProvisionalCycleContext | null {
+  // A saved record may be displayed before current site conditions are present.
+  // Absence is a held review context, not an exception while rendering the row.
+  if (!site || typeof site !== 'object' || Array.isArray(site) || !isGrowerRecordedAt(reviewedAt)) return null;
   return normaliseProvisionalCycleContext({ version: Object.hasOwn(site, 'temperatureEvidenceKey') ? 2 : 1, asOf: reviewedAt.slice(0, 10), reviewedAt, ...site, sourceFreshness: source.freshness, source: {
     kind: source.kind, sourceKey: source.sourceKey, sourceRevision: source.sourceRevision,
     geometryFingerprint: source.geometryFingerprint,

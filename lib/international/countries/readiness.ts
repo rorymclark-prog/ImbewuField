@@ -7,7 +7,7 @@ function validDate(value: unknown): value is string {
   return Number.isFinite(time) && new Date(time).toISOString().slice(0, 10) === value;
 }
 
-type Publication = Pick<CountrySource, 'publishedOn' | 'publishedMonth'>;
+type Publication = Pick<CountrySource, 'publishedOn' | 'publishedMonth' | 'publishedYear'>;
 function validMonth(value: unknown): value is string {
   return typeof value === 'string' && /^\d{4}-(?:0[1-9]|1[0-2])$/.test(value) && !value.startsWith('0000');
 }
@@ -16,12 +16,18 @@ function validMonth(value: unknown): value is string {
  * This deliberately does not claim the first day or an announcement as publication. */
 export function sourcePublicationIsKnownBy(source: Publication, asOf: string): boolean {
   if (!validDate(asOf)) return false;
+  if (source.publishedYear !== undefined && source.publishedYear !== null) return source.publishedOn === null
+    && source.publishedMonth == null && Number.isInteger(source.publishedYear) && source.publishedYear >= 1
+    && source.publishedYear <= 9999 && source.publishedYear < Number(asOf.slice(0, 4));
   if (source.publishedOn !== null) return validDate(source.publishedOn) && source.publishedOn <= asOf
     && (source.publishedMonth === undefined || source.publishedMonth === null);
   return validMonth(source.publishedMonth) && source.publishedMonth < asOf.slice(0, 7);
 }
 
 export function sourcePublicationText(source: Publication): string {
+  if (source.publishedYear !== undefined && source.publishedYear !== null) return source.publishedOn === null
+    && source.publishedMonth == null && Number.isInteger(source.publishedYear) && source.publishedYear >= 1
+    && source.publishedYear <= 9999 ? `${source.publishedYear} (month/day unknown)` : 'Unknown';
   if (source.publishedOn !== null && validDate(source.publishedOn)
     && (source.publishedMonth === undefined || source.publishedMonth === null)) return source.publishedOn;
   if (source.publishedOn === null && validMonth(source.publishedMonth)) return `${source.publishedMonth} (day unknown)`;

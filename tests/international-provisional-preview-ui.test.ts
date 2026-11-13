@@ -1057,3 +1057,39 @@ test('withdrawing the save declaration during its source check retires that atte
     } finally { ui.dispose(); }
   }
 });
+
+
+test('Canadian programme choice keeps April conditions visible in actual live, saved and exported views and retires on context changes', async () => {
+  const saved: import('../lib/international/grower-planning.ts').GrowerPlanningProfile[] = [];
+  const ui = mount({ countryCode: 'CA', evidence: undefined,
+    onSaveProfile: profile => { saved.push(structuredClone(profile)); return { status: 'confirmed', profileId: profile.profileId }; } });
+  const files = downloads();
+  const choice = () => ui.root().findByProps({ 'aria-label': 'Use Canadian multi-variety transplant reference' });
+  try {
+    ui.change('Preview crop', 'cabbage'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-04-15');
+    assert.equal(choice().props.disabled, true); ui.change('Preview establishment', 'transplant');
+    await ui.click(); assert.match(ui.text(), /Entry window: unknown/);
+    act(() => choice().props.onChange({ target: { checked: true } })); await ui.click();
+    const result = ui.root().findByProps({ 'aria-label': 'Provisional results' });
+    assert.match(text(result), /Source reports this month/); assert.match(text(result), /April concerns early varieties after hardening/);
+    const direct = result.children.filter(child => typeof child !== 'string' && child.type === 'p').map(child => text(child as ReactTestInstance)).join(' ');
+    assert.match(direct, /not every cultivar in every month/);
+    assert.match(text(result), /Nursery start \(UTC\): Unknown/);
+    await ui.click('Download printable preview');
+    const html = await files.blobs[0].text(); assert.match(html, /Canadian source conditions/); assert.match(html, /April concerns early varieties after hardening/);
+    act(() => ui.field(saveDeclaration).props.onChange({ target: { checked: true } })); await ui.click('Save provisional profile');
+    assert.equal(saved.length, 1); ui.update({ profiles: saved });
+    const savedSection = ui.root().findByProps({ 'aria-label': 'Saved provisional profiles' });
+    assert.match(text(savedSection), /April concerns early varieties after hardening/);
+    assert.match(text(savedSection), /2025 \(month\/day unknown\)/);
+    ui.change('Variety reference (optional)', 'named cultivar'); ui.change('Variety reference (optional)', '');
+    assert.equal(choice().props.checked, false); await ui.click();
+    assert.match(text(ui.root().findByProps({ 'aria-label': 'Provisional results' })), /Entry window: unknown/);
+    act(() => choice().props.onChange({ target: { checked: true } }));
+    ui.update({ countryCode: 'US' }); ui.update({ countryCode: 'CA' }); assert.equal(choice().props.checked, false);
+    act(() => choice().props.onChange({ target: { checked: true } }));
+    ui.change('Preview establishment', 'direct'); ui.change('Preview establishment', 'transplant'); assert.equal(choice().props.checked, false);
+    assert.deepEqual(ui.writes, []);
+  } finally { files.dispose(); ui.dispose(); }
+});

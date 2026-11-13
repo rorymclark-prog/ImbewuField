@@ -5,7 +5,7 @@ import { CROPS, MONTHS_SHORT } from '@/lib/crop-catalog';
 import { growerPlanningScopeKey, normaliseGrowerMeasuredAreaInput, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import { formatDerivedMassKilograms } from '@/lib/mass-units';
 import { downloadFile } from '@/lib/crop-export-deliver';
-import { buildProvisionalCropPreviewHtml, provisionalPlaceLabel, provisionalEntryWindowText, provisionalNumericFields as numericFields, provisionalLabels as labels, provisionalInputText as inputText, provisionalScopeText as scopeText } from '@/lib/international/provisional-crop-export';
+import { buildProvisionalCropPreviewHtml, provisionalEvidenceTierText, provisionalPlaceLabel, provisionalEntryWindowText, provisionalNumericFields as numericFields, provisionalLabels as labels, provisionalInputText as inputText, provisionalScopeText as scopeText } from '@/lib/international/provisional-crop-export';
 import { growerWorkflowResourceSiteId, type GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { resolveProvisionalCropPlan, type ProvisionalFieldCandidate, type ProvisionalDraftRequest } from '@/lib/international/provisional-crop-planning';
 import { usdaGreatLakesCabbageReference, usdaGreatLakesCabbageCandidates, usdaGreatLakesRegionMatches, USDA_CABBAGE_SPACING, type UsdaCabbageNurseryBasis } from '@/lib/international/providers/usda-great-lakes-cabbage';
@@ -19,6 +19,7 @@ import { worldvegKenyaCabbageCandidates, worldvegKenyaCabbageReference, worldveg
 import { worldvegKenyaCowpeaCandidates, worldvegKenyaCowpeaReference, worldvegKenyaCowpeaSpacing, type CowpeaReferenceConditions } from '@/lib/international/providers/worldveg-kenya-cowpea';
 import { captureProvisionalTemperatureCache, browserTemperatureStorage, provisionalTemperatureLines, TOMATO_MONTHLY_CRITERION,
   type ProvisionalTemperatureAssessment } from '@/lib/international/provisional-temperature';
+import { canadaCabbageReference, canadaCabbageCandidates, canadaCabbageResultQualifier, AAFC_CABBAGE_QUALIFIER, AAFC_CABBAGE_PDF_SHA256 } from '@/lib/international/providers/aafc-canada-cabbage';
 import { locationDataCacheKey } from '@/lib/location-cache-key';
 
 export interface ProvisionalCropPreviewProps {
@@ -56,6 +57,7 @@ type Draft = {
   kenyaTomatoBasis?: KenyaTomatoNurseryBasis | '';
   kenyaTomatoConsent?: string | null;
   temperatureConsent?: string | null;
+  canadaCabbageConsent?: string | null;
   usdaNursery?: { basis: UsdaCabbageNurseryBasis | ''; contextKey: string | null };
   countMode: 'density' | 'spacing';
   spacing: { rowCm: string; inRowCm: string; finalStand: string };
@@ -96,7 +98,7 @@ function EvidenceFields({ fields, spacing }: { fields: Extract<Resolution, { sta
   return <>
       {Object.entries(fields).map(([key, value]) => <details key={key} className="rounded border border-[var(--border)] p-2">
         <summary className="min-h-11 cursor-pointer">{labels[key]}: {inputText(value.activeInput)} · {value.status}</summary>
-        <p>Active basis: {value.activeTier ?? 'Unknown'}. Evidence default: {inputText(value.baselineDefault)}.</p>
+        <p>Active basis: {provisionalEvidenceTierText(value.activeTier)}. Evidence default: {inputText(value.baselineDefault)}.</p>
         {value.defaultEntryMonthCoverage === 'positive-only' && <p>Source default reports positive months only; other months are unknown. A grower override replaces the active window, not this source record.</p>}
         {value.activeInput.state === 'provided' && <p>Input provenance: {value.activeInput.provenance.kind}; recorded {value.activeInput.provenance.recordedAt}.</p>}
         {value.status === 'overridden' && value.activeInput.state === 'missing' && <p>{key === 'plantsPerM2' && spacing ? 'The chosen spacing method does not use an entered/default density.' : 'Grower withheld this value. Its evidence default remains visible but is not used.'}</p>}
@@ -191,6 +193,11 @@ function Editor(props: ProvisionalCropPreviewProps) {
     draft.method, draft.water, kenyaTomatoUse, WORLDVEG_TOMATO_NURSERY.pdfSha256]);
   const useKenyaTomatoReference = kenyaTomatoConsentKey !== null && draft.kenyaTomatoConsent === kenyaTomatoConsentKey
     && draft.method !== 'direct' && kenyaTomatoUse !== null;
+  const canadaReference = canadaCabbageReference(props.countryCode, draft.crop);
+  const canadaConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop,
+    draft.variety, draft.method, draft.water, AAFC_CABBAGE_PDF_SHA256]);
+  const useCanadaReference = canadaConsentKey !== null && draft.canadaCabbageConsent === canadaConsentKey
+    && draft.method === 'transplant' && !draft.variety.trim();
   const temperatureConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.date, draft.water, draft.method]);
   const useTemperature = temperatureConsentKey !== null && draft.temperatureConsent === temperatureConsentKey
     && draft.crop === 'tomatoes' && draft.water === 'irrigated' && !!props.policyFingerprint;
@@ -210,7 +217,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
   function edit(next: Partial<Draft>) {
     if (!isCurrent()) return;
     const sourceChoiceChanged = ['crop', 'variety', 'method', 'water'].some(key => Object.hasOwn(next, key));
-    const value = { ...draft, ...next, ...(sourceChoiceChanged ? { tomatoConsent: null, oatsConsent: null, kenyaTomatoConsent: null } : {}),
+    const value = { ...draft, ...next, ...(sourceChoiceChanged ? { tomatoConsent: null, oatsConsent: null, kenyaTomatoConsent: null, canadaCabbageConsent: null } : {}),
       ...(sourceChoiceChanged || Object.hasOwn(next, 'date') ? { temperatureConsent: null } : {}) }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
   }
   async function refresh() {
@@ -288,7 +295,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
           ...usdaGreatLakesCabbageCandidates(context, draft.crop, recordedAt, useUsdaMethod, usdaNurseryBasis || null),
           ...usdaGreatLakesTomatoCandidates(context, draft.crop, recordedAt, useTomatoReference),
           ...southeastMissouriOatsCandidates(context, draft.crop, recordedAt, useOatsReference, oatsUse),
-          ...worldvegKenyaTomatoCandidates(context, draft.crop, recordedAt, useKenyaTomatoReference, kenyaTomatoUse)], overrides,
+          ...worldvegKenyaTomatoCandidates(context, draft.crop, recordedAt, useKenyaTomatoReference, kenyaTomatoUse),
+          ...canadaCabbageCandidates(context, draft.crop, recordedAt, useCanadaReference)], overrides,
         ...(draft.countMode === 'spacing' ? { countBasis: { kind: 'spacing-cell-budget-v1', bedId: draft.bed,
           ...(usdaReference ? { purpose: 'cabbage-transplants', habit: 'not-applicable' } : draft.cowpea), ...draft.spacing,
           interpretationConfirmed: stationConfirmed, wholeAreaConfirmed } } : {}),
@@ -382,7 +390,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
     <p className="text-sm">Preview supported counts and dates using applicable evidence and your edits. Missing values stay unknown. {props.onSaveProfile ? 'Calculating does not save. Use the separate save action to keep a profile for review.' : 'Nothing here saves a profile or adds a crop.'}</p>
     <p role="note" className="text-sm">Provisional estimates: source metadata is not verification of farming accuracy. Suitability and plant legality are not established. Density is not layout clearance.</p>
     <p className="text-sm">Country: {props.countryCode ?? 'Unknown'} · Agricultural region: {props.agriculturalRegionReference ?? 'Unknown'}</p>
-    {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && !useTomatoReference && !useOatsReference && !useKenyaTomatoReference && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
+    {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && !useTomatoReference && !useOatsReference && !useKenyaTomatoReference && !useCanadaReference && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
     {!!savedProfiles.length && <section aria-label="Saved provisional profiles" className="space-y-3 rounded-lg border border-[var(--border)] p-3">
       <h3 className="font-semibold">Saved provisional profiles</h3>
       <p>Historical evidence, not a current source check or an approved planting plan. To change conditions, calculate and save a new preview.</p>
@@ -395,6 +403,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
         {saved.request.countBasis && <p>Saved budgeted whole stations: {saved.result.assessment.budgetedStations.value ?? 'Unknown'} ({saved.result.assessment.budgetedStations.status}).</p>}
         <p>Saved estimate: {saved.result.assessment.estimatedPlantCount.value ?? 'Unknown'} plants ({saved.result.assessment.estimatedPlantCount.status}); harvest weight {saved.result.assessment.estimatedYieldKg.value ?? 'Unknown'} kg ({saved.result.assessment.estimatedYieldKg.status}).</p>
         <p>Saved entry window: {provisionalEntryWindowText(saved.result.assessment.entryWindow)}. Current planting suitability is unverified.</p>
+        {canadaCabbageResultQualifier(saved.result.fields) && <p>{canadaCabbageResultQualifier(saved.result.fields)}</p>}
         {saved.result.temperatureComparison && <TemperatureAssessment value={saved.result.temperatureComparison} />}
         {saved.result.profile.version === 2 && <p>Source reports these months; other months remain unknown. Saved date offsets are conditional calculations, not planting recommendations. Specify your own field-entry window in a new preview before automatic planning or adoption.</p>}
         <ul>{Object.entries(saved.result.assessment.schedule).map(([key, value]) => <li key={key}>{labels[key]} (UTC): {value.value ?? 'Unknown'} ({value.status})</li>)}</ul>
@@ -516,6 +525,19 @@ function Editor(props: ProvisionalCropPreviewProps) {
         onChange={e => edit({ oatsConsent: e.target.checked ? oatsConsentKey : null })} />Use this March 2014 direct-seeding reference for cover-crop establishment</label>
       <p>Present suitability, water adequacy and planting permission are unknown. No density, yield, harvest or termination dates are supplied. Source availability is not current local agronomic validation.</p>
     </section>}
+    {canadaReference && <section aria-label="Canadian cabbage transplant reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
+      <h3 className="font-semibold">Canadian multi-variety transplant reference</h3>
+      <p>{AAFC_CABBAGE_QUALIFIER}</p>
+      <p>Source-mentioned months: April, May, June and July. Published: {sourcePublicationText(canadaReference)}. The 2024 reference-data year and 2026 hosting path are not publication dates.</p>
+      <p>This reference compares a programme of successive varieties, not one named cultivar. Select Transplant and leave Variety reference empty to consider it. A separate grower-defined entry window is required before automatic planning or adoption.</p>
+      <p><a className="underline" href={`${canadaReference.url}#page=9`} target="_blank" rel="noreferrer">Read the original AAFC profile, Table 3, printed page 4</a></p>
+      <p>{canadaReference.attribution}</p>
+      <p>The document remains Crown-protected. Only independently worded month facts and qualifiers are used; document reproduction permission is not established.</p>
+      <label className="flex min-h-11 items-center gap-2"><input type="checkbox" aria-label="Use Canadian multi-variety transplant reference"
+        disabled={draft.method !== 'transplant' || !!draft.variety.trim()} checked={useCanadaReference}
+        onChange={e => edit({ canadaCabbageConsent: e.target.checked ? canadaConsentKey : null })} />I choose this historical Canadian field-transplant programme across successive early and later varieties, not a window for one cultivar</label>
+      <p>No nursery duration, harvest duration, density, yield, temperature comparison or water-demand default is supplied. Your separately entered estimates can still support partial calculations.</p>
+    </section>}
     {(cowpeaReference || usdaReference) && <section aria-label="Regional spacing estimate" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
       <label className="block">Plant-count method<select aria-label="Plant-count method" className={control} value={draft.countMode}
         onChange={e => edit({ countMode: e.target.value as Draft['countMode'], stationConsent: null, areaConsent: null })}>
@@ -576,6 +598,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
       </div>}
       {saveMessage && <p role="status">{saveMessage}</p>}
       <p>Entry window: {provisionalEntryWindowText(result.assessment.entryWindow)}. An unknown window does not establish that planting on this date is suitable.</p>
+      {canadaCabbageResultQualifier(result.fields) && <p>{canadaCabbageResultQualifier(result.fields)}</p>}
       {result.temperatureComparison && <TemperatureAssessment value={result.temperatureComparison} />}
       {result.profile.version === 2 && <p>Source reports these months; other months remain unknown. Date offsets are conditional calculations, not planting recommendations. Specify your own field-entry window before automatic planning or adoption.</p>}
       {result.spacingSelection && <p role="note">Spacing-cell estimate: {result.spacingSelection.issue} ({result.spacingSelection.status})</p>}
