@@ -116,7 +116,7 @@ test('context, source revision, evidence bytes and crop changes hide old results
   for (const change of [
     (p: ProvisionalCropPreviewProps) => ({ source: { ...p.source!, sourceRevision: 'c'.repeat(64) } }),
     () => ({ countryCode: 'GB' }), () => ({ agriculturalRegionReference: 'new-region' }),
-    () => ({ contextRevision: 2 }), () => ({ checking: true }),
+    () => ({ contextRevision: 2 }), () => ({ checking: true }), () => ({ sourceName: 'Renamed garden' }),
     (p: ProvisionalCropPreviewProps) => ({ evidence: { ...p.evidence!, candidates: p.evidence!.candidates.filter(c => c.field !== 'plantsPerM2') } }),
   ]) {
     let reads = 0;
@@ -176,6 +176,40 @@ function exportRequest() {
     measuredAreaM2: { state: 'provided', value: 10.5, unit: 'm2', provenance: { kind: 'grower-record', recordedAt: '2026-11-12T12:00:00.000Z', reference: 'Measured bed' } },
     fieldEntryDate: { state: 'provided', value: '2028-02-28', unit: 'utc-date', provenance: { kind: 'grower-estimate', recordedAt: '2026-11-12T12:00:00.000Z' } } };
 }
+
+test('same-named beds print distinct place labels without exporting raw scope handles', () => {
+  const request = exportRequest();
+  for (const placeLabel of ['North garden', 'River garden <east> & family']) {
+    const metadata = { bedLabel: 'Bed 1', sample: true, placeLabel };
+    const file = buildProvisionalCropPreviewHtml(request, metadata); assert.ok(file);
+    const escaped = placeLabel.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    assert.ok(file.html.includes(`<strong>Site or workspace:</strong> ${escaped}</p>`));
+    assert.match(file.html, /<strong>Measured bed:<\/strong> Bed 1/);
+    assert.match(file.html, /26 \(ready\)/);
+    assert.doesNotMatch(file.html, /site:0\.00000|synthetic-owner|<east>/);
+  }
+  for (const placeLabel of [undefined, null, '', '   ']) {
+    const file = buildProvisionalCropPreviewHtml(request, { bedLabel: 'Bed 1', sample: false, ...{ placeLabel } }); assert.ok(file);
+    assert.match(file.html, /<strong>Site or workspace:<\/strong> Unnamed site or workspace/);
+  }
+});
+
+test('a place-label change retires results and captured downloads, including a label round trip', async () => {
+  const initial = { sample: true, sourceName: 'North garden' };
+  const ui = mount(initial); const files = downloads();
+  try {
+    ui.choose(); await ui.click(); const priorDownload = ui.action('Download printable preview');
+    await ui.click('Download printable preview'); assert.equal(files.blobs.length, 1);
+    assert.match(await files.blobs[0].text(), /<strong>Site or workspace:<\/strong> North garden/);
+    ui.update({ ...initial, sourceName: 'River garden' });
+    assert.doesNotMatch(ui.text(), /Estimated plants:/);
+    ui.update(initial); await act(async () => { await priorDownload(); });
+    assert.equal(files.blobs.length, 1, 'returning to the original name does not revive old export authority');
+    await ui.click(); await ui.click('Download printable preview'); assert.equal(files.blobs.length, 2);
+    assert.match(await files.blobs[1].text(), /<strong>Site or workspace:<\/strong> North garden/);
+    assert.deepEqual(ui.writes, []);
+  } finally { files.dispose(); ui.dispose(); }
+});
 
 test('the download identifies a saved-measurement read time without dating the original measurement', () => {
   const request = exportRequest();

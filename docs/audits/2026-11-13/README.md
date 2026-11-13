@@ -1,5 +1,7 @@
 # Audits for 13 November 2026
 
+- [Readable place identity in provisional previews](provisional-export-place-label-codex.md): scope-matched display name, captured metadata and retired exports on a name change; successor verification remains separate.
+
 - [Short-report rainfall evidence](summary-rainfall-evidence-codex.md): unsupported annual placeholders stay unknown; sourced zero remains visible in the actual one/five-page exports.
 
 Latest map feedback continuation — [Resolved preview warning](map-preview-feedback-codex.md). Explicit own-point selection retires only obsolete preview instructions; unrelated errors and save guards remain intact. Successor hosted/CI gates remain separate.
