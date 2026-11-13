@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { createSavedProvisionalProfile, createProvisionalCycleContext } from '../lib/international/provisional-profile.ts';
 import { CROPS } from '../lib/crop-catalog.ts';
 import { buildDemoDesignCanvasState } from '../lib/demo-farm.ts';
 import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
@@ -9,7 +12,7 @@ import type { GrowerInput, GrowerPlanningProfile } from '../lib/international/gr
 import type { NurserySettings } from '../lib/nursery-settings.ts';
 import { buildGrowerNurseryForecast, isGrowerNurseryForecastCurrent, nurserySettingsFingerprint, projectGrowerNurseryPreparation,
   type GrowerNurseryRequest, type GrowerNurseryResult } from '../lib/international/grower-nursery.ts';
-import { buildGrowerNurseryCsv, buildGrowerNurseryPreparationCsv } from '../lib/nursery-export.ts';
+import { buildGrowerNurseryCsv, buildGrowerNurseryPreparationCsv, buildGrowerNurseryPreparationPdf, buildGrowerNurseryBatchLabelsPdf } from '../lib/nursery-export.ts';
 
 // Synthetic arithmetic controls, not crop recommendations or an actual seed order.
 const stamp = '2026-11-05T12:00:00.000Z';
@@ -69,6 +72,75 @@ function readCsv(csv: string): Record<string, string>[] {
   assert.equal(quoted, false); const headers = table.shift()!;
   return table.map(values => { assert.equal(values.length, headers.length); return Object.fromEntries(headers.map((header, index) => [header, values[index]])); });
 }
+
+test('marked and legacy nursery members retain separate public evidence in forecast, grouped preparation, CSV and original printable documents', async () => {
+  const source = fixtures.source, original = fixtures.proposal.snapshot!.profiles[0], bed = source.beds[0];
+  const area = { ...own(bed.areaM2, 'm2'), arithmeticBasis: source.measuredAreas[0].arithmeticBasis };
+  const saved = createSavedProvisionalProfile({ profileId: 'provisional-preview', cropKey: original.cropKey,
+    context: { scope: source.scope, countryCode: 'KE', agriculturalRegionReference: null, establishment: 'transplant', waterRegime: 'irrigated' },
+    recordedAt: stamp, asOf: stamp.slice(0, 10), candidates: [], overrides: original.inputs,
+    measuredAreaM2: area, fieldEntryDate: own('2028-02-19', 'utc-date') }, 'private-marked-nursery', '2026-11-05T12:01:00.000Z', source, bed.id, bed.label);
+  assert.ok(saved);
+  const context = createProvisionalCycleContext(source, { countryCode: 'KE', agriculturalRegionReference: null,
+    policyFingerprint: 'private-policy-binding', knownPlantingRestriction: null }, '2026-11-06T12:00:00.000Z'); assert.ok(context);
+  const base = fixtures.proposal.snapshot!;
+  const request: GrowerAutoPlanRequest = { ...base, requestedAt: context.reviewedAt, provisionalContext: context, profiles: [saved, original],
+    beds: source.beds.map(bed => ({ bed, scope: source.scope, measuredAreaM2: { ...own(bed.areaM2, 'm2'),
+      arithmeticBasis: source.measuredAreas.find(row => row.bedId === bed.id)!.arithmeticBasis } })),
+    demands: [{ ...base.demands[0], demandId: 'private-marked-demand', profileId: saved.profileId, totalKg: own(1, 'kg-total') },
+      { ...base.demands[0], demandId: 'private-legacy-demand', profileId: original.profileId, totalKg: own(1, 'kg-total') }] };
+  const proposal = generateGrowerAutoPlan(request); assert.equal(proposal.status, 'ready', proposal.issues.join(','));
+  assert.equal(proposal.cycles.length, 2);
+  const review: GrowerNurseryRequest = { ...fixtures.review, source: { kind: 'proposal', proposal, currentRequest: request, competingDemand: 'assessed-none' } };
+  const result = buildGrowerNurseryForecast(review); assert.equal(result.status, 'ready', result.issues.join(','));
+  const projection = projectGrowerNurseryPreparation(result); assert.equal(projection.status, 'available');
+  const marked = result.batches.find(batch => batch.profileId === saved.profileId)!;
+  const ordinary = result.batches.find(batch => batch.profileId === original.profileId)!;
+  assert.ok(marked.provisionalEvidence); assert.equal('provisionalEvidence' in ordinary, false);
+  const member = projection.groups.flatMap(group => group.members).find(member => member.batchId === marked.id)!;
+  assert.deepEqual(member.provisionalEvidence, marked.provisionalEvidence);
+  for (const csv of [buildGrowerNurseryCsv(result, source.beds), buildGrowerNurseryPreparationCsv(result)]) {
+    const rows = readCsv(csv), evidences = rows.filter(row => row.provisional_evidence);
+    assert.equal(evidences.length, 1, 'Only the marked member may carry this profile evidence.');
+    assert.match(evidences[0].provisional_evidence, /Original evidence as of \(UTC\): 2026-11-05/);
+    assert.match(evidences[0].provisional_evidence, /New evidence review as of \(UTC\): 2026-11-06/);
+    assert.match(evidences[0].provisional_evidence, /Country: KE/);
+    assert.doesNotMatch(csv, /private-marked|private-policy-binding|private-preparation|site:0|[a-f0-9]{64}/);
+  }
+  const changed = structuredClone(result); Object.defineProperty(changed.batches.find(batch => batch.profileId === saved.profileId)!, 'provisionalEvidence', {
+    value: { ...marked.provisionalEvidence, lines: ['Fabricated approval'] }, enumerable: true, configurable: true });
+  assert.equal(projectGrowerNurseryPreparation(changed).status, 'unavailable');
+  assert.throws(() => buildGrowerNurseryCsv(changed, source.beds), /source evidence/);
+  const removed = structuredClone(result); Reflect.deleteProperty(removed.batches.find(batch => batch.profileId === saved.profileId)!, 'provisionalEvidence');
+  assert.equal(projectGrowerNurseryPreparation(removed).status, 'unavailable');
+  // Malformed present provenance must never become an ordinary-looking batch
+  // after detachment or membership validation fails. Accessors stay unexecuted.
+  let evidenceReads = 0;
+  for (const fault of ['nested-getter', 'non-json', 'duplicate-member', 'invalid-member'] as const) {
+    const malformed = structuredClone(result);
+    const batch = malformed.batches.find(batch => batch.profileId === saved.profileId)!;
+    if (fault === 'nested-getter') Object.defineProperty(batch.provisionalEvidence!, 'lines', {
+      enumerable: true, get() { evidenceReads++; return ['Untrusted approval']; } });
+    if (fault === 'non-json') Object.defineProperty(batch.provisionalEvidence!, 'extra', { value: BigInt(1), enumerable: true });
+    if (fault === 'duplicate-member') (malformed.batches as unknown[]).push(structuredClone(batch));
+    if (fault === 'invalid-member') Object.assign(batch, { targetPositions: -1 });
+    assert.equal(projectGrowerNurseryPreparation(malformed).status, 'unavailable', fault);
+    assert.throws(() => buildGrowerNurseryCsv(malformed, source.beds), /source evidence|nursery review/, fault);
+  }
+  assert.equal(evidenceReads, 0);
+  const unknown = buildGrowerNurseryForecast({ ...review, settings: { ...fixtures.settings, profiles: [] },
+    settingsReview: own(nurserySettingsFingerprint({ ...fixtures.settings, profiles: [] })!, 'nursery-settings-fingerprint') });
+  assert.equal(unknown.status, 'partial'); assert.ok(unknown.batches.every(batch => batch.seeds === null && batch.trays === null));
+  assert.ok(unknown.batches.find(batch => batch.profileId === saved.profileId)!.provisionalEvidence);
+  const cards = await buildGrowerNurseryBatchLabelsPdf(result), worksheet = await buildGrowerNurseryPreparationPdf(result);
+  assert.equal(cards.type, 'application/pdf'); assert.equal(worksheet.type, 'application/pdf');
+  if (process.env.IMBEWU_ADOPTION_ARTIFACT_DIR) {
+    const output = process.env.IMBEWU_ADOPTION_ARTIFACT_DIR; mkdirSync(output, { recursive: true });
+    writeFileSync(join(output, 'adopted-nursery-cards.pdf'), Buffer.from(await cards.arrayBuffer()));
+    writeFileSync(join(output, 'adopted-nursery-worksheet.pdf'), Buffer.from(await worksheet.arrayBuffer()));
+    writeFileSync(join(output, 'adopted-nursery-preparation.csv'), buildGrowerNurseryPreparationCsv(result));
+  }
+});
 
 test('the actual two-bed forecast sums each already-rounded raising batch once, keeping field stand, starts and seeds distinct', () => {
   const result = freshResult(), before = JSON.stringify(result), projection = projectGrowerNurseryPreparation(result);
@@ -238,10 +310,14 @@ test('the own nursery CSV preserves every batch/resource column while adding sep
   // total; verify every prior batch/resource column and exact new column order.
   const intentColumns = ['planning_intent_status', 'planning_purpose', 'original_requested_gross_kg', 'original_request_weight_unit', 'original_request_harvest_start_utc', 'original_request_harvest_end_exclusive_utc', 'original_request_note', 'original_entered_weight_text', 'original_entered_weight_unit'];
   assert.deepEqual(columns.slice(-intentColumns.length), intentColumns);
-  assert.deepEqual(columns.filter(column => !referenceColumns.includes(column) && !intentColumns.includes(column)),
+  // Conditional source evidence is another additive member field. Every prior
+  // batch/resource column and its values remain required below.
+  assert.equal(columns.filter(column => column === 'provisional_evidence').length, 1);
+  assert.deepEqual(columns.filter(column => !referenceColumns.includes(column) && !intentColumns.includes(column) && column !== 'provisional_evidence'),
     'record_type,site_name,plan_basis,source_status,review_status,headroom,crop_name,growing_spaces,start_date,end_date_exclusive,target_final_positions,starts,seeds,trays,area_m2,nursery_model,resource_type,resource_name,recorded_capacity,peak_known_min,peak_known_max,shortage_upper_end,availability_quantity,availability_complete,incomplete,assumptions,issues'.split(','));
   assert.deepEqual(columns.filter(column => referenceColumns.includes(column)), referenceColumns);
   assert.equal(new Set(columns).size, columns.length);
-  const rows = readCsv(csv); assert.equal(rows.filter(row => row.record_type === 'dated_raising_batch').length, 2);
+  const rows = readCsv(csv); assert.ok(rows.every(row => row.provisional_evidence === ''), 'An unmarked legacy member has no invented source review.');
+  assert.equal(rows.filter(row => row.record_type === 'dated_raising_batch').length, 2);
   assert.ok(rows.every(row => row.record_type !== 'preparation_group_metric'));
 });

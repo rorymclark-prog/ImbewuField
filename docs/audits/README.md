@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest adoption app/export continuation — [Provisional cycle app and exports — 13 November 2026](2026-11-13/provisional-cycle-app-exports-codex.md). Explicit acceptance, historical downloads and nursery provenance inspected; independent successor review and current-head release gates remain open.
+
 Latest adoption core — [Provisional dated-cycle adoption — 13 November 2026](2026-11-13/provisional-cycle-adoption-codex.md). Core replay and bound-bed tests pass; app/controller, exports and current-head release gates remain open.
 
 Latest global/report verification continuation — [Full-suite contracts and final save-base continuity — 13 November 2026](2026-11-13/global-report-ci-contracts-codex.md). Eleven reproduced failures retain their reasons; exact-head CI, independent review and adoption remain open.

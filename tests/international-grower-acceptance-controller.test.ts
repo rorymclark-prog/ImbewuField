@@ -9,7 +9,6 @@ import ts from 'typescript';
 import { crop, account, samples, local, events, probe, bookKey, studioKey, studio, facilitator, ownRow, reset, cleanup, siteId, pauseHashes } from './international-grower-operations-fixture.ts';
 import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles } from '../lib/international/grower-planning.ts';
 import { createSavedProvisionalProfile, provisionalSiteConditions } from '../lib/international/provisional-profile.ts';
-import { currentPlanningSupport } from '../lib/international/planning-support.ts';
 import { prepareGrowerWorkflowAcceptance, type GrowerWorkflowDraft, type GrowerWorkflowReview } from '../lib/international/grower-workflow.ts';
 import { sanitiseNurserySettings } from '../lib/nursery-settings.ts';
 import { CROPS } from '../lib/crop-catalog.ts';
@@ -34,6 +33,7 @@ const hooks = registerHooks({
     return next(url, context);
   },
 });
+const { currentPlanningSupport } = await import('../lib/international/planning-support.ts');
 const { harvestTargetsSourceKey } = await import('../lib/nursery-save-receipt.ts');
 const { useGrowerWorkflow } = await import('../components/crops/useGrowerWorkflow.ts');
 const { default: Panel } = await import('../components/crops/GrowerAutoPlanPanel.tsx');
@@ -142,6 +142,33 @@ async function markedReady() {
   const review = await ui.review(request); assert.equal(review.proposal.status, 'ready', review.issues.join(','));
   return { ...f, c, ui, saved, review };
 }
+
+test('the mounted evidence declaration starts unchecked, retires a pending uncheck/recheck attempt and allows one fresh deliberate save', async () => {
+  const f = await markedReady(); try {
+    fill(f.ui); f.ui.change('Growing estimate for this target', f.saved.profileId);
+    await f.ui.click('Review automatic crop plan');
+    const save = () => f.ui.renderer.root.findAllByType('button').find(node => text(node).startsWith('Save all '))!;
+    assert.ok(save()); assert.equal(save().props.disabled, true);
+    const declaration = () => f.ui.field('I have reviewed these source limits');
+    assert.equal(declaration().props.checked, false);
+    assert.match(f.ui.text(), /Source evidence and grower choices/); assert.match(f.ui.text(), /Country: Unknown/);
+    assert.doesNotMatch(f.ui.text(), /[a-f0-9]{64}|marked-profile|private-policy-binding/);
+    const before = readCanonicalCropPlanFixtureRaw(), writes = local.writes;
+    await act(async () => { await save().props.onClick(); });
+    assert.equal(local.writes, writes, 'A retained click cannot bypass the unchecked declaration.');
+    act(() => declaration().props.onChange({ target: { checked: true } }));
+    assert.equal(save().props.disabled, false);
+    const gate = pauseHashes();
+    act(() => { save().props.onClick(); }); await gate.started;
+    act(() => { declaration().props.onChange({ target: { checked: false } }); declaration().props.onChange({ target: { checked: true } }); });
+    await act(async () => { gate.resume(); await f.ui.pending; });
+    assert.equal(local.writes, writes); assert.equal(readCanonicalCropPlanFixtureRaw(), before);
+    await act(async () => { save().props.onClick(); await f.ui.pending; });
+    assert.equal(local.writes, writes + 1); assert.equal(f.ui.latest.acceptance.status, 'confirmed');
+    const loaded = crop.loadCropPlan(); assert.ok(loaded.plantings.length > 1);
+    assert.deepEqual(loaded.growerPlanningProfiles!.find(row => row.profileId === f.saved.profileId), f.saved);
+  } finally { f.ui.dispose(); }
+});
 
 test('the actual mounted controller and page writer adopt an intact marked profile once and reload its evidence without treating own events as revocation', async () => {
   const f = await markedReady(); try {

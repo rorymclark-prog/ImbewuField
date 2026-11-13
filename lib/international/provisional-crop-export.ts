@@ -1,6 +1,8 @@
 import { regionalSpacingReference } from './providers/regional-spacing-reference';
 import { sourcePublicationText } from './countries/readiness';
-import type { GrowerInputProvenance } from './grower-planning';
+import { assessGrowerPlanning, type GrowerInputProvenance, type GrowerPlanningSnapshot } from './grower-planning';
+import { normaliseGrowerCycleAttachment } from './grower-cycle';
+import { readSavedProvisionalProfile, reviewProvisionalCycleProfile } from './provisional-profile';
 import { formatDerivedMassKilograms } from '../mass-units';
 import { CROPS } from '../crop-catalog';
 import { resolveProvisionalCropPlan, type ProvisionalDraftRequest, type ResolvedProvisionalField } from './provisional-crop-planning';
@@ -44,6 +46,25 @@ const paragraph = (label: string, value: unknown) => `<p><strong>${escape(label)
 export function buildProvisionalCropPreviewHtml(request: ProvisionalDraftRequest, metadata: {
   bedLabel: string; sample: boolean;
 }): { html: string; fingerprint: string } | null {
+  return renderProvisionalCropDocument(request, { bedLabel: metadata.bedLabel, sample: metadata.sample });
+}
+interface AcceptedRecordMetadata {
+  acceptedAt: string; originalSavedAt: string; originalAsOf: string; reviewedAt: string;
+}
+/** A historical copy of a validated saved cycle, never permission for a new
+ * planting or proof that its source/country context is current today. */
+export function buildAdoptedProvisionalCycleHtml(value: unknown, metadata: { bedLabel: string; sample: boolean }) {
+  const attachment = normaliseGrowerCycleAttachment(value);
+  if (!attachment?.assessmentSnapshot.provisionalReview) return null;
+  const snapshot = attachment.assessmentSnapshot, saved = readSavedProvisionalProfile(snapshot.profile);
+  if (!saved) return null;
+  const review = snapshot.provisionalReview!;
+  return renderProvisionalCropDocument({ ...saved.request, profileId: saved.profile.profileId, asOf: review.context.asOf,
+    measuredAreaM2: snapshot.measuredAreaM2, fieldEntryDate: snapshot.fieldEntryDate },
+    { bedLabel: metadata.bedLabel, sample: metadata.sample }, { acceptedAt: attachment.acceptedAt,
+      originalSavedAt: saved.origin.savedAt, originalAsOf: saved.request.asOf, reviewedAt: review.context.reviewedAt });
+}
+function renderProvisionalCropDocument(request: ProvisionalDraftRequest, metadata: { bedLabel: string; sample: boolean }, record?: AcceptedRecordMetadata): { html: string; fingerprint: string } | null {
   const result = resolveProvisionalCropPlan(request);
   if (result.status !== 'resolved') return null;
   const assessment = result.assessment;
@@ -84,18 +105,19 @@ export function buildProvisionalCropPreviewHtml(request: ProvisionalDraftRequest
   return { fingerprint: result.fingerprint, html: `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
-<title>ImbewuField provisional crop preview</title><style>
+<title>ImbewuField ${record ? 'saved provisional cycle record' : 'provisional crop preview'}</title><style>
 body{font:16px/1.5 system-ui,sans-serif;color:#17251b;background:#fff;max-width:850px;margin:0 auto;padding:24px;overflow-wrap:anywhere}
 h1{font-size:1.8rem}h2{margin-top:2rem}h3{margin:.3rem 0}p{margin:.5rem 0}.notice{border:2px solid #516546;padding:12px}
 table{border-collapse:collapse;width:100%}th,td{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid #b5c1b6}
 .field{border-top:1px solid #b5c1b6;padding:14px 0}.source{border-left:3px solid #b5c1b6;padding-left:12px;margin:12px 0}
 @media print{body{padding:0;font-size:10pt}h1,h2,h3{break-after:avoid}tr,.field,.notice{break-inside:avoid}@page{margin:16mm}}
-</style></head><body><h1>${metadata.sample ? 'DEMO · ' : ''}Provisional crop preview</h1>
+</style></head><body><h1>${metadata.sample ? 'DEMO · ' : ''}${record ? 'Saved provisional cycle record' : 'Provisional crop preview'}</h1>
 <div class="notice">${metadata.sample ? '<p><strong>DEMO: sample inputs, not a real farm plan.</strong></p>' : ''}
-<p><strong>Conditional planning estimates. Not a saved or adopted crop plan.</strong></p>
+<p><strong>${record ? 'Historical estimates as accepted. Planned, not observed crops or harvest.' : 'Conditional planning estimates. Not a saved or adopted crop plan.'}</strong></p>
 <p>Missing values stay unknown. Suitability and plant legality are not established. Density is not layout clearance.
 Source metadata does not verify farming accuracy. These inputs may change after download; recalculate before acting.</p></div>
-${paragraph('Calculated at (UTC)', request.recordedAt)}${paragraph('Evidence checked as of (UTC)', request.asOf)}
+${record ? `${paragraph('Accepted at (UTC)', record.acceptedAt)}${paragraph('Original profile saved at (UTC)', record.originalSavedAt)}${paragraph('Original evidence as of (UTC)', record.originalAsOf)}${paragraph('New review at (UTC)', record.reviewedAt)}` : ''}
+${paragraph(record ? 'Original input record at (UTC)' : 'Calculated at (UTC)', request.recordedAt)}${paragraph(record ? 'Evidence rechecked as of (UTC)' : 'Evidence checked as of (UTC)', request.asOf)}
 ${paragraph('Crop', crop.name)}${paragraph('Measured bed', metadata.bedLabel)}
 ${paragraph('Country', request.context.countryCode)}${paragraph('Agricultural region', request.context.agriculturalRegionReference)}
 ${paragraph('Water regime', request.context.waterRegime)}${paragraph('Variety reference', request.context.varietyReference)}
@@ -103,7 +125,7 @@ ${paragraph('Requested establishment', result.requestedEstablishment)}${paragrap
 ${paragraph('Measured area', provisionalInputText(snapshot.measuredAreaM2))}
 ${paragraph('Field-entry date (UTC)', provisionalInputText(snapshot.fieldEntryDate))}
 ${snapshot.measuredAreaM2.state === 'provided' ? paragraph('Saved measurement source', `${snapshot.measuredAreaM2.provenance.kind}${'reference' in snapshot.measuredAreaM2.provenance ? `; reference ${snapshot.measuredAreaM2.provenance.reference}` : ''}`) : ''}
-${snapshot.measuredAreaM2.state === 'provided' ? `${paragraph('Saved measurement read at (UTC)', request.recordedAt)}
+${snapshot.measuredAreaM2.state === 'provided' ? `${paragraph('Saved measurement read at (UTC)', record?.reviewedAt ?? request.recordedAt)}
 <p>This is when the saved design was read, not when the measurement was made.</p>` : ''}
 ${snapshot.measuredAreaM2.arithmeticBasis ? paragraph('Saved rectangle arithmetic', `${snapshot.measuredAreaM2.arithmeticBasis.widthM} m × ${snapshot.measuredAreaM2.arithmeticBasis.heightM} m`) : ''}
 ${paragraph('Count arithmetic', result.profile.plantCountOrigin?.conversion ?? snapshot.countArithmetic)}
@@ -124,6 +146,64 @@ ${output.map(([label, text]) => `<tr><th scope="row">${escape(label)}</th><td>${
 ${paragraph('Uncertainties', assessment.uncertainties.length ? assessment.uncertainties.join(', ') : 'No additional resolver flags; provisional limits still apply')}
 <h2>Evidence and grower edits</h2>${evidence}
 ${result.rejected.length ? `<h2>Evidence not used</h2>${result.rejected.map(item => paragraph(item.id, item.reason)).join('')}` : ''}
-<p>Downloaded for review. Downloading this preview does not save a profile or add crops. This file does not update when the app changes.</p>
+<p>${record ? 'Historical saved record. It does not verify current source applicability, current planting suitability or completed work. Check current site and evidence before acting.' : 'Downloaded for review. Downloading this preview does not save a profile or add crops.'} This file does not update when the app changes.</p>
 </body></html>` };
+}
+
+/** Public member-specific evidence. No actor, source revision/hash, private
+ * profile/bed identity, policy fingerprint or raw request is exported. */
+export interface ProvisionalCycleEvidenceView {
+  readonly version: 1;
+  readonly originalAsOf: string;
+  readonly originalSavedAt: string;
+  readonly reviewedAsOf: string;
+  readonly reviewedAt: string;
+  readonly countryCode: string | null;
+  readonly agriculturalRegionReference: string | null;
+  readonly lines: readonly string[];
+}
+export function buildProvisionalCycleEvidence(snapshot: GrowerPlanningSnapshot): ProvisionalCycleEvidenceView | null {
+  try {
+    if (!snapshot.provisionalReview) return null;
+    const assessment = assessGrowerPlanning({ profile: snapshot.profile, scope: snapshot.scope,
+      measuredAreaM2: snapshot.measuredAreaM2, fieldEntryDate: snapshot.fieldEntryDate,
+      countAreaBinding: snapshot.countAreaBinding, provisionalContext: snapshot.provisionalReview.context });
+    if (assessment.status !== 'ready' || assessment.fingerprint !== JSON.stringify(snapshot)) return null;
+    const saved = readSavedProvisionalProfile(snapshot.profile);
+    const current = reviewProvisionalCycleProfile(snapshot.profile, snapshot.provisionalReview.context,
+      snapshot.measuredAreaM2, snapshot.fieldEntryDate, snapshot.countAreaBinding);
+    if (!saved || current.status !== 'ready') return null;
+    const context = current.context, original = saved.request;
+    const lines = [
+      'Conditional grower estimates. Source metadata does not establish agricultural accuracy, plant legality or local suitability.',
+      `Original evidence as of (UTC): ${original.asOf}. Profile saved: ${saved.origin.savedAt}.`,
+      `New evidence review as of (UTC): ${context.asOf}; reviewed ${context.reviewedAt}. Original source dates have not been renewed.`,
+      `Country: ${context.countryCode ?? 'Unknown'}. Agricultural region: ${context.agriculturalRegionReference ?? 'Unknown'}.`,
+      `Water regime: ${original.context.waterRegime ?? 'Unknown'}. Variety: ${original.context.varietyReference ?? 'Unknown'}.`,
+      `Saved design read: ${context.sourceFreshness === 'cloud-query-copy' ? 'Fetched cloud copy; not a remote write lock' : 'Device saved copy'}; not a new field measurement.`,
+      `Measured area used: ${assessment.capacity.measuredAreaM2} m². Estimated plants: ${assessment.capacity.estimatedPlantCount}${assessment.capacity.budgetedStations !== undefined ? `; whole budgeted stations: ${assessment.capacity.budgetedStations}` : ''}. Gross estimated harvest: ${formatDerivedMassKilograms(assessment.capacity.estimatedYieldKg, 'kg')} kg for the whole cycle, not weekly deliveries.`,
+      `Planned field entry: ${assessment.schedule.fieldEntryDate}; first harvest: ${assessment.schedule.firstHarvestDate}; picking ends before ${assessment.schedule.harvestEndExclusiveDate}; next field entry ${assessment.schedule.nextFieldEntryDate} (UTC). These are estimates, not observed work or guaranteed harvest.`,
+      ...(snapshot.measuredAreaM2.arithmeticBasis ? [`Saved rectangle: ${snapshot.measuredAreaM2.arithmeticBasis.widthM} m × ${snapshot.measuredAreaM2.arithmeticBasis.heightM} m. This is the recorded area basis, not a new measurement or physical row-layout check.`] : []),
+    ];
+    const spacing = snapshot.profile.plantCountOrigin;
+    if (spacing) lines.push(`Chosen spacing: row ${spacing.rowCm} cm; in-row ${spacing.inRowCm} cm. Final surviving plants per station: ${spacing.finalStand ?? 'Unknown'}. Whole measured area and station interpretation declared by grower; not physical layout clearance.`,
+      'Whole stations are floored before multiplying by final surviving plants. Source seed counts do not establish final stand.');
+    for (const [key, field] of Object.entries(current.result.fields)) {
+      const label = provisionalLabels[key];
+      lines.push(`${label}: ${provisionalInputText(field.activeInput)}; ${field.status}; basis ${field.activeTier ?? 'Unknown'}. Evidence default: ${provisionalInputText(field.baselineDefault)}.`);
+      if (field.activeInput.state === 'provided') lines.push(`${label} input provenance: ${field.activeInput.provenance.kind}; recorded ${field.activeInput.provenance.recordedAt}.`);
+      if (field.defaultConflict) lines.push(`${label}: conflicting defaults; no average supplied.`);
+      for (const option of field.defaultOptions) lines.push(`${label} default option: ${provisionalInputText(option.input)}${option.reportedRange ? `; reported range ${option.reportedRange.join('–')}` : ''}; applies to ${provisionalScopeText(option.scope)}.`);
+      for (const source of field.sourceBindings) lines.push(`${label} source: ${source.title}; ${source.url}. Published ${sourcePublicationText(source)}; accessed ${source.accessedOn ?? 'Unknown'}; review due ${source.reviewDueOn ?? 'Unknown'}; evidence state ${source.evidenceState}. Reuse: ${source.reuseTerms}. Attribution: ${source.attribution}. Limitations: ${source.limitations}.`);
+      for (const assumption of field.assumptions) lines.push(`${label} assumption: ${assumption}`);
+    }
+    for (const rejected of current.result.rejected) {
+      const candidate = original.candidates.find(row => row.id === rejected.id);
+      lines.push(`Evidence not used for ${candidate ? provisionalLabels[candidate.field] : 'an input'}: ${candidate?.source?.title ?? 'entered estimate'}; ${rejected.reason.replace(/-/g, ' ')}.`);
+    }
+    for (const uncertainty of current.result.assessment.uncertainties) lines.push(`Uncertainty: ${uncertainty.replace(/-/g, ' ')}.`);
+    return Object.freeze({ version: 1, originalAsOf: original.asOf, originalSavedAt: saved.origin.savedAt,
+      reviewedAsOf: context.asOf, reviewedAt: context.reviewedAt, countryCode: context.countryCode,
+      agriculturalRegionReference: context.agriculturalRegionReference, lines: Object.freeze(lines) });
+  } catch { return null; }
 }

@@ -773,6 +773,10 @@ export default function GrowerNurseryReviewPanel(props: GrowerNurseryReviewPanel
           <p>{batch.bedIds.map(id => props.source.beds.find(bed => bed.id === id)?.label ?? 'Growing space').join(', ')}. {batch.startDate} to before {batch.endDateExclusive} (UTC).</p>
           {props.savedReview && <GrowerCycleIntent view={batch.origin?.status === 'proposed' ? undefined : batch.origin} />}
           {props.savedReview && referenceDetails(batch.reference)}
+          {batch.provisionalEvidence && <details className="min-w-0 [overflow-wrap:anywhere]">
+            <summary className="min-h-11 cursor-pointer font-semibold">Source evidence for this raising batch</summary>
+            <ul className="space-y-2">{batch.provisionalEvidence.lines.map((line, index) => <li key={index}>{line}</li>)}</ul>
+          </details>}
           <dl className="grid grid-cols-1 gap-2 sm:grid-cols-2">{Object.entries({
             'Target final plants': batch.targetPositions,
             'Starts to raise': batch.starts,

@@ -142,10 +142,12 @@ export function buildGrowerNurseryCsv(result: GrowerNurseryResult, beds: readonl
     'crop_name', 'growing_spaces', 'member_number', 'reference_status', 'variety', 'seed_lot_reference', 'raising_batch_reference', 'reference_note', 'start_date', 'end_date_exclusive', 'target_final_positions',
     'starts', 'seeds', 'trays', 'area_m2', 'nursery_model', 'resource_type', 'resource_name',
     'recorded_capacity', 'peak_known_min', 'peak_known_max', 'shortage_upper_end',
-    'availability_quantity', 'availability_complete', 'incomplete', 'assumptions', 'issues', ...GROWER_INTENT_EXPORT_COLUMNS] as const;
+    'availability_quantity', 'availability_complete', 'incomplete', 'assumptions', 'issues', 'provisional_evidence', ...GROWER_INTENT_EXPORT_COLUMNS] as const;
   type OwnRow = Partial<Record<typeof columns[number], string | number>>;
   const rows: OwnRow[] = [];
   const preparation = projectGrowerNurseryPreparation(result);
+  if (preparation.issues.some(issue => ['preparation-provisional-evidence-changed', 'preparation-review-unreadable',
+    'preparation-batch-invalid-or-ambiguous'].includes(issue))) throw Error('The source evidence for this nursery review changed. Review it again before exporting.');
   const references = new Map(preparation.groups.flatMap(group => group.members.map(member => [member.batchId, member.reference] as const)));
   const context: OwnRow = { site_name: options.siteName ?? 'Site name not recorded',
     plan_basis: options.sample ? 'DEMO — example own-input nursery review' : 'Own-input nursery estimates',
@@ -159,7 +161,8 @@ export function buildGrowerNurseryCsv(result: GrowerNurseryResult, beds: readonl
     start_date: batch.startDate, end_date_exclusive: batch.endDateExclusive, target_final_positions: batch.targetPositions,
     starts: batch.starts ?? 'unknown', seeds: batch.seeds ?? 'unknown', trays: batch.trays ?? 'unknown',
     area_m2: batch.areaM2 ?? 'unknown', nursery_model: batch.model ?? 'unknown', incomplete: batch.incomplete ? 'yes' : 'no',
-    assumptions: batch.basis.join(' | '), issues: batch.issues.map(growerNurseryIssueText).join(' | ') });
+    assumptions: batch.basis.join(' | '), issues: batch.issues.map(growerNurseryIssueText).join(' | '),
+    provisional_evidence: preparation.groups.flatMap(group => group.members).find(member => member.batchId === batch.id)?.provisionalEvidence?.lines.join(' | ') ?? '' });
   for (const resource of result.resources) {
     const shared: OwnRow = { ...context, resource_type: resource.resourceKind, resource_name: resource.name,
       recorded_capacity: resource.capacity ?? 'unknown', headroom: resource.headroom,
@@ -295,6 +298,15 @@ export async function buildGrowerNurseryBatchLabelsPdf(result: GrowerNurseryResu
       ensure(intentHeight + 2, cardTitle);
       paragraph(memberHeading, 9, 'bold', 4, cardTitle);
       for (const line of intentLines) paragraph(line, 9, 'normal', 4, cardTitle);
+      if (member.provisionalEvidence) for (const text of member.provisionalEvidence.lines) {
+        const copy = `Member ${memberIndex + 1} evidence: ${preparationPdfCopy(text)}`;
+        referenceWriter.select(copy);
+        for (const line of doc.splitTextToSize(copy, contentWidth) as string[]) {
+          ensure(15, `${cardTitle}; Member ${memberIndex + 1}`); referenceWriter.select(line); doc.setTextColor(...ink);
+          doc.text(line, margin, y + 10); y += 13;
+        }
+        y += 4;
+      }
       paragraph(fields.reference_note, 9, 'normal', 4, cardTitle);
       for (const [label, value] of [['Variety', fields.variety], ['Seed lot reference', fields.seed_lot_reference], ['Raising batch reference', fields.raising_batch_reference]]) {
         for (const line of referenceWriter.lines(`${label}: ${value}`, contentWidth)) {
@@ -467,6 +479,18 @@ export async function buildGrowerNurseryPreparationPdf(result: GrowerNurseryResu
       ensure((memberHeight + 2 <= freshPageRoom ? memberHeight : intentHeight) + 2);
       paragraph(memberHeading, 9, 'bold');
       for (const line of intentLines) paragraph(line, 9);
+      if (member.provisionalEvidence) {
+        const groupHeading = activeGroup; activeGroup = `${groupHeading}; Member ${memberIndex + 1}`;
+        for (const text of member.provisionalEvidence.lines) {
+          const copy = `Member ${memberIndex + 1} evidence: ${preparationPdfCopy(text)}`;
+          referenceWriter.select(copy);
+          for (const line of doc.splitTextToSize(copy, contentWidth) as string[]) {
+            ensure(15); referenceWriter.select(line); doc.setTextColor(...ink); doc.text(line, margin, y + 10); y += 13;
+          }
+          y += 4;
+        }
+        activeGroup = groupHeading;
+      }
       paragraph(fields.reference_note, 9);
       for (const lines of referenceRows) {
         for (const line of lines) {
@@ -505,7 +529,7 @@ export function buildGrowerNurseryPreparationCsv(result: GrowerNurseryResult, op
     'projection_status', 'projection_incomplete', 'coverage', 'horizon_start_utc', 'horizon_end_exclusive_utc', 'group_number', 'crop_name',
     'raising_start_date_utc', 'field_entry_dates_exclusive_utc', 'represented_batch_count', 'metric', 'metric_status',
     'known_subtotal', 'represented_batch_total', 'known_batch_count', 'unknown_batch_count', 'group_incomplete',
-    'outside_review_horizon', 'member_number', 'reference_status', 'variety', 'seed_lot_reference', 'raising_batch_reference', 'reference_note', 'issues', 'guidance', ...GROWER_INTENT_EXPORT_COLUMNS] as const;
+    'outside_review_horizon', 'member_number', 'reference_status', 'variety', 'seed_lot_reference', 'raising_batch_reference', 'reference_note', 'issues', 'guidance', 'provisional_evidence', ...GROWER_INTENT_EXPORT_COLUMNS] as const;
   type PreparationRow = Partial<Record<typeof columns[number], string | number>>;
   const labels = (issues: readonly string[]) => [...new Set(issues.map(growerNurseryIssueText))].join(' | ');
   const context: PreparationRow = {
@@ -522,7 +546,8 @@ export function buildGrowerNurseryPreparationCsv(result: GrowerNurseryResult, op
     for (const [memberIndex, member] of group.members.entries()) rows.push({ ...context, record_type: 'planned_batch_reference',
       group_number: index + 1, member_number: memberIndex + 1, crop_name: group.cropName, ...growerCycleIntentColumns(member.intent ?? readGrowerCycleIntent(undefined)),
       raising_start_date_utc: group.startDate, field_entry_dates_exclusive_utc: member.endDateExclusive,
-      ...referenceColumns(exportReference(member.reference, projection.sourceStatus)), guidance: projection.guidance });
+      ...referenceColumns(exportReference(member.reference, projection.sourceStatus)), guidance: projection.guidance,
+      provisional_evidence: member.provisionalEvidence?.lines.join(' | ') ?? '' });
     for (const [name, metric] of [['field_positions', group.fieldPositions], ['starts_to_raise', group.startsToRaise], ['seeds_to_sow', group.seedsToSow]] as const) {
       rows.push({ ...context, record_type: 'preparation_group_metric', group_number: index + 1, crop_name: group.cropName,
         raising_start_date_utc: group.startDate, field_entry_dates_exclusive_utc: group.members.map(member => member.endDateExclusive).join(' | '),

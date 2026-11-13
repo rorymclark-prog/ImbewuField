@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { resolveProvisionalCropPlan, type ProvisionalDraftRequest } from '../lib/international/provisional-crop-planning.ts';
 import { worldvegKenyaCowpeaCandidates } from '../lib/international/providers/worldveg-kenya-cowpea.ts';
 import { assessGrowerPlanning, assessProvisionalGrowerPlanning, normaliseGrowerPlanningProfile } from '../lib/international/grower-planning.ts';
 import { growerSpacingSourceQuantities } from '../lib/grower-estimate-units.ts';
-import { buildProvisionalCropPreviewHtml } from '../lib/international/provisional-crop-export.ts';
+import { buildProvisionalCropPreviewHtml, buildProvisionalCycleEvidence, buildAdoptedProvisionalCycleHtml } from '../lib/international/provisional-crop-export.ts';
 import { createSavedProvisionalProfile, readSavedProvisionalProfile, createProvisionalCycleContext } from '../lib/international/provisional-profile.ts';
 import { generateGrowerAutoPlan } from '../lib/international/grower-autoplan.ts';
 import { createGrowerCyclePlanting, normaliseGrowerCycleAttachment, resolvePlantingBasis } from '../lib/international/grower-cycle.ts';
@@ -64,7 +65,27 @@ test('a complete saved spacing profile budgets whole cells on its bed through pr
   assert.deepEqual(cycle.assessment.snapshot.countAreaBinding, { bedId: 'bed-1' });
   assert.equal(cycle.assessment.snapshot.provisionalReview?.context.asOf, '2026-11-13');
   const row = createGrowerCyclePlanting(cycle, { plantingId: 'saved-spacing-cycle', acceptedAt: '2026-11-13T00:01:00.000Z', geometryFingerprint: source.geometryFingerprint });
-  assert.ok(row); const reload = JSON.parse(JSON.stringify(row));
+  assert.ok(row);
+  const publicEvidence = buildProvisionalCycleEvidence(cycle.assessment.snapshot); assert.ok(publicEvidence);
+  const publicText = JSON.stringify(publicEvidence);
+  assert.match(publicText, /Great Lakes States/); assert.match(publicText, /undated/);
+  assert.match(publicText, /76.2 cm/); assert.match(publicText, /45.72 cm/);
+  assert.equal(publicEvidence.originalAsOf, '2026-11-12'); assert.equal(publicEvidence.reviewedAsOf, '2026-11-13');
+  assert.doesNotMatch(publicText, /a{64}|b{64}|saved-spacing|site:0|Synthetic policy binding/);
+  const document = buildAdoptedProvisionalCycleHtml(row.growerCycle, { bedLabel: 'Bound bed <script>no</script>', sample: true }); assert.ok(document);
+  assert.match(document.html, /Saved provisional cycle record/); assert.doesNotMatch(document.html, /Not a saved or adopted crop plan/);
+  assert.match(document.html, /Original evidence as of/); assert.match(document.html, /Evidence rechecked as of/);
+  assert.match(document.html, /Historical estimates as accepted/); assert.match(document.html, /undated/);
+  assert.match(document.html, /&lt;script&gt;no&lt;\/script&gt;/); assert.doesNotMatch(document.html, /<script>|a{64}|b{64}|saved-spacing|site:0/);
+  const broken = JSON.parse(JSON.stringify(row.growerCycle)); broken.assessmentSnapshot.provisionalReview.resolverFingerprint += 'changed';
+  assert.equal(buildAdoptedProvisionalCycleHtml(broken, { bedLabel: 'Bed', sample: false }), null);
+  if (process.env.IMBEWU_ADOPTION_ARTIFACT_DIR) {
+    const output = process.env.IMBEWU_ADOPTION_ARTIFACT_DIR; mkdirSync(output, { recursive: true });
+    writeFileSync(join(output, 'adopted-spacing-record.html'), buildAdoptedProvisionalCycleHtml(row.growerCycle, { bedLabel: 'Bound bed', sample: true })!.html);
+    writeFileSync(join(output, 'public-evidence.json'), JSON.stringify(publicEvidence, null, 2));
+    writeFileSync(join(output, 'synthetic-accepted-row.json'), JSON.stringify({ row, source, current }, null, 2));
+  }
+  const reload = JSON.parse(JSON.stringify(row));
   assert.deepEqual(normaliseGrowerCycleAttachment(reload.growerCycle), row.growerCycle);
   const resolution = resolvePlantingBasis(reload, { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint, provisionalContext: current });
   assert.equal(resolution.kind, 'grower-dated-cycle');

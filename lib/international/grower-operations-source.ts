@@ -1,3 +1,5 @@
+import { createProvisionalCycleContext, provisionalSiteConditions, type ProvisionalCycleContext } from './provisional-profile';
+import { currentPlanningSupport } from './planning-support';
 import { readRawCropPlanReceipt, type CropPlanState } from '../crop-plan';
 import { activeAccountUid } from '../account-local-storage';
 import { getFirebase, isBackendConfigured } from '../firebase/init';
@@ -19,7 +21,7 @@ export type GrowerOperationsSources =
       readonly heldSources: readonly GrowerOperationsSourceDiagnostic[] };
 type Ready = Extract<GrowerOperationsSources, { status: 'ready' }>;
 interface LocalReceipt { read: () => RawGrowerSourceReceipt; signature: string }
-interface Binding { owner: string | null; sample: boolean; token: string; places: string; locals: LocalReceipt[]; sources: string }
+interface Binding { owner: string | null; sample: boolean; token: string; places: string; locals: LocalReceipt[]; sources: string; reviewDay?: string }
 const bindings = new WeakMap<object, Binding>();
 const record = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
 const held = (reason: string): GrowerOperationsSources => ({ status: 'held', book: null, contexts: [], heldSources: [{ reason }] });
@@ -36,7 +38,7 @@ function actor(owner: string | null, sample: boolean): boolean {
 }
 function localCurrent(binding: Binding): boolean {
   try {
-    if (!actor(binding.owner, binding.sample)) return false;
+    if (!actor(binding.owner, binding.sample) || binding.reviewDay && new Date().toISOString().slice(0, 10) !== binding.reviewDay) return false;
     const book = readRawCropPlanReceipt();
     if (book.status !== 'ready' || book.token !== binding.token || JSON.stringify(loadPlaces()) !== binding.places) return false;
     if (binding.locals.some(row => signature(row.read()) !== row.signature)) return false;
@@ -65,8 +67,10 @@ export async function loadGrowerOperationsSources(options: { isCurrent?: () => b
     const binding: Binding = { owner, sample, token: receipt.token, places: JSON.stringify(loadPlaces()), locals: [], sources: '' };
     const current = () => permitted() && localCurrent(binding);
     if (!current()) return held('context-changed');
+    const reviewedAt = new Date().toISOString();
     const heldSources: GrowerOperationsSourceDiagnostic[] = [];
-    const needs = new Map<string, { scope: GrowerPlanningScope; scopeKey: string; geometry: string }>();
+    type Need = { scope: GrowerPlanningScope; scopeKey: string; geometry: string; legacy: boolean; reviews: ProvisionalCycleContext[] };
+    const needs = new Map<string, Need>();
     const counts = new Map<unknown, number>();
     for (const row of book.plantings as unknown[]) if (record(row) && typeof row.id === 'string') counts.set(row.id, (counts.get(row.id) ?? 0) + 1);
     for (const row of book.plantings as unknown[]) {
@@ -80,7 +84,12 @@ export async function loadGrowerOperationsSources(options: { isCurrent?: () => b
       }
       const scope = normaliseGrowerPlanningScope(attachment.assessmentSnapshot.scope), scopeKey = growerPlanningScopeKey(scope);
       if (!scope || !scopeKey) { heldSources.push({ reason: 'own-row-needs-review' }); continue; }
-      needs.set(JSON.stringify([scopeKey, attachment.geometryFingerprint]), { scope, scopeKey, geometry: attachment.geometryFingerprint });
+      const key = JSON.stringify([scopeKey, attachment.geometryFingerprint]);
+      const need = needs.get(key) ?? { scope, scopeKey, geometry: attachment.geometryFingerprint, legacy: false, reviews: [] };
+      const review = attachment.assessmentSnapshot.provisionalReview;
+      if (review) { need.reviews.push(review.context); binding.reviewDay = reviewedAt.slice(0, 10); }
+      else need.legacy = true;
+      needs.set(key, need);
     }
     const candidates: GrowerWorkflowSource[] = [];
     const inspected: Array<{ request: GrowerWorkflowSourceRequest; inspection: ReturnType<typeof inspectGrowerWorkflowSource> }> = [];
@@ -105,9 +114,18 @@ export async function loadGrowerOperationsSources(options: { isCurrent?: () => b
       if (!current()) return held('context-changed');
       if (source.status === 'ready') candidates.push(source);
     }
-    const matches = (need: { scopeKey: string; geometry: string }) => candidates.filter(source =>
-      growerPlanningScopeKey(source.scope) === need.scopeKey && source.geometryFingerprint === need.geometry);
-    if ([...needs.values()].some(need => !matches(need).length) && owner && !sample && isBackendConfigured()) {
+    const sourceKey = (source: ProvisionalCycleContext['source']) => JSON.stringify([source.kind, source.sourceKey, source.sourceRevision, source.geometryFingerprint]);
+    const matches = (need: Need) => {
+      const sameGeometry = candidates.filter(source => growerPlanningScopeKey(source.scope) === need.scopeKey && source.geometryFingerprint === need.geometry);
+      // A marked record can identify its original source, but cannot resolve a
+      // legacy row's ambiguous geometry by borrowing another row's receipt.
+      if (need.legacy) return sameGeometry;
+      // Each row later validates its own receipt. An older revision must not
+      // suppress a current marked neighbour sharing this measured geometry.
+      return sameGeometry.filter(source => need.reviews.some(review => sourceKey(review.source) === sourceKey(source)));
+    };
+    if ([...needs.values()].some(need => !matches(need).length && (need.legacy || need.reviews.some(review => review.source.kind === 'facilitator-cloud')))
+      && owner && !sample && isBackendConfigured()) {
       if (!current()) return held('context-changed');
       let rows: Awaited<ReturnType<typeof myDesigns>> = [];
       try { rows = await myDesigns(); } catch { heldSources.push({ reason: 'cloud-source-unavailable' }); }
@@ -130,7 +148,12 @@ export async function loadGrowerOperationsSources(options: { isCurrent?: () => b
       const found = matches(need);
       if (found.length !== 1) { heldSources.push({ reason: found.length ? 'ambiguous-current-source' : 'current-source-unavailable', scopeKey: need.scopeKey }); continue; }
       const source = found[0];
-      contexts.push({ scope: source.scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint });
+      const provisionalContext = need.reviews.length ? createProvisionalCycleContext(source, provisionalSiteConditions(currentPlanningSupport(
+        source.scope.kind === 'mapped-site' ? source.scope.siteId : null,
+        source.scope.kind === 'unmapped-workspace' ? source.scope.workspaceId : null)), reviewedAt) : null;
+      if (need.reviews.length && !provisionalContext) { heldSources.push({ reason: 'current-provisional-context-unavailable', scopeKey: need.scopeKey }); continue; }
+      contexts.push({ scope: source.scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint,
+        ...(provisionalContext ? { provisionalContext } : {}) });
       sourceReceipts.push([source.sourceKey, source.sourceRevision]);
     }
     if (!current()) return held('context-changed');
@@ -146,6 +169,13 @@ export function isGrowerOperationsCurrent(result: GrowerOperationsSources): bool
   return !!binding && localCurrent(binding);
 }
 
+/** Each requery records its actual read time. Compare its source/site/day facts,
+ * rather than requiring two independent reads to occur in the same millisecond. */
+function currentContextFacts(contexts: readonly GrowerCycleContext[]): string {
+  return JSON.stringify(contexts.map(context => ({ ...context, ...(context.provisionalContext
+    ? { provisionalContext: { ...context.provisionalContext, reviewedAt: null } } : {}) })));
+}
+
 /** Requery cloud snapshots without replacing the original ready-object binding.
  * This is a current fetched copy, never a cloud compare-and-swap receipt. */
 export async function checkGrowerOperationsCurrent(result: GrowerOperationsSources, options: { isCurrent?: () => boolean } = {}): Promise<boolean> {
@@ -155,6 +185,6 @@ export async function checkGrowerOperationsCurrent(result: GrowerOperationsSourc
   const next = fresh.status === 'ready' ? bindings.get(fresh) : undefined;
   return !!next && (options.isCurrent?.() ?? true) && isGrowerOperationsCurrent(result)
     && next.token === previous.token && next.sources === previous.sources
-    && JSON.stringify(fresh.contexts) === JSON.stringify(result.contexts)
+    && currentContextFacts(fresh.contexts) === currentContextFacts(result.contexts)
     && JSON.stringify(fresh.heldSources) === JSON.stringify(result.heldSources);
 }
