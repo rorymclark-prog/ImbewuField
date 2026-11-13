@@ -285,6 +285,16 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
           }
           const result = assess(profile, bed, cursor);
           if (result.status !== 'ready') {
+            if (result.status === 'missing-inputs' && result.issues.length === 1
+              && result.issues[0] === 'provisional-temperature-needs-new-preview') {
+              // This month lacks the saved comparison review, not necessarily
+              // a suitable climate. Keep it held and search later months;
+              // do not let it hide a separately reviewed January candidate.
+              reasons.add(result.issues[0]);
+              const nextMonth = addGrowerUtcDays(`${cursor.slice(0, 7)}-01`, 32);
+              cursor = nextMonth ? `${nextMonth.slice(0, 7)}-01` : null;
+              continue;
+            }
             reasons.add(result.status);
             if (result.status === 'entry-window-excluded') { cursor = addGrowerUtcDays(cursor, 1); continue; }
             return null;

@@ -74,7 +74,7 @@ test('a climate-bearing v2 origin survives the actual guarded writer and adopted
     sourceKey: `studio-canvas:${scope.siteId}`, resourceSiteId: scope.siteId, scope, beds: [bed],
     measuredAreas: [{ bedId: bed.id, areaM2: 12, basis: 'explicit-saved-dimensions' }], heldBeds: [],
     sourceRevision: 'b'.repeat(64), geometryFingerprint: 'a'.repeat(64), freshness: 'device-saved-copy', sourceVerification: 'not-verified' };
-  const choices = { ...ownFixture().profile.inputs, allowedEntryMonths: provided([1, 2], 'utc-months') };
+  const choices = { ...ownFixture().profile.inputs, allowedEntryMonths: provided([12, 1, 2], 'utc-months') };
   const saved = createSavedProvisionalProfile({ profileId: 'provisional-preview', cropKey: 'tomatoes',
     context: { scope, countryCode: 'KE', agriculturalRegionReference: null, establishment: 'transplant', waterRegime: 'irrigated' },
     recordedAt: at, asOf: at.slice(0, 10), candidates: [], overrides: choices,
@@ -117,6 +117,7 @@ test('a climate-bearing v2 origin survives the actual guarded writer and adopted
   assert.equal(secondMonth.status, 'with-gaps'); assert.equal(secondMonth.cycles.length, 1);
   assert.equal(secondMonth.cycles[0].assessment.schedule.fieldEntryDate, '2027-01-10');
   assert.equal(secondMonth.demandResults[1].status, 'capacity-gap');
+  assert.ok(secondMonth.demandResults[1].reasons.includes('provisional-temperature-needs-new-preview'));
   const row = createGrowerCyclePlanting(proposal.cycles[0], { plantingId: 'temperature-cycle', acceptedAt: at,
     geometryFingerprint: source.geometryFingerprint }); assert.ok(row);
   const state = book.loadCropPlanWithWriteAdmission();
