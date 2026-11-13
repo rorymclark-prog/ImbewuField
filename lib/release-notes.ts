@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '13 November 2026', sha: 'a3fcfcda2', changes: [
+    'Short reports keep rainfall unknown when its source is missing or unsupported.',
+  ] },
   { when: '13 November 2026', sha: '41c3ea113', changes: [
     'Great Lakes tomato previews offer an optional sourced seed-starting lead time.',
   ] },

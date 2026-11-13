@@ -7,6 +7,7 @@ import { registerReportPdfFont, reportPdfText } from './report-pdf-font.ts';
 import { recordsMonthShort } from './records-months.ts';
 import type { BoqLine } from './report-boq';
 import type { SavedReport } from './saved-reports';
+import { annualRainfallMm } from './climate-temperature';
 
 export type ReportSummaryPage = { title: string; lines: string[] };
 
@@ -30,6 +31,9 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
   const amount = (value: number) => `R ${numberLabel(value, 0)}`;
   const boq = buildBillOfQuantities(facts,language);
   const soilKnown = location.soil.soilSource === 'lab' || location.soil.soilSource === 'soilgrids';
+  // Short exports must not turn the saved outage placeholder into a rainfall
+  // reading after the full report has correctly withheld it.
+  const rainfallMm = annualRainfallMm(location.rainfall);
   const title = facts?.farmName ?? t('Site summary', 'Isifinyezo sendawo');
   const factsLines = [
     `${Math.abs(location.lat).toFixed(4)}°${location.lat < 0 ? 'S' : 'N'}, ${Math.abs(location.lon).toFixed(4)}°${location.lon < 0 ? 'W' : 'E'}`,
@@ -38,7 +42,7 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
     `${t('Vegetable beds', 'Imibhede yemifino')}: ${facts?.design?.bedCount ?? unknown} · ${area(facts?.design?.bedAreaM2)}`,
     `${t('Staple plots', 'Iziza zezitshalo eziyisisekelo')}: ${facts?.design?.plotCount ?? unknown} · ${area(facts?.design?.plotAreaM2)}`,
     t('Mapped space is not confirmation that all of it is currently in production.', 'Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.'),
-    `${t('Annual rainfall estimate', 'Isilinganiso semvula yonyaka')}: ${location.rainfall.annual} mm`,
+    `${t('Annual rainfall estimate', 'Isilinganiso semvula yonyaka')}: ${rainfallMm === null ? unknown : `${rainfallMm} mm`}`,
     `${t('Soil', 'Umhlabathi')}: ${soilKnown ? `pH ${location.soil.ph} · ${location.soil.soilSource === 'lab' ? t('lab result', 'umphumela wokuhlolwa') : t('SoilGrids model; confirm on site', 'imodeli ye-SoilGrids; qinisekisa endaweni')}` : t('Not measured. Arrange a soil test.', 'Awukahlolwa. Hlela ukuhlolwa komhlabathi.')}`,
     `${t('Stated tank capacity in the design', 'Umthamo wamathangi obhalwe emklamweni')}: ${facts?.water ? `${numberLabel(facts.water.statedStorageLitres)} L` : unknown}`,
     t('Capacity is not water currently available; check which tanks are already installed.', 'Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.'),
