@@ -124,6 +124,6 @@ ${output.map(([label, text]) => `<tr><th scope="row">${escape(label)}</th><td>${
 ${paragraph('Uncertainties', assessment.uncertainties.length ? assessment.uncertainties.join(', ') : 'No additional resolver flags; provisional limits still apply')}
 <h2>Evidence and grower edits</h2>${evidence}
 ${result.rejected.length ? `<h2>Evidence not used</h2>${result.rejected.map(item => paragraph(item.id, item.reason)).join('')}` : ''}
-<p>Downloaded for review. No profile or crop was saved or adopted. This file does not update when the app changes.</p>
+<p>Downloaded for review. Downloading this preview does not save a profile or add crops. This file does not update when the app changes.</p>
 </body></html>` };
 }

@@ -7,6 +7,9 @@ import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'rea
 import ts from 'typescript';
 import { CROPS } from '../lib/crop-catalog.ts';
 import { normaliseGrowerPlanningProfile, type GrowerPlanningProfile, type GrowerPlanningScope } from '../lib/international/grower-planning.ts';
+import { createSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
+import { usdaGreatLakesCabbageCandidates } from '../lib/international/providers/usda-great-lakes-cabbage.ts';
+import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import type { PlanBed } from '../lib/crop-plan.ts';
 import type { GrowerPlanningPanelProps } from '../components/crops/GrowerPlanningPanel.tsx';
 
@@ -199,5 +202,25 @@ test('missing or ambiguous beds cannot borrow an area and a removed measured bed
     assert.doesNotMatch(ui.text(), /Estimated plants:/); ui.click('Review estimated capacity and dates'); assert.match(ui.text(), /Missing inputs/);
     assert.match(ui.text(), /Measured bed area/); assert.equal(ui.field('Measured bed').findAllByType('option').length, 1);
     ui.update({ beds: [] }); ui.click('Review estimated capacity and dates'); assert.match(ui.text(), /Missing inputs/);
+  } finally { ui.dispose(); }
+});
+
+
+test('legacy estimate editing cannot relabel a source-backed saved preview that has no spacing origin', () => {
+  const recordedAt = '2026-11-12T12:00:00.000Z';
+  const context = { scope, countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', establishment: null, waterRegime: null };
+  const source: GrowerWorkflowSource = { status: 'ready', kind: 'studio-canvas', sourceId: 'site:1.00000,1.00000',
+    sourceKey: 'studio-canvas:site:1.00000,1.00000', resourceSiteId: 'site:1.00000,1.00000', scope,
+    geometryFingerprint: 'a'.repeat(64), sourceRevision: 'b'.repeat(64), freshness: 'device-saved-copy', sourceVerification: 'not-verified', beds,
+    measuredAreas: [{ bedId: beds[0].id, areaM2: 12, basis: 'explicit-saved-dimensions' }], heldBeds: [] };
+  const profile = createSavedProvisionalProfile({ profileId: 'provisional-preview', cropKey: 'cabbage', context,
+    recordedAt, asOf: '2026-11-12', candidates: usdaGreatLakesCabbageCandidates(context, 'cabbage', recordedAt, true),
+    measuredAreaM2: { state: 'provided', value: 12, unit: 'm2', provenance: { kind: 'grower-record', recordedAt, reference: 'Synthetic saved bed' } },
+    fieldEntryDate: { state: 'missing', reason: 'not-entered' } }, 'new-profile', '2026-11-12T12:01:00.000Z', source, beds[0].id, beds[0].label);
+  assert.ok(profile); assert.equal(profile.plantCountOrigin, undefined);
+  const ui = mount([profile]);
+  try {
+    ui.click('Edit Cabbage'); assert.match(ui.text(), /preserves provisional source evidence/); assert.equal(ui.attempts.length, 0);
+    assert.deepEqual(ui.profiles[0], profile);
   } finally { ui.dispose(); }
 });

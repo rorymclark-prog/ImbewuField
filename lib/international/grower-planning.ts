@@ -6,6 +6,7 @@ import { growerEstimateSourceQuantity, normaliseGrowerEstimateSourceReceipt, typ
 import { addDecimalQuantity, floorDecimalQuantityRatio, floorExactDecimalQuantityRatio } from '../farm-records';
 import { INTERNATIONAL_SQUARE_FOOT_IN_SQUARE_METRES } from '../length-units';
 import { regionalSpacingReference } from './providers/regional-spacing-reference';
+import { normaliseSavedProvisionalOrigin, type SavedProvisionalOrigin } from './provisional-profile';
 
 export type GrowerPlanningScope =
   | { readonly kind: 'mapped-site'; readonly siteId: string }
@@ -52,6 +53,8 @@ export interface GrowerPlanningProfile {
   /** Optional entered-unit origin, not source verification or measured area. */
   readonly exactDensitySources?: Readonly<Partial<Record<GrowerEstimateSourceField, GrowerEstimateSourceReceipt>>>;
   readonly plantCountOrigin?: GrowerSpacingSelectionReceipt;
+  /** Historical source/default/override review; not current sowing authority. */
+  readonly provisionalOrigin?: SavedProvisionalOrigin;
 }
 
 export interface GrowerCountAreaBinding { readonly bedId: string }
@@ -257,10 +260,17 @@ export function normaliseGrowerPlanningProfile(value: unknown): GrowerPlanningPr
       || establishment.state !== 'provided' || establishment.value !== regionalSpacingReference(
         plantCountOrigin.countryCode, plantCountOrigin.cropKey, plantCountOrigin.regionReference, plantCountOrigin)?.establishment) return null;
   }
-  return freeze({ version: 1, profileId: value.profileId, cropKey: value.cropKey, scope,
+  const profile: GrowerPlanningProfile = freeze({ version: 1, profileId: value.profileId, cropKey: value.cropKey, scope,
     inputs: { plantsPerM2, yieldKgPerM2, establishment, nurseryDays, fieldEntryToFirstHarvestDays,
       pickingDays, fieldOccupancyDays, turnaroundDays, allowedEntryMonths: window },
     ...(exactDensitySources ? { exactDensitySources } : {}), ...(plantCountOrigin ? { plantCountOrigin } : {}) });
+  if ('provisionalOrigin' in value) {
+    const descriptor = Object.getOwnPropertyDescriptor(value, 'provisionalOrigin');
+    if (!descriptor?.enumerable || !('value' in descriptor)) return null;
+    const origin = normaliseSavedProvisionalOrigin(descriptor.value, profile);
+    return origin ? freeze({ ...profile, provisionalOrigin: origin }) : null;
+  }
+  return profile;
 }
 
 /** Duplicate identities are ambiguous even across scopes, or when one duplicate is
@@ -450,6 +460,10 @@ export function assessGrowerPlanning(request: GrowerPlanningRequest): GrowerPlan
   const held = (status: 'missing-inputs' | 'invalid-inputs' | 'scope-mismatch' | 'entry-window-excluded', issues: string[]): GrowerPlanningAssessment =>
     freeze({ ...basis, status, issues, snapshot, fingerprint });
   if (growerPlanningScopeKey(profile.scope) !== growerPlanningScopeKey(scope)) return held('scope-mismatch', ['scope']);
+  // Saving retains a historical review, not current country/source authority.
+  // The existing sowing workflow cannot revalidate that context yet. Keep this
+  // domain guard until a receipt-aware review/acceptance path supplies it.
+  if (profile.provisionalOrigin) return held('missing-inputs', ['saved-provisional-context-needs-review']);
   const values = profile.inputs;
   const required: Array<[string, GrowerInput<unknown, string>]> = Object.entries(values).filter(([key]) => key !== 'nurseryDays' && !(profile.plantCountOrigin && key === 'plantsPerM2'));
   required.push(['measuredAreaM2', measuredAreaM2], ['fieldEntryDate', fieldEntryDate]);

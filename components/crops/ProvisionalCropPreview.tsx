@@ -1,14 +1,16 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { CROPS, MONTHS_SHORT } from '@/lib/crop-catalog';
-import { growerPlanningScopeKey, type GrowerPlanningScope } from '@/lib/international/grower-planning';
+import { growerPlanningScopeKey, normaliseGrowerMeasuredAreaInput, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import { formatDerivedMassKilograms } from '@/lib/mass-units';
 import { downloadFile } from '@/lib/crop-export-deliver';
 import { buildProvisionalCropPreviewHtml, provisionalNumericFields as numericFields, provisionalLabels as labels, provisionalInputText as inputText, provisionalScopeText as scopeText } from '@/lib/international/provisional-crop-export';
 import { growerWorkflowResourceSiteId, type GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { resolveProvisionalCropPlan, type ProvisionalFieldCandidate, type ProvisionalDraftRequest } from '@/lib/international/provisional-crop-planning';
 import { usdaGreatLakesCabbageReference, usdaGreatLakesCabbageCandidates, usdaGreatLakesRegionMatches, USDA_CABBAGE_SPACING } from '@/lib/international/providers/usda-great-lakes-cabbage';
+import { createSavedProvisionalProfile, readSavedProvisionalProfile, type ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
+import type { GrowerPlanningProfile } from '@/lib/international/grower-planning';
 import { sourcePublicationText } from '@/lib/international/countries/readiness';
 import { worldvegKenyaCabbageCandidates, worldvegKenyaCabbageReference, worldvegKenyaCabbageRegionMatches } from '@/lib/international/providers/worldveg-kenya-cabbage';
 import { worldvegKenyaCowpeaCandidates, worldvegKenyaCowpeaReference, worldvegKenyaCowpeaSpacing, type CowpeaReferenceConditions } from '@/lib/international/providers/worldveg-kenya-cowpea';
@@ -27,6 +29,8 @@ export interface ProvisionalCropPreviewProps {
   onCheckSource: (expected: GrowerWorkflowSource) => Promise<{ isCurrent: () => boolean } | null>;
   /** Only owner-reviewed adapters supply candidates. Research metadata alone is
    * not an adapter; absent evidence must leave defaults unknown. */
+  profiles?: readonly GrowerPlanningProfile[];
+  onSaveProfile?: (profile: GrowerPlanningProfile, isCurrent: () => boolean) => ProvisionalProfileSaveResult;
   evidence?: { revision: string; candidates: readonly ProvisionalFieldCandidate[]; knownPlantingRestriction?: boolean };
 }
 
@@ -52,6 +56,29 @@ function binding(props: ProvisionalCropPreviewProps): string | null {
   } catch { return null; }
 }
 
+
+function savedAreaText(value: unknown) {
+  const area = normaliseGrowerMeasuredAreaInput(value);
+  return area?.state === 'provided' ? String(area.value) : 'Unknown';
+}
+
+function EvidenceFields({ fields, spacing }: { fields: Extract<Resolution, { status: 'resolved' }>['fields']; spacing: boolean }) {
+  return <>
+      {Object.entries(fields).map(([key, value]) => <details key={key} className="rounded border border-[var(--border)] p-2">
+        <summary className="min-h-11 cursor-pointer">{labels[key]}: {inputText(value.activeInput)} · {value.status}</summary>
+        <p>Active basis: {value.activeTier ?? 'Unknown'}. Evidence default: {inputText(value.baselineDefault)}.</p>
+        {value.activeInput.state === 'provided' && <p>Input provenance: {value.activeInput.provenance.kind}; recorded {value.activeInput.provenance.recordedAt}.</p>}
+        {value.status === 'overridden' && value.activeInput.state === 'missing' && <p>{key === 'plantsPerM2' && spacing ? 'The chosen spacing method does not use an entered/default density.' : 'Grower withheld this value. Its evidence default remains visible but is not used.'}</p>}
+        {value.defaultConflict && <p role="note">Conflicting defaults remain unresolved; no average was invented.</p>}
+        {value.status === 'invalid-override' && <p role="alert">Invalid override. Correct or reset this field; its default has not been substituted.</p>}
+        {value.defaultOptions.map(option => <p key={option.candidateId}>Default {option.candidateId}: {inputText(option.input)}{option.reportedRange ? `; reported range ${option.reportedRange.join('–')}` : ''}. Applies to {scopeText(option.scope)}.</p>)}
+        {value.defaultPlanningValueBasis && <p>Default planning value: {value.defaultPlanningValueBasis}</p>}
+        {value.sourceBindings.map((item, i) => <div key={`${item.id}:${i}`} className="break-words"><p>Source: {item.title} · {item.url}. Published: {sourcePublicationText(item)}; accessed: {item.accessedOn ?? 'Unknown'}; review due: {item.reviewDueOn ?? 'Unknown'}. Reuse: {item.reuseTerms}. Evidence state: {item.evidenceState}.</p><p>{item.attribution}</p><p>{item.limitations}</p></div>)}
+        {value.assumptions.map(item => <p key={item}>Assumption: {item}</p>)}
+      </details>)}
+  </>;
+}
+
 export default function ProvisionalCropPreview(props: ProvisionalCropPreviewProps) {
   const scopeKey = growerPlanningScopeKey(props.scope);
   return <details className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] text-[var(--text-primary)]">
@@ -71,6 +98,15 @@ function Editor(props: ProvisionalCropPreviewProps) {
   const previewLive = useRef(preview); previewLive.current = preview;
   const [error, setError] = useState('');
   const [exportMessage, setExportMessage] = useState('');
+  const [saveConsent, setSaveConsent] = useState<object | null>(null);
+  const saveDeclaration = useRef<{ selected: object | null }>({ selected: null });
+  function declareSave(selected: object | null) {
+    // A checkbox round trip during an awaited source read is a new decision,
+    // never permission for the already pending attempt to resume.
+    saveDeclaration.current = { selected }; setSaveConsent(selected);
+  }
+  const [saveMessage, setSaveMessage] = useState('');
+  const consumed = useRef<object | null>(null);
   const pending = useRef<object | null>(null);
   const [checkingSource, setCheckingSource] = useState(false);
   const environment = binding(props);
@@ -106,11 +142,11 @@ function Editor(props: ProvisionalCropPreviewProps) {
   }
   function edit(next: Partial<Draft>) {
     if (!isCurrent()) return;
-    const value = { ...draft, ...next }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage('');
+    const value = { ...draft, ...next }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
   }
   async function refresh() {
     if (!isCurrent()) return;
-    setPreview(null); setError(''); setExportMessage('');
+    setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
     try { await current.current.onRefresh(); }
     catch { if (isCurrent()) setError('Could not check saved measurements. Try again.'); }
   }
@@ -119,7 +155,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
     // The day belongs to this calculation, not the render-time edit guard. A form
     // left open overnight must still accept edits and start a fresh calculation.
     const calculationDay = new Date().toISOString().slice(0, 10);
-    setPreview(null); setError(''); setExportMessage('');
+    setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
     if (!sourceReady || !source || !props.scope) { setError('Check saved measurements before previewing.'); return; }
     const beds = source.beds.filter(row => row.id === draft.bed);
     const measures = source.measuredAreas.filter(row => row.bedId === draft.bed);
@@ -163,6 +199,44 @@ function Editor(props: ProvisionalCropPreviewProps) {
     } catch { if (isCurrent()) setError('Could not check this preview. Check the saved measurements and evidence again.'); }
     finally { if (pending.current === token) { pending.current = null; if (active.current) setCheckingSource(false); } }
   }
+  const savedProfiles = useMemo(() => (props.profiles ?? []).map(readSavedProvisionalProfile)
+    .filter(value => value && growerPlanningScopeKey(value.profile.scope) === growerPlanningScopeKey(props.scope)), [props.profiles, props.scope]);
+  async function savePreview() {
+    const selected = preview, writer = props.onSaveProfile;
+    if (!isCurrent() || !selected || result?.status !== 'resolved' || !source || !writer
+      || saveConsent !== selected || consumed.current === selected || pending.current) return;
+    const declaration = saveDeclaration.current;
+    const bound = () => isCurrent() && previewLive.current === selected && current.current.onSaveProfile === writer
+      && declaration.selected === selected && saveDeclaration.current === declaration
+      && selected.request.asOf === new Date().toISOString().slice(0, 10) && selected.receipt.isCurrent();
+    if (!bound()) return;
+    const token = {}; pending.current = token; setCheckingSource(true); setSaveMessage('');
+    try {
+      const fresh = await current.current.onCheckSource(source);
+      const currentSave = () => bound() && fresh?.isCurrent() === true;
+      if (!currentSave()) { if (isCurrent()) setError('Saved measurements or context changed. Calculate a fresh preview before saving.'); return; }
+      const candidate = createSavedProvisionalProfile(selected.request, crypto.randomUUID(), new Date().toISOString(), source, selected.draft.bed, selected.bedLabel);
+      if (!candidate || candidate.provisionalOrigin?.previewFingerprint !== selected.result.fingerprint) {
+        if (bound()) setError('Finish valid source and spacing choices before saving this profile. Missing yield or dates may remain unknown.'); return;
+      }
+      if (!currentSave()) return;
+      // Consume before calling a writer: a thrown callback or post-write event
+      // must never turn an uncertain completed write into an automatic retry.
+      consumed.current = selected;
+      const outcome = writer(candidate, currentSave);
+      if (outcome.status === 'held' || outcome.status === 'failed') consumed.current = null;
+      if (!isCurrent()) return;
+      if (outcome.status === 'confirmed' && outcome.profileId === candidate.profileId) {
+        setSaveMessage('Profile saved. Open its saved provisional evidence below. No sowings were added.');
+      } else if (outcome.status === 'superseded' || outcome.status === 'confirmed') {
+        setSaveMessage('A save occurred or its result could not be confirmed. Check the saved profiles before starting another save.');
+      } else setError('The profile was not saved. Check the current saved plan and measurements, then try again.');
+    } catch {
+      if (isCurrent()) setError(consumed.current === selected
+        ? 'The save result could not be confirmed. Check saved profiles before starting another save.'
+        : 'Could not check this save. Check measurements and try again.');
+    } finally { if (pending.current === token) { pending.current = null; if (active.current) setCheckingSource(false); } }
+  }
   async function exportPreview() {
     if (!isCurrent() || !result || result.status !== 'resolved' || !preview || !source || pending.current) return;
     const selected = preview;
@@ -188,17 +262,34 @@ function Editor(props: ProvisionalCropPreviewProps) {
       const delivered = await downloadFile(new Blob([document.html], { type: 'text/html;charset=utf-8' }),
         `ImbewuField${props.sample ? '-demo' : ''}-provisional-preview.html`, check, handoff);
       if (bound()) {
-        if (delivered === 'downloaded') setExportMessage('Printable preview download requested. Open the HTML file in a browser to print it. No plan was saved or adopted.');
+        if (delivered === 'downloaded') setExportMessage('Printable preview download requested. Open the HTML file in a browser to print it. Downloading does not add crops to your plan.');
         else { setPreview(null); setError('Preview changed before download. Recalculate before downloading.'); }
       }
     } catch { if (bound()) { setPreview(null); setError('Could not confirm a current preview. Nothing was downloaded.'); } }
     finally { if (pending.current === token) { pending.current = null; if (active.current) setCheckingSource(false); } }
   }
   return <section lang="en" aria-label="Provisional crop preview" className="space-y-4 px-4 pb-4 font-sans">
-    <p className="text-sm">Preview supported counts and dates using applicable evidence and your edits. Missing values stay unknown. Nothing here saves a profile or adds a crop.</p>
+    <p className="text-sm">Preview supported counts and dates using applicable evidence and your edits. Missing values stay unknown. {props.onSaveProfile ? 'Calculating does not save. Use the separate save action to keep a profile for review.' : 'Nothing here saves a profile or adds a crop.'}</p>
     <p role="note" className="text-sm">Provisional estimates: source metadata is not verification of farming accuracy. Suitability and plant legality are not established. Density is not layout clearance.</p>
     <p className="text-sm">Country: {props.countryCode ?? 'Unknown'} · Agricultural region: {props.agriculturalRegionReference ?? 'Unknown'}</p>
     {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
+    {!!savedProfiles.length && <section aria-label="Saved provisional profiles" className="space-y-3 rounded-lg border border-[var(--border)] p-3">
+      <h3 className="font-semibold">Saved provisional profiles</h3>
+      <p>Historical evidence, not a current source check or an approved planting plan. To change conditions, calculate and save a new preview.</p>
+      {savedProfiles.map(saved => saved && <details key={saved.profile.profileId} className="space-y-2 break-words">
+        <summary className="min-h-11 cursor-pointer">{CROPS.find(crop => crop.key === saved.profile.cropKey)?.name} · {saved.origin.bedLabel} · saved {saved.origin.savedAt}</summary>
+        <p>Evidence as of {saved.request.asOf}; saved country {saved.request.context.countryCode ?? 'Unknown'}; region {saved.request.context.agriculturalRegionReference ?? 'Unknown'}.</p>
+        <p>Water regime: {saved.request.context.waterRegime ?? 'Unknown'}. Variety: {saved.request.context.varietyReference ?? 'Unknown'}. Current applicability has not been checked.</p>
+        <p>Saved measured area: {savedAreaText(saved.request.measuredAreaM2)} m².</p>
+        {saved.request.countBasis && <p>Chosen spacing: {saved.request.countBasis.rowCm} cm between rows; {saved.request.countBasis.inRowCm} cm within rows; final survivors per station: {saved.request.countBasis.finalStand || 'Unknown'}. This is an area budget, not physical layout fit.</p>}
+        {saved.request.countBasis && <p>Saved budgeted whole stations: {saved.result.assessment.budgetedStations.value ?? 'Unknown'} ({saved.result.assessment.budgetedStations.status}).</p>}
+        <p>Saved estimate: {saved.result.assessment.estimatedPlantCount.value ?? 'Unknown'} plants ({saved.result.assessment.estimatedPlantCount.status}); harvest weight {saved.result.assessment.estimatedYieldKg.value ?? 'Unknown'} kg ({saved.result.assessment.estimatedYieldKg.status}).</p>
+        <p>Saved entry window: {saved.result.assessment.entryWindow}. Current planting suitability is unverified.</p>
+        <ul>{Object.entries(saved.result.assessment.schedule).map(([key, value]) => <li key={key}>{labels[key]} (UTC): {value.value ?? 'Unknown'} ({value.status})</li>)}</ul>
+        <EvidenceFields fields={saved.result.fields} spacing={!!saved.request.countBasis} />
+        {!!saved.result.rejected.length && <details><summary className="min-h-11 cursor-pointer">Saved evidence not used</summary><ul>{saved.result.rejected.map((item, i) => <li key={i}>{item.id}: {item.reason}</li>)}</ul></details>}
+      </details>)}
+    </section>}
     <button type="button" className={button} disabled={props.checking} onClick={refresh}>{props.checking ? 'Checking measurements…' : 'Check saved measurements'}</button>
     {!sourceReady && <p role="note">Current saved measurements are required. Previously calculated results are hidden.</p>}
     <div className="grid gap-3 sm:grid-cols-2">
@@ -292,6 +383,13 @@ function Editor(props: ProvisionalCropPreviewProps) {
       <h3 className="font-semibold">Provisional results</h3>
       <button type="button" className={button} disabled={checkingSource} onClick={exportPreview}>Download printable preview</button>
       {exportMessage && <p role="status">{exportMessage}</p>}
+      {props.onSaveProfile && <div className="space-y-2 rounded border border-[var(--border)] p-3">
+        <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={saveConsent === preview}
+          onChange={event => declareSave(event.target.checked ? preview : null)} />Save these inputs, source limits and unknowns as a new profile for review. Do not add sowings.</label>
+        <button type="button" className={button} disabled={checkingSource || saveConsent !== preview || consumed.current === preview}
+          onClick={savePreview}>Save provisional profile</button>
+      </div>}
+      {saveMessage && <p role="status">{saveMessage}</p>}
       <p>Entry window: {result.assessment.entryWindow}. An unknown window does not establish that planting on this date is suitable.</p>
       {result.spacingSelection && <p role="note">Spacing-cell estimate: {result.spacingSelection.issue} ({result.spacingSelection.status})</p>}
       {draft.countMode === 'spacing' && <p>Budgeted whole stations: {result.assessment.budgetedStations.value ?? 'Unknown'} ({result.assessment.budgetedStations.status}). Area budget only; physical layout fit is unassessed.</p>}
@@ -300,21 +398,10 @@ function Editor(props: ProvisionalCropPreviewProps) {
       <ul>{Object.entries(result.assessment.schedule).map(([key, value]) => <li key={key}>{labels[key]} (UTC): {value.value ?? 'Unknown'} ({value.status})</li>)}</ul>
       {!!result.assessment.uncertainties.length && <p>Uncertainties: {result.assessment.uncertainties.join(', ')}</p>}
       <h4 className="font-semibold">Evidence and edits</h4>
-      {Object.entries(result.fields).map(([key, value]) => <details key={key} className="rounded border border-[var(--border)] p-2">
-        <summary className="min-h-11 cursor-pointer">{labels[key]}: {inputText(value.activeInput)} · {value.status}</summary>
-        <p>Active basis: {value.activeTier ?? 'Unknown'}. Evidence default: {inputText(value.baselineDefault)}.</p>
-        {value.activeInput.state === 'provided' && <p>Input provenance: {value.activeInput.provenance.kind}; recorded {value.activeInput.provenance.recordedAt}.</p>}
-        {value.status === 'overridden' && value.activeInput.state === 'missing' && <p>{key === 'plantsPerM2' && draft.countMode === 'spacing' ? 'The chosen spacing method does not use an entered/default density.' : 'Grower withheld this value. Its evidence default remains visible but is not used.'}</p>}
-        {value.defaultConflict && <p role="note">Conflicting defaults remain unresolved; no average was invented.</p>}
-        {value.status === 'invalid-override' && <p role="alert">Invalid override. Correct or reset this field; its default has not been substituted.</p>}
-        {value.defaultOptions.map(option => <p key={option.candidateId}>Default {option.candidateId}: {inputText(option.input)}{option.reportedRange ? `; reported range ${option.reportedRange.join('–')}` : ''}. Applies to {scopeText(option.scope)}.</p>)}
-        {value.defaultPlanningValueBasis && <p>Default planning value: {value.defaultPlanningValueBasis}</p>}
-        {value.sourceBindings.map((item, i) => <div key={`${item.id}:${i}`} className="break-words"><p>Source: {item.title} · {item.url}. Published: {sourcePublicationText(item)}; accessed: {item.accessedOn ?? 'Unknown'}; review due: {item.reviewDueOn ?? 'Unknown'}. Reuse: {item.reuseTerms}. Evidence state: {item.evidenceState}.</p><p>{item.attribution}</p><p>{item.limitations}</p></div>)}
-        {value.assumptions.map(item => <p key={item}>Assumption: {item}</p>)}
-      </details>)}
+      <EvidenceFields fields={result.fields} spacing={draft.countMode === 'spacing'} />
       {!!result.rejected.length && <details><summary className="min-h-11 cursor-pointer">Evidence not used</summary><ul>{result.rejected.map((item, i) => <li key={i}>{item.id}: {item.reason}</li>)}</ul></details>}
       <p>Source checked at {preview?.request.recordedAt} (UTC). This is a checked snapshot, not a live source feed.</p>
-      <p>Nothing has been saved or added. These are conditional planning estimates, not locally validated farming instructions.</p>
+      <p>{props.onSaveProfile ? 'Saving a profile keeps its evidence for review; it does not add sowings.' : 'Nothing has been saved or added.'} These are conditional planning estimates, not locally validated farming instructions.</p>
     </section>}
   </section>;
 }

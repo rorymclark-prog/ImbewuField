@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest provisional save continuation — [Explicit profile save and historical review — 13 November 2026](2026-11-13/provisional-profile-save-codex.md). Shared guarded append and retained source limits; context-aware sowing adoption, independent review and current-head release gates remain open.
+
 Latest regional spacing continuation — [Great Lakes cabbage reference — 13 November 2026](2026-11-13/great-lakes-spacing-codex.md). Explicit undated regional transfer; current-head release and local validation remain open.
 
 Latest conditional count continuation — [Spacing-cell preview — 12 November 2026](2026-11-12/spacing-cell-preview-codex.md). Grower-selected spacing and final stand remain distinct from source recommendations and physical layout fit.
@@ -189,6 +191,9 @@ and checks that have not been performed. The older audit's pending-release text
 is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
+
+Latest provisional save continuation — [Explicit profile save and historical review — 13 November 2026](2026-11-13/provisional-profile-save-codex.md). Shared guarded append and retained source limits; context-aware sowing adoption, independent review and current-head release gates remain open.
+
 
 Latest preview consumer: [Provisional crop preview integration — 12 November 2026](2026-11-12/provisional-preview-integration.md). Synthetic component and freshness checks; country adapters and independent release gates remain open.
 

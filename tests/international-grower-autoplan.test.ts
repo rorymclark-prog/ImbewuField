@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { createSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
+import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import { CROPS } from '../lib/crop-catalog.ts';
 import {
   addGrowerUtcDays, isGrowerRecordedAt, isGrowerUtcDate, normaliseGrowerInput,
@@ -305,4 +307,21 @@ test('new shared public validators reject invalid arguments without weakening ea
   assert.equal(addGrowerUtcDays('2028-01-01', 0.5), null);
   assert.equal(addGrowerUtcDays('9999-12-31', 1), null);
   assert.equal(normaliseGrowerInput({ ...own(0, 'kg-total'), provenance: null }, 'kg-total', (v): v is number => typeof v === 'number'), null);
+});
+
+
+test('direct domain planning cannot accept a complete saved provisional receipt as current sowing authority', () => {
+  const original = profile(), req = { profileId: 'provisional-preview', cropKey: original.cropKey,
+    context: { scope, countryCode: 'ZA', agriculturalRegionReference: null, establishment: 'direct' as const, waterRegime: 'irrigated' as const },
+    recordedAt: requestedAt, asOf: requestedAt.slice(0, 10), candidates: [], overrides: original.inputs,
+    measuredAreaM2: own(3, 'm2'), fieldEntryDate: own('2027-12-28', 'utc-date') };
+  const source: GrowerWorkflowSource = { status: 'ready', kind: 'studio-canvas', sourceId: 'site:0.00000,0.00000', sourceKey: 'studio-canvas:site:0.00000,0.00000',
+    resourceSiteId: 'site:0.00000,0.00000', scope, geometryFingerprint: 'a'.repeat(64), sourceRevision: 'b'.repeat(64),
+    freshness: 'device-saved-copy', sourceVerification: 'not-verified', beds: [bed().bed],
+    measuredAreas: [{ bedId: 'block-a', areaM2: 3, basis: 'explicit-saved-dimensions' }], heldBeds: [] };
+  const saved = createSavedProvisionalProfile(req, 'own-profile', '2026-11-04T12:01:00.000Z', source, 'block-a', 'block-a'); assert.ok(saved);
+  const result = generateGrowerAutoPlan(request({ profiles: [saved] }));
+  assert.equal(result.status, 'missing-inputs');
+  if (result.status === 'missing-inputs') assert.ok(result.issues.some(issue => issue.includes('saved-provisional-context-needs-review')));
+  assert.equal(generateGrowerAutoPlan(request()).status, 'ready', 'Unmarked legacy planning remains available.');
 });

@@ -30,6 +30,7 @@ import NurseryPlanPanel from '@/components/crops/NurseryPlanPanel';
 import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySaveContext, beginNurserySaveRequest, commitNurserySaveRequest, readNurserySaveConfirmation, createHarvestSaveContext, beginHarvestSaveRequest, commitHarvestSaveRequest, readHarvestSaveConfirmation, harvestTargetsSourceKey, type HarvestSaveContext, type HarvestSaveRequest, type HarvestSaveResult, type NurserySaveAuthority, type NurserySaveContext, type NurserySaveRequest, type NurserySaveResult } from '@/lib/nursery-save-receipt';
 import GrowerPlanningPanel from '@/components/crops/GrowerPlanningPanel';
 import ProvisionalCropPreview from '@/components/crops/ProvisionalCropPreview';
+import type { ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
 import GrowerAutoPlanPanel from '@/components/crops/GrowerAutoPlanPanel';
 import GrowerNurseryReviewPanel from '@/components/crops/GrowerNurseryReviewPanel';
 import SavedGrowerNurseryReviewPanel from '@/components/crops/SavedGrowerNurseryReviewPanel';
@@ -1522,7 +1523,9 @@ function FacilitatorCropsPageInner() {
         : growerWorkflow.source.kind === 'facilitator-local') ? growerWorkflow.source : null;
   const growerWriteScope = useRef({ key: growerScopeKey, owner: growerOwner, sample: growerSample });
   growerWriteScope.current = { key: growerScopeKey, owner: growerOwner, sample: growerSample };
-  function saveGrowerProfiles(value: GrowerPlanningProfile[], request?: GrowerProfileChangeRequest): boolean {
+  function saveGrowerProfiles(value: GrowerPlanningProfile[], request?: GrowerProfileChangeRequest,
+    writeIsCurrent?: () => boolean, onWritten?: (token: string) => void): boolean {
+    if (writeIsCurrent && !writeIsCurrent()) return false;
     const live = growerWriteScope.current;
     if (!plan || !growerActorIsCurrent() || planSaveConflict || !growerScopeKey || live.key !== growerScopeKey || live.owner !== growerOwner
       || activeAccountUid() !== growerOwner || live.sample !== growerSample || isSampleMode() !== growerSample) return false;
@@ -1562,10 +1565,52 @@ function FacilitatorCropsPageInner() {
     if (saveTimer.current) clearTimeout(saveTimer.current);
     const profileChange = request ? createGrowerProfileChangePermit(loaded.admission, fresh, next, request) : undefined;
     if (request && !profileChange) { setPlanSaveConflict(true); return false; }
-    const receipt = saveCropPlanWithReceipt(next, profileChange ? { growerProfileChange: profileChange } : undefined);
+    const receipt = saveCropPlanWithReceipt(next, { ...(profileChange ? { growerProfileChange: profileChange } : {}),
+      ...(writeIsCurrent ? { writeIsCurrent: () => writeIsCurrent() && growerActorIsCurrent()
+        && planWriteBase.current === base && writeIsCurrent() } : {}) });
+    if (receipt.saved) onWritten?.(receipt.token);
+    // Guarded adoption owns its admitted readback and state installation. An
+    // own write event can already have changed actor or source at this point.
+    if (writeIsCurrent) return receipt.saved;
     setPlanSaveFailed(!receipt.saved);
     if (receipt.saved) { rememberStoredPlan(next, receipt.token); setPlan(next); }
     return receipt.saved;
+  }
+  function saveProvisionalProfile(profile: GrowerPlanningProfile, isCurrent: () => boolean): ProvisionalProfileSaveResult {
+    let written = false;
+    let writtenToken: string | null = null;
+    try {
+      if (!plan || !isCurrent() || !growerActorIsCurrent() || !profile.provisionalOrigin
+        || growerPlanningScopeKey(profile.scope) !== growerScopeKey) return { status: 'held' };
+      const admitted = loadCropPlanWithWriteAdmission();
+      // Admission must be lossless before considering every raw profile ID;
+      // damaged/foreign rows cannot disappear through display normalization.
+      if (admitted.admission.status !== 'ready' || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)
+        || (admitted.book.growerPlanningProfiles ?? []).some(row => row.profileId === profile.profileId)
+        || (plan.growerPlanningProfiles ?? []).some(row => row.profileId === profile.profileId)) return { status: 'held' };
+      const base = planWriteBase.current;
+      if (!saveGrowerProfiles([...(plan.growerPlanningProfiles ?? []), profile],
+        { kind: 'edit', profileId: profile.profileId, expectedProfile: null }, isCurrent,
+        token => { written = true; writtenToken = token; })) return { status: 'held' };
+      written = true;
+      const confirmed = loadCropPlanWithWriteAdmission();
+      const rows = (confirmed.book.growerPlanningProfiles ?? []).filter(row => row.profileId === profile.profileId);
+      if (!isCurrent() || !growerActorIsCurrent() || !base || planWriteBase.current !== base
+        || confirmed.token !== writtenToken || cropPlanWriteToken() !== confirmed.token
+        || !cropPlanWriteAdmissionMatches(confirmed.admission, JSON.stringify(confirmed.book), confirmed.token)
+        || rows.length !== 1 || JSON.stringify(rows[0]) !== JSON.stringify(profile)
+        || !isCurrent() || !growerActorIsCurrent()) {
+        setPlanSaveConflict(true); return { status: 'superseded' };
+      }
+      planWriteBase.current = { owner: base.owner, sample: base.sample, token: confirmed.token,
+        planKey: JSON.stringify(confirmed.book), admission: confirmed.admission };
+      setPlanSaveFailed(false);
+      setPlan(confirmed.book);
+      return { status: 'confirmed', profileId: profile.profileId };
+    } catch {
+      if (written) { setPlanSaveConflict(true); return { status: 'superseded' }; }
+      return { status: 'held' };
+    }
   }
   const planningSupport = resolvePlanningSupport({ places: countryPlaces, siteId: surveySiteId,
     workspaceId: planningWorkspaceId, workspaceReferences: plan?.workspaceReferences });
@@ -2536,7 +2581,8 @@ function FacilitatorCropsPageInner() {
       countryCode={siteCountry.status === 'confirmed' ? siteCountry.context?.countryCode ?? null : null}
       agriculturalRegionReference={siteCountry.status === 'confirmed' ? siteCountry.context?.agriculturalRegionReference ?? null : null}
       contextRevision={`${growerWorkflow.contextRevision}:${planningSupport.fingerprint}`}
-      checking={growerWorkflow.checking} onRefresh={growerWorkflow.onRefresh} onCheckSource={growerWorkflow.onCheckPreviewSource} />
+      checking={growerWorkflow.checking} onRefresh={growerWorkflow.onRefresh} onCheckSource={growerWorkflow.onCheckPreviewSource}
+      profiles={plan?.growerPlanningProfiles ?? []} onSaveProfile={saveProvisionalProfile} />
     <GrowerPlanningPanel scope={growerScope}
       beds={selectedGrowerSource?.beds ?? (canvasSite || design ? [] : designBeds)}
       measuredAreas={selectedGrowerSource?.measuredAreas} measurementsFingerprint={selectedGrowerSource?.geometryFingerprint ?? null}
