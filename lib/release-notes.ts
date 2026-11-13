@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '13 November 2026', sha: '3b47ecdc3', changes: [
+    'Report water needs stay unknown when demand and supply evidence is missing.',
+    'Irrigation planning uses drawn growing areas, not the whole property.',
+  ] },
   { when: '13 November 2026', sha: '2e870fb0c', changes: [
     'Archived crop reports retain accepted source evidence and planned dates.',
     'Source history stays separate from current farming approval.',

@@ -11,3 +11,5 @@
 - [Provisional cycle app and exports](provisional-cycle-app-exports-codex.md): explicit acceptance, retained history and member-specific printable evidence;1,519 affected checks and actual sample/outputs inspected, current-head review/CI remain open.
 
 - [Provisional history in general reports](provisional-report-history-codex.md): correct archived dates, public source evidence and print retention; final successor checks remain open.
+
+- [Report irrigation evidence](report-irrigation-evidence-codex.md): remove the remaining storage-adequacy contradiction, unsourced daily watering depth and whole-property irrigation scaling; exact-head release gates remain open.

@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest report prompt continuation — [Irrigation demand and storage evidence — 13 November 2026](2026-11-13/report-irrigation-evidence-codex.md). Actual route regression reproduces the remaining contradiction; supported sizes and explicit unknown demand are retained. Successor review/CI remain open.
+
 Latest general-report continuation — [Provisional source history in reports — 13 November 2026](2026-11-13/provisional-report-history-codex.md). Valid archived cycles retain dates and source evidence without current advice permission; exact-head verification remains open.
 
 Latest adoption app/export continuation — [Provisional cycle app and exports — 13 November 2026](2026-11-13/provisional-cycle-app-exports-codex.md). Explicit acceptance, historical downloads and nursery provenance inspected; independent successor review and current-head release gates remain open.
