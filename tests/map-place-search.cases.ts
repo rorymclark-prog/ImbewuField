@@ -219,3 +219,11 @@ test('leaving the map removes its pending frame listener and retires an already 
   ui.unmount(); assert.equal(ui.pendingFrameListeners(), 0);
   ui.paint(0); assert.equal(ui.context.placeCaptureFrame.current.ready, false);
 });
+
+
+test('effect cleanup/setup replay does not hold ordinary capture when no lookup transition has begun', () => {
+  const ui = harness();
+  ui.unmount(); // React development StrictMode can replay effect cleanup on mount.
+  ui.inlineContaining('onMapCapture(canvas.toDataURL')();
+  assert.equal(ui.captures.length, 1);
+});

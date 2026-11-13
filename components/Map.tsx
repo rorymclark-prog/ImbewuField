@@ -1713,7 +1713,7 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
   useEffect(() => () => {
     placeLookup.current?.abort(); placeSuggestions.current?.abort();
     placeCaptureFrame.current.cleanup?.();
-    ++placeCaptureFrame.current.generation; placeCaptureFrame.current.ready = false;
+    ++placeCaptureFrame.current.generation;
     if (suggestTimer.current) clearTimeout(suggestTimer.current);
   }, []);
   const previewPlaceResult = useCallback((place: Place) => {
