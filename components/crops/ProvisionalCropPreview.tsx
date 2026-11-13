@@ -5,7 +5,7 @@ import { CROPS, MONTHS_SHORT } from '@/lib/crop-catalog';
 import { growerPlanningScopeKey, normaliseGrowerMeasuredAreaInput, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import { formatDerivedMassKilograms } from '@/lib/mass-units';
 import { downloadFile } from '@/lib/crop-export-deliver';
-import { buildProvisionalCropPreviewHtml, provisionalNumericFields as numericFields, provisionalLabels as labels, provisionalInputText as inputText, provisionalScopeText as scopeText } from '@/lib/international/provisional-crop-export';
+import { buildProvisionalCropPreviewHtml, provisionalPlaceLabel, provisionalNumericFields as numericFields, provisionalLabels as labels, provisionalInputText as inputText, provisionalScopeText as scopeText } from '@/lib/international/provisional-crop-export';
 import { growerWorkflowResourceSiteId, type GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { resolveProvisionalCropPlan, type ProvisionalFieldCandidate, type ProvisionalDraftRequest } from '@/lib/international/provisional-crop-planning';
 import { usdaGreatLakesCabbageReference, usdaGreatLakesCabbageCandidates, usdaGreatLakesRegionMatches, USDA_CABBAGE_SPACING, type UsdaCabbageNurseryBasis } from '@/lib/international/providers/usda-great-lakes-cabbage';
@@ -21,6 +21,7 @@ export interface ProvisionalCropPreviewProps {
   sample?: boolean;
   scope: GrowerPlanningScope | null;
   source: GrowerWorkflowSource | null;
+  sourceName?: string | null;
   countryCode: string | null;
   agriculturalRegionReference: string | null;
   contextRevision: string | number;
@@ -55,7 +56,8 @@ function binding(props: ProvisionalCropPreviewProps): string | null {
     // A changed source revision can invalidate evidence even when area is identical.
     // Include the actual capsule too: a reused revision label must not retain an old preview.
     return JSON.stringify([props.ownerKey, props.sample === true, growerPlanningScopeKey(props.scope), props.source,
-      props.countryCode, props.agriculturalRegionReference, props.contextRevision, props.checking, props.evidence ?? null]);
+      props.countryCode, props.agriculturalRegionReference, props.contextRevision, props.checking, props.evidence ?? null,
+      props.sourceName ?? null]);
   } catch { return null; }
 }
 
@@ -97,7 +99,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
   useEffect(() => { active.current = true; return () => { active.current = false; }; }, []);
   const [draft, setDraft] = useState<Draft>({ crop: '', bed: '', date: '', method: '', water: '', variety: '', values: {}, months: null, regionalConsent: null, cowpea: { purpose: '', habit: '' }, cowpeaConsent: null, usdaConsent: null, countMode: 'density', spacing: { rowCm: '', inRowCm: '', finalStand: '' }, stationConsent: null, areaConsent: null });
   const draftLive = useRef(draft); draftLive.current = draft;
-  const [preview, setPreview] = useState<{ binding: string; generation: number; draft: Draft; result: Resolution; request: ProvisionalDraftRequest; bedLabel: string; receipt: { isCurrent: () => boolean } } | null>(null);
+  const [preview, setPreview] = useState<{ binding: string; generation: number; draft: Draft; result: Resolution; request: ProvisionalDraftRequest; bedLabel: string; placeLabel: string; receipt: { isCurrent: () => boolean } } | null>(null);
   const previewLive = useRef(preview); previewLive.current = preview;
   const [error, setError] = useState('');
   const [exportMessage, setExportMessage] = useState('');
@@ -205,7 +207,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
           ...(measures[0].arithmeticBasis ? { arithmeticBasis: measures[0].arithmeticBasis } : {}) },
         fieldEntryDate: draft.date ? supplied(draft.date, 'utc-date') : { state: 'missing', reason: 'not-entered' } });
       const next = resolveProvisionalCropPlan(request);
-      if (isCurrent() && receipt.isCurrent()) setPreview({ binding: environment!, generation, draft, result: next, request, bedLabel: beds[0].label, receipt });
+      if (isCurrent() && receipt.isCurrent()) setPreview({ binding: environment!, generation, draft, result: next, request,
+        bedLabel: beds[0].label, placeLabel: provisionalPlaceLabel(props.sourceName), receipt });
     } catch { if (isCurrent()) setError('Could not check this preview. Check the saved measurements and evidence again.'); }
     finally { if (pending.current === token) { pending.current = null; if (active.current) setCheckingSource(false); } }
   }
@@ -266,7 +269,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
     try {
       if (!await check()) { if (bound()) { setPreview(null); setError('Saved measurements changed. Recalculate before downloading.'); } return; }
       const document = buildProvisionalCropPreviewHtml(selected.request, {
-        bedLabel: selected.bedLabel, sample: props.sample === true,
+        bedLabel: selected.bedLabel, placeLabel: selected.placeLabel, sample: props.sample === true,
       });
       if (!document || document.fingerprint !== selected.result.fingerprint || !handoff()) return;
       const delivered = await downloadFile(new Blob([document.html], { type: 'text/html;charset=utf-8' }),
@@ -279,6 +282,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
     finally { if (pending.current === token) { pending.current = null; if (active.current) setCheckingSource(false); } }
   }
   return <section lang="en" aria-label="Provisional crop preview" className="space-y-4 px-4 pb-4 font-sans">
+    <p className="text-sm">Site or workspace: {provisionalPlaceLabel(props.sourceName)}</p>
     <p className="text-sm">Preview supported counts and dates using applicable evidence and your edits. Missing values stay unknown. {props.onSaveProfile ? 'Calculating does not save. Use the separate save action to keep a profile for review.' : 'Nothing here saves a profile or adds a crop.'}</p>
     <p role="note" className="text-sm">Provisional estimates: source metadata is not verification of farming accuracy. Suitability and plant legality are not established. Density is not layout clearance.</p>
     <p className="text-sm">Country: {props.countryCode ?? 'Unknown'} · Agricultural region: {props.agriculturalRegionReference ?? 'Unknown'}</p>

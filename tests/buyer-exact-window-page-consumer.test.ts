@@ -84,11 +84,12 @@ function input(allowCataloguePlanning: boolean) {
     planningScopeKey: 'current-catalogue-key', markedPlantings: [], plan: { harvestTargets: targets, growerPlanningProfiles: [], plantings },
     selectedGrowerSource: null, beds, plantings, pattern: 'mild-frost', harvestSaveContext: saveContext, saveHarvestTargets,
     canvasSite: null, design: null, designBeds: [], saveGrowerProfiles() {},
-    growerActorIsCurrent: () => true, siteCountry: { status: 'unconfirmed', context: null }, planningSupport: { fingerprint: 'fixture-policy' },
+    growerActorIsCurrent: () => true, siteCountry: { status: 'unknown', context: null, siteId, placeIds: ['fictional-place'] }, planningSupport: { fingerprint: 'fixture-policy' },
     saveProvisionalProfile() { throw Error('Consumer mount must not save automatically'); },
     growerWorkflow: { source, sourceIssue: null, checking: false, contextRevision: 4, onReview, onRefresh() {}, onAccept() {},
       onCheckPreviewSource() { throw Error('Consumer mount must not read preview source automatically'); }, acceptance: { status: 'idle' }, savedNurseryReview: null },
     placeName: 'Engineering source', designTitle: 'Engineering design', growerSample: false, growerOwner: 'fixture-owner',
+    countryPlaces: [{ id: 'fictional-place', name: 'Engineering fixture' }],
     siteClimate: null, hasSiteCoords: false, siteLat: 0, siteSurvey: null, saved,
     growerConditions, exportSavedGrowerRecord };
 }
@@ -101,9 +102,24 @@ for (const country of ['ZA', 'US', undefined]) test(`${country ?? 'unconfirmed'}
   const preview = elements(tree).find(element => element.type === boundaries.ProvisionalCropPreview); assert.ok(preview);
   assert.equal(preview.props.scope, fixture.growerScope); assert.equal(preview.props.actorIsCurrent, fixture.growerActorIsCurrent);
   assert.equal(preview.props.countryCode, policy.siteCountry.status === 'confirmed' ? country : null);
+  assert.equal(preview.props.sourceName, 'Engineering fixture', 'use current scope-matched places, not the older cover-name state');
   assert.equal(preview.props.onSaveProfile, fixture.saveProvisionalProfile);
   assert.equal(preview.props.onCheckSource, fixture.growerWorkflow.onCheckPreviewSource);
   assert.equal(preview.props.profiles, fixture.plan.growerPlanningProfiles);
+});
+
+test('provisional place labels use only this mapped scope or the selected unmapped design', () => {
+  const fixture = input(false);
+  const preview = (changes: Record<string, unknown>) => elements(renderOwn({ ...fixture, ...changes }))
+    .find(element => element.type === boundaries.ProvisionalCropPreview)!;
+  assert.equal(preview({ countryPlaces: [
+    { id: 'another-place', name: 'Wrong garden' }, { id: 'fictional-place', name: 'Right garden' },
+  ], placeName: 'Old cover label' }).props.sourceName, 'Right garden');
+  assert.equal(preview({ countryPlaces: [{ id: 'another-place', name: 'Wrong garden' }] }).props.sourceName, '');
+  assert.equal(preview({ siteCountry: { ...fixture.siteCountry, placeIds: ['fictional-place', 'alias'] },
+    countryPlaces: [{ id: 'fictional-place', name: ' ' }, { id: 'alias', name: '' }] }).props.sourceName, '');
+  assert.equal(preview({ growerScope: { kind: 'unmapped-workspace', workspaceId: 'design:fixture' },
+    design: { title: 'Selected workspace' }, placeName: 'Old mapped label' }).props.sourceName, 'Selected workspace');
 });
 
 test('absent site, absent grower scope and unmapped workspace cannot acquire the saved buyer editor', () => {

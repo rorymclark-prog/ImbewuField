@@ -41,12 +41,17 @@ const escape = (value: unknown) => String(value ?? 'Unknown').replace(/[&<>"']/g
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]!);
 const paragraph = (label: string, value: unknown) => `<p><strong>${escape(label)}:</strong> ${escape(value)}</p>`;
 
+export function provisionalPlaceLabel(value: unknown): string {
+  return typeof value === 'string' && value.trim() ? value.trim() : 'Unnamed site or workspace';
+}
+
 /** A portable view of the resolver, never another calculator or saved-plan writer.
  * The caller must freshly admit the source and actor at the actual file handoff. */
 export function buildProvisionalCropPreviewHtml(request: ProvisionalDraftRequest, metadata: {
-  bedLabel: string; sample: boolean;
+  bedLabel: string; sample: boolean; placeLabel?: string | null;
 }): { html: string; fingerprint: string } | null {
-  return renderProvisionalCropDocument(request, { bedLabel: metadata.bedLabel, sample: metadata.sample });
+  return renderProvisionalCropDocument(request, { bedLabel: metadata.bedLabel, sample: metadata.sample,
+    placeLabel: provisionalPlaceLabel(metadata.placeLabel) });
 }
 interface AcceptedRecordMetadata {
   acceptedAt: string; originalSavedAt: string; originalAsOf: string; reviewedAt: string;
@@ -64,7 +69,7 @@ export function buildAdoptedProvisionalCycleHtml(value: unknown, metadata: { bed
     { bedLabel: metadata.bedLabel, sample: metadata.sample }, { acceptedAt: attachment.acceptedAt,
       originalSavedAt: saved.origin.savedAt, originalAsOf: saved.request.asOf, reviewedAt: review.context.reviewedAt });
 }
-function renderProvisionalCropDocument(request: ProvisionalDraftRequest, metadata: { bedLabel: string; sample: boolean }, record?: AcceptedRecordMetadata): { html: string; fingerprint: string } | null {
+function renderProvisionalCropDocument(request: ProvisionalDraftRequest, metadata: { bedLabel: string; sample: boolean; placeLabel?: string }, record?: AcceptedRecordMetadata): { html: string; fingerprint: string } | null {
   const result = resolveProvisionalCropPlan(request);
   if (result.status !== 'resolved') return null;
   const assessment = result.assessment;
@@ -118,6 +123,7 @@ table{border-collapse:collapse;width:100%}th,td{text-align:left;vertical-align:t
 Source metadata does not verify farming accuracy. These inputs may change after download; recalculate before acting.</p></div>
 ${record ? `${paragraph('Accepted at (UTC)', record.acceptedAt)}${paragraph('Original profile saved at (UTC)', record.originalSavedAt)}${paragraph('Original evidence as of (UTC)', record.originalAsOf)}${paragraph('New review at (UTC)', record.reviewedAt)}` : ''}
 ${paragraph(record ? 'Original input record at (UTC)' : 'Calculated at (UTC)', request.recordedAt)}${paragraph(record ? 'Evidence rechecked as of (UTC)' : 'Evidence checked as of (UTC)', request.asOf)}
+${record ? '' : paragraph('Site or workspace', metadata.placeLabel)}
 ${paragraph('Crop', crop.name)}${paragraph('Measured bed', metadata.bedLabel)}
 ${paragraph('Country', request.context.countryCode)}${paragraph('Agricultural region', request.context.agriculturalRegionReference)}
 ${paragraph('Water regime', request.context.waterRegime)}${paragraph('Variety reference', request.context.varietyReference)}
