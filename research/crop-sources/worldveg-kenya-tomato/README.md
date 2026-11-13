@@ -1,0 +1,13 @@
+# WorldVeg Kenya tomato nursery reference
+
+Primary source: Rapando N, Pawera L, Barare M, Wangungu C, Ramasamy S. June 2024. [Agroecological vegetable production. A field manual for Kenya](https://worldveg.org/wp-content/uploads/2024/06/24-1077_Agroecology-Kenya_compressed-82.pdf). World Vegetable Center, publication24-1077, printed p31/PDF35, **Tomato: Seeding and transplanting**.
+
+Original PDF SHA256 `d15d3279690547814b8d369337987f3a6a0893316cbe5cf7ea6afd82e790368c`, 3,721,787 bytes,43 PDF pages. The preserved original was retrieved12November2026; root and independent Codex inspected the new tomato passage and original title/licence pages2/3/35 on13November. No newer publisher revision was established. June2024 is month precision; publication day and review interval are unknown.
+
+The tomato passage supports protected-nursery raising for4–6weeks before outdoor transplanting. Exact conversion is4×7=28 and6×7=42 days. The app requires explicit nursery-to-outdoor purpose and a blank-first lower/upper endpoint choice; neither is a source preference or automatic midpoint. This differs from the cabbage section's bed-preparation interval, which remains unsuitable as a nursery duration.
+
+The same passage calls for hardening before transplanting without giving its duration or establishing a separate additional interval. No days are added and calendar arithmetic does not certify readiness. This is not direct-field seeding, greenhouse crop duration or elapsed age of purchased seedlings. Kenya is the manual context, not site/region/cultivar suitability certification. Density/stand, yield, entry months, harvest duration, occupancy, turnaround, temperature-derived month rules and water demand are not adopted. Grower overrides retain the source interval and chosen endpoint separately.
+
+Original PDF3 licenses the work under [CC BY-SA3.0 Unported](https://creativecommons.org/licenses/by-sa/3.0/). Nursery facts are adapted and units converted by ImbewuField; the source remains unchanged. Attribution, licence link and change identification travel with the adapter, actual UI and exports. Adapted source material retains CC BY-SA terms without additional restrictions; no photograph/logo is reproduced and no endorsement is implied. The publisher requests a copy of citing work; no message or copy has been sent. This is scoped reuse review, not blanket legal clearance.
+
+Adapter: `lib/international/providers/worldveg-kenya-tomato.ts`. Consent/evidence binds purpose, endpoint and original checksum; context and relevant source-choice edits retire previous consent/results. No saved species, geometry, lessons or PLAN_VERSION changes.

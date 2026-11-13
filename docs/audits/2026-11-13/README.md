@@ -1,5 +1,7 @@
 # Audits for 13 November 2026
 
+- [Kenya tomato nursery interval](kenya-tomato-nursery-codex.md): explicit protected-nursery/outdoor purpose and source endpoint choice; conditional dates, retained unknowns and successor gates.
+
 - [Southeast Missouri oats reference](missouri-oats-reference-codex.md): explicit historical cover-crop/type choice, positive months and retained unknowns; successor review and CI remain required.
 
 - [Positive-only crop month evidence](positive-month-coverage-codex.md): preserve unknown omissions, legacy replay and conditional outputs; source admission and successor gates remain separate.

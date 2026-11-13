@@ -11,6 +11,7 @@ import { resolveProvisionalCropPlan, type ProvisionalFieldCandidate, type Provis
 import { usdaGreatLakesCabbageReference, usdaGreatLakesCabbageCandidates, usdaGreatLakesRegionMatches, USDA_CABBAGE_SPACING, type UsdaCabbageNurseryBasis } from '@/lib/international/providers/usda-great-lakes-cabbage';
 import { usdaGreatLakesTomatoReference, usdaGreatLakesTomatoCandidates, USDA_TOMATO_NURSERY } from '@/lib/international/providers/usda-great-lakes-tomato';
 import { southeastMissouriOatsReference, southeastMissouriRegionMatches, southeastMissouriOatsCandidates, MISSOURI_OATS_PDF_SHA256, type MissouriOatType, type MissouriOatsReferenceUse } from '@/lib/international/providers/usda-southeast-missouri-oats';
+import { worldvegKenyaTomatoReference, worldvegKenyaTomatoCandidates, WORLDVEG_TOMATO_NURSERY, type KenyaTomatoNurseryBasis, type KenyaTomatoNurseryUse } from '@/lib/international/providers/worldveg-kenya-tomato';
 import { createSavedProvisionalProfile, readSavedProvisionalProfile, type ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
 import type { GrowerPlanningProfile } from '@/lib/international/grower-planning';
 import { sourcePublicationText } from '@/lib/international/countries/readiness';
@@ -46,6 +47,8 @@ type Draft = {
   tomatoConsent?: string | null;
   oatsType?: MissouriOatType | '';
   oatsConsent?: string | null;
+  kenyaTomatoBasis?: KenyaTomatoNurseryBasis | '';
+  kenyaTomatoConsent?: string | null;
   usdaNursery?: { basis: UsdaCabbageNurseryBasis | ''; contextKey: string | null };
   countMode: 'density' | 'spacing';
   spacing: { rowCm: string; inRowCm: string; finalStand: string };
@@ -149,6 +152,13 @@ function Editor(props: ProvisionalCropPreviewProps) {
     draft.method, draft.water, oatsUse, MISSOURI_OATS_PDF_SHA256]);
   const useOatsReference = oatsConsentKey !== null && draft.oatsConsent === oatsConsentKey
     && oatsRegionMatch && draft.method !== 'transplant' && oatsUse !== null;
+  const kenyaTomatoReference = worldvegKenyaTomatoReference(props.countryCode, draft.crop);
+  const kenyaTomatoUse: KenyaTomatoNurseryUse | null = draft.kenyaTomatoBasis === 'lower-bound' || draft.kenyaTomatoBasis === 'upper-bound'
+    ? { purpose: 'protected-nursery-to-outdoor-transplant', basis: draft.kenyaTomatoBasis } : null;
+  const kenyaTomatoConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.variety,
+    draft.method, draft.water, kenyaTomatoUse, WORLDVEG_TOMATO_NURSERY.pdfSha256]);
+  const useKenyaTomatoReference = kenyaTomatoConsentKey !== null && draft.kenyaTomatoConsent === kenyaTomatoConsentKey
+    && draft.method !== 'direct' && kenyaTomatoUse !== null;
   const spacingConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.bed, draft.variety, draft.cowpea, draft.countMode, draft.spacing]);
   const stationConfirmed = spacingConsentKey !== null && draft.stationConsent === spacingConsentKey;
   const wholeAreaConfirmed = spacingConsentKey !== null && draft.areaConsent === spacingConsentKey;
@@ -165,7 +175,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
   function edit(next: Partial<Draft>) {
     if (!isCurrent()) return;
     const sourceChoiceChanged = ['crop', 'variety', 'method', 'water'].some(key => Object.hasOwn(next, key));
-    const value = { ...draft, ...next, ...(sourceChoiceChanged ? { tomatoConsent: null, oatsConsent: null } : {}) }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
+    const value = { ...draft, ...next, ...(sourceChoiceChanged ? { tomatoConsent: null, oatsConsent: null, kenyaTomatoConsent: null } : {}) }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
   }
   async function refresh() {
     if (!isCurrent()) return;
@@ -210,7 +220,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
           ...worldvegKenyaCowpeaCandidates(context, draft.crop, recordedAt, useCowpeaMethod, draft.cowpea),
           ...usdaGreatLakesCabbageCandidates(context, draft.crop, recordedAt, useUsdaMethod, usdaNurseryBasis || null),
           ...usdaGreatLakesTomatoCandidates(context, draft.crop, recordedAt, useTomatoReference),
-          ...southeastMissouriOatsCandidates(context, draft.crop, recordedAt, useOatsReference, oatsUse)], overrides,
+          ...southeastMissouriOatsCandidates(context, draft.crop, recordedAt, useOatsReference, oatsUse),
+          ...worldvegKenyaTomatoCandidates(context, draft.crop, recordedAt, useKenyaTomatoReference, kenyaTomatoUse)], overrides,
         ...(draft.countMode === 'spacing' ? { countBasis: { kind: 'spacing-cell-budget-v1', bedId: draft.bed,
           ...(usdaReference ? { purpose: 'cabbage-transplants', habit: 'not-applicable' } : draft.cowpea), ...draft.spacing,
           interpretationConfirmed: stationConfirmed, wholeAreaConfirmed } } : {}),
@@ -299,7 +310,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
     <p className="text-sm">Preview supported counts and dates using applicable evidence and your edits. Missing values stay unknown. {props.onSaveProfile ? 'Calculating does not save. Use the separate save action to keep a profile for review.' : 'Nothing here saves a profile or adds a crop.'}</p>
     <p role="note" className="text-sm">Provisional estimates: source metadata is not verification of farming accuracy. Suitability and plant legality are not established. Density is not layout clearance.</p>
     <p className="text-sm">Country: {props.countryCode ?? 'Unknown'} · Agricultural region: {props.agriculturalRegionReference ?? 'Unknown'}</p>
-    {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && !useTomatoReference && !useOatsReference && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
+    {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && !useTomatoReference && !useOatsReference && !useKenyaTomatoReference && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
     {!!savedProfiles.length && <section aria-label="Saved provisional profiles" className="space-y-3 rounded-lg border border-[var(--border)] p-3">
       <h3 className="font-semibold">Saved provisional profiles</h3>
       <p>Historical evidence, not a current source check or an approved planting plan. To change conditions, calculate and save a new preview.</p>
@@ -395,6 +406,24 @@ function Editor(props: ProvisionalCropPreviewProps) {
         disabled={!usdaRegionMatch || draft.method === 'direct'} checked={useTomatoReference}
         onChange={e => edit({ tomatoConsent: e.target.checked ? tomatoConsentKey : null })} />Use this undated tomato seed-starting reference for my declared Great Lakes States region</label>
       <p>Your nursery-duration override takes precedence. Reset it to use the source’s {USDA_TOMATO_NURSERY.days}-day reference; clearing your override keeps the duration unknown.</p>
+    </section>}
+    {kenyaTomatoReference && <section aria-label="Kenya tomato nursery reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
+      <h3 className="font-semibold">WorldVeg Kenya tomato nursery reference</h3>
+      <p>The June 2024 Kenya field manual describes seeds in a protected nursery for 4–6 weeks before outdoor transplanting. Choose a reported endpoint for this conditional calculation; neither endpoint is preferred by the source.</p>
+      <label className="block">Kenya tomato nursery interval<select aria-label="Kenya tomato nursery interval" className={control}
+        value={draft.kenyaTomatoBasis ?? ''} disabled={draft.method === 'direct'}
+        onChange={e => edit({ kenyaTomatoBasis: e.target.value as KenyaTomatoNurseryBasis | '', kenyaTomatoConsent: null })}>
+        <option value="">Choose a reported endpoint</option><option value="lower-bound">4 weeks · 28 days · lower endpoint</option>
+        <option value="upper-bound">6 weeks · 42 days · upper endpoint</option>
+      </select></label>
+      <p><a className="underline" href={`${kenyaTomatoReference.url}#page=35`} target="_blank" rel="noreferrer">Read the original WorldVeg manual, page 31 (PDF page 35)</a></p>
+      <p>{kenyaTomatoReference.attribution}</p>
+      {draft.method === 'direct' && <p role="note">This source concerns protected nursery raising followed by outdoor transplanting, not direct seeding.</p>}
+      <label className="flex min-h-11 items-center gap-2"><input type="checkbox" aria-label="Use Kenya tomato protected-nursery reference"
+        disabled={!kenyaTomatoUse || draft.method === 'direct'} checked={useKenyaTomatoReference}
+        onChange={e => edit({ kenyaTomatoConsent: e.target.checked ? kenyaTomatoConsentKey : null })} />Use this reference for seeds I raise in a protected nursery before outdoor transplanting</label>
+      <p>Harden seedlings before transplanting; the manual gives no separate hardening duration, so no extra days are added. Check actual readiness. This is not a planting-season calendar or current farm validation; density, yield, harvest timing, water adequacy and frost safety remain unknown.</p>
+      <p>Your nursery-duration override takes precedence. Reset restores the chosen source endpoint; clearing an edited duration keeps it unknown.</p>
     </section>}
     {oatsReference && <section aria-label="Southeast Missouri oats reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
       <h3 className="font-semibold">USDA Southeast Missouri oats cover-crop reference</h3>

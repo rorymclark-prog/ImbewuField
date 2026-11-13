@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest conditional nursery reference — [Kenya tomato interval](2026-11-13/kenya-tomato-nursery-codex.md). Explicit source purpose and range endpoint support partial seed-start arithmetic; no source planting calendar or successor release approval.
+
 Latest regional month reference — [Southeast Missouri oats](2026-11-13/missouri-oats-reference-codex.md). Historical cover-crop/type choice, source-bound positive months and retained unknowns; successor gates remain separate.
 
 Latest global evidence continuation — [Positive-only crop months](2026-11-13/positive-month-coverage-codex.md). Omitted months remain unknown, with preserved legacy replay and conditional partial outputs; source admission and successor gates remain separate.

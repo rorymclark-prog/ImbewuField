@@ -601,6 +601,70 @@ test('Great Lakes cabbage choices remain blank and regional consent cannot reviv
 
 const saveDeclaration = 'Save these inputs, source limits and unknowns as a new profile for review. Do not add sowings.';
 
+const kenyaTomatoChoice = 'Use this reference for seeds I raise in a protected nursery before outdoor transplanting';
+test('Kenya tomato nursery starts blank, retains the chosen source endpoint through export/save and permits independent overrides', async () => {
+  const saved: import('../lib/international/grower-planning.ts').GrowerPlanningProfile[] = [];
+  const ui = mount({ countryCode: 'KE', evidence: undefined,
+    onSaveProfile: profile => { saved.push(structuredClone(profile)); return { status: 'confirmed', profileId: profile.profileId }; } });
+  const files = downloads();
+  try {
+    ui.change('Preview crop', 'tomatoes'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-01-10');
+    assert.equal(ui.field('Kenya tomato nursery interval').props.value, '');
+    assert.equal(ui.field(kenyaTomatoChoice).props.disabled, true); await ui.click();
+    assert.match(ui.text(), /Nursery start \(UTC\): Unknown/);
+    ui.change('Kenya tomato nursery interval', 'lower-bound');
+    assert.equal(ui.field(kenyaTomatoChoice).props.checked, false); await ui.click();
+    assert.match(ui.text(), /Nursery start \(UTC\): Unknown/);
+    act(() => ui.field(kenyaTomatoChoice).props.onChange({ target: { checked: true } })); await ui.click();
+    assert.match(ui.text(), /Nursery start \(UTC\): 2026-12-13/);
+    // The existing shared evidence row puts the unit on its value, before the range.
+    assert.match(ui.text(), /28 days; reported range 28–42/);
+    assert.match(ui.text(), /Default planning value: lower-bound/); assert.match(ui.text(), /Entry window: unknown/);
+    assert.match(ui.text(), /Estimated plants: Unknown/); assert.match(ui.text(), /Estimated harvest weight: Unknown/);
+    assert.match(ui.text(), /First harvest \(UTC\): Unknown/);
+    await ui.click('Download printable preview'); const html = await files.blobs[0].text();
+    assert.match(html, /2026-12-13/); assert.match(html, /protected-nursery-to-outdoor-transplant:lower-bound:/);
+    assert.match(html, /2024-06 \(day unknown\)/); assert.match(html, /CC BY-SA/); assert.match(html, /No hardening days are added/);
+    act(() => ui.field(saveDeclaration).props.onChange({ target: { checked: true } })); await ui.click('Save provisional profile');
+    assert.equal(saved.length, 1); ui.update({ profiles: saved }); assert.match(ui.text(), /Saved provisional profiles/);
+    ui.change('Kenya tomato nursery interval', 'upper-bound');
+    assert.equal(ui.field(kenyaTomatoChoice).props.checked, false);
+    act(() => ui.field(kenyaTomatoChoice).props.onChange({ target: { checked: true } })); await ui.click();
+    assert.match(ui.text(), /Nursery start \(UTC\): 2026-11-29/);
+    ui.change('Nursery duration (days)', '35'); await ui.click();
+    assert.match(ui.text(), /Nursery start \(UTC\): 2026-12-06/); assert.match(ui.text(), /grower-estimate/);
+    ui.change('Nursery duration (days)', ''); await ui.click(); assert.match(ui.text(), /Grower withheld this value/);
+    await ui.click('Reset Nursery duration (days)'); await ui.click(); assert.match(ui.text(), /Nursery start \(UTC\): 2026-11-29/);
+    assert.deepEqual(ui.writes, []);
+  } finally { files.dispose(); ui.dispose(); }
+  const reload = mount({ countryCode: 'KE', evidence: undefined, profiles: saved });
+  try { assert.match(reload.text(), /2026-12-13/); assert.match(reload.text(), /protected-nursery-to-outdoor-transplant:lower-bound:/);
+    assert.match(reload.text(), /CC BY-SA/); assert.deepEqual(reload.writes, []);
+  } finally { reload.dispose(); }
+});
+
+test('Kenya tomato endpoint and applicability changes retire consent and an old export callback rather than reusing source dates', async () => {
+  const ui = mount({ countryCode: 'KE', evidence: undefined }); const files = downloads();
+  try {
+    ui.change('Preview crop', 'tomatoes'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-01-10'); ui.change('Kenya tomato nursery interval', 'lower-bound');
+    for (const [field, away, back] of [['Kenya tomato nursery interval', 'upper-bound', 'lower-bound'],
+      ['Preview establishment', 'direct', ''], ['Variety reference (optional)', 'other', ''],
+      ['Water regime', 'irrigated', ''], ['Preview crop', 'cabbage', 'tomatoes']]) {
+      act(() => ui.field(kenyaTomatoChoice).props.onChange({ target: { checked: true } })); await ui.click();
+      const stale = ui.action('Download printable preview'); ui.change(field, away);
+      assert.doesNotMatch(ui.text(), /Provisional results/); await act(async () => { await stale(); }); assert.equal(files.blobs.length, 0);
+      if (field === 'Preview establishment') assert.equal(ui.field(kenyaTomatoChoice).props.disabled, true);
+      ui.change(field, back); assert.equal(ui.field(kenyaTomatoChoice).props.checked, false);
+      await ui.click(); assert.match(ui.text(), /Nursery start \(UTC\): Unknown/);
+    }
+    act(() => ui.field(kenyaTomatoChoice).props.onChange({ target: { checked: true } }));
+    ui.update({ countryCode: 'US' }); assert.doesNotMatch(ui.text(), /WorldVeg Kenya tomato nursery reference/);
+    ui.update({ countryCode: 'KE' }); assert.equal(ui.field(kenyaTomatoChoice).props.checked, false); assert.deepEqual(ui.writes, []);
+  } finally { files.dispose(); ui.dispose(); }
+});
+
 const oatsChoice = 'Use this March 2014 direct-seeding reference for cover-crop establishment';
 test('Missouri oats requires a declared type and explicit source choice, then preserves its partial result in export and saved readback', async () => {
   const saved: import('../lib/international/grower-planning.ts').GrowerPlanningProfile[] = [];

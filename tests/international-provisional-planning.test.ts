@@ -8,6 +8,7 @@ import { worldvegKenyaCowpeaCandidates, worldvegKenyaCowpeaSpacing } from '../li
 import { usdaGreatLakesCabbageCandidates } from '../lib/international/providers/usda-great-lakes-cabbage.ts';
 import { usdaGreatLakesTomatoCandidates, usdaGreatLakesTomatoReference, USDA_TOMATO_NURSERY } from '../lib/international/providers/usda-great-lakes-tomato.ts';
 import { southeastMissouriOatsCandidates, southeastMissouriOatsReference, MISSOURI_OATS_PDF_SHA256, USDA_SOUTHEAST_MISSOURI_OATS_SOURCE } from '../lib/international/providers/usda-southeast-missouri-oats.ts';
+import { worldvegKenyaTomatoCandidates, WORLDVEG_TOMATO_NURSERY } from '../lib/international/providers/worldveg-kenya-tomato.ts';
 import { buildProvisionalCropPreviewHtml } from '../lib/international/provisional-crop-export.ts';
 import { normaliseGrowerPlanningProfile, assessGrowerPlanning } from '../lib/international/grower-planning.ts';
 import { createSavedProvisionalProfile, readSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
@@ -60,6 +61,40 @@ function resolved(input = request()) {
   if (result.status !== 'resolved') assert.fail(`Expected a resolved draft, got ${result.status}`);
   return result;
 }
+
+test('Kenya tomato nursery endpoints produce conditional seed-start dates without turning source temperature or hardening into a calendar', () => {
+  const at = '2026-11-13T12:00:00.000Z';
+  const context = { ...request().context, countryCode: 'KE', establishment: null, agriculturalRegionReference: null };
+  for (const [basis, days, date] of [['lower-bound', 28, '2026-12-13'], ['upper-bound', 42, '2026-11-29']] as const) {
+    const entries = worldvegKenyaTomatoCandidates(context, 'tomatoes', at, true, { purpose: 'protected-nursery-to-outdoor-transplant', basis });
+    assert.deepEqual(entries.map(c => c.field), ['establishment', 'nurseryDays']);
+    const input = request({ cropKey: 'tomatoes', context, recordedAt: at, asOf: '2026-11-13', candidates: entries,
+      fieldEntryDate: { state: 'provided', value: '2027-01-10', unit: 'utc-date', provenance: { kind: 'grower-estimate', recordedAt: at } } });
+    const value = resolved(input); assert.equal(value.activeEstablishment, 'transplant');
+    assert.equal(value.assessment.schedule.nurseryStartDate.value, date);
+    assert.equal(value.fields.nurseryDays.activeInput.state, 'provided');
+    assert.deepEqual(entries[1].reportedRange, [28, 42]); assert.equal(entries[1].planningValueBasis, basis);
+    assert.equal(value.assessment.entryWindow, 'unknown'); assert.equal(value.assessment.estimatedPlantCount.value, null);
+    assert.equal(value.assessment.estimatedYieldKg.value, null); assert.equal(value.assessment.schedule.firstHarvestDate.value, null);
+    const html = buildProvisionalCropPreviewHtml(input, { bedLabel: 'Synthetic bed', sample: true })!.html;
+    assert.ok(html.includes(date)); assert.match(html, /2024-06 \(day unknown\)/); assert.match(html, /CC BY-SA/);
+    assert.match(html, new RegExp(`protected-nursery-to-outdoor-transplant:${basis}:`));
+    assert.ok(html.includes(WORLDVEG_TOMATO_NURSERY.pdfSha256)); assert.match(html, /No hardening days are added/);
+    assert.match(html, /Neither endpoint is preferred/); assert.match(html, /not a source calendar/);
+    const active = value.fields.nurseryDays.activeInput;
+    assert.equal(active.state === 'provided' ? active.value : null, days);
+  }
+  const use = { purpose: 'protected-nursery-to-outdoor-transplant', basis: 'lower-bound' } as const;
+  for (const v of [null, { ...use, basis: '' }, { ...use, basis: 'midpoint' }, { ...use, purpose: 'purchased-seedlings' }]) {
+    assert.deepEqual(worldvegKenyaTomatoCandidates(context, 'tomatoes', at, true, v as typeof use), []);
+  }
+  for (const countryCode of ['US', 'ZA', 'GB', 'OTHER', null]) {
+    assert.deepEqual(worldvegKenyaTomatoCandidates({ ...context, countryCode }, 'tomatoes', at, true, use), []);
+  }
+  assert.deepEqual(worldvegKenyaTomatoCandidates(context, 'tomatoes', at, false, use), []);
+  assert.deepEqual(worldvegKenyaTomatoCandidates(context, 'cabbage', at, true, use), []);
+  assert.deepEqual(worldvegKenyaTomatoCandidates({ ...context, establishment: 'direct' }, 'tomatoes', at, true, use), []);
+});
 
 test('the actual Missouri oats panel supplies only grouped cover-crop method and positive months, with no catalogue agronomy', () => {
   const at = '2026-11-13T12:00:00.000Z';
