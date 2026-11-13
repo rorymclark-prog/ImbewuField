@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '13 November 2026', sha: 'c360e54d7', changes: [
+    'Kenyan tomato previews offer a sourced nursery interval with your endpoint choice.',
+  ] },
   { when: '13 November 2026', sha: '5ef1d0a5f', changes: [
     'Southeast Missouri oats previews offer a historical cover-crop month reference.',
   ] },
