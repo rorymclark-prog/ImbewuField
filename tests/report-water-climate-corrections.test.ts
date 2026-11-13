@@ -6,6 +6,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import ts from 'typescript';
 import * as climateEvidence from '../lib/climate-temperature.ts';
+import { deriveElevationData } from '../lib/elevation.ts';
 import { roofCalcLine, buildReportHeaderMarkdown, assuranceMarkdown, designPromptBlock, waterPromptBlock, type ReportSiteFacts } from '../lib/report-site-facts.ts';
 import { buildRiskRegister, riskRegisterMarkdown } from '../lib/report-risk.ts';
 import { buildSkeletonReportDoc } from '../lib/report-doc.ts';
@@ -128,6 +129,12 @@ test('actual report prompt and header preserve partial rainfall without inventin
       }
       assert.doesNotMatch(prompt, /Which earthworks are indicated|Recommended Earthworks \(priority order\)|When to build each earthwork relative|what to add, how much, why|The 5 highest-impact actions/);
       assert.match(prompt, /Earthwork proposals and missing evidence/);
+      if (annual === null) {
+        assert.match(prompt, /Slope: not known/);
+        assert.doesNotMatch(prompt, /undefined°|NaN°|null°/);
+        assert.match(body, /Slope estimate: not known/);
+        assert.doesNotMatch(body, /undefined°|NaN°|null°/);
+      }
       assert.match(prompt, /A laboratory label is recorded attribution/);
       // A laboratory source flag supplies no sampling depth; keep the known model
       // layer only for SoilGrids, independently of the displayed source qualification.
@@ -390,4 +397,53 @@ test('recorded tank groups retain their separate status and count in prompts and
     assert.ok(header.includes('30 000 L'));
   }
   assert.equal(JSON.stringify(facts), before);
+});
+
+// A declared TypeScript number does not validate provider outages or old saved data.
+// Missing slope used to print undefined degrees alongside an accurate unknown risk note.
+test('report terrain fields keep missing slope unknown without losing elevation or direction', () => {
+  for (const slope of [undefined, null, NaN, Infinity, -Infinity, -1, 91, '10', {}]) {
+    for (const language of ['en', 'zu', 'st', 'ts', 've']) {
+      const input = { lat: 0, lon: 0, elevationM: -12.5, slopeDeg: slope, aspectLabel: 'Recorded direction', rainfallMm: null };
+      const before = JSON.stringify(input);
+      const header = buildReportHeaderMarkdown(input as any, language);
+      assert.match(header, /Elevation estimate: -12.5 m/);
+      assert.match(header, /Slope estimate: not known/);
+      assert.match(header, /Aspect: Recorded direction/);
+      assert.doesNotMatch(header, /undefined|NaN|Infinity|\[object Object\]/);
+      assert.equal(JSON.stringify(input), before);
+      if (language !== 'en') assert.match(header, /English; translation pending/);
+    }
+  }
+});
+
+test('terrain outages remain independent while genuine zero and recorded signed elevation survive', () => {
+  const base = { lat: 0, lon: 0, rainfallMm: null, elevationM: 0, slopeDeg: 0, aspectLabel: 'Flat' };
+  const valid = buildReportHeaderMarkdown(base as any);
+  assert.match(valid, /0 m · 0° · faces Flat/);
+  const flat = deriveElevationData({ center: 0, north: 0, south: 0, east: 0, west: 0 });
+  assert.equal(flat.directionConfidence, 'unconfirmed');
+  const flatHeader = buildReportHeaderMarkdown({ ...base, elevationM: flat.elevation, slopeDeg: flat.slopeDeg, aspectLabel: flat.aspectLabel } as any);
+  assert.match(flatHeader, /Elevation estimate: 0 m/);
+  assert.match(flatHeader, /Slope estimate: 0°/);
+  assert.match(flatHeader, /Aspect: not known/);
+  for (const value of [undefined, null, NaN, Infinity, -Infinity, '0', {}]) {
+    const header = buildReportHeaderMarkdown({ ...base, elevationM: value } as any);
+    assert.match(header, /Elevation estimate: not known/);
+    assert.match(header, /Slope estimate: 0°/);
+    assert.match(header, /Aspect: Flat/);
+  }
+  for (const value of [undefined, null, '', '   ', '—', 'unknown', 'not known', 0, {}]) {
+    const header = buildReportHeaderMarkdown({ ...base, aspectLabel: value } as any);
+    assert.match(header, /Elevation estimate: 0 m/);
+    assert.match(header, /Slope estimate: 0°/);
+    assert.match(header, /Aspect: not known/);
+    const d = structuredClone(DEMO_LOCATION); d.elevation.aspectLabel = value as any;
+    const doc = buildSkeletonReportDoc({ id: 'terrain-outage', siteId: 'synthetic', location: d, survey: null, layers: [], plan: null, phasePlan: { phases: [] } as any, createdAt: '2026-11-13T00:00:00Z' });
+    assert.equal(doc.sections['landscape-soil']!.aspect, 'unknown');
+  }
+  for (const slope of [0, Number.MIN_VALUE, 0.5, 10, 90]) {
+    const header = buildReportHeaderMarkdown({ ...base, elevationM: -12.5, slopeDeg: slope, aspectLabel: 'S' } as any);
+    assert.ok(header.includes(`-12.5 m · ${slope}° · faces S`));
+  }
 });

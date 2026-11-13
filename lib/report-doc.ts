@@ -1,4 +1,4 @@
-import { reportWaterEvidence, reportSlopeEvidence, reportSoilEvidence, reportEarthworksEvidence, reportEvidenceText } from './report-risk';
+import { reportWaterEvidence, reportSlopeEvidence, reportSoilEvidence, reportEarthworksEvidence, reportEvidenceText, reportTerrainValues } from './report-risk';
 import { annualRainfallMm, recordMinimumC, reportClimateEvidence } from './climate-temperature';
 // ── ImbewuField structured report ("ReportDoc") ──────────────────────────────
 // The 11-section, map-linked report is the product differentiator. This is the
@@ -364,7 +364,7 @@ export function buildSkeletonReportDoc(args: {
   };
 
   // ── Landscape & soil ──
-  const el = location.elevation;
+  const terrain = reportTerrainValues(location.elevation);
   const so = location.soil;
   const slopeDeg = recordedSlope;
   const soilKnown = so?.soilSource === 'lab' || so?.soilSource === 'soilgrids';
@@ -372,7 +372,7 @@ export function buildSkeletonReportDoc(args: {
   const organicCarbon = soilKnown ? finiteNonNegative(so?.organicCarbon) : undefined;
   const landscapeSoil: LandscapeSoil = {
     slope: slopeDeg !== undefined ? { value: slopeDeg, unit: '°', provenance: 'estimated', basis: 'coarse elevation grid — confirm on site' } : undefined,
-    aspect: el?.aspectLabel ?? 'unknown',
+    aspect: terrain.aspectLabel ?? 'unknown',
     soilTexture: soilKnown ? so?.textureClass ?? 'unknown' : 'unknown',
     // The basis has to name what was ACTUALLY consulted. When the ISRIC call fails, the
     // route substitutes Loam / pH 6.5 / 1.2% OC for every site alike, and this line used to

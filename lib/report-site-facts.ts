@@ -1,4 +1,4 @@
-import { reportSoilEvidence, reportEvidenceText } from './report-risk';
+import { reportSoilEvidence, reportEvidenceText, reportTerrainValues } from './report-risk';
 import { annualRainfallMm } from './climate-temperature';
 import { reportDocumentText, REPORT_DOCUMENT_LANGUAGES, reportRecordedSourceLabel } from './report-localisation';
 import { recordsSeasonLabel } from './records-months';
@@ -972,7 +972,12 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   } else {
     row(reportEvidenceText('Recorded soil values', language), reportEvidenceText('Soil values not supported by a recorded source; review existing results and field observations', language), t('No laboratory result or SoilGrids source recorded'));
   }
-  row('Elevation, slope, aspect', t('{elevation} m · {slope}° · faces {aspect}',{elevation:input.elevationM,slope:input.slopeDeg,aspect:input.aspectLabel}), t('SRTM elevation model'));
+  const terrain = reportTerrainValues({ elevation: input.elevationM, slopeDeg: input.slopeDeg, aspectLabel: input.aspectLabel });
+  if (terrain.elevationM !== undefined && terrain.slopeDeg !== undefined && terrain.aspectLabel !== undefined) {
+    row('Elevation, slope, aspect', t('{elevation} m · {slope}° · faces {aspect}', { elevation: terrain.elevationM, slope: terrain.slopeDeg, aspect: terrain.aspectLabel }), t('SRTM elevation model'));
+  } else {
+    row('Elevation, slope, aspect', reportEvidenceText(`Elevation estimate: ${terrain.elevationM === undefined ? 'not known' : `${terrain.elevationM} m`}; Slope estimate: ${terrain.slopeDeg === undefined ? 'not known' : `${terrain.slopeDeg}°`}; Aspect: ${terrain.aspectLabel ?? 'not known'}`, language), reportEvidenceText('Recorded terrain estimates; source and field accuracy not independently verified here', language));
+  }
 
   const absent = absentWaterBodies(facts, input.hasMapWaterPolygons);
   if (absent.length) {

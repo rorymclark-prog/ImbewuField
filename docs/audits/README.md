@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest report terrain continuation — [Missing terrain fields — 13 November 2026](2026-11-13/report-terrain-unknown-codex.md). Runtime outages must not print numeric placeholders; new outputs and successor gates remain open.
+
 Latest report soil continuation — [Soil and earthworks evidence — 13 November 2026](2026-11-13/report-soil-earthworks-evidence-codex.md). Missing evidence no longer creates risk ratings or construction instructions; source-bound outputs and successor gates remain explicit.
 
 Latest report slope continuation — [Shared unrated runoff and erosion evidence — 13 November 2026](2026-11-13/report-slope-evidence-codex.md). Missing slope no longer means low risk; source/output and successor gates remain explicit.
