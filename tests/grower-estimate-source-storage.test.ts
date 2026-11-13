@@ -485,6 +485,25 @@ test('a committed provisional write remains superseded when final state installa
   assert.ok(crop.loadCropPlan().growerPlanningProfiles!.some(row => row.profileId === profile.profileId));
 });
 
+test('a replacement write base introduced during the final raw token read is preserved without installing old state', async () => {
+  const loaded = await seeded(), profile = provisionalProfile();
+  const installs: CropPlanState[] = [], save = parent(loaded, { setPlan(value: CropPlanState) { installs.push(value); } });
+  const replacement = { ...save.state.planWriteBase.current, marker: 'synthetic newer same-owner base' };
+  const original = local.setItem; let wrote = false, fired = false;
+  local.setItem = function (key: string, value: string) { original.call(this, key, value); wrote = true; };
+  local.onRead = () => {
+    const stack = new Error().stack ?? '';
+    if (wrote && !fired && stack.includes('cropPlanWriteToken') && !stack.includes('loadCropPlanWithWriteAdmission')) {
+      fired = true; save.state.planWriteBase.current = replacement;
+    }
+  };
+  try {
+    assert.equal(save.adopt(profile, () => true).status, 'superseded', 'a replaced original base must retire confirmation');
+    assert.ok(fired, 'must reach the actual post-write raw token read');
+    assert.equal(save.state.planWriteBase.current, replacement); assert.deepEqual(installs, []);
+  } finally { local.setItem = original; local.onRead = null; }
+});
+
 test('a completed write followed by an actor change returns superseded, while a failed store never claims confirmation', async () => {
   const loaded = await seeded(), profile = provisionalProfile();
   const event = crop.CROP_PLAN_CHANGED_EVENT;

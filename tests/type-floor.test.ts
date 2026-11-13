@@ -119,6 +119,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/international/countries/SavedSiteUpdates.tsx': 'farmers read account delivery and offline status before trusting saved country details; zero-debt 12px floor',
   'components/international/countries/WorkspaceReferencePanel.tsx': 'farmers must read and explicitly confirm a workspace reference basis; zero-debt 12px floor',
   'components/crops/GrowerPlanningPanel.tsx': 'growers enter their own density, yield and date assumptions; no small-print exemption',
+  'components/crops/ProvisionalCropPreview.tsx': 'growers review source limits, unknowns and explicit profile-save choices on phones; zero-debt 12px floor',
   'components/crops/GrowerAutoPlanPanel.tsx': 'growers review buyer priorities and dated whole-bed proposals before acting; no small-print exemption',
   'components/crops/GrowerNurseryReviewPanel.tsx': 'growers review seed, tray and surface requirements and incomplete budgets; no small-print exemption',
   'components/crops/GrowerFieldSeedSourcingSection.tsx': 'growers enter gross field seed counts and review held requirements on phones; zero-debt 12px floor',

@@ -43,7 +43,9 @@ assert.ok(legacyAvailability, 'Actual lower-editor availability expression must 
 assert.ok(legacyCountry, 'Lower catalogue editor must remain inside a country-support branch');
 const legacyExpression = `(${legacyCountry.condition.getText(page)}) ? (${contains(legacyCountry.whenTrue, legacyNode) ? legacyAvailability.getText(page) : 'null'})
   : (${contains(legacyCountry.whenFalse, legacyNode) ? legacyAvailability.getText(page) : 'null'})`;
-const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel'];
+// The shared section now also mounts the provisional preview. Keep it as a
+// boundary here; its actual UI/source lifecycle has its own mounted tests.
+const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel'];
 const boundaries = Object.fromEntries(names.map(name => [name, function Boundary() { return null; }]));
 function compile(expression: string): (input: Record<string, unknown>) => unknown {
   const compiled = ts.transpileModule(`function view(){return (${expression});}`, { compilerOptions: {
@@ -77,16 +79,25 @@ function input(allowCataloguePlanning: boolean) {
     planningScopeKey: 'current-catalogue-key', markedPlantings: [], plan: { harvestTargets: targets, growerPlanningProfiles: [], plantings },
     selectedGrowerSource: null, beds, plantings, pattern: 'mild-frost', harvestSaveContext: saveContext, saveHarvestTargets,
     canvasSite: null, design: null, designBeds: [], saveGrowerProfiles() {},
-    growerWorkflow: { source, sourceIssue: null, checking: false, contextRevision: 4, onReview, onRefresh() {}, onAccept() {}, acceptance: { status: 'idle' }, savedNurseryReview: null },
+    growerActorIsCurrent: () => true, siteCountry: { status: 'unconfirmed', context: null }, planningSupport: { fingerprint: 'fixture-policy' },
+    saveProvisionalProfile() { throw Error('Consumer mount must not save automatically'); },
+    growerWorkflow: { source, sourceIssue: null, checking: false, contextRevision: 4, onReview, onRefresh() {}, onAccept() {},
+      onCheckPreviewSource() { throw Error('Consumer mount must not read preview source automatically'); }, acceptance: { status: 'idle' }, savedNurseryReview: null },
     placeName: 'Engineering source', designTitle: 'Engineering design', growerSample: false, growerOwner: 'fixture-owner',
     siteClimate: null, hasSiteCoords: false, siteLat: 0, siteSurvey: null, saved };
 }
 
 for (const country of ['ZA', 'US', undefined]) test(`${country ?? 'unconfirmed'} mapped country can reach the own-records editor and automatic own-estimate planner together`, () => {
   const policy = support(country); assert.equal(policy.allowCataloguePlanning, country === 'ZA');
-  const fixture = input(policy.allowCataloguePlanning), tree = renderOwn(fixture), editor = target(tree); assert.ok(editor);
+  const fixture = { ...input(policy.allowCataloguePlanning), siteCountry: policy.siteCountry }, tree = renderOwn(fixture), editor = target(tree); assert.ok(editor);
   assert.equal(editor.props.basis, 'own-records'); assert.equal(editor.props.siteId, siteId);
   assert.ok(elements(tree).some(element => element.type === boundaries.GrowerAutoPlanPanel)); assert.equal(fixture.saved.length, 0);
+  const preview = elements(tree).find(element => element.type === boundaries.ProvisionalCropPreview); assert.ok(preview);
+  assert.equal(preview.props.scope, fixture.growerScope); assert.equal(preview.props.actorIsCurrent, fixture.growerActorIsCurrent);
+  assert.equal(preview.props.countryCode, policy.siteCountry.status === 'confirmed' ? country : null);
+  assert.equal(preview.props.onSaveProfile, fixture.saveProvisionalProfile);
+  assert.equal(preview.props.onCheckSource, fixture.growerWorkflow.onCheckPreviewSource);
+  assert.equal(preview.props.profiles, fixture.plan.growerPlanningProfiles);
 });
 
 test('absent site, absent grower scope and unmapped workspace cannot acquire the saved buyer editor', () => {
