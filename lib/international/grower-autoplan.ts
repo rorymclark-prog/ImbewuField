@@ -1,4 +1,4 @@
-import { normaliseProvisionalCycleContext, type ProvisionalCycleContext } from './provisional-profile';
+import { normaliseProvisionalCycleContext, readSavedProvisionalProfile, type ProvisionalCycleContext } from './provisional-profile';
 import type { PlanBed } from '../crop-plan';
 import {
   addGrowerUtcDays, assessGrowerPlanning, growerPlanningScopeKey, isGrowerRecordedAt, isGrowerUtcDate,
@@ -247,7 +247,13 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
         const id = JSON.stringify([demand.profileId, bed.bed.id]);
         if (checked.has(id)) continue;
         checked.add(id);
-        const result = assess(profileById.get(demand.profileId)!, bed, start);
+        // This pass checks required inputs, not a proposed planting date. A
+        // January comparison must not be reinterpreted as December merely
+        // because the search includes nursery preparation. Actual candidates
+        // below still review their own date, climate key and current context.
+        const reviewedEntry = profile.provisionalOrigin?.version === 2
+          ? normaliseGrowerInput(readSavedProvisionalProfile(profile)?.request.fieldEntryDate, 'utc-date', isGrowerUtcDate) : null;
+        const result = assess(profile, bed, reviewedEntry?.state === 'provided' ? reviewedEntry.value : start);
         if (result.status === 'missing-inputs') missing.push(...result.issues.map(issue => `${demand.profileId}:${bed.bed.id}:${issue}`));
         else if (result.status === 'invalid-inputs' || result.status === 'scope-mismatch') return held('invalid-inputs', result.issues);
       }
@@ -279,6 +285,16 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
           }
           const result = assess(profile, bed, cursor);
           if (result.status !== 'ready') {
+            if (result.status === 'missing-inputs' && result.issues.length === 1
+              && result.issues[0] === 'provisional-temperature-needs-new-preview') {
+              // This month lacks the saved comparison review, not necessarily
+              // a suitable climate. Keep it held and search later months;
+              // do not let it hide a separately reviewed January candidate.
+              reasons.add(result.issues[0]);
+              const nextMonth = addGrowerUtcDays(`${cursor.slice(0, 7)}-01`, 32);
+              cursor = nextMonth ? `${nextMonth.slice(0, 7)}-01` : null;
+              continue;
+            }
             reasons.add(result.status);
             if (result.status === 'entry-window-excluded') { cursor = addGrowerUtcDays(cursor, 1); continue; }
             return null;

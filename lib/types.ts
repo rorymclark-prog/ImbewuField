@@ -1,4 +1,5 @@
 import type { MonthlyTemperatureCoverage, PowerMonthlyTemperatureReceipt } from './climate-temperature';
+import type { PowerTemperatureSnapshot } from './power-temperature-evidence';
 
 export interface LatLon { lat: number; lon: number }
 
@@ -42,6 +43,8 @@ export interface ClimateData {
   monthlyTempCoverage?: MonthlyTemperatureCoverage;
   /** Optional raw metric provenance; older caches have no receipt, not an inferred period. */
   monthlyTempReference?: PowerMonthlyTemperatureReceipt;
+  /** Retained response used to validate the metric receipt after cache/JSON transport. */
+  monthlyTempSnapshot?: PowerTemperatureSnapshot;
   solarRadiation: number;
   solarSource?: 'nasa-power';
   koppen: string;

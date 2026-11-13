@@ -5,12 +5,13 @@ import { growerPlanningScopeKey, growerCountAreaBasisKey, normaliseGrowerMeasure
 import type { GrowerWorkflowSource } from './grower-workflow-source';
 import { detachJsonData } from '../lossless-json';
 import type { PlanningSupport } from './planning-policy';
+import { currentTemperatureEvidenceKey } from './provisional-temperature';
 
 /** A historical review record, never a durable source-check capability. Original
  * request data lets the same resolver retain defaults, overrides and unknowns. */
 export interface SavedProvisionalOrigin {
-  readonly version: 1;
-  readonly resolver: 'provisional-crop-v1';
+  readonly version: 1 | 2;
+  readonly resolver: 'provisional-crop-v1' | 'provisional-crop-v2';
   readonly profileId: string;
   readonly savedAt: string;
   readonly originalRequestJson: string;
@@ -25,7 +26,7 @@ export type ProvisionalProfileSaveResult = { readonly status: 'confirmed'; reado
 /** Recorded conditions of a new arithmetic review, not a source signature or a
  * live write capability. The controller separately binds the actual site/source. */
 export interface ProvisionalCycleContext {
-  readonly version: 1;
+  readonly version: 1 | 2;
   readonly asOf: string;
   readonly reviewedAt: string;
   readonly policyFingerprint: string;
@@ -34,18 +35,21 @@ export interface ProvisionalCycleContext {
   readonly countryCode: string | null;
   readonly agriculturalRegionReference: string | null;
   readonly source: SavedProvisionalOrigin['source'];
+  readonly temperatureEvidenceKey?: string | null;
 }
 const keys = ['version', 'resolver', 'profileId', 'savedAt', 'originalRequestJson', 'previewFingerprint', 'bedId', 'bedLabel', 'source'];
 const sourceKeys = ['kind', 'sourceKey', 'sourceRevision', 'geometryFingerprint'];
 const requestKeys = ['profileId', 'cropKey', 'context', 'recordedAt', 'asOf', 'candidates', 'overrides', 'measuredAreaM2', 'fieldEntryDate', 'knownPlantingRestriction', 'countBasis'];
 const cycleContextKeys = ['version', 'asOf', 'reviewedAt', 'policyFingerprint', 'knownPlantingRestriction', 'sourceFreshness', 'countryCode', 'agriculturalRegionReference', 'source'];
-export type ProvisionalSiteConditions = Pick<ProvisionalCycleContext, 'countryCode' | 'agriculturalRegionReference' | 'policyFingerprint' | 'knownPlantingRestriction'>;
+export type ProvisionalSiteConditions = Pick<ProvisionalCycleContext, 'countryCode' | 'agriculturalRegionReference' | 'policyFingerprint' | 'knownPlantingRestriction' | 'temperatureEvidenceKey'>;
 
 /** Catalogue support does not establish a legal planting clearance. */
 export function provisionalSiteConditions(support: PlanningSupport): ProvisionalSiteConditions {
   const site = support.siteCountry.status === 'confirmed' ? support.siteCountry.context : null;
+  const temperatureEvidenceKey = currentTemperatureEvidenceKey(support);
   return Object.freeze({ countryCode: site?.countryCode ?? null, agriculturalRegionReference: site?.agriculturalRegionReference ?? null,
-    policyFingerprint: support.fingerprint, knownPlantingRestriction: null });
+    policyFingerprint: support.fingerprint, knownPlantingRestriction: null,
+    ...(temperatureEvidenceKey ? { temperatureEvidenceKey } : {}) });
 }
 const text = (v: unknown): v is string => typeof v === 'string' && v.trim().length > 0 && v.length <= 2000 && !/[\u0000-\u001f\u007f]/.test(v);
 function own(value: unknown, expected: readonly string[]): Record<string, any> | null {
@@ -66,12 +70,15 @@ function boundedJson(value: unknown, depth = 0, budget = { nodes: 0 }): boolean 
 function original(origin: SavedProvisionalOrigin): ProvisionalDraftRequest | null {
   const request = JSON.parse(origin.originalRequestJson);
   if (!boundedJson(request) || !request || typeof request !== 'object' || Array.isArray(request)
-    || Object.keys(request).some(k => !requestKeys.includes(k)) || JSON.stringify(request) !== origin.originalRequestJson) return null;
+    || Object.keys(request).some(k => !requestKeys.includes(k) && !(origin.version === 2 && k === 'temperatureComparison'))
+    || Object.hasOwn(request, 'temperatureComparison') !== (origin.version === 2)
+    || JSON.stringify(request) !== origin.originalRequestJson) return null;
   return request;
 }
 function savable(result: ReturnType<typeof resolveProvisionalCropPlan>, request: ProvisionalDraftRequest) {
   const area = normaliseGrowerMeasuredAreaInput(request.measuredAreaM2);
   return result.status === 'resolved' && area?.state === 'provided' && area.value > 0
+    && result.temperatureComparison?.reason !== 'comparison-declaration-invalid'
     && !Object.values(result.fields).some(field => field.status === 'invalid-override')
     && Object.values(result.fields).every(field => field.sourceBindings.every(source =>
       typeof source.attribution === 'string' && typeof source.limitations === 'string'))
@@ -86,7 +93,8 @@ function savable(result: ReturnType<typeof resolveProvisionalCropPlan>, request:
 export function normaliseSavedProvisionalOrigin(value: unknown, profile: GrowerPlanningProfile): SavedProvisionalOrigin | null {
   try {
     const row = own(value, keys), source = row && own(row.source, sourceKeys);
-    if (!row || !source || row.version !== 1 || row.resolver !== 'provisional-crop-v1'
+    if (!row || !source || !((row.version === 1 && row.resolver === 'provisional-crop-v1')
+      || (row.version === 2 && row.resolver === 'provisional-crop-v2'))
       || row.profileId !== profile.profileId || row.profileId === 'provisional-preview'
       || !text(row.bedId) || !text(row.bedLabel) || !isGrowerRecordedAt(row.savedAt)
       || typeof row.originalRequestJson !== 'string' || row.originalRequestJson.length > 262144
@@ -124,7 +132,8 @@ export function createSavedProvisionalProfile(request: ProvisionalDraftRequest, 
     const rebound = resolveProvisionalCropPlan({ ...detached, profileId });
     if (rebound.status !== 'resolved') return null;
     return normaliseGrowerPlanningProfile({ ...rebound.profile, provisionalOrigin: {
-      version: 1, resolver: 'provisional-crop-v1', profileId, savedAt,
+      version: Object.hasOwn(detached, 'temperatureComparison') ? 2 : 1,
+      resolver: Object.hasOwn(detached, 'temperatureComparison') ? 'provisional-crop-v2' : 'provisional-crop-v1', profileId, savedAt,
       originalRequestJson: JSON.stringify(detached), previewFingerprint: preview.fingerprint,
       bedId, bedLabel, source: { kind: source.kind, sourceKey: source.sourceKey,
         sourceRevision: source.sourceRevision, geometryFingerprint: source.geometryFingerprint },
@@ -144,8 +153,10 @@ export function readSavedProvisionalProfile(value: unknown) {
 
 export function normaliseProvisionalCycleContext(value: unknown): ProvisionalCycleContext | null {
   try {
-    const row = own(value, cycleContextKeys), source = row && own(row.source, sourceKeys);
-    if (!row || !source || row.version !== 1 || !isGrowerUtcDate(row.asOf)
+    const version = value && typeof value === 'object' ? Object.getOwnPropertyDescriptor(value, 'version')?.value : null;
+    const row = own(value, version === 2 ? [...cycleContextKeys, 'temperatureEvidenceKey'] : cycleContextKeys), source = row && own(row.source, sourceKeys);
+    if (!row || !source || ![1, 2].includes(row.version) || !isGrowerUtcDate(row.asOf)
+      || (row.version === 2 && !(row.temperatureEvidenceKey === null || typeof row.temperatureEvidenceKey === 'string' && /^[a-f0-9]{64}$/.test(row.temperatureEvidenceKey)))
       || !isGrowerRecordedAt(row.reviewedAt) || row.reviewedAt.slice(0, 10) !== row.asOf
       || typeof row.policyFingerprint !== 'string' || !row.policyFingerprint.length || row.policyFingerprint.length > 262144
       || ![null, true, false].includes(row.knownPlantingRestriction)
@@ -160,7 +171,7 @@ export function normaliseProvisionalCycleContext(value: unknown): ProvisionalCyc
 
 export function createProvisionalCycleContext(source: GrowerWorkflowSource,
   site: ProvisionalSiteConditions, reviewedAt: string): ProvisionalCycleContext | null {
-  return normaliseProvisionalCycleContext({ version: 1, asOf: reviewedAt.slice(0, 10), reviewedAt, ...site, sourceFreshness: source.freshness, source: {
+  return normaliseProvisionalCycleContext({ version: Object.hasOwn(site, 'temperatureEvidenceKey') ? 2 : 1, asOf: reviewedAt.slice(0, 10), reviewedAt, ...site, sourceFreshness: source.freshness, source: {
     kind: source.kind, sourceKey: source.sourceKey, sourceRevision: source.sourceRevision,
     geometryFingerprint: source.geometryFingerprint,
   } });
@@ -187,6 +198,11 @@ export function reviewProvisionalCycleProfile(value: unknown, suppliedContext: u
     const result = resolveProvisionalCropPlan({ ...saved.request, profileId: saved.profile.profileId,
       asOf: context.asOf, measuredAreaM2: area, fieldEntryDate: entry });
     if (result.status !== 'resolved') return held('provisional-evidence-needs-new-review');
+    if (saved.origin.version === 2 && (saved.request.temperatureComparison?.policyFingerprint !== context.policyFingerprint
+      || (context.temperatureEvidenceKey ?? null) !== (saved.result.temperatureComparison?.evidenceKey ?? null)
+      || JSON.stringify(result.temperatureComparison) !== JSON.stringify(saved.result.temperatureComparison))) {
+      return held('provisional-temperature-needs-new-preview');
+    }
     const { provisionalOrigin: _history, ...bare } = saved.profile;
     if (JSON.stringify(result.profile) !== JSON.stringify(bare)) {
       const changed = Object.keys(saved.profile.inputs).filter(key =>

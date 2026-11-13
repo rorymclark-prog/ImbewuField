@@ -3,6 +3,7 @@ import { regionalSpacingReference, type RegionalSpacingConditions } from './prov
 import { USDA_GREAT_LAKES_CABBAGE_SOURCE } from './providers/usda-great-lakes-cabbage';
 import { sourceEvidenceState, sourcePublicationIsKnownBy } from './countries/readiness';
 import type { CountrySource } from './countries/types';
+import { assessProvisionalTemperature, type ProvisionalTemperatureInput } from './provisional-temperature';
 import {
   assessProvisionalGrowerPlanning, growerPlanningScopeKey, growerCountAreaBasisKey, normaliseGrowerMeasuredAreaInput, isGrowerRecordedAt, isGrowerUtcDate,
   normaliseGrowerInput, normaliseGrowerPlanningProfile, normaliseGrowerPlanningScope,
@@ -102,6 +103,7 @@ export interface ProvisionalDraftRequest {
   readonly fieldEntryDate: unknown;
   readonly knownPlantingRestriction?: boolean;
   readonly countBasis?: ProvisionalSpacingCountBasis;
+  readonly temperatureComparison?: ProvisionalTemperatureInput;
 }
 
 const fields: readonly Field[] = ['establishment', 'plantsPerM2', 'yieldKgPerM2', 'nurseryDays',
@@ -364,10 +366,17 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
   const canonicalContext: ProvisionalEvidenceContext = { scope, countryCode: context.countryCode,
     agriculturalRegionReference: context.agriculturalRegionReference, establishment: context.establishment, waterRegime: context.waterRegime,
     varietyReference: context.varietyReference ?? null };
+  const temperatureComparison = Object.hasOwn(request, 'temperatureComparison')
+    ? assessProvisionalTemperature(request.temperatureComparison, canonicalContext, request.cropKey,
+      entryDate?.state === 'provided' ? entryDate.value : null, request.recordedAt, request.asOf) : undefined;
+  const fingerprintParts: unknown[] = [growerPlanningScopeKey(scope), canonicalContext, establishment, request.asOf, resolved, request.countBasis ?? null, spacingSelection,
+    [...rejected].sort((a, b) => JSON.stringify(a) < JSON.stringify(b) ? -1 : JSON.stringify(a) > JSON.stringify(b) ? 1 : 0), assessment.fingerprint];
+  // Absent extensions retain the exact old canonical result and saved replay.
+  if (temperatureComparison) fingerprintParts.push(['temperature-comparison-v1', temperatureComparison]);
   return freeze({ status: 'resolved' as const, provisional: true, sourceVerification: 'not-verified' as const,
     densityEstimateNotLayoutClearance: true as const, profile, fields: resolved, assessment, rejected, spacingSelection,
     countryOrRegionApproval: false as const, knownPlantLegalityEstablished: false as const,
     requestedEstablishment: context.establishment, activeEstablishment: establishment,
-    fingerprint: JSON.stringify([growerPlanningScopeKey(scope), canonicalContext, establishment, request.asOf, resolved, request.countBasis ?? null, spacingSelection,
-      [...rejected].sort((a, b) => JSON.stringify(a) < JSON.stringify(b) ? -1 : JSON.stringify(a) > JSON.stringify(b) ? 1 : 0), assessment.fingerprint]) });
+    ...(temperatureComparison ? { temperatureComparison } : {}),
+    fingerprint: JSON.stringify(fingerprintParts) });
 }

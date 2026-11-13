@@ -9,6 +9,9 @@ import { createGrowerCyclePlanting, hasGrowerCycleMarker, resolvePlantingBasis }
 import type { CropPlanState, Planting } from '../lib/crop-plan.ts';
 import { createProvisionalCycleContext, createSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
 import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
+import { syntheticTemperatureEvidence, syntheticTemperatureInput } from './fixtures/provisional-temperature.ts';
+import { provisionalTemperatureEvidenceKey } from '../lib/international/provisional-temperature.ts';
+import { buildProvisionalCycleEvidence } from '../lib/international/provisional-crop-export.ts';
 
 const hooks = registerHooks({ resolve(specifier, context, next) {
   if (specifier === './firebase/init' && context.parentURL?.endsWith('/lib/account-local-storage.ts')) return {
@@ -62,6 +65,72 @@ function plan(plantings: Planting[], profiles?: GrowerPlanningProfile[]): CropPl
 }
 async function reset() { releaseCropPlanFixture(); exitSampleMode(); local.clear(); session.clear(); await initialiseCropPlanFixture(); }
 const legacy = (): Planting => ({ id: 'legacy-fixture', bedId: bed.id, cropKey: crop.key, sowMonth: crop.sowMonths.summer[0] ?? 1 });
+
+test('a climate-bearing v2 origin survives the actual guarded writer and adopted-cycle source record without becoming a calendar', async () => {
+  await reset();
+  const at = '2026-11-13T12:00:00.000Z';
+  const evidence = syntheticTemperatureEvidence({ latitude: 1, longitude: 1 });
+  const source: GrowerWorkflowSource = { status: 'ready', kind: 'studio-canvas', sourceId: scope.siteId,
+    sourceKey: `studio-canvas:${scope.siteId}`, resourceSiteId: scope.siteId, scope, beds: [bed],
+    measuredAreas: [{ bedId: bed.id, areaM2: 12, basis: 'explicit-saved-dimensions' }], heldBeds: [],
+    sourceRevision: 'b'.repeat(64), geometryFingerprint: 'a'.repeat(64), freshness: 'device-saved-copy', sourceVerification: 'not-verified' };
+  const choices = { ...ownFixture().profile.inputs, allowedEntryMonths: provided([12, 1, 2], 'utc-months') };
+  const saved = createSavedProvisionalProfile({ profileId: 'provisional-preview', cropKey: 'tomatoes',
+    context: { scope, countryCode: 'KE', agriculturalRegionReference: null, establishment: 'transplant', waterRegime: 'irrigated' },
+    recordedAt: at, asOf: at.slice(0, 10), candidates: [], overrides: choices,
+    measuredAreaM2: provided(12, 'm2'), fieldEntryDate: provided('2027-01-10', 'utc-date'),
+    temperatureComparison: syntheticTemperatureInput(evidence) }, 'climate-saved-profile', at, source, bed.id, bed.label);
+  assert.ok(saved); assert.equal(saved.provisionalOrigin?.version, 2);
+  assert.equal(book.saveCropPlan(plan([])), true);
+  const initial = book.loadCropPlanWithWriteAdmission(), next = { ...initial.book, growerPlanningProfiles: [saved] };
+  const permit = book.createGrowerProfileChangePermit(initial.admission, initial.book, next, { kind: 'edit', profileId: saved.profileId, expectedProfile: null });
+  assert.ok(permit); assert.equal(book.saveCropPlanWithReceipt(next, { growerProfileChange: permit }).saved, true);
+  assert.deepEqual(book.loadCropPlan().growerPlanningProfiles, [saved]);
+  assert.deepEqual(JSON.parse(readCanonicalCropPlanFixtureRaw()).growerPlanningProfiles, [saved]);
+  const current = createProvisionalCycleContext(source, { countryCode: 'KE', agriculturalRegionReference: null,
+    policyFingerprint: 'synthetic-policy', knownPlantingRestriction: null,
+    temperatureEvidenceKey: provisionalTemperatureEvidenceKey(evidence) }, at); assert.ok(current);
+  const proposal = generateGrowerAutoPlan({ requestedAt: at, scope, geometryFingerprint: source.geometryFingerprint,
+    profiles: [saved], provisionalContext: current, beds: [{ bed, scope, measuredAreaM2: provided(12, 'm2') }],
+    // The explicit ten-day nursery estimate starts in December for this January field entry.
+    planningStart: provided('2026-12-01', 'utc-date'), planningEndExclusive: provided('2027-02-01', 'utc-date'), reserved: [],
+    availability: [{ bedId: bed.id, scope, window: provided({ start: '2026-12-01', endExclusive: '2027-02-01' }, 'utc-date-window') }],
+    demands: [{ demandId: 'temperature-demand', profileId: saved.profileId, scope, totalKg: provided(1, 'kg-total'),
+      harvestWindow: provided({ start: '2027-01-12', endExclusive: '2027-01-15' }, 'utc-date-window') }], maxAssessments: 1000 });
+  assert.equal(proposal.status, 'ready', JSON.stringify(proposal.demandResults)); assert.ok(proposal.cycles.length);
+  assert.equal(proposal.cycles[0].assessment.schedule.fieldEntryDate, '2027-01-10');
+  if (proposal.status !== 'ready') return;
+  const tooLate = generateGrowerAutoPlan({ ...proposal.snapshot,
+    planningStart: provided('2027-01-01', 'utc-date'), availability: [{ bedId: bed.id, scope,
+      window: provided({ start: '2027-01-01', endExclusive: '2027-02-01' }, 'utc-date-window') }] });
+  assert.equal(tooLate.status, 'with-gaps'); assert.equal(tooLate.cycles.length, 0);
+  assert.ok(tooLate.demandResults[0].reasons.includes('nursery-before-planning-start'));
+  const changedClimate = generateGrowerAutoPlan({ ...proposal.snapshot,
+    provisionalContext: { ...current, temperatureEvidenceKey: 'c'.repeat(64) } });
+  assert.equal(changedClimate.status, 'missing-inputs'); assert.equal(changedClimate.cycles.length, 0);
+  // Both months are grower-allowed; January's reviewed climate is not consent to February.
+  const secondMonth = generateGrowerAutoPlan({ ...proposal.snapshot,
+    planningEndExclusive: provided('2027-03-01', 'utc-date'),
+    availability: [{ bedId: bed.id, scope, window: provided({ start: '2026-12-01', endExclusive: '2027-03-01' }, 'utc-date-window') }],
+    demands: [...proposal.snapshot.demands, { ...proposal.snapshot.demands[0], demandId: 'february-demand',
+      harvestWindow: provided({ start: '2027-02-12', endExclusive: '2027-02-15' }, 'utc-date-window') }] });
+  assert.equal(secondMonth.status, 'with-gaps'); assert.equal(secondMonth.cycles.length, 1);
+  assert.equal(secondMonth.cycles[0].assessment.schedule.fieldEntryDate, '2027-01-10');
+  assert.equal(secondMonth.demandResults[1].status, 'capacity-gap');
+  assert.ok(secondMonth.demandResults[1].reasons.includes('provisional-temperature-needs-new-preview'));
+  const row = createGrowerCyclePlanting(proposal.cycles[0], { plantingId: 'temperature-cycle', acceptedAt: at,
+    geometryFingerprint: source.geometryFingerprint }); assert.ok(row);
+  const state = book.loadCropPlanWithWriteAdmission();
+  assert.equal(book.saveCropPlanWithReceipt({ ...state.book, plantings: [row] }, { writeIsCurrent: () => book.cropPlanWriteToken() === state.token }).saved, true);
+  const readback = resolvePlantingBasis(book.loadCropPlan().plantings[0], { scope, beds: source.beds,
+    geometryFingerprint: source.geometryFingerprint, provisionalContext: current });
+  assert.equal(readback.kind, 'grower-dated-cycle');
+  if (readback.kind !== 'grower-dated-cycle') return;
+  const lines = buildProvisionalCycleEvidence(readback.assessment.snapshot); assert.ok(lines);
+  assert.match(lines.lines.join('\n'), /within-reported-optimum/);
+  assert.match(lines.lines.join('\n'), /not a planting window|Not a planting window/);
+  assert.match(lines.lines.join('\n'), /2001-01 to 2025-12/);
+});
 
 test('the canonical writer retains an explicitly added provisional profile and its adopted dated review through raw storage and reload', async () => {
   await reset(); const ordinary = ownFixture().profile;

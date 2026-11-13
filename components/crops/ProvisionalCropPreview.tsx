@@ -17,6 +17,9 @@ import type { GrowerPlanningProfile } from '@/lib/international/grower-planning'
 import { sourcePublicationText } from '@/lib/international/countries/readiness';
 import { worldvegKenyaCabbageCandidates, worldvegKenyaCabbageReference, worldvegKenyaCabbageRegionMatches } from '@/lib/international/providers/worldveg-kenya-cabbage';
 import { worldvegKenyaCowpeaCandidates, worldvegKenyaCowpeaReference, worldvegKenyaCowpeaSpacing, type CowpeaReferenceConditions } from '@/lib/international/providers/worldveg-kenya-cowpea';
+import { captureProvisionalTemperatureCache, browserTemperatureStorage, provisionalTemperatureLines, TOMATO_MONTHLY_CRITERION,
+  type ProvisionalTemperatureAssessment } from '@/lib/international/provisional-temperature';
+import { locationDataCacheKey } from '@/lib/location-cache-key';
 
 export interface ProvisionalCropPreviewProps {
   ownerKey: string;
@@ -27,6 +30,9 @@ export interface ProvisionalCropPreviewProps {
   countryCode: string | null;
   agriculturalRegionReference: string | null;
   contextRevision: string | number;
+  sitePoint?: { latitude: number; longitude: number } | null;
+  policyFingerprint?: string;
+  onClimateChanged?: () => void;
   actorIsCurrent: () => boolean;
   checking: boolean;
   onRefresh: () => Promise<unknown>;
@@ -49,6 +55,7 @@ type Draft = {
   oatsConsent?: string | null;
   kenyaTomatoBasis?: KenyaTomatoNurseryBasis | '';
   kenyaTomatoConsent?: string | null;
+  temperatureConsent?: string | null;
   usdaNursery?: { basis: UsdaCabbageNurseryBasis | ''; contextKey: string | null };
   countMode: 'density' | 'spacing';
   spacing: { rowCm: string; inRowCm: string; finalStand: string };
@@ -63,7 +70,7 @@ function binding(props: ProvisionalCropPreviewProps): string | null {
     // Include the actual capsule too: a reused revision label must not retain an old preview.
     return JSON.stringify([props.ownerKey, props.sample === true, growerPlanningScopeKey(props.scope), props.source,
       props.countryCode, props.agriculturalRegionReference, props.contextRevision, props.checking, props.evidence ?? null,
-      props.sourceName ?? null]);
+      props.sourceName ?? null, props.sitePoint ?? null, props.policyFingerprint ?? null]);
   } catch { return null; }
 }
 
@@ -71,6 +78,18 @@ function binding(props: ProvisionalCropPreviewProps): string | null {
 function savedAreaText(value: unknown) {
   const area = normaliseGrowerMeasuredAreaInput(value);
   return area?.state === 'provided' ? String(area.value) : 'Unknown';
+}
+
+function TemperatureAssessment({ value }: { value: ProvisionalTemperatureAssessment }) {
+  return <section aria-label="Historical temperature comparison" className="space-y-2 break-words rounded border border-[var(--border)] p-3 text-sm">
+    <h4 className="font-semibold">Historical temperature comparison</h4>
+    <p>{value.valueC === null ? 'A qualified temperature comparison is unavailable.'
+      : `Modelled monthly mean: ${value.valueC} °C — ${value.state === 'within-reported-optimum' ? 'within' : 'outside'} the reported ${value.criterion.lowerC}–${value.criterion.upperC} °C optimum.`}</p>
+    <p>{value.criterion.limits}</p>
+    <details><summary className="cursor-pointer">Sources, assumptions and limits</summary>
+      {provisionalTemperatureLines(value).map((line, i) => <p key={i}>{line}</p>)}
+    </details>
+  </section>;
 }
 
 function EvidenceFields({ fields, spacing }: { fields: Extract<Resolution, { status: 'resolved' }>['fields']; spacing: boolean }) {
@@ -118,6 +137,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
     saveDeclaration.current = { selected }; setSaveConsent(selected);
   }
   const [saveMessage, setSaveMessage] = useState('');
+  const [climateMessage, setClimateMessage] = useState('');
   const consumed = useRef<object | null>(null);
   const pending = useRef<object | null>(null);
   const [checkingSource, setCheckingSource] = useState(false);
@@ -127,6 +147,18 @@ function Editor(props: ProvisionalCropPreviewProps) {
   const context = useRef({ environment, generation: 0 });
   if (context.current.environment !== environment) context.current = { environment, generation: context.current.generation + 1 };
   const generation = context.current.generation;
+  const climateCacheKey = props.sitePoint ? locationDataCacheKey(props.sitePoint.latitude, props.sitePoint.longitude) : null;
+  useEffect(() => {
+    if (!climateCacheKey) return;
+    const changed = (event: StorageEvent) => {
+      if (event.key !== null && event.key !== climateCacheKey || !active.current || !current.current.actorIsCurrent()) return;
+      const next = { ...draftLive.current, temperatureConsent: null };
+      draftLive.current = next; setDraft(next); setPreview(null); declareSave(null); setExportMessage('');
+      current.current.onClimateChanged?.();
+    };
+    window.addEventListener('storage', changed);
+    return () => window.removeEventListener('storage', changed);
+  }, [climateCacheKey, environment]);
   const regionalReference = worldvegKenyaCabbageReference(props.countryCode, draft.crop);
   const regionalMatch = worldvegKenyaCabbageRegionMatches(props.agriculturalRegionReference);
   const regionalConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop]);
@@ -159,6 +191,9 @@ function Editor(props: ProvisionalCropPreviewProps) {
     draft.method, draft.water, kenyaTomatoUse, WORLDVEG_TOMATO_NURSERY.pdfSha256]);
   const useKenyaTomatoReference = kenyaTomatoConsentKey !== null && draft.kenyaTomatoConsent === kenyaTomatoConsentKey
     && draft.method !== 'direct' && kenyaTomatoUse !== null;
+  const temperatureConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.date, draft.water, draft.method]);
+  const useTemperature = temperatureConsentKey !== null && draft.temperatureConsent === temperatureConsentKey
+    && draft.crop === 'tomatoes' && draft.water === 'irrigated' && !!props.policyFingerprint;
   const spacingConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.bed, draft.variety, draft.cowpea, draft.countMode, draft.spacing]);
   const stationConfirmed = spacingConsentKey !== null && draft.stationConsent === spacingConsentKey;
   const wholeAreaConfirmed = spacingConsentKey !== null && draft.areaConsent === spacingConsentKey;
@@ -175,13 +210,44 @@ function Editor(props: ProvisionalCropPreviewProps) {
   function edit(next: Partial<Draft>) {
     if (!isCurrent()) return;
     const sourceChoiceChanged = ['crop', 'variety', 'method', 'water'].some(key => Object.hasOwn(next, key));
-    const value = { ...draft, ...next, ...(sourceChoiceChanged ? { tomatoConsent: null, oatsConsent: null, kenyaTomatoConsent: null } : {}) }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
+    const value = { ...draft, ...next, ...(sourceChoiceChanged ? { tomatoConsent: null, oatsConsent: null, kenyaTomatoConsent: null } : {}),
+      ...(sourceChoiceChanged || Object.hasOwn(next, 'date') ? { temperatureConsent: null } : {}) }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
   }
   async function refresh() {
     if (!isCurrent()) return;
     setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
     try { await current.current.onRefresh(); }
     catch { if (isCurrent()) setError('Could not check saved measurements. Try again.'); }
+  }
+  async function loadClimate() {
+    if (!isCurrent() || pending.current || !props.sitePoint || !props.scope || props.scope.kind !== 'mapped-site') return;
+    // Loading retires the previous calculation and use decision. The existing
+    // authenticated analysis route remains the only network authority.
+    edit({ temperatureConsent: null });
+    const selected = draftLive.current;
+    const currentLoad = () => active.current && current.current.actorIsCurrent()
+      && context.current.generation === generation && binding(current.current) === environment && draftLive.current === selected;
+    const token = {}; pending.current = token; setCheckingSource(true); setClimateMessage('');
+    try {
+      const { paidApiHeaders } = await import('@/lib/api-client-auth');
+      const headers = await paidApiHeaders();
+      if (!currentLoad()) return;
+      const point = props.sitePoint;
+      const response = await fetch(`/api/location-data?lat=${point.latitude.toFixed(6)}&lon=${point.longitude.toFixed(6)}`, { headers });
+      if (!currentLoad()) return;
+      if (!response.ok) { setClimateMessage(response.status === 401 ? 'Sign in to load a site analysis.' : 'The site analysis was unavailable. Temperature comparison stays unknown.'); return; }
+      const data = await response.json();
+      if (!currentLoad()) return;
+      const raw = JSON.stringify(data), key = locationDataCacheKey(point.latitude, point.longitude);
+      const captured = captureProvisionalTemperatureCache({ getItem: input => input === key ? raw : null }, point,
+        { scope: props.scope, countryCode: props.countryCode });
+      if (!captured.evidence) { setClimateMessage('No qualified temperature evidence was returned. Existing display substitutes are not used.'); return; }
+      if (!currentLoad()) return;
+      window.localStorage.setItem(key, raw);
+      setClimateMessage(`Modelled climate retained: ${captured.evidence.receipt.period.start} to ${captured.evidence.receipt.period.end}. Select the comparison below, then calculate.`);
+      current.current.onClimateChanged?.();
+    } catch { if (currentLoad()) setClimateMessage('Could not load or retain the site climate. The comparison stays unknown.'); }
+    finally { if (pending.current === token) { pending.current = null; if (active.current) setCheckingSource(false); } }
   }
   async function calculate() {
     if (!isCurrent() || pending.current) return;
@@ -214,6 +280,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
       if (draft.months !== null) overrides.allowedEntryMonths = supplied(draft.months, 'utc-months');
       const context = { scope: props.scope, countryCode: props.countryCode, agriculturalRegionReference: props.agriculturalRegionReference,
         establishment: draft.method || null, waterRegime: draft.water || null, varietyReference: draft.variety.trim() || null };
+      const climate = useTemperature ? captureProvisionalTemperatureCache(browserTemperatureStorage(), props.sitePoint ?? null, context) : null;
       const request: ProvisionalDraftRequest = structuredClone({ profileId: 'provisional-preview', cropKey: draft.crop,
         context, recordedAt, asOf: recordedAt.slice(0, 10),
         candidates: [...(props.evidence?.candidates ?? []), ...worldvegKenyaCabbageCandidates(context, draft.crop, recordedAt, useRegionalMethod),
@@ -226,13 +293,18 @@ function Editor(props: ProvisionalCropPreviewProps) {
           ...(usdaReference ? { purpose: 'cabbage-transplants', habit: 'not-applicable' } : draft.cowpea), ...draft.spacing,
           interpretationConfirmed: stationConfirmed, wholeAreaConfirmed } } : {}),
         knownPlantingRestriction: props.evidence?.knownPlantingRestriction,
+        ...(useTemperature ? { temperatureComparison: { version: 1, criterion: TOMATO_MONTHLY_CRITERION.id,
+          criterionSnapshot: TOMATO_MONTHLY_CRITERION,
+          purpose: 'irrigated-field-cropping', transfer: 'explicit-historical-methodology',
+          policyFingerprint: props.policyFingerprint!, evidence: climate?.evidence ?? null } } : {}),
         measuredAreaM2: { state: 'provided', value: measures[0].areaM2, unit: 'm2',
           provenance: { kind: 'grower-record', recordedAt, reference: `Saved measured bed: ${draft.bed}` },
           ...(measures[0].arithmeticBasis ? { arithmeticBasis: measures[0].arithmeticBasis } : {}) },
         fieldEntryDate: draft.date ? supplied(draft.date, 'utc-date') : { state: 'missing', reason: 'not-entered' } });
       const next = resolveProvisionalCropPlan(request);
-      if (isCurrent() && receipt.isCurrent()) setPreview({ binding: environment!, generation, draft, result: next, request,
-        bedLabel: beds[0].label, placeLabel: provisionalPlaceLabel(props.sourceName), receipt });
+      const combinedReceipt = { isCurrent: () => receipt.isCurrent() && (!climate || climate.isCurrent()) };
+      if (isCurrent() && combinedReceipt.isCurrent()) setPreview({ binding: environment!, generation, draft, result: next, request,
+        bedLabel: beds[0].label, placeLabel: provisionalPlaceLabel(props.sourceName), receipt: combinedReceipt });
     } catch { if (isCurrent()) setError('Could not check this preview. Check the saved measurements and evidence again.'); }
     finally { if (pending.current === token) { pending.current = null; if (active.current) setCheckingSource(false); } }
   }
@@ -323,6 +395,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
         {saved.request.countBasis && <p>Saved budgeted whole stations: {saved.result.assessment.budgetedStations.value ?? 'Unknown'} ({saved.result.assessment.budgetedStations.status}).</p>}
         <p>Saved estimate: {saved.result.assessment.estimatedPlantCount.value ?? 'Unknown'} plants ({saved.result.assessment.estimatedPlantCount.status}); harvest weight {saved.result.assessment.estimatedYieldKg.value ?? 'Unknown'} kg ({saved.result.assessment.estimatedYieldKg.status}).</p>
         <p>Saved entry window: {provisionalEntryWindowText(saved.result.assessment.entryWindow)}. Current planting suitability is unverified.</p>
+        {saved.result.temperatureComparison && <TemperatureAssessment value={saved.result.temperatureComparison} />}
         {saved.result.profile.version === 2 && <p>Source reports these months; other months remain unknown. Saved date offsets are conditional calculations, not planting recommendations. Specify your own field-entry window in a new preview before automatic planning or adoption.</p>}
         <ul>{Object.entries(saved.result.assessment.schedule).map(([key, value]) => <li key={key}>{labels[key]} (UTC): {value.value ?? 'Unknown'} ({value.status})</li>)}</ul>
         <EvidenceFields fields={saved.result.fields} spacing={!!saved.request.countBasis} />
@@ -460,6 +533,20 @@ function Editor(props: ProvisionalCropPreviewProps) {
           onChange={e => edit({ areaConsent: e.target.checked ? spacingConsentKey : null })} />I treat the whole selected measured bed area as usable spacing-cell area, without paths or excluded space.</label>
       </div>}
     </section>}
+    {draft.crop === 'tomatoes' && <section aria-label="Optional monthly temperature comparison" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
+      <h3 className="font-semibold">Compare this month’s modelled temperature</h3>
+      <p>The November 2018 Ethiopian irrigation guide compares monthly mean air temperature with a reported tomato optimum of 18–25°C. This is one historical criterion, not a planting calendar or frost-safety check.</p>
+      <p>Select an irrigated field-cropping context to use this method. Water availability and whole-season suitability remain unverified. Existing saved modelled climate is read first; no network request runs when you calculate.</p>
+      <p><a className="underline" href={`${TOMATO_MONTHLY_CRITERION.url}#page=42`} target="_blank" rel="noreferrer">Read the original guide, printed page 20</a></p>
+      <button type="button" className={button} disabled={checkingSource || !props.sitePoint || props.scope?.kind !== 'mapped-site'} onClick={loadClimate}>Load modelled site climate</button>
+      <p>Loading uses your existing account’s site-analysis service. It does not grant planting permission.</p>
+      {climateMessage && <p role="status">{climateMessage}</p>}
+      {!props.sitePoint && <p>A mapped point is needed for site-specific climate evidence.</p>}
+      <label className="flex min-h-11 items-center gap-2"><input type="checkbox" aria-label="Use historical irrigated tomato temperature comparison"
+        disabled={draft.water !== 'irrigated' || !props.policyFingerprint} checked={useTemperature}
+        onChange={e => edit({ temperatureConsent: e.target.checked ? temperatureConsentKey : null })} />I choose this historical Ethiopian field-cropping method for this site and its irrigation context</label>
+      <p>Country is your declaration. This source is not a locally validated recommendation outside its origin; protected nursery temperatures and soil germination thresholds are not compared.</p>
+    </section>}
     <fieldset className="space-y-3"><legend className="font-semibold">Your preview overrides</legend>
       <p className="text-sm">Entered values are your estimates. Reset restores the evidence default, if available. Clearing an edited field keeps it unknown.</p>
       <div className="grid gap-3 sm:grid-cols-2">{numericFields.filter(([key]) => draft.countMode !== 'spacing' || key !== 'plantsPerM2').map(([key, label, unit]) => <div key={key}>
@@ -489,6 +576,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
       </div>}
       {saveMessage && <p role="status">{saveMessage}</p>}
       <p>Entry window: {provisionalEntryWindowText(result.assessment.entryWindow)}. An unknown window does not establish that planting on this date is suitable.</p>
+      {result.temperatureComparison && <TemperatureAssessment value={result.temperatureComparison} />}
       {result.profile.version === 2 && <p>Source reports these months; other months remain unknown. Date offsets are conditional calculations, not planting recommendations. Specify your own field-entry window before automatic planning or adoption.</p>}
       {result.spacingSelection && <p role="note">Spacing-cell estimate: {result.spacingSelection.issue} ({result.spacingSelection.status})</p>}
       {draft.countMode === 'spacing' && <p>Budgeted whole stations: {result.assessment.budgetedStations.value ?? 'Unknown'} ({result.assessment.budgetedStations.status}). Area budget only; physical layout fit is unassessed.</p>}

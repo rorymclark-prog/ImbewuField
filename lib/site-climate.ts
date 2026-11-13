@@ -29,6 +29,8 @@ import type { RainPattern } from '@/lib/crop-catalog';
 import { classifyKoppen, sowingCalendarFor, type RainSeason } from '@/lib/koppen-global';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { completeMonthlyRainfallMm, completeMonthlyTemperatures, monthlyTemperatureStatus, recordMinimumC } from '@/lib/climate-temperature';
+import { locationDataCacheKey } from './location-cache-key';
+export { locationDataCacheKey } from './location-cache-key';
 
 export interface SiteClimate {
   /** The planner's sowing-calendar column, derived from this site's own climate:
@@ -189,10 +191,6 @@ export function sowingCalendarInUse(input: {
  * polices that all readers and writers agree) — 5 dp, and bump the version
  * everywhere at once whenever the endpoint would answer differently.
  */
-export function locationDataCacheKey(lat: number, lon: number): string {
-  return `imbewu_loc_v7_${lat.toFixed(5)}_${lon.toFixed(5)}`;
-}
-
 /**
  * Cache-only read: the pattern for a site somebody has already analysed on
  * this device. Synchronous and safe offline — this is what keeps the planner's

@@ -10,9 +10,14 @@ import type { CountrySource } from '../lib/international/countries/types.ts';
 import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import type { ProvisionalFieldCandidate } from '../lib/international/provisional-crop-planning.ts';
 import type { ProvisionalCropPreviewProps } from '../components/crops/ProvisionalCropPreview.tsx';
+import { syntheticTemperatureEvidence } from './fixtures/provisional-temperature.ts';
 
 Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true });
+const temperatureAuth = { read: async (): Promise<Record<string, string>> => ({ Authorization: 'Bearer synthetic-test' }) };
+Object.assign(globalThis, { __provisionalTemperatureAuth: temperatureAuth });
 const hooks = registerHooks({ load(url, context, next) {
+  if (url.endsWith('/lib/api-client-auth.ts')) return { shortCircuit: true, format: 'module',
+    source: 'export async function paidApiHeaders(){return globalThis.__provisionalTemperatureAuth.read();}' };
   if (url.endsWith('/components/crops/ProvisionalCropPreview.tsx')) return { shortCircuit: true, format: 'module',
     source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
       target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
@@ -66,7 +71,7 @@ function mount(changes: Partial<ProvisionalCropPreviewProps> = {}) {
     assert.ok(label, `Missing ${name}`); return label.findAll(row => row.type === 'input' || row.type === 'select')[0];
   };
   const action = (name: string) => { const button = renderer.root.findAllByType('button').find(row => text(row) === name); assert.ok(button); return button.props.onClick; };
-  return { props, writes, field, action, text: () => text(renderer.root),
+  return { props, writes, field, action, root: () => renderer.root, text: () => text(renderer.root),
     change(name: string, value: string) { act(() => field(name).props.onChange({ target: { value } })); },
     async click(name = 'Calculate provisional preview') { await act(async () => { await action(name)(); }); },
     update(changes: Partial<ProvisionalCropPreviewProps>) { Object.assign(props, changes); act(() => renderer.update(React.createElement(Panel, props))); },
@@ -74,6 +79,104 @@ function mount(changes: Partial<ProvisionalCropPreviewProps> = {}) {
     dispose() { act(() => renderer.unmount()); },
   };
 }
+
+test('the mounted monthly comparison computes from retained site evidence and preserves an unknown calendar through save and readback', async () => {
+  let saved: unknown = null;
+  const ui = mount({ sitePoint: { latitude: 0, longitude: 0 }, policyFingerprint: 'synthetic-policy', evidence: undefined,
+    onSaveProfile: profile => { saved = profile; return { status: 'confirmed', profileId: profile.profileId }; } });
+  try {
+    const evidence = syntheticTemperatureEvidence();
+    const raw = JSON.stringify({ lat: 0, lon: 0, climate: { monthlyTempReference: evidence.receipt, monthlyTempSnapshot: evidence.snapshot } });
+    window.localStorage.getItem = () => raw;
+    ui.change('Preview crop', 'tomatoes'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-01-10'); ui.change('Water regime', 'irrigated');
+    ui.change('Preview establishment', 'transplant');
+    ui.change('Nursery duration (days)', '28');
+    const findChoice = () => ui.root().findByProps({ 'aria-label': 'Use historical irrigated tomato temperature comparison' });
+    act(() => findChoice().props.onChange({ target: { checked: true } }));
+    await ui.click();
+    assert.match(ui.text(), /Temperature comparison: within-reported-optimum/);
+    assert.match(ui.text(), /modelled monthly mean: 18 °C/); assert.match(ui.text(), /Entry window: unknown/);
+    const disclosure = ui.root().findAllByType('details').find(row => text(row).includes('Sources, assumptions and limits'));
+    assert.ok(disclosure); assert.notEqual(disclosure.props.open, true);
+    assert.match(ui.text(), /Nursery start \(UTC\): 2026-12-13/);
+    const save = ui.root().findAllByType('input').find(row => row.props.type === 'checkbox' && row.parent && text(row.parent).includes('Save these inputs'));
+    assert.ok(save); act(() => save.props.onChange({ target: { checked: true } }));
+    await ui.click('Save provisional profile'); assert.ok(saved);
+    const profile = saved as import('../lib/international/grower-planning.ts').GrowerPlanningProfile;
+    assert.equal(profile.provisionalOrigin?.version, 2);
+    ui.update({ profiles: [profile] });
+    assert.match(ui.text(), /Saved provisional profiles/); assert.match(ui.text(), /2001-01 to 2025-12/);
+  } finally { ui.dispose(); }
+});
+
+test('date round trips and changed cache bytes retire temperature consent and retained download callbacks', async () => {
+  const ui = mount({ sitePoint: { latitude: 0, longitude: 0 }, policyFingerprint: 'synthetic-policy', evidence: undefined });
+  try {
+    const evidence = syntheticTemperatureEvidence();
+    let raw: string | null = JSON.stringify({ lat: 0, lon: 0, climate: { monthlyTempReference: evidence.receipt, monthlyTempSnapshot: evidence.snapshot } });
+    window.localStorage.getItem = () => raw;
+    ui.change('Preview crop', 'tomatoes'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-01-10'); ui.change('Water regime', 'irrigated');
+    const choice = () => ui.root().findByProps({ 'aria-label': 'Use historical irrigated tomato temperature comparison' });
+    act(() => choice().props.onChange({ target: { checked: true } })); await ui.click();
+    const staleExport = ui.action('Download printable preview');
+    raw = null; await act(async () => staleExport());
+    assert.match(ui.text(), /no longer current|Recalculate before downloading/);
+    act(() => choice().props.onChange({ target: { checked: true } }));
+    ui.change('Preview field-entry date (UTC)', '2027-02-10'); ui.change('Preview field-entry date (UTC)', '2027-01-10');
+    assert.equal(choice().props.checked, false);
+    act(() => choice().props.onChange({ target: { checked: true } })); await ui.click();
+    assert.match(ui.text(), /source-climate-evidence-unavailable-or-mismatched/);
+    assert.doesNotMatch(ui.text(), /Temperature comparison: within-reported-optimum/);
+  } finally { ui.dispose(); }
+});
+
+test('explicit climate loading uses the existing authenticated route once, persists validated data and requires a new comparison choice', async () => {
+  let notifications = 0, requests = 0;
+  const originalFetch = globalThis.fetch;
+  const ui = mount({ sitePoint: { latitude: 0, longitude: 0 }, policyFingerprint: 'synthetic-policy', evidence: undefined,
+    onClimateChanged: () => { notifications++; } });
+  try {
+    const evidence = syntheticTemperatureEvidence();
+    globalThis.fetch = async (url, options) => {
+      requests++; assert.equal(url, '/api/location-data?lat=0.000000&lon=0.000000');
+      assert.deepEqual(options?.headers, { Authorization: 'Bearer synthetic-test' });
+      return new Response(JSON.stringify({ lat: 0, lon: 0, climate: { monthlyTempReference: evidence.receipt, monthlyTempSnapshot: evidence.snapshot } }));
+    };
+    ui.change('Preview crop', 'tomatoes');
+    assert.equal(requests, 0, 'rendering or crop selection must not fetch');
+    await ui.click('Load modelled site climate');
+    assert.equal(requests, 1); assert.equal(notifications, 1); assert.equal(ui.writes.length, 1);
+    assert.match(ui.text(), /Modelled climate retained: 2001-01 to 2025-12/);
+    assert.equal(ui.root().findByProps({ 'aria-label': 'Use historical irrigated tomato temperature comparison' }).props.checked, false);
+  } finally { ui.dispose(); globalThis.fetch = originalFetch; }
+});
+
+test('an actor change during authentication or a country round trip during a fetch cannot write climate data into the returned context', async () => {
+  const originalFetch = globalThis.fetch, originalAuth = temperatureAuth.read;
+  let actor = true, dispatches = 0;
+  const ui = mount({ sitePoint: { latitude: 0, longitude: 0 }, policyFingerprint: 'synthetic-policy', evidence: undefined,
+    actorIsCurrent: () => actor });
+  try {
+    const evidence = syntheticTemperatureEvidence();
+    globalThis.fetch = async () => { dispatches++; return new Response('{}'); };
+    temperatureAuth.read = async () => { actor = false; return { Authorization: 'Bearer synthetic-test' }; };
+    ui.change('Preview crop', 'tomatoes'); await ui.click('Load modelled site climate');
+    assert.equal(dispatches, 0); assert.deepEqual(ui.writes, []);
+    actor = true; temperatureAuth.read = originalAuth;
+    ui.update({ contextRevision: 2 });
+    let resolveResponse!: (value: Response) => void;
+    globalThis.fetch = async () => { dispatches++; return new Promise(resolve => { resolveResponse = resolve; }); };
+    let pending!: Promise<unknown>;
+    await act(async () => { pending = ui.action('Load modelled site climate')(); await Promise.resolve(); await Promise.resolve(); });
+    assert.equal(dispatches, 1);
+    ui.update({ countryCode: 'US' }); ui.update({ countryCode: 'KE' });
+    await act(async () => { resolveResponse(new Response(JSON.stringify({ lat: 0, lon: 0,
+      climate: { monthlyTempReference: evidence.receipt, monthlyTempSnapshot: evidence.snapshot } }))); await pending; });
+    assert.deepEqual(ui.writes, []);
+  } finally { ui.dispose(); globalThis.fetch = originalFetch; temperatureAuth.read = originalAuth; }
+});
 
 test('mounted preview retains source evidence and independent counts/dates with unknown yield and entry window, without saving', async () => {
   const ui = mount(); try {

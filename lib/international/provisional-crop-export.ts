@@ -6,6 +6,7 @@ import { readSavedProvisionalProfile, reviewProvisionalCycleProfile } from './pr
 import { formatDerivedMassKilograms } from '../mass-units';
 import { CROPS } from '../crop-catalog';
 import { resolveProvisionalCropPlan, type ProvisionalDraftRequest, type ResolvedProvisionalField } from './provisional-crop-planning';
+import { provisionalTemperatureLines } from './provisional-temperature';
 
 export const provisionalNumericFields = [
   ['plantsPerM2', 'Plant density (plants per m²)', 'plants/m2'],
@@ -120,7 +121,7 @@ body{font:16px/1.5 system-ui,sans-serif;color:#17251b;background:#fff;max-width:
 h1{font-size:1.8rem}h2{margin-top:2rem}h3{margin:.3rem 0}p{margin:.5rem 0}.notice{border:2px solid #516546;padding:12px}
 table{border-collapse:collapse;width:100%}th,td{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid #b5c1b6}
 .field{border-top:1px solid #b5c1b6;padding:14px 0}.source{border-left:3px solid #b5c1b6;padding-left:12px;margin:12px 0}
-@media print{body{padding:0;font-size:10pt}h1,h2,h3{break-after:avoid}tr,.field,.notice{break-inside:avoid}@page{margin:16mm}}
+@media print{body{padding:0;font-size:10pt}h1,h2,h3{break-after:avoid}tr,.field,.notice{break-inside:avoid}.temperature{break-inside:auto}.temperature p{break-inside:avoid}@page{margin:16mm}}
 </style></head><body><h1>${metadata.sample ? 'DEMO · ' : ''}${record ? 'Saved provisional cycle record' : 'Provisional crop preview'}</h1>
 <div class="notice">${metadata.sample ? '<p><strong>DEMO: sample inputs, not a real farm plan.</strong></p>' : ''}
 <p><strong>${record ? 'Historical estimates as accepted. Planned, not observed crops or harvest.' : 'Conditional planning estimates. Not a saved or adopted crop plan.'}</strong></p>
@@ -156,6 +157,7 @@ ${result.profile.version === 2 ? '<p>Source reports these months; other months r
 <table><thead><tr><th>Output</th><th>Value and status</th></tr></thead><tbody>
 ${output.map(([label, text]) => `<tr><th scope="row">${escape(label)}</th><td>${escape(text)}</td></tr>`).join('')}</tbody></table>
 ${paragraph('Uncertainties', assessment.uncertainties.length ? assessment.uncertainties.join(', ') : 'No additional resolver flags; provisional limits still apply')}
+${result.temperatureComparison ? `<section class="field temperature"><h2>Historical temperature comparison</h2>${provisionalTemperatureLines(result.temperatureComparison).map(line => `<p>${escape(line)}</p>`).join('')}</section>` : ''}
 <h2>Evidence and grower edits</h2>${evidence}
 ${result.rejected.length ? `<h2>Evidence not used</h2>${result.rejected.map(item => paragraph(item.id, item.reason)).join('')}` : ''}
 <p>${record ? 'Historical saved record. It does not verify current source applicability, current planting suitability or completed work. Check current site and evidence before acting.' : 'Downloaded for review. Downloading this preview does not save a profile or add crops.'} This file does not update when the app changes.</p>
@@ -200,6 +202,7 @@ export function buildProvisionalCycleEvidence(snapshot: GrowerPlanningSnapshot):
     const spacing = snapshot.profile.plantCountOrigin;
     if (spacing) lines.push(`Chosen spacing: row ${spacing.rowCm} cm; in-row ${spacing.inRowCm} cm. Final surviving plants per station: ${spacing.finalStand ?? 'Unknown'}. Whole measured area and station interpretation declared by grower; not physical layout clearance.`,
       'Whole stations are floored before multiplying by final surviving plants. Source seed counts do not establish final stand.');
+    if (current.result.temperatureComparison) lines.push(...provisionalTemperatureLines(current.result.temperatureComparison));
     for (const [key, field] of Object.entries(current.result.fields)) {
       const label = provisionalLabels[key];
       lines.push(`${label}: ${provisionalInputText(field.activeInput)}; ${field.status}; basis ${field.activeTier ?? 'Unknown'}. Evidence default: ${provisionalInputText(field.baselineDefault)}.`);
