@@ -16,17 +16,21 @@ function harness(area: PlaceSearchArea = 'south-africa', fetcher: typeof fetch =
   const state = { area, suggestions: [] as any[], worldwide: [] as any[], error: '', result: '', searching: false, preview: false };
   const requests: string[] = [], flights: unknown[] = [], selected: number[][] = [], recents: unknown[] = [], shared: any[] = [];
   const timers = new Map<number, () => unknown>(); let timerId = 0;
-  let camera = { lng: -84.4839, lat: 42.7369 };
+  let camera = { lng: -84.4839, lat: 42.7369 }, pixels = 'previous-camera';
+  const idle: Array<{ fn: () => void; active: boolean }> = [];
   const writes: any[] = [], captures: string[] = [];
   const map = { flyTo: (v: unknown) => { flights.push(v); }, getCenter: () => camera, getZoom: () => 14,
     stop: () => {}, jumpTo: (v: { center: number[] }) => { camera = { lng: v.center[0], lat: v.center[1] }; },
-    getMap: () => map, getCanvas: () => ({ toDataURL: () => 'data:image/jpeg;base64,own-camera' }),
+    getMap: () => map, once: (_: string, fn: () => void) => { idle.push({ fn, active: true }); },
+    off: (_: string, fn: () => void) => { idle.filter(x => x.fn === fn).forEach(x => { x.active = false; }); },
+    getCanvas: () => ({ toDataURL: () => 'data:image/jpeg;base64,' + pixels }),
     getContainer: () => ({ clientWidth: 400, clientHeight: 800 }), unproject: () => camera };
   const context: Record<string, any> = {
     useCallback: (fn: unknown) => fn, AbortController,
     searchArea: area, searchAreaRef: { current: area }, searchEpoch: { current: 0 },
     placeLookup: { current: null }, placeSuggestions: { current: null }, suggestTimer: { current: null },
     placePreviewOnly: { current: false }, placePreviewShareCenter: { current: null },
+    placeCaptureFrame: { current: { generation: 0, ready: true, cleanup: null } },
     TOKEN: 'synthetic-public-token', mapboxPlaceSearchUrl, readMapboxPlaceResults,
     setSearchArea: (v: PlaceSearchArea) => { state.area = v; },
     setPlacePreviewActive: (v: boolean) => { state.preview = v; },
@@ -54,7 +58,7 @@ function harness(area: PlaceSearchArea = 'south-africa', fetcher: typeof fetch =
     setPlaceShareId: () => {}, setPlaceShareStatus: () => {},
     window: { location: { origin: 'https://example.invalid' } }, navigator: { clipboard: { writeText: async () => {} } },
   };
-  const names = ['onLocationSelect', 'allowMapEvidence', 'addPin', 'cancelPlaceLookup', 'cancelPlaceSuggestions', 'chooseSearchArea', 'previewPlaceResult', 'handleSearch', 'fetchSuggestions', 'selectSuggestion', 'handleShare', 'handleSharePlace'];
+  const names = ['onLocationSelect', 'allowMapEvidence', 'allowMapCapture', 'addPin', 'cancelPlaceLookup', 'cancelPlaceSuggestions', 'chooseSearchArea', 'previewPlaceResult', 'handleSearch', 'fetchSuggestions', 'selectSuggestion', 'handleShare', 'handleSharePlace'];
   function rebind() {
     context.searchArea = state.area;
     for (const name of names) {
@@ -77,6 +81,13 @@ function harness(area: PlaceSearchArea = 'south-africa', fetcher: typeof fetch =
     return bind(code, context);
   }
   return { state, context, requests, flights, selected, recents, shared, writes, captures, inlineContaining,
+    pendingFrameListeners: () => idle.filter(x => x.active).length,
+    unmount() {
+      const effect = component.body!.statements.find(n => ts.isExpressionStatement(n) && n.getText(tree).includes('placeLookup.current?.abort(); placeSuggestions.current?.abort();')) as ts.ExpressionStatement;
+      const callback = (effect.expression as ts.CallExpression).arguments[0].getText(tree);
+      bind<() => () => void>(callback, context)()();
+    },
+    paint(index?: number) { pixels = 'own-camera'; if (index !== undefined) idle[index]?.fn(); else idle.splice(0).filter(x => x.active).forEach(x => x.fn()); },
     rebind, area(v: PlaceSearchArea) { context.chooseSearchArea(v); rebind(); },
     runTimers() { const work = [...timers.values()]; timers.clear(); return Promise.all(work.map(fn => fn())); } };
 }
@@ -178,8 +189,33 @@ test('preview camera cannot become persisted water, infrastructure, boundary or 
   assert.match(ui.state.error, /Tap the exact farm/);
   ui.context.onLocationSelect(42.7, -84.6);
   water(); element(); capture(); ui.context.addPin();
+  assert.equal(ui.captures.length, 0, 'camera coordinates update before the old canvas frame is repainted');
+  assert.match(ui.state.error, /imagery is still updating/);
+  ui.paint(); capture(); assert.equal(ui.state.error, '');
   assert.equal(ui.writes.length, 3); assert.deepEqual(ui.captures, ['own-camera']);
   assert.equal(ui.writes[0].lat, 42.7); assert.equal(ui.writes[0].lon, -84.6);
   assert.equal(ui.writes[1].lat, 42.7); assert.equal(ui.writes[1].lon, -84.6);
   assert.deepEqual(ui.writes[2], [[-84.6, 42.7]]);
+});
+
+
+test('an obsolete idle event cannot release capture for a newer own-point selection or area preview', async () => {
+  const ui = harness('worldwide');
+  const capture = ui.inlineContaining('onMapCapture(canvas.toDataURL');
+  await ui.context.handleSearch('First area'); ui.context.selectSuggestion(ui.state.worldwide[0]);
+  ui.context.onLocationSelect(42.7, -84.6);
+  ui.context.onLocationSelect(42.8, -84.7);
+  ui.paint(0); capture(); assert.equal(ui.captures.length, 0);
+  ui.paint(1); capture(); assert.deepEqual(ui.captures, ['own-camera']);
+  await ui.context.handleSearch('Second area'); ui.context.selectSuggestion(ui.state.worldwide[0]);
+  ui.paint(1); capture(); assert.equal(ui.captures.length, 1);
+});
+
+
+test('leaving the map removes its pending frame listener and retires an already queued idle callback', async () => {
+  const ui = harness('worldwide');
+  await ui.context.handleSearch('First area'); ui.context.selectSuggestion(ui.state.worldwide[0]);
+  ui.context.onLocationSelect(42.7, -84.6); assert.equal(ui.pendingFrameListeners(), 1);
+  ui.unmount(); assert.equal(ui.pendingFrameListeners(), 0);
+  ui.paint(0); assert.equal(ui.context.placeCaptureFrame.current.ready, false);
 });

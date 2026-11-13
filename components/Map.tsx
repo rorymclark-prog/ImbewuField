@@ -382,6 +382,7 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
   const { t, lang } = useLanguage();
   const { user } = useAuth();
   const placePreviewOnly = useRef(false);
+  const placeCaptureFrame = useRef<{ generation: number; ready: boolean; cleanup: (() => void) | null }>({ generation: 0, ready: true, cleanup: null });
   const placePreviewShareCenter = useRef<{ lng: number; lat: number } | null>(null);
   const [placePreviewActive, setPlacePreviewActive] = useState(false);
   const onLocationSelect = useCallback((lat: number, lon: number) => {
@@ -391,8 +392,23 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
       placePreviewShareCenter.current = { lng: lon, lat };
       // Cancel the lookup flight before an own point is used for reticle placement
       // or site imagery. A tap alone otherwise leaves the old provider camera.
-      mapRef.current?.stop();
-      mapRef.current?.jumpTo({ center: [lon, lat] });
+      const map = mapRef.current;
+      placeCaptureFrame.current.cleanup?.(); placeCaptureFrame.current.cleanup = null;
+      const generation = ++placeCaptureFrame.current.generation;
+      placeCaptureFrame.current.ready = false;
+      map?.stop();
+      // jumpTo changes coordinates before the canvas is repainted. Capture must
+      // wait for this camera's completed frame, not an earlier location's idle.
+      const nativeMap = map?.getMap();
+      const ready = () => {
+        if (generation === placeCaptureFrame.current.generation && !placePreviewOnly.current) {
+          placeCaptureFrame.current.ready = true;
+          placeCaptureFrame.current.cleanup = null;
+        }
+      };
+      nativeMap?.once('idle', ready);
+      placeCaptureFrame.current.cleanup = () => { nativeMap?.off('idle', ready); };
+      map?.jumpTo({ center: [lon, lat] });
     }
     placePreviewOnly.current = false;
     setPlacePreviewActive(false);
@@ -403,6 +419,15 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
     setSearchError('Tap the exact farm location on the map before saving or capturing.');
     return false;
   }, []);
+  const allowMapCapture = useCallback(() => {
+    if (!allowMapEvidence()) return false;
+    if (!placeCaptureFrame.current.ready) {
+      setSearchError('Map imagery is still updating for your selected farm. Please try capture again when it finishes.');
+      return false;
+    }
+    setSearchError('');
+    return true;
+  }, [allowMapEvidence]);
   const isPhone = usePhoneViewport();
   // Simple / All tools (lib/app-level.ts). Simple keeps finding/choosing land, tracing the
   // boundary, a reduced Add menu, the satellite/map basemap switch, locate-me and the site
@@ -1687,11 +1712,15 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
   }, [cancelPlaceLookup, cancelPlaceSuggestions]);
   useEffect(() => () => {
     placeLookup.current?.abort(); placeSuggestions.current?.abort();
+    placeCaptureFrame.current.cleanup?.();
+    ++placeCaptureFrame.current.generation; placeCaptureFrame.current.ready = false;
     if (suggestTimer.current) clearTimeout(suggestTimer.current);
   }, []);
   const previewPlaceResult = useCallback((place: Place) => {
     if (place.searchEpoch !== searchEpoch.current) return;
     ++searchEpoch.current; cancelPlaceLookup(); cancelPlaceSuggestions(); setWorldwideResults([]);
+    placeCaptureFrame.current.cleanup?.(); placeCaptureFrame.current.cleanup = null;
+    ++placeCaptureFrame.current.generation; placeCaptureFrame.current.ready = false;
     placePreviewOnly.current = true; setPlacePreviewActive(true);
     setSearchQuery(place.name.split(',').slice(0, 2).join(',')); setShowRecents(false); setSearchError('');
     mapRef.current?.flyTo({ center: [place.lon, place.lat], zoom: 14, duration: 1600 });
@@ -3981,7 +4010,7 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
           {onMapCapture && selectedLocation && (
             <button
               onClick={() => {
-                if (!allowMapEvidence()) return;
+                if (!allowMapCapture()) return;
                 const canvas = mapRef.current?.getCanvas();
                 if (!canvas) return;
                 try { onMapCapture(canvas.toDataURL('image/jpeg', 0.88).split(',')[1]); }
