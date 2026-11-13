@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest general-report continuation — [Provisional source history in reports — 13 November 2026](2026-11-13/provisional-report-history-codex.md). Valid archived cycles retain dates and source evidence without current advice permission; exact-head verification remains open.
+
 Latest adoption app/export continuation — [Provisional cycle app and exports — 13 November 2026](2026-11-13/provisional-cycle-app-exports-codex.md). Explicit acceptance, historical downloads and nursery provenance inspected; independent successor review and current-head release gates remain open.
 
 Latest adoption core — [Provisional dated-cycle adoption — 13 November 2026](2026-11-13/provisional-cycle-adoption-codex.md). Core replay and bound-bed tests pass; app/controller, exports and current-head release gates remain open.

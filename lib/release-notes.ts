@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '13 November 2026', sha: '2e870fb0c', changes: [
+    'Archived crop reports retain accepted source evidence and planned dates.',
+    'Source history stays separate from current farming approval.',
+  ] },
   { when: '13 November 2026', sha: '8e7dd204b', changes: [
     'Review source limits before saving dated crop cycles from your own estimates.',
     'Keep accepted evidence in saved history and nursery files; estimates stay conditional.',

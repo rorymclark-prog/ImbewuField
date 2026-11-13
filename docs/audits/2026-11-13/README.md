@@ -9,3 +9,5 @@
 - [Provisional dated-cycle adoption](provisional-cycle-adoption-codex.md): receipt-aware arithmetic, bound-bed search and replay core; app/controller, consumer/export integration and release gates remain open.
 
 - [Provisional cycle app and exports](provisional-cycle-app-exports-codex.md): explicit acceptance, retained history and member-specific printable evidence;1,519 affected checks and actual sample/outputs inspected, current-head review/CI remain open.
+
+- [Provisional history in general reports](provisional-report-history-codex.md): correct archived dates, public source evidence and print retention; final successor checks remain open.

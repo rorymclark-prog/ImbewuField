@@ -3,7 +3,7 @@ import { useLanguage } from '@/lib/i18n';
 import { reportUiText, reportUiDate, reportUiMonth } from '@/lib/report-localisation';
 import { useEffect, useState } from 'react';
 import type { FactCropPlan } from '@/lib/report-site-facts';
-import { captureReportCropPlan, reportSowingCalendar, reportCropSignature, reportCropWorkingInput, currentReportCropSupport, reportCropRows } from '@/lib/report-crop-plan';
+import { captureReportCropPlan, reportSowingCalendar, reportCropSignature, reportCropWorkingInput, currentReportCropSupport, reportCropRows, type ReportCropRow } from '@/lib/report-crop-plan';
 import { loadCropPlan, CROP_PLAN_CHANGED_EVENT } from '@/lib/crop-plan';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { getCropArt } from '@/lib/crop-art';
@@ -12,6 +12,20 @@ import { deliverPdf } from '@/lib/report-pdf';
 import type { ReportChart } from '@/lib/report-visuals';
 import styles from './ReportCropPlan.module.css';
 import ProductionYearOverview from './ProductionYearOverview';
+
+/** Archived source history stays readable even when current local guidance is held. */
+function HistoricalCropEvidence({ row }: { row: ReportCropRow }) {
+  if (!row.provisionalEvidence) return null;
+  const lines = row.provisionalEvidence.lines.map((line, index) => <p key={index} className="whitespace-pre-wrap [overflow-wrap:anywhere]">{line}</p>);
+  return <>
+    <details lang="en" className={styles.evidence}>
+      <summary>Historical source evidence as accepted</summary>{lines}
+    </details>
+    <div lang="en" className={styles.evidencePrint}>
+      <p>Historical source evidence as accepted</p>{lines}
+    </div>
+  </>;
+}
 
 export default function ReportCropPlan({ crop, siteName, siteId = null, includeWorking, onIncludeWorking, language = 'en' }: {
   crop: FactCropPlan; siteName: string; siteId?: string | null; includeWorking: boolean; onIncludeWorking: (v: boolean) => void;
@@ -74,8 +88,8 @@ export default function ReportCropPlan({ crop, siteName, siteId = null, includeW
       })}</div>
       {!!calendar.unscheduled.length && <p className={styles.note}>{tr('No new sowing/transplant task in this period:', 'Akukho ukuhlwanyela noma ukutshala okusha kulesi sikhathi:')} {calendar.unscheduled.join(', ')}. {tr('See the working plan for crops already growing and undated records.', 'Bheka uhlelo lomsebenzi ngezitshalo ezikhulayo namarekhodi angenazinsuku.')}</p>}
     </> : <ul>{savedRows.map(row => <li key={row.key}>{row.name} · saved sowing: {row.sow || tr('Sowing not recorded', 'Ukuhlwanyela akubhalwanga')} · {row.where}
-      {row.intent && <div lang="en"><p>{row.status}</p>{row.intent.lines.map((line, index) => <p key={index} className="whitespace-pre-wrap [overflow-wrap:anywhere]">{line}</p>)}</div>}</li>)}</ul>}
-    {calendar && savedRows.some(row => row.intent) && <section lang="en" aria-label="Saved own-cycle planning intent"><h3>Saved own-cycle planning intent</h3><ul>{savedRows.filter(row => row.intent).map(row => <li key={row.key}>{row.name} · {row.where}<p>{row.status}</p>{row.intent?.lines.map((line, index) => <p key={index} className="whitespace-pre-wrap [overflow-wrap:anywhere]">{line}</p>)}</li>)}</ul></section>}
+      {row.intent && <div lang="en"><p>{row.status}</p>{row.intent.lines.map((line, index) => <p key={index} className="whitespace-pre-wrap [overflow-wrap:anywhere]">{line}</p>)}</div>}<HistoricalCropEvidence row={row} /></li>)}</ul>}
+    {calendar && savedRows.some(row => row.intent) && <section lang="en" aria-label="Saved own-cycle planning intent"><h3>Saved own-cycle planning intent</h3><ul>{savedRows.filter(row => row.intent).map(row => <li key={row.key}>{row.name} · {row.where}<p>{row.status}</p>{row.intent?.lines.map((line, index) => <p key={index} className="whitespace-pre-wrap [overflow-wrap:anywhere]">{line}</p>)}<HistoricalCropEvidence row={row} /></li>)}</ul></section>}
     {support.allowCataloguePlanning && s?.planNotes?.length ? <details className={styles.notes}><summary>{tr('Saved plan choices and checks', 'Ukukhetha nokuhlola uhlelo olugciniwe')}</summary><ul>{s.planNotes.map((note, i) => <li key={i}>{note.text}</li>)}</ul></details> : null}
     {s && support.allowCataloguePlanning && <div className={styles.controls}>
       <button onClick={() => { void exportWorking(false); }} disabled={exporting}>{tr('Full crop-plan report (English)', 'Umbiko ophelele wohlelo lwezitshalo (isiNgisi)')}</button>
