@@ -1,5 +1,7 @@
 # Audits for 13 November 2026
 
+- [Temperature source receipts](power-temperature-receipt-codex.md): raw monthly missingness, averaging period and point metadata retained independently of display substitutes; prerequisite for the open global climate comparison.
+
 - [Kenya tomato nursery interval](kenya-tomato-nursery-codex.md): explicit protected-nursery/outdoor purpose and source endpoint choice; conditional dates, retained unknowns and successor gates.
 
 - [Southeast Missouri oats reference](missouri-oats-reference-codex.md): explicit historical cover-crop/type choice, positive months and retained unknowns; successor review and CI remain required.

@@ -7,7 +7,65 @@ import {
   monthlyTemperatureStatus,
   recordMinimumC,
   completeMonthlyRainfallMm,
+  powerClimatologyPeriod,
+  powerMonthlyTemperatureReceipt,
 } from '../lib/climate-temperature.ts';
+
+const receiptPoint = { latitude: -1.3, longitude: 36.8 };
+const receivedAt = '2026-11-13T12:00:00.000Z';
+function temperatureReceiptFixture() {
+  return { type: 'Feature', geometry: { type: 'Point', coordinates: [36.8, -1.3] },
+    header: { range: 'Meteorological Monthly & Annual Climatologies (January 2001 - December 2020)',
+      fill_value: -999, api: { version: 'v2.10.1' }, sources: ['MERRA2'], time_standard: 'UTC' },
+    parameters: { T2M: { units: 'C' } },
+    properties: { parameter: { T2M: { JAN: -8, FEB: 0, MAR: 18, APR: -999, MAY: '20', JUN: null } } } };
+}
+
+test('POWER provenance retains its returned averaging period rather than treating retrieval as climate coverage', () => {
+  const fixture = temperatureReceiptFixture();
+  assert.deepEqual(powerClimatologyPeriod(fixture.header), { start: '2001-01', end: '2020-12', description: fixture.header.range });
+  assert.deepEqual(powerClimatologyPeriod({ start: 'JAN1991', end: 'DEC2020' }),
+    { start: '1991-01', end: '2020-12', description: 'JAN1991 – DEC2020' });
+  for (const header of [{}, { start: 'JAN2020' }, { start: 'JAN2020', end: 'DEC2001' },
+    { start: 'JAN0000', end: 'DEC2020' }, { ...fixture.header, start: 'JAN1991', end: 'DEC2020' }]) {
+    assert.equal(powerClimatologyPeriod(header), null, 'missing, reversed or contradictory dates must not invent a period');
+  }
+});
+
+test('raw monthly provenance keeps valid cold and zero values but never stores a display substitute as an observation', () => {
+  const fixture = temperatureReceiptFixture();
+  const result = powerMonthlyTemperatureReceipt(fixture, receiptPoint, receivedAt)!;
+  assert.ok(result);
+  assert.deepEqual(result.monthlyC, [-8, 0, 18, null, null, null, null, null, null, null, null, null]);
+  assert.equal(result.parameter, 'T2M'); assert.equal(result.statistic, 'climatological-monthly-mean');
+  assert.equal(result.period.end, '2020-12'); assert.equal(result.receivedAt, receivedAt);
+  assert.deepEqual(result.returnedPoint, receiptPoint);
+  assert.equal(result.apiVersion, 'v2.10.1'); assert.deepEqual(result.sources, ['MERRA2']);
+  assert.equal(result.timeStandard, 'UTC');
+  fixture.properties.parameter.T2M.JAN = 99; fixture.header.sources[0] = 'changed';
+  assert.equal(result.monthlyC[0], -8); assert.deepEqual(result.sources, ['MERRA2']);
+  assert.ok(Object.isFrozen(result) && Object.isFrozen(result.monthlyC) && Object.isFrozen(result.period)
+    && Object.isFrozen(result.requestedPoint) && Object.isFrozen(result.returnedPoint));
+});
+
+test('a different point, temperature unit, period, or malformed acquisition time cannot gain a qualified receipt', () => {
+  const fixture = temperatureReceiptFixture();
+  const altered: unknown[] = [
+    { ...fixture, parameters: { T2M: { units: 'K' } } },
+    { ...fixture, geometry: { type: 'Point', coordinates: [36.8, 1.3] } },
+    { ...fixture, geometry: { type: 'Polygon', coordinates: [36.8, -1.3] } },
+    { ...fixture, header: { ...fixture.header, range: 'unknown' } },
+    { ...fixture, header: { ...fixture.header, fill_value: '-999' } },
+    { ...fixture, properties: { parameter: { T2M: [] } } },
+  ];
+  for (const input of altered) assert.equal(powerMonthlyTemperatureReceipt(input, receiptPoint, receivedAt), null);
+  for (const date of ['2026-11-13', '2026-02-30T12:00:00.000Z', 'garbage']) {
+    assert.equal(powerMonthlyTemperatureReceipt(fixture, receiptPoint, date), null);
+  }
+  assert.equal(powerMonthlyTemperatureReceipt(fixture, { ...receiptPoint, latitude: NaN }, receivedAt), null);
+  const filled = { ...fixture, header: { ...fixture.header, fill_value: 18 } };
+  assert.equal(powerMonthlyTemperatureReceipt(filled, receiptPoint, receivedAt)!.monthlyC[2], null);
+});
 
 test('cleanPowerValue retains finite numbers above -900, rejects sentinels/non-numbers, and does not coerce hostile objects', () => {
   // Valid numbers including cold and zero

@@ -1,3 +1,5 @@
+import { powerClimatologyPeriod } from '../../climate-temperature';
+
 /** Separate from the SA climate authority: this adapter demonstrates public
  * reference access only. It never resolves a growing zone or crop calendar. */
 export const NASA_REFERENCE_PROVIDER = {
@@ -54,18 +56,14 @@ export function decodeNasaReference(value: unknown, provenance: ClimateProvenanc
   if (metadata.units !== 'C') return { status: 'failed', reason: 'wrong-units', provenance };
   // The live v2.10.1 response replaced separate start/end fields with range.
   // Retain that source label and accept the older explicit fields as well.
-  const match = typeof header.range === 'string' && header.range.length <= 500
-    ? /\(January (\d{4}) - December (\d{4})\)/.exec(header.range) : null;
-  const oldStart = typeof header.start === 'string' ? /^JAN(\d{4})$/.exec(header.start) : null;
-  const oldEnd = typeof header.end === 'string' ? /^DEC(\d{4})$/.exec(header.end) : null;
-  const startYear = match?.[1] ?? oldStart?.[1]; const endYear = match?.[2] ?? oldEnd?.[1];
+  const period = powerClimatologyPeriod(header);
   const coordinates = record(root.geometry).coordinates;
   const validPoint = root.type === 'Feature' && record(root.geometry).type === 'Point'
     && Array.isArray(coordinates) && typeof coordinates[0] === 'number' && typeof coordinates[1] === 'number'
     && Number.isFinite(coordinates[0]) && Number.isFinite(coordinates[1])
     && Math.abs(coordinates[0]) <= 180 && Math.abs(coordinates[1]) <= 90
     && (!expectedPoint || (Math.abs(coordinates[0] - expectedPoint.longitude) < 0.00001 && Math.abs(coordinates[1] - expectedPoint.latitude) < 0.00001));
-  if (!startYear || !endYear || Number(startYear) > Number(endYear) || !validPoint
+  if (!period || !validPoint
     || typeof header.fill_value !== 'number' || !Number.isFinite(header.fill_value)) {
     return { status: 'failed', reason: 'malformed-response', provenance };
   }
@@ -83,8 +81,7 @@ export function decodeNasaReference(value: unknown, provenance: ClimateProvenanc
   }
   if (monthly.every((month) => month.state === 'missing')) return { status: 'failed', reason: 'missing-measurement', provenance };
   return { status: monthly.some((month) => month.state === 'missing') ? 'partial' : 'available',
-    monthly, period: { start: `${startYear}-01`, end: `${endYear}-12`,
-      description: match ? header.range as string : `${header.start} – ${header.end}` }, units: 'C',
+    monthly, period, units: 'C',
     dataset: { apiVersion: typeof record(header.api).version === 'string' ? record(header.api).version as string : null,
       sources: Array.isArray(header.sources) ? header.sources.filter((source): source is string => typeof source === 'string' && source.length <= 120) : [],
       timeStandard: typeof header.time_standard === 'string' ? header.time_standard : null }, provenance };
