@@ -1599,7 +1599,7 @@ function FacilitatorCropsPageInner() {
         || confirmed.token !== writtenToken || cropPlanWriteToken() !== confirmed.token
         || !cropPlanWriteAdmissionMatches(confirmed.admission, JSON.stringify(confirmed.book), confirmed.token)
         || rows.length !== 1 || JSON.stringify(rows[0]) !== JSON.stringify(profile)
-        || !isCurrent() || !growerActorIsCurrent()) {
+        || !isCurrent() || !growerActorIsCurrent() || planWriteBase.current !== base) {
         setPlanSaveConflict(true); return { status: 'superseded' };
       }
       planWriteBase.current = { owner: base.owner, sample: base.sample, token: confirmed.token,

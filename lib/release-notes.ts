@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '13 November 2026', sha: '49684a44b', changes: [
+  { when: '13 November 2026', sha: '8c71b0be4', changes: [
     'Save a provisional profile with its source references, choices and unknowns.',
     'Open saved evidence later; saving a profile does not add crops to your plan.',
   ] },

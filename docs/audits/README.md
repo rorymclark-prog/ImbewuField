@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest global/report verification continuation — [Full-suite contracts and final save-base continuity — 13 November 2026](2026-11-13/global-report-ci-contracts-codex.md). Eleven reproduced failures retain their reasons; exact-head CI, independent review and adoption remain open.
+
 Latest provisional save continuation — [Explicit profile save and historical review — 13 November 2026](2026-11-13/provisional-profile-save-codex.md). Shared guarded append and retained source limits; context-aware sowing adoption, independent review and current-head release gates remain open.
 
 Latest regional spacing continuation — [Great Lakes cabbage reference — 13 November 2026](2026-11-13/great-lakes-spacing-codex.md). Explicit undated regional transfer; current-head release and local validation remain open.
@@ -191,6 +193,9 @@ and checks that have not been performed. The older audit's pending-release text
 is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
+
+Latest global/report verification continuation — [Full-suite contracts and final save-base continuity — 13 November 2026](2026-11-13/global-report-ci-contracts-codex.md). Eleven reproduced failures retain their reasons; exact-head CI, independent review and adoption remain open.
+
 
 Latest provisional save continuation — [Explicit profile save and historical review — 13 November 2026](2026-11-13/provisional-profile-save-codex.md). Shared guarded append and retained source limits; context-aware sowing adoption, independent review and current-head release gates remain open.
 
