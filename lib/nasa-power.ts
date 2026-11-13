@@ -1,7 +1,7 @@
 import type { MonthlyRainfall, ClimateData } from './types';
 import { aspectLabel } from './biome';
 import { classifyKoppen } from './koppen-global';
-import { cleanPowerValue as clean, completeMonthlyTemperatures, type MonthlyTemperatureCoverage } from './climate-temperature';
+import { cleanPowerValue as clean, completeMonthlyTemperatures, powerMonthlyTemperatureReceipt, type MonthlyTemperatureCoverage } from './climate-temperature';
 
 const MONTH_KEYS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -157,6 +157,8 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
 
   if (!res.ok) throw new Error(`NASA POWER API error: ${res.status}`);
   const data = await res.json();
+  const monthlyTempReference = powerMonthlyTemperatureReceipt(data,
+    { latitude: Number(lat.toFixed(4)), longitude: Number(lon.toFixed(4)) }, new Date().toISOString());
   const p: Record<string, unknown> = data?.properties?.parameter;
   if (!p || typeof p !== 'object' || Array.isArray(p)) {
     throw new Error('Incomplete NASA POWER climate data');
@@ -332,6 +334,6 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
 
   return {
     rainfall: { monthly, annual: parseFloat(annual.toFixed(0)), pattern, wetSeason, drySeason, rainfallSource },
-    climate: { meanTemp, maxTemp, ...(hasMaximumReading ? { maxTempSource: 'nasa-power' as const } : {}), ...(hasSolarReading ? { solarSource: 'nasa-power' as const } : {}), minTemp, ...(hasMinimumReading ? { minTempSource: 'nasa-power' as const } : {}), monthlyTemp, monthlyTempCoverage, solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, ...(hasWindReading ? { windSource: 'nasa-power' as const } : {}), ...((windFromSummer !== '—' || windFromWinter !== '—') ? { windDirectionSource: 'nasa-power' as const } : {}), windFromSummer, windFromWinter },
+    climate: { meanTemp, maxTemp, ...(hasMaximumReading ? { maxTempSource: 'nasa-power' as const } : {}), ...(hasSolarReading ? { solarSource: 'nasa-power' as const } : {}), minTemp, ...(hasMinimumReading ? { minTempSource: 'nasa-power' as const } : {}), monthlyTemp, monthlyTempCoverage, ...(monthlyTempReference ? { monthlyTempReference } : {}), solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, ...(hasWindReading ? { windSource: 'nasa-power' as const } : {}), ...((windFromSummer !== '—' || windFromWinter !== '—') ? { windDirectionSource: 'nasa-power' as const } : {}), windFromSummer, windFromWinter },
   };
 }

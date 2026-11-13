@@ -71,6 +71,14 @@ test('a legacy explicit period is retained rather than silently replaced by the 
   assert.equal(result.period.start, '1991-01'); assert.equal(result.period.end, '2020-12');
 });
 
+test('conflicting response periods cannot label a country reference with whichever period is preferred', () => {
+  const payload = fixture();
+  payload.header = { ...payload.header, ...{ start: 'JAN1991', end: 'DEC2020' } };
+  const result = decodeNasaReference(payload, provenance);
+  assert.equal(result.status, 'failed');
+  if (result.status === 'failed') assert.equal(result.reason, 'malformed-response');
+});
+
 test('unsupported codes and attacker-controlled URL strings never make a network request', async () => {
   let calls = 0;
   for (const code of ['EU', 'ZZ', '__proto__', 'https://example.com/private', 'constructor']) {

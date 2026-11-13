@@ -1,4 +1,4 @@
-import type { MonthlyTemperatureCoverage } from './climate-temperature';
+import type { MonthlyTemperatureCoverage, PowerMonthlyTemperatureReceipt } from './climate-temperature';
 
 export interface LatLon { lat: number; lon: number }
 
@@ -40,6 +40,8 @@ export interface ClimateData {
   monthlyTemp: number[];
   /** Parser coverage of raw monthly means, before display substitutes; not a farm observation. */
   monthlyTempCoverage?: MonthlyTemperatureCoverage;
+  /** Optional raw metric provenance; older caches have no receipt, not an inferred period. */
+  monthlyTempReference?: PowerMonthlyTemperatureReceipt;
   solarRadiation: number;
   solarSource?: 'nasa-power';
   koppen: string;

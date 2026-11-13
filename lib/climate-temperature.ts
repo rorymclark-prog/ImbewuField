@@ -7,6 +7,80 @@ export type MonthlyTemperatureCoverage = {
 
 export type MonthlyTemperatureStatus = 'complete' | 'incomplete' | 'unknown';
 
+export interface PowerClimatologyPeriod {
+  readonly start: string;
+  readonly end: string;
+  readonly description: string;
+}
+
+/** POWER has returned both explicit dates and a human-readable range. Neither
+ * the request date nor a cache timestamp tells us which years were averaged. */
+export function powerClimatologyPeriod(value: unknown): PowerClimatologyPeriod | null {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const header = value as Record<string, unknown>;
+  const range = typeof header.range === 'string' && header.range.length <= 500
+    ? /\(January (\d{4}) - December (\d{4})\)/.exec(header.range) : null;
+  const start = typeof header.start === 'string' ? /^JAN(\d{4})$/.exec(header.start) : null;
+  const end = typeof header.end === 'string' ? /^DEC(\d{4})$/.exec(header.end) : null;
+  if ((header.start !== undefined || header.end !== undefined) && (!start || !end)) return null;
+  if (range && start && (range[1] !== start[1] || range[2] !== end![1])) return null;
+  const from = range?.[1] ?? start?.[1], through = range?.[2] ?? end?.[1];
+  if (!from || !through || Number(from) < 1 || Number(from) > Number(through)) return null;
+  return Object.freeze({ start: `${from}-01`, end: `${through}-12`,
+    description: range ? header.range as string : `${header.start} – ${header.end}` });
+}
+
+export interface PowerMonthlyTemperatureReceipt {
+  readonly provider: 'nasa-power';
+  readonly parameter: 'T2M';
+  readonly units: 'C';
+  readonly statistic: 'climatological-monthly-mean';
+  readonly monthlyC: readonly (number | null)[];
+  readonly period: PowerClimatologyPeriod;
+  readonly requestedPoint: Readonly<{ latitude: number; longitude: number }>;
+  /** API geometry is a returned point, not proof of the native cell boundary. */
+  readonly returnedPoint: Readonly<{ latitude: number; longitude: number }>;
+  readonly receivedAt: string;
+  readonly apiVersion: string | null;
+  readonly sources: readonly string[];
+  readonly timeStandard: string | null;
+}
+
+/** Retain the original metric alongside legacy display values. Missing months
+ * must not inherit the display's 20°C substitute in a future crop comparison.
+ * This is evidence retention, not site/country admission or crop suitability. */
+export function powerMonthlyTemperatureReceipt(value: unknown,
+  requestedPoint: { latitude: number; longitude: number }, receivedAt: string): PowerMonthlyTemperatureReceipt | null {
+  const record = (item: unknown): Record<string, unknown> => item && typeof item === 'object' && !Array.isArray(item)
+    ? item as Record<string, unknown> : {};
+  const pointValid = (lat: unknown, lon: unknown) => typeof lat === 'number' && Number.isFinite(lat) && Math.abs(lat) <= 90
+    && typeof lon === 'number' && Number.isFinite(lon) && Math.abs(lon) <= 180;
+  const root = record(value), header = record(root.header), geometry = record(root.geometry);
+  const period = powerClimatologyPeriod(header), coordinates = geometry.coordinates;
+  const metadata = record(record(root.parameters).T2M);
+  if (!pointValid(requestedPoint.latitude, requestedPoint.longitude) || !period || metadata.units !== 'C'
+    || root.type !== 'Feature' || geometry.type !== 'Point' || !Array.isArray(coordinates)
+    || !pointValid(coordinates[1], coordinates[0])
+    || Math.abs(coordinates[1] - requestedPoint.latitude) >= 0.00001
+    || Math.abs(coordinates[0] - requestedPoint.longitude) >= 0.00001
+    || typeof header.fill_value !== 'number' || !Number.isFinite(header.fill_value)
+    || typeof receivedAt !== 'string' || !/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/.test(receivedAt)
+    || !Number.isFinite(Date.parse(receivedAt)) || new Date(receivedAt).toISOString() !== receivedAt) return null;
+  const measurements = record(record(root.properties).parameter).T2M;
+  if (!measurements || typeof measurements !== 'object' || Array.isArray(measurements)) return null;
+  const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+  const series = measurements as Record<string, unknown>;
+  const monthlyC = Object.freeze(months.map(month => !Object.hasOwn(series, month) || series[month] === header.fill_value
+    ? null : cleanPowerValue(series[month])));
+  const text = (item: unknown) => typeof item === 'string' && item.length > 0 && item.length <= 500 ? item : null;
+  return Object.freeze({ provider: 'nasa-power', parameter: 'T2M', units: 'C', statistic: 'climatological-monthly-mean',
+    monthlyC, period, requestedPoint: Object.freeze({ ...requestedPoint }),
+    returnedPoint: Object.freeze({ latitude: coordinates[1], longitude: coordinates[0] }), receivedAt,
+    apiVersion: text(record(header.api).version),
+    sources: Object.freeze(Array.isArray(header.sources) ? header.sources.flatMap(item => text(item) ? [item as string] : []) : []),
+    timeStandard: text(header.time_standard) });
+}
+
 /**
  * Replicates the exact NASA POWER numeric cleaning semantics:
  * finite primitive number > -900 sentinel cutoff, else null.
