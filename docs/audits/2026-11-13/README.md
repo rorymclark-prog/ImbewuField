@@ -13,3 +13,5 @@
 - [Provisional history in general reports](provisional-report-history-codex.md): correct archived dates, public source evidence and print retention; final successor checks remain open.
 
 - [Report irrigation evidence](report-irrigation-evidence-codex.md): remove the remaining storage-adequacy contradiction, unsourced daily watering depth and whole-property irrigation scaling; exact-head release gates remain open.
+
+- [Saved-place actor guard](saved-place-actor-guard-codex.md): retire pending nearby-site confirmations across account/view/sample changes; actual callback regressions and inherited buyer-fixture correction, with successor release gates open.

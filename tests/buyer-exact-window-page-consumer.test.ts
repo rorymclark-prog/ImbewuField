@@ -75,6 +75,11 @@ function input(allowCataloguePlanning: boolean) {
   const saveHarvestTargets = (...args: unknown[]) => { saved.push(args); };
   const source = Object.freeze({ marker: 'current-checked-source' });
   const onReview = () => { throw Error('Consumer mount must not review automatically'); };
+  // The actual section also passes current conditions and a guarded historical
+  // export callback to SavedGrowerRows. Keep those boundaries explicit: copying
+  // its JSX without these bindings throws before the buyer-editor assertions run.
+  const growerConditions = Object.freeze({ marker: 'current-provisional-conditions' });
+  const exportSavedGrowerRecord = () => { throw Error('Consumer mount must not export automatically'); };
   return { allowCataloguePlanning, productionSiteId: siteId, growerScope: { kind: 'mapped-site', siteId }, growerScopeKey: 'current-scope-key',
     planningScopeKey: 'current-catalogue-key', markedPlantings: [], plan: { harvestTargets: targets, growerPlanningProfiles: [], plantings },
     selectedGrowerSource: null, beds, plantings, pattern: 'mild-frost', harvestSaveContext: saveContext, saveHarvestTargets,
@@ -84,7 +89,8 @@ function input(allowCataloguePlanning: boolean) {
     growerWorkflow: { source, sourceIssue: null, checking: false, contextRevision: 4, onReview, onRefresh() {}, onAccept() {},
       onCheckPreviewSource() { throw Error('Consumer mount must not read preview source automatically'); }, acceptance: { status: 'idle' }, savedNurseryReview: null },
     placeName: 'Engineering source', designTitle: 'Engineering design', growerSample: false, growerOwner: 'fixture-owner',
-    siteClimate: null, hasSiteCoords: false, siteLat: 0, siteSurvey: null, saved };
+    siteClimate: null, hasSiteCoords: false, siteLat: 0, siteSurvey: null, saved,
+    growerConditions, exportSavedGrowerRecord };
 }
 
 for (const country of ['ZA', 'US', undefined]) test(`${country ?? 'unconfirmed'} mapped country can reach the own-records editor and automatic own-estimate planner together`, () => {
@@ -122,6 +128,10 @@ test('the actual own-records mount retains its exact key, full rows, save contex
   (editor.props.onAccept as () => void)(); assert.equal(JSON.stringify(fixture.plan), before); assert.equal(fixture.saved.length, 0);
   const auto = elements(tree).find(element => element.type === boundaries.GrowerAutoPlanPanel); assert.ok(auto);
   assert.equal(auto.props.source, fixture.growerWorkflow.source); assert.equal(auto.props.onReview, fixture.growerWorkflow.onReview);
+  const history = elements(tree).find(element => element.type === boundaries.SavedGrowerRows); assert.ok(history);
+  assert.equal(history.props.wholeBookRows, fixture.plan.plantings);
+  assert.equal(history.props.conditions, fixture.growerConditions);
+  assert.equal(history.props.onExport, fixture.exportSavedGrowerRecord);
 });
 
 test('an absent current plan passes empty target rows rather than borrowing another source', () => {

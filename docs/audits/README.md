@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest saved-site continuation — [Actor-bound nearby-site saves — 13 November 2026](2026-11-13/saved-place-actor-guard-codex.md). Retired confirmations cannot save into the next account; original source/CI failures and focused verification are retained, with exact-head release gates open.
+
 Latest report prompt continuation — [Irrigation demand and storage evidence — 13 November 2026](2026-11-13/report-irrigation-evidence-codex.md). Actual route regression reproduces the remaining contradiction; supported sizes and explicit unknown demand are retained. Successor review/CI remain open.
 
 Latest general-report continuation — [Provisional source history in reports — 13 November 2026](2026-11-13/provisional-report-history-codex.md). Valid archived cycles retain dates and source evidence without current advice permission; exact-head verification remains open.

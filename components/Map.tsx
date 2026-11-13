@@ -1,5 +1,6 @@
 'use client';
 import { savedRainfallFields } from '@/lib/saved-places';
+import { useSavedPlaceWriteContext, savedPlaceWriteContextIsCurrent } from '@/lib/length-unit-preference';
 
 import { numberLabel } from '@/lib/format-figures';
 import { useRef, useState, useCallback, useEffect, useMemo, type PointerEvent as ReactPointerEvent } from 'react';
@@ -376,6 +377,7 @@ const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (si
 
 export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onMapReady, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, activePlaceId, people, showPeople, onTogglePeople, onDesignPresenceChange, guided }: Props) {
   const appConfirm = useAppConfirm();
+  const placeSaveContext = useSavedPlaceWriteContext();
   const { t, lang } = useLanguage();
   const { user } = useAuth();
   const isPhone = usePhoneViewport();
@@ -659,6 +661,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
   const confirmSavePlace = useCallback(async () => {
     if (!namingPlace) return;
+    const context = placeSaveContext.current;
+    if (!savedPlaceWriteContextIsCurrent(context)) return;
     const existingId = editingPlaceId;
     const existing = existingId ? savedPins.find((p) => p.id === existingId) : null;
     // Save-time duplicate guard — shared authority in lib/saved-places.ts promptNearbyUpdate.
@@ -667,7 +671,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     // (and savedAt/notes) survive so coordinate-keyed downstream data doesn't fork.
     const nearby = existingId ? null : await promptNearbyUpdate(namingPlace.lat, namingPlace.lon, appConfirm);
     const target = existing ?? nearby;
-    savePlace({
+    const saved = savePlace({
       id: target?.id ?? generateId(),
       name: placeName.trim() || target?.name || 'My place',
       lat: namingPlace.lat, lon: namingPlace.lon,
@@ -679,12 +683,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       savedAt: target?.savedAt ?? new Date().toISOString(),
       // Not editable in this sheet — carry existing notes through instead of dropping them.
       notes: target?.notes,
-    });
-    setSavedPins(loadPlaces());
+    }, { isCurrent: () => savedPlaceWriteContextIsCurrent(context) });
+    if (!saved) return;
+    setSavedPins(saved);
     setEditingPlaceId(null);
     setNamingPlace(null);
     if (!existingId) { setPlaceSaved(true); setTimeout(() => setPlaceSaved(false), 2500); }
-  }, [namingPlace, placeName, placeLabel, customPlaceColor, locationData, editingPlaceId, savedPins, appConfirm]);
+  }, [namingPlace, placeName, placeLabel, customPlaceColor, locationData, editingPlaceId, savedPins, appConfirm, placeSaveContext]);
 
   // Lima coach-marks — a quick guide that auto-shows the first time the tools
   // panel is opened, and reopens any time via the "?" in the panel header.

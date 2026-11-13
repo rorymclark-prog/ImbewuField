@@ -165,3 +165,195 @@ test('the dialog keeps the semantics the conversions rely on', () => {
   // surface is translated), so the provider itself needs no i18n keys.
   assert.match(dialog, /confirmLabel: string/);
 });
+
+
+// QUICK-SAVE-ACTOR-01: execute the actual saved-place callback bodies, rather
+// than testing only the nearby lookup. Heavy React/map rendering is outside this
+// test; real duplicate lookup, account namespaces and saved-place writes are not.
+import ts from 'typescript';
+import * as placeContexts from '../lib/length-unit-preference.ts';
+import { accountLocalStorageKey, bindMountedAccountLocalStorageUid } from '../lib/account-local-storage.ts';
+import { loadPlaces, savedRainfallFields } from '../lib/saved-places.ts';
+
+const placeEvents = new EventTarget();
+Object.assign(globalThis, {
+  addEventListener: placeEvents.addEventListener.bind(placeEvents),
+  removeEventListener: placeEvents.removeEventListener.bind(placeEvents),
+  dispatchEvent: placeEvents.dispatchEvent.bind(placeEvents),
+});
+
+function actualSaveHandler(path: string, name: string, scope: Record<string, unknown>): () => Promise<void> {
+  const source = read(path);
+  const ast = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  let body: ts.Node | undefined;
+  function visit(node: ts.Node) {
+    if (ts.isVariableDeclaration(node) && node.name.getText(ast) === name) {
+      const initializer = node.initializer;
+      body = initializer && ts.isCallExpression(initializer) ? initializer.arguments[0] : initializer;
+    }
+    if (ts.isFunctionDeclaration(node) && node.name?.text === name) body = node;
+    ts.forEachChild(node, visit);
+  }
+  visit(ast);
+  assert.ok(body, `actual ${path} handler must be found`);
+  const js = ts.transpileModule(`return (${body.getText(ast)});`, {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
+  }).outputText;
+  return new Function(...Object.keys(scope), js)(...Object.values(scope));
+}
+
+for (const [path, handlerName] of [
+  ['components/DataPanel.tsx', 'quickSavePlace'],
+  ['components/SavedPlaces.tsx', 'handleSave'],
+  ['components/Map.tsx', 'confirmSavePlace'],
+]) for (const answer of [true, false]) for (const scenario of ['switch-account', 'keep-account', 'sample-round-trip', 'revoke-view']) {
+  test(`${path}: nearby confirmation ${answer}, ${scenario} keeps the write in its original live view`, async () => {
+    localStorage.clear(); sessionStorage.clear();
+    bindMountedAccountLocalStorageUid('synthetic-save-A');
+    seedHome();
+    const keyA = accountLocalStorageKey('permamap_saved_places', 'synthetic-save-A');
+    const keyB = accountLocalStorageKey('permamap_saved_places', 'synthetic-save-B');
+    const before = localStorage.getItem(keyA);
+    // Against the parent source, the new token is unused by the actual callback;
+    // that negative control still reaches the real cross-account write assertion.
+    const contexts = placeContexts as any;
+    const context = contexts.captureSavedPlaceWriteContext?.() ?? { kind: 'unused-parent-token' };
+    const contextRef = { current: context };
+    let resolveAsk!: (value: boolean) => void;
+    let asked = false;
+    const confirmation = new Promise<boolean>(resolve => { resolveAsk = resolve; });
+    const feedback: unknown[] = [];
+    const mark = (value: unknown) => { feedback.push(value); };
+    const data = { biome: { name: 'Savanna' }, rainfall: { annual: 600 }, elevation: { elevation: 600 } };
+    const noop = () => {};
+    try {
+      const handler = actualSaveHandler(path, handlerName, {
+        data, coords: NEARBY, locationData: data, namingPlace: NEARBY,
+        name: 'Synthetic site', notes: '', placeName: 'Synthetic site',
+        placeLabel: 'field', customPlaceColor: '', editingPlaceId: null, savedPins: loadPlaces(),
+        promptNearbyUpdate, savePlace, savedRainfallFields, loadPlaces,
+        appConfirm: () => { asked = true; return confirmation; },
+        placeSaveContext: contextRef,
+        savedPlaceWriteContextIsCurrent: contexts.savedPlaceWriteContextIsCurrent ?? (() => true),
+        generateId: () => 'synthetic-new-place',
+        setPlaceSaved: mark, setSaved: mark, setPlaces: mark, setSavedPins: mark,
+        setSaving: noop, setNotes: noop, setEditingPlaceId: noop, setNamingPlace: noop,
+        setTimeout: () => 0,
+      });
+      const pending = handler();
+      assert.equal(asked, true, 'the real callback must suspend at the real nearby-site dialog');
+      if (scenario === 'switch-account') bindMountedAccountLocalStorageUid('synthetic-save-B');
+      if (scenario === 'sample-round-trip') {
+        sessionStorage.setItem('imbewu_sample_mode', '1');
+        dispatchEvent(new CustomEvent('imbewu-sample-mode-changed'));
+        sessionStorage.removeItem('imbewu_sample_mode');
+        dispatchEvent(new CustomEvent('imbewu-sample-mode-changed'));
+      }
+      if (scenario === 'revoke-view') { contexts.revokeSavedPlaceWriteContext?.(context); contextRef.current = null; }
+      resolveAsk(answer);
+      await pending;
+      assert.equal(localStorage.getItem(keyB), null, 'old dialog must not create or update a row for the next account');
+      if (scenario === 'keep-account') {
+        const saved = JSON.parse(localStorage.getItem(keyA) ?? '[]');
+        const written = saved.find((row: any) => row.id === (answer ? 'place-home' : 'synthetic-new-place'));
+        assert.ok(written, 'a live confirmation must still save in the original account');
+        assert.equal(written.lat, NEARBY.lat);
+        assert.equal(written.rainfall, answer ? 800 : undefined, 'recorded rain survives updates; a new outage does not become rain');
+        assert.ok(feedback.includes(true), 'a live save still shows success');
+        assert.equal(saved.length, answer ? 1 : 2);
+      } else {
+        assert.equal(localStorage.getItem(keyA), before, 'retired confirmation must leave the original row untouched');
+        assert.deepEqual(feedback, [], 'retired callback must not show success or install saved rows');
+      }
+    } finally {
+      contexts.revokeSavedPlaceWriteContext?.(context);
+      bindMountedAccountLocalStorageUid(null);
+      localStorage.clear(); sessionStorage.clear();
+    }
+  });
+}
+
+
+import React from 'react';
+import { act, create } from 'react-test-renderer';
+
+test('the actual saved-place hook retires its receipt on unmount, without disabling the next view', () => {
+  localStorage.clear(); sessionStorage.clear();
+  bindMountedAccountLocalStorageUid('synthetic-save-A');
+  let current: { current: any } | undefined;
+  function View() { current = placeContexts.useSavedPlaceWriteContext(); return null; }
+  let mounted: ReturnType<typeof create>;
+  act(() => { mounted = create(React.createElement(View)); });
+  const receipt = current!.current;
+  assert.ok(receipt);
+  assert.equal(placeContexts.savedPlaceWriteContextIsCurrent(receipt), true);
+  act(() => mounted.unmount());
+  assert.equal(current!.current, null);
+  assert.equal(placeContexts.savedPlaceWriteContextIsCurrent(receipt), false);
+  act(() => { mounted = create(React.createElement(View)); });
+  assert.equal(placeContexts.savedPlaceWriteContextIsCurrent(current!.current), true);
+  act(() => mounted.unmount());
+  bindMountedAccountLocalStorageUid(null);
+});
+
+test('a guarded local write followed by an account change cannot confirm or target the new owner', () => {
+  localStorage.clear(); sessionStorage.clear(); bindMountedAccountLocalStorageUid('synthetic-save-A');
+  const context = placeContexts.captureSavedPlaceWriteContext();
+  assert.ok(context);
+  const changeAccount = () => bindMountedAccountLocalStorageUid('synthetic-save-B');
+  addEventListener('permamap-places-changed', changeAccount, { once: true });
+  try {
+    const result = savePlace({ id: 'synthetic-committed-A', name: 'Synthetic A', ...HOME,
+      biome: 'Savanna', elevation: 600, savedAt: '2026-11-13T00:00:00.000Z' }, { isCurrent: () => placeContexts.savedPlaceWriteContextIsCurrent(context) });
+    assert.equal(result, null, 'a completed local write is not a current-view success after notification retires it');
+    assert.equal(localStorage.getItem(accountLocalStorageKey('permamap_saved_places', 'synthetic-save-B')), null);
+    assert.ok(localStorage.getItem(accountLocalStorageKey('permamap_saved_places', 'synthetic-save-A')), 'the completed original-owner write is preserved, not rolled back into a different account');
+  } finally {
+    removeEventListener('permamap-places-changed', changeAccount);
+    placeContexts.revokeSavedPlaceWriteContext(context); bindMountedAccountLocalStorageUid(null);
+  }
+});
+
+
+test('a mounted sample view retires the old save receipt and renews one for the next explicit save', async () => {
+  localStorage.clear(); sessionStorage.clear();
+  sessionStorage.setItem('imbewu_sample_mode', '1');
+  bindMountedAccountLocalStorageUid('synthetic-save-A');
+  let current: { current: any } | undefined;
+  function View() { current = placeContexts.useSavedPlaceWriteContext(); return null; }
+  let mounted: ReturnType<typeof create>;
+  act(() => { mounted = create(React.createElement(View)); });
+  try {
+    const oldReceipt = current!.current;
+    assert.equal(placeContexts.savedPlaceWriteContextIsCurrent(oldReceipt), true);
+    const samplePlace = loadPlaces()[0]; assert.ok(samplePlace);
+    const before = JSON.stringify(loadPlaces());
+    let answer!: (value: boolean) => void;
+    let asked = false;
+    const pendingAnswer = new Promise<boolean>(resolve => { answer = resolve; });
+    let ask = () => { asked = true; return pendingAnswer; };
+    const feedback: boolean[] = [];
+    const handler = actualSaveHandler('components/DataPanel.tsx', 'quickSavePlace', {
+      data: { biome: { name: samplePlace.biome }, rainfall: { annual: 600 }, elevation: { elevation: samplePlace.elevation } },
+      coords: { lat: samplePlace.lat, lon: samplePlace.lon }, promptNearbyUpdate, savePlace, savedRainfallFields,
+      appConfirm: () => ask(), placeSaveContext: current!, savedPlaceWriteContextIsCurrent: placeContexts.savedPlaceWriteContextIsCurrent,
+      generateId: () => 'synthetic-new-sample-place', setPlaceSaved: (saved: boolean) => feedback.push(saved),
+    });
+    const oldPendingSave = handler(); assert.equal(asked, true);
+    // startRolePreview emits this event even when sample mode stays on. The
+    // Map and its save button may stay mounted on the same route.
+    act(() => { dispatchEvent(new CustomEvent('imbewu-sample-mode-changed')); });
+    assert.equal(placeContexts.savedPlaceWriteContextIsCurrent(oldReceipt), false);
+    assert.notEqual(current!.current, oldReceipt, 'future explicit actions need a fresh receipt, never the retired callback receipt');
+    assert.equal(placeContexts.savedPlaceWriteContextIsCurrent(current!.current), true);
+    answer(true); await oldPendingSave;
+    assert.equal(JSON.stringify(loadPlaces()), before, 'the newly current receipt cannot approve the old pending confirmation');
+    assert.deepEqual(feedback, []);
+    ask = async () => true;
+    await handler();
+    assert.deepEqual(feedback, [true], 'a fresh click in the same mounted view must still save');
+  } finally {
+    act(() => mounted.unmount());
+    sessionStorage.clear(); bindMountedAccountLocalStorageUid(null);
+  }
+});
