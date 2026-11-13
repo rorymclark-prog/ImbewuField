@@ -1515,6 +1515,7 @@ function FacilitatorCropsPageInner() {
   const planningSupport = resolvePlanningSupport({ places: countryPlaces, siteId: surveySiteId,
     workspaceId: planningWorkspaceId, workspaceReferences: plan?.workspaceReferences });
   const siteCountry = planningSupport.siteCountry;
+  const [provisionalClimateRevision, setProvisionalClimateRevision] = useState(0);
   const growerConditions = provisionalSiteConditions(planningSupport);
   const growerWorkflow = useGrowerWorkflow({ scope: growerScope, resourceSiteId: productionSiteId, book: plan,
     provisionalSiteConditions: growerConditions,
@@ -2608,13 +2609,15 @@ function FacilitatorCropsPageInner() {
       saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
       onSaveTargets={saveHarvestTargets} onAccept={() => {}} />}
     <ProvisionalCropPreview sample={growerSample} ownerKey={`${growerOwner}:${growerSample}`} scope={growerScope}
+      sitePoint={hasSiteCoords ? { latitude: siteLat!, longitude: siteLon! } : null} policyFingerprint={planningSupport.fingerprint}
+      onClimateChanged={() => setProvisionalClimateRevision(value => value + 1)}
       source={selectedGrowerSource} actorIsCurrent={growerActorIsCurrent}
       sourceName={growerScope?.kind === 'mapped-site'
         ? countryPlaces.filter(place => siteCountry.placeIds.includes(place.id)).map(place => place.name.trim()).filter(Boolean).join(' / ')
         : design?.title || design?.bgSite?.name}
       countryCode={siteCountry.status === 'confirmed' ? siteCountry.context?.countryCode ?? null : null}
       agriculturalRegionReference={siteCountry.status === 'confirmed' ? siteCountry.context?.agriculturalRegionReference ?? null : null}
-      contextRevision={`${growerWorkflow.contextRevision}:${planningSupport.fingerprint}`}
+      contextRevision={`${growerWorkflow.contextRevision}:${planningSupport.fingerprint}:${provisionalClimateRevision}`}
       checking={growerWorkflow.checking} onRefresh={growerWorkflow.onRefresh} onCheckSource={growerWorkflow.onCheckPreviewSource}
       profiles={plan?.growerPlanningProfiles ?? []} onSaveProfile={saveProvisionalProfile} />
     <GrowerPlanningPanel scope={growerScope}

@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest global comparison continuation — [Optional monthly tomato comparison](2026-11-13/provisional-temperature-comparison-codex.md). Source-qualified model temperatures, retained assumptions, actual dated-cycle review and explicit unknowns; successor CI, external review and local validation remain separate.
+
 Latest global climate prerequisite — [Temperature source receipts](2026-11-13/power-temperature-receipt-codex.md). Preserve the actual response statistic, averaging period and missing months; this alone is not a crop model or P04 completion.
 
 Latest conditional nursery reference — [Kenya tomato interval](2026-11-13/kenya-tomato-nursery-codex.md). Explicit source purpose and range endpoint support partial seed-start arithmetic; no source planting calendar or successor release approval.

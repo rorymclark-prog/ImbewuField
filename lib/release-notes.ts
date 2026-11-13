@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '13 November 2026', sha: '3253c91bb', changes: [
+    'Tomato previews can compare modelled monthly temperature with a sourced optimum.',
+    'Temperature comparisons keep their source limits and never create a planting window.',
+  ] },
   { when: '13 November 2026', sha: '2fb067569', changes: [
     'New climate records retain their source period and genuine missing temperatures.',
   ] },

@@ -12,6 +12,9 @@ import { worldvegKenyaTomatoCandidates, WORLDVEG_TOMATO_NURSERY } from '../lib/i
 import { buildProvisionalCropPreviewHtml } from '../lib/international/provisional-crop-export.ts';
 import { normaliseGrowerPlanningProfile, assessGrowerPlanning } from '../lib/international/grower-planning.ts';
 import { createSavedProvisionalProfile, readSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
+import { createProvisionalCycleContext, reviewProvisionalCycleProfile } from '../lib/international/provisional-profile.ts';
+import { syntheticTemperatureEvidence, syntheticTemperatureInput } from './fixtures/provisional-temperature.ts';
+import { provisionalTemperatureEvidenceKey } from '../lib/international/provisional-temperature.ts';
 import { resolvePlantingBasis } from '../lib/international/grower-cycle.ts';
 import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import type { CountrySource } from '../lib/international/countries/types.ts';
@@ -61,6 +64,91 @@ function resolved(input = request()) {
   if (result.status !== 'resolved') assert.fail(`Expected a resolved draft, got ${result.status}`);
   return result;
 }
+
+function temperatureRequest(month = 1): ProvisionalDraftRequest {
+  const at = '2026-11-13T12:00:00.000Z';
+  return request({ cropKey: 'tomatoes', recordedAt: at, asOf: '2026-11-13',
+    context: { ...request().context, scope: { kind: 'mapped-site', siteId: 'site:0.00000,0.00000' }, establishment: 'transplant' },
+    candidates: [candidate('establishment', 'transplant'), candidate('plantsPerM2', 2.5), candidate('nurseryDays', 28)]
+      .map(row => ({ ...row, cropKey: 'tomatoes' })),
+    temperatureComparison: syntheticTemperatureInput(),
+    fieldEntryDate: { state: 'provided', value: `2027-${String(month).padStart(2, '0')}-10`, unit: 'utc-date',
+      provenance: { kind: 'grower-estimate', recordedAt: at } },
+  });
+}
+
+test('a source-compatible monthly comparison is automatic but never becomes a planting window or destroys independent arithmetic', () => {
+  for (const [month, valueC, expected] of [[1, 18, 'within-reported-optimum'], [2, 25, 'within-reported-optimum'],
+    [3, 17.999, 'outside-reported-optimum'], [4, 25.001, 'outside-reported-optimum'],
+    [5, 0, 'outside-reported-optimum'], [6, -5, 'outside-reported-optimum']] as const) {
+    const input = temperatureRequest(month), r = resolved(input);
+    assert.equal(r.temperatureComparison?.state, expected); assert.equal(r.temperatureComparison?.valueC, valueC);
+    assert.equal(r.assessment.entryWindow, 'unknown');
+    assert.equal(r.assessment.estimatedPlantCount.value, 26); assert.equal(r.assessment.estimatedYieldKg.value, null);
+    assert.equal(r.assessment.schedule.nurseryStartDate.status, 'ready');
+    const { temperatureComparison: _, ...legacy } = input;
+    const before = resolved(legacy);
+    assert.deepEqual(r.profile, before.profile); assert.deepEqual(r.assessment, before.assessment);
+    assert.notEqual(r.fingerprint, before.fingerprint);
+    assert.equal(Object.hasOwn(before, 'temperatureComparison'), false, 'legacy requests keep their exact result shape');
+  }
+});
+
+test('missing months, source/metric/scope mismatches and unchosen irrigation leave the comparison unknown rather than assuming20C', () => {
+  const input = temperatureRequest();
+  const missing = syntheticTemperatureEvidence({ months: [null, 19] });
+  const r = resolved({ ...input, temperatureComparison: syntheticTemperatureInput(missing) });
+  assert.equal(r.temperatureComparison?.reason, 'target-month-temperature-missing');
+  assert.equal(r.temperatureComparison?.valueC, null); assert.equal(r.assessment.estimatedPlantCount.value, 26);
+  assert.equal(resolved({ ...temperatureRequest(2), temperatureComparison: syntheticTemperatureInput(missing) }).temperatureComparison?.valueC, 19);
+  for (const evidence of [null, { ...syntheticTemperatureEvidence(), countryCode: 'US' },
+    { ...syntheticTemperatureEvidence(), scopeKey: 'mapped-site:site:1.00000,0.00000' },
+    { ...syntheticTemperatureEvidence(), receipt: { ...syntheticTemperatureEvidence().receipt, units: 'K' } },
+    { ...syntheticTemperatureEvidence(), snapshot: { ...syntheticTemperatureEvidence().snapshot, responseJsonSha256: 'a'.repeat(64) } }]) {
+    const next = resolved({ ...input, temperatureComparison: { ...input.temperatureComparison!, evidence } as ProvisionalDraftRequest['temperatureComparison'] });
+    assert.equal(next.temperatureComparison?.state, 'unknown'); assert.equal(next.assessment.estimatedPlantCount.value, 26);
+    assert.equal(next.assessment.entryWindow, 'unknown');
+  }
+  for (const waterRegime of ['rain-fed', null] as const) {
+    assert.equal(resolved({ ...input, context: { ...input.context, waterRegime } }).temperatureComparison?.reason, 'irrigated-field-context-required');
+  }
+  assert.equal(resolveProvisionalCropPlan({ ...input, knownPlantingRestriction: true }).status, 'restricted');
+});
+
+test('temperature source and comparison survive an actual v2 saved origin and export while changed cycle evidence needs a new preview', () => {
+  const input = temperatureRequest(), at = '2026-11-13T12:00:00.000Z';
+  const measured = input.measuredAreaM2 as { value: number };
+  const workflowSource: GrowerWorkflowSource = { status: 'ready', kind: 'studio-canvas', sourceId: 'site:0.00000,0.00000',
+    scope: input.context.scope, sourceKey: 'studio-canvas:fixture', resourceSiteId: 'site:0.00000,0.00000',
+    geometryFingerprint: 'a'.repeat(64), sourceRevision: 'b'.repeat(64), freshness: 'device-saved-copy', sourceVerification: 'not-verified',
+    beds: [{ id: 'bed', label: 'Synthetic bed', areaM2: measured.value }],
+    measuredAreas: [{ bedId: 'bed', areaM2: measured.value, basis: 'explicit-saved-dimensions' }], heldBeds: [] };
+  // Save's area proof uses the actual bed provenance, as a real UI request does.
+  const requestToSave = { ...input, measuredAreaM2: { ...input.measuredAreaM2 as object,
+    provenance: { kind: 'grower-record', recordedAt: at, reference: 'bed' } } };
+  const saved = createSavedProvisionalProfile(requestToSave, 'temperature-profile', at, workflowSource, 'bed', 'Synthetic bed');
+  assert.ok(saved); assert.equal(saved.provisionalOrigin?.version, 2); assert.equal(saved.provisionalOrigin?.resolver, 'provisional-crop-v2');
+  const read = readSavedProvisionalProfile(JSON.parse(JSON.stringify(saved))); assert.ok(read);
+  assert.equal(read.result.temperatureComparison?.valueC, 18);
+  assert.equal(read.result.temperatureComparison?.evidence?.snapshot.responseJsonSha256, input.temperatureComparison!.evidence!.snapshot.responseJsonSha256);
+  const html = buildProvisionalCropPreviewHtml(requestToSave, { bedLabel: 'Synthetic bed', sample: true })!.html;
+  assert.match(html, /Historical temperature comparison/); assert.match(html, /within-reported-optimum/);
+  assert.match(html, /2001-01 to 2025-12/); assert.match(html, /Document licence not established/);
+  assert.match(html, /Entry window:<\/strong> unknown/); assert.doesNotMatch(html, /synthetic-policy|responseJson&quot;/);
+  const conditions = { countryCode: 'KE', agriculturalRegionReference: input.context.agriculturalRegionReference,
+    policyFingerprint: 'synthetic-policy', knownPlantingRestriction: null,
+    temperatureEvidenceKey: provisionalTemperatureEvidenceKey(input.temperatureComparison!.evidence!) };
+  const context = createProvisionalCycleContext(workflowSource, conditions, at); assert.ok(context);
+  const binding = { bedId: 'bed' };
+  assert.equal(reviewProvisionalCycleProfile(saved, context, requestToSave.measuredAreaM2, input.fieldEntryDate, binding).status, 'ready');
+  for (const changed of [{ ...context, temperatureEvidenceKey: 'c'.repeat(64) }, { ...context, policyFingerprint: 'changed' }]) {
+    assert.equal(reviewProvisionalCycleProfile(saved, changed, requestToSave.measuredAreaM2, input.fieldEntryDate, binding).status, 'held');
+  }
+  assert.equal(reviewProvisionalCycleProfile(saved, context, requestToSave.measuredAreaM2, temperatureRequest(3).fieldEntryDate, binding).status, 'held');
+  const legacy = { ...requestToSave }; delete legacy.temperatureComparison;
+  const oldSaved = createSavedProvisionalProfile(legacy, 'legacy-profile', at, workflowSource, 'bed', 'Synthetic bed');
+  assert.equal(oldSaved?.provisionalOrigin?.version, 1); assert.equal(oldSaved?.provisionalOrigin?.resolver, 'provisional-crop-v1');
+});
 
 test('Kenya tomato nursery endpoints produce conditional seed-start dates without turning source temperature or hardening into a calendar', () => {
   const at = '2026-11-13T12:00:00.000Z';

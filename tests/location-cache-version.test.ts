@@ -28,6 +28,7 @@ const FILES = [
   '../components/design/SectorSummary.tsx', // reads
   '../components/design/TankCalculator.tsx', // reads
   '../lib/site-climate.ts',        // reads AND writes — the crop planner's per-site RainPattern
+  '../lib/location-cache-key.ts',  // lightweight shared identity, also used by global evidence
 ] as const;
 
 const source = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8');
@@ -36,7 +37,15 @@ test('every reader and writer of the location cache is on the same version', () 
   const versions = new Map<string, Set<string>>();
   for (const rel of FILES) {
     const found = new Set<string>();
-    for (const m of source(rel).matchAll(/imbewu_loc_v(\d+)_/g)) found.add(m[1]);
+    const text = source(rel);
+    for (const m of text.matchAll(/imbewu_loc_v(\d+)_/g)) found.add(m[1]);
+    // The evidence decoder must not import auth/crop-book side effects merely
+    // to find a key. Delegation still has to resolve to the same actual version.
+    if (rel === '../lib/site-climate.ts') {
+      assert.match(text, /import \{ locationDataCacheKey \} from '\.\/location-cache-key'/);
+      assert.match(text, /export \{ locationDataCacheKey \} from '\.\/location-cache-key'/);
+      for (const m of source('../lib/location-cache-key.ts').matchAll(/imbewu_loc_v(\d+)_/g)) found.add(m[1]);
+    }
     assert.ok(found.size > 0, `${rel} no longer references the location cache at all`);
     assert.equal(found.size, 1, `${rel} mentions more than one cache version: ${[...found].join(', ')}`);
     versions.set(rel, found);

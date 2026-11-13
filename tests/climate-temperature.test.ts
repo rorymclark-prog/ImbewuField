@@ -1,5 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readPowerTemperatureEvidence } from '../lib/power-temperature-evidence.ts';
+import { syntheticTemperatureEvidence } from './fixtures/provisional-temperature.ts';
 
 import {
   cleanPowerValue,
@@ -13,6 +16,19 @@ import {
 
 const receiptPoint = { latitude: -1.3, longitude: 36.8 };
 const receivedAt = '2026-11-13T12:00:00.000Z';
+
+test('retained response JSON checksum is independently reproducible and rejects stale or edited metric receipts after transport', () => {
+  const evidence = syntheticTemperatureEvidence();
+  const { snapshot, receipt, sitePoint } = JSON.parse(JSON.stringify(evidence));
+  assert.equal(snapshot.responseJsonSha256, createHash('sha256').update(snapshot.responseJson).digest('hex'));
+  assert.ok(readPowerTemperatureEvidence(receipt, snapshot, sitePoint));
+  assert.equal(readPowerTemperatureEvidence({ ...receipt, monthlyC: Array(12).fill(20) }, snapshot, sitePoint), null);
+  assert.equal(readPowerTemperatureEvidence(receipt, { ...snapshot, responseJson: snapshot.responseJson.replace('17.999', '18.999') }, sitePoint), null);
+  assert.equal(readPowerTemperatureEvidence(receipt, { ...snapshot, responseJsonSha256: '0'.repeat(64) }, sitePoint), null);
+  assert.equal(readPowerTemperatureEvidence(receipt, { ...snapshot, endpoint: snapshot.endpoint.replace('latitude=0.0000', 'latitude=1.0000') }, sitePoint), null);
+  assert.equal(readPowerTemperatureEvidence(receipt, { ...snapshot, endpoint: snapshot.endpoint + '&latitude=0.0000' }, sitePoint), null);
+  assert.equal(readPowerTemperatureEvidence(receipt, snapshot, { ...sitePoint, latitude: 1 }), null);
+});
 function temperatureReceiptFixture() {
   return { type: 'Feature', geometry: { type: 'Point', coordinates: [36.8, -1.3] },
     header: { range: 'Meteorological Monthly & Annual Climatologies (January 2001 - December 2020)',

@@ -1,5 +1,7 @@
 # Audits for 13 November 2026
 
+- [Optional monthly tomato temperature comparison](provisional-temperature-comparison-codex.md): explicit historical methodology transfer, source-bound comparison, saved replay and dated-cycle review; no inferred planting calendar or release approval.
+
 - [Temperature source receipts](power-temperature-receipt-codex.md): raw monthly missingness, averaging period and point metadata retained independently of display substitutes; prerequisite for the open global climate comparison.
 
 - [Kenya tomato nursery interval](kenya-tomato-nursery-codex.md): explicit protected-nursery/outdoor purpose and source endpoint choice; conditional dates, retained unknowns and successor gates.
