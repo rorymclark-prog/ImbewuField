@@ -19,9 +19,21 @@ const fixture=JSON.parse(read('tests/fixtures/report-labels-translation/source-c
 const languages=['zu','st','ts','ve']as const;
 const packet=JSON.parse(read('docs/translation/four-language-completion/report-labels-drafts.json'));
 
-test('the catalogue label pass preserves exact English output and every earlier legacy or custom name',()=>{
+test('the catalogue label pass preserves every legacy or custom name while missing inventory stays unverified',()=>{
  assert.equal(fixture.sourceSha,'ac308edb2c7b2e4c5bda9c41ebdf611804bead35');assert.equal(packet.sourceSha,fixture.sourceSha);assert.match(packet.status,/Unreviewed/);
- for(const c of fixture.cases){assert.equal(buildReportHeaderMarkdown(c.input),c.english);assert.equal(buildReportHeaderMarkdown(c.input,'af'),c.english);assert.deepEqual(siteReportVisuals(c.input.facts!,fixture.location),c.visuals);}
+ // The historical label fixture also pinned “not on this site” to an incomplete map.
+ // Correct only that unsupported absence claim; all catalogue/custom names, numbers,
+ // other header rows and complete chart objects remain exact historical comparisons.
+ const oldInventory='| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |';
+ for(const c of fixture.cases){
+  assert.ok(c.english.includes(oldInventory));
+  for(const language of ['en','af']){
+   const pending=(s:string)=>language==='en'?s:`English; translation pending: ${s}`;
+   const inventory=`| ${pending('Water inventory gaps')} | ${pending('Not recorded in supplied map/survey:')} dam, pond, reservoir, borehole, well, spring, river | ${pending('This is an inventory gap, not proof of physical absence')} |`;
+   assert.equal(buildReportHeaderMarkdown(c.input,language),c.english.replace(oldInventory,inventory));
+  }
+  assert.deepEqual(siteReportVisuals(c.input.facts!,fixture.location),c.visuals);
+ }
  for(const row of packet.entries){assert.deepEqual(REPORT_VISUAL_COPY.find(r=>r.english===row.english),row);for(const lang of languages){assert.ok(row[lang].trim());assert.notEqual(row[lang],row.english);assert.deepEqual(row[lang].match(/\d+/g),row.english.match(/\d+/g));}}
 });
 

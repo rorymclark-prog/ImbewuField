@@ -396,8 +396,8 @@ Sun: ${sunData}
 
 SOIL (0–30cm)
 ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids'
-  ? `Source: ${d.soil.soilSource === 'lab' ? 'laboratory test supplied by the farmer' : 'ISRIC SoilGrids model, not a field measurement'}.\nTexture: ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} · pH: ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : 'not measured'} · Organic carbon: ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.organicCarbon : 'not measured'}%\nClay: ${d.soil.clay}% · Sand: ${d.soil.sand}% · Silt: ${d.soil.silt}% · Bulk density: ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.bulkDensity : 'not measured'} g/cm³`
-  : 'No measured soil data is available. The app has generic placeholders, which are NOT evidence about this soil. Do not claim a soil pH, texture, fertility advantage, amendment rate or irrigation capacity. Request a soil test and field observations.'}
+  ? `Source: ${d.soil.soilSource === 'lab' ? 'recorded laboratory attribution; original report and sample/site correspondence are not verified by this source flag' : 'ISRIC SoilGrids model, not a field measurement'}.\nTexture: ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} · pH: ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : 'not measured'} · Organic carbon: ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.organicCarbon : 'not measured'}%\nClay: ${d.soil.clay}% · Sand: ${d.soil.sand}% · Silt: ${d.soil.silt}% · Bulk density: ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.bulkDensity : 'not measured'} g/cm³`
+  : 'No measured soil data is available. The app has generic placeholders, which are NOT evidence about this soil. Do not claim a soil pH, texture, fertility advantage, amendment rate or irrigation capacity. Review any existing original results and field observations; identify missing sampling evidence without assuming a duplicate test is needed.'}
 
 BIOME KEY SPECIES: ${ecology.biome.keySpecies.join(', ')}
 BIOME CHALLENGES: ${ecology.biome.challenges.join(' · ')}
@@ -451,7 +451,7 @@ ${sections.includes('Executive Summary') ? `## Executive Summary
 [Detailed climate interpretation specific to this location. What does ${rainDescription} of ${rainPattern} rainfall mean practically? What are the frost/heat risks?]
 
 ### Terrain Analysis
-[What does ${d.elevation.slopeDeg}° slope on ${d.elevation.aspectLabel}-facing ground mean for water movement, sun exposure, and design? Which earthworks are indicated?]
+[Report the recorded slope/aspect estimates and their limitations. Slope alone does not establish runoff or erosion likelihood or suitable earthworks. Identify missing field observations and local design assessment; do not infer construction or dimensions from these values.]
 
 ### Soil Assessment
 | Property | Value | Interpretation |
@@ -490,10 +490,8 @@ Keep the tone and length consistent with the rest of the report.
 ### Strategy
 [1 paragraph: the water harvesting approach for THIS site — ${rainDescription}, ${rainPattern} pattern, ${d.elevation.slopeDeg}° slope, ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} soil]
 
-### Recommended Earthworks (priority order)
-1. **[Earthwork name]** — [location on site, dimensions, why this first]
-2. **[Earthwork name]** — [details]
-3. **[Earthwork name]** — [details]
+### Earthwork proposals and missing evidence
+Describe only proposals explicitly recorded in the supplied map, survey or plan, retaining their status and recorded measurements. A drawing is not proof of site suitability or approval. If no proposal is recorded, say so; do not invent an earthwork, dimensions, construction priority or cheapest option. Identify contour, drainage, soil/infiltration, safe-overflow and local-design evidence needed before choosing work.
 
 ### Calculations
 ${roofCalcLine(facts, annualRain)}
@@ -505,23 +503,15 @@ ${waterData ? `- **Drawn water storage:** ${waterData.count} store(s), ~**${wate
 ${facts?.water && facts.water.statedStorageLitres > 0 ? `- **Tank storage on the plan:** **${facts.water.statedStorageLitres.toLocaleString()} L** stated capacity (${facts.water.tanks.map((tank) => `${tank.name} x${tank.count}`).join(', ')}). Keep this recorded capacity distinct from water currently available. Do not infer storage adequacy or additional tank size without a supported supply-and-demand budget.` : ''}
 
 ### Implementation Timeline
-When to build each earthwork relative to the ${wetSeason} wet season.
+Use only supported recorded dates and reviewed work dependencies. Otherwise say construction order and dates are unknown; a rainfall season alone does not set a build date. Preserve recorded plans as proposals, not proof that work is suitable or completed.
 
 ` : ''}${sections.includes('Soil Strategy') ? `## Soil Building Plan
 
-### Immediate Actions (Month 1–3)
-[Use soil tests and buffering capacity to justify any amendment rate. With no lab result, recommend testing and general soil-cover actions; do not prescribe lime, fertiliser or target pH from a placeholder. Soil source: ${d.soil.soilSource}. Recorded pH ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : 'not measured'} and OC ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.organicCarbon : 'not measured'}% — what to add, how much, why]
-
-### 12-Month Programme
-| Period | Action | Purpose |
-|--------|--------|---------|
-| Month 1–3 | [action] | [why] |
-| Month 4–6 | [action] | [why] |
-| Month 7–9 | [action] | [why] |
-| Month 10–12 | [action] | [why] |
+### Soil evidence and review steps
+Soil source label: ${d.soil.soilSource ?? 'not recorded'}. A laboratory label is recorded attribution, not verification of an original sample/report. Preserve supplied source-labelled values, but require original sampling details and supported crop-specific interpretation before recommending treatment or rates. Review existing evidence before requesting further tests; do not assume another sample is always needed. If treatment, rates or timing are unsupported, keep them unknown. Do not fill an invented month-by-month programme.
 
 ### Target Numbers
-- pH target and amendment rate: only if a lab result with a supported crop-specific recommendation is available. Otherwise state that testing is required; do not invent a rate.
+- pH target and amendment rate: only if a lab result with a supported crop-specific recommendation is available. Otherwise identify missing interpretation/evidence; do not infer that a repeat test is required or invent a rate.
 - Organic carbon: describe monitoring and soil-cover actions; do not promise a target percentage or time to reach it without measured evidence.
 
 ` : ''}${sections.includes('Planting Calendar') ? `## Seasonal Planting Guidance
@@ -664,13 +654,7 @@ ${zonePromptBlock(facts)}
 
 ` : ''}${sections.includes('Year 1 Priorities') ? `## Year 1 Priorities
 
-The 5 highest-impact actions for this specific site, in order of importance:
-
-1. **[Action]** — [why this is #1 for this site, specific to slope/rainfall/soil]
-2. **[Action]** — [specifics]
-3. **[Action]** — [specifics]
-4. **[Action]** — [specifics]
-5. **[Action]** — [specifics]
+Use recorded goals, reviewed proposals and supported dependencies only. Do not force five actions, rank construction by slope/rain/soil labels alone, invent a schedule, or treat missing inventory as physical absence. When evidence is missing, list review steps and the uncertainty they would resolve. Preserve any supplied phase-plan tasks as recorded proposals rather than inventing replacement work.
 
 ` : ''}
 
@@ -759,7 +743,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
             'You are writing a site report a South African smallholder will act on and spend money against.',
             'NEVER state that a physical structure exists — a dam, borehole, reservoir, tank, pond, river, well, pump, fence or building — unless it appears in the site facts supplied to you.',
             'NEVER attach a capacity, depth, water level, percentage or age to a structure that is not in those facts.',
-            'Where the facts are silent, the honest reading is that the thing is absent. Write recommendations as something to BUILD or BUY, not as something to monitor or draw down.',
+            'Where the facts are silent, presence, condition and suitability are UNKNOWN, not absent. Do not infer that anything must be built or bought. Preserve recorded existing/proposed status; missing inventory or a drawing is not construction approval. Ask for the missing evidence instead of inventing work, dimensions, costs or dates.',
             'Prefer saying a figure is unknown over supplying a plausible one. An invented number in this report is worse than a missing one, because the farmer cannot tell them apart.',
             REPORT_PLANTING_SAFETY_RULE,
           ].join(' '),
@@ -893,7 +877,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
       ...(purchasingGuidance ? [purchasingGuidance] : []),
       billOfQuantitiesMarkdown(boq,langCode),
       monitoringMarkdown(buildMonitoringPlan(facts,langCode),langCode)+(zuluClosing?`\n\n${zuluClosing.monitoringNote}`:''),
-      riskRegisterMarkdown(risks,langCode,annualRain,d.elevation?.slopeDeg)+(zuluClosing?`\n\n${zuluClosing.riskNote}`:''),
+      riskRegisterMarkdown(risks,langCode,annualRain,d.elevation?.slopeDeg,d.soil.soilSource)+(zuluClosing?`\n\n${zuluClosing.riskNote}`:''),
       assuranceMarkdown(langCode,{soilSource:d.soil.soilSource}),
     ],
   });

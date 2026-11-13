@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest report soil continuation — [Soil and earthworks evidence — 13 November 2026](2026-11-13/report-soil-earthworks-evidence-codex.md). Missing evidence no longer creates risk ratings or construction instructions; source-bound outputs and successor gates remain explicit.
+
 Latest report slope continuation — [Shared unrated runoff and erosion evidence — 13 November 2026](2026-11-13/report-slope-evidence-codex.md). Missing slope no longer means low risk; source/output and successor gates remain explicit.
 
 Latest saved-site continuation — [Actor-bound nearby-site saves — 13 November 2026](2026-11-13/saved-place-actor-guard-codex.md). Retired confirmations cannot save into the next account; original source/CI failures and focused verification are retained, with exact-head release gates open.
