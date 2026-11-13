@@ -1,5 +1,8 @@
 # ImbewuField audit archive
 
+Latest calendar follow-up — [Individual DEMO calendar identity — 13 November 2026](2026-11-13/calendar-individual-demo-codex.md). Actual single/bulk files share DEMO identity and guarded delivery; successor gates remain separate.
+
+
 Latest provisional calendar continuation — [Calendar evidence — 13 November 2026](2026-11-13/provisional-calendar-evidence-codex.md). Individual/bulk events retain public provenance and limitations; current-head release gates remain separate.
 
 Latest global map entry — [Worldwide place search — 13 November 2026](2026-11-13/global-place-search-codex.md). Temporary area previews require separate farm selection; successor review and CI remain open.

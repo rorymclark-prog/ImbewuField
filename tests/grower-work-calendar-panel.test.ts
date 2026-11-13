@@ -156,6 +156,48 @@ function events(content: string) {
 }
 const icsText = (value: string) => value.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r\n|\r|\n/g, '\\n');
 
+for (const mode of ['ordinary', 'prop', 'device'] as const) test(`${mode} individual calendar keeps the same event identity and qualifications as its bulk counterpart`, async () => {
+  if (mode === 'device') assert.equal(enterSampleMode(), true);
+  const transport = delivery(), ui = mount(mode === 'prop' ? { sample: true } : {});
+  try {
+    await invoke(ui.handler('Download planned-date calendar'));
+    await invoke(ui.handler());
+    assert.equal(transport.downloads.length, 2);
+    const singleContent = await transport.blobs[0].text(), bulkContent = await transport.blobs[1].text();
+    const single = events(singleContent), bulk = events(bulkContent);
+    assert.equal(single.length, 1); assert.deepEqual(single[0], bulk[0]);
+    if (mode === 'ordinary') {
+      assert.doesNotMatch(singleContent, /DEMO|demo-/);
+      assert.doesNotMatch(transport.downloads[0].filename, /DEMO/);
+    } else {
+      assert.match(transport.downloads[0].filename, /^DEMO-/);
+      assert.match(single[0].uid!, /^demo-/);
+      assert.match(single[0].summary!, /^DEMO/); assert.match(single[0].description!, /^DEMO/);
+      assert.match(singleContent.replace(/\r\n[ \t]/g, ''), /X-WR-CALNAME:DEMO/);
+    }
+    assert.equal(local.writes, 0);
+  } finally { ui.dispose(); transport.restore(); exitSampleMode(); }
+});
+
+for (const transition of ['sample-prop', 'device-demo', 'checker', 'current-callback'] as const) {
+  test(`individual calendar cannot revive after a ${transition} round trip while checking its source`, async () => {
+    const gate = deferred<boolean>(), transport = delivery(), ui = mount({ checkCurrent: () => gate.promise });
+    try {
+      const old = ui.handler('Download planned-date calendar'), original = ui.props;
+      await invoke(old);
+      if (transition === 'sample-prop') { ui.update({ sample: true }); ui.update({ sample: original.sample }); }
+      if (transition === 'device-demo') { act(() => { enterSampleMode(); }); act(() => exitSampleMode()); }
+      if (transition === 'checker') { ui.update({ checkCurrent: async () => true }); ui.update({ checkCurrent: original.checkCurrent }); }
+      if (transition === 'current-callback') { ui.update({ isCurrent: () => false }); ui.update({ isCurrent: original.isCurrent }); }
+      await resolveCheck(gate);
+      await invoke(old);
+      assert.equal(transport.downloads.length, 0); assert.equal(transport.blobs.length, 0);
+      assert.equal(local.writes, 0);
+      await invoke(ui.handler('Download planned-date calendar')); assert.equal(transport.downloads.length, 1);
+    } finally { ui.dispose(); transport.restore(); exitSampleMode(); }
+  });
+}
+
 test('one bulk action downloads every displayed accepted event, including done items, with exact one-time UTC dates', async () => {
   const state = ready();
   const projected = buildGrowerBoardTasks(state.book!.plantings, state.contexts, now, new Set());

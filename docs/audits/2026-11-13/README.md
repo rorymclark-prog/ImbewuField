@@ -1,5 +1,7 @@
 # Audits for 13 November 2026
 
+- [Individual DEMO calendar identity](calendar-individual-demo-codex.md) — retained sample export finding; same guarded writer for individual and bulk delivery.
+
 - [Provisional calendar evidence](provisional-calendar-evidence-codex.md): public sources, regional limits and unknowns retained in individual/bulk calendars and a collapsed task disclosure; successor review/CI remain open.
 
 - [Worldwide place-search entry](global-place-search-codex.md): explicit global area previews and separate farm/country selection; temporary-result write/capture guards, exact successor gates remain open.
