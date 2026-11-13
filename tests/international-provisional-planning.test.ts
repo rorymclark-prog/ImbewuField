@@ -1,3 +1,4 @@
+import { canadaCabbageCandidates, canadaCabbageFactReuse, AAFC_CANADA_CABBAGE_SOURCE, AAFC_CABBAGE_PDF_SHA256, AAFC_CABBAGE_QUALIFIER } from '../lib/international/providers/aafc-canada-cabbage.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -758,4 +759,135 @@ test('WorldVeg method requires explicit choice and region, never converts seedbe
   assert.equal(override.fields.establishment.baselineDefault?.state, 'provided');
   assert.equal(override.fields.establishment.sourceBindings[0].id, WORLDVEG_KENYA_CABBAGE_SOURCE.id);
   assert.equal(evaluateCountryReadiness({ countryCode: 'KE' }, base.asOf).localReviewComplete, false);
+});
+
+
+function canadaRequest(month = 4): ProvisionalDraftRequest {
+  const at = '2026-11-14T12:00:00.000Z';
+  const context = { ...request().context, countryCode: 'CA', establishment: 'transplant' as const, varietyReference: null };
+  return request({ cropKey: 'cabbage', context, recordedAt: at, asOf: '2026-11-14',
+    candidates: canadaCabbageCandidates(context, 'cabbage', at, true),
+    overrides: { establishment: { state: 'provided', value: 'transplant', unit: 'method', provenance: { kind: 'grower-estimate', recordedAt: at } } },
+    fieldEntryDate: { state: 'provided', value: `2027-${String(month).padStart(2, '0')}-15`, unit: 'utc-date',
+      provenance: { kind: 'grower-estimate', recordedAt: at } } });
+}
+
+test('Canadian cabbage month facts preserve aggregate, April and copyright limits through actual resolution and export', () => {
+  for (let month = 1; month <= 12; month++) {
+    const input = canadaRequest(month), result = resolved(input);
+    assert.equal(result.profile.version, 2);
+    assert.equal(result.assessment.entryWindow, month >= 4 && month <= 7 ? 'reported-positive' : 'unknown');
+    assert.equal(result.fields.allowedEntryMonths.activeTier, 'historical-public-reference');
+    assert.equal(result.activeEstablishment, 'transplant');
+    assert.equal(result.assessment.estimatedPlantCount.value, null); assert.equal(result.assessment.estimatedYieldKg.value, null);
+    assert.ok(Object.values(result.assessment.schedule).every(row => row.value === null));
+    assert.equal(result.temperatureComparison, undefined);
+    const binding = result.fields.allowedEntryMonths.sourceBindings[0];
+    assert.equal(binding.publishedYear, 2025); assert.equal(binding.publishedMonth, null); assert.equal(binding.publishedOn, null);
+    assert.equal(AAFC_CANADA_CABBAGE_SOURCE.licence.status, 'unknown');
+    assert.match(binding.reuseTerms, /Limited independently worded month facts/);
+    const html = buildProvisionalCropPreviewHtml(input, { bedLabel: 'Synthetic Canadian bed', sample: true })!.html;
+    assert.ok(html.includes(AAFC_CABBAGE_PDF_SHA256)); assert.ok(html.includes(AAFC_CABBAGE_QUALIFIER));
+    assert.match(html, /2025 \(month\/day unknown\)/); assert.match(html, /document reproduction permission is not established/);
+    assert.ok(html.indexOf('Canadian source conditions') < html.indexOf('<h2>Evidence and grower edits'));
+  }
+});
+
+test('Canadian fact admission requires exact data-only reviewed capsules, unchanged qualifiers and scope', () => {
+  const req = canadaRequest(), original = req.candidates[0];
+  const changes: Array<(c: any) => void> = [
+    c => { c.input.value = [3, 4, 5, 6, 7]; }, c => { c.field = 'nurseryDays'; c.input.value = 28; c.input.unit = 'days'; },
+    c => { c.assumptions = []; }, c => { c.source.licence = { status: 'known', value: 'open licence' }; },
+    c => { c.source.publishedOn = '2025-01-01'; }, c => { c.source.publishedYear = 2024; },
+    c => { c.source.url += '?other'; }, c => { c.entryMonthCoverage = undefined; },
+    c => { c.temporalScope.kind = 'recurring-season'; }, c => { c.geography.countryCode = 'US'; },
+    c => { c.tier = 'local-public-evidence'; }, c => { c.assumptions[1] = 'changed hash'; },
+    c => { c.input.provenance.recordedAt = '2026-11-13T12:00:00.000Z'; },
+  ];
+  for (const change of changes) {
+    const candidate = structuredClone(original); change(candidate);
+    assert.equal(canadaCabbageFactReuse(candidate, req.context, req.recordedAt), null);
+    assert.equal(resolved({ ...req, candidates: [candidate] }).fields.allowedEntryMonths.activeTier, null);
+  }
+  const accessor = structuredClone(original); let invoked = 0;
+  Object.defineProperty(accessor, 'assumptions', { enumerable: true, get() { invoked++; return original.assumptions; } });
+  assert.equal(canadaCabbageFactReuse(accessor, req.context, req.recordedAt), null); assert.equal(invoked, 0);
+  const reordered = Object.fromEntries(Object.entries(structuredClone(original)).reverse()) as unknown as ProvisionalFieldCandidate;
+  assert.ok(canadaCabbageFactReuse(reordered, req.context, req.recordedAt));
+  for (const context of [{ ...req.context, countryCode: 'US' }, { ...req.context, establishment: 'direct' as const },
+    { ...req.context, establishment: null }, { ...req.context, varietyReference: 'named cultivar' }]) {
+    assert.deepEqual(canadaCabbageCandidates(context, 'cabbage', req.recordedAt, true), []);
+    assert.equal(resolved({ ...req, context }).fields.allowedEntryMonths.activeTier, null);
+  }
+  assert.deepEqual(canadaCabbageCandidates(req.context, 'cabbage', req.recordedAt, false), []);
+  assert.deepEqual(canadaCabbageCandidates(req.context, 'tomatoes', req.recordedAt, true), []);
+});
+
+test('Canadian source-only windows remain unadoptable while independently entered estimates and edits stay useful', () => {
+  const input = canadaRequest(8);
+  const supplied = (value: unknown, unit: string) => ({ state: 'provided', value, unit,
+    provenance: { kind: 'grower-estimate', recordedAt: input.recordedAt } });
+  const next = { ...input, overrides: { ...input.overrides, nurseryDays: supplied(20, 'days'), plantsPerM2: supplied(2, 'plants/m2') } };
+  const value = resolved(next);
+  assert.equal(value.assessment.estimatedPlantCount.value, 21); assert.equal(value.assessment.schedule.nurseryStartDate.value, '2027-07-26');
+  assert.equal(value.assessment.entryWindow, 'unknown'); assert.equal(value.profile.version, 2);
+  const source: GrowerWorkflowSource = { status: 'ready', kind: 'studio-canvas', sourceId: 'virtual-bed', sourceKey: 'synthetic-saved-source',
+    resourceSiteId: 'virtual-bed', scope: input.context.scope, geometryFingerprint: 'a'.repeat(64), sourceRevision: 'b'.repeat(64),
+    freshness: 'device-saved-copy', sourceVerification: 'not-verified', beds: [{ id: 'bed-1', label: 'Synthetic Canadian bed', areaM2: 10.5 }],
+    measuredAreas: [{ bedId: 'bed-1', areaM2: 10.5, basis: 'explicit-saved-dimensions' }], heldBeds: [] };
+  const saved = createSavedProvisionalProfile(next, 'canada-synthetic', input.recordedAt, source, 'bed-1', 'Synthetic Canadian bed');
+  assert.ok(saved); const read = readSavedProvisionalProfile(saved); assert.ok(read);
+  assert.equal(read.result.fingerprint, value.fingerprint); assert.ok(read.result.fields.allowedEntryMonths.assumptions.includes(AAFC_CABBAGE_QUALIFIER));
+  assert.equal(resolved({ ...next, overrides: { ...next.overrides, allowedEntryMonths: supplied([], 'utc-months') } }).assessment.entryWindow, 'excluded');
+  const own = resolved({ ...next, overrides: { ...next.overrides, allowedEntryMonths: supplied([8], 'utc-months') } });
+  assert.equal(own.assessment.entryWindow, 'allowed'); assert.equal(own.profile.version, 1);
+  assert.deepEqual(own.fields.allowedEntryMonths.baselineDefault, value.fields.allowedEntryMonths.baselineDefault);
+});
+
+test('year-only publication is precise, conservative and cannot bypass conflicting or future dates', () => {
+  const source = AAFC_CANADA_CABBAGE_SOURCE;
+  assert.equal(sourcePublicationIsKnownBy(source, '2025-12-31'), false);
+  assert.equal(sourcePublicationIsKnownBy(source, '2026-01-01'), true);
+  assert.equal(sourcePublicationText(source), '2025 (month/day unknown)');
+  for (const bad of [{ publishedYear: 2026 }, { publishedYear: 0 }, { publishedYear: 2025.5 },
+    { publishedOn: '2025-01-01' }, { publishedMonth: '2025-03' }]) {
+    assert.equal(sourcePublicationIsKnownBy({ ...source, ...bad }, '2026-01-01'), false);
+  }
+  assert.equal(sourcePublicationText({ ...source, publishedMonth: '2025-03' }), 'Unknown');
+});
+
+
+test('historical fallback cannot reinterpret a future, malformed or conflicting supplied year as an undated source', () => {
+  const make = (year: unknown) => candidate('plantsPerM2', 2, { tier: 'historical-public-reference',
+    temporalScope: { kind: 'historical-transfer', period: 'Historical engineering fixture', assumption: 'Explicit fixture transfer' },
+    assumptions: ['Fixture only'], source: { ...source, publishedOn: null, publishedYear: year } as CountrySource });
+  for (const year of [2027, 0, '2025', 2025.5]) assert.equal(resolved(request({ candidates: [make(year)] })).fields.plantsPerM2.activeTier, null);
+  assert.equal(resolved(request({ candidates: [make(2025)] })).fields.plantsPerM2.activeTier, 'historical-public-reference');
+  const conflict = make(2025); conflict.source!.publishedMonth = '2025-03';
+  assert.equal(resolved(request({ candidates: [conflict] })).fields.plantsPerM2.activeTier, null);
+  const recurring = { ...make(2025), temporalScope: { kind: 'recurring-season' as const } };
+  assert.equal(resolved(request({ candidates: [recurring] })).fields.plantsPerM2.activeTier, null);
+});
+
+
+test('actual Canadian source capsule cannot grant full planning permission even with otherwise complete own estimates', () => {
+  const input = canadaRequest(4);
+  const overrides = Object.fromEntries(Object.entries(values).filter(([key]) => !['allowedEntryMonths', 'establishment', 'nurseryDays'].includes(key))
+    .map(([key, [value, unit]]) => [key, { state: 'provided', value, unit, provenance: { kind: 'grower-estimate', recordedAt: input.recordedAt } }]));
+  const result = resolved({ ...input, overrides: { ...input.overrides, ...overrides,
+    nurseryDays: { state: 'provided', value: 20, unit: 'days', provenance: { kind: 'grower-estimate', recordedAt: input.recordedAt } } } });
+  const full = assessGrowerPlanning({ profile: result.profile, scope: input.context.scope,
+    measuredAreaM2: input.measuredAreaM2, fieldEntryDate: input.fieldEntryDate });
+  assert.equal(full.status, 'missing-inputs');
+  if (full.status === 'missing-inputs') assert.deepEqual(full.issues, ['needs-grower-entry-window']);
+});
+
+
+test('saved-cycle review context stays held rather than throwing before site conditions arrive', () => {
+  const source = { freshness: 'device-saved-copy', kind: 'studio-canvas', sourceKey: 'fixture',
+    sourceRevision: 'a'.repeat(64), geometryFingerprint: 'b'.repeat(64) } as GrowerWorkflowSource;
+  assert.equal(createProvisionalCycleContext(source, undefined, recordedAt), null);
+  assert.equal(createProvisionalCycleContext(source, null, recordedAt), null);
+  assert.equal(createProvisionalCycleContext(source, { countryCode: null, agriculturalRegionReference: null,
+    policyFingerprint: 'fixture-policy', knownPlantingRestriction: null }, 'not-a-date'), null);
 });

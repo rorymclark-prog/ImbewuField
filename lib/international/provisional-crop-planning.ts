@@ -1,3 +1,4 @@
+import { isCanadaCabbageFactCandidate, canadaCabbageFactReuse } from './providers/aafc-canada-cabbage';
 import { normaliseGrowerSpacingSelectionReceipt, type GrowerSpacingSelectionReceipt } from '../grower-estimate-units';
 import { regionalSpacingReference, type RegionalSpacingConditions } from './providers/regional-spacing-reference';
 import { USDA_GREAT_LAKES_CABBAGE_SOURCE } from './providers/usda-great-lakes-cabbage';
@@ -10,7 +11,7 @@ import {
   type GrowerPlanningInputs, type GrowerPlanningProfile, type GrowerPlanningScope,
 } from './grower-planning';
 
-export type ProvisionalEvidenceTier = 'local-public-evidence' | 'climate-crop-derived' | 'grower-estimate';
+export type ProvisionalEvidenceTier = 'local-public-evidence' | 'historical-public-reference' | 'climate-crop-derived' | 'grower-estimate';
 type Field = keyof GrowerPlanningInputs;
 type Input = GrowerPlanningInputs[Field];
 
@@ -71,7 +72,7 @@ export interface ResolvedProvisionalField {
   readonly sourceReferences: readonly string[];
   readonly sourceBindings: readonly {
     id: string; title: string; url: string; accessedOn: string | null;
-    publishedOn: string | null; publishedMonth: string | null; reviewDueOn: string | null; reuseTerms: string;
+    publishedOn: string | null; publishedMonth: string | null; publishedYear?: number | null; reviewDueOn: string | null; reuseTerms: string;
     attribution: string; limitations: string;
     evidenceState: ReturnType<typeof sourceEvidenceState>;
   }[];
@@ -109,7 +110,7 @@ export interface ProvisionalDraftRequest {
 const fields: readonly Field[] = ['establishment', 'plantsPerM2', 'yieldKgPerM2', 'nurseryDays',
   'fieldEntryToFirstHarvestDays', 'pickingDays', 'fieldOccupancyDays', 'turnaroundDays', 'allowedEntryMonths'];
 const unknown = () => ({ state: 'missing', reason: 'not-known' }) as const;
-const ranks: Record<ProvisionalEvidenceTier, number> = { 'local-public-evidence': 0, 'climate-crop-derived': 1, 'grower-estimate': 2 };
+const ranks: Record<ProvisionalEvidenceTier, number> = { 'local-public-evidence': 0, 'historical-public-reference': 1, 'climate-crop-derived': 2, 'grower-estimate': 3 };
 const record = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
 const text = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0
   && value.length <= 2000 && !/[\u0000-\u001f\u007f]/.test(value);
@@ -127,6 +128,9 @@ function freeze<T>(value: T): T {
 export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
   const scope = normaliseGrowerPlanningScope(request.context?.scope);
   const context = request.context;
+  const reviewedReuse = (candidate: ProvisionalFieldCandidate): string | null => isCanadaCabbageFactCandidate(candidate)
+    ? canadaCabbageFactReuse(candidate, context, request.recordedAt)
+    : candidate.source?.licence?.status === 'known' && text(candidate.source.licence.value) ? candidate.source.licence.value : null;
   const emptyInputs = Object.fromEntries(fields.map(field => [field, unknown()]));
   const makeProfile = (inputs: Record<string, unknown>, plantCountOrigin?: GrowerSpacingSelectionReceipt, positiveMonths = false) => normaliseGrowerPlanningProfile({
     version: positiveMonths ? 2 : 1, profileId: request.profileId, cropKey: request.cropKey, scope, inputs, ...(plantCountOrigin ? { plantCountOrigin } : {}),
@@ -187,6 +191,7 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
         || (candidate.varietyReference !== undefined && (!text(candidate.varietyReference)
           || candidate.varietyReference !== context.varietyReference))) { reject('scope-mismatch'); continue; }
       const temporal = candidate.temporalScope;
+      if (candidate.tier === 'historical-public-reference' && temporal.kind !== 'historical-transfer') { reject('historical-transfer-unjustified'); continue; }
       if (temporal.kind === 'dated') {
         if (!isGrowerUtcDate(temporal.fromDate) || !isGrowerUtcDate(temporal.throughDate)
           || temporal.fromDate > temporal.throughDate || entryDate?.state !== 'provided'
@@ -228,23 +233,23 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
       if (candidate.tier !== 'grower-estimate') {
         const source = candidate.source;
         if (!record(source) || !text(source.id) || !text(source.url) || !text(source.title)
-          || candidate.reuseReview !== 'reviewed' || source.licence?.status !== 'known' || !text(source.licence.value)
+          || candidate.reuseReview !== 'reviewed' || !reviewedReuse(candidate)
           || value.provenance.kind !== 'external-reference' || value.provenance.sourceUrl !== source.url) {
           reject('source-or-reuse-unverified'); continue;
         }
         const state = sourceEvidenceState(source, request.asOf);
         // An undated or historical table may inform a disclosed estimate, but it
         // must not be promoted to current local evidence or receive an invented date.
-        const historicalEstimate = candidate.tier === 'climate-crop-derived' && temporal.kind === 'historical-transfer'
+        const historicalEstimate = (candidate.tier === 'climate-crop-derived' || candidate.tier === 'historical-public-reference') && temporal.kind === 'historical-transfer'
           && candidate.assumptions.length > 0 && source.verification === 'content-read'
           && isGrowerUtcDate(source.accessedOn) && source.accessedOn <= request.asOf
-          && ((source.publishedOn === null && (source.publishedMonth === undefined || source.publishedMonth === null))
+          && ((source.publishedOn === null && (source.publishedMonth === undefined || source.publishedMonth === null) && source.publishedYear == null)
             || sourcePublicationIsKnownBy(source, request.asOf))
           && (source.reviewDueOn === null || isGrowerUtcDate(source.reviewDueOn));
         if (state !== 'available-reference' && !historicalEstimate) { reject('source-or-reuse-unverified'); continue; }
         if (field === 'allowedEntryMonths' && candidate.positiveWindowEvidence !== true) { reject('positive-window-evidence-missing'); continue; }
       } else if (value.provenance.kind !== 'grower-estimate') { reject('estimate-provenance-mismatch'); continue; }
-      if (candidate.tier === 'climate-crop-derived' && !candidate.assumptions.length) { reject('transfer-assumption-missing'); continue; }
+      if ((candidate.tier === 'climate-crop-derived' || candidate.tier === 'historical-public-reference') && !candidate.assumptions.length) { reject('transfer-assumption-missing'); continue; }
       accepted.push({ candidate, input: value });
     }
     const rank = accepted.length ? accepted.reduce((rank, value) => Math.min(rank, ranks[value.candidate.tier]), Infinity) : null;
@@ -271,9 +276,10 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
     if (field === 'allowedEntryMonths') positiveMonths = status === 'selected' && best[0]?.candidate.entryMonthCoverage === 'positive-only';
     const sourceBindings = best.flatMap(({ candidate }) => {
       const source = candidate.source;
-      return candidate.tier !== 'grower-estimate' && source && source.licence.status === 'known' ? [{
+      return candidate.tier !== 'grower-estimate' && source && reviewedReuse(candidate) ? [{
         id: source.id, title: source.title, url: source.url, accessedOn: source.accessedOn,
-        publishedOn: source.publishedOn, publishedMonth: source.publishedMonth ?? null, reviewDueOn: source.reviewDueOn, reuseTerms: source.licence.value,
+        publishedOn: source.publishedOn, publishedMonth: source.publishedMonth ?? null, ...(source.publishedYear != null ? { publishedYear: source.publishedYear } : {}),
+        reviewDueOn: source.reviewDueOn, reuseTerms: reviewedReuse(candidate)!,
         attribution: source.attribution ?? 'Unknown', limitations: source.limitations ?? 'Unknown',
         evidenceState: sourceEvidenceState(source, request.asOf),
       }] : [];

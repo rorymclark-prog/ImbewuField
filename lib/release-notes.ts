@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '14 November 2026', sha: 'ed4a368e5', changes: [
+    'Canadian cabbage previews offer a historical transplant-month reference across varieties.',
+    'Source months keep their limits beside your results and saved profiles.',
+    'Saved crop records stay visible while site conditions are unavailable.',
+  ] },
   { when: '13 November 2026', sha: '35e158051', changes: [
     'Tomato previews can compare modelled monthly temperature with a sourced optimum.',
     'Temperature comparisons keep their source limits and never create a planting window.',
