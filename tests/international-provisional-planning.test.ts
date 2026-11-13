@@ -5,6 +5,7 @@ import { sourceEvidenceState, sourcePublicationIsKnownBy, sourcePublicationText,
 import { WORLDVEG_KENYA_CABBAGE_SOURCE, worldvegKenyaCabbageCandidates } from '../lib/international/providers/worldveg-kenya-cabbage.ts';
 import { worldvegKenyaCowpeaCandidates, worldvegKenyaCowpeaSpacing } from '../lib/international/providers/worldveg-kenya-cowpea.ts';
 import { usdaGreatLakesCabbageCandidates } from '../lib/international/providers/usda-great-lakes-cabbage.ts';
+import { usdaGreatLakesTomatoCandidates, usdaGreatLakesTomatoReference, USDA_TOMATO_NURSERY } from '../lib/international/providers/usda-great-lakes-tomato.ts';
 import { buildProvisionalCropPreviewHtml } from '../lib/international/provisional-crop-export.ts';
 import type { CountrySource } from '../lib/international/countries/types.ts';
 import { resolveProvisionalCropPlan, type ProvisionalDraftRequest, type ProvisionalFieldCandidate } from '../lib/international/provisional-crop-planning.ts';
@@ -53,6 +54,44 @@ function resolved(input = request()) {
   if (result.status !== 'resolved') assert.fail(`Expected a resolved draft, got ${result.status}`);
   return result;
 }
+
+test('the undated Great Lakes tomato row supplies only its chosen transplant lead time, not a local calendar or crop forecast', () => {
+  const at = '2026-11-13T12:00:00.000Z';
+  const context = { ...request().context, countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', establishment: null };
+  const entries = usdaGreatLakesTomatoCandidates(context, 'tomatoes', at, true);
+  assert.deepEqual(entries.map(row => row.field), ['establishment', 'nurseryDays']);
+  assert.equal(USDA_TOMATO_NURSERY.days, 56);
+  const input = request({ recordedAt: at, asOf: '2026-11-13', cropKey: 'tomatoes', context, candidates: entries,
+    fieldEntryDate: { state: 'provided', value: '2027-01-10', unit: 'utc-date', provenance: { kind: 'grower-estimate', recordedAt: at } } });
+  const value = resolved(input);
+  assert.equal(value.assessment.schedule.nurseryStartDate.value, '2026-11-15');
+  assert.equal(value.fields.nurseryDays.defaultPlanningValueBasis, 'reported-point');
+  assert.equal(value.fields.nurseryDays.sourceBindings[0].evidenceState, 'undated');
+  assert.equal(value.fields.nurseryDays.sourceBindings[0].publishedOn, null);
+  assert.equal(value.fields.nurseryDays.sourceBindings[0].accessedOn, '2026-11-13');
+  assert.equal(value.assessment.entryWindow, 'unknown');
+  assert.equal(value.assessment.estimatedPlantCount.value, null);
+  assert.equal(value.assessment.estimatedYieldKg.value, null);
+  assert.equal(value.assessment.schedule.firstHarvestDate.value, null);
+  assert.equal(value.assessment.schedule.fieldClearDate.value, null);
+  const html = buildProvisionalCropPreviewHtml(input, { bedLabel: 'Synthetic bed', sample: true })!.html;
+  assert.match(html, /56 days/); assert.match(html, /usda-nrcs-great-lakes-tomato/);
+  assert.match(html, /seed-starting lead time/); assert.match(html, /not time after emergence/);
+  assert.match(html, /publication and revision dates unknown/);
+  assert.match(html, /ff7a1dfea4582f69/);
+});
+
+test('tomato reference needs the existing crop, declared Great Lakes region and explicit source choice; direct sowing cannot use it', () => {
+  const context = { ...request().context, countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', establishment: null };
+  for (const other of [{ countryCode: 'KE' }, { countryCode: null }, { countryCode: 'OTHER' },
+    { agriculturalRegionReference: null }, { agriculturalRegionReference: 'Michigan' }, { establishment: 'direct' as const }]) {
+    assert.deepEqual(usdaGreatLakesTomatoCandidates({ ...context, ...other }, 'tomatoes', recordedAt, true), []);
+  }
+  assert.deepEqual(usdaGreatLakesTomatoCandidates(context, 'cabbage', recordedAt, true), []);
+  assert.deepEqual(usdaGreatLakesTomatoCandidates(context, 'tomatoes', recordedAt, false), []);
+  assert.equal(usdaGreatLakesTomatoReference('KE', 'tomatoes'), null);
+  assert.equal(usdaGreatLakesTomatoReference('US', 'cabbage'), null);
+});
 
 test('a deliberately chosen USDA nursery bound derives only seed-start time and preserves the original range and unknown calendar', () => {
   const base = request({ cropKey: 'cabbage', recordedAt: '2026-11-13T12:00:00.000Z', asOf: '2026-11-13' });
