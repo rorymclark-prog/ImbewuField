@@ -1,5 +1,7 @@
 # Audits for 13 November 2026
 
+- [Preview build memory](preview-build-memory-codex.md) — explicitly authorised two-line heap setting; actual successor verification required.
+
 - [Individual DEMO calendar identity](calendar-individual-demo-codex.md) — retained sample export finding; same guarded writer for individual and bulk delivery.
 
 - [Provisional calendar evidence](provisional-calendar-evidence-codex.md): public sources, regional limits and unknowns retained in individual/bulk calendars and a collapsed task disclosure; successor review/CI remain open.
