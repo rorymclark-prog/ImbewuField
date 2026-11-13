@@ -1,5 +1,6 @@
 'use client';
 import { savedRainfallFields } from '@/lib/saved-places';
+import { useSavedPlaceWriteContext, savedPlaceWriteContextIsCurrent } from '@/lib/length-unit-preference';
 
 import { numberLabel } from '@/lib/format-figures';
 import { annualRainfallMm, modelledWindSpeed, monthlyTemperatureStatus, recordMinimumC } from '@/lib/climate-temperature';
@@ -321,6 +322,7 @@ function Skeleton() {
 /* ── Main component ───────────────────────────────── */
 export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, peopleError, currentUserId, onOpenProfile, initialChatQuery, initialChatPhoto, onChatDeepLinkConsumed, openSurvey, onSurveyOpened, surveyViewport }: Props) {
   const appConfirm = useAppConfirm();
+  const placeSaveContext = useSavedPlaceWriteContext();
   const { t, lang } = useLanguage();
   const REPORT_GROUP_LABEL: Record<string, string> = {
     water: t('reportGroupWater'), structures: t('reportGroupStructures'),
@@ -676,33 +678,37 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   // One-tap save of the current location (prominent, vs the Places tab form).
   const quickSavePlace = async () => {
     if (!data || !coords) return;
+    const context = placeSaveContext.current;
+    if (!savedPlaceWriteContextIsCurrent(context)) return;
     // Save-time duplicate guard — shared authority in lib/saved-places.ts promptNearbyUpdate.
     // The one-tap button is the EASIEST place to mint a second row for the same farm; updating
     // keeps the existing id (and the farmer's chosen name/notes/label/colour) so coordinate-keyed
     // downstream data (surveys, design studio) doesn't fork onto a second id.
     const nearby = await promptNearbyUpdate(coords.lat, coords.lon, appConfirm);
     if (nearby) {
-      savePlace({
+      const saved = savePlace({
         ...nearby,
         lat: coords.lat, lon: coords.lon,
         biome: data.biome.name,
         ...savedRainfallFields(data.rainfall, nearby),
         elevation: data.elevation.elevation,
-      });
+      }, { isCurrent: () => savedPlaceWriteContextIsCurrent(context) });
+      if (!saved) return;
       setPlaceSaved(true);
       return;
     }
     const name = data.biome.name !== 'Outside South Africa'
       ? `${data.biome.name} site`
       : `${Math.abs(coords.lat).toFixed(3)}°S ${coords.lon.toFixed(3)}°E`;
-    savePlace({
+    const saved = savePlace({
       id: generateId(), name,
       lat: coords.lat, lon: coords.lon,
       biome: data.biome.name,
       ...savedRainfallFields(data.rainfall),
       elevation: data.elevation.elevation,
       savedAt: new Date().toISOString(),
-    });
+    }, { isCurrent: () => savedPlaceWriteContextIsCurrent(context) });
+    if (!saved) return;
     setPlaceSaved(true);
   };
 
