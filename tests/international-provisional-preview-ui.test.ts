@@ -601,6 +601,77 @@ test('Great Lakes cabbage choices remain blank and regional consent cannot reviv
 
 const saveDeclaration = 'Save these inputs, source limits and unknowns as a new profile for review. Do not add sowings.';
 
+const oatsChoice = 'Use this March 2014 direct-seeding reference for cover-crop establishment';
+test('Missouri oats requires a declared type and explicit source choice, then preserves its partial result in export and saved readback', async () => {
+  const saved: import('../lib/international/grower-planning.ts').GrowerPlanningProfile[] = [];
+  const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Southeast Missouri', evidence: undefined,
+    onSaveProfile: profile => { saved.push(structuredClone(profile)); return { status: 'confirmed', profileId: profile.profileId }; } });
+  const files = downloads();
+  try {
+    ui.change('Preview crop', 'oats'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-08-15');
+    assert.equal(ui.field('Oat type for this reference').props.value, '');
+    assert.equal(ui.field(oatsChoice).props.disabled, true); await ui.click();
+    assert.match(ui.text(), /Entry window: unknown/);
+    ui.change('Oat type for this reference', 'spring');
+    assert.equal(ui.field(oatsChoice).props.checked, false); await ui.click();
+    assert.match(ui.text(), /Entry window: unknown/);
+    act(() => ui.field(oatsChoice).props.onChange({ target: { checked: true } })); await ui.click();
+    assert.match(ui.text(), /Source reports this month/); assert.match(ui.text(), /other months remain unknown/);
+    assert.match(ui.text(), /Estimated plants: Unknown/); assert.match(ui.text(), /Estimated harvest weight: Unknown/);
+    assert.match(ui.text(), /First harvest \(UTC\): Unknown/);
+    // The shared result formatter renders a null date as Unknown and preserves its not-applicable status.
+    assert.match(ui.text(), /Nursery start \(UTC\): Unknown \(not-applicable\)/);
+    assert.match(ui.text(), /2014-03 \(day unknown\)/); assert.match(ui.text(), /cover-crop-establishment:spring:/);
+    await ui.click('Download printable preview');
+    const html = await files.blobs[0].text();
+    assert.match(html, /cover-crop-establishment:spring:/); assert.match(html, /Southeast Missouri/);
+    assert.match(html, /2014-03 \(day unknown\)/); assert.match(html, /other months remain unknown/);
+    assert.match(html, /de0f2d394e0c3ca96ef1c6bc56ade6b32158ec617b420ff45864956395c14656/);
+    act(() => ui.field(saveDeclaration).props.onChange({ target: { checked: true } })); await ui.click('Save provisional profile');
+    assert.equal(saved.length, 1); assert.equal(saved[0].version, 2);
+    ui.update({ profiles: saved }); assert.match(ui.text(), /Saved provisional profiles/);
+    assert.match(ui.text(), /cover-crop-establishment:spring:/);
+    ui.change('Preview field-entry date (UTC)', '2027-10-15'); await ui.click();
+    assert.match(ui.text(), /Entry window: unknown/);
+    act(() => ui.field('I specify preview field-entry months').props.onChange({ target: { checked: true } }));
+    await ui.click(); assert.match(ui.text(), /Entry window: excluded/);
+    act(() => ui.field('I specify preview field-entry months').props.onChange({ target: { checked: false } }));
+    await ui.click(); assert.match(ui.text(), /Entry window: unknown/); assert.deepEqual(ui.writes, []);
+  } finally { files.dispose(); ui.dispose(); }
+  const remount = mount({ countryCode: 'US', agriculturalRegionReference: 'Southeast Missouri', evidence: undefined, profiles: saved });
+  try { assert.match(remount.text(), /Saved provisional profiles/); assert.match(remount.text(), /cover-crop-establishment:spring:/);
+    assert.match(remount.text(), /other months remain unknown/); assert.deepEqual(remount.writes, []);
+  } finally { remount.dispose(); }
+});
+
+test('changing oat type or applicability retires source consent and old export callbacks even when the grouped months agree', async () => {
+  const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Southeast Missouri', evidence: undefined });
+  const files = downloads();
+  try {
+    ui.change('Preview crop', 'oats'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-03-15'); ui.change('Oat type for this reference', 'spring');
+    for (const [field, away, back] of [['Oat type for this reference', 'winter', 'spring'],
+      ['Preview establishment', 'transplant', ''], ['Variety reference (optional)', 'other', ''],
+      ['Water regime', 'irrigated', ''], ['Preview crop', 'cabbage', 'oats']]) {
+      act(() => ui.field(oatsChoice).props.onChange({ target: { checked: true } })); await ui.click();
+      assert.match(ui.text(), /Source reports this month/); const stale = ui.action('Download printable preview');
+      ui.change(field, away); assert.doesNotMatch(ui.text(), /Provisional results/);
+      await act(async () => { await stale(); }); assert.equal(files.blobs.length, 0);
+      if (field === 'Preview establishment') assert.equal(ui.field(oatsChoice).props.disabled, true);
+      ui.change(field, back); assert.equal(ui.field(oatsChoice).props.checked, false);
+      await ui.click(); assert.match(ui.text(), /Entry window: unknown/);
+    }
+    ui.change('Oat type for this reference', 'winter');
+    act(() => ui.field(oatsChoice).props.onChange({ target: { checked: true } })); await ui.click();
+    assert.match(ui.text(), /cover-crop-establishment:winter:/); assert.match(ui.text(), /Source reports this month/);
+    ui.update({ agriculturalRegionReference: 'Missouri' }); assert.equal(ui.field(oatsChoice).props.disabled, true);
+    ui.update({ agriculturalRegionReference: 'Southeast Missouri' }); assert.equal(ui.field(oatsChoice).props.checked, false);
+    ui.update({ countryCode: 'KE' }); assert.doesNotMatch(ui.text(), /USDA Southeast Missouri oats cover-crop reference/);
+    ui.update({ countryCode: 'US' }); assert.equal(ui.field(oatsChoice).props.checked, false); assert.deepEqual(ui.writes, []);
+  } finally { files.dispose(); ui.dispose(); }
+});
+
 test('tomato nursery source is opt-in, editable and preserved in actual printable and historical profile output', async () => {
   const saved: import('../lib/international/grower-planning.ts').GrowerPlanningProfile[] = [];
   const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', evidence: undefined,

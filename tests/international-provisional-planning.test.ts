@@ -7,6 +7,7 @@ import { WORLDVEG_KENYA_CABBAGE_SOURCE, worldvegKenyaCabbageCandidates } from '.
 import { worldvegKenyaCowpeaCandidates, worldvegKenyaCowpeaSpacing } from '../lib/international/providers/worldveg-kenya-cowpea.ts';
 import { usdaGreatLakesCabbageCandidates } from '../lib/international/providers/usda-great-lakes-cabbage.ts';
 import { usdaGreatLakesTomatoCandidates, usdaGreatLakesTomatoReference, USDA_TOMATO_NURSERY } from '../lib/international/providers/usda-great-lakes-tomato.ts';
+import { southeastMissouriOatsCandidates, southeastMissouriOatsReference, MISSOURI_OATS_PDF_SHA256, USDA_SOUTHEAST_MISSOURI_OATS_SOURCE } from '../lib/international/providers/usda-southeast-missouri-oats.ts';
 import { buildProvisionalCropPreviewHtml } from '../lib/international/provisional-crop-export.ts';
 import { normaliseGrowerPlanningProfile, assessGrowerPlanning } from '../lib/international/grower-planning.ts';
 import { createSavedProvisionalProfile, readSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
@@ -59,6 +60,62 @@ function resolved(input = request()) {
   if (result.status !== 'resolved') assert.fail(`Expected a resolved draft, got ${result.status}`);
   return result;
 }
+
+test('the actual Missouri oats panel supplies only grouped cover-crop method and positive months, with no catalogue agronomy', () => {
+  const at = '2026-11-13T12:00:00.000Z';
+  const context = { ...request().context, countryCode: 'US', agriculturalRegionReference: 'Southeast Missouri', establishment: null };
+  for (const oatType of ['spring', 'winter'] as const) {
+    const entries = southeastMissouriOatsCandidates(context, 'oats', at, true, { purpose: 'cover-crop-establishment', oatType });
+    assert.deepEqual(entries.map(c => c.field), ['establishment', 'allowedEntryMonths']);
+    assert.ok(entries.every(c => c.tier === 'climate-crop-derived' && c.temporalScope.kind === 'historical-transfer'));
+    assert.equal(entries[1].entryMonthCoverage, 'positive-only');
+    for (const [month, expected] of [[2, 'unknown'], [3, 'reported-positive'], [4, 'reported-positive'], [5, 'unknown'],
+      [7, 'unknown'], [8, 'reported-positive'], [9, 'reported-positive'], [10, 'unknown']] as const) {
+      const input = request({ cropKey: 'oats', context, recordedAt: at, asOf: '2026-11-13', candidates: entries,
+        fieldEntryDate: { state: 'provided', value: `2027-${String(month).padStart(2, '0')}-15`, unit: 'utc-date',
+          provenance: { kind: 'grower-estimate', recordedAt: at } } });
+      const value = resolved(input);
+      assert.equal(value.profile.version, 2); assert.equal(value.assessment.entryWindow, expected);
+      assert.equal(value.activeEstablishment, 'direct'); assert.equal(value.assessment.estimatedPlantCount.value, null);
+      assert.equal(value.assessment.estimatedYieldKg.value, null);
+      assert.ok(Object.values(value.assessment.schedule).every(r => r.value === null));
+      assert.equal(value.assessment.schedule.nurseryStartDate.status, 'not-applicable');
+      assert.equal(value.fields.allowedEntryMonths.sourceBindings[0].publishedMonth, '2014-03');
+      assert.equal(value.fields.allowedEntryMonths.sourceBindings[0].publishedOn, null);
+      assert.equal(value.fields.allowedEntryMonths.sourceBindings[0].evidenceState, 'available-reference');
+      const html = buildProvisionalCropPreviewHtml(input, { bedLabel: 'Synthetic bed', sample: true })!.html;
+      assert.match(html, /2014-03 \(day unknown\)/); assert.match(html, /cover-crop establishment/);
+      assert.match(html, new RegExp(`cover-crop-establishment:${oatType}:`)); assert.ok(html.includes(MISSOURI_OATS_PDF_SHA256));
+      assert.match(html, /not a separately validated cultivar calendar/); assert.match(html, /other months remain unknown/);
+      assert.doesNotMatch(html, /166 days|70kg|35 pounds|50 pounds/);
+    }
+    const undated = resolved(request({ cropKey: 'oats', context, recordedAt: at, asOf: '2026-11-13', candidates: entries,
+      fieldEntryDate: { state: 'missing', reason: 'not-entered' } }));
+    assert.equal(undated.assessment.entryWindow, 'missing-date');
+  }
+  assert.equal(USDA_SOUTHEAST_MISSOURI_OATS_SOURCE.reviewDueOn, null);
+});
+
+test('Missouri oats cannot infer source use, type, region or method from a country or the winter-cover crop label', () => {
+  const context = { ...request().context, countryCode: 'US', agriculturalRegionReference: 'Southeast Missouri', establishment: null };
+  const use = { purpose: 'cover-crop-establishment', oatType: 'spring' } as const;
+  for (const changes of [{ countryCode: 'KE' }, { countryCode: null }, { countryCode: 'OTHER' },
+    { agriculturalRegionReference: null }, { agriculturalRegionReference: 'Missouri' }, { agriculturalRegionReference: 'Great Lakes States' },
+    { establishment: 'transplant' as const }]) {
+    assert.deepEqual(southeastMissouriOatsCandidates({ ...context, ...changes }, 'oats', recordedAt, true, use), []);
+  }
+  assert.deepEqual(southeastMissouriOatsCandidates(context, 'oats', recordedAt, false, use), []);
+  for (const value of [null, { ...use, oatType: '' }, { ...use, purpose: 'grain-harvest' }, { ...use, oatType: 'unknown' }]) {
+    assert.deepEqual(southeastMissouriOatsCandidates(context, 'oats', recordedAt, true, value as typeof use), []);
+  }
+  assert.equal(southeastMissouriOatsReference('US', 'cabbage'), null);
+  assert.deepEqual(southeastMissouriOatsCandidates(context, 'cabbage', recordedAt, true, use), []);
+  const spring = resolved(request({ cropKey: 'oats', context, recordedAt: '2026-11-13T12:00:00.000Z', asOf: '2026-11-13',
+    candidates: southeastMissouriOatsCandidates(context, 'oats', '2026-11-13T12:00:00.000Z', true, use) }));
+  const winter = resolved(request({ cropKey: 'oats', context, recordedAt: '2026-11-13T12:00:00.000Z', asOf: '2026-11-13',
+    candidates: southeastMissouriOatsCandidates(context, 'oats', '2026-11-13T12:00:00.000Z', true, { ...use, oatType: 'winter' }) }));
+  assert.notEqual(spring.fingerprint, winter.fingerprint, 'equal month values must not erase the chosen oat type');
+});
 
 test('positive source months preserve unknown omissions and conditional dates instead of inventing exclusions', () => {
   for (const [month, status] of [[6, 'unknown'], [7, 'reported-positive'], [9, 'reported-positive'], [10, 'unknown']] as const) {
