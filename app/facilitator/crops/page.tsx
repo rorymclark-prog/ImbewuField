@@ -1524,7 +1524,7 @@ function FacilitatorCropsPageInner() {
   const growerWriteScope = useRef({ key: growerScopeKey, owner: growerOwner, sample: growerSample });
   growerWriteScope.current = { key: growerScopeKey, owner: growerOwner, sample: growerSample };
   function saveGrowerProfiles(value: GrowerPlanningProfile[], request?: GrowerProfileChangeRequest,
-    writeIsCurrent?: () => boolean, onWritten?: () => void): boolean {
+    writeIsCurrent?: () => boolean, onWritten?: (token: string) => void): boolean {
     if (writeIsCurrent && !writeIsCurrent()) return false;
     const live = growerWriteScope.current;
     if (!plan || !growerActorIsCurrent() || planSaveConflict || !growerScopeKey || live.key !== growerScopeKey || live.owner !== growerOwner
@@ -1568,13 +1568,17 @@ function FacilitatorCropsPageInner() {
     const receipt = saveCropPlanWithReceipt(next, { ...(profileChange ? { growerProfileChange: profileChange } : {}),
       ...(writeIsCurrent ? { writeIsCurrent: () => writeIsCurrent() && growerActorIsCurrent()
         && planWriteBase.current === base && writeIsCurrent() } : {}) });
-    if (receipt.saved) onWritten?.();
+    if (receipt.saved) onWritten?.(receipt.token);
+    // Guarded adoption owns its admitted readback and state installation. An
+    // own write event can already have changed actor or source at this point.
+    if (writeIsCurrent) return receipt.saved;
     setPlanSaveFailed(!receipt.saved);
     if (receipt.saved) { rememberStoredPlan(next, receipt.token); setPlan(next); }
     return receipt.saved;
   }
   function saveProvisionalProfile(profile: GrowerPlanningProfile, isCurrent: () => boolean): ProvisionalProfileSaveResult {
     let written = false;
+    let writtenToken: string | null = null;
     try {
       if (!plan || !isCurrent() || !growerActorIsCurrent() || !profile.provisionalOrigin
         || growerPlanningScopeKey(profile.scope) !== growerScopeKey) return { status: 'held' };
@@ -1584,20 +1588,23 @@ function FacilitatorCropsPageInner() {
       if (admitted.admission.status !== 'ready' || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)
         || (admitted.book.growerPlanningProfiles ?? []).some(row => row.profileId === profile.profileId)
         || (plan.growerPlanningProfiles ?? []).some(row => row.profileId === profile.profileId)) return { status: 'held' };
+      const base = planWriteBase.current;
       if (!saveGrowerProfiles([...(plan.growerPlanningProfiles ?? []), profile],
-        { kind: 'edit', profileId: profile.profileId, expectedProfile: null }, isCurrent, () => { written = true; })) return { status: 'held' };
+        { kind: 'edit', profileId: profile.profileId, expectedProfile: null }, isCurrent,
+        token => { written = true; writtenToken = token; })) return { status: 'held' };
       written = true;
-      const installed = planWriteBase.current, confirmed = loadCropPlanWithWriteAdmission();
+      const confirmed = loadCropPlanWithWriteAdmission();
       const rows = (confirmed.book.growerPlanningProfiles ?? []).filter(row => row.profileId === profile.profileId);
-      if (!isCurrent() || !growerActorIsCurrent() || !installed || planWriteBase.current !== installed
-        || confirmed.token !== installed.token || cropPlanWriteToken() !== confirmed.token
+      if (!isCurrent() || !growerActorIsCurrent() || !base || planWriteBase.current !== base
+        || confirmed.token !== writtenToken || cropPlanWriteToken() !== confirmed.token
         || !cropPlanWriteAdmissionMatches(confirmed.admission, JSON.stringify(confirmed.book), confirmed.token)
         || rows.length !== 1 || JSON.stringify(rows[0]) !== JSON.stringify(profile)
         || !isCurrent() || !growerActorIsCurrent()) {
         setPlanSaveConflict(true); return { status: 'superseded' };
       }
-      planWriteBase.current = { owner: installed.owner, sample: installed.sample, token: confirmed.token,
+      planWriteBase.current = { owner: base.owner, sample: base.sample, token: confirmed.token,
         planKey: JSON.stringify(confirmed.book), admission: confirmed.admission };
+      setPlanSaveFailed(false);
       setPlan(confirmed.book);
       return { status: 'confirmed', profileId: profile.profileId };
     } catch {

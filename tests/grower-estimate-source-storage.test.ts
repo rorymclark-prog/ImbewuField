@@ -448,13 +448,41 @@ test('final source revocation reaches the actual parent raw writer rather than w
   let prewrite = 0;
   for (let position = 1; position <= reads; position++) {
     await reset(); const base = await seeded(), save = parent(base), before = readCanonicalCropPlanFixtureRaw(), writes = local.writes;
+    const originalBase = save.state.planWriteBase.current;
     let count = 0, current = true, beforeWrite = false, fired = false;
     local.onRead = () => { if (++count === position) { local.onRead = null; fired = true; beforeWrite = local.writes === writes; current = false; } };
     const outcome = save.adopt(profile, () => current); local.onRead = null;
     if (fired && beforeWrite) { prewrite++; assert.equal(outcome.status, 'held', `read ${position}`); assert.equal(readCanonicalCropPlanFixtureRaw(), before, `read ${position}`); }
     else if (fired) assert.equal(outcome.status, 'superseded', `post-write read ${position} must not claim no write`);
+    if (fired) { assert.equal(save.state.plan, base.book, `read ${position} must not install a retired candidate`);
+      assert.equal(save.state.planWriteBase.current, originalBase, `read ${position} must not replace the write base`); }
   }
   assert.ok(prewrite > 0);
+});
+
+test('a completed provisional save never installs its candidate or write base after actor sample or source revocation', async () => {
+  for (const kind of ['actor', 'sample', 'source'] as const) {
+    await reset(); const loaded = await seeded(), profile = provisionalProfile(), save = parent(loaded);
+    const originalBase = save.state.planWriteBase.current; let current = true;
+    const revoke = () => {
+      current = false;
+      if (kind === 'actor') { probe.actor = 'owner-b'; account.bindMountedAccountLocalStorageUid('owner-b'); }
+      if (kind === 'sample') samples.enterSampleMode();
+    };
+    events.addEventListener(crop.CROP_PLAN_CHANGED_EVENT, revoke);
+    try {
+      assert.equal(save.adopt(profile, () => current).status, 'superseded', kind);
+      assert.equal(save.state.plan, loaded.book, `${kind}: no old candidate state installation`);
+      assert.equal(save.state.planWriteBase.current, originalBase, `${kind}: no changed-owner or stale-source base`);
+    } finally { events.removeEventListener(crop.CROP_PLAN_CHANGED_EVENT, revoke); }
+  }
+});
+
+test('a committed provisional write remains superseded when final state installation throws', async () => {
+  const loaded = await seeded(), profile = provisionalProfile();
+  const save = parent(loaded, { setPlan() { throw Error('synthetic state installation failure'); } });
+  assert.equal(save.adopt(profile, () => true).status, 'superseded');
+  assert.ok(crop.loadCropPlan().growerPlanningProfiles!.some(row => row.profileId === profile.profileId));
 });
 
 test('a completed write followed by an actor change returns superseded, while a failed store never claims confirmation', async () => {

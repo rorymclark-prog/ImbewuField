@@ -99,6 +99,12 @@ function Editor(props: ProvisionalCropPreviewProps) {
   const [error, setError] = useState('');
   const [exportMessage, setExportMessage] = useState('');
   const [saveConsent, setSaveConsent] = useState<object | null>(null);
+  const saveDeclaration = useRef<{ selected: object | null }>({ selected: null });
+  function declareSave(selected: object | null) {
+    // A checkbox round trip during an awaited source read is a new decision,
+    // never permission for the already pending attempt to resume.
+    saveDeclaration.current = { selected }; setSaveConsent(selected);
+  }
   const [saveMessage, setSaveMessage] = useState('');
   const consumed = useRef<object | null>(null);
   const pending = useRef<object | null>(null);
@@ -136,11 +142,11 @@ function Editor(props: ProvisionalCropPreviewProps) {
   }
   function edit(next: Partial<Draft>) {
     if (!isCurrent()) return;
-    const value = { ...draft, ...next }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); setSaveConsent(null); setSaveMessage('');
+    const value = { ...draft, ...next }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
   }
   async function refresh() {
     if (!isCurrent()) return;
-    setPreview(null); setError(''); setExportMessage(''); setSaveConsent(null); setSaveMessage('');
+    setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
     try { await current.current.onRefresh(); }
     catch { if (isCurrent()) setError('Could not check saved measurements. Try again.'); }
   }
@@ -149,7 +155,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
     // The day belongs to this calculation, not the render-time edit guard. A form
     // left open overnight must still accept edits and start a fresh calculation.
     const calculationDay = new Date().toISOString().slice(0, 10);
-    setPreview(null); setError(''); setExportMessage(''); setSaveConsent(null); setSaveMessage('');
+    setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
     if (!sourceReady || !source || !props.scope) { setError('Check saved measurements before previewing.'); return; }
     const beds = source.beds.filter(row => row.id === draft.bed);
     const measures = source.measuredAreas.filter(row => row.bedId === draft.bed);
@@ -199,7 +205,9 @@ function Editor(props: ProvisionalCropPreviewProps) {
     const selected = preview, writer = props.onSaveProfile;
     if (!isCurrent() || !selected || result?.status !== 'resolved' || !source || !writer
       || saveConsent !== selected || consumed.current === selected || pending.current) return;
+    const declaration = saveDeclaration.current;
     const bound = () => isCurrent() && previewLive.current === selected && current.current.onSaveProfile === writer
+      && declaration.selected === selected && saveDeclaration.current === declaration
       && selected.request.asOf === new Date().toISOString().slice(0, 10) && selected.receipt.isCurrent();
     if (!bound()) return;
     const token = {}; pending.current = token; setCheckingSource(true); setSaveMessage('');
@@ -377,7 +385,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
       {exportMessage && <p role="status">{exportMessage}</p>}
       {props.onSaveProfile && <div className="space-y-2 rounded border border-[var(--border)] p-3">
         <label className="flex min-h-11 items-center gap-2"><input type="checkbox" checked={saveConsent === preview}
-          onChange={event => setSaveConsent(event.target.checked ? preview : null)} />Save these inputs, source limits and unknowns as a new profile for review. Do not add sowings.</label>
+          onChange={event => declareSave(event.target.checked ? preview : null)} />Save these inputs, source limits and unknowns as a new profile for review. Do not add sowings.</label>
         <button type="button" className={button} disabled={checkingSource || saveConsent !== preview || consumed.current === preview}
           onClick={savePreview}>Save provisional profile</button>
       </div>}

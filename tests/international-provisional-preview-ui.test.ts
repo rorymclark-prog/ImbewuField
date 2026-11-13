@@ -625,3 +625,23 @@ test('a save crossing UTC midnight holds, and failed or uncertain writes do not 
     } finally { view.dispose(); }
   }
 });
+
+test('withdrawing the save declaration during its source check retires that attempt even if checked again', async () => {
+  for (const checkAgain of [false, true]) {
+    let finish!: (receipt: { isCurrent: () => boolean }) => void, calls = 0;
+    const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', evidence: undefined,
+      onSaveProfile: () => { calls++; return { status: 'held' }; } });
+    try {
+      await saveChoices(ui); ui.update({ onCheckSource: async () => new Promise(resolve => { finish = resolve; }) });
+      let work!: Promise<void>; act(() => { work = ui.action('Save provisional profile')(); });
+      act(() => ui.field(saveDeclaration).props.onChange({ target: { checked: false } }));
+      if (checkAgain) act(() => ui.field(saveDeclaration).props.onChange({ target: { checked: true } }));
+      await act(async () => { finish({ isCurrent: () => true }); await work; });
+      assert.equal(calls, 0, 'the pending attempt must not use a withdrawn or replacement declaration');
+      assert.deepEqual(ui.writes, []);
+      ui.update({ onCheckSource: async () => ({ isCurrent: () => true }) });
+      act(() => ui.field(saveDeclaration).props.onChange({ target: { checked: true } }));
+      await ui.click('Save provisional profile'); assert.equal(calls, 1, 'a new explicit attempt remains possible');
+    } finally { ui.dispose(); }
+  }
+});

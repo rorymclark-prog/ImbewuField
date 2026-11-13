@@ -90,3 +90,26 @@ Resolve findings, wait for exact-head required CI and retain any failures. Then
 continue the original planner integration toward explicit context-aware adoption;
 do not describe the whole G04/global milestone as finished because this slice saves.
 No production merge while its applicable gates remain open.
+
+## Independent review follow-up
+
+The separate Codex reviewer inspected exact49684a/treee2ec4ac against7af, all16
+Git files, actual screens and all five original print pages. It requested changes;
+no approval is inferred from its positive replay/source observations.
+
+| ID | Independent reproduction | Successor correction / acceptance |
+| --- | --- | --- |
+| G04-49684A-01 (P1) | An own-change event or post-write read revoked actor/sample/source; the generic writer installed old candidate state/base before the wrapper returned superseded | Guarded provisional saves now return the actual write token without installing candidate state/base. The wrapper retains its original base, admits exact current readback and installs only after the final authority checks. Actual-parent regressions assert no stale state/base installation across synchronous actor/sample/source changes and every calibrated storage-read revocation; completed-write/state-installation failure still reports superseded. |
+| G04-49684A-02 (P2) | Clearing the enabled confirmation during an awaited source check still invoked the writer | A synchronous declaration identity retires the pending attempt on checkbox withdrawal, including an uncheck/recheck round trip. A new deliberate click can acquire a new attempt; no old callback inherits the new declaration. |
+
+Both corrected regressions fail against the exact49684a parent implementation
+with their intended assertions, not import errors. The two affected existing test
+files pass60 checks after correction. Ordered typecheck is clean and483 affected
+tests across23 existing files pass with zero failures, skips, cancellations or
+todos; whitespace is clean. Exact-successor independent delta review and hosted
+parent results are recorded separately on the PR/ledger.
+The original480-pass record remains historical; it did not cover these two
+interactions. Full current-head CI and actual hosted parent remain required.
+Unchanged numerical/source/print evidence is reused explicitly, not called fresh
+agronomic validation. This follow-up changes save interaction semantics, not the
+farming arithmetic or original source statements.
