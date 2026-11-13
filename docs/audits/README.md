@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest global entry continuation — [Provisional planner messages](2026-11-13/provisional-entry-copy-codex.md). Country notices distinguish supported partial previews from held South African catalogue advice; exact successor visual/review/CI gates remain separate.
+
 Latest map feedback continuation — [Resolved preview warning](2026-11-13/map-preview-feedback-codex.md). Explicit own-point selection retires only obsolete preview instructions; unrelated errors and save guards remain intact. Successor hosted/CI gates remain separate.
 
 

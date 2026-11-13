@@ -10,8 +10,9 @@ export default function PlannerSupportHold({ resolution, beds, plantings, unmapp
   plantings: readonly Planting[];
 }) {
   return <section aria-label="Planning support" className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] p-4 font-sans text-[var(--text-primary)]">
-    <h1 className="font-display text-xl font-semibold">{unmapped ? 'Choose a reference basis for this unmapped workspace' : resolution.status === 'confirmed' ? 'Local crop planning is not available for this country yet' : 'Confirm the site country before crop planning'}</h1>
-    <p className="mt-2 text-sm">The existing automatic planner uses South African source assumptions. Country details alone cannot approve a new region. Local calendars, forecasts, crop instructions and their PDF/calendar exports are unavailable here until the planning basis is reviewed.</p>
+    <h1 className="font-display text-xl font-semibold">{unmapped ? 'Choose a reference basis for this unmapped workspace' : resolution.status === 'confirmed' ? 'Use a provisional crop preview for this country' : 'Confirm the site country for regional references'}</h1>
+    <p className="mt-2 text-sm">The South African catalogue planner’s automatic calendars, forecasts and PDF/calendar instructions are unavailable for this planning basis. Confirming a country does not approve local farming advice.</p>
+    <p className="mt-2 text-sm">Provisional previews below can calculate supported partial counts and dates using applicable regional evidence and your estimates. Missing values stay unknown. You can download a printable preview and separately save a profile for review; neither action establishes local planting suitability or permission to grow a crop.</p>
     <p className="mt-2 text-sm">Your saved sowing entries and mapped measurements remain stored. You can review those entries, keep actual production records and manage your own nursery equipment below. The catalogue nursery forecast is unavailable here. For a saved measured growing space, use Automatic plan from your estimates to review proposed seedling requirements from your own dates and inputs.</p>
     <p className="mt-2 text-sm"><Link href="/international" className="underline">Review international evidence and readiness</Link></p>
     <details className="mt-3">
