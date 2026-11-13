@@ -8,12 +8,13 @@ import { act, create, type ReactTestRenderer, type ReactTestInstance } from 'rea
 import ts from 'typescript';
 import { crop, account, samples, local, events, probe, bookKey, studioKey, studio, facilitator, ownRow, reset, cleanup, siteId, pauseHashes } from './international-grower-operations-fixture.ts';
 import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles } from '../lib/international/grower-planning.ts';
+import { createSavedProvisionalProfile, provisionalSiteConditions } from '../lib/international/provisional-profile.ts';
 import { prepareGrowerWorkflowAcceptance, type GrowerWorkflowDraft, type GrowerWorkflowReview } from '../lib/international/grower-workflow.ts';
 import { sanitiseNurserySettings } from '../lib/nursery-settings.ts';
 import { CROPS } from '../lib/crop-catalog.ts';
 import type { CropPlanState, HarvestTarget } from '../lib/crop-plan.ts';
 import { generateGrowerAutoPlan } from '../lib/international/grower-autoplan.ts';
-import { createGrowerCyclePlanting } from '../lib/international/grower-cycle.ts';
+import { createGrowerCyclePlanting, normaliseGrowerCycleAttachment } from '../lib/international/grower-cycle.ts';
 import { prepareGrowerNurseryBatchReferenceChanges, type GrowerNurseryBatchReferenceChange } from '../lib/international/grower-nursery.ts';
 import type { GrowerSavedNurseryReview, GrowerNurseryReferenceAcknowledgement } from '../components/crops/useGrowerWorkflow.ts';
 
@@ -32,6 +33,7 @@ const hooks = registerHooks({
     return next(url, context);
   },
 });
+const { currentPlanningSupport } = await import('../lib/international/planning-support.ts');
 const { harvestTargetsSourceKey } = await import('../lib/nursery-save-receipt.ts');
 const { useGrowerWorkflow } = await import('../components/crops/useGrowerWorkflow.ts');
 const { default: Panel } = await import('../components/crops/GrowerAutoPlanPanel.tsx');
@@ -74,6 +76,7 @@ function parent(book: unknown, resourceSiteId=siteId) {
   if(samples.isSampleMode()) samples.setSandboxCropPlan(book as CropPlanState); else replaceCanonicalCropPlanFixtureRaw(JSON.stringify(book));
   let notify=()=>{};
   const state:any={plan:null,planWriteBase:{current:null},planSaveConflict:false,planSaveFailed:false,saveTimer:{current:null},
+    surveySiteId:siteId,planningWorkspaceId:null,currentPlanningSupport,provisionalSiteConditions,
     growerOwner:account.activeAccountUid(),growerSample:samples.isSampleMode(),growerScope:scope,growerScopeKey:growerPlanningScopeKey(scope),productionSiteId:resourceSiteId,
     growerWriteScope:{current:{key:growerPlanningScopeKey(scope),owner:account.activeAccountUid(),sample:samples.isSampleMode()}},
     growerBookContext:{current:{siteId:resourceSiteId,owner:account.activeAccountUid(),sample:samples.isSampleMode(),scopeKey:growerPlanningScopeKey(scope)}},
@@ -90,12 +93,12 @@ function parent(book: unknown, resourceSiteId=siteId) {
   return {state,...functions,notify(callback:()=>void){notify=callback;}};
 }
 const text=(node:ReactTestInstance|string):string=>typeof node==='string'?node:node.children.map(item=>text(item as ReactTestInstance|string)).join('');
-function mounted(controller:ReturnType<typeof parent>) {
+function mounted(controller:ReturnType<typeof parent>, withProvisionalContext = false) {
   let current=controller,renderer!:ReactTestRenderer,latest!:ReturnType<typeof useGrowerWorkflow>,counter=0;
   let reviewPending:Promise<GrowerWorkflowReview>|null=null,acceptPending:Promise<unknown>|null=null;
   let id=()=>`persistent-${++counter}`;let selection:Parameters<typeof useGrowerWorkflow>[0]['selection']={kind:'studio-canvas',sourceId:siteId};
   function App(){const [,render]=React.useState(0),expectedActor=current.growerActorIsCurrent;current.notify(()=>render(value=>value+1));
-    latest=useGrowerWorkflow({selection,scope,resourceSiteId:current.state.productionSiteId,book:current.state.plan,actorIsCurrent:()=>expectedActor(),readCurrentBook:current.readCurrentGrowerBook,commitAcceptance:current.commitGrowerAcceptance,commitNurseryReferences:current.commitNurseryBatchReferences,createPlantingId:()=>id()});
+    latest=useGrowerWorkflow({selection,scope,...(withProvisionalContext?{provisionalSiteConditions:provisionalSiteConditions(currentPlanningSupport(siteId)),readCurrentProvisionalSiteConditions:()=>provisionalSiteConditions(currentPlanningSupport(siteId))}:{}),resourceSiteId:current.state.productionSiteId,book:current.state.plan,actorIsCurrent:()=>expectedActor(),readCurrentBook:current.readCurrentGrowerBook,commitAcceptance:current.commitGrowerAcceptance,commitNurseryReferences:current.commitNurseryBatchReferences,createPlantingId:()=>id()});
     return React.createElement(Panel,{scope,source:latest.source,sourceName:'Synthetic garden',sourceIssue:latest.sourceIssue,checking:latest.checking,contextRevision:latest.contextRevision,
       profiles:current.state.plan.growerPlanningProfiles??[],targets:current.state.plan.harvestTargets??[],targetSiteId:current.state.productionSiteId,onRefresh:latest.onRefresh,onReview:(value:GrowerWorkflowDraft)=>{reviewPending=latest.onReview(value);return reviewPending;},onAccept:(review:Extract<GrowerWorkflowReview,{status:'review'}>,guard:()=>boolean)=>{acceptPending=latest.onAccept(review,guard);return acceptPending as ReturnType<typeof latest.onAccept>;},acceptance:latest.acceptance});}
   act(()=>{renderer=create(React.createElement(App));});
@@ -108,7 +111,7 @@ function mounted(controller:ReturnType<typeof parent>) {
     replace(next:ReturnType<typeof parent>){current=next;act(()=>renderer.update(React.createElement(App)));},
     rerender(){act(()=>renderer.update(React.createElement(App)));},
     async refresh(){await act(async()=>{await latest.onRefresh();});},
-    async review(){let result!:GrowerWorkflowReview;await act(async()=>{result=await latest.onReview(draft());});assert.equal(result.status,'review',result.issues.join(','));if(result.status!=='review')throw Error('fixture held');return result;},
+    async review(request=draft()){let result!:GrowerWorkflowReview;await act(async()=>{result=await latest.onReview(request);});assert.equal(result.status,'review',result.issues.join(','));if(result.status!=='review')throw Error('fixture held');return result;},
     async accept(review:Extract<GrowerWorkflowReview,{status:'review'}>,guard=()=>true){let result!:Awaited<ReturnType<typeof latest.onAccept>>;await act(async()=>{result=await latest.onAccept(review,guard);});return result;},
     async readNursery(acknowledgement?:GrowerNurseryReferenceAcknowledgement){let result!:Awaited<ReturnType<typeof latest.onReadSavedNursery>>;await act(async()=>{result=await latest.onReadSavedNursery(acknowledgement);});return result;},
     async checkNursery(view:GrowerSavedNurseryReview){let result=false;await act(async()=>{result=await latest.onCheckSavedNurseryCurrent(view);});return result;},
@@ -116,6 +119,108 @@ function mounted(controller:ReturnType<typeof parent>) {
     dispose(){act(()=>renderer.unmount());}};
 }
 async function ready() {const f=await fixture();local.setItem(studioKey(),JSON.stringify(studio()));const c=parent(f.book),ui=mounted(c);await ui.refresh();return {...f,c,ui};}
+
+async function markedReady() {
+  const f = await fixture(); local.setItem(studioKey(), JSON.stringify(studio()));
+  const c = parent(f.book), ui = mounted(c, true); await ui.refresh(); const source = ui.latest.source; assert.ok(source);
+  const original = f.book.growerPlanningProfiles![0], recordedAt = '2026-11-04T12:00:00.000Z';
+  const own = (value: unknown, unit: string) => ({ state: 'provided', value, unit, provenance: { kind: 'grower-estimate', recordedAt } });
+  const saved = createSavedProvisionalProfile({ profileId: 'provisional-preview', cropKey: original.cropKey,
+    context: { scope, countryCode: null, agriculturalRegionReference: null, establishment: 'direct', waterRegime: 'irrigated' },
+    recordedAt, asOf: '2026-11-04', candidates: [], overrides: original.inputs,
+    measuredAreaM2: { ...own(8, 'm2'), arithmeticBasis: source.measuredAreas[0].arithmeticBasis },
+    fieldEntryDate: own('2028-12-01', 'utc-date') }, 'marked-profile', '2026-11-04T12:01:00.000Z', source, source.beds[0].id, source.beds[0].label);
+  assert.ok(saved); const initial = crop.loadCropPlanWithWriteAdmission();
+  const next = { ...initial.book, growerPlanningProfiles: [...initial.book.growerPlanningProfiles!, saved] };
+  const permit = crop.createGrowerProfileChangePermit(initial.admission, initial.book, next,
+    { kind: 'edit', profileId: saved.profileId, expectedProfile: null }); assert.ok(permit);
+  act(() => { assert.equal(crop.saveCropPlanWithReceipt(next, { growerProfileChange: permit }).saved, true); });
+  const loaded = crop.loadCropPlanWithWriteAdmission(); c.state.plan = loaded.book;
+  c.state.planWriteBase.current = { ...c.state.planWriteBase.current, token: loaded.token, planKey: JSON.stringify(loaded.book), admission: loaded.admission };
+  ui.rerender(); await ui.refresh();
+  const request = { ...draft(), targetProfiles: [{ targetId: 'buyer', profileId: saved.profileId }] };
+  const review = await ui.review(request); assert.equal(review.proposal.status, 'ready', review.issues.join(','));
+  return { ...f, c, ui, saved, review };
+}
+
+test('the mounted evidence declaration starts unchecked, retires a pending uncheck/recheck attempt and allows one fresh deliberate save', async () => {
+  const f = await markedReady(); try {
+    fill(f.ui); f.ui.change('Growing estimate for this target', f.saved.profileId);
+    await f.ui.click('Review automatic crop plan');
+    const save = () => f.ui.renderer.root.findAllByType('button').find(node => text(node).startsWith('Save all '))!;
+    assert.ok(save()); assert.equal(save().props.disabled, true);
+    const declaration = () => f.ui.field('I have reviewed these source limits');
+    assert.equal(declaration().props.checked, false);
+    assert.match(f.ui.text(), /Source evidence and grower choices/); assert.match(f.ui.text(), /Country: Unknown/);
+    assert.doesNotMatch(f.ui.text(), /[a-f0-9]{64}|marked-profile|private-policy-binding/);
+    const before = readCanonicalCropPlanFixtureRaw(), writes = local.writes;
+    await act(async () => { await save().props.onClick(); });
+    assert.equal(local.writes, writes, 'A retained click cannot bypass the unchecked declaration.');
+    act(() => declaration().props.onChange({ target: { checked: true } }));
+    assert.equal(save().props.disabled, false);
+    const gate = pauseHashes();
+    act(() => { save().props.onClick(); }); await gate.started;
+    act(() => { declaration().props.onChange({ target: { checked: false } }); declaration().props.onChange({ target: { checked: true } }); });
+    await act(async () => { gate.resume(); await f.ui.pending; });
+    assert.equal(local.writes, writes); assert.equal(readCanonicalCropPlanFixtureRaw(), before);
+    await act(async () => { save().props.onClick(); await f.ui.pending; });
+    assert.equal(local.writes, writes + 1); assert.equal(f.ui.latest.acceptance.status, 'confirmed');
+    const loaded = crop.loadCropPlan(); assert.ok(loaded.plantings.length > 1);
+    assert.deepEqual(loaded.growerPlanningProfiles!.find(row => row.profileId === f.saved.profileId), f.saved);
+  } finally { f.ui.dispose(); }
+});
+
+test('the actual mounted controller and page writer adopt an intact marked profile once and reload its evidence without treating own events as revocation', async () => {
+  const f = await markedReady(); try {
+    const writes = local.writes, before = crop.loadCropPlan(); const result = await f.ui.accept(f.review);
+    assert.equal(result.status, 'confirmed', JSON.stringify(result)); assert.equal(local.writes, writes + 1);
+    const saved = crop.loadCropPlan(); assert.deepEqual(saved.growerPlanningProfiles, before.growerPlanningProfiles);
+    assert.deepEqual(saved.plantings[0], f.foreign);
+    for (const row of saved.plantings.slice(1)) {
+      const attachment = normaliseGrowerCycleAttachment(row.growerCycle); assert.ok(attachment);
+      assert.deepEqual(attachment.assessmentSnapshot.profile, f.saved);
+      assert.equal(attachment.assessmentSnapshot.provisionalReview?.context.countryCode, null);
+      assert.equal(attachment.assessmentSnapshot.provisionalReview?.context.asOf, new Date().toISOString().slice(0, 10));
+    }
+    const after = local.writes; assert.equal((await f.ui.accept(f.review)).status, 'held'); assert.equal(local.writes, after);
+    assert.equal(f.c.state.planSaveConflict, false);
+  } finally { f.ui.dispose(); }
+});
+
+test('crossing UTC midnight during the actual acceptance source read retires the marked review before any write', async t => {
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-11-13T23:59:59.900Z') });
+  const f = await markedReady(); try {
+    const before = readCanonicalCropPlanFixtureRaw(), writes = local.writes, gate = pauseHashes();
+    let pending!: ReturnType<typeof f.ui.latest.onAccept>;
+    act(() => { pending = f.ui.latest.onAccept(f.review, () => true); }); await gate.started;
+    t.mock.timers.tick(1000);
+    let result!: Awaited<typeof pending>; await act(async () => { gate.resume(); result = await pending; });
+    assert.equal(result.status, 'held'); assert.equal(local.writes, writes); assert.equal(readCanonicalCropPlanFixtureRaw(), before);
+  } finally { f.ui.dispose(); }
+});
+
+test('the final raw writer guard prevents a marked write if the review day changes after page preparation', async t => {
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-11-13T23:59:59.900Z') });
+  const f = await markedReady(); try {
+    const before = readCanonicalCropPlanFixtureRaw(), writes = local.writes;
+    const actual = f.c.state.saveCropPlanWithReceipt;
+    f.c.state.saveCropPlanWithReceipt = (book: CropPlanState, options: Parameters<typeof crop.saveCropPlanWithReceipt>[1]) => {
+      t.mock.timers.tick(1000); return actual(book, options);
+    };
+    assert.equal((await f.ui.accept(f.review)).status, 'held');
+    assert.equal(local.writes, writes); assert.equal(readCanonicalCropPlanFixtureRaw(), before);
+  } finally { f.ui.dispose(); }
+});
+
+test('source revocation during a completed marked write reports superseded without installing stale plan state', async () => {
+  const f = await markedReady(); try {
+    const base = f.c.state.planWriteBase.current, plan = f.c.state.plan, writes = local.writes;
+    events.addEventListener(crop.CROP_PLAN_CHANGED_EVENT, () => events.dispatchEvent(new Event('permamap-places-changed')), { once: true });
+    assert.equal((await f.ui.accept(f.review)).status, 'superseded'); assert.equal(local.writes, writes + 1);
+    assert.equal(f.c.state.planWriteBase.current, base); assert.equal(f.c.state.plan, plan);
+    const after = local.writes; assert.equal((await f.ui.accept(f.review)).status, 'held'); assert.equal(local.writes, after);
+  } finally { f.ui.dispose(); }
+});
 function fill(ui:ReturnType<typeof mounted>){ui.check(`Include ${CROPS[0].name}`);ui.change('Growing estimate for this target','own-estimate');ui.change('First planning date','2028-12-01');ui.change('Planning ends before','2029-01-01');ui.change('Search work limit','1000');ui.check('I confirm availability');ui.change('Available from','2028-12-01');ui.change('Available until','2029-01-01');ui.check('I supply these planning dates');}
 
 test('actual mounted review save appends every canonical cycle once and preserves foreign evidence, nursery claims and observed records',async()=>{

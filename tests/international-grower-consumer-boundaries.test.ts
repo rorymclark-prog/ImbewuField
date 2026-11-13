@@ -12,7 +12,9 @@ import { buildPlanYieldBenchmark, readRawCropPlanReceipt, cropPlanWriteToken, lo
 import { activeAccountUid, activeAccountLocalStorageKey } from '../lib/account-local-storage.ts';
 import { isSampleMode } from '../lib/sample-mode.ts';
 import { getFirebase, isBackendConfigured } from '../lib/firebase/init.ts';
-import { hasGrowerCycleMarker, isProvenForeignGrowerCycle, createGrowerCyclePlanting } from '../lib/international/grower-cycle.ts';
+import { hasGrowerCycleMarker, isProvenForeignGrowerCycle, createGrowerCyclePlanting, normaliseGrowerCycleAttachment } from '../lib/international/grower-cycle.ts';
+import { createSavedProvisionalProfile, createProvisionalCycleContext } from '../lib/international/provisional-profile.ts';
+import { buildProvisionalCycleEvidence } from '../lib/international/provisional-crop-export.ts';
 import { projectGrowerCycles } from '../lib/international/grower-cycle-projection.ts';
 import { growerPlanningScopeKey, type GrowerInput, type GrowerPlanningProfile } from '../lib/international/grower-planning.ts';
 import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
@@ -79,8 +81,41 @@ function handlers(book:CropPlanState,beds:any[],binding?:{owner:string|null;samp
   return{...result,state,get book(){return current;},replaceBook(book:CropPlanState){current=book;}};
 }
 const text=(node:ReactTestInstance|string):string=>typeof node==='string'?node:node.children.map(c=>text(c as ReactTestInstance|string)).join('');
-const SavedRows=Function('React','projectGrowerCycles','cropByKey','Link','GrowerCycleIntent',transpile(functionText('SavedGrowerRows'),true)+'\nreturn SavedGrowerRows;')(React,projectGrowerCycles,cropByKey,(props:any)=>React.createElement('a',props,props.children),GrowerCycleIntent);
+const SavedRows=Function('React','useState','projectGrowerCycles','cropByKey','Link','GrowerCycleIntent','createProvisionalCycleContext','normaliseGrowerCycleAttachment','buildProvisionalCycleEvidence',transpile(functionText('SavedGrowerRows'),true)+'\nreturn SavedGrowerRows;')(React,React.useState,projectGrowerCycles,cropByKey,(props:any)=>React.createElement('a',props,props.children),GrowerCycleIntent,createProvisionalCycleContext,normaliseGrowerCycleAttachment,buildProvisionalCycleEvidence);
 Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});
+
+test('the actual saved-record view retains accepted evidence when current country use is held and offers a separate historical download', async () => {
+  const f = await fixture(), bed = f.source.beds[0];
+  const saved = createSavedProvisionalProfile({ profileId: 'provisional-preview', cropKey: f.profile.cropKey,
+    context: { scope: f.scope, countryCode: 'DE', agriculturalRegionReference: null, establishment: 'direct', waterRegime: 'irrigated' },
+    recordedAt, asOf: recordedAt.slice(0, 10), candidates: [], overrides: f.profile.inputs,
+    measuredAreaM2: { ...own(bed.areaM2, 'm2'), arithmeticBasis: f.source.measuredAreas[0].arithmeticBasis },
+    fieldEntryDate: own('2028-02-01', 'utc-date') }, 'private-historical-profile', '2026-11-05T12:01:00.000Z', f.source, bed.id, bed.label);
+  assert.ok(saved);
+  const conditions = { countryCode: 'DE', agriculturalRegionReference: null, policyFingerprint: 'private-historical-policy', knownPlantingRestriction: null };
+  const review = assembleGrowerWorkflowReview({ ...f, book: { ...f.book, growerPlanningProfiles: [saved] },
+    recordedAt: '2026-11-06T12:00:00.000Z', provisionalSiteConditions: conditions,
+    draft: { ...f.draft, targetProfiles: [{ targetId: f.target.id, profileId: saved.profileId }] } });
+  assert.equal(review.status, 'review', review.issues.join(',')); if (review.status !== 'review') throw Error('Fixture held');
+  const row = createGrowerCyclePlanting(review.proposal.cycles[0], { plantingId: 'private-historical-row',
+    acceptedAt: '2026-11-06T12:01:00.000Z', geometryFingerprint: f.source.geometryFingerprint }); assert.ok(row);
+  let renderer!: ReturnType<typeof create>, exports = 0;
+  const props = { rows: [row], wholeBookRows: [row], source: f.source, scope: f.scope, conditions,
+    onExport: async (candidate: Planting) => { assert.equal(candidate, row); exports++; return true; } };
+  try {
+    await act(async () => { renderer = create(React.createElement(SavedRows, props)); });
+    assert.match(text(renderer.root), /Own estimates: field entry/);
+    assert.match(text(renderer.root), /Original evidence as of \(UTC\): 2026-11-05/);
+    assert.match(text(renderer.root), /New evidence review as of \(UTC\): 2026-11-06/);
+    await act(async () => renderer.update(React.createElement(SavedRows, { ...props, conditions: { ...conditions, countryCode: 'GB' } })));
+    assert.match(text(renderer.root), /Held:/); assert.doesNotMatch(text(renderer.root), /Own estimates: field entry/);
+    assert.match(text(renderer.root), /Country: DE/); assert.doesNotMatch(text(renderer.root), /Country: GB/);
+    assert.doesNotMatch(text(renderer.root), /private-historical|[a-f0-9]{64}/);
+    const download = renderer.root.findAllByType('button').find(button => text(button) === 'Download historical record'); assert.ok(download);
+    await act(async () => { await download.props.onClick(); }); assert.equal(exports, 1);
+    assert.match(text(renderer.root), /Historical record download requested/);
+  } finally { if (renderer) await act(async () => renderer.unmount()); }
+});
 
 test('the actual saved-row screen reads back requested weight and window after JSON without substituting allocated bed capacity',async()=>{
  const f=await fixture();

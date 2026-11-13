@@ -7,6 +7,8 @@ import { type GrowerInput, type GrowerPlanningProfile } from '../lib/internation
 import { generateGrowerAutoPlan } from '../lib/international/grower-autoplan.ts';
 import { createGrowerCyclePlanting, hasGrowerCycleMarker, resolvePlantingBasis } from '../lib/international/grower-cycle.ts';
 import type { CropPlanState, Planting } from '../lib/crop-plan.ts';
+import { createProvisionalCycleContext, createSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
+import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 
 const hooks = registerHooks({ resolve(specifier, context, next) {
   if (specifier === './firebase/init' && context.parentURL?.endsWith('/lib/account-local-storage.ts')) return {
@@ -60,6 +62,45 @@ function plan(plantings: Planting[], profiles?: GrowerPlanningProfile[]): CropPl
 }
 async function reset() { releaseCropPlanFixture(); exitSampleMode(); local.clear(); session.clear(); await initialiseCropPlanFixture(); }
 const legacy = (): Planting => ({ id: 'legacy-fixture', bedId: bed.id, cropKey: crop.key, sowMonth: crop.sowMonths.summer[0] ?? 1 });
+
+test('the canonical writer retains an explicitly added provisional profile and its adopted dated review through raw storage and reload', async () => {
+  await reset(); const ordinary = ownFixture().profile;
+  const source: GrowerWorkflowSource = { status: 'ready', kind: 'studio-canvas', sourceId: scope.siteId, sourceKey: `studio-canvas:${scope.siteId}`,
+    resourceSiteId: scope.siteId, scope, beds: [bed], measuredAreas: [{ bedId: bed.id, areaM2: bed.areaM2, basis: 'explicit-saved-dimensions' }],
+    heldBeds: [], sourceRevision: 'b'.repeat(64), geometryFingerprint: 'a'.repeat(64), freshness: 'device-saved-copy', sourceVerification: 'not-verified' };
+  const saved = createSavedProvisionalProfile({ profileId: 'provisional-preview', cropKey: ordinary.cropKey,
+    context: { scope, countryCode: 'DE', agriculturalRegionReference: null, establishment: 'transplant', waterRegime: 'irrigated' },
+    candidates: [], overrides: ordinary.inputs, recordedAt, asOf: recordedAt.slice(0, 10), measuredAreaM2: provided(12, 'm2'),
+    fieldEntryDate: provided('2024-12-31', 'utc-date') }, 'saved-marked-profile', '2024-11-01T00:01:00.000Z', source, bed.id, bed.label);
+  assert.ok(saved); assert.equal(book.saveCropPlan(plan([])), true);
+  const initial = book.loadCropPlanWithWriteAdmission(), withProfile = { ...initial.book, growerPlanningProfiles: [saved] };
+  const permit = book.createGrowerProfileChangePermit(initial.admission, initial.book, withProfile, { kind: 'edit', profileId: saved.profileId, expectedProfile: null });
+  assert.ok(permit); assert.equal(book.saveCropPlanWithReceipt(withProfile, { growerProfileChange: permit }).saved, true);
+  const reviewedAt = '2024-11-02T00:00:00.000Z';
+  const current = createProvisionalCycleContext(source, { countryCode: 'DE', agriculturalRegionReference: null,
+    policyFingerprint: 'Synthetic policy context', knownPlantingRestriction: null }, reviewedAt); assert.ok(current);
+  const proposal = generateGrowerAutoPlan({ requestedAt: reviewedAt, scope, geometryFingerprint: source.geometryFingerprint,
+    profiles: [saved], provisionalContext: current, beds: [{ bed, scope, measuredAreaM2: provided(12, 'm2') }],
+    planningStart: provided('2024-12-01', 'utc-date'), planningEndExclusive: provided('2025-02-01', 'utc-date'), reserved: [],
+    availability: [{ bedId: bed.id, scope, window: provided({ start: '2024-12-01', endExclusive: '2025-02-01' }, 'utc-date-window') }],
+    demands: [{ demandId: 'marked-demand', profileId: saved.profileId, scope, totalKg: provided(1, 'kg-total'),
+      harvestWindow: provided({ start: '2025-01-02', endExclusive: '2025-01-05' }, 'utc-date-window') }], maxAssessments: 1000 });
+  assert.equal(proposal.status, 'ready', proposal.issues.join(',')); assert.equal(proposal.cycles.length, 1);
+  const row = createGrowerCyclePlanting(proposal.cycles[0], { plantingId: 'marked-record', acceptedAt: '2024-11-02T00:01:00.000Z', geometryFingerprint: source.geometryFingerprint });
+  assert.ok(row); const beforeAppend = book.loadCropPlanWithWriteAdmission();
+  assert.equal(book.saveCropPlanWithReceipt({ ...beforeAppend.book, plantings: [row] }, {
+    writeIsCurrent: () => book.cropPlanWriteToken() === beforeAppend.token }).saved, true);
+  const raw = JSON.parse(readCanonicalCropPlanFixtureRaw()), loaded = book.loadCropPlan();
+  assert.deepEqual(raw.growerPlanningProfiles, [saved]); assert.deepEqual(raw.plantings, [row]);
+  assert.deepEqual(loaded.growerPlanningProfiles, [saved]); assert.deepEqual(loaded.plantings, [row]);
+  const resolution = resolvePlantingBasis(loaded.plantings[0], { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint, provisionalContext: current });
+  assert.equal(resolution.kind, 'grower-dated-cycle');
+  if (resolution.kind === 'grower-dated-cycle') {
+    assert.equal(resolution.assessment.schedule.fieldEntryDate, '2024-12-31');
+    assert.equal(resolution.assessment.capacity.estimatedPlantCount, 24);
+    assert.deepEqual(resolution.assessment.snapshot.profile, saved);
+  }
+});
 
 test('actual canonical save/load retains an old own cycle without confirming, finishing or retiming it',async()=>{
   await reset(); const { row, profile } = ownFixture(); const before = JSON.stringify(row);

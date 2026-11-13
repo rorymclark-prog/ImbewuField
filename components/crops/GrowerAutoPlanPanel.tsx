@@ -6,6 +6,7 @@ import { cropByKey } from '@/lib/crop-catalog';
 import { estimateNumberLabel as quantity } from '@/lib/format-figures';
 import { resolveHarvestTargetDateWindow, isMonthlyHarvestTarget, type HarvestTarget } from '@/lib/crop-plan';
 import { growerPlanningScopeKey, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
+import { buildProvisionalCycleEvidence } from '@/lib/international/provisional-crop-export';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import type { GrowerWorkflowDemandDraft, GrowerWorkflowDraft, GrowerWorkflowReview } from '@/lib/international/grower-workflow';
 import { GROWER_DEMAND_SELECTION_MAX_ROWS, type GrowerEnteredDemandEntry, type GrowerEnteredDemandPurpose } from '@/lib/international/grower-entered-demand';
@@ -145,6 +146,11 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [receiptHidden, setReceiptHidden] = useState(false);
+  const [provisionalConsent, setProvisionalConsent] = useState<object | null>(null);
+  const provisionalDeclaration = useRef<{ selected: object | null }>({ selected: null });
+  function declareProvisionalConsent(selected: object | null) {
+    provisionalDeclaration.current = { selected }; setProvisionalConsent(selected);
+  }
   const generation = useRef(0), accepting = useRef(false);
   const formId = useId(), rowSequence = useRef(0), virtualRows = useRef(new Map<string, string>());
   const draftRef = useRef(draft); draftRef.current = draft;
@@ -153,7 +159,7 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
   const reviewRef = useRef(review); reviewRef.current = review;
   const live = useRef(props); live.current = props;
   const scopeKey = growerPlanningScopeKey(props.scope);
-  useEffect(() => { generation.current++; reviewGeneration.current = null; reviewContext.current = null; setReview(null); setError(''); setBusy(false); }, [props.contextRevision, props.source, scopeKey]);
+  useEffect(() => { declareProvisionalConsent(null); generation.current++; reviewGeneration.current = null; reviewContext.current = null; setReview(null); setError(''); setBusy(false); }, [props.contextRevision, props.source, scopeKey]);
   useEffect(() => () => { generation.current++; }, []);
   const targets = props.scope?.kind === 'mapped-site' && props.targetSiteId
     ? props.targets.filter(target => target.siteId === props.targetSiteId) : [];
@@ -166,6 +172,7 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
     && reviewContext.current?.scopeKey === scopeKey;
   function change(next: PanelDraft) {
     if (!draftCurrent()) return;
+    declareProvisionalConsent(null);
     generation.current++; reviewGeneration.current = null; reviewContext.current = null; draftRef.current = next;
     setReceiptHidden(true); setDraft(next); setReview(null); setError(''); setBusy(false);
   }
@@ -232,6 +239,7 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
   }
   async function run() {
     if (!draftCurrent()) return;
+    declareProvisionalConsent(null);
     const turn = ++generation.current, revision = props.contextRevision;
     reviewGeneration.current = null; reviewContext.current = null;
     setBusy(true); setReview(null); setError('');
@@ -249,12 +257,15 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
   async function save() {
     if (accepting.current || live.current.acceptance?.status === 'confirmed' || live.current.acceptance?.status === 'superseded' || !props.onAccept || review?.status !== 'review' || !contextCurrent() || !reviewMatchesContext
       || reviewRef.current !== review || reviewGeneration.current !== generation.current) return;
+    const declaration = provisionalDeclaration.current;
+    if (needsProvisionalReview && (!provisionalConsent || declaration.selected !== provisionalConsent || !provisionalEvidenceComplete)) return;
     const expected = review, turn = ++generation.current, revision = props.contextRevision;
     reviewGeneration.current = turn;
     accepting.current = true; setReceiptHidden(false); setError('');
     try {
       await props.onAccept(expected, () => generation.current === turn && reviewRef.current === expected
-        && live.current.contextRevision === revision && contextCurrent());
+        && live.current.contextRevision === revision && contextCurrent()
+        && (!needsProvisionalReview || provisionalDeclaration.current === declaration && declaration.selected === provisionalConsent));
     } catch { if (generation.current === turn) setError('Could not confirm this save. Review the current saved records before trying again.'); }
     finally { accepting.current = false; }
   }
@@ -267,6 +278,12 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
   const saving = props.acceptance?.status === 'saving';
   const saved = props.acceptance?.status === 'confirmed';
   const usable = review?.status === 'review' && (review.proposal.status === 'ready' || review.proposal.status === 'with-gaps');
+  const needsProvisionalReview = review?.status === 'review' && review.proposal.cycles.some(cycle => !!cycle.assessment.snapshot.profile.provisionalOrigin);
+  const provisionalEvidence = useMemo(() => usable && review?.status === 'review'
+    ? review.proposal.cycles.filter(cycle => cycle.assessment.snapshot.profile.provisionalOrigin).map(cycle => ({
+      cycleId: cycle.cycleId, evidence: buildProvisionalCycleEvidence(cycle.assessment.snapshot),
+    })) : [], [review, usable]);
+  const provisionalEvidenceComplete = provisionalEvidence.length > 0 && provisionalEvidence.every(row => row.evidence !== null);
   // Canonical replay is bounded but deliberate work: reuse one report for this
   // review, including ordinary receipt or parent rerenders. It grants no live authority.
   const buyerPicking = useMemo(() => usable && review ? projectGrowerBuyerPickingPeriods(review) : null, [review, usable]);
@@ -400,6 +417,12 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
             {review.enteredDemandMetadata?.map(entry => <p key={`entry:${entry.demandId}`}>Original entered weight for this whole demand: <span className="whitespace-pre-wrap [overflow-wrap:anywhere]">{entry.quantityEntry.text || 'not entered'} {entry.quantityEntry.unit}</span>. Kilogram figures above are the canonical planning equivalent.</p>)}
             {usable && review.proposal.cycles.map(cycle => <article key={cycle.cycleId} className="space-y-2 rounded-lg border border-[var(--border)] p-3">
               <h4 className="font-semibold">{beds.find(bed => bed.id === cycle.bedId)?.label ?? 'Saved growing space'} · {cropByKey(cycle.cropKey)?.name ?? cycle.cropKey}{enteredMeta(cycle.demandId) ? ` · ${purposeLabel(enteredMeta(cycle.demandId)!.purpose)}` : ''}</h4>
+              {cycle.assessment.snapshot.profile.provisionalOrigin && <details className="min-w-0 rounded border border-[var(--border)] p-2 [overflow-wrap:anywhere]">
+                <summary className="min-h-11 cursor-pointer font-semibold">Source evidence and grower choices</summary>
+                {provisionalEvidence.find(row => row.cycleId === cycle.cycleId)?.evidence
+                  ? <ul className="space-y-2">{provisionalEvidence.find(row => row.cycleId === cycle.cycleId)!.evidence!.lines.map((line, index) => <li key={index}>{line}</li>)}</ul>
+                  : <p role="alert">This source review could not be reproduced. Recalculate the profile before saving crops.</p>}
+              </details>}
               <p>{quantity(cycle.assessment.capacity.estimatedPlantCount)} estimated plants; {quantity(cycle.assessment.capacity.estimatedYieldKg)} kg for this whole cycle.</p>
               <dl>{Object.entries({ 'Nursery start': cycle.assessment.schedule.nurseryStartDate ?? 'No nursery phase', 'Field entry': cycle.assessment.schedule.fieldEntryDate,
                 'First harvest': cycle.assessment.schedule.firstHarvestDate, 'Picking ends (exclusive)': cycle.assessment.schedule.harvestEndExclusiveDate,
@@ -435,8 +458,13 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
           </>}
         {review.blockedBeds.length > 0 && <ul>{review.blockedBeds.map(bed => <li key={bed.bedId}>{beds.find(item => item.id === bed.bedId)?.label ?? 'Growing space'} held: {bed.reasons.map(issueText).join('; ')}</li>)}</ul>}
         {review.status === 'review' && !saved && props.acceptance?.status !== 'superseded' && <p>These are proposed estimates, not planted crops, observed stock or local farming approval. No crop cycle has been added to your saved plan.</p>}
+        {needsProvisionalReview && <label className="flex min-h-11 items-start gap-2">
+          <input type="checkbox" checked={provisionalConsent !== null} onChange={event => declareProvisionalConsent(event.target.checked ? {} : null)} />
+          I have reviewed these source limits, chosen inputs and unknowns for this proposal. These conditional estimates are not local farming approval.
+        </label>}
         {props.onAccept && review.status === 'review' && review.proposal.status === 'ready' && review.proposal.cycles.length > 0 && <button
-          type="button" className={button} disabled={saving || saved || props.acceptance?.status === 'superseded' || props.checking || busy} onClick={() => void save()}>
+          type="button" className={button} disabled={saving || saved || props.acceptance?.status === 'superseded' || props.checking || busy
+            || needsProvisionalReview && (!provisionalConsent || !provisionalEvidenceComplete)} onClick={() => void save()}>
           {saving ? 'Checking and saving planned cycles…' : `Save all ${review.proposal.cycles.length} planned crop cycles`}
         </button>}
         {usable && review.status === 'review' && props.nurseryReview?.(review)}

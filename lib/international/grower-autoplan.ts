@@ -1,3 +1,4 @@
+import { normaliseProvisionalCycleContext, type ProvisionalCycleContext } from './provisional-profile';
 import type { PlanBed } from '../crop-plan';
 import {
   addGrowerUtcDays, assessGrowerPlanning, growerPlanningScopeKey, isGrowerRecordedAt, isGrowerUtcDate,
@@ -39,6 +40,7 @@ export interface GrowerAutoPlanDemand {
 }
 export interface GrowerAutoPlanRequest {
   readonly requestedAt: string;
+  readonly provisionalContext?: ProvisionalCycleContext;
   readonly scope: GrowerPlanningScope;
   /** From the actual selected saved source; bed area alone cannot detect a moved polygon. */
   readonly geometryFingerprint: string;
@@ -176,7 +178,10 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
   const demands = (value.demands as unknown[]).map(normaliseGrowerAutoPlanDemand);
   const planningStart = normaliseGrowerInput(value.planningStart, 'utc-date', isGrowerUtcDate);
   const planningEndExclusive = normaliseGrowerInput(value.planningEndExclusive, 'utc-date', isGrowerUtcDate);
-  const invalid = [!scope && 'scope', profiles.length !== (value.profiles as unknown[]).length && 'profiles',
+  const hasContext = 'provisionalContext' in value;
+  const provisionalContext = hasContext ? normaliseProvisionalCycleContext(value.provisionalContext) : null;
+  const invalid = [hasContext && (!provisionalContext || provisionalContext.reviewedAt !== value.requestedAt
+      || provisionalContext.source.geometryFingerprint !== value.geometryFingerprint) && 'provisionalContext', !scope && 'scope', profiles.length !== (value.profiles as unknown[]).length && 'profiles',
     beds.some(row => !row) && 'beds', availability.some(row => !row) && 'availability', reserved.some(row => !row) && 'reserved',
     demands.some(row => !row) && 'demands', !planningStart && 'planningStart', !planningEndExclusive && 'planningEndExclusive',
     !isGrowerRecordedAt(value.requestedAt) && 'requestedAt',
@@ -199,7 +204,7 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
   }
   const canonicalRows = <T>(rows: T[]) => rows.sort((a, b) => compare(JSON.stringify(a), JSON.stringify(b)));
   snapshot = freeze({ countArithmetic: GROWER_COUNT_ARITHMETIC, requestedAt: value.requestedAt as string, scope, geometryFingerprint: value.geometryFingerprint as string,
-    profiles, beds: knownBeds.sort((a, b) => compare(a.bed.id, b.bed.id)), planningStart, planningEndExclusive,
+    ...(provisionalContext ? { provisionalContext } : {}), profiles, beds: knownBeds.sort((a, b) => compare(a.bed.id, b.bed.id)), planningStart, planningEndExclusive,
     availability: canonicalRows(knownAvailability), reserved: canonicalRows(knownReserved), demands: knownDemands, maxAssessments: budget });
   fingerprint = JSON.stringify(snapshot);
   const missing: string[] = [];
@@ -221,14 +226,24 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
   const generatedDate = (date: string): GrowerInput<string, 'utc-date'> => ({ state: 'provided', value: date, unit: 'utc-date',
     provenance: { kind: 'grower-estimate', recordedAt: snapshot!.requestedAt,
       note: 'Automatically selected from this request’s grower inputs; not an observed entry.' } });
+  // A source-backed or spacing profile describes its actual bed, never every
+  // bed in a multi-bed drawing. Reservations still cover the complete source.
+  const eligibleBeds = (profile: GrowerPlanningProfile) => {
+    const bound = profile.provisionalOrigin?.bedId ?? profile.plantCountOrigin?.bedId;
+    return bound ? knownBeds.filter(row => row.bed.id === bound) : knownBeds;
+  };
   const assess = (profile: GrowerPlanningProfile, bed: GrowerAutoPlanBed, date: string) => {
     spend();
-    return assessGrowerPlanning({ profile, scope, measuredAreaM2: bed.measuredAreaM2, fieldEntryDate: generatedDate(date) });
+    return assessGrowerPlanning({ profile, scope, measuredAreaM2: bed.measuredAreaM2, fieldEntryDate: generatedDate(date), countAreaBinding: { bedId: bed.bed.id },
+      ...(profile.provisionalOrigin && provisionalContext ? { provisionalContext } : {}) });
   };
   try {
     const checked = new Set<string>();
     for (const demand of positive) {
-      for (const bed of knownBeds) {
+      const profile = profileById.get(demand.profileId)!;
+      const eligible = eligibleBeds(profile);
+      if (!eligible.length) missing.push(`${demand.profileId}:bound-bed-unavailable`);
+      for (const bed of eligible) {
         const id = JSON.stringify([demand.profileId, bed.bed.id]);
         if (checked.has(id)) continue;
         checked.add(id);
@@ -263,7 +278,11 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
             continue;
           }
           const result = assess(profile, bed, cursor);
-          if (result.status !== 'ready') { reasons.add(result.status); return null; }
+          if (result.status !== 'ready') {
+            reasons.add(result.status);
+            if (result.status === 'entry-window-excluded') { cursor = addGrowerUtcDays(cursor, 1); continue; }
+            return null;
+          }
           if (result.capacity.estimatedYieldKg === 0 || result.capacity.estimatedPlantCount === 0) {
             reasons.add('zero-estimated-cycle-capacity'); return null;
           }
@@ -297,7 +316,7 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
       }
       const reasons = new Set<string>();
       const candidates = new Map<string, GrowerReadyAssessment>();
-      for (const bed of knownBeds) { const candidate = findCandidate(demand, bed, reasons); if (candidate) candidates.set(bed.bed.id, candidate); }
+      for (const bed of eligibleBeds(profileById.get(demand.profileId)!)) { const candidate = findCandidate(demand, bed, reasons); if (candidate) candidates.set(bed.bed.id, candidate); }
       let estimatedAllocatedKg = 0;
       while (estimatedAllocatedKg < requestedKg && candidates.size) {
         const [bedId, assessment] = [...candidates].sort((a, b) => compare(a[1].schedule.fieldEntryDate, b[1].schedule.fieldEntryDate) || compare(a[0], b[0]))[0];

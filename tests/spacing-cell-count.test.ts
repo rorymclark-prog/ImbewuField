@@ -1,12 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { resolveProvisionalCropPlan, type ProvisionalDraftRequest } from '../lib/international/provisional-crop-planning.ts';
 import { worldvegKenyaCowpeaCandidates } from '../lib/international/providers/worldveg-kenya-cowpea.ts';
 import { assessGrowerPlanning, assessProvisionalGrowerPlanning, normaliseGrowerPlanningProfile } from '../lib/international/grower-planning.ts';
 import { growerSpacingSourceQuantities } from '../lib/grower-estimate-units.ts';
-import { buildProvisionalCropPreviewHtml } from '../lib/international/provisional-crop-export.ts';
-import { createSavedProvisionalProfile, readSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
+import { buildProvisionalCropPreviewHtml, buildProvisionalCycleEvidence, buildAdoptedProvisionalCycleHtml } from '../lib/international/provisional-crop-export.ts';
+import { createSavedProvisionalProfile, readSavedProvisionalProfile, createProvisionalCycleContext } from '../lib/international/provisional-profile.ts';
+import { generateGrowerAutoPlan } from '../lib/international/grower-autoplan.ts';
+import { createGrowerCyclePlanting, normaliseGrowerCycleAttachment, resolvePlantingBasis } from '../lib/international/grower-cycle.ts';
 import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import { usdaGreatLakesCabbageCandidates, USDA_CABBAGE_SPACING_VERSION, USDA_CABBAGE_SPACING } from '../lib/international/providers/usda-great-lakes-cabbage.ts';
 
@@ -36,6 +39,81 @@ function usdaRequest(): ProvisionalDraftRequest {
     candidates: usdaGreatLakesCabbageCandidates(ctx, 'cabbage', recordedAt, true),
     countBasis: { ...original.countBasis!, purpose: 'cabbage-transplants', habit: 'not-applicable', rowCm: '76.2', inRowCm: '45.72', finalStand: '' } };
 }
+
+test('a complete saved spacing profile budgets whole cells on its bed through proposal, dated attachment and historical replay', () => {
+  const r = usdaRequest();
+  const complete = { ...r, countBasis: { ...r.countBasis!, finalStand: '2' }, overrides: { ...r.overrides, yieldKgPerM2: supplied(1, 'kg/m2/cycle') } };
+  const source: GrowerWorkflowSource = { status: 'ready', kind: 'studio-canvas', sourceId: scope.siteId, sourceKey: `studio-canvas:${scope.siteId}`,
+    resourceSiteId: scope.siteId, scope, geometryFingerprint: 'a'.repeat(64), sourceRevision: 'b'.repeat(64), freshness: 'device-saved-copy',
+    sourceVerification: 'not-verified', beds: [{ id: 'bed-1', label: 'Bound bed', areaM2: 10.125 }, { id: 'other', label: 'Unrelated bed', areaM2: 12 }],
+    measuredAreas: [{ bedId: 'bed-1', areaM2: 10.125, basis: 'explicit-saved-dimensions' }, { bedId: 'other', areaM2: 12, basis: 'explicit-saved-dimensions' }], heldBeds: [] };
+  const saved = createSavedProvisionalProfile(complete, 'saved-spacing', '2026-11-12T12:01:00.000Z', source, 'bed-1', 'Bound bed'); assert.ok(saved);
+  const reviewedAt = '2026-11-13T00:00:00.000Z';
+  const current = createProvisionalCycleContext(source, { countryCode: 'US', agriculturalRegionReference: 'Great Lakes States',
+    policyFingerprint: 'Synthetic policy binding', knownPlantingRestriction: null }, reviewedAt); assert.ok(current);
+  const input = { requestedAt: reviewedAt, scope, geometryFingerprint: source.geometryFingerprint, provisionalContext: current, profiles: [saved],
+    beds: source.beds.map(bed => ({ bed, scope, measuredAreaM2: supplied(bed.areaM2, 'm2') })),
+    planningStart: supplied('2026-11-13', 'utc-date'), planningEndExclusive: supplied('2026-12-31', 'utc-date'),
+    availability: source.beds.map(bed => ({ bedId: bed.id, scope, window: supplied({ start: '2026-11-13', endExclusive: '2026-12-31' }, 'utc-date-window') })),
+    reserved: [], demands: [{ demandId: 'synthetic-demand', profileId: saved.profileId, scope, totalKg: supplied(1, 'kg-total'),
+      harvestWindow: supplied({ start: '2026-11-13', endExclusive: '2026-12-31' }, 'utc-date-window') }], maxAssessments: 1000 };
+  const result = generateGrowerAutoPlan(input);
+  assert.equal(result.status, 'ready', result.issues.join(',')); assert.equal(result.cycles.length, 1);
+  const cycle = result.cycles[0]; assert.equal(cycle.bedId, 'bed-1');
+  assert.equal(cycle.assessment.capacity.budgetedStations, 29); assert.equal(cycle.assessment.capacity.estimatedPlantCount, 58);
+  assert.deepEqual(cycle.assessment.snapshot.profile, saved);
+  assert.deepEqual(cycle.assessment.snapshot.countAreaBinding, { bedId: 'bed-1' });
+  assert.equal(cycle.assessment.snapshot.provisionalReview?.context.asOf, '2026-11-13');
+  const row = createGrowerCyclePlanting(cycle, { plantingId: 'saved-spacing-cycle', acceptedAt: '2026-11-13T00:01:00.000Z', geometryFingerprint: source.geometryFingerprint });
+  assert.ok(row);
+  const publicEvidence = buildProvisionalCycleEvidence(cycle.assessment.snapshot); assert.ok(publicEvidence);
+  const publicText = JSON.stringify(publicEvidence);
+  assert.match(publicText, /Great Lakes States/); assert.match(publicText, /undated/);
+  assert.match(publicText, /76.2 cm/); assert.match(publicText, /45.72 cm/);
+  assert.equal(publicEvidence.originalAsOf, '2026-11-12'); assert.equal(publicEvidence.reviewedAsOf, '2026-11-13');
+  assert.doesNotMatch(publicText, /a{64}|b{64}|saved-spacing|site:0|Synthetic policy binding/);
+  const document = buildAdoptedProvisionalCycleHtml(row.growerCycle, { bedLabel: 'Bound bed <script>no</script>', sample: true }); assert.ok(document);
+  assert.match(document.html, /Saved provisional cycle record/); assert.doesNotMatch(document.html, /Not a saved or adopted crop plan/);
+  assert.match(document.html, /Original evidence as of/); assert.match(document.html, /Evidence rechecked as of/);
+  assert.match(document.html, /Historical estimates as accepted/); assert.match(document.html, /undated/);
+  assert.match(document.html, /&lt;script&gt;no&lt;\/script&gt;/); assert.doesNotMatch(document.html, /<script>|a{64}|b{64}|saved-spacing|site:0/);
+  const broken = JSON.parse(JSON.stringify(row.growerCycle)); broken.assessmentSnapshot.provisionalReview.resolverFingerprint += 'changed';
+  assert.equal(buildAdoptedProvisionalCycleHtml(broken, { bedLabel: 'Bed', sample: false }), null);
+  if (process.env.IMBEWU_ADOPTION_ARTIFACT_DIR) {
+    const output = process.env.IMBEWU_ADOPTION_ARTIFACT_DIR; mkdirSync(output, { recursive: true });
+    writeFileSync(join(output, 'adopted-spacing-record.html'), buildAdoptedProvisionalCycleHtml(row.growerCycle, { bedLabel: 'Bound bed', sample: true })!.html);
+    writeFileSync(join(output, 'public-evidence.json'), JSON.stringify(publicEvidence, null, 2));
+    writeFileSync(join(output, 'synthetic-accepted-row.json'), JSON.stringify({ row, source, current }, null, 2));
+  }
+  const reload = JSON.parse(JSON.stringify(row));
+  assert.deepEqual(normaliseGrowerCycleAttachment(reload.growerCycle), row.growerCycle);
+  const resolution = resolvePlantingBasis(reload, { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint, provisionalContext: current });
+  assert.equal(resolution.kind, 'grower-dated-cycle');
+  const evidence = readSavedProvisionalProfile(saved); assert.ok(evidence);
+  assert.equal(evidence.result.fields.establishment.sourceBindings[0].evidenceState, 'undated');
+  assert.equal(evidence.result.fields.establishment.sourceBindings[0].publishedOn, null);
+  const unknown = createSavedProvisionalProfile({ ...complete, countBasis: { ...complete.countBasis, finalStand: '' } },
+    'unknown-stand', '2026-11-12T12:01:00.000Z', source, 'bed-1', 'Bound bed'); assert.ok(unknown);
+  const held = generateGrowerAutoPlan({ ...input, profiles: [unknown], demands: [{ ...input.demands[0], profileId: unknown.profileId }] });
+  assert.equal(held.status, 'missing-inputs'); assert.equal(held.cycles.length, 0);
+  assert.ok(held.issues.some(issue => issue.endsWith(':spacing-final-stand')));
+
+  // ADOPT-E15-01: the same area on another bed cannot move a legitimate
+  // spacing-only attachment, even without a provisional-history extension.
+  const bare = resolved(complete).profile, { provisionalContext: _review, ...ordinaryRequest } = input;
+  const twins = source.beds.map(bed => ({ ...bed, areaM2: 10.125 }));
+  const bareProposal = generateGrowerAutoPlan({ ...ordinaryRequest, profiles: [bare],
+    beds: twins.map(bed => ({ bed, scope, measuredAreaM2: supplied(bed.areaM2, 'm2') })),
+    demands: [{ ...input.demands[0], profileId: bare.profileId }] });
+  assert.equal(bareProposal.status, 'ready'); const bareCycle = bareProposal.cycles[0];
+  const options = { plantingId: 'spacing-only', acceptedAt: '2026-11-13T00:01:00.000Z', geometryFingerprint: source.geometryFingerprint };
+  const bareRow = createGrowerCyclePlanting(bareCycle, options); assert.ok(bareRow);
+  assert.deepEqual(normaliseGrowerCycleAttachment(JSON.parse(JSON.stringify(bareRow.growerCycle))), bareRow.growerCycle);
+  assert.equal(createGrowerCyclePlanting({ ...bareCycle, bedId: 'other' }, options), null, 'ADOPT-E15-01: creation must retain the assessed bed.');
+  const moved = JSON.parse(JSON.stringify(bareRow)); moved.bedId = 'other'; moved.growerCycle.bedId = 'other';
+  assert.equal(normaliseGrowerCycleAttachment(moved.growerCycle), null, 'ADOPT-E15-01: copied outer and attachment bed IDs must not rebind spacing.');
+  assert.equal(resolvePlantingBasis(moved, { scope, beds: twins, geometryFingerprint: source.geometryFingerprint }).kind, 'held');
+});
 
 test('undated Great Lakes transplant spacing supports a conditional count without inventing stand, local currency or yield', () => {
   const r = usdaRequest();

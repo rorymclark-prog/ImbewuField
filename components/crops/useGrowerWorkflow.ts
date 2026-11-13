@@ -1,5 +1,7 @@
 'use client';
 
+import { createProvisionalCycleContext, type ProvisionalSiteConditions } from '@/lib/international/provisional-profile';
+
 import { useEffect, useRef, useState } from 'react';
 import type { CropPlanState } from '@/lib/crop-plan';
 import { CROP_PLAN_CHANGED_EVENT } from '@/lib/crop-plan';
@@ -40,6 +42,8 @@ export interface GrowerWorkflowAcceptanceCommit {
   readonly plantingIds: PrepareGrowerWorkflowAcceptanceInput['plantingIds'];
   /** Revocation only: the parent still checks its own actor, admission and book. */
   readonly isCurrent: () => boolean;
+  /** Source/site/day revocation survives this writer's own crop-book event. */
+  readonly sourceIsCurrent?: () => boolean;
 }
 export interface GrowerSavedNurseryReview {
   readonly kind: 'saved-nursery-review';
@@ -91,6 +95,8 @@ interface Inputs {
   scope: GrowerPlanningScope | null;
   resourceSiteId: string | null;
   book: CropPlanState | null;
+  provisionalSiteConditions?: ProvisionalSiteConditions;
+  readCurrentProvisionalSiteConditions?: () => ProvisionalSiteConditions | null;
   /** Parent checks both mounted ownership and the actual authentication singleton. */
   actorIsCurrent: () => boolean;
   readCurrentBook: () => GrowerWorkflowBookReceipt;
@@ -105,9 +111,11 @@ const savedNurseryKey = (value: unknown): string | null => {
   try { return JSON.stringify(detachJsonData(value, { allowUndefinedObjectFields: true })); }
   catch { return null; }
 };
-function savedNurseryView(source: GrowerWorkflowSource, book: CropPlanState, recordedAt: string): GrowerSavedNurseryReview {
+function savedNurseryView(source: GrowerWorkflowSource, book: CropPlanState, recordedAt: string, conditions?: ProvisionalSiteConditions): GrowerSavedNurseryReview {
   const rows = detachJsonData(book.plantings, { allowUndefinedObjectFields: true });
-  const cycleContext: GrowerCycleContext = { scope: source.scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint };
+  const provisionalContext = conditions ? createProvisionalCycleContext(source, conditions, recordedAt) : null;
+  const cycleContext: GrowerCycleContext = { scope: source.scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint,
+    ...(provisionalContext ? { provisionalContext } : {}) };
   const projection = projectGrowerCycles(rows, cycleContext);
   const references: GrowerSavedNurseryReview['references'] = projection.ownCycles.flatMap(cycle => {
     if (!cycle.nurseryDemand) return [];
@@ -155,7 +163,7 @@ export function useGrowerWorkflow(input: Inputs) {
   const epoch = useRef(0), sourceEpoch = useRef(0), mounted = useRef(false);
   const [source, setSource] = useState<GrowerWorkflowSource | null>(null);
   const sourceRef = useRef(source);
-  const sourceContext = useRef<{ actorIsCurrent: () => boolean; selectionKey: string } | null>(null);
+  const sourceContext = useRef<{ actorIsCurrent: () => boolean; selectionKey: string; generation: number } | null>(null);
   const [sourceIssue, setSourceIssue] = useState<string | null>(null);
   const [checking, setChecking] = useState(false);
   const [revision, setRevision] = useState(0);
@@ -169,18 +177,34 @@ export function useGrowerWorkflow(input: Inputs) {
   const recordedNurseryIntents = useRef(new WeakSet<() => boolean>());
   const accepting = useRef(false);
   const acceptanceContext = useRef<{ actorIsCurrent: () => boolean; selectionKey: string } | null>(null);
-  const selectionKey = JSON.stringify([input.selection, growerPlanningScopeKey(input.scope), input.resourceSiteId]);
+  const selectionKey = JSON.stringify([input.selection, growerPlanningScopeKey(input.scope), input.resourceSiteId, input.provisionalSiteConditions ?? null]);
+  const contextGeneration = useRef({ key: selectionKey, generation: 0 });
+  if (contextGeneration.current.key !== selectionKey) {
+    contextGeneration.current = { key: selectionKey, generation: contextGeneration.current.generation + 1 };
+    epoch.current++; sourceEpoch.current++;
+  }
+  const conditionsCurrent = () => {
+    try {
+      if (!live.current.provisionalSiteConditions) return true;
+      const current = !!live.current.readCurrentProvisionalSiteConditions
+        && JSON.stringify(live.current.readCurrentProvisionalSiteConditions()) === JSON.stringify(live.current.provisionalSiteConditions);
+      // An observed store mismatch retires old actions even if the values return
+      // before React receives another render (country A -> B -> A).
+      if (!current) { contextGeneration.current.generation++; epoch.current++; sourceEpoch.current++; }
+      return current;
+    } catch { contextGeneration.current.generation++; epoch.current++; sourceEpoch.current++; return false; }
+  };
   const selectionRef = useRef(selectionKey); selectionRef.current = selectionKey;
   let visibleSource = source;
   try {
     const context = sourceContext.current;
-    if (!context || context.selectionKey !== selectionKey || !context.actorIsCurrent() || !input.actorIsCurrent()) visibleSource = null;
+    if (!context || context.selectionKey !== selectionKey || context.generation !== contextGeneration.current.generation || !context.actorIsCurrent() || !input.actorIsCurrent()) visibleSource = null;
   } catch { visibleSource = null; }
   // Keep original check provenance, not the identity of each inline callback.
   // Rendering another account with the same selection cannot disclose its source.
   sourceRef.current = visibleSource;
   const bookKey = planningKey(input.book);
-  const bindings = useRef(new WeakMap<object, { draft: GrowerWorkflowDraft; source: GrowerWorkflowSource; recordedAt: string; actorIsCurrent: () => boolean; selectionKey: string }>());
+  const bindings = useRef(new WeakMap<object, { draft: GrowerWorkflowDraft; source: GrowerWorkflowSource; recordedAt: string; actorIsCurrent: () => boolean; selectionKey: string; generation: number; provisionalSiteConditions?: ProvisionalSiteConditions }>());
 
   function invalidateSource(message: string | null) {
     sourceEpoch.current++;
@@ -222,14 +246,14 @@ export function useGrowerWorkflow(input: Inputs) {
   }, [bookEvent, bookKey]);
 
   async function readSource(): Promise<{ source: GrowerWorkflowSource; isCurrent: () => boolean } | null> {
-    const initial = live.current, selected = initial.selection, key = selectionRef.current, actorIsCurrent = initial.actorIsCurrent;
-    if (!selected || !actorIsCurrent()) return null;
+    const initial = live.current, selected = initial.selection, key = selectionRef.current, actorIsCurrent = initial.actorIsCurrent, generation = contextGeneration.current.generation;
+    if (!selected || !actorIsCurrent() || !conditionsCurrent()) return null;
     let raw: unknown, rawRevision: string;
     let reread: (() => ReturnType<typeof readFacilitatorSourceReceipt>) | null = null;
     let receiptOwner: string | null = null, receiptSample = false;
     if (selected.kind === 'facilitator-cloud') {
       const rows = await myDesigns();
-      if (!actorIsCurrent() || selectionRef.current !== key) return null;
+      if (!actorIsCurrent() || selectionRef.current !== key || contextGeneration.current.generation !== generation || !conditionsCurrent()) return null;
       const matches = rows.filter(row => row.id === selected.sourceId);
       if (matches.length !== 1) return null;
       raw = matches[0]; rawRevision = JSON.stringify(raw);
@@ -240,11 +264,12 @@ export function useGrowerWorkflow(input: Inputs) {
     }
     const result = await fingerprintGrowerWorkflowSource(inspectGrowerWorkflowSource({ ...selected, raw, sourceRevision: rawRevision }));
     if (result.status !== 'ready' || !actorIsCurrent() || !live.current.actorIsCurrent()
-      || selectionRef.current !== key || growerPlanningScopeKey(result.scope) !== growerPlanningScopeKey(live.current.scope)
+      || selectionRef.current !== key || contextGeneration.current.generation !== generation || !conditionsCurrent() || growerPlanningScopeKey(result.scope) !== growerPlanningScopeKey(live.current.scope)
       || result.resourceSiteId !== live.current.resourceSiteId) return null;
     const isCurrent = () => {
       try {
-        if (!actorIsCurrent() || !live.current.actorIsCurrent() || selectionRef.current !== key) return false;
+        if (!actorIsCurrent() || !live.current.actorIsCurrent() || selectionRef.current !== key
+          || contextGeneration.current.generation !== generation || !conditionsCurrent()) return false;
         if (reread) {
           const after = reread();
           return after.status === 'ready' && after.revision === rawRevision && after.ownerUid === receiptOwner && after.sample === receiptSample;
@@ -264,7 +289,7 @@ export function useGrowerWorkflow(input: Inputs) {
     try {
       const checked = await readSource(), fresh = checked?.source ?? null;
       if (epoch.current !== turn) return;
-      sourceContext.current = fresh ? { actorIsCurrent, selectionKey: checkedSelection } : null;
+      sourceContext.current = fresh ? { actorIsCurrent, selectionKey: checkedSelection, generation: contextGeneration.current.generation } : null;
       sourceRef.current = fresh; setSource(fresh);
       if (!fresh) setSourceIssue('This source could not be checked, or its saved measurements need review. Reopen the design before continuing.');
     } catch { if (epoch.current === turn) setSourceIssue('Could not read this saved design. No local crop assumptions have been substituted.'); }
@@ -273,9 +298,12 @@ export function useGrowerWorkflow(input: Inputs) {
   async function onReview(draft: GrowerWorkflowDraft): Promise<GrowerWorkflowReview> {
     const initial = live.current, turn = epoch.current, expected = sourceRef.current, actorIsCurrent = initial.actorIsCurrent, reviewedSelection = selectionRef.current;
     if (accepting.current) return hold('acceptance-in-progress');
+    const recordedAt = new Date().toISOString(), generation = contextGeneration.current.generation;
+    const conditions = initial.provisionalSiteConditions ? detachJsonData(initial.provisionalSiteConditions) as ProvisionalSiteConditions : undefined;
     const reviewIsCurrent = () => {
       try { return mounted.current && epoch.current === turn && sourceRef.current === expected
-        && selectionRef.current === reviewedSelection && actorIsCurrent() && live.current.actorIsCurrent(); }
+        && selectionRef.current === reviewedSelection && contextGeneration.current.generation === generation && conditionsCurrent()
+        && (!conditions || new Date().toISOString().slice(0, 10) === recordedAt.slice(0, 10)) && actorIsCurrent() && live.current.actorIsCurrent(); }
       catch { return false; }
     };
     if (!expected || !reviewIsCurrent()) return hold('current-source-required');
@@ -292,7 +320,7 @@ export function useGrowerWorkflow(input: Inputs) {
     setAcceptance(previous => previous.status === 'superseded' ? previous : { status: 'idle' });
     const before = live.current.readCurrentBook(); if (before.status === 'held') return hold(before.reason);
     const checked = await readSource(), fresh = checked?.source;
-    if (epoch.current !== turn || selectionRef.current !== reviewedSelection || !actorIsCurrent() || !live.current.actorIsCurrent()) return hold('context-changed');
+    if (!reviewIsCurrent()) return hold('context-changed');
     if (!fresh || fresh.sourceKey !== expected.sourceKey || fresh.sourceRevision !== expected.sourceRevision) {
       invalidateSource('The saved design changed. Check it again before reviewing.'); return hold('source-changed');
     }
@@ -300,9 +328,12 @@ export function useGrowerWorkflow(input: Inputs) {
     if (after.status === 'held') return hold(after.reason);
     if (after.token !== before.token) return hold('saved-plan-changed');
     setAcceptance({ status: 'idle' });
-    const recordedAt = new Date().toISOString();
-    const review = assembleGrowerWorkflowReview({ scope: live.current.scope, source: fresh, book: after.book, draft: detachedDraft, recordedAt });
-    if (review.status === 'review') bindings.current.set(review, { draft: detachedDraft, source: fresh, recordedAt, actorIsCurrent, selectionKey: reviewedSelection });
+    if (!reviewIsCurrent() || !checked?.isCurrent()) return hold('context-changed');
+    const review = assembleGrowerWorkflowReview({ scope: live.current.scope, source: fresh, book: after.book, draft: detachedDraft, recordedAt,
+      ...(conditions ? { provisionalSiteConditions: conditions } : {}) });
+    if (!reviewIsCurrent()) return hold('context-changed');
+    if (review.status === 'review') bindings.current.set(review, { draft: detachedDraft, source: fresh, recordedAt, actorIsCurrent, selectionKey: reviewedSelection, generation,
+      ...(conditions ? { provisionalSiteConditions: conditions } : {}) });
     return review;
   }
   async function onCheckPreviewSource(expected: GrowerWorkflowSource): Promise<{ isCurrent: () => boolean } | null> {
@@ -320,17 +351,24 @@ export function useGrowerWorkflow(input: Inputs) {
     // actual saved design instead of treating a cached measurement as a fresh receipt.
     return { isCurrent: () => current() && checked.isCurrent() };
   }
+  function bindingContextCurrent(binding: { generation: number; recordedAt: string; provisionalSiteConditions?: ProvisionalSiteConditions }): boolean {
+    return conditionsCurrent()
+      && JSON.stringify(binding.provisionalSiteConditions ?? null) === JSON.stringify(live.current.provisionalSiteConditions ?? null)
+      && (!binding.provisionalSiteConditions || new Date().toISOString().slice(0, 10) === binding.recordedAt.slice(0, 10))
+      && contextGeneration.current.generation === binding.generation;
+  }
   async function onCheckCurrent(review: Extract<GrowerWorkflowReview, { status: 'review' }>): Promise<boolean> {
     const binding = bindings.current.get(review), turn = epoch.current;
-    if (!binding || !binding.actorIsCurrent() || binding.selectionKey !== selectionRef.current || !live.current.actorIsCurrent()) return false;
+    if (!binding || !bindingContextCurrent(binding) || !binding.actorIsCurrent() || binding.selectionKey !== selectionRef.current || !live.current.actorIsCurrent()) return false;
     const before = live.current.readCurrentBook(); if (before.status !== 'ready') return false;
     const checked = await readSource(), fresh = checked?.source;
-    if (epoch.current !== turn || !binding.actorIsCurrent() || !live.current.actorIsCurrent() || !fresh
+    if (epoch.current !== turn || !bindingContextCurrent(binding) || !binding.actorIsCurrent() || !live.current.actorIsCurrent() || !fresh
       || fresh.sourceKey !== binding.source.sourceKey || fresh.sourceRevision !== binding.source.sourceRevision) return false;
     const after = live.current.readCurrentBook(); if (after.status !== 'ready' || before.token !== after.token) return false;
     const current = assembleGrowerWorkflowReview({ scope: live.current.scope, source: fresh, book: after.book,
-      draft: binding.draft, recordedAt: binding.recordedAt });
-    return current.status === 'review' && current.proposal.fingerprint === review.proposal.fingerprint
+      draft: binding.draft, recordedAt: binding.recordedAt,
+      ...(binding.provisionalSiteConditions ? { provisionalSiteConditions: binding.provisionalSiteConditions } : {}) });
+    return bindingContextCurrent(binding) && checked?.isCurrent() === true && current.status === 'review' && current.proposal.fingerprint === review.proposal.fingerprint
       && JSON.stringify(current.request) === JSON.stringify(review.request)
       && JSON.stringify(current.blockedBeds) === JSON.stringify(review.blockedBeds)
       && JSON.stringify(current.existingOwnCycles) === JSON.stringify(review.existingOwnCycles);
@@ -371,7 +409,7 @@ export function useGrowerWorkflow(input: Inputs) {
       const after = live.current.readCurrentBook();
       if (after.status !== 'ready') return held(after.reason);
       if (after.token !== before.token || !after.isCurrent?.() || !checked.isCurrent()) return held('saved-plan-changed');
-      const view = savedNurseryView(checked.source, after.book, new Date().toISOString()), key = savedNurseryKey(view);
+      const view = savedNurseryView(checked.source, after.book, new Date().toISOString(), live.current.provisionalSiteConditions), key = savedNurseryKey(view);
       const sourceKey = savedNurseryKey(checked.source);
       if (!key || !sourceKey || !before.isCurrent?.() || !after.isCurrent?.() || !acknowledgementIsCurrent()) return held('context-changed');
       const sourceTurn = sourceEpoch.current;
@@ -384,7 +422,7 @@ export function useGrowerWorkflow(input: Inputs) {
         sourceIsCurrent: () => mounted.current && sourceEpoch.current === sourceTurn && checked.isCurrent() });
       if (!savedBindingIsCurrent(view)) return held('context-changed');
       if (acknowledgementBinding) acknowledgementBinding.consumed = true;
-      sourceContext.current = { actorIsCurrent, selectionKey: selection };
+      sourceContext.current = { actorIsCurrent, selectionKey: selection, generation: contextGeneration.current.generation };
       sourceRef.current = checked.source; setSource(checked.source); setSourceIssue(null);
       setSavedNursery(view);
       return { status: 'ready', view };
@@ -498,13 +536,14 @@ export function useGrowerWorkflow(input: Inputs) {
     } catch { return held(); }
     finally { nurserySaving.current = false; }
   }
-  async function onAccept(review: Review, displayedReviewIsCurrent: () => boolean = () => true): Promise<GrowerWorkflowAcceptanceResult> {
+  async function onAccept(review: Review, displayedReviewIsCurrent?: () => boolean): Promise<GrowerWorkflowAcceptanceResult> {
     const held = (...reasons: string[]): GrowerWorkflowAcceptanceResult => ({ status: 'held', reasons });
     if (accepting.current) return held('acceptance-in-progress');
-    const binding = bindings.current.get(review), initial = live.current, turn = epoch.current;
+    const binding = bindings.current.get(review), initial = live.current, turn = epoch.current, sourceTurn = sourceEpoch.current;
     const boundCurrent = () => {
       try { return mounted.current && !!binding && binding.selectionKey === selectionRef.current
-        && binding.actorIsCurrent() && live.current.actorIsCurrent() && displayedReviewIsCurrent(); }
+        && bindingContextCurrent(binding) && binding.actorIsCurrent() && live.current.actorIsCurrent()
+        && (displayedReviewIsCurrent?.() ?? !review.request.provisionalContext); }
       catch { return false; }
     };
     if (!binding || !initial.commitAcceptance || !initial.createPlantingId || !boundCurrent()) return held('review-binding-mismatch');
@@ -531,8 +570,11 @@ export function useGrowerWorkflow(input: Inputs) {
               && before.isCurrent?.() === true && after.isCurrent?.() === true;
             if (!isCurrent()) result = held('context-changed');
             else result = initial.commitAcceptance({ review,
-              binding: { draft: binding.draft, source: binding.source, recordedAt: binding.recordedAt },
-              source: fresh, expectedBookToken: after.token, acceptedAt: new Date().toISOString(), plantingIds, isCurrent });
+              binding: { draft: binding.draft, source: binding.source, recordedAt: binding.recordedAt,
+                ...(binding.provisionalSiteConditions ? { provisionalSiteConditions: binding.provisionalSiteConditions } : {}) },
+              source: fresh, expectedBookToken: after.token, acceptedAt: new Date().toISOString(), plantingIds, isCurrent,
+              sourceIsCurrent: () => mounted.current && sourceEpoch.current === sourceTurn && bindingContextCurrent(binding)
+                && binding.actorIsCurrent() && live.current.actorIsCurrent() && checked.isCurrent() });
             if (result.status === 'held' && boundCurrent() && !checked.isCurrent()) invalidateSource('The saved design changed. Check it again before reviewing.');
           }
         }

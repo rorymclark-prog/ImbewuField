@@ -30,15 +30,17 @@ import NurseryPlanPanel from '@/components/crops/NurseryPlanPanel';
 import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySaveContext, beginNurserySaveRequest, commitNurserySaveRequest, readNurserySaveConfirmation, createHarvestSaveContext, beginHarvestSaveRequest, commitHarvestSaveRequest, readHarvestSaveConfirmation, harvestTargetsSourceKey, type HarvestSaveContext, type HarvestSaveRequest, type HarvestSaveResult, type NurserySaveAuthority, type NurserySaveContext, type NurserySaveRequest, type NurserySaveResult } from '@/lib/nursery-save-receipt';
 import GrowerPlanningPanel from '@/components/crops/GrowerPlanningPanel';
 import ProvisionalCropPreview from '@/components/crops/ProvisionalCropPreview';
-import type { ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
+import { provisionalSiteConditions, createProvisionalCycleContext, type ProvisionalSiteConditions, type ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
 import GrowerAutoPlanPanel from '@/components/crops/GrowerAutoPlanPanel';
 import GrowerNurseryReviewPanel from '@/components/crops/GrowerNurseryReviewPanel';
 import SavedGrowerNurseryReviewPanel from '@/components/crops/SavedGrowerNurseryReviewPanel';
 import { useGrowerWorkflow, type GrowerWorkflowBookReceipt, type GrowerWorkflowAcceptanceCommit, type GrowerWorkflowAcceptanceResult,
   type GrowerNurseryReferenceCommit, type GrowerNurseryReferenceCommitResult } from '@/components/crops/useGrowerWorkflow';
 import { prepareGrowerNurseryBatchReferenceChanges } from '@/lib/international/grower-nursery';
-import { hasGrowerCycleMarker, isProvenForeignGrowerCycle } from '@/lib/international/grower-cycle';
+import { hasGrowerCycleMarker, isProvenForeignGrowerCycle, normaliseGrowerCycleAttachment } from '@/lib/international/grower-cycle';
 import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
+import { buildProvisionalCycleEvidence, buildAdoptedProvisionalCycleHtml } from '@/lib/international/provisional-crop-export';
+import { downloadFile } from '@/lib/crop-export-deliver';
 import GrowerCycleIntent from '@/components/crops/GrowerCycleIntent';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-workflow';
@@ -1510,7 +1512,13 @@ function FacilitatorCropsPageInner() {
     : surveySiteId ?? (design ? 'design:local' : useVirtual ? 'virtual-bed' : null));
   const growerBookContext = useRef({ siteId: productionSiteId, owner: growerOwner, sample: growerSample, scopeKey: growerScopeKey });
   growerBookContext.current = { siteId: productionSiteId, owner: growerOwner, sample: growerSample, scopeKey: growerScopeKey };
+  const planningSupport = resolvePlanningSupport({ places: countryPlaces, siteId: surveySiteId,
+    workspaceId: planningWorkspaceId, workspaceReferences: plan?.workspaceReferences });
+  const siteCountry = planningSupport.siteCountry;
+  const growerConditions = provisionalSiteConditions(planningSupport);
   const growerWorkflow = useGrowerWorkflow({ scope: growerScope, resourceSiteId: productionSiteId, book: plan,
+    provisionalSiteConditions: growerConditions,
+    readCurrentProvisionalSiteConditions: () => provisionalSiteConditions(currentPlanningSupport(surveySiteId, planningWorkspaceId)),
     selection: canvasSite ? { kind: 'studio-canvas', sourceId: canvasSite }
       : design ? chosenDesignId && chosenDesignId !== 'local' ? { kind: 'facilitator-cloud', sourceId: chosenDesignId }
         : { kind: 'facilitator-local', sourceId: 'local' } : null,
@@ -1612,9 +1620,7 @@ function FacilitatorCropsPageInner() {
       return { status: 'held' };
     }
   }
-  const planningSupport = resolvePlanningSupport({ places: countryPlaces, siteId: surveySiteId,
-    workspaceId: planningWorkspaceId, workspaceReferences: plan?.workspaceReferences });
-  const siteCountry = planningSupport.siteCountry;
+
   const allowCataloguePlanning = planningSupport.allowCataloguePlanning;
   const planningGeometryKey = JSON.stringify([canvasSite, chosenDesignId, beds]);
   const planningScopeKey = JSON.stringify([planningGeometryKey, planningSupport.fingerprint]);
@@ -2199,7 +2205,8 @@ function FacilitatorCropsPageInner() {
     const held = (reason: string): GrowerWorkflowAcceptanceResult => ({ status: 'held', reasons: [reason] });
     let written = false;
     try {
-      if (!plan || !growerActorIsCurrent() || planSaveConflict || !request.isCurrent()) return held('context-changed');
+      if (!plan || !growerActorIsCurrent() || planSaveConflict || !request.isCurrent()
+        || (request.sourceIsCurrent ? !request.sourceIsCurrent() : !!request.review.request.provisionalContext)) return held('context-changed');
       const base = planWriteBase.current;
       if (!base || base.owner !== growerOwner || base.sample !== growerSample || base.planKey !== JSON.stringify(plan)
         || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) return held('pending-plan-edits');
@@ -2214,7 +2221,8 @@ function FacilitatorCropsPageInner() {
       // Only the hook supplies its private original data binding. The pure
       // helper receives no functions or reconstructed display fingerprints.
       const prepared = prepareGrowerWorkflowAcceptance({ review: request.review, binding: request.binding,
-        scope: growerScope, source: request.source, book: current.book, acceptedAt: request.acceptedAt, plantingIds: request.plantingIds });
+        scope: growerScope, source: request.source, book: current.book, acceptedAt: request.acceptedAt, plantingIds: request.plantingIds,
+        ...(request.binding.provisionalSiteConditions ? { provisionalSiteConditions: provisionalSiteConditions(currentPlanningSupport(surveySiteId, planningWorkspaceId)) } : {}) });
       if (prepared.status === 'held') return { status: 'held', reasons: prepared.reasons };
       if (!cropPlanWriteCandidateIsLossless(prepared.book)) return held('acceptance-write-lossy');
       if (!request.isCurrent() || !growerActorIsCurrent() || planWriteBase.current !== base
@@ -2222,14 +2230,19 @@ function FacilitatorCropsPageInner() {
         || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)
         || cropPlanWriteToken() !== current.token) return held('saved-plan-changed');
       if (saveTimer.current) clearTimeout(saveTimer.current);
-      const receipt = saveCropPlanWithReceipt(prepared.book);
+      const receipt = saveCropPlanWithReceipt(prepared.book, { writeIsCurrent: () => request.isCurrent()
+        && (request.sourceIsCurrent?.() ?? true) && growerActorIsCurrent()
+        && cropPlanWriteToken() === current.token && planWriteBase.current === base });
+      // Retain the actual write before state callbacks or readback can fail.
+      if (receipt.saved) written = true;
       setPlanSaveFailed(!receipt.saved);
-      if (!receipt.saved) return { status: 'failed' };
-      written = true;
-      if (!growerActorIsCurrent() || planWriteBase.current !== base) { setPlanSaveConflict(true); return { status: 'superseded' }; }
+      if (!receipt.saved) return !request.isCurrent() || !(request.sourceIsCurrent?.() ?? true)
+        ? held('context-changed') : { status: 'failed' };
+      if (!(request.sourceIsCurrent?.() ?? true) || !growerActorIsCurrent() || planWriteBase.current !== base) { setPlanSaveConflict(true); return { status: 'superseded' }; }
       const confirmed = loadCropPlanWithWriteAdmission(), key = JSON.stringify(confirmed.book);
       if (confirmed.token !== receipt.token || !cropPlanWriteAdmissionMatches(confirmed.admission, key, receipt.token)
-        || !growerActorIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== receipt.token) {
+        || cropPlanWriteToken() !== receipt.token || !(request.sourceIsCurrent?.() ?? true)
+        || !growerActorIsCurrent() || planWriteBase.current !== base) {
         setPlanSaveConflict(true); return { status: 'superseded' };
       }
       // The raw appended book can legitimately project old once-row settlement.
@@ -2241,6 +2254,24 @@ function FacilitatorCropsPageInner() {
       if (written) { setPlanSaveConflict(true); return { status: 'superseded' }; }
       return held('acceptance-check-failed');
     }
+  }
+  async function exportSavedGrowerRecord(row: Planting): Promise<boolean> {
+    try {
+      const base = planWriteBase.current, receipt = readCurrentGrowerBook();
+      if (!base || receipt.status !== 'ready') return false;
+      const matches = receipt.book.plantings.filter(candidate => candidate.id === row.id);
+      if (matches.length !== 1 || JSON.stringify(matches[0]) !== JSON.stringify(row)) return false;
+      const attachment = normaliseGrowerCycleAttachment(matches[0].growerCycle);
+      if (!attachment?.assessmentSnapshot.profile.provisionalOrigin) return false;
+      const current = () => growerActorIsCurrent() && receipt.isCurrent?.() === true && planWriteBase.current === base;
+      if (!current()) return false;
+      const document = buildAdoptedProvisionalCycleHtml(attachment, {
+        bedLabel: attachment.assessmentSnapshot.profile.provisionalOrigin.bedLabel, sample: growerSample,
+      });
+      if (!document || !current()) return false;
+      return await downloadFile(new Blob([document.html], { type: 'text/html;charset=utf-8' }),
+        `ImbewuField${growerSample ? '-demo' : ''}-saved-provisional-cycle.html`, async () => current(), current) === 'downloaded';
+    } catch { return false; }
   }
   function commitNurseryBatchReferences(request: GrowerNurseryReferenceCommit): GrowerNurseryReferenceCommitResult {
     const held = (...reasons: string[]): GrowerNurseryReferenceCommitResult => ({ status: 'held', reasons });
@@ -2570,7 +2601,7 @@ function FacilitatorCropsPageInner() {
 
   const loading = design === undefined || plan === null || !mounted;
   const growerPlanningPanel = <>
-    <SavedGrowerRows rows={markedPlantings} wholeBookRows={plan?.plantings ?? []} source={selectedGrowerSource} scope={growerScope} />
+    <SavedGrowerRows rows={markedPlantings} wholeBookRows={plan?.plantings ?? []} source={selectedGrowerSource} scope={growerScope} conditions={growerConditions} onExport={exportSavedGrowerRecord} />
     {productionSiteId && growerScope?.kind === 'mapped-site' && <HarvestTargetsPanel
       key={`own-targets:${productionSiteId}:${growerScopeKey}`} basis="own-records" siteId={productionSiteId}
       targets={plan?.harvestTargets ?? []} beds={beds} plantings={plantings} pattern={pattern} climate={{}}
@@ -5316,23 +5347,37 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
   );
 }
 
-function SavedGrowerRows({ rows, wholeBookRows, source, scope }: {
+function SavedGrowerRows({ rows, wholeBookRows, source, scope, conditions, onExport }: {
   rows: readonly Planting[]; wholeBookRows: readonly Planting[];
   source: GrowerWorkflowSource | null; scope: GrowerPlanningScope | null;
+  conditions: ProvisionalSiteConditions; onExport: (row: Planting) => Promise<boolean>;
 }) {
+  const [exportMessage, setExportMessage] = useState('');
   if (!rows.length) return null;
-  const projection = source ? projectGrowerCycles(wholeBookRows, { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint }) : null;
+  const provisionalContext = source ? createProvisionalCycleContext(source, conditions, new Date().toISOString()) : null;
+  const projection = source ? projectGrowerCycles(wholeBookRows, { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint,
+    ...(provisionalContext ? { provisionalContext } : {}) }) : null;
   return <section aria-label="Saved own dated records" className="my-4 rounded-xl border p-4 text-sm" style={{ borderColor: 'var(--border)' }}>
     <h2 className="font-display text-lg font-semibold">Saved own dated records</h2>
     <p>These records remain saved. Catalogue dates, quantities and complete food or free-land coverage are withheld for them. Legacy controls cannot edit or clear them.</p>
     {!source && <p role="status">Current saved source not checked. These records are held until their site, geometry and measured space are checked again.</p>}
     <ul className="my-2 space-y-2">{rows.map((row, i) => {
       const cycle = projection?.ownCycles.find(cycle => cycle.plantingId === row.id);
+      const history = normaliseGrowerCycleAttachment(row.growerCycle);
+      const evidence = history ? buildProvisionalCycleEvidence(history.assessmentSnapshot) : null;
       return <li key={`${row.id}:${i}`}><strong>{cropByKey(row.cropKey)?.name ?? 'Saved crop record'}</strong> · {cycle
         ? `Own estimates: field entry ${cycle.assessment.schedule.fieldEntryDate}; next field entry ${cycle.assessment.schedule.nextFieldEntryDate}. Planned, not an observation.`
         : 'Held: source, scope, geometry or record identity needs review. No replacement catalogue schedule is supplied.'}
-        {cycle && <GrowerCycleIntent view={cycle.origin} />}</li>;
+        {cycle && <GrowerCycleIntent view={cycle.origin} />}
+        {evidence && <details className="min-w-0 [overflow-wrap:anywhere]"><summary className="min-h-11 cursor-pointer font-semibold">Historical evidence as accepted</summary>
+          <p>Saved estimates, not observed crops or current farming approval. Current operations may be held while this history remains readable.</p>
+          <ul className="space-y-2">{evidence.lines.map((line, index) => <li key={index}>{line}</li>)}</ul>
+          <button type="button" className="my-2 min-h-11 rounded-lg border px-3 py-2" onClick={async () => {
+            setExportMessage(await onExport(row) ? 'Historical record download requested. Open the HTML file in a browser to print it.' : 'The saved record changed or could not be checked. Reopen it before downloading.');
+          }}>Download historical record</button>
+        </details>}</li>;
     })}</ul>
+    {exportMessage && <p role="status">{exportMessage}</p>}
     <Link href="/cropplan" className="underline">Open Task Planner</Link>
   </section>;
 }
