@@ -10,6 +10,7 @@ import { growerWorkflowResourceSiteId, type GrowerWorkflowSource } from '@/lib/i
 import { resolveProvisionalCropPlan, type ProvisionalFieldCandidate, type ProvisionalDraftRequest } from '@/lib/international/provisional-crop-planning';
 import { usdaGreatLakesCabbageReference, usdaGreatLakesCabbageCandidates, usdaGreatLakesRegionMatches, USDA_CABBAGE_SPACING, type UsdaCabbageNurseryBasis } from '@/lib/international/providers/usda-great-lakes-cabbage';
 import { usdaGreatLakesTomatoReference, usdaGreatLakesTomatoCandidates, USDA_TOMATO_NURSERY } from '@/lib/international/providers/usda-great-lakes-tomato';
+import { southeastMissouriOatsReference, southeastMissouriRegionMatches, southeastMissouriOatsCandidates, MISSOURI_OATS_PDF_SHA256, type MissouriOatType, type MissouriOatsReferenceUse } from '@/lib/international/providers/usda-southeast-missouri-oats';
 import { createSavedProvisionalProfile, readSavedProvisionalProfile, type ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
 import type { GrowerPlanningProfile } from '@/lib/international/grower-planning';
 import { sourcePublicationText } from '@/lib/international/countries/readiness';
@@ -43,6 +44,8 @@ type Draft = {
   values: Partial<Record<NumericField, string>>; months: number[] | null; regionalConsent: string | null;
   cowpea: CowpeaReferenceConditions; cowpeaConsent: string | null; usdaConsent: string | null;
   tomatoConsent?: string | null;
+  oatsType?: MissouriOatType | '';
+  oatsConsent?: string | null;
   usdaNursery?: { basis: UsdaCabbageNurseryBasis | ''; contextKey: string | null };
   countMode: 'density' | 'spacing';
   spacing: { rowCm: string; inRowCm: string; finalStand: string };
@@ -138,6 +141,14 @@ function Editor(props: ProvisionalCropPreviewProps) {
   const tomatoConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.variety, draft.method, draft.water]);
   const useTomatoReference = tomatoConsentKey !== null && draft.tomatoConsent === tomatoConsentKey
     && usdaRegionMatch && draft.method !== 'direct';
+  const oatsReference = southeastMissouriOatsReference(props.countryCode, draft.crop);
+  const oatsRegionMatch = southeastMissouriRegionMatches(props.agriculturalRegionReference);
+  const oatsUse: MissouriOatsReferenceUse | null = draft.oatsType === 'spring' || draft.oatsType === 'winter'
+    ? { purpose: 'cover-crop-establishment', oatType: draft.oatsType } : null;
+  const oatsConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.variety,
+    draft.method, draft.water, oatsUse, MISSOURI_OATS_PDF_SHA256]);
+  const useOatsReference = oatsConsentKey !== null && draft.oatsConsent === oatsConsentKey
+    && oatsRegionMatch && draft.method !== 'transplant' && oatsUse !== null;
   const spacingConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.bed, draft.variety, draft.cowpea, draft.countMode, draft.spacing]);
   const stationConfirmed = spacingConsentKey !== null && draft.stationConsent === spacingConsentKey;
   const wholeAreaConfirmed = spacingConsentKey !== null && draft.areaConsent === spacingConsentKey;
@@ -154,7 +165,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
   function edit(next: Partial<Draft>) {
     if (!isCurrent()) return;
     const sourceChoiceChanged = ['crop', 'variety', 'method', 'water'].some(key => Object.hasOwn(next, key));
-    const value = { ...draft, ...next, ...(sourceChoiceChanged ? { tomatoConsent: null } : {}) }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
+    const value = { ...draft, ...next, ...(sourceChoiceChanged ? { tomatoConsent: null, oatsConsent: null } : {}) }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
   }
   async function refresh() {
     if (!isCurrent()) return;
@@ -198,7 +209,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
         candidates: [...(props.evidence?.candidates ?? []), ...worldvegKenyaCabbageCandidates(context, draft.crop, recordedAt, useRegionalMethod),
           ...worldvegKenyaCowpeaCandidates(context, draft.crop, recordedAt, useCowpeaMethod, draft.cowpea),
           ...usdaGreatLakesCabbageCandidates(context, draft.crop, recordedAt, useUsdaMethod, usdaNurseryBasis || null),
-          ...usdaGreatLakesTomatoCandidates(context, draft.crop, recordedAt, useTomatoReference)], overrides,
+          ...usdaGreatLakesTomatoCandidates(context, draft.crop, recordedAt, useTomatoReference),
+          ...southeastMissouriOatsCandidates(context, draft.crop, recordedAt, useOatsReference, oatsUse)], overrides,
         ...(draft.countMode === 'spacing' ? { countBasis: { kind: 'spacing-cell-budget-v1', bedId: draft.bed,
           ...(usdaReference ? { purpose: 'cabbage-transplants', habit: 'not-applicable' } : draft.cowpea), ...draft.spacing,
           interpretationConfirmed: stationConfirmed, wholeAreaConfirmed } } : {}),
@@ -287,7 +299,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
     <p className="text-sm">Preview supported counts and dates using applicable evidence and your edits. Missing values stay unknown. {props.onSaveProfile ? 'Calculating does not save. Use the separate save action to keep a profile for review.' : 'Nothing here saves a profile or adds a crop.'}</p>
     <p role="note" className="text-sm">Provisional estimates: source metadata is not verification of farming accuracy. Suitability and plant legality are not established. Density is not layout clearance.</p>
     <p className="text-sm">Country: {props.countryCode ?? 'Unknown'} · Agricultural region: {props.agriculturalRegionReference ?? 'Unknown'}</p>
-    {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && !useTomatoReference && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
+    {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && !useTomatoReference && !useOatsReference && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
     {!!savedProfiles.length && <section aria-label="Saved provisional profiles" className="space-y-3 rounded-lg border border-[var(--border)] p-3">
       <h3 className="font-semibold">Saved provisional profiles</h3>
       <p>Historical evidence, not a current source check or an approved planting plan. To change conditions, calculate and save a new preview.</p>
@@ -383,6 +395,24 @@ function Editor(props: ProvisionalCropPreviewProps) {
         disabled={!usdaRegionMatch || draft.method === 'direct'} checked={useTomatoReference}
         onChange={e => edit({ tomatoConsent: e.target.checked ? tomatoConsentKey : null })} />Use this undated tomato seed-starting reference for my declared Great Lakes States region</label>
       <p>Your nursery-duration override takes precedence. Reset it to use the source’s {USDA_TOMATO_NURSERY.days}-day reference; clearing your override keeps the duration unknown.</p>
+    </section>}
+    {oatsReference && <section aria-label="Southeast Missouri oats reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
+      <h3 className="font-semibold">USDA Southeast Missouri oats cover-crop reference</h3>
+      <p>The March 2014 guide groups spring and winter oats with seeding months March–April and August–September. These are reported positive months; other months stay unknown.</p>
+      <p>This is historical cover-crop establishment guidance, not grain or food harvest advice. The grouped window is not a separately validated calendar for each type or cultivar. Winter survival and termination requirements remain unverified.</p>
+      <label className="block">Oat type for this reference<select aria-label="Oat type for this reference" className={control} value={draft.oatsType ?? ''}
+        onChange={e => edit({ oatsType: e.target.value as MissouriOatType | '', oatsConsent: null })}>
+        <option value="">Choose your oat type</option><option value="spring">Spring oat type</option><option value="winter">Winter oat type</option>
+      </select></label>
+      <p>The crop label does not determine your oat type. Check your seed and local conditions.</p>
+      <p><a className="underline" href={`${oatsReference.url}#page=2`} target="_blank" rel="noreferrer">Read the original USDA guide, page 2</a></p>
+      <p>{oatsReference.attribution}</p><p>{oatsReference.licence.status === 'known' && oatsReference.licence.value}</p>
+      {!oatsRegionMatch && <p role="note">Declare the explicit region “Southeast Missouri” to consider this reference. Country and coordinates alone do not select it.</p>}
+      {draft.method === 'transplant' && <p role="note">This source concerns direct seeding, not transplanting.</p>}
+      <label className="flex min-h-11 items-center gap-2"><input type="checkbox" aria-label="Use March 2014 oats cover-crop reference"
+        disabled={!oatsRegionMatch || !oatsUse || draft.method === 'transplant'} checked={useOatsReference}
+        onChange={e => edit({ oatsConsent: e.target.checked ? oatsConsentKey : null })} />Use this March 2014 direct-seeding reference for cover-crop establishment</label>
+      <p>Present suitability, water adequacy and planting permission are unknown. No density, yield, harvest or termination dates are supplied. Source availability is not current local agronomic validation.</p>
     </section>}
     {(cowpeaReference || usdaReference) && <section aria-label="Regional spacing estimate" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
       <label className="block">Plant-count method<select aria-label="Plant-count method" className={control} value={draft.countMode}
