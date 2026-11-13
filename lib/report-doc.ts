@@ -1,4 +1,4 @@
-import { reportWaterEvidence, reportSlopeEvidence } from './report-risk';
+import { reportWaterEvidence, reportSlopeEvidence, reportSoilEvidence, reportEarthworksEvidence, reportEvidenceText } from './report-risk';
 import { annualRainfallMm, recordMinimumC, reportClimateEvidence } from './climate-temperature';
 // ── ImbewuField structured report ("ReportDoc") ──────────────────────────────
 // The 11-section, map-linked report is the product differentiator. This is the
@@ -238,11 +238,9 @@ function finitePositive(value: unknown): number | undefined {
  * unknown rather than assumed good.
  */
 function soilBasis(soil: SoilData | undefined, suffix = ''): string {
-  // A lab result takes no hedging suffix. Every branch below ends by telling
-  // the farmer to get a soil test; once they have, repeating it is noise — and
-  // worse, it casts doubt on the one figure in the document that actually
-  // measured their ground.
-  if (soil?.soilSource === 'lab') return 'your uploaded soil test — measured on this site';
+  // Attribution is recorded, but the flag carries no original report or sample
+  // identity. Keep the value without upgrading it to an independently checked test.
+  if (soil?.soilSource === 'lab') return 'recorded laboratory attribution — original report and sample/site correspondence not verified here';
   if (soil?.soilSource === 'soilgrids') return `SoilGrids model${suffix}`;
   if (soil?.soilSource === 'estimate') {
     return `no soil data for this point — app default, not a reading${suffix || ' — a soil test is the only way to know'}`;
@@ -267,6 +265,9 @@ export function buildSkeletonReportDoc(args: {
 }): ReportDoc {
   const { id, siteId, location, survey, layers, plan, phasePlan, studio, createdAt } = args;
   const lang = args.lang ?? 'en';
+  const pending = (text: string) => reportEvidenceText(text, lang);
+  const soilEvidence = reportSoilEvidence(location.soil?.soilSource, lang);
+  const earthworksEvidence = reportEarthworksEvidence(lang);
   const wc = plan?.waterCalc;
   // The SANBI vegetation unit when it is known, not the coarse biome polygon — see
   // lib/site-ecology.ts for why the two disagree and which one a farmer should be planting from.
@@ -305,28 +306,26 @@ export function buildSkeletonReportDoc(args: {
 
   // ── Executive ──
   const opportunities: string[] = [];
-  if (harvestKL) opportunities.push(`Harvest ~${numberLabel(harvestKL)} kL/year of rainwater off the roof — connect gutters to a tank.`);
-  if (gardenAreaM2) opportunities.push(`Intensify the existing ${Math.round(gardenAreaM2)} m² vegetable garden with beds, compost and drip irrigation.`);
-  opportunities.push('Establish a north-facing orchard / food forest on the open sunny ground.');
-  if (hasTreeBelt) opportunities.push('Keep the existing tree belt as a windbreak and biodiversity buffer.');
+  if (roofAreaM2 && harvestKL !== null) opportunities.push(pending(`Recorded roof collection estimate: ~${numberLabel(harvestKL)} kL/year. Available supply and storage adequacy have not been established.`));
+  if (gardenAreaM2) opportunities.push(pending(`Review the recorded ${Math.round(gardenAreaM2)} m² cultivation footprint against intended crops and local conditions.`));
+  if (hasTreeBelt) opportunities.push(pending('A tree-belt footprint is recorded; confirm its condition and intended role on site.'));
+  if (!opportunities.length) opportunities.push(pending('Site-specific opportunities have not been assessed; record farmer goals and site evidence.'));
 
   const challenges = clean(survey?.challenges);
   const minTemp = recordMinimumC(location.climate);
 
   if (survey?.productionConditions?.frost === 'yes') challenges.push('Frost has been observed on this farm (grower-reported); confirm affected locations and timing.');
-  if (survey?.soilCondition === 'compacted') challenges.push('Compacted soil — needs aeration and organic-matter building.');
-  if (!challenges.length) challenges.push('Building soil fertility and year-round food production.');
+  if (survey?.soilCondition === 'compacted') challenges.push(pending('Compaction is reported by the grower; confirm field conditions before selecting treatment.'));
+  if (!challenges.length) challenges.push(pending('Site constraints have not yet been assessed.'));
 
   const executive: ExecutiveSummary = {
-    farmOverview: `A ${sizeHa !== undefined ? `${sizeHa} ha ` : ''}site in the ${biome}${bruNote}${rainMm !== null ? ` (~${rainMm} mm/yr)` : ''}.${goals.length ? ` The household's main goals are ${goals.join(', ')}.` : ''} This plan organises the land into permaculture zones from the house outward, captures water high in the landscape, and builds a layered, largely self-feeding system.`,
+    farmOverview: pending(`A ${sizeHa !== undefined ? `${sizeHa} ha ` : ''}site in the ${biome}${bruNote}${rainMm !== null ? ` (~${rainMm} mm/yr)` : ''}.${goals.length ? ` The household's main goals are ${goals.join(', ')}.` : ''} This draft organises recorded site and design information. Proposed works and planting choices still require local evidence and review.`),
     topOpportunities: opportunities.slice(0, 5),
     topChallenges: [reportWaterEvidence(rainMm), ...challenges.slice(0, 5)],
     priorityActions12mo: [
-      { month: 'Months 1–2', action: 'Set up compost and connect roof gutters to a tank', why: 'Fast wins: fertility + stored water before the dry season.' },
-      { month: 'Months 2–3', action: 'Mark and dig the first swale on contour above the garden', why: 'Slows and sinks runoff where it is most useful.' },
-      { month: 'Months 3–5', action: 'Plant fruit & nut trees in the orchard zone', why: 'Get perennials established in the planting season.' },
-      { month: 'Months 6–9', action: 'Expand the kitchen garden and add small livestock if planned', why: 'Builds daily food production close to the house.' },
-      { month: 'Months 9–12', action: 'Plant the windbreak / tree-belt edge and review progress', why: 'Protects the system and closes the first cycle.' },
+      { month: pending('Before choosing soil work'), action: pending('Review original soil results and field observations'), why: soilEvidence },
+      { month: pending('Before choosing earthworks'), action: pending('Arrange a local assessment of contour, drainage, soil and safe overflow'), why: earthworksEvidence },
+      { month: pending('Before scheduling construction'), action: pending('Review recorded proposals, evidence gaps and local quotations'), why: pending('No construction order, timing or comparative cost has been established.') },
     ],
   };
 
@@ -334,11 +333,11 @@ export function buildSkeletonReportDoc(args: {
   const existingSite: ExistingSite = {
     sizeHa: sizeHa !== undefined ? { value: sizeHa, unit: 'ha', provenance: 'measured', basis: 'traced property boundary' } : undefined,
     climateSummary: reportClimateEvidence(location),
-    currentLandUses: [gardenAreaM2 ? 'vegetable garden' : '', hasTreeBelt ? 'trees / bush' : '', 'dwelling'].filter(Boolean),
+    currentLandUses: [gardenAreaM2 ? pending('Cultivation footprint recorded on the plan') : '', hasTreeBelt ? pending('Tree-belt footprint recorded on the plan') : ''].filter(Boolean),
     infrastructure: clean(survey?.otherInfra),
     existingCrops: crops,
     existingLivestock: livestock,
-    existingTrees: hasTreeBelt ? ['existing tree belt'] : [],
+    existingTrees: hasTreeBelt ? [pending('Tree-belt footprint recorded; existence and condition not verified here')] : [],
     observations: [],
   };
 
@@ -350,15 +349,15 @@ export function buildSkeletonReportDoc(args: {
     sources: clean(survey?.waterSource),
     storageExisting: clean(survey?.waterStorage, ['none']),
     runoffRisk, erosionRisk,
-    floodRisk: 'Observe the low corner after heavy rain (no detailed survey).',
+    floodRisk: pending('Flood risk has not been assessed; record observed water flow and inundation.'),
     harvestingOpportunities: [
-      harvestKL ? `Roof catchment ~${numberLabel(harvestKL)} kL/yr to tanks.` : 'Connect roof gutters to a tank.',
-      'Swales on contour to slow, spread and sink runoff.',
+      roofAreaM2 ? pending(harvestKL !== null ? `Recorded roof collection estimate: ~${numberLabel(harvestKL)} kL/year; available supply and storage adequacy remain unassessed.` : 'A roof footprint is recorded; its water collection potential is not known.')
+        : pending('No roof catchment is recorded; this does not prove that no roof exists.'),
+      earthworksEvidence,
     ],
-    recommendedEarthworks: [
-      { type: 'Swale', note: 'On contour, upslope of the garden.' },
-      { type: 'Tank', note: roofs.length ? `Sized to the roof harvest above.` : 'JoJo tank at the house.' },
-    ],
+    // User-recorded features remain in master-design. No generic earthwork is
+    // promoted to a recommendation without a supported site assessment.
+    recommendedEarthworks: [],
     estStorageCapacity: finitePositive(wc?.dryBufferLitres90Day)
       ? { value: Math.round(finitePositive(wc?.dryBufferLitres90Day)! / 1000), unit: 'kL', provenance: 'calculated', basis: '90-day household dry-season buffer' }
       : undefined,
@@ -381,15 +380,15 @@ export function buildSkeletonReportDoc(args: {
     // answered. A farmer reading "SoilGrids model" reasonably believes something looked at
     // their land, and the 45-page Ubhejane report built its whole soil section on exactly
     // that misplaced trust. See SoilData.soilSource.
-    ph: ph !== undefined ? { value: ph, provenance: so?.soilSource === 'lab' ? 'measured' : 'estimated', basis: soilBasis(so, ' — confirm with a soil test') } : undefined,
-    organicMatter: organicCarbon !== undefined ? { value: organicCarbon, unit: '% OC', provenance: so?.soilSource === 'lab' ? 'measured' : 'estimated', basis: soilBasis(so) } : undefined,
-    compaction: survey?.soilCondition === 'compacted' ? 'Reported compacted — aerate before planting.' : 'Assess by digging a test hole.',
+    ph: ph !== undefined ? { value: ph, provenance: so?.soilSource === 'lab' ? 'user-reported' : 'estimated', basis: pending(soilBasis(so, ' — confirm with a soil test')) } : undefined,
+    organicMatter: organicCarbon !== undefined ? { value: organicCarbon, unit: '% OC', provenance: so?.soilSource === 'lab' ? 'user-reported' : 'estimated', basis: pending(soilBasis(so)) } : undefined,
+    compaction: pending(survey?.soilCondition === 'compacted' ? 'Compaction reported by the grower; treatment suitability has not been assessed.' : 'Compaction has not been assessed; record field observations.'),
     erosion: water.erosionRisk,
     improvementPlan: [
-      { action: 'Add compost and mulch to build organic matter', timing: 'ongoing', provenance: 'estimated' },
-      { action: 'Interpret a soil test for the intended crop and field conditions before choosing amendments', timing: 'before planting', provenance: 'estimated' },
+      { action: soilEvidence, timing: pending('Before choosing treatment'), provenance: 'estimated' },
+      { action: pending('Match any proposed amendment to supported crop-specific interpretation and field conditions'), timing: pending('After reviewing the evidence'), provenance: 'estimated' },
     ],
-    coverCrops: ['cowpea', 'sunn hemp', 'oats/vetch (winter)'],
+    coverCrops: [],
   };
 
   // ── Sector ──
@@ -408,7 +407,7 @@ export function buildSkeletonReportDoc(args: {
     dust: 'Screen dust from the road/driveway with a hedge.',
     frost: survey?.productionConditions?.frost === 'yes' ? 'Frost observed on the farm (grower-reported).' : survey?.productionConditions?.frost === 'no' ? 'No frost observed by the grower; this does not certify frost-free conditions.' : `Farm frost observations not recorded.${minTemp !== null ? ` Modelled record low ${minTemp} °C; this does not establish frost frequency.` : ''}`,
     neighbours: 'Screen overlooked edges; keep neighbourly access clear.',
-    externalOpportunities: ['Roof + driveway runoff to harvest', 'Sun on the northern slope for the orchard'],
+    externalOpportunities: [],
   };
 
   // ── Zones (from the generated plan if present) ──

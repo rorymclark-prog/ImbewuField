@@ -212,7 +212,7 @@ test('area and roof harvest obey their dimensional rules and shared coefficient 
     WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
   );
   assert.ok(doc.sections.water?.harvestingOpportunities.includes(
-    `Roof catchment ~${numberLabel(Math.round(harvest / 1_000))} kL/yr to tanks.`,
+    `Recorded roof collection estimate: ~${numberLabel(Math.round(harvest / 1_000))} kL/year; available supply and storage adequacy remain unassessed.`,
   ));
 
   const source = readFileSync(new URL('../lib/report-doc.ts', import.meta.url), 'utf8');
@@ -260,10 +260,10 @@ test('all approved roofs and gardens contribute to their derived report facts', 
     WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
   );
   assert.ok(doc.sections.water?.harvestingOpportunities.includes(
-    `Roof catchment ~${numberLabel(Math.round(harvest / 1_000))} kL/yr to tanks.`,
+    `Recorded roof collection estimate: ~${numberLabel(Math.round(harvest / 1_000))} kL/year; available supply and storage adequacy remain unassessed.`,
   ));
   assert.ok(doc.sections.executive?.topOpportunities.some(
-    (text) => text.includes(`${firstGarden.areaM2 + secondGarden.areaM2} m² vegetable garden`),
+    (text) => text.includes(`${firstGarden.areaM2 + secondGarden.areaM2} m² cultivation footprint`),
   ));
 
   const steps = doc.sections.implementation?.flatMap((phase) => phase.steps) ?? [];

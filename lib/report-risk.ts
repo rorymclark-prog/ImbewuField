@@ -44,24 +44,9 @@ export function buildRiskRegister(input: RiskInput, language = 'en'): RiskRow[] 
   };
 
   // ── Water ──
-  const storage = facts?.water?.statedStorageLitres ?? 0;
-  // "Nothing to store it in" must mean genuinely NOTHING. `storage` is the sum of STATED tank
-  // capacities only (FactWater.statedStorageLitres never guesses an unknown one into the total),
-  // so a farm with one tank of unrecorded size also has storage === 0 — but it does have
-  // something to gutter the roof into, and the very next check below already raises "tank sizes
-  // are not recorded" for exactly that case. Firing both told a farmer in one row that they had
-  // nothing to store water in and, in the next, that their tank's size just was not recorded —
-  // two rows of the same register disagreeing about whether a tank exists.
-  const hasAnyTank = (facts?.water?.tanks.length ?? 0) > 0;
-  if (storage === 0 && !hasAnyTank && facts?.roof && facts.roof.areaM2 > 0) {
-    add({
-      risk: t('Roof runoff is lost — catchment traced but nothing to store it in'),
-      trigger: t('{area} m² of roof traced and 0 L of tank capacity on the plan',{area:Math.round(facts.roof.areaM2)}),
-      likelihood: 'High',
-      impact: 'Medium',
-      mitigation: t('Gutter the traced roof and connect it to a tank. This is the cheapest water on the site and it is currently running onto the ground.'),
-    });
-  }
+
+  // A missing tank on a drawing is not a complete inventory, runoff observation
+  // or cost comparison. The shared unrated earthworks note keeps this limit visible.
   const unknownTanks = facts?.water?.tanksOfUnknownCapacity ?? 0;
   if (unknownTanks > 0) {
     add({
@@ -80,17 +65,7 @@ export function buildRiskRegister(input: RiskInput, language = 'en'): RiskRow[] 
 
 
   // ── The data the report itself stands on ──
-  if (input.soilSource !== 'lab') {
-    add({
-      risk: t('Soil recommendations are built on modelled soil, not this field'),
-      trigger: input.soilSource === 'soilgrids'
-        ? t('soil figures come from a district-wide model, not a sample taken here')
-        : t('no soil data for this point — the app\'s generic defaults were used'),
-      likelihood: 'High',
-      impact: 'Medium',
-      mitigation: t('Take one soil sample and send it for a test. It is the cheapest way to replace every estimated soil figure in this report with a measured one.'),
-    });
-  }
+  // A source label alone does not support a soil-health/risk grade or treatment.
   if (!facts?.boundary) {
     add({
       risk: t('Every area figure is provisional — no property boundary was traced'),
@@ -129,21 +104,36 @@ export function reportWaterEvidence(rainfallMm: number | null): string {
   return `Annual rainfall: ${annual}. Crop water demand, seasonal water supply and water adequacy have not been assessed. Annual rainfall alone does not establish dry-season crop-failure risk or required storage capacity.`;
 }
 
+/** New evidence copy remains visibly English until its translation is reviewed. */
+export function reportEvidenceText(text: string, language = 'en'): string {
+  return language === 'en' ? text : `English; translation pending: ${text}`;
+}
+
+export function reportSoilEvidence(source: unknown, language = 'en'): string {
+  const recorded = source === 'lab' ? 'laboratory attribution; original report and sample/site correspondence not verified here'
+    : source === 'soilgrids' ? 'SoilGrids model, not a field sample'
+      : source === 'estimate' ? 'generic app placeholders, not field evidence' : 'not known';
+  return reportEvidenceText(`Recorded soil source: ${recorded}. Soil health, compaction, amendment needs and risk likelihood/impact have not been assessed. Review the original results and sampling method, depth and date for the intended crop and field conditions before choosing treatment. Comparative costs have not been assessed.`, language);
+}
+
+export function reportEarthworksEvidence(language = 'en'): string {
+  return reportEvidenceText('Earthwork suitability, dimensions, construction order, timing and comparative costs have not been assessed. Missing map entries do not prove physical absence. Recorded features and proposals are not a site-design approval. Confirm contour, drainage, soil/infiltration, safe overflow and local design requirements before selecting work.', language);
+}
+
 /** Shared by the risk register and the instant document. A recorded model value
  * is not a runoff model, erosion observation or earthworks suitability check. */
 export function reportSlopeEvidence(slopeDeg: unknown, language = 'en'): { recordedSlope: number | undefined; runoffRisk: string; erosionRisk: string } {
   const recordedSlope = typeof slopeDeg === 'number' && Number.isFinite(slopeDeg) && slopeDeg >= 0 && slopeDeg <= 90
     ? slopeDeg : undefined;
   const recorded = recordedSlope === undefined ? 'unknown' : `${recordedSlope}°`;
-  const fallback = language === 'en' ? '' : 'English; translation pending: ';
   return {
     recordedSlope,
-    runoffRisk: `${fallback}Recorded slope estimate: ${recorded}. Runoff risk has not been assessed. Confirm drainage, soil, ground cover and observed water flow before planning earthworks.`,
-    erosionRisk: `${fallback}Erosion risk has not been assessed. A slope estimate alone does not establish soil-loss likelihood or impact.`,
+    runoffRisk: reportEvidenceText(`Recorded slope estimate: ${recorded}. Runoff risk has not been assessed. Confirm drainage, soil, ground cover and observed water flow before planning earthworks.`, language),
+    erosionRisk: reportEvidenceText('Erosion risk has not been assessed. A slope estimate alone does not establish soil-loss likelihood or impact.', language),
   };
 }
 
-export function riskRegisterMarkdown(rows: RiskRow[], language = 'en', rainfallMm: number | null = null, slopeDeg?: unknown): string {
+export function riskRegisterMarkdown(rows: RiskRow[], language = 'en', rainfallMm: number | null = null, slopeDeg?: unknown, soilSource?: unknown): string {
   const t=(source:string,values?:Record<string,string|number>)=>reportDocumentText(source,language,values);
   // The new evidence statement has no reviewed translations. Make the English
   // fallback visible rather than reusing the retired translated risk judgement.
@@ -151,7 +141,9 @@ export function riskRegisterMarkdown(rows: RiskRow[], language = 'en', rainfallM
   const slopeLabel = language === 'en' ? 'Slope evidence' : 'Slope evidence (English; translation pending)';
   const slope = reportSlopeEvidence(slopeDeg);
   const out: string[] = [`## ${t('Risk Register')}`, '', `**${label}:** ${reportWaterEvidence(rainfallMm)}`, '',
-    `**${slopeLabel}:** ${slope.runoffRisk} ${slope.erosionRisk}`, ''];
+    `**${slopeLabel}:** ${slope.runoffRisk} ${slope.erosionRisk}`, '',
+    `**Soil evidence${language === 'en' ? '' : ' (English; translation pending)'}:** ${reportSoilEvidence(soilSource)}`, '',
+    `**Earthworks evidence${language === 'en' ? '' : ' (English; translation pending)'}:** ${reportEarthworksEvidence()}`, ''];
   if (!rows.length) {
     out.push('No risk rows were produced from the available inputs. Missing evidence and farm frost conditions have not been assessed; this is not a finding of low risk.');
     out.push('');

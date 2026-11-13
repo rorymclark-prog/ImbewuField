@@ -285,10 +285,12 @@ test('a roof with an unrecorded-size tank is not told it has nothing to store wa
   assert.equal(risks.some((r) => /nothing to store it in/.test(r.risk)), false);
   assert.ok(risks.some((r) => /tank sizes are not recorded/.test(r.risk)));
 
-  // A genuinely tank-less roof still raises it.
+  // Missing tank records do not prove physical absence or lost runoff; no cost
+  // evidence supports the former cheapest-water row (soil/earthworks correction).
   const noTank: ReportSiteFacts = { roof: { areaM2: 80, source: 'Traced by the farmer on the map' } };
   const risks2 = buildRiskRegister({ facts: noTank, rainfallMm: 700, slopeDeg: 2, unpricedBoqLines: 0 });
-  assert.ok(risks2.some((r) => /nothing to store it in/.test(r.risk)));
+  assert.equal(risks2.some((r) => /nothing to store it in/.test(r.risk)), false);
+  assert.match(riskRegisterMarkdown(risks2, 'en', 700, 2), /Missing map entries do not prove physical absence/);
 });
 
 test('the BOQ and Site at a Glance group thousands the same way', () => {

@@ -279,7 +279,8 @@ test('the water block reports the drawn tank the report used to deny', () => {
   assert.match(block, /Municipal tap/);
   // A tank on the plan and a tank on the map are very likely one tank, counted once.
   assert.match(block, /most likely the SAME tank\. Count the storage once/);
-  assert.match(block, /no dam, no pond/);
+  assert.match(block, /NOT RECORDED in the supplied map\/survey: dam, pond/);
+  assert.match(block, /not proof of physical absence/);
 });
 
 test('the irrigation table carries the real bed sizes, and says so when there are none', () => {
@@ -319,7 +320,7 @@ test('the Site at a Glance table names the farm and sources every figure', () =>
   assert.match(header, /\| Growing area drawn \| 128 m² — 7 beds 44 m² \+ 4 staple plots 84 m² \|/);
   assert.match(header, /\| Property boundary \| 1 037 m²/);
   assert.match(header, /\| Roof catchment traced \| 144 m²/);
-  assert.match(header, /\| Not on this site \| No dam, no pond/);
+  assert.match(header, /\| Water inventory gaps \| Not recorded in supplied map\/survey: dam, pond/);
   // Every row must declare where it came from — the third column is never blank.
   for (const line of header.split('\n')) {
     if (!line.startsWith('|') || /^\|\s*-+/.test(line) || line.includes('| Measure |')) continue;
@@ -643,7 +644,7 @@ test('the report collector reads market notes only from this site saved survey, 
 test('the full report header cannot turn unsourced soil placeholders into a site measurement', () => {
   for (const soilSource of [undefined, 'estimate'] as const) {
     const header = buildReportHeaderMarkdown({ ...HEADER_BASE, facts: null, soilSource });
-    assert.match(header, /Soil \(0-30 cm\) \| Not measured; arrange a soil test/);
+    assert.match(header, /Recorded soil values \| Soil values not supported by a recorded source/);
     assert.doesNotMatch(header, /pH 6\.2|1\.1% organic carbon|Sandy clay loam/);
   }
   for (const soilSource of ['lab', 'soilgrids'] as const) {

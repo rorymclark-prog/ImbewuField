@@ -585,7 +585,7 @@ test('actual six-column monitoring and native risk tables preserve rows beneath 
   const fx = JSON.parse(readFileSync(new URL('./fixtures/report-monitoring-translation/source-cases.json', import.meta.url), 'utf8'));
   const input = fx.risks.find((c: any) => c.name === 'all-possible').input;
   for (const lang of ['en', 'zu', 'st', 'ts', 've']) {
-    for (const raw of [riskRegisterMarkdown(buildRiskRegister(input, lang), lang, input.rainfallMm, input.slopeDeg), monitoringMarkdown(buildMonitoringPlan(input.facts, lang), lang)]) {
+    for (const raw of [riskRegisterMarkdown(buildRiskRegister(input, lang), lang, input.rainfallMm, input.slopeDeg, input.soilSource), monitoringMarkdown(buildMonitoringPlan(input.facts, lang), lang)]) {
       const table = parseReportMarkdown(raw).find(block => block.kind === 'table');
       assert.ok(table?.kind === 'table'); assert.equal(table.headers.length, 6);
       // Mark only the first cells so the page assertions survive native wrapping;
@@ -599,6 +599,23 @@ test('actual six-column monitoring and native risk tables preserve rows beneath 
         for (const page of pages.filter(page => page.includes('HEADERKEEP'))) assert.match(page, /ROWKEEP\d+/, `${lang}: detached header`);
         for (let i = 0; i < table.rows.length; i += 1) assert.equal((pages.join('\n').match(new RegExp(`\\(ROWKEEP${i}\\)`, 'g')) ?? []).length, 1);
       }
+    }
+  }
+});
+
+// Report footers must not override qualified evidence with a blanket demand
+// to buy another test. Inspect the actual decompressed PDF text on every page.
+test('report PDF footer asks for evidence review without mandating another soil test', async () => {
+  const { buildReportPdf } = await import('../lib/report-pdf.ts');
+  for (const language of ['en', 'st']) {
+    const blob = await buildReportPdf('# Recorded laboratory source\n\n' + 'Original report and sample correspondence remain unverified.\n\n'.repeat(80), { biome: 'Synthetic', lat: 0, lon: 0, dateLabel: 'Synthetic', language });
+    const pages = pdfTextStreams(await blob.arrayBuffer());
+    assert.ok(pages.length > 1, 'exercise repeated page footers');
+    for (const page of pages) {
+      const text = [...page.matchAll(/\(([^)]*)\)/g)].map(m => m[1]).join(' ');
+      assert.match(text, /Review existing soil evidence and field conditions/);
+      assert.doesNotMatch(text, /get a soil test before spending/);
+      if (language !== 'en') assert.match(text, /English; translation pending/);
     }
   }
 });

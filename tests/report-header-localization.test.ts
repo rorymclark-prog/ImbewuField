@@ -25,19 +25,28 @@ const tokens=(s:string)=>(s.match(/\{\w+\}/g)??[]).sort();
 // A Zulu noun prefix such as engu-7 is not negative seven; a free-standing minus still is.
 const numbers=(s:string)=>(s.match(/(?<![\p{L}\p{N}])-?\d+(?:[.,]\d+)?/gu)??[]).sort();
 const rows=(s:string)=>s.split('\n').filter(l=>l.startsWith('| ')&&!l.includes('|---')).map(line=>line.slice(1,-1).split('|').map(c=>c.trim()));
-function cell(markdown:string,source:string,language:string){return rows(markdown).find(r=>r[0]===reportDocumentText(source,language))!;}
+const visibleEnglish=(text:string,language:string)=>language==='en'?text:`English; translation pending: ${text}`;
+const fieldLabel=(text:string,language:string)=>['Recorded soil values','Water inventory gaps'].includes(text)?visibleEnglish(text,language):reportDocumentText(text,language);
+function cell(markdown:string,source:string,language:string){return rows(markdown).find(r=>r[0]===fieldLabel(source,language))!;}
+function soilCell(markdown:string,source:unknown,language:string){return cell(markdown,source==='soilgrids'?'Soil (0-30 cm)':'Recorded soil values',language);}
 
 // The frozen translation packet describes the old source. Only its unsupported rain rows
 // are superseded here; its original artifact/source identity remains intact.
-function currentHeaderExpectation(row: { input: ReportHeaderInput; expected: string }): string {
- if (['nasa-power','open-meteo','grower-entered'].includes(row.input.rainfallSource ?? '')) return row.expected;
- let result=row.expected.replace(/^\| Annual rainfall \|.*$/m,'| Annual rainfall | Not known | No supported rainfall source recorded |');
- if(row.input.facts?.roof) result=result.replace(/^(\| Roof catchment traced \| )(.*?)( → .*?)( \| .* \|)$/m,'$1$2 — annual harvest not calculated; rainfall not known$4');
- return result;
+// Only superseded evidence claims change. Original fixtures remain byte intact;
+// all unrelated figures, rows, names and source translations stay exact.
+function currentHeaderExpectation(row: { input: ReportHeaderInput; expected: string }, language='en'): string {
+ let result=row.expected;
+ if (!['nasa-power','open-meteo','grower-entered'].includes(row.input.rainfallSource ?? '')) {
+  result=result.replace(/^\| Annual rainfall \|.*$/m,'| Annual rainfall | Not known | No supported rainfall source recorded |');
+  if(row.input.facts?.roof) result=result.replace(/^(\| Roof catchment traced \| )(.*?)( → .*?)( \| .* \|)$/m,'$1$2 — annual harvest not calculated; rainfall not known$4');
+ }
+ if (row.input.soilSource==='lab') result=result.replace(/^\| Soil \(0-30 cm\) \| (.*?) \| Soil test you uploaded \|$/m,(_,value)=>`| ${visibleEnglish('Recorded soil values',language)} | ${value} | ${visibleEnglish('Recorded laboratory attribution; original report, sampling depth and sample/site correspondence not verified here',language)} |`);
+ else if(row.input.soilSource!=='soilgrids') result=result.replace(/^\| Soil \(0-30 cm\) \|.*$/m,`| ${visibleEnglish('Recorded soil values',language)} | ${visibleEnglish('Soil values not supported by a recorded source; review existing results and field observations',language)} | No laboratory result or SoilGrids source recorded |`);
+ return result.replace(/^\| Not on this site \| (.*?) \| Nothing of the kind drawn or recorded \|$/m,(_,value)=>`| ${visibleEnglish('Water inventory gaps',language)} | ${visibleEnglish('Not recorded in supplied map/survey:',language)} ${value.replace(/\b[Nn]o /g,'')} | ${visibleEnglish('This is an inventory gap, not proof of physical absence',language)} |`);
 }
 
 test('unchanged header facts and figures retain their original evidence while unsupported climate and soil claims are withdrawn',()=>{
- const before=JSON.stringify(fixture);for(const row of fixture.cases){assert.equal(buildReportHeaderMarkdown(row.input),currentHeaderExpectation(row),row.name);assert.equal(buildReportHeaderMarkdown(row.input,'af'),currentHeaderExpectation(row));}
+ const before=JSON.stringify(fixture);for(const row of fixture.cases){assert.equal(buildReportHeaderMarkdown(row.input),currentHeaderExpectation(row),row.name);assert.equal(buildReportHeaderMarkdown(row.input,'af'),currentHeaderExpectation(row,'af'));}
  const current=siteReportFigures(visual.facts,visual.location,'en',{canvas:visual.canvas,mapLayers:visual.refs,phasePlan:visual.phasePlan});
  // Soil/climate claims changed deliberately; all unrelated original figure bytes remain pinned.
  const unchanged=(figures:any[])=>figures.filter(f=>!['soil','climate'].includes(f.id));
@@ -69,7 +78,7 @@ test('native header labels and provenance translate without changing any measure
  for(const row of fixture.cases)for(const lang of languages){const before=JSON.stringify(row.input);const native=buildReportHeaderMarkdown(row.input,lang);const englishRows=rows(currentHeaderExpectation(row)),nativeRows=rows(native);
   assert.equal(nativeRows.length,englishRows.length);assert.deepEqual(numbers(native),numbers(currentHeaderExpectation(row)),`${row.name}/${lang}: source numbers changed`);
   assert.deepEqual(nativeRows[0],[reportDocumentText('Measure',lang),reportDocumentText('Value',lang),reportDocumentText('Where it comes from',lang)]);
-  for(let i=1;i<englishRows.length;i++)assert.equal(nativeRows[i][0],reportDocumentText(englishRows[i][0],lang),`${row.name}: field label`);
+  for(let i=1;i<englishRows.length;i++)assert.equal(nativeRows[i][0],fieldLabel(englishRows[i][0],lang),`${row.name}: field label`);
   const rawSources=new Set([row.input.facts?.boundary?.source,row.input.facts?.roof?.source,...packet.preservedSourceIdentities,
    // New corrected English source remains explicit until separate fluent-human translation gates.
    'No supported rainfall source recorded','Grower-entered']);
@@ -78,8 +87,8 @@ test('native header labels and provenance translate without changing any measure
   for(const source of ['Not traced','Not traced or measured','capacity not stated'])if(englishRows.some(r=>r[1]===source))assert.ok(nativeRows.some(r=>r[1]===reportDocumentText(source,lang)));
   // Soil figures print only from an uploaded laboratory test or SoilGrids; generic defaults say "Not measured" (SS-014).
   const measured=row.input.soilSource==='lab'||row.input.soilSource==='soilgrids';
-  if(measured)assert.ok(cell(native,'Soil (0-30 cm)',lang)[1].includes(row.input.soilSource==='lab'?row.input.soilTexture:reportVisualText(row.input.soilTexture,lang)));
-  else assert.equal(cell(native,'Soil (0-30 cm)',lang)[1],reportDocumentText('Not measured; arrange a soil test',lang));
+  if(measured)assert.ok(soilCell(native,row.input.soilSource,lang)[1].includes(row.input.soilSource==='lab'?row.input.soilTexture:reportVisualText(row.input.soilTexture,lang)));
+  else assert.equal(soilCell(native,row.input.soilSource,lang)[1],visibleEnglish('Soil values not supported by a recorded source; review existing results and field observations',lang));
   assert.equal(JSON.stringify(row.input),before);
  }
 });
@@ -102,9 +111,9 @@ test('recorded labels that happen to equal authored words stay raw and categorie
 test('missing water stays absent, recorded water is never denied and proposed storage never turns into installed water',()=>{
  const base=fixture.cases[0].input;const kinds=['dam','pond','reservoir','borehole','well','spring','river'];
  for(const lang of languages){for(const kind of kinds){const facts=structuredClone(base.facts!) as ReportSiteFacts;facts.water!.mapPoints=[{name:kind,category:kind}];facts.water!.bodies=[];
-   const absent=absentWaterBodies(facts,false);assert.ok(!absent.includes(kind));const table=buildReportHeaderMarkdown({...base,facts},lang);const denial=cell(table,'Not on this site',lang)[1];assert.equal(denial,absent.map((body,i)=>reportDocumentText(i?'no {body}':'No {body}',lang,{body:reportDocumentText(body,lang)})).join(', '));
+   const absent=absentWaterBodies(facts,false);assert.ok(!absent.includes(kind));const table=buildReportHeaderMarkdown({...base,facts},lang);const denial=cell(table,'Water inventory gaps',lang)[1];assert.equal(denial,visibleEnglish('Not recorded in supplied map/survey:',lang)+' '+absent.map(body=>reportDocumentText(body,lang)).join(', '));
   }
-  assert.equal(cell(buildReportHeaderMarkdown({...base,facts:null,hasMapWaterPolygons:true},lang),'Not on this site',lang),undefined);
+  assert.equal(cell(buildReportHeaderMarkdown({...base,facts:null,hasMapWaterPolygons:true},lang),'Water inventory gaps',lang),undefined);
   for(const state of ['proposed','existing','mixed']as const){const facts=structuredClone(base.facts!);facts.water!.tanks=facts.water!.tanks.map(t=>({...t,status:state}));const table=buildReportHeaderMarkdown({...base,facts},lang);const value=cell(table,'Water storage on the plan',lang)[1];const proposed=reportDocumentText('{value} (drawn as proposed)',lang,{value:''}).trim();assert.equal(value.endsWith(proposed),state==='proposed');}
  }
 });
@@ -136,7 +145,7 @@ test('the real API emits the translated measurement table with the same supplied
  const hooks=registerHooks({resolve(s,c,next){if(s==='@anthropic-ai/sdk')return{url:module('export default class Anthropic{}'),shortCircuit:true};if(s==='next/server')return{url:module('export class NextRequest{}'),shortCircuit:true};if(s==='@/lib/report-country-policy')return {url:SUPPORTED_REPORT_COUNTRY_FIXTURE_URL,shortCircuit:true};if(s==='@/lib/api-auth')return{url:module('export async function guardPaidApiRequest(){return {uid:"header-test"};}'),shortCircuit:true};if(s==='@/lib/metered-ai')return{url:module(`export const AI_MODELS={main:'claude-sonnet-4-6'};export async function meteredAi(){return {ai:{model:m=>m,messages:{create:async request=>{globalThis[Symbol.for('imbewu-header-provider-stub')].push(request);return {usage:{},stop_reason:'end_turn',content:[{type:'text',text:'## Mocked body\\nOriginal mocked response.'}]};}}}};}`),shortCircuit:true};return next(s,c);}});
  const original=globalThis.fetch;globalThis.fetch=async()=>new Response('{}');
  try{const {POST}=await import('../app/api/generate-report/route.ts');for(const language of ['en',...languages]){calls.length=0;const response=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({language,locationData:DEMO_LOCATION,sections:['Executive Summary']})})as any);assert.equal(response.status,200);const text=await response.text();assert.equal(calls.length,1);
-  const start=text.indexOf('## '+reportDocumentText('Site at a Glance',language));assert.ok(start>=0);const table=text.slice(start,text.indexOf('## 1. Mocked body'));assert.ok(table.includes(`| ${reportDocumentText('Measure',language)} | ${reportDocumentText('Value',language)} | ${reportDocumentText('Where it comes from',language)} |`));assert.ok(cell(table,'Annual rainfall',language)[1].includes(String(DEMO_LOCATION.rainfall.annual)+' mm'));assert.ok(['lab','soilgrids'].includes(String((DEMO_LOCATION.soil as {soilSource?:string}).soilSource))?cell(table,'Soil (0-30 cm)',language)[1].includes('pH '+DEMO_LOCATION.soil.ph):cell(table,'Soil (0-30 cm)',language)[1]===reportDocumentText('Not measured; arrange a soil test',language));if(language!=='en')assert.ok(!table.includes('| Property boundary |'));
+  const start=text.indexOf('## '+reportDocumentText('Site at a Glance',language));assert.ok(start>=0);const table=text.slice(start,text.indexOf('## 1. Mocked body'));assert.ok(table.includes(`| ${reportDocumentText('Measure',language)} | ${reportDocumentText('Value',language)} | ${reportDocumentText('Where it comes from',language)} |`));assert.ok(cell(table,'Annual rainfall',language)[1].includes(String(DEMO_LOCATION.rainfall.annual)+' mm'));assert.ok(['lab','soilgrids'].includes(String((DEMO_LOCATION.soil as {soilSource?:string}).soilSource))?soilCell(table,DEMO_LOCATION.soil.soilSource,language)[1].includes('pH '+DEMO_LOCATION.soil.ph):soilCell(table,DEMO_LOCATION.soil.soilSource,language)[1]===visibleEnglish('Soil values not supported by a recorded source; review existing results and field observations',language));if(language!=='en')assert.ok(!table.includes('| Property boundary |'));
  }
  // Exercise the actual paid-route prompt assembly with an inert provider stub and no network.
  const outage={...DEMO_LOCATION,rainfall:{...DEMO_LOCATION.rainfall,annual:600,monthly:Array(12).fill(50),rainfallSource:undefined},climate:{...DEMO_LOCATION.climate,minTemp:1,minTempSource:undefined,windSpeed:3,windSource:undefined,monthlyTempCoverage:undefined}};
@@ -179,7 +188,7 @@ test('only recognized collector provenance translates, with original vertex digi
 
 test('model soil classes reuse existing native diagram wording while laboratory and unknown classes stay as recorded',()=>{
  const base=fixture.cases[0].input;
- for(const lang of languages){for(const soilSource of ['soilgrids','estimate','lab']as const){const input={...base,soilSource,soilTexture:'Loam'};const before=JSON.stringify(input);const soil=cell(buildReportHeaderMarkdown(input,lang),'Soil (0-30 cm)',lang)[1];assert.ok(soilSource==='estimate'?soil===reportDocumentText('Not measured; arrange a soil test',lang):soil.includes(soilSource==='lab'?'Loam':reportVisualText('Loam',lang)));assert.equal(JSON.stringify(input),before);}
-  const recorded='Recorded custom texture';assert.ok(cell(buildReportHeaderMarkdown({...base,soilTexture:recorded},lang),'Soil (0-30 cm)',lang)[1].includes(recorded));
+ for(const lang of languages){for(const soilSource of ['soilgrids','estimate','lab']as const){const input={...base,soilSource,soilTexture:'Loam'};const before=JSON.stringify(input);const soil=soilCell(buildReportHeaderMarkdown(input,lang),soilSource,lang)[1];assert.ok(soilSource==='estimate'?soil===visibleEnglish('Soil values not supported by a recorded source; review existing results and field observations',lang):soil.includes(soilSource==='lab'?'Loam':reportVisualText('Loam',lang)));assert.equal(JSON.stringify(input),before);}
+  const recorded='Recorded custom texture';assert.ok(soilCell(buildReportHeaderMarkdown({...base,soilTexture:recorded},lang),base.soilSource,lang)[1].includes(recorded));
  }
 });
