@@ -1,5 +1,7 @@
 # Audits for 13 November 2026
 
+- [Optional Great Lakes cabbage nursery lead time](usda-cabbage-nursery-reference-codex.md): explicit source-bound duration choice and conditional seed-start arithmetic; successor review and release gates remain open.
+
 - [Missing report terrain fields](report-terrain-unknown-codex.md): preserve valid estimates and label missing terrain independently; actual outputs and successor verification remain open.
 
 - [Report soil and earthworks evidence](report-soil-earthworks-evidence-codex.md): remove unsupported soil/roof risk and default construction instructions, qualify laboratory attribution and preserve recorded designs; exact-head review and CI remain open.

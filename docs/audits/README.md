@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest global source continuation — [Optional cabbage nursery lead time — 13 November 2026](2026-11-13/usda-cabbage-nursery-reference-codex.md). Blank-first endpoint selection preserves source range and unknown calendar; exact successor gates remain open.
+
 Latest report terrain continuation — [Missing terrain fields — 13 November 2026](2026-11-13/report-terrain-unknown-codex.md). Runtime outages must not print numeric placeholders; new outputs and successor gates remain open.
 
 Latest report soil continuation — [Soil and earthworks evidence — 13 November 2026](2026-11-13/report-soil-earthworks-evidence-codex.md). Missing evidence no longer creates risk ratings or construction instructions; source-bound outputs and successor gates remain explicit.

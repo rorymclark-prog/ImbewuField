@@ -549,6 +549,50 @@ test('Great Lakes cabbage choices remain blank and regional consent cannot reviv
 });
 
 const saveDeclaration = 'Save these inputs, source limits and unknowns as a new profile for review. Do not add sowings.';
+test('USDA nursery duration starts unselected, retains its source bound through export and permits a separate grower override', async () => {
+  const saved: import('../lib/international/grower-planning.ts').GrowerPlanningProfile[] = [];
+  const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', evidence: undefined,
+    onSaveProfile: profile => { saved.push(JSON.parse(JSON.stringify(profile))); return { status: 'confirmed', profileId: profile.profileId }; } });
+  const files = downloads();
+  const consent = 'Use this undated reference for cabbage bedding transplants in my declared Great Lakes States region';
+  const choice = 'USDA nursery lead-time choice';
+  try {
+    ui.change('Preview crop', 'cabbage'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-01-10');
+    assert.equal(ui.field(choice).props.value, ''); assert.equal(ui.field(choice).props.disabled, true);
+    act(() => ui.field(consent).props.onChange({ target: { checked: true } }));
+    assert.equal(ui.field(choice).props.value, ''); await ui.click();
+    assert.match(ui.text(), /Nursery start \(UTC\): Unknown/);
+    ui.change(choice, 'upper-bound'); await ui.click();
+    assert.match(ui.text(), /Nursery start \(UTC\): 2026-11-29 \(ready\)/);
+    assert.match(ui.text(), /nurseryDays|Nursery duration/); assert.match(ui.text(), /reported range 28–42/);
+    assert.match(ui.text(), /upper-bound/); assert.match(ui.text(), /First harvest \(UTC\): Unknown/);
+    await ui.click('Download printable preview');
+    const html = await files.blobs[0].text();
+    assert.match(html, /2026-11-29/); assert.match(html, /upper-bound/); assert.match(html, /reported range 28–42/);
+    act(() => ui.field(saveDeclaration).props.onChange({ target: { checked: true } }));
+    await ui.click('Save provisional profile'); assert.equal(saved.length, 1);
+    ui.update({ profiles: saved });
+    assert.match(ui.text(), /Saved provisional profiles/);
+    assert.match(ui.text(), /Nursery start \(UTC\): 2026-11-29/);
+    assert.match(ui.text(), /Default planning value: upper-bound/);
+    ui.change('Nursery duration (days)', '35'); await ui.click();
+    assert.match(ui.text(), /Nursery start \(UTC\): 2026-12-06/); assert.match(ui.text(), /grower-estimate/);
+    await ui.click('Reset Nursery duration (days)'); await ui.click();
+    assert.match(ui.text(), /Nursery start \(UTC\): 2026-11-29/);
+    act(() => ui.field(consent).props.onChange({ target: { checked: false } }));
+    act(() => ui.field(consent).props.onChange({ target: { checked: true } }));
+    assert.equal(ui.field(choice).props.value, '');
+    ui.change(choice, 'lower-bound'); ui.update({ agriculturalRegionReference: 'Elsewhere' });
+    ui.update({ agriculturalRegionReference: 'Great Lakes States' });
+    assert.equal(ui.field(choice).props.value, '');
+    act(() => ui.field(consent).props.onChange({ target: { checked: true } }));
+    ui.change(choice, 'lower-bound'); ui.change('Preview establishment', 'direct');
+    assert.equal(ui.field(choice).props.disabled, true); assert.equal(ui.field(choice).props.value, '');
+    ui.change('Preview establishment', 'transplant'); assert.equal(ui.field(choice).props.value, '');
+    assert.deepEqual(ui.writes, []);
+  } finally { files.dispose(); ui.dispose(); }
+});
 async function saveChoices(ui: ReturnType<typeof mount>) {
   ui.change('Preview crop', 'cabbage'); ui.change('Preview measured bed', 'bed-1');
   act(() => ui.field('Use this undated reference for cabbage bedding transplants in my declared Great Lakes States region').props.onChange({ target: { checked: true } }));

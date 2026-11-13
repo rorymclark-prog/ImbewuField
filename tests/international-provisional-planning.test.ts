@@ -4,6 +4,7 @@ import { CROPS } from '../lib/crop-catalog.ts';
 import { sourceEvidenceState, sourcePublicationIsKnownBy, sourcePublicationText, evaluateCountryReadiness } from '../lib/international/countries/readiness.ts';
 import { WORLDVEG_KENYA_CABBAGE_SOURCE, worldvegKenyaCabbageCandidates } from '../lib/international/providers/worldveg-kenya-cabbage.ts';
 import { worldvegKenyaCowpeaCandidates, worldvegKenyaCowpeaSpacing } from '../lib/international/providers/worldveg-kenya-cowpea.ts';
+import { usdaGreatLakesCabbageCandidates } from '../lib/international/providers/usda-great-lakes-cabbage.ts';
 import { buildProvisionalCropPreviewHtml } from '../lib/international/provisional-crop-export.ts';
 import type { CountrySource } from '../lib/international/countries/types.ts';
 import { resolveProvisionalCropPlan, type ProvisionalDraftRequest, type ProvisionalFieldCandidate } from '../lib/international/provisional-crop-planning.ts';
@@ -52,6 +53,39 @@ function resolved(input = request()) {
   if (result.status !== 'resolved') assert.fail(`Expected a resolved draft, got ${result.status}`);
   return result;
 }
+
+test('a deliberately chosen USDA nursery bound derives only seed-start time and preserves the original range and unknown calendar', () => {
+  const base = request({ cropKey: 'cabbage', recordedAt: '2026-11-13T12:00:00.000Z', asOf: '2026-11-13' });
+  const context = { ...base.context, countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', establishment: null };
+  const input = { ...base, context, fieldEntryDate: { state: 'provided', value: '2027-01-10', unit: 'utc-date',
+    provenance: { kind: 'grower-estimate', recordedAt: base.recordedAt } } };
+  const blank = resolved({ ...input, candidates: usdaGreatLakesCabbageCandidates(context, 'cabbage', base.recordedAt, true) });
+  assert.equal(blank.assessment.schedule.nurseryStartDate.value, null);
+  for (const [basis, days, start] of [['lower-bound', 28, '2026-12-13'], ['upper-bound', 42, '2026-11-29']] as const) {
+    const candidates = usdaGreatLakesCabbageCandidates(context, 'cabbage', base.recordedAt, true, basis);
+    const value = resolved({ ...input, candidates });
+    assert.equal(value.fields.nurseryDays.activeInput.state, 'provided');
+    if (value.fields.nurseryDays.activeInput.state === 'provided') assert.equal(value.fields.nurseryDays.activeInput.value, days);
+    assert.deepEqual(value.fields.nurseryDays.defaultReportedRange, [28, 42]);
+    assert.equal(value.fields.nurseryDays.defaultPlanningValueBasis, basis);
+    assert.equal(value.assessment.schedule.nurseryStartDate.value, start);
+    assert.equal(value.assessment.schedule.firstHarvestDate.value, null);
+    assert.equal(value.assessment.estimatedYieldKg.value, null);
+    assert.equal(value.assessment.estimatedPlantCount.value, null);
+    assert.equal(value.assessment.entryWindow, 'unknown');
+    const html = buildProvisionalCropPreviewHtml({ ...input, candidates }, { bedLabel: 'Synthetic bed', sample: true })!.html;
+    assert.match(html, /4–6 weeks before transplanting/); assert.match(html, /reported range 28–42/);
+    assert.ok(html.includes(basis)); assert.ok(html.includes(start));
+    assert.match(html, /ff7a1dfea4582f69d8349e150e7e875b02df32c01bc1eef957aded6fa2a9483e/);
+    assert.deepEqual(usdaGreatLakesCabbageCandidates(context, 'cabbage', base.recordedAt, false, basis), []);
+    assert.deepEqual(usdaGreatLakesCabbageCandidates({ ...context, countryCode: 'KE' }, 'cabbage', base.recordedAt, true, basis), []);
+    assert.deepEqual(usdaGreatLakesCabbageCandidates({ ...context, agriculturalRegionReference: 'Elsewhere' }, 'cabbage', base.recordedAt, true, basis), []);
+    const direct = resolved({ ...input, context: { ...context, establishment: 'direct' }, candidates });
+    assert.equal(direct.fields.nurseryDays.activeInput.state, 'missing');
+    const undated = resolved({ ...input, candidates, fieldEntryDate: { state: 'missing', reason: 'not-entered' } });
+    assert.equal(undated.assessment.schedule.nurseryStartDate.value, null);
+  }
+});
 
 test('Kenya cowpea method binds declared leaf purpose and habit; source spacing and seed counts never become density', () => {
   const base = request({ cropKey: 'cowpea', recordedAt: '2026-11-12T12:00:00.000Z', asOf: '2026-11-12' });

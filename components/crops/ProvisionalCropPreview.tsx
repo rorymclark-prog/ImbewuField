@@ -8,7 +8,7 @@ import { downloadFile } from '@/lib/crop-export-deliver';
 import { buildProvisionalCropPreviewHtml, provisionalNumericFields as numericFields, provisionalLabels as labels, provisionalInputText as inputText, provisionalScopeText as scopeText } from '@/lib/international/provisional-crop-export';
 import { growerWorkflowResourceSiteId, type GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { resolveProvisionalCropPlan, type ProvisionalFieldCandidate, type ProvisionalDraftRequest } from '@/lib/international/provisional-crop-planning';
-import { usdaGreatLakesCabbageReference, usdaGreatLakesCabbageCandidates, usdaGreatLakesRegionMatches, USDA_CABBAGE_SPACING } from '@/lib/international/providers/usda-great-lakes-cabbage';
+import { usdaGreatLakesCabbageReference, usdaGreatLakesCabbageCandidates, usdaGreatLakesRegionMatches, USDA_CABBAGE_SPACING, type UsdaCabbageNurseryBasis } from '@/lib/international/providers/usda-great-lakes-cabbage';
 import { createSavedProvisionalProfile, readSavedProvisionalProfile, type ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
 import type { GrowerPlanningProfile } from '@/lib/international/grower-planning';
 import { sourcePublicationText } from '@/lib/international/countries/readiness';
@@ -40,6 +40,7 @@ type Draft = {
   water: '' | 'rain-fed' | 'irrigated'; variety: string;
   values: Partial<Record<NumericField, string>>; months: number[] | null; regionalConsent: string | null;
   cowpea: CowpeaReferenceConditions; cowpeaConsent: string | null; usdaConsent: string | null;
+  usdaNursery?: { basis: UsdaCabbageNurseryBasis | ''; contextKey: string | null };
   countMode: 'density' | 'spacing';
   spacing: { rowCm: string; inRowCm: string; finalStand: string };
   stationConsent: string | null; areaConsent: string | null;
@@ -127,6 +128,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
   const usdaRegionMatch = usdaGreatLakesRegionMatches(props.agriculturalRegionReference);
   const usdaConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.variety]);
   const useUsdaMethod = usdaConsentKey !== null && draft.usdaConsent === usdaConsentKey && usdaRegionMatch;
+  const usdaNurseryBasis = useUsdaMethod && draft.method !== 'direct' && draft.usdaNursery?.contextKey === usdaConsentKey ? draft.usdaNursery.basis : '';
   const spacingConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.bed, draft.variety, draft.cowpea, draft.countMode, draft.spacing]);
   const stationConfirmed = spacingConsentKey !== null && draft.stationConsent === spacingConsentKey;
   const wholeAreaConfirmed = spacingConsentKey !== null && draft.areaConsent === spacingConsentKey;
@@ -185,7 +187,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
         context, recordedAt, asOf: recordedAt.slice(0, 10),
         candidates: [...(props.evidence?.candidates ?? []), ...worldvegKenyaCabbageCandidates(context, draft.crop, recordedAt, useRegionalMethod),
           ...worldvegKenyaCowpeaCandidates(context, draft.crop, recordedAt, useCowpeaMethod, draft.cowpea),
-          ...usdaGreatLakesCabbageCandidates(context, draft.crop, recordedAt, useUsdaMethod)], overrides,
+          ...usdaGreatLakesCabbageCandidates(context, draft.crop, recordedAt, useUsdaMethod, usdaNurseryBasis || null)], overrides,
         ...(draft.countMode === 'spacing' ? { countBasis: { kind: 'spacing-cell-budget-v1', bedId: draft.bed,
           ...(usdaReference ? { purpose: 'cabbage-transplants', habit: 'not-applicable' } : draft.cowpea), ...draft.spacing,
           interpretationConfirmed: stationConfirmed, wholeAreaConfirmed } } : {}),
@@ -298,7 +300,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
       <label className="text-sm">Preview measured bed<select aria-label="Preview measured bed" className={control} value={draft.bed} onChange={e => edit({ bed: e.target.value, stationConsent: null, areaConsent: null })}>
         <option value="">Choose a measured bed</option>{sourceReady && source?.beds.map(bed => <option key={bed.id} value={bed.id}>{bed.label} · {bed.areaM2} m²</option>)}</select></label>
       <label className="text-sm">Preview field-entry date (UTC)<input className={control} type="date" value={draft.date} onChange={e => edit({ date: e.target.value })} /></label>
-      <label className="text-sm">Preview establishment<select aria-label="Preview establishment" className={control} value={draft.method} onChange={e => edit({ method: e.target.value as Draft['method'] })}>
+      <label className="text-sm">Preview establishment<select aria-label="Preview establishment" className={control} value={draft.method} onChange={e => edit({ method: e.target.value as Draft['method'], usdaNursery: undefined })}>
         <option value="">Use evidence if available</option><option value="direct">Direct sowing</option><option value="transplant">Transplant</option></select></label>
       <label className="text-sm">Water regime<select aria-label="Water regime" className={control} value={draft.water} onChange={e => edit({ water: e.target.value as Draft['water'] })}>
         <option value="">Unknown</option><option value="rain-fed">Rain-fed</option><option value="irrigated">Irrigated</option></select></label>
@@ -342,8 +344,17 @@ function Editor(props: ProvisionalCropPreviewProps) {
       <p>{usdaReference.attribution}</p><p>{usdaReference.licence.status === 'known' && usdaReference.licence.value}</p>
       {!usdaRegionMatch && <p role="note">Enter the explicit region description “Great Lakes States” to consider this reference. Region is declared by you; no boundary is inferred from country, state or coordinates.</p>}
       <label className="flex min-h-11 items-center gap-2"><input type="checkbox" aria-label="Use undated USDA transplant reference" disabled={!usdaRegionMatch}
-        checked={useUsdaMethod} onChange={e => edit({ usdaConsent: e.target.checked ? usdaConsentKey : null })} />Use this undated reference for cabbage bedding transplants in my declared Great Lakes States region</label>
-      <p>Yield, nursery duration and calendar dates receive no defaults. Your separately entered estimates remain editable.</p>
+        checked={useUsdaMethod} onChange={e => edit({ usdaConsent: e.target.checked ? usdaConsentKey : null, usdaNursery: undefined })} />Use this undated reference for cabbage bedding transplants in my declared Great Lakes States region</label>
+      <p>The same cabbage row reports 4–6 weeks before transplanting (28–42 days). This is seed-starting lead time before garden transplanting, not days after emergence or germination time. It does not select one nursery age. Choose a bound only if you want a conditional nursery start from your own field-entry date.</p>
+      <label className="block">USDA nursery lead-time choice<select aria-label="USDA nursery lead-time choice" className={control}
+        disabled={!useUsdaMethod || draft.method === 'direct'} value={usdaNurseryBasis}
+        onChange={e => edit({ usdaNursery: { basis: e.target.value as UsdaCabbageNurseryBasis | '', contextKey: usdaConsentKey } })}>
+        <option value="">No source duration selected</option>
+        <option value="lower-bound">4 weeks · 28 days · shorter</option>
+        <option value="upper-bound">6 weeks · 42 days · longer</option>
+      </select></label>
+      <p>A shorter lead time starts seeds later; a longer lead time starts them earlier, for the same field-entry date.</p>
+      <p>This is not a local planting calendar, frost-safety check or guarantee of seedling readiness. Yield and harvest dates receive no defaults. Your nursery-duration override below takes precedence; reset it to use your selected source bound.</p>
     </section>}
     {(cowpeaReference || usdaReference) && <section aria-label="Regional spacing estimate" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
       <label className="block">Plant-count method<select aria-label="Plant-count method" className={control} value={draft.countMode}
