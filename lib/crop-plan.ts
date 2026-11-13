@@ -967,10 +967,11 @@ export function cropPlanWriteCandidateIsLossless(candidate: CropPlanState, prepa
 function existingCountOriginsPreserved(previous: CropPlanState, candidate: CropPlanState): boolean {
   const next = candidate.growerPlanningProfiles ?? [];
   return (previous.growerPlanningProfiles ?? []).every(profile => {
-    if (!profile.exactDensitySources && !profile.plantCountOrigin) return true;
+    if (!profile.exactDensitySources && !profile.plantCountOrigin && !profile.provisionalOrigin) return true;
     const retained = next.find(row => row.profileId === profile.profileId);
     return !!retained && cropPlanDataKey(retained.exactDensitySources ?? null) === cropPlanDataKey(profile.exactDensitySources ?? null)
-      && cropPlanDataKey(retained.plantCountOrigin ?? null) === cropPlanDataKey(profile.plantCountOrigin ?? null);
+      && cropPlanDataKey(retained.plantCountOrigin ?? null) === cropPlanDataKey(profile.plantCountOrigin ?? null)
+      && cropPlanDataKey(retained.provisionalOrigin ?? null) === cropPlanDataKey(profile.provisionalOrigin ?? null);
   });
 }
 
@@ -995,6 +996,7 @@ function growerProfileChangeIsExplicit(previous: CropPlanState, candidate: CropP
   // The existing editor has no spacing-basis switch. Even an otherwise valid
   // edit permit cannot discard or rewrite the original denominator/area choice.
   if (prior.plantCountOrigin && cropPlanDataKey(prior.plantCountOrigin) !== cropPlanDataKey(next.plantCountOrigin ?? null)) return false;
+  if (prior.provisionalOrigin && cropPlanDataKey(prior.provisionalOrigin) !== cropPlanDataKey(next.provisionalOrigin ?? null)) return false;
   // An intentional edit may replace origin with newly validated source, or
   // explicitly clear the density. A still-provided Number cannot justify
   // silently falling back from its original source digits to legacy arithmetic.

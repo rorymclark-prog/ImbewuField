@@ -8,6 +8,10 @@ import { CROPS } from '../lib/crop-catalog.ts';
 import { growerEstimateDensityToCanonical } from '../lib/grower-estimate-units.ts';
 import { growerPlanningScopeKey, normaliseGrowerPlanningProfile, normaliseGrowerPlanningProfiles,
   type GrowerInput, type GrowerPlanningProfile } from '../lib/international/grower-planning.ts';
+import { createSavedProvisionalProfile, readSavedProvisionalProfile, type ProvisionalProfileSaveResult } from '../lib/international/provisional-profile.ts';
+import { usdaGreatLakesCabbageCandidates } from '../lib/international/providers/usda-great-lakes-cabbage.ts';
+import type { ProvisionalDraftRequest } from '../lib/international/provisional-crop-planning.ts';
+import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import type { CropPlanState, CropPlanWriteLoad, GrowerProfileChangeRequest } from '../lib/crop-plan.ts';
 
 beforeEach(reset); after(cleanup);
@@ -319,10 +323,10 @@ test('sample actions use the existing sample admission rather than a personal ac
 // admission checks stay in the path; this is not an alternate save controller.
 const parentFile = ts.createSourceFile('page.tsx', readFileSync(new URL('../app/facilitator/crops/page.tsx', import.meta.url), 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 let parentSource = '';
-function visit(node: ts.Node) { if (ts.isFunctionDeclaration(node) && node.name?.text === 'saveGrowerProfiles') parentSource = node.getText(parentFile); ts.forEachChild(node, visit); }
+function visit(node: ts.Node) { if (ts.isFunctionDeclaration(node) && ['saveGrowerProfiles', 'saveProvisionalProfile', 'rememberStoredPlan'].includes(node.name?.text ?? '')) parentSource += node.getText(parentFile) + '\n'; ts.forEachChild(node, visit); }
 visit(parentFile); assert.ok(parentSource);
 const compiledParent = ts.transpileModule(parentSource, { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None } }).outputText;
-function parent(loaded: CropPlanWriteLoad) {
+function parent(loaded: CropPlanWriteLoad, overrides: Record<string, unknown> = {}) {
   const state: any = { plan: loaded.book, planSaveConflict: false, growerOwner: account.activeAccountUid(), growerSample: samples.isSampleMode(),
     growerScopeKey: growerPlanningScopeKey(ownScope), growerWriteScope: { current: { key: growerPlanningScopeKey(ownScope), owner: account.activeAccountUid(), sample: samples.isSampleMode() } },
     planWriteBase: { current: { owner: account.activeAccountUid(), sample: samples.isSampleMode(), planKey: JSON.stringify(loaded.book), token: loaded.token, admission: loaded.admission } },
@@ -332,7 +336,9 @@ function parent(loaded: CropPlanWriteLoad) {
     normaliseGrowerPlanningProfiles, growerPlanningScopeKey, createGrowerProfileChangePermit: crop.createGrowerProfileChangePermit,
     saveCropPlanWithReceipt: crop.saveCropPlanWithReceipt, saveTimer: { current: null }, clearTimeout() {}, setPlanSaveFailed() {},
     setPlanSaveConflict(value: boolean) { state.planSaveConflict = value; }, rememberStoredPlan() {}, setPlan(value: CropPlanState) { state.plan = value; } };
-  return Function('state', `with(state){${compiledParent};return saveGrowerProfiles;}`)(state) as (value: GrowerPlanningProfile[], request?: GrowerProfileChangeRequest) => boolean;
+  Object.assign(state, overrides);
+  return Function('state', `with(state){${compiledParent};return Object.assign(saveGrowerProfiles,{adopt:saveProvisionalProfile,state});}`)(state) as
+    ((value: GrowerPlanningProfile[], request?: GrowerProfileChangeRequest) => boolean) & { adopt: (profile: GrowerPlanningProfile, current: () => boolean) => ProvisionalProfileSaveResult; state: typeof state };
 }
 test('the real parent profile writer requires a confirmed operation and mints it only under current scope checks', async () => {
   const loaded = await seeded(), original = loaded.book.growerPlanningProfiles![0], replaced = replacement(original), save = parent(loaded);
@@ -371,4 +377,97 @@ test('saved spacing denominators survive reload and cannot be dropped or replace
   const removal = crop.createGrowerProfileChangePermit(fresh.admission, fresh.book, next,
     { kind: 'remove', profileId: original.profileId, expectedProfile: original }); assert.ok(removal);
   assert.equal(crop.saveCropPlanWithReceipt(next, { growerProfileChange: removal }).saved, true, 'explicit confirmed removal remains available');
+});
+
+
+function provisionalProfile(id = 'new-provisional-profile') {
+  const recordedAt = '2026-11-12T12:00:00.000Z';
+  const ctx = { scope: ownScope, countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', establishment: null, waterRegime: null };
+  const request: ProvisionalDraftRequest = { profileId: 'provisional-preview', cropKey: 'cabbage', context: ctx,
+    recordedAt, asOf: '2026-11-12', candidates: usdaGreatLakesCabbageCandidates(ctx, 'cabbage', recordedAt, true),
+    measuredAreaM2: { state: 'provided', value: 6, unit: 'm2', provenance: { kind: 'grower-record', recordedAt, reference: 'bed' } },
+    fieldEntryDate: { state: 'missing', reason: 'not-entered' },
+    countBasis: { kind: 'spacing-cell-budget-v1', bedId: 'bed', purpose: 'cabbage-transplants', habit: 'not-applicable',
+      rowCm: '76.2', inRowCm: '45.72', finalStand: '', interpretationConfirmed: true, wholeAreaConfirmed: true } };
+  const source: GrowerWorkflowSource = { status: 'ready', kind: 'facilitator-local', sourceId: 'local', sourceKey: 'facilitator-local:local',
+    resourceSiteId: 'workspace:design:synthetic-workspace', scope: ownScope, geometryFingerprint: 'a'.repeat(64), sourceRevision: 'b'.repeat(64),
+    freshness: 'device-saved-copy', sourceVerification: 'not-verified', beds: [{ id: 'bed', label: 'Synthetic bed', areaM2: 6 }],
+    measuredAreas: [{ bedId: 'bed', areaM2: 6, basis: 'explicit-saved-dimensions' }], heldBeds: [] };
+  const profile = createSavedProvisionalProfile(request, id, '2026-11-12T12:01:00.000Z', source, 'bed', 'Synthetic bed');
+  assert.ok(profile); return profile;
+}
+
+test('the actual provisional parent appends and reads back one evidence-preserving profile without changing the rest of the book', async () => {
+  const initial = await seeded();
+  assert.equal(crop.saveCropPlanWithReceipt({ ...initial.book, plantings: [{ id: 'existing-row', bedId: 'other-bed', cropKey: CROPS[0].key, sowMonth: 2, areaFraction: 0.5, existing: true }] }).saved, true);
+  const loaded = crop.loadCropPlanWithWriteAdmission(), original = structuredClone(loaded.book), profile = provisionalProfile(), save = parent(loaded);
+  assert.deepEqual(save.adopt(profile, () => true), { status: 'confirmed', profileId: profile.profileId });
+  const current = crop.loadCropPlan();
+  const { growerPlanningProfiles: rows, updatedAt: _time, ...other } = current;
+  const { growerPlanningProfiles: previous, updatedAt: _oldTime, ...oldOther } = original;
+  assert.deepEqual(other, oldOther); assert.deepEqual(rows!.filter(p => p.profileId !== profile.profileId).sort((a,b) => a.profileId.localeCompare(b.profileId)), previous!.sort((a,b) => a.profileId.localeCompare(b.profileId)));
+  assert.deepEqual(rows!.find(p => p.profileId === profile.profileId), profile);
+  const saved = readSavedProvisionalProfile(rows!.find(p => p.profileId === profile.profileId)); assert.ok(saved);
+  assert.equal(saved.result.fields.establishment.sourceBindings[0].evidenceState, 'undated');
+  assert.equal(saved.result.assessment.budgetedStations.value, 17); assert.equal(saved.result.assessment.estimatedPlantCount.value, null);
+  const before = readCanonicalCropPlanFixtureRaw(); assert.equal(save.adopt(profile, () => true).status, 'held'); assert.equal(readCanonicalCropPlanFixtureRaw(), before);
+});
+
+test('historical provisional receipts survive unrelated autosaves and cannot be removed or relabelled by ordinary edit permits', async () => {
+  const profile = provisionalProfile(), loaded = await seeded([profile, sourceProfile('foreign-profile', foreignScope)]);
+  assert.equal(crop.saveCropPlanWithReceipt({ ...loaded.book, rainPattern: 'winter', updatedAt: 9 }).saved, true);
+  const fresh = crop.loadCropPlanWithWriteAdmission(); assert.deepEqual(fresh.book.growerPlanningProfiles![0], profile);
+  const { provisionalOrigin: _origin, ...without } = profile;
+  const next = candidate(fresh, without), before = readCanonicalCropPlanFixtureRaw();
+  assert.equal(crop.saveCropPlanWithReceipt(next).saved, false);
+  assert.equal(crop.createGrowerProfileChangePermit(fresh.admission, fresh.book, next, editRequest(profile)), null);
+  assert.equal(readCanonicalCropPlanFixtureRaw(), before);
+  const remove = candidate(fresh, null), permit = crop.createGrowerProfileChangePermit(fresh.admission, fresh.book, remove,
+    { kind: 'remove', profileId: profile.profileId, expectedProfile: profile }); assert.ok(permit);
+  assert.equal(crop.saveCropPlanWithReceipt(remove, { growerProfileChange: permit }).saved, true);
+});
+
+test('new saved profile IDs cannot collide with foreign or damaged raw rows, and malformed receipts do not permit a lossy rewrite', async () => {
+  const loaded = await seeded();
+  const before = readCanonicalCropPlanFixtureRaw();
+  assert.equal(parent(loaded).adopt(provisionalProfile('foreign-profile'), () => true).status, 'held');
+  assert.equal(readCanonicalCropPlanFixtureRaw(), before);
+  for (const row of [{ version: 999, profileId: 'new-provisional-profile' },
+    { ...provisionalProfile(), provisionalOrigin: { ...provisionalProfile().provisionalOrigin!, version: 2 } }]) {
+    replaceCanonicalCropPlanFixtureRaw(JSON.stringify({ ...loaded.book, growerPlanningProfiles: [...loaded.book.growerPlanningProfiles!, row] }));
+    const raw = readCanonicalCropPlanFixtureRaw(), current = crop.loadCropPlanWithWriteAdmission();
+    assert.equal(current.admission.status, 'held'); assert.equal(parent(current).adopt(provisionalProfile(), () => true).status, 'held');
+    assert.equal(crop.saveCropPlanWithReceipt({ ...current.book, updatedAt: 10 }).saved, false); assert.equal(readCanonicalCropPlanFixtureRaw(), raw);
+  }
+});
+
+test('final source revocation reaches the actual parent raw writer rather than waiting for another React render', async () => {
+  const loaded = await seeded(), profile = provisionalProfile(); let reads = 0;
+  local.onRead = () => { reads++; };
+  assert.equal(parent(loaded).adopt(profile, () => true).status, 'confirmed'); local.onRead = null;
+  let prewrite = 0;
+  for (let position = 1; position <= reads; position++) {
+    await reset(); const base = await seeded(), save = parent(base), before = readCanonicalCropPlanFixtureRaw(), writes = local.writes;
+    let count = 0, current = true, beforeWrite = false, fired = false;
+    local.onRead = () => { if (++count === position) { local.onRead = null; fired = true; beforeWrite = local.writes === writes; current = false; } };
+    const outcome = save.adopt(profile, () => current); local.onRead = null;
+    if (fired && beforeWrite) { prewrite++; assert.equal(outcome.status, 'held', `read ${position}`); assert.equal(readCanonicalCropPlanFixtureRaw(), before, `read ${position}`); }
+    else if (fired) assert.equal(outcome.status, 'superseded', `post-write read ${position} must not claim no write`);
+  }
+  assert.ok(prewrite > 0);
+});
+
+test('a completed write followed by an actor change returns superseded, while a failed store never claims confirmation', async () => {
+  const loaded = await seeded(), profile = provisionalProfile();
+  const event = crop.CROP_PLAN_CHANGED_EVENT;
+  const revoke = () => { probe.actor = 'owner-b'; };
+  events.addEventListener(event, revoke);
+  try { const outcome = parent(loaded).adopt(profile, () => probe.actor === 'owner-a'); assert.equal(outcome.status, 'superseded'); }
+  finally { events.removeEventListener(event, revoke); }
+  probe.actor = 'owner-a'; assert.ok(crop.loadCropPlan().growerPlanningProfiles!.some(row => row.profileId === profile.profileId));
+  await reset(); const fresh = await seeded();
+  const original = local.setItem; local.setItem = () => { throw Error('synthetic quota'); };
+  try { assert.equal(parent(fresh).adopt(provisionalProfile(), () => true).status, 'held'); }
+  finally { local.setItem = original; }
+  assert.ok(!crop.loadCropPlan().growerPlanningProfiles!.some(row => row.profileId === profile.profileId));
 });

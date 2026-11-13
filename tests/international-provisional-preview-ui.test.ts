@@ -547,3 +547,81 @@ test('Great Lakes cabbage choices remain blank and regional consent cannot reviv
     assert.deepEqual(ui.writes, []);
   } finally { files.dispose(); ui.dispose(); }
 });
+
+const saveDeclaration = 'Save these inputs, source limits and unknowns as a new profile for review. Do not add sowings.';
+async function saveChoices(ui: ReturnType<typeof mount>) {
+  ui.change('Preview crop', 'cabbage'); ui.change('Preview measured bed', 'bed-1');
+  act(() => ui.field('Use this undated reference for cabbage bedding transplants in my declared Great Lakes States region').props.onChange({ target: { checked: true } }));
+  ui.change('Plant-count method', 'spacing'); ui.change('Chosen row spacing (cm)', '76.2'); ui.change('Chosen in-row spacing (cm)', '45.72');
+  acknowledgeSpacing(ui); await ui.click();
+  act(() => ui.field(saveDeclaration).props.onChange({ target: { checked: true } }));
+}
+test('explicit save keeps partial source evidence, consumes duplicate clicks and reopens a historical record after remount', async () => {
+  const rows: import('../lib/international/grower-planning.ts').GrowerPlanningProfile[] = [];
+  let ui!: ReturnType<typeof mount>, calls = 0;
+  const writer: NonNullable<ProvisionalCropPreviewProps['onSaveProfile']> = (profile, current) => {
+    assert.equal(current(), true); calls++; rows.push(profile); ui.update({ profiles: [...rows] });
+    return { status: 'confirmed', profileId: profile.profileId };
+  };
+  ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', evidence: undefined, profiles: rows, onSaveProfile: writer });
+  try {
+    await saveChoices(ui); const oldSave = ui.action('Save provisional profile');
+    await ui.click('Save provisional profile'); await act(async () => { await oldSave(); });
+    assert.equal(calls, 1); assert.equal(rows.length, 1); assert.notEqual(rows[0].profileId, 'provisional-preview');
+    assert.equal(rows[0].plantCountOrigin!.profileId, rows[0].profileId); assert.equal(rows[0].plantCountOrigin!.finalStand, null);
+    assert.match(ui.text(), /Historical evidence, not a current source check/); assert.match(ui.text(), /Saved estimate: Unknown plants/);
+    assert.match(ui.text(), /undated/); assert.match(ui.text(), /climate-crop-derived/); assert.match(ui.text(), /No sowings were added/);
+    assert.doesNotMatch(ui.text(), /Nothing has been saved or added/);
+    assert.deepEqual(ui.writes, []);
+  } finally { ui.dispose(); }
+  ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', evidence: undefined, profiles: rows });
+  try { assert.match(ui.text(), /Saved provisional profiles/); assert.match(ui.text(), /76.2 cm between rows/); assert.match(ui.text(), /Current applicability has not been checked/);
+    assert.match(ui.text(), /Saved measured area: 10.5 m²/); assert.match(ui.text(), /Saved budgeted whole stations: 30 \(ready\)/); }
+  finally { ui.dispose(); }
+});
+
+test('pending save cannot survive draft edits, actor loss or country and scope round trips', async () => {
+  for (const change of ['draft', 'actor', 'country', 'scope', 'source'] as const) {
+    let finish!: (receipt: { isCurrent: () => boolean } | null) => void, calls = 0, live = true;
+    const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', evidence: undefined,
+      onSaveProfile: () => { calls++; return { status: 'held' }; } });
+    try {
+      await saveChoices(ui);
+      ui.update({ onCheckSource: async () => new Promise(resolve => { finish = resolve; }) });
+      let work!: Promise<void>; act(() => { work = ui.action('Save provisional profile')(); });
+      if (change === 'draft') { ui.change('Chosen in-row spacing (cm)', '60.96'); ui.change('Chosen in-row spacing (cm)', '45.72'); }
+      if (change === 'actor') ui.update({ actorIsCurrent: () => false });
+      if (change === 'country') { ui.update({ countryCode: 'KE' }); ui.update({ countryCode: 'US' }); }
+      if (change === 'scope') { ui.update({ scope: { kind: 'unmapped-workspace', workspaceId: 'design:other' } }); ui.update({ scope }); }
+      if (change === 'source') live = false;
+      await act(async () => { finish({ isCurrent: () => live }); await work; });
+      assert.equal(calls, 0, change); assert.deepEqual(ui.writes, []);
+    } finally { ui.dispose(); }
+  }
+});
+
+test('a save crossing UTC midnight holds, and failed or uncertain writes do not duplicate a possibly completed save', async t => {
+  const now = Date.now(); t.mock.timers.enable({ apis: ['Date'], now });
+  let finish!: (receipt: { isCurrent: () => boolean }) => void, calls = 0;
+  const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', evidence: undefined,
+    onSaveProfile: () => { calls++; return { status: 'held' }; } });
+  try {
+    await saveChoices(ui); ui.update({ onCheckSource: async () => new Promise(resolve => { finish = resolve; }) });
+    let work!: Promise<void>; act(() => { work = ui.action('Save provisional profile')(); });
+    t.mock.timers.setTime(now + 86400000);
+    await act(async () => { finish({ isCurrent: () => true }); await work; }); assert.equal(calls, 0);
+  } finally { ui.dispose(); }
+  t.mock.timers.setTime(now);
+  for (const status of ['failed', 'superseded', 'throws'] as const) {
+    calls = 0;
+    const view = mount({ countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', evidence: undefined,
+      onSaveProfile: () => { calls++; if (status === 'throws') throw Error('uncertain callback'); return { status }; } });
+    try {
+      await saveChoices(view); const action = view.action('Save provisional profile');
+      await view.click('Save provisional profile'); await act(async () => { await action(); });
+      assert.equal(calls, status === 'failed' ? 2 : 1, status);
+      assert.doesNotMatch(view.text(), /Profile saved\./);
+      if (status !== 'failed') assert.match(view.text(), /could not be confirmed/);
+    } finally { view.dispose(); }
+  }
+});

@@ -6,6 +6,8 @@ import { worldvegKenyaCowpeaCandidates } from '../lib/international/providers/wo
 import { assessGrowerPlanning, assessProvisionalGrowerPlanning, normaliseGrowerPlanningProfile } from '../lib/international/grower-planning.ts';
 import { growerSpacingSourceQuantities } from '../lib/grower-estimate-units.ts';
 import { buildProvisionalCropPreviewHtml } from '../lib/international/provisional-crop-export.ts';
+import { createSavedProvisionalProfile, readSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
+import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import { usdaGreatLakesCabbageCandidates, USDA_CABBAGE_SPACING_VERSION, USDA_CABBAGE_SPACING } from '../lib/international/providers/usda-great-lakes-cabbage.ts';
 
 const recordedAt = '2026-11-12T12:00:00.000Z';
@@ -212,4 +214,71 @@ for (const c of usdaOracle.cases) test(`independent USDA saved-number Fraction o
     assert.deepEqual(after.estimatedPlantCount, result.assessment.estimatedPlantCount);
     assert.deepEqual(after.budgetedStations, result.assessment.budgetedStations);
   }
+});
+
+
+function profileSource(r: ProvisionalDraftRequest): GrowerWorkflowSource {
+  return { status: 'ready', kind: 'studio-canvas', sourceId: scope.siteId, sourceKey: `studio-canvas:${scope.siteId}`,
+    resourceSiteId: scope.siteId, scope: r.context.scope, geometryFingerprint: 'a'.repeat(64), sourceRevision: 'b'.repeat(64),
+    freshness: 'device-saved-copy', sourceVerification: 'not-verified', beds: [{ id: 'bed-1', label: 'Synthetic bed', areaM2: 10.125 }],
+    measuredAreas: [{ bedId: 'bed-1', areaM2: 10.125, basis: 'explicit-saved-dimensions' }], heldBeds: [] };
+}
+function adopted(r = usdaRequest()) {
+  const profile = createSavedProvisionalProfile(r, 'new-saved-profile', '2026-11-12T12:01:00.000Z', profileSource(r), 'bed-1', 'Synthetic bed');
+  assert.ok(profile); return profile;
+}
+test('saved partial evidence rebinds identity without erasing undated source, overrides, missing fields or exact spacing', () => {
+  const r = { ...usdaRequest(), overrides: { yieldKgPerM2: supplied(0, 'kg/m2/cycle') } };
+  const profile = adopted(r), saved = readSavedProvisionalProfile(JSON.parse(JSON.stringify(profile))); assert.ok(saved);
+  assert.equal(profile.profileId, 'new-saved-profile'); assert.equal(profile.plantCountOrigin!.profileId, profile.profileId);
+  assert.equal(profile.plantCountOrigin!.rowCm, '76.2'); assert.equal(profile.plantCountOrigin!.inRowCm, '45.72');
+  assert.equal(profile.plantCountOrigin!.finalStand, null); assert.equal(profile.inputs.plantsPerM2.state, 'missing');
+  assert.equal(saved.result.fields.establishment.activeTier, 'climate-crop-derived');
+  assert.equal(saved.result.fields.establishment.sourceBindings[0].evidenceState, 'undated');
+  assert.equal(saved.result.fields.establishment.sourceBindings[0].publishedOn, null);
+  assert.equal(saved.result.fields.yieldKgPerM2.activeTier, 'grower-estimate');
+  assert.equal(saved.result.assessment.estimatedYieldKg.value, 0); assert.equal(saved.result.assessment.estimatedPlantCount.value, null);
+  assert.equal(saved.origin.savedAt, '2026-11-12T12:01:00.000Z'); assert.equal(saved.request.asOf, '2026-11-12');
+  assert.deepEqual(saved.request, r); assert.notEqual(saved.request.profileId, profile.profileId, 'Original preview identity is retained separately.');
+});
+
+test('a present broken saved-evidence receipt or modified retained profile cannot become a legacy planning profile', () => {
+  const profile = adopted(), receipt = profile.provisionalOrigin!;
+  const altered = JSON.parse(receipt.originalRequestJson); altered.context.agriculturalRegionReference = 'Other region';
+  const changedLimits = JSON.parse(receipt.originalRequestJson); changedLimits.candidates[0].source.limitations = 'Changed evidence with the same numbers';
+  for (const provisionalOrigin of [undefined, null, { ...receipt, version: 2 }, { ...receipt, profileId: 'other' },
+    { ...receipt, savedAt: '2026-11-13T12:01:00.000Z' }, { ...receipt, bedId: 'other-bed' },
+    { ...receipt, previewFingerprint: receipt.previewFingerprint + 'x' }, { ...receipt, originalRequestJson: JSON.stringify(altered) },
+    { ...receipt, originalRequestJson: JSON.stringify(changedLimits) },
+    { ...receipt, source: { ...receipt.source, sourceRevision: 'forged' } }, { ...receipt, extra: true }]) {
+    assert.equal(normaliseGrowerPlanningProfile({ ...profile, provisionalOrigin }), null);
+  }
+  assert.equal(normaliseGrowerPlanningProfile({ ...profile, inputs: { ...profile.inputs, yieldKgPerM2: supplied(99, 'kg/m2/cycle') } }), null);
+  assert.equal(normaliseGrowerPlanningProfile({ ...profile, plantCountOrigin: { ...profile.plantCountOrigin!, profileId: 'old-preview-id' } }), null);
+  let gets = 0; const withGetter = { ...receipt };
+  Object.defineProperty(withGetter, 'originalRequestJson', { enumerable: true, get() { gets++; return receipt.originalRequestJson; } });
+  assert.equal(normaliseGrowerPlanningProfile({ ...profile, provisionalOrigin: withGetter }), null); assert.equal(gets, 0);
+});
+
+test('even a complete saved provisional profile is held out of legacy sowing approval until current source context is revalidated', () => {
+  const r = usdaRequest(), profile = adopted({ ...r, countBasis: { ...r.countBasis!, finalStand: '1' } });
+  const assessment = assessGrowerPlanning({ profile, scope, measuredAreaM2: r.measuredAreaM2,
+    fieldEntryDate: r.fieldEntryDate, countAreaBinding: { bedId: 'bed-1' } });
+  assert.equal(assessment.status, 'missing-inputs');
+  if (assessment.status === 'missing-inputs') assert.ok(assessment.issues.includes('saved-provisional-context-needs-review'));
+  const saved = readSavedProvisionalProfile(profile); assert.ok(saved); assert.equal(saved.result.assessment.estimatedPlantCount.value, 29);
+  assert.equal(resolved(r).profile.provisionalOrigin, undefined, 'Ordinary live previews have no saved evidence marker.');
+});
+
+test('saving refuses stale days, invalid selections and source/measurement mismatches without manufacturing a missing value', () => {
+  const r = usdaRequest(), src = profileSource(r);
+  for (const [req, id, date, source, bed] of [
+    [r, r.profileId, '2026-11-12T12:01:00.000Z', src, 'bed-1'],
+    [r, 'new', '2026-11-13T12:01:00.000Z', src, 'bed-1'],
+    [{ ...r, knownPlantingRestriction: true }, 'new', '2026-11-12T12:01:00.000Z', src, 'bed-1'],
+    [{ ...r, countBasis: { ...r.countBasis!, inRowCm: '45.71999999999999999' } }, 'new', '2026-11-12T12:01:00.000Z', src, 'bed-1'],
+    [{ ...r, overrides: { yieldKgPerM2: supplied(-1, 'kg/m2/cycle') } }, 'new', '2026-11-12T12:01:00.000Z', src, 'bed-1'],
+    [r, 'new', '2026-11-12T12:01:00.000Z', { ...src, measuredAreas: [{ ...src.measuredAreas[0], areaM2: 9 }] }, 'bed-1'],
+    [r, 'new', '2026-11-12T12:01:00.000Z', src, 'another-bed'],
+  ] as const) assert.equal(createSavedProvisionalProfile(req, id, date, source, bed, 'Synthetic bed'), null);
 });
