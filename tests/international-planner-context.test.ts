@@ -269,11 +269,16 @@ function assertOwnTargetRecords(screen: Awaited<ReturnType<typeof mount>>) {
   assert.deepEqual(props.climate, {});
 }
 
-test('the real planner withholds recommendation and export widgets for unknown and foreign sites even with auto=1', async () => {
+test('the real planner offers provisional partial work while withholding SA catalogue advice even with auto=1', async () => {
   for (const code of [undefined, 'KE', 'GB', 'US', 'BR']) {
     const screen = await mount(code);
     try {
-      assert.match(screen.text(), code ? /Local crop planning is not available/ : /Confirm the site country/);
+      // The old blanket hold contradicted the usable provisional planner below it.
+      assert.match(screen.text(), code ? /Use a provisional crop preview for this country/ : /Confirm the site country/);
+      assert.match(screen.text(), /Provisional previews below can calculate supported partial counts and dates/);
+      assert.match(screen.text(), /South African catalogue/);
+      assert.match(screen.text(), /printable preview/);
+      assert.doesNotMatch(screen.text(), /Local crop planning is not available for this country/);
       assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
       assertOwnTargetRecords(screen);
       assert.equal(screen.boundaries('ProductionAvailabilityGraphs').length, 0);
@@ -364,7 +369,7 @@ test('a stale harvest-target accept callback rereads the current country before 
     await screen.setStoredCountry('KE');
     assertOwnTargetRecords(screen);
     assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
-    assert.match(screen.text(), /Local crop planning is not available/);
+    assert.match(screen.text(), /Use a provisional crop preview for this country/);
   } finally { await screen.dispose(); }
 });
 
@@ -532,7 +537,7 @@ test('a mapped foreign site cannot inherit an unmapped reference choice in the r
     assertOwnTargetRecords(screen);
     assert.equal(screen.boundaries('CropPlanExportCard').length, 0);
     assert.equal(screen.renderer.root.findAllByProps({ 'aria-label': 'Unmapped workspace reference basis' }).length, 0);
-    assert.match(screen.text(), /Local crop planning is not available/);
+    assert.match(screen.text(), /Use a provisional crop preview for this country/);
     assert.equal(probe.climateRequests, 0);
     await screen.flushSave();
     const saved = JSON.parse(screen.savedRaw());

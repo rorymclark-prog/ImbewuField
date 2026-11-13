@@ -80,7 +80,7 @@ export default function SiteCountryPanel({ resolution, onSaved, onDelivery }: {
           : 'Confirm the country for this saved mapped site. Existing plans and measured maps stay saved.'}</p>
     {current && <p className="mt-2 text-sm text-[var(--text-secondary)]">{planning.allowAutoPlanning
       ? 'South African reference planning is available for this saved site. Country confirmation does not verify local growing conditions.'
-      : 'Automatic crop planning is not available for this country. You can review country reference evidence; confirming the site does not approve local farming advice.'}</p>}
+      : 'The South African catalogue planner is unavailable for this country. Provisional crop previews in the production plan can use applicable regional evidence and your estimates; missing values stay unknown. Confirming the site does not approve local farming advice.'}</p>}
     {evidenceHref && <p className="mt-2 text-sm">
       <Link href={evidenceHref} className="inline-flex min-h-11 items-center font-medium underline">
         Review country evidence

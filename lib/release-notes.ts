@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '13 November 2026', sha: 'd012bf123', changes: [
+    'Country notices now distinguish provisional previews from catalogue planning.',
+    'Supported counts and dates remain available when other crop details are unknown.',
+  ] },
   { when: '13 November 2026', sha: '2c28cfc8a', changes: [
     'Choosing your exact map point clears the preview-only warning.',
     'Map previews wait for your exact location before saving a new place.',
