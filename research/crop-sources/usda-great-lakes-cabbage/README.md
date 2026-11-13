@@ -22,7 +22,31 @@ a US-wide recommendation, proof of local suitability or a verified region bounda
 The grower chooses spacing within the range, final surviving plants per station,
 and whether the whole measured area can be used. Controls start blank. Missing
 stand stays unknown; the planting-cell footnote(1) does not supply one survivor.
-No density, yield, nursery duration or calendar point is imported.
+No density, yield or calendar point is imported. The original spacing-only
+adapter selected no nursery duration; its source identity remains unchanged.
+
+## Optional nursery lead time — 13 November continuation
+
+The original page5 cabbage row also reports4–6 weeks before transplanting.
+Pages1,5,9 and the live original were inspected again on13 November; publication
+and revision dates remain unknown. A separately identified nursery source capsule
+records the weeks and exact28–42day conversion. It does not select one age.
+The grower may deliberately choose the shorter4week/28day duration (later seed
+start) or longer6week/42day duration (earlier seed start). The UI starts blank;
+reference consent, US/Great Lakes region and transplant establishment must apply.
+The chosen numerical bound, complete source range and conversion survive in the
+saved request and printable evidence through the existing candidate contract.
+No saved profile schema or historical spacing capsule is rewritten.
+
+The existing schedule subtracts the selected duration from the grower's separately
+entered transplant date. This is a conditional seed-starting lead time, not a
+guarantee that seedlings are ready. Page1 requires a local frost-free date;
+neither choosing a bound nor entering a date establishes frost safety or a local
+calendar. No additional hardening-off duration is added. Yield, harvest, occupancy
+and final stand remain unknown unless supplied separately. A nursery-duration
+override remains a grower estimate; resetting it restores the explicit source
+bound rather than a hidden midpoint. Revoked reference/context choices do not
+revive a previous bound. Source metadata and reuse limits above still apply.
 
 Reuse basis: USDA Digital Rights and Copyright policy at
 https://www.usda.gov/about-usda/policies-and-links . The owner and source reviewer

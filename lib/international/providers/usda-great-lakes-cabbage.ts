@@ -34,11 +34,26 @@ export const USDA_CABBAGE_SPACING = Object.freeze({
   source: USDA_GREAT_LAKES_CABBAGE_SOURCE,
   display: '30 inches between rows (76.2 cm); 18–24 inches within rows (45.72–60.96 cm). Conversion precision is not agronomic precision.',
 });
+export type UsdaCabbageNurseryBasis = 'lower-bound' | 'upper-bound';
+/** Page5 reports a range, not one seedling age. A grower must deliberately
+ * choose a bound; neither a midpoint nor the longer duration is a default. */
+export const USDA_CABBAGE_NURSERY = Object.freeze({
+  weeks: Object.freeze([4, 6] as const), days: Object.freeze([28, 42] as const),
+  source: { ...USDA_GREAT_LAKES_CABBAGE_SOURCE,
+    id: 'usda-nrcs-great-lakes-cabbage-nursery',
+    units: { status: 'known' as const, value: 'Weeks before transplanting; 1 week = 7 days exactly.' },
+    accessedOn: '2026-11-13',
+    attribution: 'U.S. Department of Agriculture, Natural Resources Conservation Service. Community Garden Guide — Season Extension — Seed Starting, pp1,5,9. Nursery lead-time range converted from weeks to days by ImbewuField; endpoint deliberately chosen by the grower. No USDA endorsement.',
+    verifiedClaim: 'Page5, Cabbage row: 4–6 weeks before transplanting (28–42 days). No single age is specified.',
+    missingDataBehavior: 'No point nursery duration is selected until the grower chooses a bound. No field-entry calendar, yield, harvest duration or site suitability is supplied.',
+    limitations: `${USDA_GREAT_LAKES_CABBAGE_SOURCE.limitations} A chosen nursery lead-time bound is not a guarantee of seedling readiness. Check actual development and local frost conditions.`,
+  },
+});
 export function usdaGreatLakesCabbageCandidates(context: ProvisionalEvidenceContext, crop: string,
-  recordedAt: string, useReference: boolean): readonly ProvisionalFieldCandidate[] {
+  recordedAt: string, useReference: boolean, nurseryBasis: UsdaCabbageNurseryBasis | null = null): readonly ProvisionalFieldCandidate[] {
   if (!useReference || !usdaGreatLakesCabbageReference(context.countryCode, crop)
     || !usdaGreatLakesRegionMatches(context.agriculturalRegionReference)) return [];
-  return [{ id: 'usda-nrcs-great-lakes-cabbage-transplant', field: 'establishment', cropKey: 'cabbage',
+  const method: ProvisionalFieldCandidate = { id: 'usda-nrcs-great-lakes-cabbage-transplant', field: 'establishment', cropKey: 'cabbage',
     tier: 'climate-crop-derived', input: { state: 'provided', value: 'transplant', unit: 'method',
       provenance: { kind: 'external-reference', recordedAt, sourceUrl: USDA_GREAT_LAKES_CABBAGE_SOURCE.url,
         reference: 'Community Garden Guide, page5, Cabbage row, TRANSPLANT SPACING' } },
@@ -52,5 +67,19 @@ export function usdaGreatLakesCabbageCandidates(context: ProvisionalEvidenceCont
       USDA_CABBAGE_SPACING.display,
       'The source adapter selects no point spacing or final surviving plants per station. Grower choices are recorded separately. The cell-size footnote (1) is not a final stand.',
       USDA_GREAT_LAKES_CABBAGE_SOURCE.missingDataBehavior, USDA_GREAT_LAKES_CABBAGE_SOURCE.limitations,
+    ] };
+  if (nurseryBasis !== 'lower-bound' && nurseryBasis !== 'upper-bound') return [method];
+  const days = USDA_CABBAGE_NURSERY.days[nurseryBasis === 'lower-bound' ? 0 : 1];
+  return [method, { ...method, id: `usda-nrcs-great-lakes-cabbage-nursery-${nurseryBasis}`,
+    field: 'nurseryDays', input: { state: 'provided', value: days, unit: 'days',
+      provenance: { kind: 'external-reference', recordedAt, sourceUrl: USDA_CABBAGE_NURSERY.source.url,
+        reference: 'Community Garden Guide, page5, Cabbage row, WEEKS BEFORE TRANSPLANTING; grower-chosen range bound' } },
+    source: USDA_CABBAGE_NURSERY.source, reportedRange: USDA_CABBAGE_NURSERY.days,
+    planningValueBasis: nurseryBasis, assumptions: [
+      ...method.assumptions,
+      `Original USDA PDF SHA256: ${USDA_CABBAGE_PDF_SHA256}; page5, Cabbage row, WEEKS BEFORE TRANSPLANTING.`,
+      `Source reports 4–6 weeks before transplanting (28–42 days). Grower explicitly chose the ${nurseryBasis}: ${days} days; the source does not recommend a single age.`,
+      'A nursery start calculated from this bound is conditional on the separately entered field-entry date. It is not a local planting calendar, frost-safety check or guarantee that seedlings will be ready.',
+      'This is seed-starting lead time before garden transplanting, not time after emergence or a germination duration. No additional hardening-off interval is added.',
     ] }];
 }
