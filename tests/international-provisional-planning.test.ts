@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { CROPS } from '../lib/crop-catalog.ts';
 import { sourceEvidenceState, sourcePublicationIsKnownBy, sourcePublicationText, evaluateCountryReadiness } from '../lib/international/countries/readiness.ts';
 import { WORLDVEG_KENYA_CABBAGE_SOURCE, worldvegKenyaCabbageCandidates } from '../lib/international/providers/worldveg-kenya-cabbage.ts';
@@ -7,6 +8,10 @@ import { worldvegKenyaCowpeaCandidates, worldvegKenyaCowpeaSpacing } from '../li
 import { usdaGreatLakesCabbageCandidates } from '../lib/international/providers/usda-great-lakes-cabbage.ts';
 import { usdaGreatLakesTomatoCandidates, usdaGreatLakesTomatoReference, USDA_TOMATO_NURSERY } from '../lib/international/providers/usda-great-lakes-tomato.ts';
 import { buildProvisionalCropPreviewHtml } from '../lib/international/provisional-crop-export.ts';
+import { normaliseGrowerPlanningProfile, assessGrowerPlanning } from '../lib/international/grower-planning.ts';
+import { createSavedProvisionalProfile, readSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
+import { resolvePlantingBasis } from '../lib/international/grower-cycle.ts';
+import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import type { CountrySource } from '../lib/international/countries/types.ts';
 import { resolveProvisionalCropPlan, type ProvisionalDraftRequest, type ProvisionalFieldCandidate } from '../lib/international/provisional-crop-planning.ts';
 
@@ -54,6 +59,105 @@ function resolved(input = request()) {
   if (result.status !== 'resolved') assert.fail(`Expected a resolved draft, got ${result.status}`);
   return result;
 }
+
+test('positive source months preserve unknown omissions and conditional dates instead of inventing exclusions', () => {
+  for (const [month, status] of [[6, 'unknown'], [7, 'reported-positive'], [9, 'reported-positive'], [10, 'unknown']] as const) {
+    const input = request();
+    const day = `2028-${String(month).padStart(2, '0')}-15`;
+    const r = resolved({ ...input, candidates: input.candidates.map(c => c.field === 'allowedEntryMonths'
+      ? candidate('allowedEntryMonths', [7, 8, 9], { entryMonthCoverage: 'positive-only' }) : c),
+      fieldEntryDate: { ...input.fieldEntryDate as object, value: day } });
+    assert.equal(r.assessment.entryWindow, status);
+    assert.equal(r.profile.version, 2); assert.equal(r.profile.entryMonthCoverage, 'positive-only');
+    assert.equal(r.assessment.schedule.firstHarvestDate.value, day.slice(0, -2) + '18');
+    assert.equal(r.assessment.estimatedPlantCount.value, 26);
+    assert.equal(r.assessment.status, 'partial-ready');
+    const full = assessGrowerPlanning({ profile: r.profile, scope: input.context.scope,
+      measuredAreaM2: input.measuredAreaM2, fieldEntryDate: { ...input.fieldEntryDate as object, value: day } });
+    assert.equal(full.status, 'missing-inputs');
+    if (full.status === 'missing-inputs') assert.deepEqual(full.issues, ['needs-grower-entry-window']);
+    const html = buildProvisionalCropPreviewHtml({ ...input, candidates: input.candidates.map(c => c.field === 'allowedEntryMonths'
+      ? candidate('allowedEntryMonths', [7, 8, 9], { entryMonthCoverage: 'positive-only' }) : c),
+      fieldEntryDate: { ...input.fieldEntryDate as object, value: day } }, { bedLabel: 'Synthetic bed', sample: true })!.html;
+    assert.match(html, /other months remain unknown/); assert.match(html, /conditional calculations/);
+    assert.doesNotMatch(html, /Entry window<\/strong>:\s*excluded/);
+  }
+});
+
+test('a deliberate grower month override replaces active coverage while retaining the positive source baseline', () => {
+  const input = request({ candidates: [candidate('allowedEntryMonths', [7, 8, 9], { entryMonthCoverage: 'positive-only' })] });
+  const baseline = resolved(input);
+  assert.equal(baseline.profile.version, 2);
+  for (const [value, status] of [[[], 'excluded'], [[2], 'allowed']] as const) {
+    const r = resolved({ ...input, overrides: { allowedEntryMonths: { state: 'provided', value, unit: 'utc-months',
+      provenance: { kind: 'grower-estimate', recordedAt } } } });
+    assert.equal(r.profile.version, 1); assert.equal(r.profile.entryMonthCoverage, undefined);
+    assert.equal(r.assessment.entryWindow, status);
+    assert.equal(r.fields.allowedEntryMonths.defaultEntryMonthCoverage, 'positive-only');
+    assert.equal(r.fields.allowedEntryMonths.defaultOptions[0].scope.entryMonthCoverage, 'positive-only');
+    assert.notEqual(r.fingerprint, baseline.fingerprint);
+  }
+  const withheld = resolved({ ...input, overrides: { allowedEntryMonths: { state: 'missing', reason: 'not-entered' } } });
+  assert.equal(withheld.profile.version, 1); assert.equal(withheld.assessment.entryWindow, 'unknown');
+  const invalid = resolved({ ...input, overrides: { allowedEntryMonths: { state: 'provided', value: [99], unit: 'utc-months' } } });
+  assert.equal(invalid.fields.allowedEntryMonths.status, 'invalid-override'); assert.equal(invalid.profile.version, 1);
+  assert.equal(resolved(input).fingerprint, baseline.fingerprint, 'reset is removal of the deliberate override');
+});
+
+test('coverage conflicts and rejected candidates never mark another month default as positive-only', () => {
+  const positive = candidate('allowedEntryMonths', [7, 8, 9], { entryMonthCoverage: 'positive-only' });
+  const closed = candidate('allowedEntryMonths', [7, 8, 9], { id: 'closed-window' });
+  const conflict = resolved(request({ candidates: [positive, closed] }));
+  assert.equal(conflict.fields.allowedEntryMonths.status, 'conflict'); assert.equal(conflict.profile.version, 1);
+  assert.equal(conflict.assessment.entryWindow, 'unknown');
+  const rejected = resolved(request({ candidates: [{ ...positive, geography: { kind: 'country', countryCode: 'US' } }, closed] }));
+  assert.equal(rejected.profile.version, 1); assert.equal(rejected.fields.allowedEntryMonths.defaultEntryMonthCoverage, undefined);
+  for (const changes of [{ field: 'nurseryDays', input: candidate('nurseryDays').input }, { tier: 'grower-estimate' },
+    { entryMonthCoverage: 'invented' }, { input: candidate('allowedEntryMonths', []).input }]) {
+    const r = resolved(request({ candidates: [{ ...positive, ...changes } as ProvisionalFieldCandidate] }));
+    assert.equal(r.profile.version, 1); assert.equal(r.fields.allowedEntryMonths.activeInput.state, 'missing');
+    assert.ok(r.rejected.some(c => c.reason === 'invalid-entry-month-coverage'));
+  }
+});
+
+test('normalisation cannot drop positive month semantics or convert grower estimates into source evidence', () => {
+  const p = resolved(request({ candidates: [candidate('allowedEntryMonths', [7, 8, 9], { entryMonthCoverage: 'positive-only' })] })).profile;
+  assert.deepEqual(normaliseGrowerPlanningProfile(JSON.parse(JSON.stringify(p))), p);
+  assert.equal(normaliseGrowerPlanningProfile({ ...p, version: 1 }), null);
+  assert.equal(normaliseGrowerPlanningProfile({ ...p, entryMonthCoverage: undefined }), null);
+  assert.equal(normaliseGrowerPlanningProfile({ ...p, inputs: { ...p.inputs, allowedEntryMonths: { state: 'missing', reason: 'not-known' } } }), null);
+  assert.equal(normaliseGrowerPlanningProfile({ ...p, inputs: { ...p.inputs, allowedEntryMonths: { state: 'provided', value: [], unit: 'utc-months',
+    provenance: { kind: 'external-reference', recordedAt, sourceUrl: source.url, reference: 'Fixture' } } } }), null);
+  assert.equal(normaliseGrowerPlanningProfile({ ...p, inputs: { ...p.inputs, allowedEntryMonths: { state: 'provided', value: [7], unit: 'utc-months',
+    provenance: { kind: 'grower-estimate', recordedAt } } } }), null);
+});
+
+test('the frozen pre-extension saved profile and adopted cycle retain exact replay identity', () => {
+  const { base, fixture } = JSON.parse(readFileSync(new URL('./fixtures/provisional-month-coverage/legacy-v1.json', import.meta.url), 'utf8'));
+  assert.equal(base, '51872cdfe7cc93855667f92b69c5e9e77f9ccf15');
+  assert.deepEqual(normaliseGrowerPlanningProfile(fixture.saved), fixture.saved);
+  const saved = readSavedProvisionalProfile(fixture.saved); assert.ok(saved);
+  assert.equal(saved.result.fingerprint, fixture.saved.provisionalOrigin.previewFingerprint);
+  assert.equal(resolvePlantingBasis(fixture.row, fixture.context).kind, 'grower-dated-cycle');
+});
+
+test('saved positive source coverage and an explicit replacement window both replay without changing their baseline', () => {
+  const input = request({ asOf: recordedAt.slice(0, 10), candidates: [candidate('establishment'), candidate('allowedEntryMonths', [7, 8, 9], { entryMonthCoverage: 'positive-only' })] });
+  const source: GrowerWorkflowSource = { status: 'ready', kind: 'studio-canvas', sourceId: 'virtual-bed', sourceKey: 'synthetic-saved-source',
+    resourceSiteId: 'virtual-bed', scope: input.context.scope, geometryFingerprint: 'a'.repeat(64), sourceRevision: 'b'.repeat(64),
+    freshness: 'device-saved-copy', sourceVerification: 'not-verified', beds: [{ id: 'synthetic-bed', label: 'Synthetic bed', areaM2: 10.5 }],
+    measuredAreas: [{ bedId: 'synthetic-bed', areaM2: 10.5, basis: 'explicit-saved-dimensions' }], heldBeds: [] };
+  for (const overrides of [undefined, { allowedEntryMonths: { state: 'provided', value: [2], unit: 'utc-months',
+    provenance: { kind: 'grower-estimate', recordedAt } } }]) {
+    const saved = createSavedProvisionalProfile({ ...input, overrides }, 'new-positive-profile', recordedAt, source, 'synthetic-bed', 'Synthetic bed');
+    assert.ok(saved);
+    assert.equal(saved.version, overrides ? 1 : 2);
+    const read = readSavedProvisionalProfile(JSON.parse(JSON.stringify(saved))); assert.ok(read);
+    assert.equal(read.result.fields.allowedEntryMonths.defaultEntryMonthCoverage, 'positive-only');
+    assert.equal(read.result.assessment.entryWindow, overrides ? 'allowed' : 'unknown');
+    assert.deepEqual(read.profile, saved);
+  }
+});
 
 test('the undated Great Lakes tomato row supplies only its chosen transplant lead time, not a local calendar or crop forecast', () => {
   const at = '2026-11-13T12:00:00.000Z';

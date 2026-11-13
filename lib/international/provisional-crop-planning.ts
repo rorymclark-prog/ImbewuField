@@ -44,6 +44,8 @@ export interface ProvisionalFieldCandidate {
   readonly reuseReview?: 'reviewed' | 'not-reviewed';
   /** An exclusion-only heat/moisture pass is not a positive planting-window source. */
   readonly positiveWindowEvidence?: boolean;
+  /** Listed months support a conditional reference; omitted months are unknown. */
+  readonly entryMonthCoverage?: 'positive-only';
   readonly reportedRange?: readonly [number, number];
   readonly planningValueBasis?: 'reported-point' | 'lower-bound' | 'upper-bound';
   readonly assumptions: readonly string[];
@@ -62,6 +64,7 @@ export interface ResolvedProvisionalField {
       cropKey: string; geography: ProvisionalFieldCandidate['geography']; temporalScope: ProvisionalFieldCandidate['temporalScope'];
       establishment: ProvisionalFieldCandidate['establishment']; waterRegime: ProvisionalFieldCandidate['waterRegime'];
       varietyReference: string | null;
+      entryMonthCoverage?: 'positive-only';
     };
   }[];
   readonly sourceReferences: readonly string[];
@@ -74,6 +77,7 @@ export interface ResolvedProvisionalField {
   readonly defaultReportedRange: readonly [number, number] | null;
   readonly defaultPlanningValueBasis: ProvisionalFieldCandidate['planningValueBasis'] | null;
   readonly assumptions: readonly string[];
+  readonly defaultEntryMonthCoverage?: 'positive-only';
 }
 
 export interface ProvisionalSpacingCountBasis extends RegionalSpacingConditions {
@@ -122,8 +126,9 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
   const scope = normaliseGrowerPlanningScope(request.context?.scope);
   const context = request.context;
   const emptyInputs = Object.fromEntries(fields.map(field => [field, unknown()]));
-  const makeProfile = (inputs: Record<string, unknown>, plantCountOrigin?: GrowerSpacingSelectionReceipt) => normaliseGrowerPlanningProfile({
-    version: 1, profileId: request.profileId, cropKey: request.cropKey, scope, inputs, ...(plantCountOrigin ? { plantCountOrigin } : {}),
+  const makeProfile = (inputs: Record<string, unknown>, plantCountOrigin?: GrowerSpacingSelectionReceipt, positiveMonths = false) => normaliseGrowerPlanningProfile({
+    version: positiveMonths ? 2 : 1, profileId: request.profileId, cropKey: request.cropKey, scope, inputs, ...(plantCountOrigin ? { plantCountOrigin } : {}),
+    ...(positiveMonths ? { entryMonthCoverage: 'positive-only' } : {}),
   });
   const base = makeProfile(emptyInputs);
   const entryDate = normaliseGrowerInput(request.fieldEntryDate, 'utc-date', isGrowerUtcDate);
@@ -149,6 +154,7 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
   const inputs: Record<string, unknown> = { ...emptyInputs };
   const candidates: readonly ProvisionalFieldCandidate[] = request.candidates;
   let establishment = context.establishment;
+  let positiveMonths = false;
   const ids = new Map<string, number>();
   for (const candidate of candidates) if (text(candidate?.id)) ids.set(candidate.id, (ids.get(candidate.id) ?? 0) + 1);
 
@@ -190,6 +196,13 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
       } else if (temporal.kind !== 'recurring-season') { reject('invalid-time-scope'); continue; }
       const value = normaliseField(field, candidate.input);
       if (!value || value.state !== 'provided') { reject('invalid-value'); continue; }
+      const coverage = Object.getOwnPropertyDescriptor(candidate, 'entryMonthCoverage');
+      if ('entryMonthCoverage' in candidate && (!coverage?.enumerable || !('value' in coverage) || coverage.value !== 'positive-only'
+        || field !== 'allowedEntryMonths' || candidate.tier === 'grower-estimate'
+        || candidate.positiveWindowEvidence !== true || value.provenance.kind !== 'external-reference'
+        || !Array.isArray(value.value) || !value.value.length)) {
+        reject('invalid-entry-month-coverage'); continue;
+      }
       if (field === 'establishment') {
         // Applicability metadata cannot contradict the capsule's own method.
         if (candidate.establishment !== 'any' && candidate.establishment !== value.value) {
@@ -237,7 +250,8 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
       .sort((a, b) => a.candidate.id < b.candidate.id ? -1 : a.candidate.id > b.candidate.id ? 1 : 0);
     // Equal-ranked conflicting values are not resolved by array order or a fabricated average.
     const identities = new Set(best.map(({ input, candidate }) => input.state === 'provided'
-      ? JSON.stringify([input.unit, input.value, candidate.reportedRange ?? null, candidate.planningValueBasis ?? null]) : 'missing'));
+      ? JSON.stringify([input.unit, input.value, candidate.reportedRange ?? null, candidate.planningValueBasis ?? null,
+        ...(candidate.entryMonthCoverage ? [candidate.entryMonthCoverage] : [])]) : 'missing'));
     const conflict = identities.size > 1;
     const defaultInput = best.length && !conflict ? best[0].input : null;
     let activeInput: Input = defaultInput ?? unknown();
@@ -252,6 +266,7 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
       status = override ? 'overridden' : 'invalid-override';
       activeTier = override ? 'grower-estimate' : null;
     }
+    if (field === 'allowedEntryMonths') positiveMonths = status === 'selected' && best[0]?.candidate.entryMonthCoverage === 'positive-only';
     const sourceBindings = best.flatMap(({ candidate }) => {
       const source = candidate.source;
       return candidate.tier !== 'grower-estimate' && source && source.licence.status === 'known' ? [{
@@ -277,11 +292,13 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
           temporalScope: candidate.temporalScope.kind === 'recurring-season' ? { kind: 'recurring-season' }
             : candidate.temporalScope.kind === 'dated' ? { kind: 'dated', fromDate: candidate.temporalScope.fromDate, throughDate: candidate.temporalScope.throughDate }
               : { kind: 'historical-transfer', period: candidate.temporalScope.period, assumption: candidate.temporalScope.assumption },
-          establishment: candidate.establishment, waterRegime: candidate.waterRegime, varietyReference: candidate.varietyReference ?? null } })),
+          establishment: candidate.establishment, waterRegime: candidate.waterRegime, varietyReference: candidate.varietyReference ?? null,
+          ...(candidate.entryMonthCoverage ? { entryMonthCoverage: candidate.entryMonthCoverage } : {}) } })),
       sourceReferences: [...new Set(sourceReferences)], sourceBindings,
       defaultReportedRange: defaultInput && best[0].candidate.reportedRange ? [...best[0].candidate.reportedRange] as [number, number] : null,
       defaultPlanningValueBasis: defaultInput ? best[0].candidate.planningValueBasis ?? null : null,
-      assumptions: [...new Set(assumptions)] };
+      assumptions: [...new Set(assumptions)],
+      ...(defaultInput && best[0].candidate.entryMonthCoverage ? { defaultEntryMonthCoverage: best[0].candidate.entryMonthCoverage } : {}) };
     inputs[field] = activeInput;
     if (field === 'establishment' && activeInput.state === 'provided') {
       establishment = activeInput.value as 'direct' | 'transplant';
@@ -334,7 +351,7 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
       else spacingSelection = { status: 'invalid-inputs', issue: 'Spacing must lie within the source range and final stand must be a non-negative safe whole number.' };
     }
   }
-  const profile = makeProfile(inputs, plantCountOrigin);
+  const profile = makeProfile(inputs, plantCountOrigin, positiveMonths);
   // Every resolved result promises a valid profile. Do not rely on an erased
   // non-null assertion if a future normalizer change breaks that invariant.
   if (!profile) return freeze({ status: 'invalid-context' as const,

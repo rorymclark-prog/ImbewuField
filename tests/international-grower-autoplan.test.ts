@@ -47,6 +47,15 @@ function request(values: Partial<GrowerAutoPlanRequest> = {}): GrowerAutoPlanReq
     beds: [bed(), bed('bed-z', 2)], planningStart: own('2027-12-28', 'utc-date'), planningEndExclusive: own('2028-02-01', 'utc-date'),
     availability: [availability(), availability('bed-z')], reserved: [], demands: [demand()], maxAssessments: 1000, ...values };
 }
+
+test('positive-only source months cannot authorise full auto-planning even when every other input is complete', () => {
+  const p: GrowerPlanningProfile = { ...profile(), version: 2, entryMonthCoverage: 'positive-only',
+    inputs: { ...profile().inputs, allowedEntryMonths: { state: 'provided', value: [1, 12], unit: 'utc-months', provenance: {
+      kind: 'external-reference', recordedAt: requestedAt, sourceUrl: 'https://example.invalid/months', reference: 'Synthetic positive-only list' } } } };
+  const result = generateGrowerAutoPlan(request({ profiles: [p] }));
+  assert.equal(result.status, 'missing-inputs'); assert.equal(result.cycles.length, 0);
+  assert.ok(result.issues.some(issue => issue.endsWith(':needs-grower-entry-window')));
+});
 function proposal(input: unknown = request()) {
   const result = generateGrowerAutoPlan(input);
   assert.ok(result.status === 'ready' || result.status === 'with-gaps', JSON.stringify(result));

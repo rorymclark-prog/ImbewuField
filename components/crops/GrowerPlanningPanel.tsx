@@ -365,6 +365,7 @@ function Editor({ scope, beds, profiles, current, sourceKey, measuredAreas, meas
     if (!draftIsCurrent()) return;
     if (!latest || !shownSignature || latest.signature !== shownSignature) { setReview(null); setError(changedSourceMessage); return; }
     const value = latest.profile;
+    if (value.version === 2) { setError('This profile retains positive source months; other months are unknown. Use the source-aware provisional preview to deliberately specify your own window. This editor cannot convert its source evidence.'); return; }
     if (value.provisionalOrigin) { setError('This profile preserves provisional source evidence. Open its saved evidence in Provisional crop preview; this estimate editor cannot replace that evidence.'); return; }
     if (value.plantCountOrigin) { setError('This estimate uses spacing cells. This editor cannot change that count basis; the original choices remain saved.'); return; }
     dirty(); replaceSession(value); setCropKey(value.cropKey);

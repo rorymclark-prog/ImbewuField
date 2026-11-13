@@ -44,7 +44,10 @@ export interface GrowerPlanningInputs {
 }
 
 export interface GrowerPlanningProfile {
-  readonly version: 1;
+  readonly version: 1 | 2;
+  /** Version2 preserves positive source months without excluding omissions.
+   * Older readers must reject this profile, not discard the distinction. */
+  readonly entryMonthCoverage?: 'positive-only';
   readonly profileId: string;
   /** Existing catalogue identity only; no catalogue agronomy is read. */
   readonly cropKey: string;
@@ -214,7 +217,7 @@ const months = (v: unknown): v is number[] => Array.isArray(v) && v.length <= 12
 
 /** Invalid supplied data is rejected, never silently replaced with a missing/default value. */
 export function normaliseGrowerPlanningProfile(value: unknown): GrowerPlanningProfile | null {
-  if (!record(value) || value.version !== 1 || !text(value.profileId) || typeof value.cropKey !== 'string'
+  if (!record(value) || (value.version !== 1 && value.version !== 2) || !text(value.profileId) || typeof value.cropKey !== 'string'
     || !cropByKey(value.cropKey) || !record(value.inputs)) return null;
   const scope = normaliseGrowerPlanningScope(value.scope);
   const raw = value.inputs;
@@ -229,6 +232,10 @@ export function normaliseGrowerPlanningProfile(value: unknown): GrowerPlanningPr
   const allowedEntryMonths = input(raw.allowedEntryMonths, 'utc-months', months);
   if (!scope || !plantsPerM2 || !yieldKgPerM2 || !establishment || !nurseryDays || !fieldEntryToFirstHarvestDays
     || !pickingDays || !fieldOccupancyDays || !turnaroundDays || !allowedEntryMonths) return null;
+  const coverage = Object.getOwnPropertyDescriptor(value, 'entryMonthCoverage');
+  if (value.version === 1 ? 'entryMonthCoverage' in value
+    : !coverage?.enumerable || !('value' in coverage) || coverage.value !== 'positive-only' || allowedEntryMonths.state !== 'provided'
+      || !allowedEntryMonths.value.length || allowedEntryMonths.provenance.kind !== 'external-reference') return null;
   const window: GrowerPlanningInputs['allowedEntryMonths'] = allowedEntryMonths.state === 'missing' ? allowedEntryMonths
     : { ...allowedEntryMonths, value: [...allowedEntryMonths.value].sort((a, b) => a - b) };
   let exactDensitySources: GrowerPlanningProfile['exactDensitySources'];
@@ -264,10 +271,11 @@ export function normaliseGrowerPlanningProfile(value: unknown): GrowerPlanningPr
       || establishment.state !== 'provided' || establishment.value !== regionalSpacingReference(
         plantCountOrigin.countryCode, plantCountOrigin.cropKey, plantCountOrigin.regionReference, plantCountOrigin)?.establishment) return null;
   }
-  const profile: GrowerPlanningProfile = freeze({ version: 1, profileId: value.profileId, cropKey: value.cropKey, scope,
+  const profile: GrowerPlanningProfile = freeze({ version: value.version, profileId: value.profileId, cropKey: value.cropKey, scope,
     inputs: { plantsPerM2, yieldKgPerM2, establishment, nurseryDays, fieldEntryToFirstHarvestDays,
       pickingDays, fieldOccupancyDays, turnaroundDays, allowedEntryMonths: window },
-    ...(exactDensitySources ? { exactDensitySources } : {}), ...(plantCountOrigin ? { plantCountOrigin } : {}) });
+    ...(exactDensitySources ? { exactDensitySources } : {}), ...(plantCountOrigin ? { plantCountOrigin } : {}),
+    ...(value.version === 2 ? { entryMonthCoverage: 'positive-only' as const } : {}) });
   if ('provisionalOrigin' in value) {
     const descriptor = Object.getOwnPropertyDescriptor(value, 'provisionalOrigin');
     if (!descriptor?.enumerable || !('value' in descriptor)) return null;
@@ -355,7 +363,7 @@ export interface ProvisionalGrowerPlanningAssessment extends AssessmentBasis {
   readonly estimatedPlantCount: ProvisionalPlanningValue<number>;
   readonly budgetedStations: ProvisionalPlanningValue<number>;
   readonly estimatedYieldKg: ProvisionalPlanningValue<number>;
-  readonly entryWindow: 'allowed' | 'unknown' | 'excluded' | 'missing-date';
+  readonly entryWindow: 'allowed' | 'reported-positive' | 'unknown' | 'excluded' | 'missing-date';
   readonly schedule: Readonly<Record<keyof Omit<GrowerDateEstimate, 'fieldEntryDate'>, ProvisionalPlanningValue<string>>>;
   readonly uncertainties: readonly string[];
 }
@@ -406,8 +414,10 @@ export function assessProvisionalGrowerPlanning(request: GrowerPlanningRequest):
     yieldKg = Number.isFinite(value) ? result('ready', value) : invalid<number>('estimatedYieldKg');
   }
   const entryWindow = entry.state === 'missing' ? 'missing-date' : values.allowedEntryMonths.state === 'missing' ? 'unknown'
-    : values.allowedEntryMonths.value.includes(Number(entry.value.slice(5, 7))) ? 'allowed' : 'excluded';
+    : values.allowedEntryMonths.value.includes(Number(entry.value.slice(5, 7)))
+      ? profile.version === 2 ? 'reported-positive' : 'allowed' : profile.version === 2 ? 'unknown' : 'excluded';
   const uncertainties: string[] = [];
+  if (profile.version === 2) uncertainties.push('positive-months-only', 'needs-grower-entry-window');
   if (entryWindow === 'unknown') uncertainties.push('entry-window-unknown');
   if (values.establishment.state === 'missing') uncertainties.push('establishment-unknown');
   const offset = (start: GrowerInput<string, 'utc-date'> | ProvisionalPlanningValue<string>, daysInput: GrowerInput<number, 'days'>,
@@ -474,6 +484,9 @@ export function assessGrowerPlanning(request: GrowerPlanningRequest): GrowerPlan
   // being silently discarded. Live permissions remain private to the controller.
   if (!profile.provisionalOrigin && Object.hasOwn(request, 'provisionalContext') && request.provisionalContext !== undefined)
     return held('invalid-inputs', ['unexpected-provisional-context']);
+  // A positive reference is useful for a partial preview, not an assertion that
+  // the grower has chosen a complete window for automatic scheduling/adoption.
+  if (profile.version === 2) return held('missing-inputs', ['needs-grower-entry-window']);
   const values = profile.inputs;
   const required: Array<[string, GrowerInput<unknown, string>]> = Object.entries(values).filter(([key]) => key !== 'nurseryDays' && !(profile.plantCountOrigin && key === 'plantsPerM2'));
   required.push(['measuredAreaM2', measuredAreaM2], ['fieldEntryDate', fieldEntryDate]);

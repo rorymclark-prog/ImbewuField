@@ -1,5 +1,7 @@
 # Audits for 13 November 2026
 
+- [Positive-only crop month evidence](positive-month-coverage-codex.md): preserve unknown omissions, legacy replay and conditional outputs; source admission and successor gates remain separate.
+
 - [Readable place identity in provisional previews](provisional-export-place-label-codex.md): scope-matched display name, captured metadata and retired exports on a name change; successor verification remains separate.
 
 - [Short-report rainfall evidence](summary-rainfall-evidence-codex.md): unsupported annual placeholders stay unknown; sourced zero remains visible in the actual one/five-page exports.

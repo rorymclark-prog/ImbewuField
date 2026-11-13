@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '13 November 2026', sha: '51872cdfe', changes: [
+    'Partial crop calendars keep unlisted months unknown instead of excluding them.',
+  ] },
   { when: '13 November 2026', sha: '6b9de2c4b', changes: [
     'Printable crop previews now name the selected site or workspace.',
   ] },

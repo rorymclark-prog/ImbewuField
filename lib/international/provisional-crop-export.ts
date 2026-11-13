@@ -25,6 +25,10 @@ export function provisionalInputText(input: { state: string; value?: unknown; un
   const unit = ({ 'plants/m2': 'plants/m²', 'kg/m2/cycle': 'kg/m²/cycle', m2: 'm²', 'utc-date': '(UTC)', 'utc-months': '(UTC months)', method: '' } as Record<string, string>)[input.unit ?? ''] ?? input.unit ?? '';
   return `${Array.isArray(input.value) ? input.value.join(', ') : input.value} ${unit}`.trim();
 }
+export function provisionalEntryWindowText(status: string): string {
+  return status === 'reported-positive' ? 'Source reports this month; current suitability is unverified' : status;
+}
+
 export function provisionalScopeText(scope: ResolvedProvisionalField['defaultOptions'][number]['scope']) {
   const geography = scope.geography, time = scope.temporalScope;
   const place = geography.kind === 'country' ? geography.countryCode
@@ -32,7 +36,7 @@ export function provisionalScopeText(scope: ResolvedProvisionalField['defaultOpt
       : geography.kind === 'site' ? 'this saved site' : `transferred evidence: ${geography.assumption}`;
   const period = time.kind === 'recurring-season' ? 'recurring season'
     : time.kind === 'dated' ? `${time.fromDate} through ${time.throughDate}` : `${time.period}; ${time.assumption}`;
-  return `${place}; ${period}; establishment ${scope.establishment}; water regime ${scope.waterRegime}${scope.varietyReference ? `; variety ${scope.varietyReference}` : ''}`;
+  return `${place}; ${period}; establishment ${scope.establishment}; water regime ${scope.waterRegime}${scope.varietyReference ? `; variety ${scope.varietyReference}` : ''}${scope.entryMonthCoverage === 'positive-only' ? '; source reports positive months only; other months unknown' : ''}`;
 }
 
 const provenanceText = (p: GrowerInputProvenance) => `${p.kind}; recorded ${p.recordedAt}${'reference' in p ? `; reference ${p.reference}` : ''}${'sourceUrl' in p ? `; source ${p.sourceUrl}` : ''}${'note' in p && p.note ? `; note ${p.note}` : ''}`;
@@ -92,6 +96,7 @@ function renderProvisionalCropDocument(request: ProvisionalDraftRequest, metadat
     ${paragraph('Active basis', field.activeTier ?? 'Unknown')}
     ${field.activeInput.state === 'provided' ? paragraph('Input provenance', provenanceText(field.activeInput.provenance)) : ''}
     ${paragraph('Evidence default', provisionalInputText(field.baselineDefault))}
+    ${field.defaultEntryMonthCoverage === 'positive-only' ? '<p>Source default reports positive months only; other months are unknown. A grower override replaces the active window, not this source record.</p>' : ''}
     ${field.status === 'overridden' && field.activeInput.state === 'missing' && !(request.countBasis && key === 'plantsPerM2') ? '<p>Grower withheld this value. Its evidence default remains visible but is not used.</p>' : ''}
     ${field.defaultConflict ? '<p><strong>Conflicting defaults remain unresolved. No average was invented.</strong></p>' : ''}
     ${field.status === 'invalid-override' ? '<p><strong>Invalid override: its default has not been substituted.</strong></p>' : ''}
@@ -145,7 +150,8 @@ ${paragraph('Source between-plants distance interpreted as station spacing', req
 ${paragraph('Whole measured bed treated as usable spacing-cell area', request.countBasis.wholeAreaConfirmed ? 'Declared by grower' : 'Not declared')}
 <p>Formula: floor(area in m² × 10000 / (row cm × in-row cm)) gives whole budgeted stations; multiply those whole stations by declared final survivors. Original decimal choices are retained. This is a conditional grower estimate, not a sourced density or physical layout clearance. The source’s seeds per hill and planting-cell footnotes do not supply final stand. Entered/default density is not used.</p></section>` : ''}
 
-<h2>Supported results</h2>${paragraph('Entry window', assessment.entryWindow)}
+<h2>Supported results</h2>${paragraph('Entry window', provisionalEntryWindowText(assessment.entryWindow))}
+${result.profile.version === 2 ? '<p>Source reports these months; other months remain unknown. Date offsets are conditional calculations, not planting recommendations. Specify your own field-entry window before automatic planning or adoption.</p>' : ''}
 <p>An unknown window does not establish that planting on this date is suitable.</p>
 <table><thead><tr><th>Output</th><th>Value and status</th></tr></thead><tbody>
 ${output.map(([label, text]) => `<tr><th scope="row">${escape(label)}</th><td>${escape(text)}</td></tr>`).join('')}</tbody></table>

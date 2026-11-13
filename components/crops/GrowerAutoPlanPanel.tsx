@@ -95,6 +95,7 @@ const issueLabels: Record<string, string> = {
   'fieldOccupancyDays': 'Your field occupancy is missing or invalid.',
   'turnaroundDays': 'Your turnaround after clearing is missing or invalid.',
   'allowedEntryMonths': 'Your allowed field-entry months are missing or invalid.',
+  'needs-grower-entry-window': 'The source lists positive months only. Specify your own field-entry window in a new provisional preview before automatic planning; other months remain unknown.',
   'totalKg': 'A demand weight has not been entered. Blank is not zero: enter 0 only when the known demand is zero.',
   'harvestWindow': 'A positive demand needs both harvest dates.',
   'demand-selection-ambiguous': 'This review mixed two demand lists. Reopen the form and review again.',

@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest global evidence continuation — [Positive-only crop months](2026-11-13/positive-month-coverage-codex.md). Omitted months remain unknown, with preserved legacy replay and conditional partial outputs; source admission and successor gates remain separate.
+
 Latest provisional export continuation — [Readable place identity](2026-11-13/provisional-export-place-label-codex.md). Current preview files name the scope-matched place/workspace without exposing raw handles; exact output/review/CI gates remain separate.
 
 Latest short-report continuation — [Rainfall evidence](2026-11-13/summary-rainfall-evidence-codex.md). One-page, five-page and prepared reports use the shared source gate; unsupported placeholders stay unknown and sourced zero remains visible. Exact successor review and CI remain separate.

@@ -5,7 +5,7 @@ import { CROPS, MONTHS_SHORT } from '@/lib/crop-catalog';
 import { growerPlanningScopeKey, normaliseGrowerMeasuredAreaInput, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import { formatDerivedMassKilograms } from '@/lib/mass-units';
 import { downloadFile } from '@/lib/crop-export-deliver';
-import { buildProvisionalCropPreviewHtml, provisionalPlaceLabel, provisionalNumericFields as numericFields, provisionalLabels as labels, provisionalInputText as inputText, provisionalScopeText as scopeText } from '@/lib/international/provisional-crop-export';
+import { buildProvisionalCropPreviewHtml, provisionalPlaceLabel, provisionalEntryWindowText, provisionalNumericFields as numericFields, provisionalLabels as labels, provisionalInputText as inputText, provisionalScopeText as scopeText } from '@/lib/international/provisional-crop-export';
 import { growerWorkflowResourceSiteId, type GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { resolveProvisionalCropPlan, type ProvisionalFieldCandidate, type ProvisionalDraftRequest } from '@/lib/international/provisional-crop-planning';
 import { usdaGreatLakesCabbageReference, usdaGreatLakesCabbageCandidates, usdaGreatLakesRegionMatches, USDA_CABBAGE_SPACING, type UsdaCabbageNurseryBasis } from '@/lib/international/providers/usda-great-lakes-cabbage';
@@ -72,6 +72,7 @@ function EvidenceFields({ fields, spacing }: { fields: Extract<Resolution, { sta
       {Object.entries(fields).map(([key, value]) => <details key={key} className="rounded border border-[var(--border)] p-2">
         <summary className="min-h-11 cursor-pointer">{labels[key]}: {inputText(value.activeInput)} · {value.status}</summary>
         <p>Active basis: {value.activeTier ?? 'Unknown'}. Evidence default: {inputText(value.baselineDefault)}.</p>
+        {value.defaultEntryMonthCoverage === 'positive-only' && <p>Source default reports positive months only; other months are unknown. A grower override replaces the active window, not this source record.</p>}
         {value.activeInput.state === 'provided' && <p>Input provenance: {value.activeInput.provenance.kind}; recorded {value.activeInput.provenance.recordedAt}.</p>}
         {value.status === 'overridden' && value.activeInput.state === 'missing' && <p>{key === 'plantsPerM2' && spacing ? 'The chosen spacing method does not use an entered/default density.' : 'Grower withheld this value. Its evidence default remains visible but is not used.'}</p>}
         {value.defaultConflict && <p role="note">Conflicting defaults remain unresolved; no average was invented.</p>}
@@ -298,7 +299,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
         {saved.request.countBasis && <p>Chosen spacing: {saved.request.countBasis.rowCm} cm between rows; {saved.request.countBasis.inRowCm} cm within rows; final survivors per station: {saved.request.countBasis.finalStand || 'Unknown'}. This is an area budget, not physical layout fit.</p>}
         {saved.request.countBasis && <p>Saved budgeted whole stations: {saved.result.assessment.budgetedStations.value ?? 'Unknown'} ({saved.result.assessment.budgetedStations.status}).</p>}
         <p>Saved estimate: {saved.result.assessment.estimatedPlantCount.value ?? 'Unknown'} plants ({saved.result.assessment.estimatedPlantCount.status}); harvest weight {saved.result.assessment.estimatedYieldKg.value ?? 'Unknown'} kg ({saved.result.assessment.estimatedYieldKg.status}).</p>
-        <p>Saved entry window: {saved.result.assessment.entryWindow}. Current planting suitability is unverified.</p>
+        <p>Saved entry window: {provisionalEntryWindowText(saved.result.assessment.entryWindow)}. Current planting suitability is unverified.</p>
+        {saved.result.profile.version === 2 && <p>Source reports these months; other months remain unknown. Saved date offsets are conditional calculations, not planting recommendations. Specify your own field-entry window in a new preview before automatic planning or adoption.</p>}
         <ul>{Object.entries(saved.result.assessment.schedule).map(([key, value]) => <li key={key}>{labels[key]} (UTC): {value.value ?? 'Unknown'} ({value.status})</li>)}</ul>
         <EvidenceFields fields={saved.result.fields} spacing={!!saved.request.countBasis} />
         {!!saved.result.rejected.length && <details><summary className="min-h-11 cursor-pointer">Saved evidence not used</summary><ul>{saved.result.rejected.map((item, i) => <li key={i}>{item.id}: {item.reason}</li>)}</ul></details>}
@@ -427,7 +429,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
           onClick={savePreview}>Save provisional profile</button>
       </div>}
       {saveMessage && <p role="status">{saveMessage}</p>}
-      <p>Entry window: {result.assessment.entryWindow}. An unknown window does not establish that planting on this date is suitable.</p>
+      <p>Entry window: {provisionalEntryWindowText(result.assessment.entryWindow)}. An unknown window does not establish that planting on this date is suitable.</p>
+      {result.profile.version === 2 && <p>Source reports these months; other months remain unknown. Date offsets are conditional calculations, not planting recommendations. Specify your own field-entry window before automatic planning or adoption.</p>}
       {result.spacingSelection && <p role="note">Spacing-cell estimate: {result.spacingSelection.issue} ({result.spacingSelection.status})</p>}
       {draft.countMode === 'spacing' && <p>Budgeted whole stations: {result.assessment.budgetedStations.value ?? 'Unknown'} ({result.assessment.budgetedStations.status}). Area budget only; physical layout fit is unassessed.</p>}
       <p>Estimated plants: {result.assessment.estimatedPlantCount.value ?? 'Unknown'} ({result.assessment.estimatedPlantCount.status})</p>

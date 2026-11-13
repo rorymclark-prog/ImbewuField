@@ -75,6 +75,22 @@ function legacyPlan(): CropPlanState {
       provenance: 'fictional-example', note: 'Recorded stock fixture, not a storage-life recommendation.' }],
     planNotes: [{ kind: 'basis', text: 'Keep the grower’s original accepted-plan explanation.' }], planNotesAt: Date.UTC(2026, 10, 1) };
 }
+
+test('mixed legacy and positive-only profiles survive the real storage writer without a coverage downgrade', async () => {
+  await initialiseCropPlanFixture();
+  const positive: GrowerPlanningProfile = { ...profile('positive-source'), version: 2, entryMonthCoverage: 'positive-only',
+    inputs: { ...profile().inputs, allowedEntryMonths: { state: 'provided', value: [7, 8, 9], unit: 'utc-months',
+      provenance: { kind: 'external-reference', recordedAt, reference: 'Synthetic positive list', sourceUrl: 'https://example.invalid/months' } } } };
+  const book = { ...legacyPlan(), growerPlanningProfiles: [profile('legacy'), positive] };
+  assert.equal(saveCropPlan(book), true);
+  assert.deepEqual(loadCropPlan(), book);
+  assert.deepEqual(readCanonicalCropPlanFixture(), book);
+  const malformed = { ...positive, version: 1 };
+  const bytes = JSON.stringify({ ...book, growerPlanningProfiles: [book.growerPlanningProfiles[0], malformed] });
+  replaceCanonicalCropPlanFixtureRaw(bytes);
+  assert.equal(saveCropPlan({ ...loadCropPlan(), updatedAt: 999 }), false, 'lossy projection must hold unrelated edits');
+  assert.equal(readCanonicalCropPlanFixtureRaw(), bytes);
+});
 function withoutProfiles(plan: CropPlanState) {
   const { growerPlanningProfiles: _profiles, ...rest } = plan;
   return rest;
