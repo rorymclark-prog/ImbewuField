@@ -1,5 +1,8 @@
 # ImbewuField audit archive
 
+Latest preview verification — [Preview build memory — 13 November 2026](2026-11-13/preview-build-memory-codex.md). Narrow user-approved workflow exception preserves every check; actual build and hosted verification remain separate.
+
+
 Latest calendar follow-up — [Individual DEMO calendar identity — 13 November 2026](2026-11-13/calendar-individual-demo-codex.md). Actual single/bulk files share DEMO identity and guarded delivery; successor gates remain separate.
 
 
