@@ -1,5 +1,8 @@
 # ImbewuField audit archive
 
+Latest new-place continuation — [Map preview naming guard](2026-11-13/map-new-place-preview-codex.md). Actual hosted failure reproduced; draft and selection validity now protect new-place saves. Successor hosted/review/CI gates remain separate.
+
+
 Latest preview verification — [Preview build memory — 13 November 2026](2026-11-13/preview-build-memory-codex.md). Narrow user-approved workflow exception preserves every check; actual build and hosted verification remain separate.
 
 

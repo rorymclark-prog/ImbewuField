@@ -226,9 +226,13 @@ for (const [path, handlerName] of [
     const mark = (value: unknown) => { feedback.push(value); };
     const data = { biome: { name: 'Savanna' }, rainfall: { annual: 600 }, elevation: { elevation: 600 } };
     const noop = () => {};
+    const mapDraft = { ...NEARBY, selectionGeneration: 0 };
+    const mapIntent = { current: { generation: 0, draft: mapDraft as typeof mapDraft | null } };
     try {
       const handler = actualSaveHandler(path, handlerName, {
-        data, coords: NEARBY, locationData: data, namingPlace: NEARBY,
+        data, coords: NEARBY, locationData: data, namingPlace: mapDraft,
+        placeSaveIntent: mapIntent, allowMapEvidence: () => true,
+        closePlaceNaming: () => { mapIntent.current.draft = null; },
         name: 'Synthetic site', notes: '', placeName: 'Synthetic site',
         placeLabel: 'field', customPlaceColor: '', editingPlaceId: null, savedPins: loadPlaces(),
         promptNearbyUpdate, savePlace, savedRainfallFields, loadPlaces,

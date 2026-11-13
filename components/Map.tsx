@@ -376,16 +376,27 @@ const SIMPLE_ELEMENT_TYPES: SiteElementType[] = ['tree', 'jojo_tank'];
 const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
 const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Natal plum', 'Wild plum', 'Waterberry', 'Other tree'];
 
+type PlaceNamingDraft = { lat: number; lon: number; selectionGeneration: number };
+
 export default function PermaMap({ onLocationSelect: onSelectLocation, selectedLocation, loading, onMapCapture, onMapReady, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, activePlaceId, people, showPeople, onTogglePeople, onDesignPresenceChange, guided }: Props) {
   const appConfirm = useAppConfirm();
   const placeSaveContext = useSavedPlaceWriteContext();
   const { t, lang } = useLanguage();
   const { user } = useAuth();
   const placePreviewOnly = useRef(false);
+  // A nearby-place answer must belong to the point and naming sheet the farmer
+  // actually opened, even after a preview -> own-point round trip.
+  const placeSaveIntent = useRef<{ generation: number; pointKey: string; draft: PlaceNamingDraft | null }>({ generation: 0, pointKey: '', draft: null });
+  const selectedPointKey = selectedLocation ? `${selectedLocation.lat},${selectedLocation.lon}` : '';
+  if (placeSaveIntent.current.pointKey !== selectedPointKey) {
+    placeSaveIntent.current.pointKey = selectedPointKey;
+    ++placeSaveIntent.current.generation;
+  }
   const placeCaptureFrame = useRef<{ generation: number; ready: boolean; cleanup: (() => void) | null }>({ generation: 0, ready: true, cleanup: null });
   const placePreviewShareCenter = useRef<{ lng: number; lat: number } | null>(null);
   const [placePreviewActive, setPlacePreviewActive] = useState(false);
   const onLocationSelect = useCallback((lat: number, lon: number) => {
+    ++placeSaveIntent.current.generation;
     // A map tap selects a farmer's own point but need not move the camera away
     // from the temporary geocoder centre. Share the selected point thereafter.
     if (placePreviewOnly.current || placePreviewShareCenter.current) {
@@ -691,39 +702,54 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
   // Save the currently selected point as a place (right from the map tools).
   // Save place = drop a pin at the spot, then name it + pick a label (sets colour).
   // editingPlaceId: when non-null, the naming sheet is editing an existing saved place.
-  const [namingPlace, setNamingPlace] = useState<{ lat: number; lon: number } | null>(null);
+  const [namingPlace, setNamingPlace] = useState<PlaceNamingDraft | null>(null);
   const [placeName, setPlaceName] = useState('');
   const [placeLabel, setPlaceLabel] = useState<PlaceLabel>('field');
   const [editingPlaceId, setEditingPlaceId] = useState<string | null>(null);
 
   const saveCurrentPlace = useCallback(() => {
-    if (!selectedLocation) return;
+    if (!selectedLocation || !allowMapEvidence() || selectedPointKey !== placeSaveIntent.current.pointKey) return;
+    const draft = { lat: selectedLocation.lat, lon: selectedLocation.lon, selectionGeneration: placeSaveIntent.current.generation };
+    placeSaveIntent.current.draft = draft;
     setEditingPlaceId(null);
-    setNamingPlace({ lat: selectedLocation.lat, lon: selectedLocation.lon });
+    setNamingPlace(draft);
     setPlaceName(locationData?.biome?.name ?? '');
     setPlaceLabel('field');
-  }, [selectedLocation, locationData]);
+  }, [selectedLocation, selectedPointKey, locationData, allowMapEvidence]);
 
   // Open the naming sheet to edit an existing saved place (rename/recolour)
   const startEditPlace = useCallback((p: SavedPlace) => {
+    const draft = { lat: p.lat, lon: p.lon, selectionGeneration: placeSaveIntent.current.generation };
+    placeSaveIntent.current.draft = draft;
     setEditingPlaceId(p.id);
-    setNamingPlace({ lat: p.lat, lon: p.lon });
+    setNamingPlace(draft);
     setPlaceName(p.name);
     setPlaceLabel(p.label ?? 'field');
     setCustomPlaceColor(p.color ?? '');
   }, []);
 
+  const closePlaceNaming = useCallback(() => {
+    placeSaveIntent.current.draft = null;
+    setEditingPlaceId(null);
+    setNamingPlace(null);
+  }, []);
+
   const confirmSavePlace = useCallback(async () => {
     if (!namingPlace) return;
     const context = placeSaveContext.current;
-    if (!savedPlaceWriteContextIsCurrent(context)) return;
     const existingId = editingPlaceId;
+    const isCurrent = () => savedPlaceWriteContextIsCurrent(context)
+      && placeSaveIntent.current.draft === namingPlace
+      && (existingId !== null || (allowMapEvidence()
+        && namingPlace.selectionGeneration === placeSaveIntent.current.generation));
+    if (!isCurrent()) return;
     const existing = existingId ? savedPins.find((p) => p.id === existingId) : null;
     // Save-time duplicate guard — shared authority in lib/saved-places.ts promptNearbyUpdate.
     // Only for brand-new pin saves: the explicit edit flow (existingId set via startEditPlace) is
     // already an update of a known id. When the farmer opts to update the nearby place, its id
     // (and savedAt/notes) survive so coordinate-keyed downstream data doesn't fork.
     const nearby = existingId ? null : await promptNearbyUpdate(namingPlace.lat, namingPlace.lon, appConfirm);
+    if (!isCurrent()) return;
     const target = existing ?? nearby;
     const saved = savePlace({
       id: target?.id ?? generateId(),
@@ -737,13 +763,12 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
       savedAt: target?.savedAt ?? new Date().toISOString(),
       // Not editable in this sheet — carry existing notes through instead of dropping them.
       notes: target?.notes,
-    }, { isCurrent: () => savedPlaceWriteContextIsCurrent(context) });
+    }, { isCurrent });
     if (!saved) return;
     setSavedPins(saved);
-    setEditingPlaceId(null);
-    setNamingPlace(null);
+    closePlaceNaming();
     if (!existingId) { setPlaceSaved(true); setTimeout(() => setPlaceSaved(false), 2500); }
-  }, [namingPlace, placeName, placeLabel, customPlaceColor, locationData, editingPlaceId, savedPins, appConfirm, placeSaveContext]);
+  }, [namingPlace, placeName, placeLabel, customPlaceColor, locationData, editingPlaceId, savedPins, appConfirm, placeSaveContext, allowMapEvidence, closePlaceNaming]);
 
   // Lima coach-marks — a quick guide that auto-shows the first time the tools
   // panel is opened, and reopens any time via the "?" in the panel header.
@@ -1712,6 +1737,8 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
   }, [cancelPlaceLookup, cancelPlaceSuggestions]);
   useEffect(() => () => {
     placeLookup.current?.abort(); placeSuggestions.current?.abort();
+    placeSaveIntent.current.draft = null;
+    ++placeSaveIntent.current.generation;
     placeCaptureFrame.current.cleanup?.();
     ++placeCaptureFrame.current.generation;
     if (suggestTimer.current) clearTimeout(suggestTimer.current);
@@ -1719,6 +1746,7 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
   const previewPlaceResult = useCallback((place: Place) => {
     if (place.searchEpoch !== searchEpoch.current) return;
     ++searchEpoch.current; cancelPlaceLookup(); cancelPlaceSuggestions(); setWorldwideResults([]);
+    ++placeSaveIntent.current.generation;
     placeCaptureFrame.current.cleanup?.(); placeCaptureFrame.current.cleanup = null;
     ++placeCaptureFrame.current.generation; placeCaptureFrame.current.ready = false;
     placePreviewOnly.current = true; setPlacePreviewActive(true);
@@ -4420,7 +4448,7 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
       {namingPlace && (
         <>
           <div className="fixed inset-0 z-[70]" style={{ background: 'rgba(6,16,10,0.55)', backdropFilter: 'blur(2px)' }}
-            onClick={() => setNamingPlace(null)} aria-hidden="true" />
+            onClick={closePlaceNaming} aria-hidden="true" />
           <div className="fixed left-1/2 -translate-x-1/2 z-[71] w-full"
             style={{ bottom: 'calc(72px + env(safe-area-inset-bottom))', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
             <div className="rounded-2xl p-4 font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
@@ -4462,7 +4490,7 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
                 </label>
               </div>
               <div className="flex gap-2">
-                <button onClick={() => setNamingPlace(null)}
+                <button onClick={closePlaceNaming}
                   className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                   {t('savePlaceCancelButton')}
                 </button>
