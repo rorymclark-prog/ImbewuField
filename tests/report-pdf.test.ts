@@ -585,7 +585,7 @@ test('actual six-column monitoring and native risk tables preserve rows beneath 
   const fx = JSON.parse(readFileSync(new URL('./fixtures/report-monitoring-translation/source-cases.json', import.meta.url), 'utf8'));
   const input = fx.risks.find((c: any) => c.name === 'all-possible').input;
   for (const lang of ['en', 'zu', 'st', 'ts', 've']) {
-    for (const raw of [riskRegisterMarkdown(buildRiskRegister(input, lang), lang, input.rainfallMm), monitoringMarkdown(buildMonitoringPlan(input.facts, lang), lang)]) {
+    for (const raw of [riskRegisterMarkdown(buildRiskRegister(input, lang), lang, input.rainfallMm, input.slopeDeg), monitoringMarkdown(buildMonitoringPlan(input.facts, lang), lang)]) {
       const table = parseReportMarkdown(raw).find(block => block.kind === 'table');
       assert.ok(table?.kind === 'table'); assert.equal(table.headers.length, 6);
       // Mark only the first cells so the page assertions survive native wrapping;

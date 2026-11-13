@@ -15,3 +15,5 @@
 - [Report irrigation evidence](report-irrigation-evidence-codex.md): remove the remaining storage-adequacy contradiction, unsourced daily watering depth and whole-property irrigation scaling; exact-head release gates remain open.
 
 - [Saved-place actor guard](saved-place-actor-guard-codex.md): retire pending nearby-site confirmations across account/view/sample changes; actual callback regressions and inherited buyer-fixture correction, with successor release gates open.
+
+- [Report slope evidence](report-slope-evidence-codex.md): remove unsupported slope ratings and unknown-to-low claims while retaining an unrated shared estimate; soil/earthworks and successor release gates remain open.

@@ -25,6 +25,7 @@ export interface RiskInput {
   facts: ReportSiteFacts | null | undefined;
   /** Retained for callers; annual rainfall alone cannot produce a risk rating. */
   rainfallMm: number | null;
+  /** Recorded estimate only; slope alone does not establish runoff/erosion risk. */
   slopeDeg: number;
   /** Retained for old callers; a record low does not establish farm frost risk. */
   minTempC?: number;
@@ -33,9 +34,6 @@ export interface RiskInput {
   unpricedBoqLines: number;
 }
 
-/** Thresholds, named so the register can print them. */
-const STEEP_SLOPE_DEG = 10;
-const MODERATE_SLOPE_DEG = 5;
 
 export function buildRiskRegister(input: RiskInput, language = 'en'): RiskRow[] {
   const t=(source:string,values?:Record<string,string|number>)=>reportDocumentText(source,language,values);
@@ -75,24 +73,8 @@ export function buildRiskRegister(input: RiskInput, language = 'en'): RiskRow[] 
     });
   }
 
-  // ── Land ──
-  if (input.slopeDeg >= STEEP_SLOPE_DEG) {
-    add({
-      risk: t('Soil loss from runoff on the slope'),
-      trigger: t('{slope}° slope, at or above the {threshold}° threshold',{slope:input.slopeDeg,threshold:STEEP_SLOPE_DEG}),
-      likelihood: 'High',
-      impact: 'High',
-      mitigation: t('Keep the ground covered at all times, and put earthworks on contour above the growing area before breaking any more soil.'),
-    });
-  } else if (input.slopeDeg >= MODERATE_SLOPE_DEG) {
-    add({
-      risk: t('Runoff carries water and topsoil off the growing area'),
-      trigger: t('{slope}° slope, between the {lower}° and {upper}° thresholds',{slope:input.slopeDeg,lower:MODERATE_SLOPE_DEG,upper:STEEP_SLOPE_DEG}),
-      likelihood: 'Medium',
-      impact: 'Medium',
-      mitigation: t('Mulch the beds and slow runoff on contour. Watch the ground after the first heavy rain and record where water actually runs.'),
-    });
-  }
+  // Slope remains visible in the shared unrated evidence note below. The old
+  // 5°/10° bands disagreed with the document and had no site-risk evidence.
   // Farm frost observations remain in the survey evidence. A grid record low cannot
   // supply a likelihood rating or a last-frost date for this register.
 
@@ -147,18 +129,35 @@ export function reportWaterEvidence(rainfallMm: number | null): string {
   return `Annual rainfall: ${annual}. Crop water demand, seasonal water supply and water adequacy have not been assessed. Annual rainfall alone does not establish dry-season crop-failure risk or required storage capacity.`;
 }
 
-export function riskRegisterMarkdown(rows: RiskRow[], language = 'en', rainfallMm: number | null = null): string {
+/** Shared by the risk register and the instant document. A recorded model value
+ * is not a runoff model, erosion observation or earthworks suitability check. */
+export function reportSlopeEvidence(slopeDeg: unknown, language = 'en'): { recordedSlope: number | undefined; runoffRisk: string; erosionRisk: string } {
+  const recordedSlope = typeof slopeDeg === 'number' && Number.isFinite(slopeDeg) && slopeDeg >= 0 && slopeDeg <= 90
+    ? slopeDeg : undefined;
+  const recorded = recordedSlope === undefined ? 'unknown' : `${recordedSlope}°`;
+  const fallback = language === 'en' ? '' : 'English; translation pending: ';
+  return {
+    recordedSlope,
+    runoffRisk: `${fallback}Recorded slope estimate: ${recorded}. Runoff risk has not been assessed. Confirm drainage, soil, ground cover and observed water flow before planning earthworks.`,
+    erosionRisk: `${fallback}Erosion risk has not been assessed. A slope estimate alone does not establish soil-loss likelihood or impact.`,
+  };
+}
+
+export function riskRegisterMarkdown(rows: RiskRow[], language = 'en', rainfallMm: number | null = null, slopeDeg?: unknown): string {
   const t=(source:string,values?:Record<string,string|number>)=>reportDocumentText(source,language,values);
   // The new evidence statement has no reviewed translations. Make the English
   // fallback visible rather than reusing the retired translated risk judgement.
   const label = language === 'en' ? 'Water evidence' : 'Water evidence (English; translation pending)';
-  const out: string[] = [`## ${t('Risk Register')}`, '', `**${label}:** ${reportWaterEvidence(rainfallMm)}`, ''];
+  const slopeLabel = language === 'en' ? 'Slope evidence' : 'Slope evidence (English; translation pending)';
+  const slope = reportSlopeEvidence(slopeDeg);
+  const out: string[] = [`## ${t('Risk Register')}`, '', `**${label}:** ${reportWaterEvidence(rainfallMm)}`, '',
+    `**${slopeLabel}:** ${slope.runoffRisk} ${slope.erosionRisk}`, ''];
   if (!rows.length) {
     out.push('No risk rows were produced from the available inputs. Missing evidence and farm frost conditions have not been assessed; this is not a finding of low risk.');
     out.push('');
     return out.join('\n');
   }
-  out.push(t('Each row was raised by this site\'s own data. The trigger column prints the figure and the threshold that produced the rating, so a reader who disagrees can argue with the number rather than the adjective.'));
+  out.push(`${language === 'en' ? '' : 'English; translation pending: '}These rows identify recorded inputs and gaps to review. Retained ratings are qualitative rule outputs, not measured probabilities or a complete site-risk assessment.`);
   out.push('');
   out.push(`| # | ${t('Risk')} | ${t('What raised it')} | ${t('Likelihood')} | ${t('Impact')} | ${t('What to do about it')} |`);
   out.push('|---|------|----------------|------------|--------|---------------------|');
