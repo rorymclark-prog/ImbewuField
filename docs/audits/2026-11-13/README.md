@@ -1,5 +1,7 @@
 # Audits for 13 November 2026
 
+- [Worldwide place-search entry](global-place-search-codex.md): explicit global area previews and separate farm/country selection; temporary-result write/capture guards, exact successor gates remain open.
+
 - [Optional Great Lakes cabbage nursery lead time](usda-cabbage-nursery-reference-codex.md): explicit source-bound duration choice and conditional seed-start arithmetic; successor review and release gates remain open.
 
 - [Missing report terrain fields](report-terrain-unknown-codex.md): preserve valid estimates and label missing terrain independently; actual outputs and successor verification remain open.
