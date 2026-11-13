@@ -120,6 +120,26 @@ export function reportEarthworksEvidence(language = 'en'): string {
   return reportEvidenceText('Earthwork suitability, dimensions, construction order, timing and comparative costs have not been assessed. Missing map entries do not prove physical absence. Recorded features and proposals are not a site-design approval. Confirm contour, drainage, soil/infiltration, safe overflow and local design requirements before selecting work.', language);
 }
 
+/** Provider outages and older saved records can violate the declared numeric type.
+ * Keep fields independent: below-sea-level elevation and a genuine zero are valid
+ * recorded estimates, while absent direction cannot justify an orientation claim. */
+export function reportTerrainValues(input: {
+  elevation?: unknown; slopeDeg?: unknown; slopePct?: unknown; aspectLabel?: unknown;
+} | null | undefined): {
+  elevationM: number | undefined; slopeDeg: number | undefined;
+  slopePct: number | undefined; aspectLabel: string | undefined;
+} {
+  return {
+    elevationM: typeof input?.elevation === 'number' && Number.isFinite(input.elevation) ? input.elevation : undefined,
+    slopeDeg: reportSlopeEvidence(input?.slopeDeg).recordedSlope,
+    slopePct: typeof input?.slopePct === 'number' && Number.isFinite(input.slopePct) && input.slopePct >= 0 ? input.slopePct : undefined,
+    // The elevation producer explicitly uses an em dash when its relief does
+    // not support a direction. Do not turn that sentinel into a facing claim.
+    aspectLabel: typeof input?.aspectLabel === 'string' && input.aspectLabel.trim()
+      && !['—', 'unknown', 'not known'].includes(input.aspectLabel.trim().toLowerCase()) ? input.aspectLabel : undefined,
+  };
+}
+
 /** Shared by the risk register and the instant document. A recorded model value
  * is not a runoff model, erosion observation or earthworks suitability check. */
 export function reportSlopeEvidence(slopeDeg: unknown, language = 'en'): { recordedSlope: number | undefined; runoffRisk: string; erosionRisk: string } {

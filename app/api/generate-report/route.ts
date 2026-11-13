@@ -38,7 +38,7 @@ import { biomeKeyForName } from '@/lib/biome';
 import { plantingColdMinimum } from '@/lib/design-elements';
 import { buildCoverMarkdown } from '@/lib/report-cover';
 import { buildMonitoringPlan, monitoringMarkdown } from '@/lib/report-monitoring';
-import { buildRiskRegister, riskRegisterMarkdown } from '@/lib/report-risk';
+import { buildRiskRegister, riskRegisterMarkdown, reportTerrainValues } from '@/lib/report-risk';
 import { assembleReportDocument } from '@/lib/report-assemble';
 import { zuluReportClosingNotes, savedCropPlanMarkdown, reportHeadingLookup, reportHeadingPrompt, reportDocumentText, reportUiDate } from '@/lib/report-localisation';
 import {
@@ -309,11 +309,9 @@ export async function POST(req: NextRequest) {
   );
   // Real administrative area for this point (municipality / district / province)
   const admin = await reverseGeocode(d.lat, d.lon);
-  const facingNote = d.elevation.aspectLabel.includes('N')
-    ? 'north-facing (warmer/drier in southern hemisphere)'
-    : d.elevation.aspectLabel.includes('S')
-    ? 'south-facing (cooler/moister in southern hemisphere)'
-    : 'lateral slope';
+  const terrain = reportTerrainValues(d.elevation);
+  const facingNote = terrain.aspectLabel === undefined
+    ? 'slope orientation not known' : 'recorded estimate; confirm on site';
 
   // Sun geometry from latitude (pure astronomy) — noon sun elevation + day length at solstices.
   // Uses lib/solar.deriveSolar (SECTOR-MODEL-SPEC §0.2/§1) rather than a hardcoded "sun is always
@@ -386,7 +384,7 @@ SITE DATA
 Biome: ${ecology.biome.name} (${ecology.biome.code}) — ${ecology.biome.description}${d.vegetation ? `\nExact vegetation type (SANBI 2018 National Vegetation Map): ${d.vegetation.vegUnit} — biome ${d.vegetation.biome}. This vegetation unit and its biome are AUTHORITATIVE for this site: name the natural plant community, every indigenous species and every tree recommendation from it. Do not describe this site as belonging to any other biome.${ecology.biomeName.toLowerCase() !== d.biome.name.toLowerCase() ? ` (A coarser biome layer guesses "${d.biome.name}" for this point; it is lower resolution and WRONG here — ignore it entirely.)` : ''}` : ''}${d.bru ? `\nKZN Bioresource Unit (KZN DARD): zone ${d.bru.brucode} (parent ${d.bru.bruParent}), closest matching Bioresource Group: ${d.bru.nearestBrg} — this is a BEST-EFFORT climate-similarity match, NOT a verified BRU→BRG crosswalk, so name it as approximate, never as confirmed fact. Zone temperature range ${d.bru.tmin}–${d.bru.tmax}°C (mean ${d.bru.tmean}°C). Use this as extra agro-ecological zone context (e.g. frost/mistbelt character, local grassveld type) alongside the vegetation unit above. Do NOT quote the BRU's own zone-average rainfall as a rainfall figure — Annual rainfall below is the ONLY rainfall number to use; never present two conflicting rainfall figures.` : ''}
 Coordinates: ${Math.abs(d.lat).toFixed(4)}°S, ${d.lon.toFixed(4)}°E
 ${admin ? `Administrative area (reverse-geocoded — use these REAL names, do not invent): ${admin.label}${admin.municipality ? `\n  · Local municipality: ${admin.municipality}` : ''}${admin.district ? `\n  · District municipality: ${admin.district}` : ''}${admin.province ? `\n  · Province: ${admin.province}` : ''}` : 'Administrative area unavailable. Ask the farmer to confirm municipality, district and province; do not infer names or distances from coordinates.'}
-Elevation: ${d.elevation.elevation}m ASL · Slope: ${d.elevation.slopeDeg}° (${d.elevation.slopePct}%) · Aspect: ${d.elevation.aspectLabel} (${facingNote})
+Elevation: ${terrain.elevationM === undefined ? 'not known' : `${terrain.elevationM}m ASL`} · Slope: ${terrain.slopeDeg === undefined ? 'not known' : `${terrain.slopeDeg}°`}${terrain.slopePct === undefined ? '' : ` (recorded estimate ${terrain.slopePct}%)`} · Aspect: ${terrain.aspectLabel ?? 'not known'} (${facingNote})
 
 CLIMATE
 ${climateEvidence}
@@ -488,7 +486,7 @@ Keep the tone and length consistent with the rest of the report.
 ` : ''}${sections.includes('Water Harvesting') ? `## Water Harvesting Design
 
 ### Strategy
-[1 paragraph: the water harvesting approach for THIS site — ${rainDescription}, ${rainPattern} pattern, ${d.elevation.slopeDeg}° slope, ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} soil]
+[1 paragraph: the water harvesting approach for THIS site — ${rainDescription}, ${rainPattern} pattern, ${terrain.slopeDeg === undefined ? 'slope not known' : `${terrain.slopeDeg}° recorded slope estimate`}, ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} soil. Terrain estimates do not establish runoff or earthwork suitability.]
 
 ### Earthwork proposals and missing evidence
 Describe only proposals explicitly recorded in the supplied map, survey or plan, retaining their status and recorded measurements. A drawing is not proof of site suitability or approval. If no proposal is recorded, say so; do not invent an earthwork, dimensions, construction priority or cheapest option. Identify contour, drainage, soil/infiltration, safe-overflow and local-design evidence needed before choosing work.

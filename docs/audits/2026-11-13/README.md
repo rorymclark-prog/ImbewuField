@@ -1,5 +1,7 @@
 # Audits for 13 November 2026
 
+- [Missing report terrain fields](report-terrain-unknown-codex.md): preserve valid estimates and label missing terrain independently; actual outputs and successor verification remain open.
+
 - [Report soil and earthworks evidence](report-soil-earthworks-evidence-codex.md): remove unsupported soil/roof risk and default construction instructions, qualify laboratory attribution and preserve recorded designs; exact-head review and CI remain open.
 
 - [Great Lakes cabbage spacing reference](great-lakes-spacing-codex.md): optional undated regional source, grower choices and unchanged exact count ownership; release gates remain open.
