@@ -5,3 +5,5 @@
 - [Saskatchewan cabbage nursery reference](saskatchewan-cabbage-nursery-codex.md): explicit approximate range endpoint, local prairie declaration, source-specific reuse, saved/adopted date qualifications and full-width print row; successor gates remain separate.
 
 - [Provisional report evidence pagination](provisional-print-pagination-codex.md): compact untouched unknowns, paragraph-level source appendix, preserved meanings/fingerprints and four shorter actual PDFs; successor gates remain separate.
+
+- [Proposed field-period temperature comparison](field-period-temperature-codex.md): optional monthly rows across a grower-proposed interval, strict old replay/origin3, consent and automatic-search safeguards; successor gates separate.

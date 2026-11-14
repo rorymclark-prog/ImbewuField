@@ -5,7 +5,7 @@ import type { PowerMonthlyTemperatureReceipt } from '../climate-temperature';
 import { detachJsonData } from '../lossless-json';
 import { canonicalCoordinateSiteId, coordinateSiteIdParts } from '../site-id';
 import { locationDataCacheKey } from '../location-cache-key';
-import { growerPlanningScopeKey, isGrowerUtcDate } from './grower-planning';
+import { growerPlanningScopeKey, isGrowerUtcDate, type GrowerPlanningInputs } from './grower-planning';
 import type { ProvisionalEvidenceContext } from './provisional-crop-planning';
 import type { PlanningSupport } from './planning-policy';
 
@@ -54,6 +54,28 @@ export interface ProvisionalTemperatureAssessment {
   readonly evidence: ProvisionalTemperatureEvidence | null;
   readonly criterion: typeof TOMATO_MONTHLY_CRITERION;
 }
+export type ProvisionalFieldPeriodTemperatureInput = Omit<ProvisionalTemperatureInput, 'version'> & {
+  readonly version: 2;
+  readonly comparisonScope: 'proposed-field-period';
+};
+type MonthComparison = Pick<ProvisionalTemperatureAssessment, 'state' | 'reason' | 'month' | 'valueC'>;
+export interface ProvisionalFieldPeriodTemperatureAssessment {
+  readonly version: 2;
+  readonly algorithm: 'proposed-field-period-monthly-v1';
+  readonly state: 'available' | 'unknown';
+  readonly reason: string | null;
+  readonly entryMonth: MonthComparison;
+  readonly evidenceKey: string | null;
+  readonly evidence: ProvisionalTemperatureEvidence | null;
+  readonly criterion: typeof TOMATO_MONTHLY_CRITERION;
+  readonly start: string | null;
+  readonly endExclusive: string | null;
+  readonly occupancy: GrowerPlanningInputs['fieldOccupancyDays'];
+  readonly rows: readonly (MonthComparison & { readonly yearMonth: string; readonly from: string; readonly endExclusive: string })[];
+}
+export type ProvisionalTemperatureResult = ProvisionalTemperatureAssessment | ProvisionalFieldPeriodTemperatureAssessment;
+// A display/serialization limit, never a biological maximum or a truncated plan.
+export const MAX_TEMPERATURE_PERIOD_ROWS = 128;
 const hash = (value: string) => bytesToHex(sha256(new TextEncoder().encode(value)));
 const record = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
 const pointSiteId = (point: Point) => Number.isFinite(point?.latitude) && Number.isFinite(point?.longitude)
@@ -154,9 +176,81 @@ export function assessProvisionalTemperature(input: unknown, context: Provisiona
   } catch { return unknown('comparison-declaration-invalid'); }
 }
 
+/** Repeat the admitted one-month operation over an already calculated field
+ * interval. This function cannot create a clear date or a planting window. */
+export function assessProvisionalFieldPeriodTemperature(input: unknown, context: ProvisionalEvidenceContext,
+  cropKey: string, start: string | null, clear: { status: string; value: string | null },
+  occupancy: GrowerPlanningInputs['fieldOccupancyDays'], recordedAt: string, asOf: string): ProvisionalFieldPeriodTemperatureAssessment {
+  let selected: ProvisionalTemperatureAssessment;
+  try {
+    const row = detachJsonData(input);
+    if (!record(row) || row.version !== 2 || row.comparisonScope !== 'proposed-field-period'
+      || Object.keys(row).sort().join(',') !== 'comparisonScope,criterion,criterionSnapshot,evidence,policyFingerprint,purpose,transfer,version') throw Error('invalid declaration');
+    const { comparisonScope: _mode, ...single } = row;
+    selected = assessProvisionalTemperature({ ...single, version: 1 }, context, cropKey, start, recordedAt, asOf);
+  } catch {
+    selected = assessProvisionalTemperature(null, context, cropKey, start, recordedAt, asOf);
+  }
+  const { version: _version, algorithm: _algorithm, evidence, evidenceKey, criterion, ...entryMonth } = selected;
+  const end = clear.status === 'ready' && isGrowerUtcDate(clear.value) ? clear.value : null;
+  const base = { version: 2 as const, algorithm: 'proposed-field-period-monthly-v1' as const,
+    entryMonth: Object.freeze(entryMonth), evidence, evidenceKey, criterion,
+    start: start && isGrowerUtcDate(start) ? start : null, endExclusive: end, occupancy };
+  const unknown = (reason: string): ProvisionalFieldPeriodTemperatureAssessment => Object.freeze({ ...base,
+    state: 'unknown', reason, rows: Object.freeze([]) });
+  if (selected.reason && selected.reason !== 'target-month-temperature-missing') return unknown(selected.reason);
+  if (!base.start || !end || base.start >= end || occupancy.state !== 'provided' || occupancy.value <= 0)
+    return unknown('ready-field-period-unavailable');
+  const last = new Date(`${end}T00:00:00.000Z`); last.setUTCDate(last.getUTCDate() - 1);
+  const first = new Date(`${base.start}T00:00:00.000Z`);
+  const count = (last.getUTCFullYear() - first.getUTCFullYear()) * 12 + last.getUTCMonth() - first.getUTCMonth() + 1;
+  if (count > MAX_TEMPERATURE_PERIOD_ROWS) return unknown('field-period-exceeds-software-output-limit');
+  const rows: ProvisionalFieldPeriodTemperatureAssessment['rows'][number][] = [];
+  const cursor = new Date(first); cursor.setUTCDate(1);
+  for (let i = 0; i < count; i++) {
+    const next = new Date(cursor); next.setUTCMonth(next.getUTCMonth() + 1);
+    const month = cursor.getUTCMonth() + 1, valueC = evidence!.receipt.monthlyC[month - 1];
+    rows.push(Object.freeze({ yearMonth: cursor.toISOString().slice(0, 7), month,
+      from: i === 0 ? base.start : cursor.toISOString().slice(0, 10),
+      endExclusive: next.getTime() < Date.parse(`${end}T00:00:00.000Z`) ? next.toISOString().slice(0, 10) : end,
+      valueC, state: valueC === null ? 'unknown' : valueC >= criterion.lowerC && valueC <= criterion.upperC
+        ? 'within-reported-optimum' : 'outside-reported-optimum',
+      reason: valueC === null ? 'target-month-temperature-missing' : null }));
+    cursor.setUTCMonth(cursor.getUTCMonth() + 1);
+  }
+  return Object.freeze({ ...base, state: 'available', reason: null, rows: Object.freeze(rows) });
+}
+
+/** Select the algorithm from data-only input. Malformed versions must reach the
+ * declaration validator without invoking an accessor in an imported record. */
+export function assessProvisionalTemperatureComparison(input: unknown, context: ProvisionalEvidenceContext,
+  cropKey: string, start: string | null, clear: { status: string; value: string | null },
+  occupancy: GrowerPlanningInputs['fieldOccupancyDays'], recordedAt: string, asOf: string): ProvisionalTemperatureResult {
+  let period = false;
+  try { const row = detachJsonData(input); period = record(row) && row.version === 2; } catch { /* invalid stays invalid */ }
+  return period ? assessProvisionalFieldPeriodTemperature(input, context, cropKey, start, clear, occupancy, recordedAt, asOf)
+    : assessProvisionalTemperature(input, context, cropKey, start, recordedAt, asOf);
+}
+
 /** Common human lines keep the live screen, saved readback and file in agreement.
  * The raw response and private policy/account handles never enter the document. */
-export function provisionalTemperatureLines(value: ProvisionalTemperatureAssessment): readonly string[] {
+export function provisionalTemperaturePeriodSummaryLines(value: ProvisionalFieldPeriodTemperatureAssessment): readonly string[] {
+  return [
+    `Proposed field-period monthly comparisons: ${value.state}. ${value.reason ?? ''}`.trim(),
+    `Grower-proposed UTC interval: ${value.start ?? 'Unknown'} to ${value.endExclusive ?? 'Unknown'} (exclusive). Field occupancy: ${value.occupancy.state === 'provided' ? `${value.occupancy.value} days; ${value.occupancy.provenance.kind}; recorded ${value.occupancy.provenance.recordedAt}` : 'Unknown'}.`,
+    `Separate entry-month comparison: ${value.entryMonth.state}; UTC month ${value.entryMonth.month ?? 'Unknown'}; modelled monthly mean ${value.entryMonth.valueC === null ? 'Unknown' : `${value.entryMonth.valueC} °C`}${value.entryMonth.reason ? `; ${value.entryMonth.reason}` : ''}.`,
+    'Application convention: each row covers the overlap with one calendar month in [entry, clear). Its whole-month historical mean is not a daily condition or forecast for those overlap days. Repeated calendar months use the same climatology, not independent yearly predictions.',
+    'Each row applies the cited single-month comparison separately. There is no whole-period suitability result, growth-stage assessment, safe-day count, planting permission or inferred crop duration. Missing harvest compatibility remains unassessed.',
+    `Software output limit: ${MAX_TEMPERATURE_PERIOD_ROWS} touched months, not a farming maximum. Longer periods remain unavailable rather than being truncated.`,
+    ...value.rows.map(row => `${row.yearMonth}: ${row.from} to ${row.endExclusive} exclusive; modelled monthly mean ${row.valueC === null ? 'Unknown' : `${row.valueC} °C`}; ${row.state}${row.reason ? `; ${row.reason}` : ''}.`),
+  ];
+}
+export function provisionalTemperatureLines(value: ProvisionalTemperatureResult): readonly string[] {
+  if (value.version === 2) {
+    const single: ProvisionalTemperatureAssessment = { version: 1, algorithm: 'selected-month-optimum-comparison-v1',
+      ...value.entryMonth, evidenceKey: value.evidenceKey, evidence: value.evidence, criterion: value.criterion };
+    return [...provisionalTemperaturePeriodSummaryLines(value), ...provisionalTemperatureLines(single).slice(2)];
+  }
   const { criterion, evidence } = value;
   return [
     `Temperature comparison: ${value.state}. ${value.reason ?? ''}`.trim(),

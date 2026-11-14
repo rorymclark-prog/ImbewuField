@@ -10,8 +10,8 @@ import { currentTemperatureEvidenceKey } from './provisional-temperature';
 /** A historical review record, never a durable source-check capability. Original
  * request data lets the same resolver retain defaults, overrides and unknowns. */
 export interface SavedProvisionalOrigin {
-  readonly version: 1 | 2;
-  readonly resolver: 'provisional-crop-v1' | 'provisional-crop-v2';
+  readonly version: 1 | 2 | 3;
+  readonly resolver: 'provisional-crop-v1' | 'provisional-crop-v2' | 'provisional-crop-v3';
   readonly profileId: string;
   readonly savedAt: string;
   readonly originalRequestJson: string;
@@ -70,8 +70,10 @@ function boundedJson(value: unknown, depth = 0, budget = { nodes: 0 }): boolean 
 function original(origin: SavedProvisionalOrigin): ProvisionalDraftRequest | null {
   const request = JSON.parse(origin.originalRequestJson);
   if (!boundedJson(request) || !request || typeof request !== 'object' || Array.isArray(request)
-    || Object.keys(request).some(k => !requestKeys.includes(k) && !(origin.version === 2 && k === 'temperatureComparison'))
-    || Object.hasOwn(request, 'temperatureComparison') !== (origin.version === 2)
+    || Object.keys(request).some(k => !requestKeys.includes(k) && !((origin.version === 2 || origin.version === 3) && k === 'temperatureComparison'))
+    || Object.hasOwn(request, 'temperatureComparison') !== (origin.version === 2 || origin.version === 3)
+    || (origin.version === 2 && request.temperatureComparison?.version !== 1)
+    || (origin.version === 3 && (request.temperatureComparison?.version !== 2 || request.temperatureComparison?.comparisonScope !== 'proposed-field-period'))
     || JSON.stringify(request) !== origin.originalRequestJson) return null;
   return request;
 }
@@ -94,7 +96,8 @@ export function normaliseSavedProvisionalOrigin(value: unknown, profile: GrowerP
   try {
     const row = own(value, keys), source = row && own(row.source, sourceKeys);
     if (!row || !source || !((row.version === 1 && row.resolver === 'provisional-crop-v1')
-      || (row.version === 2 && row.resolver === 'provisional-crop-v2'))
+      || (row.version === 2 && row.resolver === 'provisional-crop-v2')
+      || (row.version === 3 && row.resolver === 'provisional-crop-v3'))
       || row.profileId !== profile.profileId || row.profileId === 'provisional-preview'
       || !text(row.bedId) || !text(row.bedLabel) || !isGrowerRecordedAt(row.savedAt)
       || typeof row.originalRequestJson !== 'string' || row.originalRequestJson.length > 262144
@@ -132,8 +135,8 @@ export function createSavedProvisionalProfile(request: ProvisionalDraftRequest, 
     const rebound = resolveProvisionalCropPlan({ ...detached, profileId });
     if (rebound.status !== 'resolved') return null;
     return normaliseGrowerPlanningProfile({ ...rebound.profile, provisionalOrigin: {
-      version: Object.hasOwn(detached, 'temperatureComparison') ? 2 : 1,
-      resolver: Object.hasOwn(detached, 'temperatureComparison') ? 'provisional-crop-v2' : 'provisional-crop-v1', profileId, savedAt,
+      version: detached.temperatureComparison?.version === 2 ? 3 : Object.hasOwn(detached, 'temperatureComparison') ? 2 : 1,
+      resolver: detached.temperatureComparison?.version === 2 ? 'provisional-crop-v3' : Object.hasOwn(detached, 'temperatureComparison') ? 'provisional-crop-v2' : 'provisional-crop-v1', profileId, savedAt,
       originalRequestJson: JSON.stringify(detached), previewFingerprint: preview.fingerprint,
       bedId, bedLabel, source: { kind: source.kind, sourceKey: source.sourceKey,
         sourceRevision: source.sourceRevision, geometryFingerprint: source.geometryFingerprint },
@@ -201,7 +204,7 @@ export function reviewProvisionalCycleProfile(value: unknown, suppliedContext: u
     const result = resolveProvisionalCropPlan({ ...saved.request, profileId: saved.profile.profileId,
       asOf: context.asOf, measuredAreaM2: area, fieldEntryDate: entry });
     if (result.status !== 'resolved') return held('provisional-evidence-needs-new-review');
-    if (saved.origin.version === 2 && (saved.request.temperatureComparison?.policyFingerprint !== context.policyFingerprint
+    if ((saved.origin.version === 2 || saved.origin.version === 3) && (saved.request.temperatureComparison?.policyFingerprint !== context.policyFingerprint
       || (context.temperatureEvidenceKey ?? null) !== (saved.result.temperatureComparison?.evidenceKey ?? null)
       || JSON.stringify(result.temperatureComparison) !== JSON.stringify(saved.result.temperatureComparison))) {
       return held('provisional-temperature-needs-new-preview');

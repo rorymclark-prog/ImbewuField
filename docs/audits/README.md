@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest global comparison continuation — [Proposed field-period monthly temperatures](2026-11-14/field-period-temperature-codex.md). Explicit repeated historical comparisons preserve unknowns, exact old replay and own dates; no whole-season suitability or calendar inference.
+
 Latest report presentation continuation — [Provisional evidence pagination](2026-11-14/provisional-print-pagination-codex.md). Compact untouched unknowns and readable source continuations preserve all meanings; exact successor review/CI remain separate.
 
 Latest prairie nursery continuation — [Saskatchewan cabbage seed-start lead](2026-11-14/saskatchewan-cabbage-nursery-codex.md). Explicit approximate endpoint, retained readiness/region uncertainty, canonical saved/adopted evidence and printable qualification; full successor CI/external gates remain separate.

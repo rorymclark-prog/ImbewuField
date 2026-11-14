@@ -1,3 +1,5 @@
+import { syntheticTemperatureInput } from './fixtures/provisional-temperature.ts';
+import { provisionalTemperatureEvidenceKey } from '../lib/international/provisional-temperature.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createSavedProvisionalProfile, createProvisionalCycleContext, readSavedProvisionalProfile,
@@ -532,4 +534,22 @@ test('a complete source review never supplies a missing grower requirement or tu
   assert.equal(empty.cycles.length, 0); assert.equal(empty.demandResults[0].status, 'zero-demand');
   assert.equal(createGrowerCyclePlanting(proposal(f.input).cycles[0], { plantingId: 'late',
     acceptedAt: '2026-11-06T00:00:00.000Z', geometryFingerprint: f.source.geometryFingerprint }), null);
+});
+
+
+test('an exact reviewed field period inside a month is not skipped when automatic search starts earlier', () => {
+  const f = adoptionFixture(), at = '2026-11-14T12:00:00.000Z', temperature = syntheticTemperatureInput();
+  const original: ProvisionalDraftRequest = { ...f.original, cropKey: 'tomatoes', recordedAt: at, asOf: '2026-11-14',
+    context: { ...f.original.context, countryCode: 'KE' }, temperatureComparison: {
+      ...temperature, version: 2, comparisonScope: 'proposed-field-period' } };
+  const saved = createSavedProvisionalProfile(original, 'own-profile', at, f.source, 'block-a', 'block-a'); assert.ok(saved);
+  const context = createProvisionalCycleContext(f.source, { countryCode: 'KE', agriculturalRegionReference: null,
+    policyFingerprint: temperature.policyFingerprint, knownPlantingRestriction: null,
+    temperatureEvidenceKey: provisionalTemperatureEvidenceKey(temperature.evidence!) }, at); assert.ok(context);
+  const input = request({ requestedAt: at, geometryFingerprint: f.source.geometryFingerprint, profiles: [saved], provisionalContext: context,
+    planningStart: own('2027-12-01', 'utc-date'), availability: [availability('block-a', '2027-12-01', '2028-02-01')],
+    demands: [demand('buyer', 6)] });
+  const actual = proposal(input); assert.equal(actual.status, 'ready'); assert.equal(actual.cycles[0].assessment.schedule.fieldEntryDate, '2027-12-28');
+  const shifted = reviewProvisionalCycleProfile(saved, context, original.measuredAreaM2, own('2027-12-29', 'utc-date'), { bedId: 'block-a' });
+  assert.equal(shifted.status, 'held', 'similar monthly means cannot approve an unreviewed overlap interval');
 });
