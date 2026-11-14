@@ -20,6 +20,7 @@ import { worldvegKenyaCowpeaCandidates, worldvegKenyaCowpeaReference, worldvegKe
 import { captureProvisionalTemperatureCache, browserTemperatureStorage, provisionalTemperatureLines, TOMATO_MONTHLY_CRITERION,
   type ProvisionalTemperatureAssessment } from '@/lib/international/provisional-temperature';
 import { canadaCabbageReference, canadaCabbageCandidates, canadaCabbageResultQualifier, AAFC_CABBAGE_QUALIFIER, AAFC_CABBAGE_PDF_SHA256 } from '@/lib/international/providers/aafc-canada-cabbage';
+import { saskatchewanCabbageNurseryReference, saskatchewanCabbageNurseryCandidates, saskatchewanPrairieRegionMatches, saskatchewanNurseryResultQualifier, USASK_CABBAGE_QUALIFIER, USASK_CABBAGE_ORIGINAL_SHA256, type SaskatchewanNurseryBasis, type SaskatchewanNurseryUse } from '@/lib/international/providers/usask-saskatchewan-cabbage';
 import { locationDataCacheKey } from '@/lib/location-cache-key';
 
 export interface ProvisionalCropPreviewProps {
@@ -58,6 +59,8 @@ type Draft = {
   kenyaTomatoConsent?: string | null;
   temperatureConsent?: string | null;
   canadaCabbageConsent?: string | null;
+  saskatchewanBasis?: SaskatchewanNurseryBasis | '';
+  saskatchewanConsent?: string | null;
   usdaNursery?: { basis: UsdaCabbageNurseryBasis | ''; contextKey: string | null };
   countMode: 'density' | 'spacing';
   spacing: { rowCm: string; inRowCm: string; finalStand: string };
@@ -193,6 +196,14 @@ function Editor(props: ProvisionalCropPreviewProps) {
     draft.method, draft.water, kenyaTomatoUse, WORLDVEG_TOMATO_NURSERY.pdfSha256]);
   const useKenyaTomatoReference = kenyaTomatoConsentKey !== null && draft.kenyaTomatoConsent === kenyaTomatoConsentKey
     && draft.method !== 'direct' && kenyaTomatoUse !== null;
+  const saskatchewanReference = saskatchewanCabbageNurseryReference(props.countryCode, draft.crop);
+  const saskatchewanRegionMatch = saskatchewanPrairieRegionMatches(props.agriculturalRegionReference);
+  const saskatchewanUse: SaskatchewanNurseryUse | null = draft.saskatchewanBasis === 'lower-bound' || draft.saskatchewanBasis === 'upper-bound'
+    ? { purpose: 'seed-raised-nursery-to-outdoor', basis: draft.saskatchewanBasis } : null;
+  const saskatchewanConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop,
+    draft.variety, draft.method, draft.water, saskatchewanUse, USASK_CABBAGE_ORIGINAL_SHA256]);
+  const useSaskatchewanReference = saskatchewanConsentKey !== null && draft.saskatchewanConsent === saskatchewanConsentKey
+    && saskatchewanRegionMatch && draft.method === 'transplant' && saskatchewanUse !== null;
   const canadaReference = canadaCabbageReference(props.countryCode, draft.crop);
   const canadaConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop,
     draft.variety, draft.method, draft.water, AAFC_CABBAGE_PDF_SHA256]);
@@ -217,7 +228,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
   function edit(next: Partial<Draft>) {
     if (!isCurrent()) return;
     const sourceChoiceChanged = ['crop', 'variety', 'method', 'water'].some(key => Object.hasOwn(next, key));
-    const value = { ...draft, ...next, ...(sourceChoiceChanged ? { tomatoConsent: null, oatsConsent: null, kenyaTomatoConsent: null, canadaCabbageConsent: null } : {}),
+    const value = { ...draft, ...next, ...(sourceChoiceChanged ? { tomatoConsent: null, oatsConsent: null, kenyaTomatoConsent: null, canadaCabbageConsent: null, saskatchewanConsent: null } : {}),
       ...(sourceChoiceChanged || Object.hasOwn(next, 'date') ? { temperatureConsent: null } : {}) }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
   }
   async function refresh() {
@@ -296,7 +307,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
           ...usdaGreatLakesTomatoCandidates(context, draft.crop, recordedAt, useTomatoReference),
           ...southeastMissouriOatsCandidates(context, draft.crop, recordedAt, useOatsReference, oatsUse),
           ...worldvegKenyaTomatoCandidates(context, draft.crop, recordedAt, useKenyaTomatoReference, kenyaTomatoUse),
-          ...canadaCabbageCandidates(context, draft.crop, recordedAt, useCanadaReference)], overrides,
+          ...canadaCabbageCandidates(context, draft.crop, recordedAt, useCanadaReference),
+          ...saskatchewanCabbageNurseryCandidates(context, draft.crop, recordedAt, useSaskatchewanReference, saskatchewanUse)], overrides,
         ...(draft.countMode === 'spacing' ? { countBasis: { kind: 'spacing-cell-budget-v1', bedId: draft.bed,
           ...(usdaReference ? { purpose: 'cabbage-transplants', habit: 'not-applicable' } : draft.cowpea), ...draft.spacing,
           interpretationConfirmed: stationConfirmed, wholeAreaConfirmed } } : {}),
@@ -390,7 +402,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
     <p className="text-sm">Preview supported counts and dates using applicable evidence and your edits. Missing values stay unknown. {props.onSaveProfile ? 'Calculating does not save. Use the separate save action to keep a profile for review.' : 'Nothing here saves a profile or adds a crop.'}</p>
     <p role="note" className="text-sm">Provisional estimates: source metadata is not verification of farming accuracy. Suitability and plant legality are not established. Density is not layout clearance.</p>
     <p className="text-sm">Country: {props.countryCode ?? 'Unknown'} · Agricultural region: {props.agriculturalRegionReference ?? 'Unknown'}</p>
-    {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && !useTomatoReference && !useOatsReference && !useKenyaTomatoReference && !useCanadaReference && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
+    {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && !useTomatoReference && !useOatsReference && !useKenyaTomatoReference && !useCanadaReference && !useSaskatchewanReference && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
     {!!savedProfiles.length && <section aria-label="Saved provisional profiles" className="space-y-3 rounded-lg border border-[var(--border)] p-3">
       <h3 className="font-semibold">Saved provisional profiles</h3>
       <p>Historical evidence, not a current source check or an approved planting plan. To change conditions, calculate and save a new preview.</p>
@@ -407,6 +419,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
         {saved.result.temperatureComparison && <TemperatureAssessment value={saved.result.temperatureComparison} />}
         {saved.result.profile.version === 2 && <p>Source reports these months; other months remain unknown. Saved date offsets are conditional calculations, not planting recommendations. Specify your own field-entry window in a new preview before automatic planning or adoption.</p>}
         <ul>{Object.entries(saved.result.assessment.schedule).map(([key, value]) => <li key={key}>{labels[key]} (UTC): {value.value ?? 'Unknown'} ({value.status})</li>)}</ul>
+        {saskatchewanNurseryResultQualifier(saved.result.fields) && <p>{saskatchewanNurseryResultQualifier(saved.result.fields)}</p>}
         <EvidenceFields fields={saved.result.fields} spacing={!!saved.request.countBasis} />
         {!!saved.result.rejected.length && <details><summary className="min-h-11 cursor-pointer">Saved evidence not used</summary><ul>{saved.result.rejected.map((item, i) => <li key={i}>{item.id}: {item.reason}</li>)}</ul></details>}
       </details>)}
@@ -525,6 +538,27 @@ function Editor(props: ProvisionalCropPreviewProps) {
         onChange={e => edit({ oatsConsent: e.target.checked ? oatsConsentKey : null })} />Use this March 2014 direct-seeding reference for cover-crop establishment</label>
       <p>Present suitability, water adequacy and planting permission are unknown. No density, yield, harvest or termination dates are supplied. Source availability is not current local agronomic validation.</p>
     </section>}
+    {saskatchewanReference && <section aria-label="Saskatchewan cabbage nursery reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
+      <h3 className="font-semibold">Saskatchewan prairie cabbage nursery reference</h3>
+      <p>{USASK_CABBAGE_QUALIFIER}</p>
+      <p>This reference is offered for an explicitly declared Saskatchewan prairie garden or Saskatoon context. The declared region is not a validated climate boundary. Country alone does not select this source.</p>
+      {!saskatchewanRegionMatch && <p role="note">Your current region does not identify that context. Review the site's agricultural region if appropriate; do not change it merely to obtain a default.</p>}
+      <label className="block">Saskatchewan cabbage nursery interval<select aria-label="Saskatchewan cabbage nursery interval" className={control}
+        value={draft.saskatchewanBasis ?? ''} disabled={!saskatchewanRegionMatch || draft.method !== 'transplant'}
+        onChange={e => edit({ saskatchewanBasis: e.target.value as SaskatchewanNurseryBasis | '', saskatchewanConsent: null })}>
+        <option value="">Choose an approximate range endpoint</option><option value="lower-bound">5 weeks · 35 days · lower endpoint</option>
+        <option value="upper-bound">6 weeks · 42 days · upper endpoint</option>
+      </select></label>
+      <p><a className="underline" href={`${saskatchewanReference.url}#Growingoutdoors-Transplants`} target="_blank" rel="noreferrer">Read the original USask article, Growing outdoors · Transplants</a></p>
+      <p>{saskatchewanReference.attribution}</p>
+      <p>The article's document licence is unknown; only limited independently worded timing and readiness facts are used.</p>
+      {draft.method !== 'transplant' && <p role="note">Choose Transplant explicitly. This lead does not describe direct field sowing or purchased seedling age.</p>}
+      <label className="flex min-h-11 items-center gap-2"><input type="checkbox" aria-label="Use Saskatchewan seed-raised cabbage nursery reference"
+        disabled={!saskatchewanRegionMatch || !saskatchewanUse || draft.method !== 'transplant'} checked={useSaskatchewanReference}
+        onChange={e => edit({ saskatchewanConsent: e.target.checked ? saskatchewanConsentKey : null })} />I choose this undated prairie reference for seeds I raise in a protected or home nursery before outdoor entry</label>
+      <p>Harden seedlings before entry; the source describes at least 3 days in a sheltered frost-free place. No extra days are added. Check sturdy growth and developed roots. Source weather conditions concern actual daytime temperature reaching 10 °C and nights at least −2 °C for several consecutive nights; a modelled monthly mean cannot substitute. These conditions have not been checked.</p>
+      <p>Your nursery-duration edit takes precedence. Clearing keeps it unknown; reset restores your chosen source endpoint. Field-entry months, harvest timing, yield and water demand receive no new defaults.</p>
+    </section>}
     {canadaReference && <section aria-label="Canadian cabbage transplant reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
       <h3 className="font-semibold">Canadian multi-variety transplant reference</h3>
       <p>{AAFC_CABBAGE_QUALIFIER}</p>
@@ -606,6 +640,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
       <p>Estimated plants: {result.assessment.estimatedPlantCount.value ?? 'Unknown'} ({result.assessment.estimatedPlantCount.status})</p>
       <p>Estimated harvest weight: {result.assessment.estimatedYieldKg.value === null ? 'Unknown' : `${formatDerivedMassKilograms(result.assessment.estimatedYieldKg.value, 'kg')} kg`} ({result.assessment.estimatedYieldKg.status})</p>
       <ul>{Object.entries(result.assessment.schedule).map(([key, value]) => <li key={key}>{labels[key]} (UTC): {value.value ?? 'Unknown'} ({value.status})</li>)}</ul>
+      {saskatchewanNurseryResultQualifier(result.fields) && <p>{saskatchewanNurseryResultQualifier(result.fields)}</p>}
       {!!result.assessment.uncertainties.length && <p>Uncertainties: {result.assessment.uncertainties.join(', ')}</p>}
       <h4 className="font-semibold">Evidence and edits</h4>
       <EvidenceFields fields={result.fields} spacing={draft.countMode === 'spacing'} />

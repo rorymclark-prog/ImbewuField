@@ -1,4 +1,5 @@
 import { isCanadaCabbageFactCandidate, canadaCabbageFactReuse } from './providers/aafc-canada-cabbage';
+import { isSaskatchewanNurseryFactCandidate, saskatchewanNurseryFactReuse } from './providers/usask-saskatchewan-cabbage';
 import { normaliseGrowerSpacingSelectionReceipt, type GrowerSpacingSelectionReceipt } from '../grower-estimate-units';
 import { regionalSpacingReference, type RegionalSpacingConditions } from './providers/regional-spacing-reference';
 import { USDA_GREAT_LAKES_CABBAGE_SOURCE } from './providers/usda-great-lakes-cabbage';
@@ -130,6 +131,7 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
   const context = request.context;
   const reviewedReuse = (candidate: ProvisionalFieldCandidate): string | null => isCanadaCabbageFactCandidate(candidate)
     ? canadaCabbageFactReuse(candidate, context, request.recordedAt)
+    : isSaskatchewanNurseryFactCandidate(candidate) ? saskatchewanNurseryFactReuse(candidate, context, request.recordedAt)
     : candidate.source?.licence?.status === 'known' && text(candidate.source.licence.value) ? candidate.source.licence.value : null;
   const emptyInputs = Object.fromEntries(fields.map(field => [field, unknown()]));
   const makeProfile = (inputs: Record<string, unknown>, plantCountOrigin?: GrowerSpacingSelectionReceipt, positiveMonths = false) => normaliseGrowerPlanningProfile({

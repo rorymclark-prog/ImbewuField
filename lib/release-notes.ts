@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '14 November 2026', sha: 'ad363b6f7', changes: [
+    'Saskatchewan cabbage previews offer a nursery range with your endpoint choice.',
+    'Nursery dates keep their source conditions in saved plans and reports.',
+  ] },
   { when: '14 November 2026', sha: 'ed4a368e5', changes: [
     'Canadian cabbage previews offer a historical transplant-month reference across varieties.',
     'Source months keep their limits beside your results and saved profiles.',

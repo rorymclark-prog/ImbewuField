@@ -1093,3 +1093,57 @@ test('Canadian programme choice keeps April conditions visible in actual live, s
     assert.deepEqual(ui.writes, []);
   } finally { files.dispose(); ui.dispose(); }
 });
+
+
+test('Saskatchewan nursery choice starts blank and preserves endpoint, override, clear/reset and saved/exported readiness conditions', async () => {
+  const saved: import('../lib/international/grower-planning.ts').GrowerPlanningProfile[] = [];
+  const ui = mount({ countryCode: 'CA', agriculturalRegionReference: 'Saskatoon', evidence: undefined,
+    onSaveProfile: profile => { saved.push(structuredClone(profile)); return { status: 'confirmed', profileId: profile.profileId }; } });
+  const files = downloads(), choice = () => ui.root().findByProps({ 'aria-label': 'Use Saskatchewan seed-raised cabbage nursery reference' });
+  const result = () => ui.root().findByProps({ 'aria-label': 'Provisional results' });
+  try {
+    ui.change('Preview crop', 'cabbage'); ui.change('Preview measured bed', 'bed-1'); ui.change('Preview field-entry date (UTC)', '2027-05-20');
+    assert.equal(ui.field('Saskatchewan cabbage nursery interval').props.value, ''); assert.equal(choice().props.disabled, true);
+    ui.change('Preview establishment', 'transplant'); ui.change('Saskatchewan cabbage nursery interval', 'lower-bound');
+    assert.equal(choice().props.checked, false); await ui.click(); assert.match(text(result()), /Nursery start \(UTC\): Unknown/);
+    act(() => choice().props.onChange({ target: { checked: true } })); await ui.click();
+    assert.match(text(result()), /Nursery start \(UTC\): 2027-04-15/); assert.match(text(result()), /Entry window: unknown/);
+    assert.match(text(result()), /Estimated plants: Unknown/); assert.match(text(result()), /First harvest \(UTC\): Unknown/);
+    const direct = result().children.filter(child => typeof child !== 'string' && child.type === 'p').map(child => text(child as ReactTestInstance)).join(' ');
+    assert.match(direct, /Source choice: lower-bound, 35 days/); assert.match(direct, /several consecutive nights/);
+    ui.change('Nursery duration (days)', '40'); await ui.click(); assert.match(text(result()), /2027-04-10/); assert.match(text(result()), /Active nursery duration is a grower edit/);
+    ui.change('Nursery duration (days)', ''); await ui.click(); assert.match(text(result()), /Nursery start \(UTC\): Unknown/);
+    await ui.click('Reset Nursery duration (days)'); await ui.click(); assert.match(text(result()), /2027-04-15/);
+    ui.change('Saskatchewan cabbage nursery interval', 'upper-bound'); assert.equal(choice().props.checked, false);
+    act(() => choice().props.onChange({ target: { checked: true } })); await ui.click(); assert.match(text(result()), /2027-04-08/);
+    await ui.click('Download printable preview'); const html = await files.blobs[0].text();
+    assert.match(html, /Nursery source conditions/); assert.match(html, /Source choice: upper-bound, 42 days/); assert.match(html, /monthly means cannot substitute/);
+    act(() => ui.field(saveDeclaration).props.onChange({ target: { checked: true } })); await ui.click('Save provisional profile');
+    assert.equal(saved.length, 1); assert.equal(saved[0].provisionalOrigin?.version, 1);
+    ui.update({ profiles: saved }); const readback = ui.root().findByProps({ 'aria-label': 'Saved provisional profiles' });
+    assert.match(text(readback), /Source choice: upper-bound, 42 days/); assert.match(text(readback), /several consecutive nights/);
+    assert.deepEqual(ui.writes, []);
+  } finally { files.dispose(); ui.dispose(); }
+});
+
+test('Saskatchewan source choices and old download callbacks cannot revive through endpoint, method, variety or region round trips', async () => {
+  const ui = mount({ countryCode: 'CA', agriculturalRegionReference: 'Saskatchewan prairie', evidence: undefined });
+  const files = downloads(), choice = () => ui.root().findByProps({ 'aria-label': 'Use Saskatchewan seed-raised cabbage nursery reference' });
+  try {
+    ui.change('Preview crop', 'cabbage'); ui.change('Preview measured bed', 'bed-1'); ui.change('Preview field-entry date (UTC)', '2027-05-20');
+    ui.change('Preview establishment', 'transplant'); ui.change('Saskatchewan cabbage nursery interval', 'lower-bound');
+    for (const roundTrip of [
+      () => { ui.change('Saskatchewan cabbage nursery interval', 'upper-bound'); ui.change('Saskatchewan cabbage nursery interval', 'lower-bound'); },
+      () => { ui.change('Preview establishment', 'direct'); ui.change('Preview establishment', 'transplant'); },
+      () => { ui.change('Variety reference (optional)', 'new variety'); ui.change('Variety reference (optional)', ''); },
+      () => { ui.update({ agriculturalRegionReference: 'Ontario' }); ui.update({ agriculturalRegionReference: 'Saskatchewan prairie' }); },
+      () => { ui.update({ countryCode: 'US' }); ui.update({ countryCode: 'CA' }); },
+    ]) {
+      act(() => choice().props.onChange({ target: { checked: true } })); await ui.click();
+      const old = ui.action('Download printable preview'); roundTrip();
+      assert.equal(choice().props.checked, false); await act(async () => old()); assert.equal(files.blobs.length, 0);
+    }
+    ui.update({ agriculturalRegionReference: 'Saskatchewan' }); assert.equal(choice().props.disabled, true);
+    assert.deepEqual(ui.writes, []);
+  } finally { files.dispose(); ui.dispose(); }
+});

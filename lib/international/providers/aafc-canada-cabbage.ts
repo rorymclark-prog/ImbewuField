@@ -1,4 +1,4 @@
-import { detachJsonData } from '../../lossless-json';
+import { exactReviewedFactMatch, freezeReferenceData } from './reviewed-fact-capsule';
 import { unknown, type CountrySource } from '../countries/types';
 import type { ProvisionalEvidenceContext, ProvisionalFieldCandidate, ResolvedProvisionalField } from '../provisional-crop-planning';
 
@@ -6,11 +6,7 @@ export const AAFC_CABBAGE_PDF_SHA256 = 'fd69162fd641a77a212fb70fd806241ca27f4524
 const SOURCE_ID = 'aafc-canada-cabbage-aggregate-2025';
 export const AAFC_CABBAGE_QUALIFIER = 'Historical Canadian multi-variety field-transplant reference: April concerns early varieties after hardening; May–July covers successive varieties, not every cultivar in every month. Local region, cultivar and weather applicability are unverified. Other months are unknown.';
 export const AAFC_CABBAGE_FACT_REUSE = 'Limited independently worded month facts and qualifiers only; document reproduction permission is not established. Fact/expression basis: https://ised-isde.canada.ca/site/ised/en/about-copyright and https://www.canada.ca/en/canadian-heritage/services/crown-copyright-request.html . No copied table, prose, images, logos or endorsement. This is not an AAFC commercial document licence.';
-function freeze<T>(value: T): T {
-  if (value && typeof value === 'object') { Object.values(value).forEach(freeze); Object.freeze(value); }
-  return value;
-}
-export const AAFC_CANADA_CABBAGE_SOURCE: CountrySource = freeze({
+export const AAFC_CANADA_CABBAGE_SOURCE: CountrySource = freezeReferenceData({
   id: SOURCE_ID, category: 'agricultural-extension', authority: 'Agriculture and Agri-Food Canada, Pest Management Centre',
   title: 'Crop Profile for Brassica Vegetables in Canada, 2024 — sixth edition, 2025',
   url: 'https://agriculture.canada.ca/sites/default/files/documents/2026-01/Brassica%20CP%202024%20EN.pdf',
@@ -58,20 +54,13 @@ export function isCanadaCabbageFactCandidate(candidate: ProvisionalFieldCandidat
   return candidate.source?.id === SOURCE_ID || candidate.source?.url === AAFC_CANADA_CABBAGE_SOURCE.url
     || candidate.id.startsWith(`${SOURCE_ID}:`);
 }
-function canonical(value: unknown): string {
-  if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
-  if (value !== null && typeof value === 'object') return `{${Object.keys(value).sort().map(key =>
-    `${JSON.stringify(key)}:${canonical((value as Record<string, unknown>)[key])}`).join(',')}}`;
-  return JSON.stringify(value);
-}
 /** Narrow reviewed fact use, not a licence for arbitrary protected sources. Exact
  * data-only comparison keeps field, scope, source hash and every qualifier bound. */
 export function canadaCabbageFactReuse(candidate: ProvisionalFieldCandidate, context: ProvisionalEvidenceContext,
   recordedAt: string): string | null {
   try {
-    const actual = canonical(detachJsonData(candidate));
-    return canadaCabbageCandidates(context, candidate.cropKey, recordedAt, true)
-      .some(expected => actual === canonical(expected)) ? AAFC_CABBAGE_FACT_REUSE : null;
+    return canadaCabbageCandidates(context, 'cabbage', recordedAt, true)
+      .some(expected => exactReviewedFactMatch(candidate, expected)) ? AAFC_CABBAGE_FACT_REUSE : null;
   } catch { return null; }
 }
 

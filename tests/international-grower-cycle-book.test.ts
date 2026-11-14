@@ -1,3 +1,4 @@
+import { saskatchewanCabbageNurseryCandidates } from '../lib/international/providers/usask-saskatchewan-cabbage.ts';
 import { initialiseCropPlanFixture, releaseCropPlanFixture, readCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.ts';
 import assert from 'node:assert/strict';
 import { registerHooks } from 'node:module';
@@ -283,4 +284,49 @@ test('failed canonical writes preserve the previous stored basis and receipt rat
     assert.deepEqual(book.saveCropPlanWithReceipt(plan([{ ...row, growerCycle: undefined }])), { saved: false, token: null });
     assert.equal(local.getItem(storageKey), bytes); assert.equal(book.cropPlanWriteToken(), token);
   } finally { local.fail = false; }
+});
+
+
+test('a nursery source and separate complete own inputs survive actual adoption, canonical storage and later report evidence', async () => {
+  await reset();
+  const at = '2026-11-14T12:00:00.000Z';
+  const own = <T, U extends string>(value: T, unit: U): GrowerInput<T, U> => ({ state: 'provided', value, unit, provenance: { kind: 'grower-estimate', recordedAt: at } });
+  const source: GrowerWorkflowSource = { status: 'ready', kind: 'studio-canvas', sourceId: scope.siteId,
+    sourceKey: `studio-canvas:${scope.siteId}`, resourceSiteId: scope.siteId, scope, beds: [bed],
+    measuredAreas: [{ bedId: bed.id, areaM2: 12, basis: 'explicit-saved-dimensions' }], heldBeds: [],
+    sourceRevision: 'b'.repeat(64), geometryFingerprint: 'a'.repeat(64), freshness: 'device-saved-copy', sourceVerification: 'not-verified' };
+  const context = { scope, countryCode: 'CA', agriculturalRegionReference: 'Saskatoon', establishment: 'transplant' as const, waterRegime: null };
+  // All count, yield, field/harvest durations and entry-window values below are
+  // synthetic grower choices. Only nursery lead comes from the admitted source.
+  const choices = { establishment: own('transplant', 'method'), plantsPerM2: own(2, 'plants/m2'), yieldKgPerM2: own(3, 'kg/m2/cycle'),
+    fieldEntryToFirstHarvestDays: own(2, 'days'), pickingDays: own(3, 'days'), fieldOccupancyDays: own(5, 'days'),
+    turnaroundDays: own(1, 'days'), allowedEntryMonths: own([5], 'utc-months') };
+  const saved = createSavedProvisionalProfile({ profileId: 'provisional-preview', cropKey: 'cabbage', context,
+    candidates: saskatchewanCabbageNurseryCandidates(context, 'cabbage', at, true, { purpose: 'seed-raised-nursery-to-outdoor', basis: 'lower-bound' }),
+    overrides: choices, recordedAt: at, asOf: at.slice(0, 10), measuredAreaM2: own(12, 'm2'), fieldEntryDate: own('2027-05-20', 'utc-date') },
+    'nursery-saved-profile', at, source, bed.id, bed.label);
+  assert.ok(saved); assert.equal(saved.provisionalOrigin?.version, 1);
+  assert.equal(book.saveCropPlan(plan([legacy()])), true);
+  const initial = book.loadCropPlanWithWriteAdmission(), withProfile = { ...initial.book, growerPlanningProfiles: [saved] };
+  const permit = book.createGrowerProfileChangePermit(initial.admission, initial.book, withProfile, { kind: 'edit', profileId: saved.profileId, expectedProfile: null });
+  assert.ok(permit); assert.equal(book.saveCropPlanWithReceipt(withProfile, { growerProfileChange: permit }).saved, true);
+  const current = createProvisionalCycleContext(source, { countryCode: 'CA', agriculturalRegionReference: 'Saskatoon', policyFingerprint: 'Synthetic policy', knownPlantingRestriction: null }, at);
+  assert.ok(current);
+  const proposal = generateGrowerAutoPlan({ requestedAt: at, scope, geometryFingerprint: source.geometryFingerprint, profiles: [saved], provisionalContext: current,
+    beds: [{ bed, scope, measuredAreaM2: own(12, 'm2') }], planningStart: own('2027-04-01', 'utc-date'), planningEndExclusive: own('2027-08-01', 'utc-date'), reserved: [],
+    availability: [{ bedId: bed.id, scope, window: own({ start: '2027-04-01', endExclusive: '2027-08-01' }, 'utc-date-window') }],
+    demands: [{ demandId: 'nursery-demand', profileId: saved.profileId, scope, totalKg: own(1, 'kg-total'),
+      harvestWindow: own({ start: '2027-05-22', endExclusive: '2027-05-25' }, 'utc-date-window') }], maxAssessments: 1000 });
+  assert.equal(proposal.status, 'ready', proposal.issues.join(',')); assert.equal(proposal.cycles.length, 1);
+  assert.equal(proposal.cycles[0].assessment.schedule.nurseryStartDate, '2027-04-15');
+  const row = createGrowerCyclePlanting(proposal.cycles[0], { plantingId: 'nursery-cycle', acceptedAt: at, geometryFingerprint: source.geometryFingerprint }); assert.ok(row);
+  const before = book.loadCropPlanWithWriteAdmission();
+  assert.equal(book.saveCropPlanWithReceipt({ ...before.book, plantings: [...before.book.plantings, row] }, { writeIsCurrent: () => book.cropPlanWriteToken() === before.token }).saved, true);
+  const loaded = book.loadCropPlan(); assert.equal(loaded.plantings.length, 2); assert.deepEqual(loaded.growerPlanningProfiles, [saved]);
+  const resolution = resolvePlantingBasis(loaded.plantings.find(item => item.id === 'nursery-cycle')!, { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint, provisionalContext: current });
+  assert.equal(resolution.kind, 'grower-dated-cycle'); if (resolution.kind !== 'grower-dated-cycle') return;
+  const report = buildProvisionalCycleEvidence(resolution.assessment.snapshot); assert.ok(report);
+  assert.match(report.lines.join('\n'), /Nursery start \(UTC\): 2027-04-15/);
+  assert.match(report.lines.join('\n'), /Source choice: lower-bound, 35 days/); assert.match(report.lines.join('\n'), /several consecutive nights/);
+  assert.match(report.lines.join('\n'), /not proof of readiness/);
 });
