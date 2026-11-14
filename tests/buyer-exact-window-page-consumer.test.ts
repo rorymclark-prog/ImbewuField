@@ -80,6 +80,10 @@ function input(allowCataloguePlanning: boolean) {
   // its JSX without these bindings throws before the buyer-editor assertions run.
   const growerConditions = Object.freeze({ marker: 'current-provisional-conditions' });
   const exportSavedGrowerRecord = () => { throw Error('Consumer mount must not export automatically'); };
+  // The actual page's preview revision now includes climate changes. Supply
+  // that state boundary too, so extracting its JSX still exercises the buyer
+  // editor rather than failing on an unrelated missing lexical binding.
+  const climateState = { revision: 7 };
   return { allowCataloguePlanning, productionSiteId: siteId, growerScope: { kind: 'mapped-site', siteId }, growerScopeKey: 'current-scope-key',
     planningScopeKey: 'current-catalogue-key', markedPlantings: [], plan: { harvestTargets: targets, growerPlanningProfiles: [], plantings },
     selectedGrowerSource: null, beds, plantings, pattern: 'mild-frost', harvestSaveContext: saveContext, saveHarvestTargets,
@@ -91,7 +95,9 @@ function input(allowCataloguePlanning: boolean) {
     placeName: 'Engineering source', designTitle: 'Engineering design', growerSample: false, growerOwner: 'fixture-owner',
     countryPlaces: [{ id: 'fictional-place', name: 'Engineering fixture' }],
     siteClimate: null, hasSiteCoords: false, siteLat: 0, siteSurvey: null, saved,
-    growerConditions, exportSavedGrowerRecord };
+    growerConditions, exportSavedGrowerRecord,
+    get provisionalClimateRevision() { return climateState.revision; },
+    setProvisionalClimateRevision(update: (value: number) => number) { climateState.revision = update(climateState.revision); } };
 }
 
 for (const country of ['ZA', 'US', undefined]) test(`${country ?? 'unconfirmed'} mapped country can reach the own-records editor and automatic own-estimate planner together`, () => {
@@ -120,6 +126,19 @@ test('provisional place labels use only this mapped scope or the selected unmapp
     countryPlaces: [{ id: 'fictional-place', name: ' ' }, { id: 'alias', name: '' }] }).props.sourceName, '');
   assert.equal(preview({ growerScope: { kind: 'unmapped-workspace', workspaceId: 'design:fixture' },
     design: { title: 'Selected workspace' }, placeName: 'Old mapped label' }).props.sourceName, 'Selected workspace');
+});
+
+test('the actual preview mount forwards climate revision changes without reviewing or saving the buyer plan', () => {
+  const fixture = input(false), before = JSON.stringify(fixture.plan);
+  const preview = () => elements(renderOwn(fixture)).find(element => element.type === boundaries.ProvisionalCropPreview)!;
+  const initial = preview(); assert.ok(initial);
+  assert.equal(fixture.provisionalClimateRevision, 7, 'mounting must not invoke the change callback');
+  assert.equal(initial.props.contextRevision, '4:fixture-policy:7');
+  assert.equal(typeof initial.props.onClimateChanged, 'function');
+  (initial.props.onClimateChanged as () => void)();
+  assert.equal(fixture.provisionalClimateRevision, 8);
+  assert.equal(preview().props.contextRevision, '4:fixture-policy:8', 'the next actual mount must receive the changed climate revision');
+  assert.equal(JSON.stringify(fixture.plan), before); assert.equal(fixture.saved.length, 0);
 });
 
 test('absent site, absent grower scope and unmapped workspace cannot acquire the saved buyer editor', () => {
