@@ -79,6 +79,21 @@ export function buildAdoptedProvisionalCycleHtml(value: unknown, metadata: { bed
 export function provisionalEvidenceTierText(tier: string | null): string {
   return tier === 'historical-public-reference' ? 'Historical public reference (explicit transfer)' : tier ?? 'Unknown';
 }
+/** Only untouched absence can use a short row. In particular, clearing a value
+ * or rejecting its evidence is a grower decision, not absence of evidence. */
+export function provisionalFieldCanUseMissingRow(key: string, field: ResolvedProvisionalField, request: ProvisionalDraftRequest): boolean {
+  const keys = ['status', 'activeInput', 'activeTier', 'baselineDefault', 'defaultCandidateIds', 'defaultConflict',
+    'defaultOptions', 'sourceReferences', 'sourceBindings', 'defaultReportedRange', 'defaultPlanningValueBasis', 'assumptions'];
+  return Object.keys(field).every(name => keys.includes(name))
+    && field.status === 'missing' && field.activeInput.state === 'missing' && field.activeInput.reason === 'not-known'
+    && Object.keys(field.activeInput).every(name => name === 'state' || name === 'reason')
+    && field.activeTier === null && field.baselineDefault === null && field.defaultConflict === false
+    && field.defaultCandidateIds.length === 0 && field.defaultOptions.length === 0
+    && field.sourceReferences.length === 0 && field.sourceBindings.length === 0 && field.assumptions.length === 0
+    && field.defaultReportedRange === null && field.defaultPlanningValueBasis === null
+    && !Object.prototype.hasOwnProperty.call(request.overrides ?? {}, key)
+    && !request.candidates.some(candidate => !candidate || !provisionalLabels[candidate.field] || candidate.field === key);
+}
 function renderProvisionalCropDocument(request: ProvisionalDraftRequest, metadata: { bedLabel: string; sample: boolean; placeLabel?: string }, record?: AcceptedRecordMetadata): { html: string; fingerprint: string } | null {
   const result = resolveProvisionalCropPlan(request);
   if (result.status !== 'resolved') return null;
@@ -96,7 +111,23 @@ function renderProvisionalCropDocument(request: ProvisionalDraftRequest, metadat
     ['Estimated harvest weight', value({ ...assessment.estimatedYieldKg, value: assessment.estimatedYieldKg.value === null ? null : formatDerivedMassKilograms(assessment.estimatedYieldKg.value, 'kg') }, ' kg')],
     ...Object.entries(assessment.schedule).map(([key, item]) => [`${provisionalLabels[key]} (UTC)`, value(item)]),
   ];
-  const evidence = Object.entries(result.fields).map(([key, field]) => `<section class="field">
+  const evidenceParts: string[] = [], missingRows: string[] = [];
+  const flushMissingRows = () => {
+    if (!missingRows.length) return;
+    evidenceParts.push(`<table class="missing-evidence"><caption>Inputs with no evidence or grower edits</caption>
+      <thead><tr><th>Input</th><th>Status</th><th>Active input</th><th>Active basis</th><th>Evidence default</th></tr></thead>
+      <tbody>${missingRows.join('')}</tbody></table>`);
+    missingRows.length = 0;
+  };
+  for (const [key, field] of Object.entries(result.fields)) {
+    if (provisionalFieldCanUseMissingRow(key, field, request)) {
+      missingRows.push(`<tr><th scope="row">${escape(provisionalLabels[key])}</th><td>${escape(field.status)}</td>
+        <td>${escape(provisionalInputText(field.activeInput))}</td><td>${escape(provisionalEvidenceTierText(field.activeTier))}</td>
+        <td>${escape(provisionalInputText(field.baselineDefault))}</td></tr>`);
+      continue;
+    }
+    flushMissingRows();
+    evidenceParts.push(`<section class="field">
     <h3>${escape(provisionalLabels[key])}</h3>
     ${paragraph('Status', field.status)}
     ${paragraph('Active input', provisionalInputText(field.activeInput))}
@@ -115,7 +146,10 @@ function renderProvisionalCropDocument(request: ProvisionalDraftRequest, metadat
       ${paragraph('Review due', source.reviewDueOn)}${paragraph('Reuse terms', source.reuseTerms)}
       ${paragraph('Attribution', source.attribution)}${paragraph('Source limitations', source.limitations)}${paragraph('Evidence state', source.evidenceState)}</div>`).join('')}
     ${field.assumptions.map(item => paragraph('Assumption', item)).join('')}
-  </section>`).join('');
+  </section>`);
+  }
+  flushMissingRows();
+  const evidence = evidenceParts.join('');
   // Do not embed raw fingerprints: they contain account/site scope and serialized
   // source objects. Saved-source revisions can also be serialized raw designs.
   // Neither revision nor fingerprint belongs in the human document.
@@ -127,7 +161,8 @@ body{font:16px/1.5 system-ui,sans-serif;color:#17251b;background:#fff;max-width:
 h1{font-size:1.8rem}h2{margin-top:2rem}h3{margin:.3rem 0}p{margin:.5rem 0}.notice{border:2px solid #516546;padding:12px}
 table{border-collapse:collapse;width:100%}th,td{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid #b5c1b6}
 .field{border-top:1px solid #b5c1b6;padding:14px 0}.source{border-left:3px solid #b5c1b6;padding-left:12px;margin:12px 0}
-@media print{body{padding:0;font-size:10pt}h1,h2,h3{break-after:avoid}tr,.field,.notice{break-inside:avoid}.temperature{break-inside:auto}.temperature p{break-inside:avoid}@page{margin:16mm}}
+caption{text-align:left;font-weight:bold;margin:12px 0 6px}.missing-evidence td{white-space:nowrap}
+@media print{body{padding:0;font-size:10pt}h1,h2,h3,caption{break-after:avoid}tr,.field,.notice{break-inside:avoid}.temperature{break-inside:auto}.temperature p{break-inside:avoid}.evidence-appendix .field{break-inside:auto}.evidence-appendix p{break-inside:avoid;orphans:3;widows:3}@page{margin:16mm}}
 </style></head><body><h1>${metadata.sample ? 'DEMO · ' : ''}${record ? 'Saved provisional cycle record' : 'Provisional crop preview'}</h1>
 <div class="notice">${metadata.sample ? '<p><strong>DEMO: sample inputs, not a real farm plan.</strong></p>' : ''}
 <p><strong>${record ? 'Historical estimates as accepted. Planned, not observed crops or harvest.' : 'Conditional planning estimates. Not a saved or adopted crop plan.'}</strong></p>
@@ -167,7 +202,7 @@ ${output.map(([label, text]) => label === `${provisionalLabels.nurseryStartDate}
   : `<tr><th scope="row">${escape(label)}</th><td>${escape(text)}</td></tr>`).join('')}</tbody></table>
 ${paragraph('Uncertainties', assessment.uncertainties.length ? assessment.uncertainties.join(', ') : 'No additional resolver flags; provisional limits still apply')}
 ${result.temperatureComparison ? `<section class="field temperature"><h2>Historical temperature comparison</h2>${provisionalTemperatureLines(result.temperatureComparison).map(line => `<p>${escape(line)}</p>`).join('')}</section>` : ''}
-<h2>Evidence and grower edits</h2>${evidence}
+<section class="evidence-appendix"><h2>Evidence and grower edits</h2>${evidence}</section>
 ${result.rejected.length ? `<h2>Evidence not used</h2>${result.rejected.map(item => paragraph(item.id, item.reason)).join('')}` : ''}
 <p>${record ? 'Historical saved record. It does not verify current source applicability, current planting suitability or completed work. Check current site and evidence before acting.' : 'Downloaded for review. Downloading this preview does not save a profile or add crops.'} This file does not update when the app changes.</p>
 </body></html>` };

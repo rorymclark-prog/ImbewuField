@@ -11,7 +11,7 @@ import { usdaGreatLakesCabbageCandidates } from '../lib/international/providers/
 import { usdaGreatLakesTomatoCandidates, usdaGreatLakesTomatoReference, USDA_TOMATO_NURSERY } from '../lib/international/providers/usda-great-lakes-tomato.ts';
 import { southeastMissouriOatsCandidates, southeastMissouriOatsReference, MISSOURI_OATS_PDF_SHA256, USDA_SOUTHEAST_MISSOURI_OATS_SOURCE } from '../lib/international/providers/usda-southeast-missouri-oats.ts';
 import { worldvegKenyaTomatoCandidates, WORLDVEG_TOMATO_NURSERY } from '../lib/international/providers/worldveg-kenya-tomato.ts';
-import { buildProvisionalCropPreviewHtml } from '../lib/international/provisional-crop-export.ts';
+import { buildProvisionalCropPreviewHtml, provisionalFieldCanUseMissingRow, provisionalLabels } from '../lib/international/provisional-crop-export.ts';
 import { normaliseGrowerPlanningProfile, assessGrowerPlanning } from '../lib/international/grower-planning.ts';
 import { createSavedProvisionalProfile, readSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
 import { createProvisionalCycleContext, reviewProvisionalCycleProfile } from '../lib/international/provisional-profile.ts';
@@ -981,4 +981,56 @@ test('two admissible USask endpoint capsules conflict rather than selecting or a
   const r = resolved({ ...input, candidates: [...input.candidates, ...saskatchewanRequest('upper-bound').candidates] });
   assert.equal(r.fields.nurseryDays.status, 'conflict'); assert.equal(r.assessment.schedule.nurseryStartDate.value, null);
   assert.match(saskatchewanNurseryResultQualifier(r.fields)!, /Conflicting nursery endpoints remain unresolved/);
+});
+
+
+test('print compaction keeps only untouched unknowns short and fails closed for evidence-bearing metadata', () => {
+  const input = request({ candidates: [] }), field = resolved(input).fields.plantsPerM2;
+  assert.equal(provisionalFieldCanUseMissingRow('plantsPerM2', field, input), true);
+  const changed = [
+    { status: 'overridden' }, { activeInput: { state: 'missing', reason: 'withheld' } },
+    { activeInput: { state: 'missing', reason: 'not-known', note: 'new metadata' } },
+    { activeTier: 'grower-estimate' }, { baselineDefault: { state: 'missing', reason: 'not-known' } },
+    { defaultConflict: true }, { defaultCandidateIds: ['candidate'] }, { defaultOptions: [{}] },
+    { sourceReferences: ['https://example.invalid/reference'] }, { sourceBindings: [{}] },
+    { assumptions: ['Unverified condition'] }, { defaultReportedRange: [0, 1] },
+    { defaultPlanningValueBasis: 'lower-bound' }, { defaultEntryMonthCoverage: 'positive-only' },
+    { futureEvidence: 'Do not hide new semantics' },
+  ];
+  for (const change of changed) assert.equal(provisionalFieldCanUseMissingRow('plantsPerM2',
+    { ...field, ...change } as typeof field, input), false, JSON.stringify(change));
+  assert.equal(provisionalFieldCanUseMissingRow('plantsPerM2', field,
+    { ...input, overrides: { plantsPerM2: undefined } }), false);
+  assert.equal(provisionalFieldCanUseMissingRow('plantsPerM2', field,
+    { ...input, candidates: [candidate('plantsPerM2', 2, { reuseReview: 'not-reviewed' } as never)] }), false);
+  assert.equal(provisionalFieldCanUseMissingRow('plantsPerM2', field,
+    { ...input, candidates: [{ field: 'unmappable' } as never] }), false);
+});
+
+test('printed unknown rows retain each meaning while zero, withheld, invalid, exclusion and rejected defaults stay detailed', () => {
+  const empty = request({ candidates: [] });
+  const render = (input: ProvisionalDraftRequest) => buildProvisionalCropPreviewHtml(input,
+    { sample: true, bedLabel: 'Synthetic bed' })!;
+  const before = JSON.stringify(empty), result = resolved(empty), document = render(empty);
+  assert.equal(document.fingerprint, result.fingerprint); assert.equal(JSON.stringify(empty), before);
+  for (const key of Object.keys(values)) {
+    assert.ok(document.html.includes(`<th scope="row">${provisionalLabels[key]}</th><td>missing</td>`));
+  }
+  assert.equal((document.html.match(/<td>Unknown<\/td>/g) ?? []).length, 27, 'three explicit unknown meanings per missing input');
+  const own = (value: unknown, unit: string) => ({ state: 'provided', value, unit,
+    provenance: { kind: 'grower-estimate', recordedAt } });
+  for (const override of [own(0, 'days'), { state: 'missing', reason: 'not-known' }, own(-1, 'days')]) {
+    const html = render({ ...empty, overrides: { nurseryDays: override } }).html;
+    assert.ok(html.includes('<h3>Nursery duration (days)</h3>'));
+    assert.ok(!html.includes('<th scope="row">Nursery duration (days)</th>'));
+    if ('value' in override && override.value === 0) assert.match(html, /0 days/);
+    else assert.match(html, /Grower withheld this value|Invalid override/);
+  }
+  assert.ok(render({ ...empty, overrides: { allowedEntryMonths: own([], 'utc-months') } }).html.includes('<h3>Field-entry months</h3>'));
+  const rejected = render({ ...empty, candidates: [candidate('plantsPerM2', 2, { geography: { kind: 'country', countryCode: 'US' } })] }).html;
+  assert.ok(rejected.includes('<h3>Plant density (plants per m²)</h3>'));
+  assert.match(rejected, /Evidence not used/);
+  const conflict = render({ ...empty, candidates: [candidate('plantsPerM2', 2), candidate('plantsPerM2', 3, { id: 'other-density' })] }).html;
+  assert.match(conflict, /Conflicting defaults remain unresolved/);
+  assert.match(conflict, /Default source-plantsPerM2/); assert.match(conflict, /Default other-density/);
 });
