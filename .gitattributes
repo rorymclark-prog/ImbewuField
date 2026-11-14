@@ -14,3 +14,5 @@ docs/audits/2026-11-11/evidence-cp117/outputs/** -whitespace
 docs/audits/2026-11-11/evidence-cp117/artifacts/*.txt -whitespace
 docs/audits/2026-11-11/evidence-cp118/logs/* -whitespace
 docs/audits/2026-11-11/evidence-cp118/outputs/** -whitespace
+docs/audits/2026-11-14/evidence-nasa-power-hardening/logs/* -whitespace
+docs/audits/2026-11-14/evidence-nasa-power-hardening/outputs/** -whitespace

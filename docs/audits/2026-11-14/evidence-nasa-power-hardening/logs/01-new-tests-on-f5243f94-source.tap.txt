@@ -1,0 +1,207 @@
+TAP version 13
+# (node:1968) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/nasa-power.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: one mm per day becomes the calendar number of mm in each complete month
+ok 1 - one mm per day becomes the calendar number of mm in each complete month
+  ---
+  duration_ms: 2.197514
+  type: 'test'
+  ...
+# Subtest: a partial Open-Meteo history is rejected rather than averaged as missing rain
+ok 2 - a partial Open-Meteo history is rejected rather than averaged as missing rain
+  ---
+  duration_ms: 0.82589
+  type: 'test'
+  ...
+# Subtest: invalid daily precipitation never creates a finite-looking monthly normal
+ok 3 - invalid daily precipitation never creates a finite-looking monthly normal
+  ---
+  duration_ms: 0.71632
+  type: 'test'
+  ...
+# Subtest: Open-Meteo outage, bad status and partial payload all return null
+ok 4 - Open-Meteo outage, bad status and partial payload all return null
+  ---
+  duration_ms: 0.726261
+  type: 'test'
+  ...
+# Subtest: NASA daily climatology is multiplied by each month length before annual sum
+ok 5 - NASA daily climatology is multiplied by each month length before annual sum
+  ---
+  duration_ms: 1.206977
+  type: 'test'
+  ...
+# Subtest: a missing monthly minimum cannot be stamped as evidence that a site is warm
+ok 6 - a missing monthly minimum cannot be stamped as evidence that a site is warm
+  ---
+  duration_ms: 0.524616
+  type: 'test'
+  ...
+# Subtest: both climate requests carry bounded abort signals
+ok 7 - both climate requests carry bounded abort signals
+  ---
+  duration_ms: 0.461299
+  type: 'test'
+  ...
+# Subtest: missing or sentinel NASA rainfall months reject instead of becoming zero-rain months
+ok 8 - missing or sentinel NASA rainfall months reject instead of becoming zero-rain months
+  ---
+  duration_ms: 1.082413
+  type: 'test'
+  ...
+# Subtest: March rainfall cannot be misclassified as austral summer DJF rain
+ok 9 - March rainfall cannot be misclassified as austral summer DJF rain
+  ---
+  duration_ms: 0.484849
+  type: 'test'
+  ...
+# Subtest: a partial Open-Meteo response leaves complete NASA rainfall in charge
+ok 10 - a partial Open-Meteo response leaves complete NASA rainfall in charge
+  ---
+  duration_ms: 0.529619
+  type: 'test'
+  ...
+# Subtest: a complete, materially different Open-Meteo normal can replace coarse NASA rainfall
+ok 11 - a complete, materially different Open-Meteo normal can replace coarse NASA rainfall
+  ---
+  duration_ms: 24.23159
+  type: 'test'
+  ...
+# Subtest: missing wind directions stay unknown rather than averaging sentinels to north
+ok 12 - missing wind directions stay unknown rather than averaging sentinels to north
+  ---
+  duration_ms: 0.511979
+  type: 'test'
+  ...
+# Subtest: negative wind and solar values and out-of-domain directions stay unavailable
+ok 13 - negative wind and solar values and out-of-domain directions stay unavailable
+  ---
+  duration_ms: 0.405962
+  type: 'test'
+  ...
+# Subtest: a malformed NASA payload fails with a stable data error
+ok 14 - a malformed NASA payload fails with a stable data error
+  ---
+  duration_ms: 0.218185
+  type: 'test'
+  ...
+# Subtest: invalid coordinates are rejected before spending a network request
+ok 15 - invalid coordinates are rejected before spending a network request
+  ---
+  duration_ms: 0.148402
+  type: 'test'
+  ...
+# Subtest: complete raw monthly means retain cold and zero values and carry their own coverage
+ok 16 - complete raw monthly means retain cold and zero values and carry their own coverage
+  ---
+  duration_ms: 0.48439
+  type: 'test'
+  ...
+# Subtest: missing or invalid monthly means cannot acquire coverage from the unchanged display fill or complete minima
+ok 17 - missing or invalid monthly means cannot acquire coverage from the unchanged display fill or complete minima
+  ---
+  duration_ms: 1.364036
+  type: 'test'
+  ...
+# Subtest: sparse arrays, annual-only data and wrong month-key shapes stay incomplete rather than pretending to be monthly records
+ok 18 - sparse arrays, annual-only data and wrong month-key shapes stay incomplete rather than pretending to be monthly records
+  ---
+  duration_ms: 0.986917
+  type: 'test'
+  ...
+# Subtest: complete monthly means do not stamp absent monthly minimum readings as frost evidence
+ok 19 - complete monthly means do not stamp absent monthly minimum readings as frost evidence
+  ---
+  duration_ms: 0.377662
+  type: 'test'
+  ...
+# Subtest: a rainfall record that states inches, another unit or no unit is refused, so NASA POWER rainfall stays
+not ok 20 - a rainfall record that states inches, another unit or no unit is refused, so NASA POWER rainfall stays
+  ---
+  duration_ms: 14.194911
+  type: 'test'
+  location: '/home/user/ImbewuField/tests/nasa-power.test.ts:428:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    units block absent must be refused
+    + actual - expected
+    
+    + [
+    +   310,
+    +   282.7,
+    +   310,
+    +   300,
+    +   310,
+    +   300,
+    +   310,
+    +   310,
+    +   300,
+    +   310,
+    +   300,
+    +   310
+    + ]
+    - null
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ~
+  actual:
+    0: 310
+    1: 282.7
+    2: 310
+    3: 300
+    4: 310
+    5: 300
+    6: 310
+    7: 310
+    8: 300
+    9: 310
+    10: 300
+    11: 310
+  operator: 'strictEqual'
+  stack: |-
+    file:///home/user/ImbewuField/tests/nasa-power.test.ts:449:26
+    async withFetch (file:///home/user/ImbewuField/tests/nasa-power.test.ts:65:12)
+    async TestContext.<anonymous> (file:///home/user/ImbewuField/tests/nasa-power.test.ts:447:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the rainfall request leaves model and grid-cell choice to the provider until a measured decision changes it
+ok 21 - the rainfall request leaves model and grid-cell choice to the provider until a measured decision changes it
+  ---
+  duration_ms: 0.21616
+  type: 'test'
+  ...
+# Subtest: north of the equator, rain in December to February is winter rain, not summer rain
+not ok 22 - north of the equator, rain in December to February is winter rain, not summer rain
+  ---
+  duration_ms: 0.793235
+  type: 'test'
+  location: '/home/user/ImbewuField/tests/nasa-power.test.ts:490:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'summer' !== 'winter'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'winter'
+  actual: 'summer'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/ImbewuField/tests/nasa-power.test.ts:496:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 20
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 333.312799

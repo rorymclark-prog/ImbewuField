@@ -1,0 +1,186 @@
+TAP version 13
+# (node:1915) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/nasa-power.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: one mm per day becomes the calendar number of mm in each complete month
+ok 1 - one mm per day becomes the calendar number of mm in each complete month
+  ---
+  duration_ms: 2.85992
+  type: 'test'
+  ...
+# Subtest: a partial Open-Meteo history is rejected rather than averaged as missing rain
+ok 2 - a partial Open-Meteo history is rejected rather than averaged as missing rain
+  ---
+  duration_ms: 0.925199
+  type: 'test'
+  ...
+# Subtest: invalid daily precipitation never creates a finite-looking monthly normal
+ok 3 - invalid daily precipitation never creates a finite-looking monthly normal
+  ---
+  duration_ms: 2.009831
+  type: 'test'
+  ...
+# Subtest: Open-Meteo outage, bad status and partial payload all return null
+ok 4 - Open-Meteo outage, bad status and partial payload all return null
+  ---
+  duration_ms: 0.904646
+  type: 'test'
+  ...
+# Subtest: NASA daily climatology is multiplied by each month length before annual sum
+ok 5 - NASA daily climatology is multiplied by each month length before annual sum
+  ---
+  duration_ms: 1.282249
+  type: 'test'
+  ...
+# Subtest: a missing monthly minimum cannot be stamped as evidence that a site is warm
+ok 6 - a missing monthly minimum cannot be stamped as evidence that a site is warm
+  ---
+  duration_ms: 0.658248
+  type: 'test'
+  ...
+# Subtest: both climate requests carry bounded abort signals
+ok 7 - both climate requests carry bounded abort signals
+  ---
+  duration_ms: 0.576846
+  type: 'test'
+  ...
+# Subtest: missing or sentinel NASA rainfall months reject instead of becoming zero-rain months
+ok 8 - missing or sentinel NASA rainfall months reject instead of becoming zero-rain months
+  ---
+  duration_ms: 1.253477
+  type: 'test'
+  ...
+# Subtest: March rainfall cannot be misclassified as austral summer DJF rain
+ok 9 - March rainfall cannot be misclassified as austral summer DJF rain
+  ---
+  duration_ms: 0.652908
+  type: 'test'
+  ...
+# Subtest: a partial Open-Meteo response leaves complete NASA rainfall in charge
+ok 10 - a partial Open-Meteo response leaves complete NASA rainfall in charge
+  ---
+  duration_ms: 0.636136
+  type: 'test'
+  ...
+# Subtest: a complete, materially different Open-Meteo normal can replace coarse NASA rainfall
+ok 11 - a complete, materially different Open-Meteo normal can replace coarse NASA rainfall
+  ---
+  duration_ms: 27.004811
+  type: 'test'
+  ...
+# Subtest: missing wind directions stay unknown rather than averaging sentinels to north
+ok 12 - missing wind directions stay unknown rather than averaging sentinels to north
+  ---
+  duration_ms: 0.608823
+  type: 'test'
+  ...
+# Subtest: negative wind and solar values and out-of-domain directions stay unavailable
+ok 13 - negative wind and solar values and out-of-domain directions stay unavailable
+  ---
+  duration_ms: 1.099907
+  type: 'test'
+  ...
+# Subtest: a malformed NASA payload fails with a stable data error
+ok 14 - a malformed NASA payload fails with a stable data error
+  ---
+  duration_ms: 0.330629
+  type: 'test'
+  ...
+# Subtest: invalid coordinates are rejected before spending a network request
+ok 15 - invalid coordinates are rejected before spending a network request
+  ---
+  duration_ms: 0.193789
+  type: 'test'
+  ...
+# Subtest: complete raw monthly means retain cold and zero values and carry their own coverage
+ok 16 - complete raw monthly means retain cold and zero values and carry their own coverage
+  ---
+  duration_ms: 0.564756
+  type: 'test'
+  ...
+# Subtest: missing or invalid monthly means cannot acquire coverage from the unchanged display fill or complete minima
+ok 17 - missing or invalid monthly means cannot acquire coverage from the unchanged display fill or complete minima
+  ---
+  duration_ms: 1.635491
+  type: 'test'
+  ...
+# Subtest: sparse arrays, annual-only data and wrong month-key shapes stay incomplete rather than pretending to be monthly records
+ok 18 - sparse arrays, annual-only data and wrong month-key shapes stay incomplete rather than pretending to be monthly records
+  ---
+  duration_ms: 1.139868
+  type: 'test'
+  ...
+# Subtest: complete monthly means do not stamp absent monthly minimum readings as frost evidence
+ok 19 - complete monthly means do not stamp absent monthly minimum readings as frost evidence
+  ---
+  duration_ms: 0.422561
+  type: 'test'
+  ...
+# Subtest: a rainfall record that states inches, another unit or no unit is refused, so NASA POWER rainfall stays
+ok 20 - a rainfall record that states inches, another unit or no unit is refused, so NASA POWER rainfall stays
+  ---
+  duration_ms: 17.43146
+  type: 'test'
+  ...
+# Subtest: the rainfall request leaves model and grid-cell choice to the provider until a measured decision changes it
+ok 21 - the rainfall request leaves model and grid-cell choice to the provider until a measured decision changes it
+  ---
+  duration_ms: 0.666258
+  type: 'test'
+  ...
+# Subtest: north of the equator, rain in December to February is winter rain, not summer rain
+ok 22 - north of the equator, rain in December to February is winter rain, not summer rain
+  ---
+  duration_ms: 0.908241
+  type: 'test'
+  ...
+# (node:1916) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/site-climate.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the historical recorded farm reading stays unknown without original monthly coverage evidence
+ok 23 - the historical recorded farm reading stays unknown without original monthly coverage evidence
+  ---
+  duration_ms: 0.792933
+  type: 'test'
+  ...
+# Subtest: provider-composed complete monthly evidence resolves the warm-area column, not the hard-frost interior
+ok 24 - provider-composed complete monthly evidence resolves the warm-area column, not the hard-frost interior
+  ---
+  duration_ms: 3.794459
+  type: 'test'
+  ...
+# Subtest: the API route’s NASA-outage fallback is never mistaken for per-site climate
+ok 25 - the API route’s NASA-outage fallback is never mistaken for per-site climate
+  ---
+  duration_ms: 0.20086
+  type: 'test'
+  ...
+# Subtest: malformed or partial payloads refuse to answer instead of guessing
+ok 26 - malformed or partial payloads refuse to answer instead of guessing
+  ---
+  duration_ms: 0.870531
+  type: 'test'
+  ...
+# Subtest: open-meteo rainfall keeps its provenance beside provider-complete monthly temperature evidence
+ok 27 - open-meteo rainfall keeps its provenance beside provider-complete monthly temperature evidence
+  ---
+  duration_ms: 0.756468
+  type: 'test'
+  ...
+# Subtest: the cache key matches the app-wide imbewu_loc_v7 format at 5 dp
+ok 28 - the cache key matches the app-wide imbewu_loc_v7 format at 5 dp
+  ---
+  duration_ms: 0.116204
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1011.460209

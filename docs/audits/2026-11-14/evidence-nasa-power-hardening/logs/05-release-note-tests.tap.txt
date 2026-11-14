@@ -1,0 +1,2399 @@
+TAP version 13
+# (node:4536) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/account-copy.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: account drafts retain exact sources, inline isiZulu and shared controls without changing calibrated dictionary bytes
+ok 1 - account drafts retain exact sources, inline isiZulu and shared controls without changing calibrated dictionary bytes
+  ---
+  duration_ms: 15.295409
+  type: 'test'
+  ...
+# Subtest: zu: actual profile controls save the same typed values and language, then sign out to the original destination
+ok 2 - zu: actual profile controls save the same typed values and language, then sign out to the original destination
+  ---
+  duration_ms: 200.126378
+  type: 'test'
+  ...
+# Subtest: st: actual profile controls save the same typed values and language, then sign out to the original destination
+ok 3 - st: actual profile controls save the same typed values and language, then sign out to the original destination
+  ---
+  duration_ms: 40.172265
+  type: 'test'
+  ...
+# Subtest: ts: actual profile controls save the same typed values and language, then sign out to the original destination
+ok 4 - ts: actual profile controls save the same typed values and language, then sign out to the original destination
+  ---
+  duration_ms: 38.028728
+  type: 'test'
+  ...
+# Subtest: ve: actual profile controls save the same typed values and language, then sign out to the original destination
+ok 5 - ve: actual profile controls save the same typed values and language, then sign out to the original destination
+  ---
+  duration_ms: 39.753429
+  type: 'test'
+  ...
+# Subtest: blank profile fields keep the original omission/null meanings and errors retain edited values across language changes
+ok 6 - blank profile fields keep the original omission/null meanings and errors retain edited values across language changes
+  ---
+  duration_ms: 38.584148
+  type: 'test'
+  ...
+# Subtest: zu: password validation and backend messages repaint without changing the request or closing a failed form
+ok 7 - zu: password validation and backend messages repaint without changing the request or closing a failed form
+  ---
+  duration_ms: 36.792175
+  type: 'test'
+  ...
+# Subtest: st: password validation and backend messages repaint without changing the request or closing a failed form
+ok 8 - st: password validation and backend messages repaint without changing the request or closing a failed form
+  ---
+  duration_ms: 36.043242
+  type: 'test'
+  ...
+# Subtest: ts: password validation and backend messages repaint without changing the request or closing a failed form
+ok 9 - ts: password validation and backend messages repaint without changing the request or closing a failed form
+  ---
+  duration_ms: 21.856189
+  type: 'test'
+  ...
+# Subtest: ve: password validation and backend messages repaint without changing the request or closing a failed form
+ok 10 - ve: password validation and backend messages repaint without changing the request or closing a failed form
+  ---
+  duration_ms: 28.064686
+  type: 'test'
+  ...
+# Subtest: successful password updates keep the original close delay, while photo/logo paths retain their payloads and error sources
+ok 11 - successful password updates keep the original close delay, while photo/logo paths retain their payloads and error sources
+  ---
+  duration_ms: 31.527013
+  type: 'test'
+  ...
+# Subtest: zu: sample, sign-in and slow-auth doors keep their actions and Simple still discloses extra settings
+ok 12 - zu: sample, sign-in and slow-auth doors keep their actions and Simple still discloses extra settings
+  ---
+  duration_ms: 18.707049
+  type: 'test'
+  ...
+# Subtest: st: sample, sign-in and slow-auth doors keep their actions and Simple still discloses extra settings
+ok 13 - st: sample, sign-in and slow-auth doors keep their actions and Simple still discloses extra settings
+  ---
+  duration_ms: 20.747049
+  type: 'test'
+  ...
+# Subtest: ts: sample, sign-in and slow-auth doors keep their actions and Simple still discloses extra settings
+ok 14 - ts: sample, sign-in and slow-auth doors keep their actions and Simple still discloses extra settings
+  ---
+  duration_ms: 19.46055
+  type: 'test'
+  ...
+# Subtest: ve: sample, sign-in and slow-auth doors keep their actions and Simple still discloses extra settings
+ok 15 - ve: sample, sign-in and slow-auth doors keep their actions and Simple still discloses extra settings
+  ---
+  duration_ms: 17.437611
+  type: 'test'
+  ...
+# Subtest: zu: account access labels cannot change dashboard destinations, preview identities or permissions
+ok 16 - zu: account access labels cannot change dashboard destinations, preview identities or permissions
+  ---
+  duration_ms: 8.430728
+  type: 'test'
+  ...
+# Subtest: st: account access labels cannot change dashboard destinations, preview identities or permissions
+ok 17 - st: account access labels cannot change dashboard destinations, preview identities or permissions
+  ---
+  duration_ms: 7.677085
+  type: 'test'
+  ...
+# Subtest: ts: account access labels cannot change dashboard destinations, preview identities or permissions
+ok 18 - ts: account access labels cannot change dashboard destinations, preview identities or permissions
+  ---
+  duration_ms: 7.667869
+  type: 'test'
+  ...
+# Subtest: ve: account access labels cannot change dashboard destinations, preview identities or permissions
+ok 19 - ve: account access labels cannot change dashboard destinations, preview identities or permissions
+  ---
+  duration_ms: 9.175066
+  type: 'test'
+  ...
+# Subtest: zu: allowance figures, model-fallback meaning, reset day and progress arithmetic survive translation
+ok 20 - zu: allowance figures, model-fallback meaning, reset day and progress arithmetic survive translation
+  ---
+  duration_ms: 8.006857
+  type: 'test'
+  ...
+# Subtest: st: allowance figures, model-fallback meaning, reset day and progress arithmetic survive translation
+ok 21 - st: allowance figures, model-fallback meaning, reset day and progress arithmetic survive translation
+  ---
+  duration_ms: 7.669604
+  type: 'test'
+  ...
+# Subtest: ts: allowance figures, model-fallback meaning, reset day and progress arithmetic survive translation
+ok 22 - ts: allowance figures, model-fallback meaning, reset day and progress arithmetic survive translation
+  ---
+  duration_ms: 15.467489
+  type: 'test'
+  ...
+# Subtest: ve: allowance figures, model-fallback meaning, reset day and progress arithmetic survive translation
+ok 23 - ve: allowance figures, model-fallback meaning, reset day and progress arithmetic survive translation
+  ---
+  duration_ms: 7.71333
+  type: 'test'
+  ...
+# Subtest: zu: the actual shared dialog translates its default Cancel while custom choices, focus, Escape and answers remain intact
+ok 24 - zu: the actual shared dialog translates its default Cancel while custom choices, focus, Escape and answers remain intact
+  ---
+  duration_ms: 25.32354
+  type: 'test'
+  ...
+# Subtest: st: the actual shared dialog translates its default Cancel while custom choices, focus, Escape and answers remain intact
+ok 25 - st: the actual shared dialog translates its default Cancel while custom choices, focus, Escape and answers remain intact
+  ---
+  duration_ms: 5.766996
+  type: 'test'
+  ...
+# Subtest: ts: the actual shared dialog translates its default Cancel while custom choices, focus, Escape and answers remain intact
+ok 26 - ts: the actual shared dialog translates its default Cancel while custom choices, focus, Escape and answers remain intact
+  ---
+  duration_ms: 4.394513
+  type: 'test'
+  ...
+# Subtest: ve: the actual shared dialog translates its default Cancel while custom choices, focus, Escape and answers remain intact
+ok 27 - ve: the actual shared dialog translates its default Cancel while custom choices, focus, Escape and answers remain intact
+  ---
+  duration_ms: 4.072116
+  type: 'test'
+  ...
+# Subtest: the new account release description uses all four drafts without altering old notice descriptions
+ok 28 - the new account release description uses all four drafts without altering old notice descriptions
+  ---
+  duration_ms: 47.869035
+  type: 'test'
+  ...
+# Subtest: zu: sharing clauses keep their exact scopes and source while permissions remain explicit and off by default
+ok 29 - zu: sharing clauses keep their exact scopes and source while permissions remain explicit and off by default
+  ---
+  duration_ms: 26.086526
+  type: 'test'
+  ...
+# Subtest: st: sharing clauses keep their exact scopes and source while permissions remain explicit and off by default
+ok 30 - st: sharing clauses keep their exact scopes and source while permissions remain explicit and off by default
+  ---
+  duration_ms: 24.28428
+  type: 'test'
+  ...
+# Subtest: ts: sharing clauses keep their exact scopes and source while permissions remain explicit and off by default
+ok 31 - ts: sharing clauses keep their exact scopes and source while permissions remain explicit and off by default
+  ---
+  duration_ms: 15.094617
+  type: 'test'
+  ...
+# Subtest: ve: sharing clauses keep their exact scopes and source while permissions remain explicit and off by default
+ok 32 - ve: sharing clauses keep their exact scopes and source while permissions remain explicit and off by default
+  ---
+  duration_ms: 10.947158
+  type: 'test'
+  ...
+# Subtest: a failed sharing read never pretends every scope is off, and retry/failed writes retain the last real permissions
+ok 33 - a failed sharing read never pretends every scope is off, and retry/failed writes retain the last real permissions
+  ---
+  duration_ms: 15.332839
+  type: 'test'
+  ...
+# Subtest: sharing load and withdrawal failures retain their own states and never invent an all-off result
+ok 34 - sharing load and withdrawal failures retain their own states and never invent an all-off result
+  ---
+  duration_ms: 7.880286
+  type: 'test'
+  ...
+# Subtest: TabBar measures its own rendered element and publishes the height
+ok 35 - TabBar measures its own rendered element and publishes the height
+  ---
+  duration_ms: 1.007368
+  type: 'test'
+  ...
+# Subtest: TabBar survives a text-size change even though ResizeObserver alone does not
+ok 36 - TabBar survives a text-size change even though ResizeObserver alone does not
+  ---
+  duration_ms: 0.660543
+  type: 'test'
+  ...
+# Subtest: publish() is idempotent, so the MutationObserver cannot re-trigger itself forever
+ok 37 - publish() is idempotent, so the MutationObserver cannot re-trigger itself forever
+  ---
+  duration_ms: 0.317747
+  type: 'test'
+  ...
+# Subtest: TabBar clears the variable on unmount so a nav-less route cannot inherit a stale value
+ok 38 - TabBar clears the variable on unmount so a nav-less route cannot inherit a stale value
+  ---
+  duration_ms: 0.318819
+  type: 'test'
+  ...
+# Subtest: PWAUpdateNotifier positions the pill off the published variable, not a literal guess
+ok 39 - PWAUpdateNotifier positions the pill off the published variable, not a literal guess
+  ---
+  duration_ms: 0.418827
+  type: 'test'
+  ...
+# Subtest: app/globals.css keeps exactly one fallback, clearly marked as one
+ok 40 - app/globals.css keeps exactly one fallback, clearly marked as one
+  ---
+  duration_ms: 2.483787
+  type: 'test'
+  ...
+# Subtest: the ?force-update testing backdoor cannot fire in production
+ok 41 - the ?force-update testing backdoor cannot fire in production
+  ---
+  duration_ms: 0.341496
+  type: 'test'
+  ...
+# Subtest: the WHY-these-notes-live-here comment is back, pointing at lib/release-notes.ts
+ok 42 - the WHY-these-notes-live-here comment is back, pointing at lib/release-notes.ts
+  ---
+  duration_ms: 0.155746
+  type: 'test'
+  ...
+# (node:4552) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/canvas-labels.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: no two laid-out pills overlap, at the density that broke the old layout
+ok 43 - no two laid-out pills overlap, at the density that broke the old layout
+  ---
+  duration_ms: 1.524198
+  type: 'test'
+  ...
+# Subtest: every pill is unambiguous: nearest to its own icon, or carrying a leader to it
+ok 44 - every pill is unambiguous: nearest to its own icon, or carrying a leader to it
+  ---
+  duration_ms: 0.403768
+  type: 'test'
+  ...
+# Subtest: no pill covers another plant’s icon disc
+ok 45 - no pill covers another plant’s icon disc
+  ---
+  duration_ms: 0.335846
+  type: 'test'
+  ...
+# Subtest: the naive fixed-offset layout FAILS both properties — i.e. these tests can fail
+ok 46 - the naive fixed-offset layout FAILS both properties — i.e. these tests can fail
+  ---
+  duration_ms: 0.361363
+  type: 'test'
+  ...
+# Subtest: a pill only claims a leader line when de-collision really displaced it
+ok 47 - a pill only claims a leader line when de-collision really displaced it
+  ---
+  duration_ms: 0.153644
+  type: 'test'
+  ...
+# Subtest: layout is independent of the order the farmer placed things in
+ok 48 - layout is independent of the order the farmer placed things in
+  ---
+  duration_ms: 0.207165
+  type: 'test'
+  ...
+# Subtest: results come back in the caller order, so React keys stay stable
+ok 49 - results come back in the caller order, so React keys stay stable
+  ---
+  duration_ms: 0.76006
+  type: 'test'
+  ...
+# Subtest: invalid label geometry is rejected before it can become an SVG transform
+ok 50 - invalid label geometry is rejected before it can become an SVG transform
+  ---
+  duration_ms: 0.297132
+  type: 'test'
+  ...
+# Subtest: pill width estimate clears the WIDEST width actually measured in the browser
+ok 51 - pill width estimate clears the WIDEST width actually measured in the browser
+  ---
+  duration_ms: 0.318284
+  type: 'test'
+  ...
+# Subtest: pill width estimation remains finite and non-negative for malformed sizing inputs
+ok 52 - pill width estimation remains finite and non-negative for malformed sizing inputs
+  ---
+  duration_ms: 0.445554
+  type: 'test'
+  ...
+# Subtest: the update banner can never become a wall of text over the map
+ok 53 - the update banner can never become a wall of text over the map
+  ---
+  duration_ms: 0.337404
+  type: 'test'
+  ...
+# Subtest: release notes are written for the farmer, not the repo
+ok 54 - release notes are written for the farmer, not the repo
+  ---
+  duration_ms: 0.529719
+  type: 'test'
+  ...
+# Subtest: a leader lands on the ring edge, not its centroid
+ok 55 - a leader lands on the ring edge, not its centroid
+  ---
+  duration_ms: 0.340591
+  type: 'test'
+  ...
+# Subtest: the anchor stays ON the ring, never on a segment extension
+ok 56 - the anchor stays ON the ring, never on a segment extension
+  ---
+  duration_ms: 0.168911
+  type: 'test'
+  ...
+# Subtest: a boundary ring is never cut into by the areas inside it
+ok 57 - a boundary ring is never cut into by the areas inside it
+  ---
+  duration_ms: 0.193435
+  type: 'test'
+  ...
+# Subtest: seven identical bed pills become ONE "×7" pill anchored on the most central bed
+ok 58 - seven identical bed pills become ONE "×7" pill anchored on the most central bed
+  ---
+  duration_ms: 0.207928
+  type: 'test'
+  ...
+# Subtest: custom names, noted items, singletons and empty texts never merge
+ok 59 - custom names, noted items, singletons and empty texts never merge
+  ---
+  duration_ms: 0.199358
+  type: 'test'
+  ...
+# Subtest: a suppressed entry emits no pill but its icon disc still blocks other pills
+ok 60 - a suppressed entry emits no pill but its icon disc still blocks other pills
+  ---
+  duration_ms: 0.198322
+  type: 'test'
+  ...
+# Subtest: the newest release-notes block is dated, never self-declared "Latest"
+ok 61 - the newest release-notes block is dated, never self-declared "Latest"
+  ---
+  duration_ms: 0.128529
+  type: 'test'
+  ...
+# Subtest: two badges on top of each other are pushed apart
+ok 62 - two badges on top of each other are pushed apart
+  ---
+  duration_ms: 0.249497
+  type: 'test'
+  ...
+# Subtest: exactly coincident centroids still yield two readable badges
+ok 63 - exactly coincident centroids still yield two readable badges
+  ---
+  duration_ms: 0.310996
+  type: 'test'
+  ...
+# Subtest: a badge the farmer dragged is pinned — the separator moves the other one
+ok 64 - a badge the farmer dragged is pinned — the separator moves the other one
+  ---
+  duration_ms: 0.182155
+  type: 'test'
+  ...
+# Subtest: badges stay inside the sheet and a lone zone is left exactly where it is
+ok 65 - badges stay inside the sheet and a lone zone is left exactly where it is
+  ---
+  duration_ms: 0.180742
+  type: 'test'
+  ...
+# (node:4560) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/update-copy.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: conversation/hub drafts retain source figures, exact old locale bytes and declared inline isiZulu, while corrupt/partial changes remain detectable
+ok 66 - conversation/hub drafts retain source figures, exact old locale bytes and declared inline isiZulu, while corrupt/partial changes remain detectable
+  ---
+  duration_ms: 21.725461
+  type: 'test'
+  ...
+# Subtest: both community clocks keep original English/isiZulu thresholds, flooring, local calendar dates and source timestamp bytes
+ok 67 - both community clocks keep original English/isiZulu thresholds, flooring, local calendar dates and source timestamp bytes
+  ---
+  duration_ms: 294.632071
+  type: 'test'
+  ...
+# Subtest: zu: real conversation preserves owned text and recipient paths while send/Enter use the same trimmed message
+ok 68 - zu: real conversation preserves owned text and recipient paths while send/Enter use the same trimmed message
+  ---
+  duration_ms: 120.804725
+  type: 'test'
+  ...
+# Subtest: st: real conversation preserves owned text and recipient paths while send/Enter use the same trimmed message
+ok 69 - st: real conversation preserves owned text and recipient paths while send/Enter use the same trimmed message
+  ---
+  duration_ms: 9.032925
+  type: 'test'
+  ...
+# Subtest: ts: real conversation preserves owned text and recipient paths while send/Enter use the same trimmed message
+ok 70 - ts: real conversation preserves owned text and recipient paths while send/Enter use the same trimmed message
+  ---
+  duration_ms: 6.89988
+  type: 'test'
+  ...
+# Subtest: ve: real conversation preserves owned text and recipient paths while send/Enter use the same trimmed message
+ok 71 - ve: real conversation preserves owned text and recipient paths while send/Enter use the same trimmed message
+  ---
+  duration_ms: 5.980677
+  type: 'test'
+  ...
+# Subtest: zu: pending sends announce native progress, keep a failed draft, and cannot overwrite a different conversation
+ok 72 - zu: pending sends announce native progress, keep a failed draft, and cannot overwrite a different conversation
+  ---
+  duration_ms: 16.045588
+  type: 'test'
+  ...
+# Subtest: st: pending sends announce native progress, keep a failed draft, and cannot overwrite a different conversation
+ok 73 - st: pending sends announce native progress, keep a failed draft, and cannot overwrite a different conversation
+  ---
+  duration_ms: 13.029375
+  type: 'test'
+  ...
+# Subtest: ts: pending sends announce native progress, keep a failed draft, and cannot overwrite a different conversation
+ok 74 - ts: pending sends announce native progress, keep a failed draft, and cannot overwrite a different conversation
+  ---
+  duration_ms: 19.459048
+  type: 'test'
+  ...
+# Subtest: ve: pending sends announce native progress, keep a failed draft, and cannot overwrite a different conversation
+ok 75 - ve: pending sends announce native progress, keep a failed draft, and cannot overwrite a different conversation
+  ---
+  duration_ms: 19.992477
+  type: 'test'
+  ...
+# Subtest: zu: listener Retry unsubscribes once, keeps the conversation and ignores late callbacks from the old listener
+ok 76 - zu: listener Retry unsubscribes once, keeps the conversation and ignores late callbacks from the old listener
+  ---
+  duration_ms: 9.142122
+  type: 'test'
+  ...
+# Subtest: st: listener Retry unsubscribes once, keeps the conversation and ignores late callbacks from the old listener
+ok 77 - st: listener Retry unsubscribes once, keeps the conversation and ignores late callbacks from the old listener
+  ---
+  duration_ms: 6.989274
+  type: 'test'
+  ...
+# Subtest: ts: listener Retry unsubscribes once, keeps the conversation and ignores late callbacks from the old listener
+ok 78 - ts: listener Retry unsubscribes once, keeps the conversation and ignores late callbacks from the old listener
+  ---
+  duration_ms: 6.802975
+  type: 'test'
+  ...
+# Subtest: ve: listener Retry unsubscribes once, keeps the conversation and ignores late callbacks from the old listener
+ok 79 - ve: listener Retry unsubscribes once, keeps the conversation and ignores late callbacks from the old listener
+  ---
+  duration_ms: 7.283791
+  type: 'test'
+  ...
+# Subtest: zu: read failure, missing thread and pending load never offer an unverified composer or stale target
+ok 80 - zu: read failure, missing thread and pending load never offer an unverified composer or stale target
+  ---
+  duration_ms: 14.651658
+  type: 'test'
+  ...
+# Subtest: st: read failure, missing thread and pending load never offer an unverified composer or stale target
+ok 81 - st: read failure, missing thread and pending load never offer an unverified composer or stale target
+  ---
+  duration_ms: 13.623196
+  type: 'test'
+  ...
+# Subtest: ts: read failure, missing thread and pending load never offer an unverified composer or stale target
+ok 82 - ts: read failure, missing thread and pending load never offer an unverified composer or stale target
+  ---
+  duration_ms: 18.839233
+  type: 'test'
+  ...
+# Subtest: ve: read failure, missing thread and pending load never offer an unverified composer or stale target
+ok 83 - ve: read failure, missing thread and pending load never offer an unverified composer or stale target
+  ---
+  duration_ms: 13.494173
+  type: 'test'
+  ...
+# Subtest: zu: message reports keep original recipient, reason boundary and close delay through native success/failure
+ok 84 - zu: message reports keep original recipient, reason boundary and close delay through native success/failure
+  ---
+  duration_ms: 21.016408
+  type: 'test'
+  ...
+# Subtest: st: message reports keep original recipient, reason boundary and close delay through native success/failure
+ok 85 - st: message reports keep original recipient, reason boundary and close delay through native success/failure
+  ---
+  duration_ms: 15.878719
+  type: 'test'
+  ...
+# Subtest: ts: message reports keep original recipient, reason boundary and close delay through native success/failure
+ok 86 - ts: message reports keep original recipient, reason boundary and close delay through native success/failure
+  ---
+  duration_ms: 15.407085
+  type: 'test'
+  ...
+# Subtest: ve: message reports keep original recipient, reason boundary and close delay through native success/failure
+ok 87 - ve: message reports keep original recipient, reason boundary and close delay through native success/failure
+  ---
+  duration_ms: 20.686219
+  type: 'test'
+  ...
+# Subtest: Simple keeps reports reachable, hides clock detail, and missing names use a native fallback without changing stored names
+ok 88 - Simple keeps reports reachable, hides clock detail, and missing names use a native fallback without changing stored names
+  ---
+  duration_ms: 20.940584
+  type: 'test'
+  ...
+# Subtest: zu: real hub tabs, privacy source and canonical posting choices survive language and Simple changes
+ok 89 - zu: real hub tabs, privacy source and canonical posting choices survive language and Simple changes
+  ---
+  duration_ms: 85.212033
+  type: 'test'
+  ...
+# Subtest: st: real hub tabs, privacy source and canonical posting choices survive language and Simple changes
+ok 90 - st: real hub tabs, privacy source and canonical posting choices survive language and Simple changes
+  ---
+  duration_ms: 29.534558
+  type: 'test'
+  ...
+# Subtest: ts: real hub tabs, privacy source and canonical posting choices survive language and Simple changes
+ok 91 - ts: real hub tabs, privacy source and canonical posting choices survive language and Simple changes
+  ---
+  duration_ms: 17.10608
+  type: 'test'
+  ...
+# Subtest: ve: real hub tabs, privacy source and canonical posting choices survive language and Simple changes
+ok 92 - ve: real hub tabs, privacy source and canonical posting choices survive language and Simple changes
+  ---
+  duration_ms: 40.408711
+  type: 'test'
+  ...
+# Subtest: zu: board photo/post/action failures stay native and preserve farmer content and exact selected IDs
+ok 93 - zu: board photo/post/action failures stay native and preserve farmer content and exact selected IDs
+  ---
+  duration_ms: 43.170756
+  type: 'test'
+  ...
+# Subtest: st: board photo/post/action failures stay native and preserve farmer content and exact selected IDs
+ok 94 - st: board photo/post/action failures stay native and preserve farmer content and exact selected IDs
+  ---
+  duration_ms: 39.175752
+  type: 'test'
+  ...
+# Subtest: ts: board photo/post/action failures stay native and preserve farmer content and exact selected IDs
+ok 95 - ts: board photo/post/action failures stay native and preserve farmer content and exact selected IDs
+  ---
+  duration_ms: 33.995774
+  type: 'test'
+  ...
+# Subtest: ve: board photo/post/action failures stay native and preserve farmer content and exact selected IDs
+ok 96 - ve: board photo/post/action failures stay native and preserve farmer content and exact selected IDs
+  ---
+  duration_ms: 52.776038
+  type: 'test'
+  ...
+# Subtest: healthy hub reads remain available when another tab fails; a failed tab never asserts a false empty result
+ok 97 - healthy hub reads remain available when another tab fails; a failed tab never asserts a false empty result
+  ---
+  duration_ms: 6.146812
+  type: 'test'
+  ...
+# Subtest: a late hub reply cannot expose the previous owner’s conversation after the account changes
+ok 98 - a late hub reply cannot expose the previous owner’s conversation after the account changes
+  ---
+  duration_ms: 4.790867
+  type: 'test'
+  ...
+# Subtest: zu: actual map controls expose native purpose and close/view actions without changing any coordinates or owned names
+ok 99 - zu: actual map controls expose native purpose and close/view actions without changing any coordinates or owned names
+  ---
+  duration_ms: 3.806745
+  type: 'test'
+  ...
+# Subtest: st: actual map controls expose native purpose and close/view actions without changing any coordinates or owned names
+ok 100 - st: actual map controls expose native purpose and close/view actions without changing any coordinates or owned names
+  ---
+  duration_ms: 3.415993
+  type: 'test'
+  ...
+# Subtest: ts: actual map controls expose native purpose and close/view actions without changing any coordinates or owned names
+ok 101 - ts: actual map controls expose native purpose and close/view actions without changing any coordinates or owned names
+  ---
+  duration_ms: 3.415027
+  type: 'test'
+  ...
+# Subtest: ve: actual map controls expose native purpose and close/view actions without changing any coordinates or owned names
+ok 102 - ve: actual map controls expose native purpose and close/view actions without changing any coordinates or owned names
+  ---
+  duration_ms: 3.145205
+  type: 'test'
+  ...
+# Subtest: a pending report preserves the submitted reason, prevents duplicate writes and cannot clear a new conversation’s form
+ok 103 - a pending report preserves the submitted reason, prevents duplicate writes and cannot clear a new conversation’s form
+  ---
+  duration_ms: 5.80556
+  type: 'test'
+  ...
+# Subtest: pending board uploads/posts/actions keep native busy feedback and cannot submit duplicate operations
+ok 104 - pending board uploads/posts/actions keep native busy feedback and cannot submit duplicate operations
+  ---
+  duration_ms: 28.042855
+  type: 'test'
+  ...
+# Subtest: zu: the lazy nearby map announces loading without fetching its map runtime in Board or Messages
+ok 105 - zu: the lazy nearby map announces loading without fetching its map runtime in Board or Messages
+  ---
+  duration_ms: 6.250944
+  type: 'test'
+  ...
+# Subtest: st: the lazy nearby map announces loading without fetching its map runtime in Board or Messages
+ok 106 - st: the lazy nearby map announces loading without fetching its map runtime in Board or Messages
+  ---
+  duration_ms: 6.198645
+  type: 'test'
+  ...
+# Subtest: ts: the lazy nearby map announces loading without fetching its map runtime in Board or Messages
+ok 107 - ts: the lazy nearby map announces loading without fetching its map runtime in Board or Messages
+  ---
+  duration_ms: 5.771063
+  type: 'test'
+  ...
+# Subtest: ve: the lazy nearby map announces loading without fetching its map runtime in Board or Messages
+ok 108 - ve: the lazy nearby map announces loading without fetching its map runtime in Board or Messages
+  ---
+  duration_ms: 5.911382
+  type: 'test'
+  ...
+# Subtest: community release descriptions stay source-bound in four drafts and the visible guide retains its real destinations
+ok 109 - community release descriptions stay source-bound in four drafts and the visible guide retains its real destinations
+  ---
+  duration_ms: 31.21864
+  type: 'test'
+  ...
+# (node:4568) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/update-copy.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: member drafts bind original source and placeholders while exact prior locale bytes and unrelated learning changes remain visible
+ok 110 - member drafts bind original source and placeholders while exact prior locale bytes and unrelated learning changes remain visible
+  ---
+  duration_ms: 21.54793
+  type: 'test'
+  ...
+# Subtest: zu: actual public profile translates controls but preserves farmer identity, crop names, biography and photo data
+ok 111 - zu: actual public profile translates controls but preserves farmer identity, crop names, biography and photo data
+  ---
+  duration_ms: 80.20109
+  type: 'test'
+  ...
+# Subtest: st: actual public profile translates controls but preserves farmer identity, crop names, biography and photo data
+ok 112 - st: actual public profile translates controls but preserves farmer identity, crop names, biography and photo data
+  ---
+  duration_ms: 15.213158
+  type: 'test'
+  ...
+# Subtest: ts: actual public profile translates controls but preserves farmer identity, crop names, biography and photo data
+ok 113 - ts: actual public profile translates controls but preserves farmer identity, crop names, biography and photo data
+  ---
+  duration_ms: 8.4111
+  type: 'test'
+  ...
+# Subtest: ve: actual public profile translates controls but preserves farmer identity, crop names, biography and photo data
+ok 114 - ve: actual public profile translates controls but preserves farmer identity, crop names, biography and photo data
+  ---
+  duration_ms: 5.853383
+  type: 'test'
+  ...
+# Subtest: zu: missing records, failed reads and in-flight loads are distinct, retryable and safe across target changes
+ok 115 - zu: missing records, failed reads and in-flight loads are distinct, retryable and safe across target changes
+  ---
+  duration_ms: 13.567603
+  type: 'test'
+  ...
+# Subtest: st: missing records, failed reads and in-flight loads are distinct, retryable and safe across target changes
+ok 116 - st: missing records, failed reads and in-flight loads are distinct, retryable and safe across target changes
+  ---
+  duration_ms: 16.726426
+  type: 'test'
+  ...
+# Subtest: ts: missing records, failed reads and in-flight loads are distinct, retryable and safe across target changes
+ok 117 - ts: missing records, failed reads and in-flight loads are distinct, retryable and safe across target changes
+  ---
+  duration_ms: 12.643028
+  type: 'test'
+  ...
+# Subtest: ve: missing records, failed reads and in-flight loads are distinct, retryable and safe across target changes
+ok 118 - ve: missing records, failed reads and in-flight loads are distinct, retryable and safe across target changes
+  ---
+  duration_ms: 11.843597
+  type: 'test'
+  ...
+# Subtest: zu: report reason retains its 300-character boundary and trim, original identifiers, sent notice and two-second close
+ok 119 - zu: report reason retains its 300-character boundary and trim, original identifiers, sent notice and two-second close
+  ---
+  duration_ms: 8.263796
+  type: 'test'
+  ...
+# Subtest: st: report reason retains its 300-character boundary and trim, original identifiers, sent notice and two-second close
+ok 120 - st: report reason retains its 300-character boundary and trim, original identifiers, sent notice and two-second close
+  ---
+  duration_ms: 15.325666
+  type: 'test'
+  ...
+# Subtest: ts: report reason retains its 300-character boundary and trim, original identifiers, sent notice and two-second close
+ok 121 - ts: report reason retains its 300-character boundary and trim, original identifiers, sent notice and two-second close
+  ---
+  duration_ms: 15.206041
+  type: 'test'
+  ...
+# Subtest: ve: report reason retains its 300-character boundary and trim, original identifiers, sent notice and two-second close
+ok 122 - ve: report reason retains its 300-character boundary and trim, original identifiers, sent notice and two-second close
+  ---
+  duration_ms: 7.410415
+  type: 'test'
+  ...
+# Subtest: zu: conversation and moderation failures repaint without clearing report text or claiming a sent report
+ok 123 - zu: conversation and moderation failures repaint without clearing report text or claiming a sent report
+  ---
+  duration_ms: 23.569011
+  type: 'test'
+  ...
+# Subtest: st: conversation and moderation failures repaint without clearing report text or claiming a sent report
+ok 124 - st: conversation and moderation failures repaint without clearing report text or claiming a sent report
+  ---
+  duration_ms: 20.549062
+  type: 'test'
+  ...
+# Subtest: ts: conversation and moderation failures repaint without clearing report text or claiming a sent report
+ok 125 - ts: conversation and moderation failures repaint without clearing report text or claiming a sent report
+  ---
+  duration_ms: 21.263405
+  type: 'test'
+  ...
+# Subtest: ve: conversation and moderation failures repaint without clearing report text or claiming a sent report
+ok 126 - ve: conversation and moderation failures repaint without clearing report text or claiming a sent report
+  ---
+  duration_ms: 23.17738
+  type: 'test'
+  ...
+# Subtest: pending actions cannot duplicate messages/reports, own profiles have no self-contact, and Simple preserves its secondary disclosure
+ok 127 - pending actions cannot duplicate messages/reports, own profiles have no self-contact, and Simple preserves its secondary disclosure
+  ---
+  duration_ms: 53.294764
+  type: 'test'
+  ...
+# Subtest: the farmer profile release remains source-bound and native after later releases prepend
+ok 128 - the farmer profile release remains source-bound and native after later releases prepend
+  ---
+  duration_ms: 37.015841
+  type: 'test'
+  ...
+# (node:4576) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/release-notes.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: community drafts bind every source, figure, placeholder and prior locale byte, while catalogue identities stay exact
+ok 129 - community drafts bind every source, figure, placeholder and prior locale byte, while catalogue identities stay exact
+  ---
+  duration_ms: 22.716128
+  type: 'test'
+  ...
+# Subtest: zu: actual profile preserves owned text, source privacy clauses, original payload and save delay
+ok 130 - zu: actual profile preserves owned text, source privacy clauses, original payload and save delay
+  ---
+  duration_ms: 143.190854
+  type: 'test'
+  ...
+# Subtest: st: actual profile preserves owned text, source privacy clauses, original payload and save delay
+ok 131 - st: actual profile preserves owned text, source privacy clauses, original payload and save delay
+  ---
+  duration_ms: 24.266724
+  type: 'test'
+  ...
+# Subtest: ts: actual profile preserves owned text, source privacy clauses, original payload and save delay
+ok 132 - ts: actual profile preserves owned text, source privacy clauses, original payload and save delay
+  ---
+  duration_ms: 27.584707
+  type: 'test'
+  ...
+# Subtest: ve: actual profile preserves owned text, source privacy clauses, original payload and save delay
+ok 133 - ve: actual profile preserves owned text, source privacy clauses, original payload and save delay
+  ---
+  duration_ms: 38.277529
+  type: 'test'
+  ...
+# Subtest: an explicit empty name keeps the original canonical fallback, and the existing bio limit changes no characters before its boundary
+ok 134 - an explicit empty name keeps the original canonical fallback, and the existing bio limit changes no characters before its boundary
+  ---
+  duration_ms: 14.638937
+  type: 'test'
+  ...
+# Subtest: zu: failed reads offer retry instead of an empty saveable profile; obsolete reads cannot fill a later owner
+ok 135 - zu: failed reads offer retry instead of an empty saveable profile; obsolete reads cannot fill a later owner
+  ---
+  duration_ms: 20.700485
+  type: 'test'
+  ...
+# Subtest: st: failed reads offer retry instead of an empty saveable profile; obsolete reads cannot fill a later owner
+ok 136 - st: failed reads offer retry instead of an empty saveable profile; obsolete reads cannot fill a later owner
+  ---
+  duration_ms: 19.001174
+  type: 'test'
+  ...
+# Subtest: ts: failed reads offer retry instead of an empty saveable profile; obsolete reads cannot fill a later owner
+ok 137 - ts: failed reads offer retry instead of an empty saveable profile; obsolete reads cannot fill a later owner
+  ---
+  duration_ms: 12.229589
+  type: 'test'
+  ...
+# Subtest: ve: failed reads offer retry instead of an empty saveable profile; obsolete reads cannot fill a later owner
+ok 138 - ve: failed reads offer retry instead of an empty saveable profile; obsolete reads cannot fill a later owner
+  ---
+  duration_ms: 20.885141
+  type: 'test'
+  ...
+# Subtest: zu: map opt-in, original coarse coordinates, failed-location off state and retained draft all survive language changes
+ok 139 - zu: map opt-in, original coarse coordinates, failed-location off state and retained draft all survive language changes
+  ---
+  duration_ms: 24.838101
+  type: 'test'
+  ...
+# Subtest: st: map opt-in, original coarse coordinates, failed-location off state and retained draft all survive language changes
+ok 140 - st: map opt-in, original coarse coordinates, failed-location off state and retained draft all survive language changes
+  ---
+  duration_ms: 21.503512
+  type: 'test'
+  ...
+# Subtest: ts: map opt-in, original coarse coordinates, failed-location off state and retained draft all survive language changes
+ok 141 - ts: map opt-in, original coarse coordinates, failed-location off state and retained draft all survive language changes
+  ---
+  duration_ms: 28.238105
+  type: 'test'
+  ...
+# Subtest: ve: map opt-in, original coarse coordinates, failed-location off state and retained draft all survive language changes
+ok 142 - ve: map opt-in, original coarse coordinates, failed-location off state and retained draft all survive language changes
+  ---
+  duration_ms: 19.896065
+  type: 'test'
+  ...
+# Subtest: zu: photo actions expose native names but retain the same resize/upload/delete identities and four-photo limit
+ok 143 - zu: photo actions expose native names but retain the same resize/upload/delete identities and four-photo limit
+  ---
+  duration_ms: 21.518767
+  type: 'test'
+  ...
+# Subtest: st: photo actions expose native names but retain the same resize/upload/delete identities and four-photo limit
+ok 144 - st: photo actions expose native names but retain the same resize/upload/delete identities and four-photo limit
+  ---
+  duration_ms: 29.057255
+  type: 'test'
+  ...
+# Subtest: ts: photo actions expose native names but retain the same resize/upload/delete identities and four-photo limit
+ok 145 - ts: photo actions expose native names but retain the same resize/upload/delete identities and four-photo limit
+  ---
+  duration_ms: 20.326822
+  type: 'test'
+  ...
+# Subtest: ve: photo actions expose native names but retain the same resize/upload/delete identities and four-photo limit
+ok 146 - ve: photo actions expose native names but retain the same resize/upload/delete identities and four-photo limit
+  ---
+  duration_ms: 19.302969
+  type: 'test'
+  ...
+# Subtest: photo failures/null URLs and profile-save failures have native feedback without clearing owned fields
+ok 147 - photo failures/null URLs and profile-save failures have native feedback without clearing owned fields
+  ---
+  duration_ms: 28.310603
+  type: 'test'
+  ...
+# Subtest: zu: real source-paired destructive confirmation preserves cancellation, focus, delete identity and destination
+ok 148 - zu: real source-paired destructive confirmation preserves cancellation, focus, delete identity and destination
+  ---
+  duration_ms: 7.387214
+  type: 'test'
+  ...
+# Subtest: st: real source-paired destructive confirmation preserves cancellation, focus, delete identity and destination
+ok 149 - st: real source-paired destructive confirmation preserves cancellation, focus, delete identity and destination
+  ---
+  duration_ms: 9.596032
+  type: 'test'
+  ...
+# Subtest: ts: real source-paired destructive confirmation preserves cancellation, focus, delete identity and destination
+ok 150 - ts: real source-paired destructive confirmation preserves cancellation, focus, delete identity and destination
+  ---
+  duration_ms: 5.484456
+  type: 'test'
+  ...
+# Subtest: ve: real source-paired destructive confirmation preserves cancellation, focus, delete identity and destination
+ok 151 - ve: real source-paired destructive confirmation preserves cancellation, focus, delete identity and destination
+  ---
+  duration_ms: 11.225327
+  type: 'test'
+  ...
+# Subtest: failed and pending deletion retain the profile instead of claiming a completed deletion
+ok 152 - failed and pending deletion retain the profile instead of claiming a completed deletion
+  ---
+  duration_ms: 16.732943
+  type: 'test'
+  ...
+# Subtest: Simple keeps selected catalogue identities visible, and original feature/auth redirects remain
+ok 153 - Simple keeps selected catalogue identities visible, and original feature/auth redirects remain
+  ---
+  duration_ms: 14.922168
+  type: 'test'
+  ...
+# Subtest: the community profile release keeps its exact source and four native draft descriptions
+ok 154 - the community profile release keeps its exact source and four native draft descriptions
+  ---
+  duration_ms: 30.121049
+  type: 'test'
+  ...
+# Subtest: zu: an outstanding photo upload announces native progress and cannot offer another photo yet
+ok 155 - zu: an outstanding photo upload announces native progress and cannot offer another photo yet
+  ---
+  duration_ms: 7.819664
+  type: 'test'
+  ...
+# Subtest: st: an outstanding photo upload announces native progress and cannot offer another photo yet
+ok 156 - st: an outstanding photo upload announces native progress and cannot offer another photo yet
+  ---
+  duration_ms: 6.628485
+  type: 'test'
+  ...
+# Subtest: ts: an outstanding photo upload announces native progress and cannot offer another photo yet
+ok 157 - ts: an outstanding photo upload announces native progress and cannot offer another photo yet
+  ---
+  duration_ms: 9.61418
+  type: 'test'
+  ...
+# Subtest: ve: an outstanding photo upload announces native progress and cannot offer another photo yet
+ok 158 - ve: an outstanding photo upload announces native progress and cannot offer another photo yet
+  ---
+  duration_ms: 6.412117
+  type: 'test'
+  ...
+# (node:4584) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/update-tour.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: an important update demonstrates the feature and lets the reader pause and replay it
+ok 159 - an important update demonstrates the feature and lets the reader pause and replay it
+  ---
+  duration_ms: 109.551656
+  type: 'test'
+  ...
+# Subtest: routine updates do not acquire a demonstration and reduced motion has a complete still frame
+ok 160 - routine updates do not acquire a demonstration and reduced motion has a complete still frame
+  ---
+  duration_ms: 4.62113
+  type: 'test'
+  ...
+# Subtest: acknowledging a feature keeps offers quiet, while history opens the current guide
+ok 161 - acknowledging a feature keeps offers quiet, while history opens the current guide
+  ---
+  duration_ms: 4.5464
+  type: 'test'
+  ...
+# Subtest: history uses routine or important current releases instead of replaying an acknowledged saved stop
+ok 162 - history uses routine or important current releases instead of replaying an acknowledged saved stop
+  ---
+  duration_ms: 6.297273
+  type: 'test'
+  ...
+# Subtest: the mounted guide recognizes /farmer?panel=Ask only after the required panel is selected
+ok 163 - the mounted guide recognizes /farmer?panel=Ask only after the required panel is selected
+  ---
+  duration_ms: 5.101472
+  type: 'test'
+  ...
+# Subtest: the mounted guide recognizes /records?tab=sold only after the required panel is selected
+ok 164 - the mounted guide recognizes /records?tab=sold only after the required panel is selected
+  ---
+  duration_ms: 3.336179
+  type: 'test'
+  ...
+# Subtest: acknowledging a feature keeps later update offers quiet, while the history can reopen it
+ok 165 - acknowledging a feature keeps later update offers quiet, while the history can reopen it
+  ---
+  duration_ms: 2.53037
+  type: 'test'
+  ...
+# Subtest: current announcements govern history and refresh before and after an explicit archived guide fixture
+ok 166 - current announcements govern history and refresh before and after an explicit archived guide fixture
+  ---
+  duration_ms: 64.239594
+  type: 'test'
+  ...
+# Subtest: an explicit empty guide cannot fall through to an available archived assistant demonstration
+ok 167 - an explicit empty guide cannot fall through to an available archived assistant demonstration
+  ---
+  duration_ms: 1.43648
+  type: 'test'
+  ...
+# (node:4592) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/international/locales/mass-entry-review-server.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual Next 14 config accepts a narrowly traced mass-review data/source bundle that the real loader can read
+ok 168 - actual Next 14 config accepts a narrowly traced mass-review data/source bundle that the real loader can read
+  ---
+  duration_ms: 155.017153
+  type: 'test'
+  ...
+# Subtest: removing actual tracing includes reproduces missing runtime English and packets instead of falling back to the frozen source
+ok 169 - removing actual tracing includes reproduces missing runtime English and packets instead of falling back to the frozen source
+  ---
+  duration_ms: 1.241223
+  type: 'test'
+  ...
+# Subtest: an omitted traced components/crops/GrowerCycleIntent.ts remains visibly unknown rather than borrowing a frozen/runtime dictionary
+ok 170 - an omitted traced components/crops/GrowerCycleIntent.ts remains visibly unknown rather than borrowing a frozen/runtime dictionary
+  ---
+  duration_ms: 50.203185
+  type: 'test'
+  ...
+# Subtest: an omitted traced components/crops/GrowerEnteredMassField.ts remains visibly unknown rather than borrowing a frozen/runtime dictionary
+ok 171 - an omitted traced components/crops/GrowerEnteredMassField.ts remains visibly unknown rather than borrowing a frozen/runtime dictionary
+  ---
+  duration_ms: 35.006998
+  type: 'test'
+  ...
+# Subtest: an omitted traced lib/international/grower-cycle-intent.ts remains visibly unknown rather than borrowing a frozen/runtime dictionary
+ok 172 - an omitted traced lib/international/grower-cycle-intent.ts remains visibly unknown rather than borrowing a frozen/runtime dictionary
+  ---
+  duration_ms: 61.875561
+  type: 'test'
+  ...
+# Subtest: an omitted traced lib/international/locales/mass-entry-drafts/bn.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+ok 173 - an omitted traced lib/international/locales/mass-entry-drafts/bn.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+  ---
+  duration_ms: 53.981143
+  type: 'test'
+  ...
+# Subtest: an omitted traced lib/international/locales/mass-entry-drafts/es.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+ok 174 - an omitted traced lib/international/locales/mass-entry-drafts/es.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+  ---
+  duration_ms: 45.99994
+  type: 'test'
+  ...
+# Subtest: an omitted traced lib/international/locales/mass-entry-drafts/fr.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+ok 175 - an omitted traced lib/international/locales/mass-entry-drafts/fr.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+  ---
+  duration_ms: 42.230441
+  type: 'test'
+  ...
+# Subtest: an omitted traced lib/international/locales/mass-entry-drafts/hi.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+ok 176 - an omitted traced lib/international/locales/mass-entry-drafts/hi.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+  ---
+  duration_ms: 31.927733
+  type: 'test'
+  ...
+# Subtest: an omitted traced lib/international/locales/mass-entry-drafts/id.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+ok 177 - an omitted traced lib/international/locales/mass-entry-drafts/id.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+  ---
+  duration_ms: 34.106828
+  type: 'test'
+  ...
+# Subtest: an omitted traced lib/international/locales/mass-entry-drafts/pt-BR.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+ok 178 - an omitted traced lib/international/locales/mass-entry-drafts/pt-BR.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+  ---
+  duration_ms: 33.221303
+  type: 'test'
+  ...
+# Subtest: an omitted traced lib/international/locales/mass-entry-drafts/source.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+ok 179 - an omitted traced lib/international/locales/mass-entry-drafts/source.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+  ---
+  duration_ms: 12.249532
+  type: 'test'
+  ...
+# Subtest: an omitted traced lib/international/locales/mass-entry-drafts/sw.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+ok 180 - an omitted traced lib/international/locales/mass-entry-drafts/sw.json remains visibly unknown rather than borrowing a frozen/runtime dictionary
+  ---
+  duration_ms: 41.789284
+  type: 'test'
+  ...
+# Subtest: an omitted traced lib/release-notes.ts remains visibly unknown rather than borrowing a frozen/runtime dictionary
+ok 181 - an omitted traced lib/release-notes.ts remains visibly unknown rather than borrowing a frozen/runtime dictionary
+  ---
+  duration_ms: 28.73534
+  type: 'test'
+  ...
+# Subtest: mass-review assets are not additionally bundled for unrelated app/international/locales/nursery-field-planting/page
+ok 182 - mass-review assets are not additionally bundled for unrelated app/international/locales/nursery-field-planting/page
+  ---
+  duration_ms: 0.524524
+  type: 'test'
+  ...
+# Subtest: mass-review assets are not additionally bundled for unrelated app/facilitator/crops/page
+ok 183 - mass-review assets are not additionally bundled for unrelated app/facilitator/crops/page
+  ---
+  duration_ms: 0.112062
+  type: 'test'
+  ...
+# Subtest: the worksheet registers its existing in-flow return once and releases it on unmount
+ok 184 - the worksheet registers its existing in-flow return once and releases it on unmount
+  ---
+  duration_ms: 14.762259
+  type: 'test'
+  ...
+# Subtest: the original four inactive comparisons remain usable in the seven-language chooser without runtime imports or approval
+ok 185 - the original four inactive comparisons remain usable in the seven-language chooser without runtime imports or approval
+  ---
+  duration_ms: 18.245174
+  type: 'test'
+  ...
+# Subtest: Hindi, Bengali and Indonesian compare their own inactive rows without changing app settings or approvals
+ok 186 - Hindi, Bengali and Indonesian compare their own inactive rows without changing app settings or approvals
+  ---
+  duration_ms: 13.905056
+  type: 'test'
+  ...
+# Subtest: source states and frozen/current differences remain visible instead of painting old wording as current
+ok 187 - source states and frozen/current differences remain visible instead of painting old wording as current
+  ---
+  duration_ms: 10.974603
+  type: 'test'
+  ...
+# Subtest: a structurally valid draft with a source-context warning still counts as needing attention
+ok 188 - a structurally valid draft with a source-context warning still counts as needing attention
+  ---
+  duration_ms: 8.831217
+  type: 'test'
+  ...
+# Subtest: invalid language text remains visibly invalid without withdrawing an independent draft language
+ok 189 - invalid language text remains visibly invalid without withdrawing an independent draft language
+  ---
+  duration_ms: 8.447651
+  type: 'test'
+  ...
+# Subtest: a frozen-source failure or absent comparison shows its supplied problem without invented rows
+ok 190 - a frozen-source failure or absent comparison shows its supplied problem without invented rows
+  ---
+  duration_ms: 1.748618
+  type: 'test'
+  ...
+# Subtest: search matches key, actual English and selected draft text, with an explicit zero-match result and no mutation
+ok 191 - search matches key, actual English and selected draft text, with an explicit zero-match result and no mutation
+  ---
+  duration_ms: 36.291496
+  type: 'test'
+  ...
+# Subtest: a later source failure replaces earlier success while retaining a clearly labelled frozen snapshot
+ok 192 - a later source failure replaces earlier success while retaining a clearly labelled frozen snapshot
+  ---
+  duration_ms: 6.023746
+  type: 'test'
+  ...
+# Subtest: hostile draft strings remain isolated text with no forms, save controls or executable markup
+ok 193 - hostile draft strings remain isolated text with no forms, save controls or executable markup
+  ---
+  duration_ms: 6.814061
+  type: 'test'
+  ...
+# (node:4612) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/international/locales/mass-entry-review.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the actual mass sources retain 84 unreviewed pairs while seven changed non-summing sentences remain stale
+ok 194 - the actual mass sources retain 84 unreviewed pairs while seven changed non-summing sentences remain stale
+  ---
+  duration_ms: 179.593756
+  type: 'test'
+  ...
+# Subtest: the named server loader reads actual current source and packet files rather than treating frozen English as live input
+ok 195 - the named server loader reads actual current source and packet files rather than treating frozen English as live input
+  ---
+  duration_ms: 109.480231
+  type: 'test'
+  ...
+# Subtest: relocated current wording retains historical component provenance without inventing a presenter capture
+ok 196 - relocated current wording retains historical component provenance without inventing a presenter capture
+  ---
+  duration_ms: 43.472711
+  type: 'test'
+  ...
+# Subtest: missing-import component delegation cannot certify shared presenter wording
+ok 197 - missing-import component delegation cannot certify shared presenter wording
+  ---
+  duration_ms: 27.103421
+  type: 'test'
+  ...
+# Subtest: wrong-call component delegation cannot certify shared presenter wording
+ok 198 - wrong-call component delegation cannot certify shared presenter wording
+  ---
+  duration_ms: 28.470859
+  type: 'test'
+  ...
+# Subtest: wrong-argument component delegation cannot certify shared presenter wording
+ok 199 - wrong-argument component delegation cannot certify shared presenter wording
+  ---
+  duration_ms: 26.600227
+  type: 'test'
+  ...
+# Subtest: unused-result component delegation cannot certify shared presenter wording
+ok 200 - unused-result component delegation cannot certify shared presenter wording
+  ---
+  duration_ms: 20.061318
+  type: 'test'
+  ...
+# Subtest: missing-render component delegation cannot certify shared presenter wording
+ok 201 - missing-render component delegation cannot certify shared presenter wording
+  ---
+  duration_ms: 19.579125
+  type: 'test'
+  ...
+# Subtest: dynamic-render component delegation cannot certify shared presenter wording
+ok 202 - dynamic-render component delegation cannot certify shared presenter wording
+  ---
+  duration_ms: 24.447102
+  type: 'test'
+  ...
+# Subtest: syntax-error component delegation cannot certify shared presenter wording
+ok 203 - syntax-error component delegation cannot certify shared presenter wording
+  ---
+  duration_ms: 39.331374
+  type: 'test'
+  ...
+# Subtest: comment cannot substitute for the presenter's actual buyer-purpose literal
+ok 204 - comment cannot substitute for the presenter's actual buyer-purpose literal
+  ---
+  duration_ms: 35.928724
+  type: 'test'
+  ...
+# Subtest: unrelated-function cannot substitute for the presenter's actual buyer-purpose literal
+ok 205 - unrelated-function cannot substitute for the presenter's actual buyer-purpose literal
+  ---
+  duration_ms: 31.15233
+  type: 'test'
+  ...
+# Subtest: nested-helper cannot substitute for the presenter's actual buyer-purpose literal
+ok 206 - nested-helper cannot substitute for the presenter's actual buyer-purpose literal
+  ---
+  duration_ms: 33.432657
+  type: 'test'
+  ...
+# Subtest: nested-arrow cannot substitute for the presenter's actual buyer-purpose literal
+ok 207 - nested-arrow cannot substitute for the presenter's actual buyer-purpose literal
+  ---
+  duration_ms: 34.31385
+  type: 'test'
+  ...
+# Subtest: dynamic-template cannot substitute for the presenter's actual buyer-purpose literal
+ok 208 - dynamic-template cannot substitute for the presenter's actual buyer-purpose literal
+  ---
+  duration_ms: 30.317666
+  type: 'test'
+  ...
+# Subtest: actual changed presenter literals are exposed as current English rather than substituted from frozen packets
+ok 209 - actual changed presenter literals are exposed as current English rather than substituted from frozen packets
+  ---
+  duration_ms: 35.629331
+  type: 'test'
+  ...
+# Subtest: wrong-branch presenter cannot choose an arbitrary purposeUnknown literal
+ok 210 - wrong-branch presenter cannot choose an arbitrary purposeUnknown literal
+  ---
+  duration_ms: 28.398404
+  type: 'test'
+  ...
+# Subtest: duplicate-branch presenter cannot choose an arbitrary purposeUnknown literal
+ok 211 - duplicate-branch presenter cannot choose an arbitrary purposeUnknown literal
+  ---
+  duration_ms: 29.871153
+  type: 'test'
+  ...
+# Subtest: unexported-owner presenter cannot choose an arbitrary purposeUnknown literal
+ok 212 - unexported-owner presenter cannot choose an arbitrary purposeUnknown literal
+  ---
+  duration_ms: 46.910585
+  type: 'test'
+  ...
+# Subtest: duplicate-owner presenter cannot choose an arbitrary purposeUnknown literal
+ok 213 - duplicate-owner presenter cannot choose an arbitrary purposeUnknown literal
+  ---
+  duration_ms: 35.334526
+  type: 'test'
+  ...
+# Subtest: dynamic-array presenter cannot choose an arbitrary purposeUnknown literal
+ok 214 - dynamic-array presenter cannot choose an arbitrary purposeUnknown literal
+  ---
+  duration_ms: 43.542188
+  type: 'test'
+  ...
+# Subtest: conditional missing-entry and missing-request roles cannot borrow old wording from unrelated pushes
+ok 215 - conditional missing-entry and missing-request roles cannot borrow old wording from unrelated pushes
+  ---
+  duration_ms: 65.24441
+  type: 'test'
+  ...
+# Subtest: duplicate or dynamic canonical push arguments cannot retain current-English status through another literal
+ok 216 - duplicate or dynamic canonical push arguments cannot retain current-English status through another literal
+  ---
+  duration_ms: 154.565562
+  type: 'test'
+  ...
+# Subtest: missing actual components/crops/GrowerEnteredMassField.ts withdraws only its current English instead of borrowing the frozen snapshot
+ok 217 - missing actual components/crops/GrowerEnteredMassField.ts withdraws only its current English instead of borrowing the frozen snapshot
+  ---
+  duration_ms: 47.027335
+  type: 'test'
+  ...
+# Subtest: missing actual components/crops/GrowerCycleIntent.ts withdraws only its current English instead of borrowing the frozen snapshot
+ok 218 - missing actual components/crops/GrowerCycleIntent.ts withdraws only its current English instead of borrowing the frozen snapshot
+  ---
+  duration_ms: 29.256007
+  type: 'test'
+  ...
+# Subtest: missing actual lib/international/grower-cycle-intent.ts withdraws only its current English instead of borrowing the frozen snapshot
+ok 219 - missing actual lib/international/grower-cycle-intent.ts withdraws only its current English instead of borrowing the frozen snapshot
+  ---
+  duration_ms: 32.134633
+  type: 'test'
+  ...
+# Subtest: missing actual lib/release-notes.ts withdraws only its current English instead of borrowing the frozen snapshot
+ok 220 - missing actual lib/release-notes.ts withdraws only its current English instead of borrowing the frozen snapshot
+  ---
+  duration_ms: 16.868728
+  type: 'test'
+  ...
+# Subtest: actual changed literal is returned as current English and marks its frozen translation stale
+ok 221 - actual changed literal is returned as current English and marks its frozen translation stale
+  ---
+  duration_ms: 31.459843
+  type: 'test'
+  ...
+# Subtest: the held-unit callback is read independently of the identical fallback wording elsewhere in the render
+ok 222 - the held-unit callback is read independently of the identical fallback wording elsewhere in the render
+  ---
+  duration_ms: 86.054837
+  type: 'test'
+  ...
+# Subtest: a changed component context remains visible even when its precisely identified literals are unchanged
+ok 223 - a changed component context remains visible even when its precisely identified literals are unchanged
+  ---
+  duration_ms: 29.411212
+  type: 'test'
+  ...
+# Subtest: comment wording cannot stand in for the current option literal
+ok 224 - comment wording cannot stand in for the current option literal
+  ---
+  duration_ms: 26.144532
+  type: 'test'
+  ...
+# Subtest: substring wording cannot stand in for the current option literal
+ok 225 - substring wording cannot stand in for the current option literal
+  ---
+  duration_ms: 29.571696
+  type: 'test'
+  ...
+# Subtest: unrelated-function wording cannot stand in for the current option literal
+ok 226 - unrelated-function wording cannot stand in for the current option literal
+  ---
+  duration_ms: 30.726844
+  type: 'test'
+  ...
+# Subtest: variable-reference wording cannot stand in for the current option literal
+ok 227 - variable-reference wording cannot stand in for the current option literal
+  ---
+  duration_ms: 32.200498
+  type: 'test'
+  ...
+# Subtest: syntax-error cannot choose an arbitrary source match
+ok 228 - syntax-error cannot choose an arbitrary source match
+  ---
+  duration_ms: 26.596194
+  type: 'test'
+  ...
+# Subtest: duplicate-owner cannot choose an arbitrary source match
+ok 229 - duplicate-owner cannot choose an arbitrary source match
+  ---
+  duration_ms: 22.841032
+  type: 'test'
+  ...
+# Subtest: extra-option cannot choose an arbitrary source match
+ok 230 - extra-option cannot choose an arbitrary source match
+  ---
+  duration_ms: 29.96906
+  type: 'test'
+  ...
+# Subtest: unused nested declaration text cannot replace the literal in the actual rendered mass option
+ok 231 - unused nested declaration text cannot replace the literal in the actual rendered mass option
+  ---
+  duration_ms: 26.997181
+  type: 'test'
+  ...
+# Subtest: unused nested arrow text cannot replace the literal in the actual rendered mass option
+ok 232 - unused nested arrow text cannot replace the literal in the actual rendered mass option
+  ---
+  duration_ms: 28.770877
+  type: 'test'
+  ...
+# Subtest: unused nested unused-call text cannot replace the literal in the actual rendered mass option
+ok 233 - unused nested unused-call text cannot replace the literal in the actual rendered mass option
+  ---
+  duration_ms: 31.529385
+  type: 'test'
+  ...
+# Subtest: unrelated component text cannot certify a missing source even if it contains every frozen phrase
+ok 234 - unrelated component text cannot certify a missing source even if it contains every frozen phrase
+  ---
+  duration_ms: 21.407875
+  type: 'test'
+  ...
+# Subtest: release metadata drift does not invalidate the independently located household tour route
+ok 235 - release metadata drift does not invalidate the independently located household tour route
+  ---
+  duration_ms: 28.639847
+  type: 'test'
+  ...
+# Subtest: the unrelated buyer-unit tour cannot replace a missing household tour anchor
+ok 236 - the unrelated buyer-unit tour cannot replace a missing household tour anchor
+  ---
+  duration_ms: 31.095747
+  type: 'test'
+  ...
+# Subtest: duplicate independently anchored household tours cannot choose their first route as a winner
+ok 237 - duplicate independently anchored household tours cannot choose their first route as a winner
+  ---
+  duration_ms: 32.052152
+  type: 'test'
+  ...
+# Subtest: the actual household route is read independently when its where literal changes
+ok 238 - the actual household route is read independently when its where literal changes
+  ---
+  duration_ms: 33.341284
+  type: 'test'
+  ...
+# Subtest: missing frozen input cannot certify its own replacement English
+ok 239 - missing frozen input cannot certify its own replacement English
+  ---
+  duration_ms: 2.59541
+  type: 'test'
+  ...
+# Subtest: malformed frozen input cannot certify its own replacement English
+ok 240 - malformed frozen input cannot certify its own replacement English
+  ---
+  duration_ms: 2.164419
+  type: 'test'
+  ...
+# Subtest: changed-English frozen input cannot certify its own replacement English
+ok 241 - changed-English frozen input cannot certify its own replacement English
+  ---
+  duration_ms: 3.053094
+  type: 'test'
+  ...
+# Subtest: reformatted frozen input cannot certify its own replacement English
+ok 242 - reformatted frozen input cannot certify its own replacement English
+  ---
+  duration_ms: 2.088012
+  type: 'test'
+  ...
+# Subtest: duplicate-JSON-member frozen input cannot certify its own replacement English
+ok 243 - duplicate-JSON-member frozen input cannot certify its own replacement English
+  ---
+  duration_ms: 2.254756
+  type: 'test'
+  ...
+# Subtest: duplicate row key holds the whole affected language without granting reviewed coverage
+ok 244 - duplicate row key holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 32.377402
+  type: 'test'
+  ...
+# Subtest: reordered rows holds the whole affected language without granting reviewed coverage
+ok 245 - reordered rows holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 26.833937
+  type: 'test'
+  ...
+# Subtest: missing row holds the whole affected language without granting reviewed coverage
+ok 246 - missing row holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 24.720803
+  type: 'test'
+  ...
+# Subtest: extra row holds the whole affected language without granting reviewed coverage
+ok 247 - extra row holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 24.753009
+  type: 'test'
+  ...
+# Subtest: changed English and recomputed message hash holds the whole affected language without granting reviewed coverage
+ok 248 - changed English and recomputed message hash holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 26.824051
+  type: 'test'
+  ...
+# Subtest: wrong message hash holds the whole affected language without granting reviewed coverage
+ok 249 - wrong message hash holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 24.437081
+  type: 'test'
+  ...
+# Subtest: wrong source hash holds the whole affected language without granting reviewed coverage
+ok 250 - wrong source hash holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 25.639994
+  type: 'test'
+  ...
+# Subtest: wrong locale holds the whole affected language without granting reviewed coverage
+ok 251 - wrong locale holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 27.763543
+  type: 'test'
+  ...
+# Subtest: wrong schema key holds the whole affected language without granting reviewed coverage
+ok 252 - wrong schema key holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 30.835781
+  type: 'test'
+  ...
+# Subtest: status alias holds the whole affected language without granting reviewed coverage
+ok 253 - status alias holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 33.298429
+  type: 'test'
+  ...
+# Subtest: runtime activation holds the whole affected language without granting reviewed coverage
+ok 254 - runtime activation holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 24.271667
+  type: 'test'
+  ...
+# Subtest: claimed human review holds the whole affected language without granting reviewed coverage
+ok 255 - claimed human review holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 26.858684
+  type: 'test'
+  ...
+# Subtest: extra packet review holds the whole affected language without granting reviewed coverage
+ok 256 - extra packet review holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 27.467042
+  type: 'test'
+  ...
+# Subtest: extra row review holds the whole affected language without granting reviewed coverage
+ok 257 - extra row review holds the whole affected language without granting reviewed coverage
+  ---
+  duration_ms: 25.858324
+  type: 'test'
+  ...
+# Subtest: missing packet stays visibly invalid while another language remains a draft
+ok 258 - missing packet stays visibly invalid while another language remains a draft
+  ---
+  duration_ms: 27.024634
+  type: 'test'
+  ...
+# Subtest: malformed packet stays visibly invalid while another language remains a draft
+ok 259 - malformed packet stays visibly invalid while another language remains a draft
+  ---
+  duration_ms: 23.810923
+  type: 'test'
+  ...
+# Subtest: array packet stays visibly invalid while another language remains a draft
+ok 260 - array packet stays visibly invalid while another language remains a draft
+  ---
+  duration_ms: 28.597488
+  type: 'test'
+  ...
+# Subtest: duplicate JSON member packet stays visibly invalid while another language remains a draft
+ok 261 - duplicate JSON member packet stays visibly invalid while another language remains a draft
+  ---
+  duration_ms: 28.516189
+  type: 'test'
+  ...
+# Subtest: generic Portuguese neither replaces nor renames the Brazilian Portuguese packet
+ok 262 - generic Portuguese neither replaces nor renames the Brazilian Portuguese packet
+  ---
+  duration_ms: 52.539657
+  type: 'test'
+  ...
+# Subtest: remove protected kg cannot change unit, approximation or route meaning
+ok 263 - remove protected kg cannot change unit, approximation or route meaning
+  ---
+  duration_ms: 27.218844
+  type: 'test'
+  ...
+# Subtest: duplicate protected kg cannot change unit, approximation or route meaning
+ok 264 - duplicate protected kg cannot change unit, approximation or route meaning
+  ---
+  duration_ms: 34.351187
+  type: 'test'
+  ...
+# Subtest: remove protected lb cannot change unit, approximation or route meaning
+ok 265 - remove protected lb cannot change unit, approximation or route meaning
+  ---
+  duration_ms: 46.488912
+  type: 'test'
+  ...
+# Subtest: duplicate protected lb cannot change unit, approximation or route meaning
+ok 266 - duplicate protected lb cannot change unit, approximation or route meaning
+  ---
+  duration_ms: 44.048624
+  type: 'test'
+  ...
+# Subtest: remove protected ≈ cannot change unit, approximation or route meaning
+ok 267 - remove protected ≈ cannot change unit, approximation or route meaning
+  ---
+  duration_ms: 23.931251
+  type: 'test'
+  ...
+# Subtest: duplicate protected ≈ cannot change unit, approximation or route meaning
+ok 268 - duplicate protected ≈ cannot change unit, approximation or route meaning
+  ---
+  duration_ms: 25.578763
+  type: 'test'
+  ...
+# Subtest: remove protected → cannot change unit, approximation or route meaning
+ok 269 - remove protected → cannot change unit, approximation or route meaning
+  ---
+  duration_ms: 24.625864
+  type: 'test'
+  ...
+# Subtest: duplicate protected → cannot change unit, approximation or route meaning
+ok 270 - duplicate protected → cannot change unit, approximation or route meaning
+  ---
+  duration_ms: 29.087791
+  type: 'test'
+  ...
+# Subtest: blank or interpolated draft "" stays invalid without human-review promotion
+ok 271 - blank or interpolated draft "" stays invalid without human-review promotion
+  ---
+  duration_ms: 26.877668
+  type: 'test'
+  ...
+# Subtest: blank or interpolated draft "   " stays invalid without human-review promotion
+ok 272 - blank or interpolated draft "   " stays invalid without human-review promotion
+  ---
+  duration_ms: 22.477518
+  type: 'test'
+  ...
+# Subtest: blank or interpolated draft "Synthetic {crop}" stays invalid without human-review promotion
+ok 273 - blank or interpolated draft "Synthetic {crop}" stays invalid without human-review promotion
+  ---
+  duration_ms: 25.506277
+  type: 'test'
+  ...
+# Subtest: blank or interpolated draft "Synthetic {" stays invalid without human-review promotion
+ok 274 - blank or interpolated draft "Synthetic {" stays invalid without human-review promotion
+  ---
+  duration_ms: 34.364858
+  type: 'test'
+  ...
+# Subtest: blank or interpolated draft "Synthetic }" stays invalid without human-review promotion
+ok 275 - blank or interpolated draft "Synthetic }" stays invalid without human-review promotion
+  ---
+  duration_ms: 27.922879
+  type: 'test'
+  ...
+# Subtest: blank or interpolated draft "Synthetic {{crop}}" stays invalid without human-review promotion
+ok 276 - blank or interpolated draft "Synthetic {{crop}}" stays invalid without human-review promotion
+  ---
+  duration_ms: 25.98635
+  type: 'test'
+  ...
+# (node:4620) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/page-titles.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: every recorded static title keeps its exact English server source, and all native drafts bind those identities
+ok 277 - every recorded static title keeps its exact English server source, and all native drafts bind those identities
+  ---
+  duration_ms: 367.137693
+  type: 'test'
+  ...
+# Subtest: unknown or private titles are never interpreted as templates, while only the last owned output can be restored
+ok 278 - unknown or private titles are never interpreted as templates, while only the last owned output can be restored
+  ---
+  duration_ms: 0.363027
+  type: 'test'
+  ...
+# Subtest: zu: the actual lifecycle handles server title replacement, native language changes and its own mutation without looping
+ok 279 - zu: the actual lifecycle handles server title replacement, native language changes and its own mutation without looping
+  ---
+  duration_ms: 21.529035
+  type: 'test'
+  ...
+# Subtest: st: the actual lifecycle handles server title replacement, native language changes and its own mutation without looping
+ok 280 - st: the actual lifecycle handles server title replacement, native language changes and its own mutation without looping
+  ---
+  duration_ms: 2.077748
+  type: 'test'
+  ...
+# Subtest: ts: the actual lifecycle handles server title replacement, native language changes and its own mutation without looping
+ok 281 - ts: the actual lifecycle handles server title replacement, native language changes and its own mutation without looping
+  ---
+  duration_ms: 1.424663
+  type: 'test'
+  ...
+# Subtest: ve: the actual lifecycle handles server title replacement, native language changes and its own mutation without looping
+ok 282 - ve: the actual lifecycle handles server title replacement, native language changes and its own mutation without looping
+  ---
+  duration_ms: 1.397171
+  type: 'test'
+  ...
+# Subtest: a late dictionary chunk repaints the current source while delayed navigation metadata remains authoritative
+ok 283 - a late dictionary chunk repaints the current source while delayed navigation metadata remains authoritative
+  ---
+  duration_ms: 2.029078
+  type: 'test'
+  ...
+# Subtest: manual/Pitch owners and unknown private names survive language changes; returning to app metadata resumes localization
+ok 284 - manual/Pitch owners and unknown private names survive language changes; returning to app metadata resumes localization
+  ---
+  duration_ms: 1.214339
+  type: 'test'
+  ...
+# Subtest: title release copy is source-bound and the two current guide actions remain reachable
+ok 285 - title release copy is source-bound and the two current guide actions remain reachable
+  ---
+  duration_ms: 37.391733
+  type: 'test'
+  ...
+# (node:4628) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/pwa-update.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: photo controls bind exact English source, native drafts and only their declared historical layer
+ok 286 - photo controls bind exact English source, native drafts and only their declared historical layer
+  ---
+  duration_ms: 13.131419
+  type: 'test'
+  ...
+# Subtest: en: the actual dialog names controls, preserves owned caption and source, zooms and restores focus
+ok 287 - en: the actual dialog names controls, preserves owned caption and source, zooms and restores focus
+  ---
+  duration_ms: 43.239523
+  type: 'test'
+  ...
+# Subtest: zu: the actual dialog names controls, preserves owned caption and source, zooms and restores focus
+ok 288 - zu: the actual dialog names controls, preserves owned caption and source, zooms and restores focus
+  ---
+  duration_ms: 7.687496
+  type: 'test'
+  ...
+# Subtest: st: the actual dialog names controls, preserves owned caption and source, zooms and restores focus
+ok 289 - st: the actual dialog names controls, preserves owned caption and source, zooms and restores focus
+  ---
+  duration_ms: 5.428981
+  type: 'test'
+  ...
+# Subtest: ts: the actual dialog names controls, preserves owned caption and source, zooms and restores focus
+ok 290 - ts: the actual dialog names controls, preserves owned caption and source, zooms and restores focus
+  ---
+  duration_ms: 5.318353
+  type: 'test'
+  ...
+# Subtest: ve: the actual dialog names controls, preserves owned caption and source, zooms and restores focus
+ok 291 - ve: the actual dialog names controls, preserves owned caption and source, zooms and restores focus
+  ---
+  duration_ms: 5.245984
+  type: 'test'
+  ...
+# Subtest: zu: fallback and illustration labels repaint when language changes without reinterpreting a caption
+ok 292 - zu: fallback and illustration labels repaint when language changes without reinterpreting a caption
+  ---
+  duration_ms: 17.043108
+  type: 'test'
+  ...
+# Subtest: st: fallback and illustration labels repaint when language changes without reinterpreting a caption
+ok 293 - st: fallback and illustration labels repaint when language changes without reinterpreting a caption
+  ---
+  duration_ms: 4.825804
+  type: 'test'
+  ...
+# Subtest: ts: fallback and illustration labels repaint when language changes without reinterpreting a caption
+ok 294 - ts: fallback and illustration labels repaint when language changes without reinterpreting a caption
+  ---
+  duration_ms: 4.632706
+  type: 'test'
+  ...
+# Subtest: ve: fallback and illustration labels repaint when language changes without reinterpreting a caption
+ok 295 - ve: fallback and illustration labels repaint when language changes without reinterpreting a caption
+  ---
+  duration_ms: 4.6796
+  type: 'test'
+  ...
+# Subtest: zu: a failed photo has native recovery, exact English source and no misleading zoom action
+ok 296 - zu: a failed photo has native recovery, exact English source and no misleading zoom action
+  ---
+  duration_ms: 5.116587
+  type: 'test'
+  ...
+# Subtest: st: a failed photo has native recovery, exact English source and no misleading zoom action
+ok 297 - st: a failed photo has native recovery, exact English source and no misleading zoom action
+  ---
+  duration_ms: 4.331346
+  type: 'test'
+  ...
+# Subtest: ts: a failed photo has native recovery, exact English source and no misleading zoom action
+ok 298 - ts: a failed photo has native recovery, exact English source and no misleading zoom action
+  ---
+  duration_ms: 4.436814
+  type: 'test'
+  ...
+# Subtest: ve: a failed photo has native recovery, exact English source and no misleading zoom action
+ok 299 - ve: a failed photo has native recovery, exact English source and no misleading zoom action
+  ---
+  duration_ms: 4.168654
+  type: 'test'
+  ...
+# Subtest: only opted-in photographs open, observers refresh changed images, and cleanup removes both capture listeners
+ok 300 - only opted-in photographs open, observers refresh changed images, and cleanup removes both capture listeners
+  ---
+  duration_ms: 3.914492
+  type: 'test'
+  ...
+# Subtest: photo update and its optional Account guide stay source-bound in every language
+ok 301 - photo update and its optional Account guide stay source-bound in every language
+  ---
+  duration_ms: 37.831497
+  type: 'test'
+  ...
+# Subtest: the draft notice can switch the open viewer to English without changing the photograph
+ok 302 - the draft notice can switch the open viewer to English without changing the photograph
+  ---
+  duration_ms: 4.797771
+  type: 'test'
+  ...
+# Subtest: nothing user-facing since the note: the banner is telling the truth
+ok 303 - nothing user-facing since the note: the banner is telling the truth
+  ---
+  duration_ms: 346.058346
+  type: 'test'
+  ...
+# Subtest: one unnoted commit passes when it is HEAD — the squash-merge case
+ok 304 - one unnoted commit passes when it is HEAD — the squash-merge case
+  ---
+  duration_ms: 353.314862
+  type: 'test'
+  ...
+# Subtest: one unnoted commit still passes once a CI-only commit lands on top of it
+ok 305 - one unnoted commit still passes once a CI-only commit lands on top of it
+  ---
+  duration_ms: 419.319659
+  type: 'test'
+  ...
+# Subtest: two unnoted commits fail — this is the drift the check exists to stop
+ok 306 - two unnoted commits fail — this is the drift the check exists to stop
+  ---
+  duration_ms: 369.249397
+  type: 'test'
+  ...
+# Subtest: the notes file changing is not itself news
+ok 307 - the notes file changing is not itself news
+  ---
+  duration_ms: 457.349609
+  type: 'test'
+  ...
+# Subtest: PWAUpdateNotifier no longer statically imports runtime values from lib/release-notes
+ok 308 - PWAUpdateNotifier no longer statically imports runtime values from lib/release-notes
+  ---
+  duration_ms: 0.814029
+  type: 'test'
+  ...
+# Subtest: UpdateGuide no longer statically imports runtime values from lib/release-notes
+ok 309 - UpdateGuide no longer statically imports runtime values from lib/release-notes
+  ---
+  duration_ms: 0.243452
+  type: 'test'
+  ...
+# Subtest: neither component renders a note/tour list before its lazily-loaded data has resolved
+ok 310 - neither component renders a note/tour list before its lazily-loaded data has resolved
+  ---
+  duration_ms: 0.128761
+  type: 'test'
+  ...
+# (node:4665) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/release-notes-types.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: update-tour.ts imports MAX_TOUR_STOPS from the tiny types module, not release-notes.ts
+ok 311 - update-tour.ts imports MAX_TOUR_STOPS from the tiny types module, not release-notes.ts
+  ---
+  duration_ms: 1.135673
+  type: 'test'
+  ...
+# Subtest: release-notes.ts re-exports MAX_TOUR_STOPS and UpdateTourStop rather than defining them
+ok 312 - release-notes.ts re-exports MAX_TOUR_STOPS and UpdateTourStop rather than defining them
+  ---
+  duration_ms: 0.686356
+  type: 'test'
+  ...
+# Subtest: the re-exported value is the same value the tiny module defines
+ok 313 - the re-exported value is the same value the tiny module defines
+  ---
+  duration_ms: 0.204706
+  type: 'test'
+  ...
+# (node:4699) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/update-copy.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: PV reference keeps provider units, monthly resource, actual period and explicit assumptions
+ok 314 - PV reference keeps provider units, monthly resource, actual period and explicit assumptions
+  ---
+  duration_ms: 2.254435
+  type: 'test'
+  ...
+# Subtest: wrong coordinates, units, missing months and inconsistent annual totals never become estimates
+ok 315 - wrong coordinates, units, missing months and inconsistent annual totals never become estimates
+  ---
+  duration_ms: 0.657277
+  type: 'test'
+  ...
+# Subtest: solar URL fixes the free public provider and declares a reference system instead of a roof size
+ok 316 - solar URL fixes the free public provider and declares a reference system instead of a roof size
+  ---
+  duration_ms: 0.430841
+  type: 'test'
+  ...
+# Subtest: manual numeric answers must be corrected instead of silently disappearing at the survey save gate
+ok 317 - manual numeric answers must be corrected instead of silently disappearing at the survey save gate
+  ---
+  duration_ms: 0.197503
+  type: 'test'
+  ...
+# Subtest: a real sampled zero or below-sea-level benchmark survives without validating legacy fallback zero
+ok 318 - a real sampled zero or below-sea-level benchmark survives without validating legacy fallback zero
+  ---
+  duration_ms: 0.302504
+  type: 'test'
+  ...
+# Subtest: wind is a source/height/period observation and never annual electricity from a mean speed
+ok 319 - wind is a source/height/period observation and never annual electricity from a mean speed
+  ---
+  duration_ms: 0.297785
+  type: 'test'
+  ...
+# Subtest: solar lookup requires a verified actor even when the legacy auth helper returns a soft guest
+ok 320 - solar lookup requires a verified actor even when the legacy auth helper returns a soft guest
+  ---
+  duration_ms: 10.774468
+  type: 'test'
+  ...
+# Subtest: site-bound response is private and forwards only a fixed-provider coordinate reference
+ok 321 - site-bound response is private and forwards only a fixed-provider coordinate reference
+  ---
+  duration_ms: 2.104648
+  type: 'test'
+  ...
+# Subtest: unsupported coverage, busy provider and corrupt results return errors without an invented fallback
+ok 322 - unsupported coverage, busy provider and corrupt results return errors without an invented fallback
+  ---
+  duration_ms: 2.56551
+  type: 'test'
+  ...
+# Subtest: mismatched site and oversized/headerless bodies are rejected before provider access
+ok 323 - mismatched site and oversized/headerless bodies are rejected before provider access
+  ---
+  duration_ms: 1.252706
+  type: 'test'
+  ...
+# Subtest: energy release draft pairs retain exact source, provisional status and existing locale bytes
+ok 324 - energy release draft pairs retain exact source, provisional status and existing locale bytes
+  ---
+  duration_ms: 60.439159
+  type: 'test'
+  ...
+# Subtest: saved provider climate periods are bounded by retrieval provenance rather than the device clock
+ok 325 - saved provider climate periods are bounded by retrieval provenance rather than the device clock
+  ---
+  duration_ms: 0.695028
+  type: 'test'
+  ...
+# (node:4774) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/sample-tour.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: regional guide drafts bind exact source fields, routes, timing and existing isiZulu instead of declaring English fallback complete
+ok 326 - regional guide drafts bind exact source fields, routes, timing and existing isiZulu instead of declaring English fallback complete
+  ---
+  duration_ms: 3.640627
+  type: 'test'
+  ...
+# Subtest: st: every original stop and tip resolves natively while English and other languages keep the original object
+ok 327 - st: every original stop and tip resolves natively while English and other languages keep the original object
+  ---
+  duration_ms: 0.36713
+  type: 'test'
+  ...
+# Subtest: ts: every original stop and tip resolves natively while English and other languages keep the original object
+ok 328 - ts: every original stop and tip resolves natively while English and other languages keep the original object
+  ---
+  duration_ms: 0.137067
+  type: 'test'
+  ...
+# Subtest: ve: every original stop and tip resolves natively while English and other languages keep the original object
+ok 329 - ve: every original stop and tip resolves natively while English and other languages keep the original object
+  ---
+  duration_ms: 0.071097
+  type: 'test'
+  ...
+# Subtest: UI interpolation inserts data once and retains exact source numbers and unknown errors
+ok 330 - UI interpolation inserts data once and retains exact source numbers and unknown errors
+  ---
+  duration_ms: 0.422979
+  type: 'test'
+  ...
+# Subtest: regional duration never borrows isiZulu words or changes the original minute values
+ok 331 - regional duration never borrows isiZulu words or changes the original minute values
+  ---
+  duration_ms: 0.351119
+  type: 'test'
+  ...
+# Subtest: the completeness check rejects a missing paragraph, tip, control or error instead of passing fallback English
+ok 332 - the completeness check rejects a missing paragraph, tip, control or error instead of passing fallback English
+  ---
+  duration_ms: 0.37296
+  type: 'test'
+  ...
+# Subtest: every inventoried workspace control has a separate source-bound regional draft with the original numbers and placeholders
+ok 333 - every inventoried workspace control has a separate source-bound regional draft with the original numbers and placeholders
+  ---
+  duration_ms: 1.733273
+  type: 'test'
+  ...
+# Subtest: zu: the actual chooser pairs role drafts and source, discloses review status and preserves all anonymous destinations
+ok 334 - zu: the actual chooser pairs role drafts and source, discloses review status and preserves all anonymous destinations
+  ---
+  duration_ms: 145.940764
+  type: 'test'
+  ...
+# Subtest: st: the actual chooser pairs role drafts and source, discloses review status and preserves all anonymous destinations
+ok 335 - st: the actual chooser pairs role drafts and source, discloses review status and preserves all anonymous destinations
+  ---
+  duration_ms: 20.089641
+  type: 'test'
+  ...
+# Subtest: ts: the actual chooser pairs role drafts and source, discloses review status and preserves all anonymous destinations
+ok 336 - ts: the actual chooser pairs role drafts and source, discloses review status and preserves all anonymous destinations
+  ---
+  duration_ms: 17.803331
+  type: 'test'
+  ...
+# Subtest: ve: the actual chooser pairs role drafts and source, discloses review status and preserves all anonymous destinations
+ok 337 - ve: the actual chooser pairs role drafts and source, discloses review status and preserves all anonymous destinations
+  ---
+  duration_ms: 10.065051
+  type: 'test'
+  ...
+# Subtest: zu: language changes cannot widen confirmed account roles or execute a disabled practice action
+ok 338 - zu: language changes cannot widen confirmed account roles or execute a disabled practice action
+  ---
+  duration_ms: 81.205473
+  type: 'test'
+  ...
+# Subtest: st: language changes cannot widen confirmed account roles or execute a disabled practice action
+ok 339 - st: language changes cannot widen confirmed account roles or execute a disabled practice action
+  ---
+  duration_ms: 57.182419
+  type: 'test'
+  ...
+# Subtest: ts: language changes cannot widen confirmed account roles or execute a disabled practice action
+ok 340 - ts: language changes cannot widen confirmed account roles or execute a disabled practice action
+  ---
+  duration_ms: 55.809383
+  type: 'test'
+  ...
+# Subtest: ve: language changes cannot widen confirmed account roles or execute a disabled practice action
+ok 341 - ve: language changes cannot widen confirmed account roles or execute a disabled practice action
+  ---
+  duration_ms: 47.254146
+  type: 'test'
+  ...
+# Subtest: late role reads cannot grant the next account the previous account’s practice choices
+ok 342 - late role reads cannot grant the next account the previous account’s practice choices
+  ---
+  duration_ms: 7.364626
+  type: 'test'
+  ...
+# Subtest: zu: failed access reads and failed session startup retain truthful native errors and never navigate
+ok 343 - zu: failed access reads and failed session startup retain truthful native errors and never navigate
+  ---
+  duration_ms: 11.802083
+  type: 'test'
+  ...
+# Subtest: st: failed access reads and failed session startup retain truthful native errors and never navigate
+ok 344 - st: failed access reads and failed session startup retain truthful native errors and never navigate
+  ---
+  duration_ms: 13.967101
+  type: 'test'
+  ...
+# Subtest: ts: failed access reads and failed session startup retain truthful native errors and never navigate
+ok 345 - ts: failed access reads and failed session startup retain truthful native errors and never navigate
+  ---
+  duration_ms: 11.015074
+  type: 'test'
+  ...
+# Subtest: ve: failed access reads and failed session startup retain truthful native errors and never navigate
+ok 346 - ve: failed access reads and failed session startup retain truthful native errors and never navigate
+  ---
+  duration_ms: 14.383133
+  type: 'test'
+  ...
+# Subtest: zu: shared Tour controls use native captions and preserve sample privacy and fallback visibility
+ok 347 - zu: shared Tour controls use native captions and preserve sample privacy and fallback visibility
+  ---
+  duration_ms: 48.940385
+  type: 'test'
+  ...
+# Subtest: st: shared Tour controls use native captions and preserve sample privacy and fallback visibility
+ok 348 - st: shared Tour controls use native captions and preserve sample privacy and fallback visibility
+  ---
+  duration_ms: 19.851483
+  type: 'test'
+  ...
+# Subtest: ts: shared Tour controls use native captions and preserve sample privacy and fallback visibility
+ok 349 - ts: shared Tour controls use native captions and preserve sample privacy and fallback visibility
+  ---
+  duration_ms: 17.584755
+  type: 'test'
+  ...
+# Subtest: ve: shared Tour controls use native captions and preserve sample privacy and fallback visibility
+ok 350 - ve: shared Tour controls use native captions and preserve sample privacy and fallback visibility
+  ---
+  duration_ms: 26.299418
+  type: 'test'
+  ...
+# Subtest: showcase pages and an unconfigured backend still suppress only their own controls
+ok 351 - showcase pages and an unconfigured backend still suppress only their own controls
+  ---
+  duration_ms: 13.455186
+  type: 'test'
+  ...
+# Subtest: chooser English and isiZulu role cards remain exact while earlier native drafts survive completion of the held fields
+ok 352 - chooser English and isiZulu role cards remain exact while earlier native drafts survive completion of the held fields
+  ---
+  duration_ms: 4.646131
+  type: 'test'
+  ...
+# Subtest: a cancelled access read cannot undo signing out, and a refused reset does not reload the visitor’s page
+ok 353 - a cancelled access read cannot undo signing out, and a refused reset does not reload the visitor’s page
+  ---
+  duration_ms: 21.539263
+  type: 'test'
+  ...
+# Subtest: zu: the actual staff role selector keeps demonstration payloads and never offers the switcher to an ordinary account
+ok 354 - zu: the actual staff role selector keeps demonstration payloads and never offers the switcher to an ordinary account
+  ---
+  duration_ms: 22.677411
+  type: 'test'
+  ...
+# Subtest: st: the actual staff role selector keeps demonstration payloads and never offers the switcher to an ordinary account
+ok 355 - st: the actual staff role selector keeps demonstration payloads and never offers the switcher to an ordinary account
+  ---
+  duration_ms: 20.248698
+  type: 'test'
+  ...
+# Subtest: ts: the actual staff role selector keeps demonstration payloads and never offers the switcher to an ordinary account
+ok 356 - ts: the actual staff role selector keeps demonstration payloads and never offers the switcher to an ordinary account
+  ---
+  duration_ms: 28.296331
+  type: 'test'
+  ...
+# Subtest: ve: the actual staff role selector keeps demonstration payloads and never offers the switcher to an ordinary account
+ok 357 - ve: the actual staff role selector keeps demonstration payloads and never offers the switcher to an ordinary account
+  ---
+  duration_ms: 22.798253
+  type: 'test'
+  ...
+# Subtest: the announced practice change retains native source-bound release text and a real guide action in every language
+ok 358 - the announced practice change retains native source-bound release text and a real guide action in every language
+  ---
+  duration_ms: 54.255317
+  type: 'test'
+  ...
+# Subtest: native role wording never changes a role key, icon, readiness flag, destination or mentor alias
+ok 359 - native role wording never changes a role key, icon, readiness flag, destination or mentor alias
+  ---
+  duration_ms: 2.366261
+  type: 'test'
+  ...
+# (node:5004) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/update-copy.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: update drafts preserve source history, existing control wording, quantities and original locale bytes
+ok 360 - update drafts preserve source history, existing control wording, quantities and original locale bytes
+  ---
+  duration_ms: 60.119412
+  type: 'test'
+  ...
+# Subtest: native update data never substitutes a different source, language, quantity, placeholder or inherited property
+ok 361 - native update data never substitutes a different source, language, quantity, placeholder or inherited property
+  ---
+  duration_ms: 0.331011
+  type: 'test'
+  ...
+# Subtest: displayed update dates retain original day/year/group identity and use the shared month authority
+ok 362 - displayed update dates retain original day/year/group identity and use the shared month authority
+  ---
+  duration_ms: 0.355034
+  type: 'test'
+  ...
+# Subtest: zu: real update banner keeps manual refresh, native controls, source backing and new-build authority
+ok 363 - zu: real update banner keeps manual refresh, native controls, source backing and new-build authority
+  ---
+  duration_ms: 78.981194
+  type: 'test'
+  ...
+# Subtest: st: real update banner keeps manual refresh, native controls, source backing and new-build authority
+ok 364 - st: real update banner keeps manual refresh, native controls, source backing and new-build authority
+  ---
+  duration_ms: 9.510234
+  type: 'test'
+  ...
+# Subtest: ts: real update banner keeps manual refresh, native controls, source backing and new-build authority
+ok 365 - ts: real update banner keeps manual refresh, native controls, source backing and new-build authority
+  ---
+  duration_ms: 7.316709
+  type: 'test'
+  ...
+# Subtest: ve: real update banner keeps manual refresh, native controls, source backing and new-build authority
+ok 366 - ve: real update banner keeps manual refresh, native controls, source backing and new-build authority
+  ---
+  duration_ms: 7.406557
+  type: 'test'
+  ...
+# Subtest: a newly published empty native set leaves its source English instead of restoring an older local draft
+ok 367 - a newly published empty native set leaves its source English instead of restoring an older local draft
+  ---
+  duration_ms: 4.833086
+  type: 'test'
+  ...
+# Subtest: dismissal suppresses the notice, pitch stays unobstructed, and offline fallback remains lazy
+ok 368 - dismissal suppresses the notice, pitch stays unobstructed, and offline fallback remains lazy
+  ---
+  duration_ms: 10.475413
+  type: 'test'
+  ...
+# Subtest: zu: current guide follows original destinations and progress while descriptions change language
+ok 369 - zu: current guide follows original destinations and progress while descriptions change language
+  ---
+  duration_ms: 26.89889
+  type: 'test'
+  ...
+# Subtest: st: current guide follows original destinations and progress while descriptions change language
+ok 370 - st: current guide follows original destinations and progress while descriptions change language
+  ---
+  duration_ms: 9.477525
+  type: 'test'
+  ...
+# Subtest: ts: current guide follows original destinations and progress while descriptions change language
+ok 371 - ts: current guide follows original destinations and progress while descriptions change language
+  ---
+  duration_ms: 6.723376
+  type: 'test'
+  ...
+# Subtest: ve: current guide follows original destinations and progress while descriptions change language
+ok 372 - ve: current guide follows original destinations and progress while descriptions change language
+  ---
+  duration_ms: 7.337149
+  type: 'test'
+  ...
+# Subtest: history reflects actual native coverage, older history remains reachable source, and Simple keeps its original limit
+ok 373 - history reflects actual native coverage, older history remains reachable source, and Simple keeps its original limit
+  ---
+  duration_ms: 642.726563
+  type: 'test'
+  ...
+# Subtest: zu: full, partial and withdrawn native history copy retain honest source coverage
+ok 374 - zu: full, partial and withdrawn native history copy retain honest source coverage
+  ---
+  duration_ms: 4.184612
+  type: 'test'
+  ...
+# Subtest: st: full, partial and withdrawn native history copy retain honest source coverage
+ok 375 - st: full, partial and withdrawn native history copy retain honest source coverage
+  ---
+  duration_ms: 2.764286
+  type: 'test'
+  ...
+# Subtest: ts: full, partial and withdrawn native history copy retain honest source coverage
+ok 376 - ts: full, partial and withdrawn native history copy retain honest source coverage
+  ---
+  duration_ms: 4.481119
+  type: 'test'
+  ...
+# Subtest: ve: full, partial and withdrawn native history copy retain honest source coverage
+ok 377 - ve: full, partial and withdrawn native history copy retain honest source coverage
+  ---
+  duration_ms: 4.45972
+  type: 'test'
+  ...
+# Subtest: current deployment copy matches exact announcement coverage and retains build metadata even when native coverage is empty
+ok 378 - current deployment copy matches exact announcement coverage and retains build metadata even when native coverage is empty
+  ---
+  duration_ms: 28.885882
+  type: 'test'
+  ...
+# Subtest: a real archived announcement serves its available native pairs and excludes translated unannounced history
+ok 379 - a real archived announcement serves its available native pairs and excludes translated unannounced history
+  ---
+  duration_ms: 4.839363
+  type: 'test'
+  ...
+# Subtest: zu: the real discovery invitation and onboarding CTA retain their original actions
+ok 380 - zu: the real discovery invitation and onboarding CTA retain their original actions
+  ---
+  duration_ms: 43.83143
+  type: 'test'
+  ...
+# Subtest: st: the real discovery invitation and onboarding CTA retain their original actions
+ok 381 - st: the real discovery invitation and onboarding CTA retain their original actions
+  ---
+  duration_ms: 6.509824
+  type: 'test'
+  ...
+# Subtest: ts: the real discovery invitation and onboarding CTA retain their original actions
+ok 382 - ts: the real discovery invitation and onboarding CTA retain their original actions
+  ---
+  duration_ms: 4.009337
+  type: 'test'
+  ...
+# Subtest: ve: the real discovery invitation and onboarding CTA retain their original actions
+ok 383 - ve: the real discovery invitation and onboarding CTA retain their original actions
+  ---
+  duration_ms: 3.676029
+  type: 'test'
+  ...
+# Subtest: late native chunks cannot relabel a different selected language, and chunk failures disclose English source
+ok 384 - late native chunks cannot relabel a different selected language, and chunk failures disclose English source
+  ---
+  duration_ms: 4.645576
+  type: 'test'
+  ...
+# Subtest: wrong-language and damaged new-build copy stays source, and hidden notices do not load native descriptions
+ok 385 - wrong-language and damaged new-build copy stays source, and hidden notices do not load native descriptions
+  ---
+  duration_ms: 5.805764
+  type: 'test'
+  ...
+# (node:5012) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/release-notes.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the update guide visits the pages described by the visible release notes
+ok 386 - the update guide visits the pages described by the visible release notes
+  ---
+  duration_ms: 2.632006
+  type: 'test'
+  ...
+# Subtest: a refresh offers only internal app pages from the newly installed build
+ok 387 - a refresh offers only internal app pages from the newly installed build
+  ---
+  duration_ms: 0.668819
+  type: 'test'
+  ...
+# Subtest: the guide retains its exact Ask and Sold panels without admitting arbitrary queries or redirect-shaped destinations
+ok 388 - the guide retains its exact Ask and Sold panels without admitting arbitrary queries or redirect-shaped destinations
+  ---
+  duration_ms: 0.321907
+  type: 'test'
+  ...
+1..388
+# tests 388
+# suites 0
+# pass 388
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14592.660929
+notes exit 0

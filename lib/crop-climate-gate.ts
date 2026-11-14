@@ -107,6 +107,9 @@ export function heatLimitOf(crop: Pick<CropDef, 'key'>): HeatLimitC | undefined 
   return ECOCROP_HEAT_LIMITS_C[crop.key];
 }
 
+// A 365-day year, like the FAO-56 day numbers and declination below. A 28.25-day
+// February (POWER's 2001-2020 mean) would move February PET by 0.9% and touch the
+// rain-fed screen; not changed alone (docs/audits/2026-11-14/nasa-power-hardening-claude.md, NPH-04).
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const MID_MONTH_DAY_OF_YEAR = [15, 46, 74, 105, 135, 166, 196, 227, 258, 288, 319, 349];
 

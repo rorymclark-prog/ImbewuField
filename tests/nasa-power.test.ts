@@ -126,6 +126,7 @@ test('Open-Meteo outage, bad status and partial payload all return null', async 
   );
   await withFetch(
     (async () => response({
+      daily_units: { time: 'iso8601', precipitation_sum: 'mm' },
       daily: {
         time: ['1991-01-01', '1991-01-02'],
         precipitation_sum: [1, 1],
@@ -237,6 +238,7 @@ test('a partial Open-Meteo response leaves complete NASA rainfall in charge', as
       return calls === 1
         ? response(nasaPayload())
         : response({
+          daily_units: { time: 'iso8601', precipitation_sum: 'mm' },
           daily: {
             time: ['1991-01-01', '1991-01-02'],
             precipitation_sum: [20, 20],
@@ -259,6 +261,7 @@ test('a complete, materially different Open-Meteo normal can replace coarse NASA
       return calls === 1
         ? response(nasaPayload())
         : response({
+          daily_units: { time: 'iso8601', precipitation_sum: 'mm' },
           daily: {
             time: openMeteo.dates,
             precipitation_sum: openMeteo.values,
@@ -407,4 +410,106 @@ test('complete monthly means do not stamp absent monthly minimum readings as fro
   assert.deepEqual(absent.climate.monthlyTempCoverage, { source: 'nasa-power', status: 'complete' });
   assert.equal(absent.climate.minTempSource, undefined);
   assert.equal(absent.climate.minTemp, 5, 'the existing numeric minimum fallback stays unchanged');
+});
+
+// ── Hardening from the 11 November 2026 reviews (Argon ISS-04/ISS-05, Codex CBR-02).
+// Record: docs/audits/2026-11-14/nasa-power-hardening-claude.md
+
+/** The shape Open-Meteo's archive actually returns (checked against the 118 raw
+ *  responses archived under docs/audits/2026-11-1x): units sit beside the series. */
+const NO_UNITS_BLOCK = Symbol('no daily_units block');
+function openMeteoArchive(dates: string[], values: unknown[], units: unknown = { time: 'iso8601', precipitation_sum: 'mm' }) {
+  return {
+    ...(units === NO_UNITS_BLOCK ? {} : { daily_units: units }),
+    daily: { time: dates, precipitation_sum: values },
+  };
+}
+
+test('a rainfall record that states inches, another unit or no unit is refused, so NASA POWER rainfall stays', async () => {
+  // Ten a day, every day for thirty years: complete in every date, finite and
+  // non-negative. Read as mm it is ~3,650 mm a year and replaces NASA's 365 mm. If the
+  // series is in inches, the real rain is 25.4 times more. Completeness cannot tell the
+  // two apart; only the stated unit can.
+  const series = dailySeries(1991, 2020, 10);
+  const refused: unknown[] = [
+    NO_UNITS_BLOCK,                              // no daily_units block at all
+    { time: 'iso8601' },                         // block present, rainfall unit absent
+    {},                                          // empty block
+    { time: 'iso8601', precipitation_sum: 'inch' },
+    { time: 'iso8601', precipitation_sum: 'in' },
+    { time: 'iso8601', precipitation_sum: 'MM' },
+    { time: 'iso8601', precipitation_sum: '' },
+    { time: 'iso8601', precipitation_sum: null },
+    'mm',                                        // a bare string where an object belongs
+  ];
+  for (const units of refused) {
+    const body = openMeteoArchive(series.dates, series.values, units);
+    await withFetch(
+      (async () => response(body)) as typeof fetch,
+      async () => assert.equal(await fetchOpenMeteoRainfall(-29, 31), null, `units ${String(JSON.stringify(units) ?? 'block absent')} must be refused`),
+    );
+    let calls = 0;
+    const result = await withFetch(
+      (async () => (++calls === 1 ? response(nasaPayload()) : response(body))) as typeof fetch,
+      () => fetchNasaPower(-29, 31),
+    );
+    assert.equal(result.rainfall.rainfallSource, 'nasa-power', `units ${String(JSON.stringify(units) ?? 'block absent')} must leave NASA POWER in charge`);
+    assert.equal(result.rainfall.annual, 365);
+  }
+  // Control: the same series stating mm is still accepted, so the refusal above is the unit.
+  await withFetch(
+    (async () => response(openMeteoArchive(series.dates, series.values))) as typeof fetch,
+    async () => assert.ok(await fetchOpenMeteoRainfall(-29, 31)),
+  );
+});
+
+test('the rainfall request leaves model and grid-cell choice to the provider until a measured decision changes it', async () => {
+  // Not a fix: a tripwire. Pinning a model changes the rainfall growers see, so it must
+  // arrive with a before/after comparison on the recorded places and Rory's decision,
+  // not as a one-line parameter. If this fails, that comparison belongs in the same PR.
+  const urls: URL[] = [];
+  await withFetch(
+    (async (input) => { urls.push(new URL(String(input))); return response({}, false, 503); }) as typeof fetch,
+    () => fetchOpenMeteoRainfall(-29, 31),
+  );
+  assert.equal(urls.length, 1);
+  assert.equal(urls[0].searchParams.has('models'), false);
+  assert.equal(urls[0].searchParams.has('cell_selection'), false);
+  assert.equal(urls[0].searchParams.get('daily'), 'precipitation_sum');
+});
+
+async function patternAt(lat: number, precipitation: Record<string, number>) {
+  let calls = 0;
+  const result = await withFetch(
+    (async () => (++calls === 1 ? response(nasaPayload({ PRECTOTCORR: precipitation })) : response({}, false, 503))) as typeof fetch,
+    () => fetchNasaPower(lat, 10),
+  );
+  return result.rainfall;
+}
+
+test('north of the equator, rain in December to February is winter rain, not summer rain', async () => {
+  const decToFeb = { ...monthValues(0.5), DEC: 4, JAN: 4, FEB: 4 };
+  const junToAug = { ...monthValues(0.5), JUN: 4, JUL: 4, AUG: 4 };
+
+  // A Mediterranean-type northern site: wet Dec–Feb is its winter.
+  const north = await patternAt(38, decToFeb);
+  assert.equal(north.pattern, 'winter');
+  // The month ranges name calendar months and were already right; they must not move.
+  assert.equal(north.wetSeason, 'Oct–Mar');
+  assert.equal(north.drySeason, 'May–Aug');
+
+  // A northern monsoon site: wet Jun–Aug is its summer.
+  const monsoon = await patternAt(20, junToAug);
+  assert.equal(monsoon.pattern, 'summer');
+  assert.equal(monsoon.wetSeason, 'May–Sep');
+  assert.equal(monsoon.drySeason, 'Nov–Mar');
+
+  // South Africa is unchanged, word for word.
+  const south = await patternAt(-29, decToFeb);
+  assert.deepEqual([south.pattern, south.wetSeason, south.drySeason], ['summer', 'Oct–Mar', 'May–Aug']);
+  const cape = await patternAt(-34, junToAug);
+  assert.deepEqual([cape.pattern, cape.wetSeason, cape.drySeason], ['winter', 'May–Sep', 'Nov–Mar']);
+
+  // The equator takes the classifier's tie (summerMonthIndices: lat >= 0 is northern).
+  assert.equal((await patternAt(0, decToFeb)).pattern, 'winter');
 });

@@ -1,0 +1,142 @@
+  ▲ Next.js 14.2.18
+  - Local:        http://localhost:4242
+
+ ✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+ ✓ Ready in 1255ms
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 511ms (115 modules)
+ ⨯ Failed to find font override values for font `Newsreader`
+ ○ Compiling /reports ...
+ ⨯ Failed to find font override values for font `Newsreader`
+ ✓ Compiled /reports in 17s (2341 modules)
+ GET /reports 200 in 17829ms
+ ○ Compiling /sw.js ...
+ ✓ Compiled /sw.js in 7.4s (1240 modules)
+ ✓ Compiled (1248 modules)
+ GET /api/build-info?update-check=1794641498923&language=en 200 in 7906ms
+ GET /api/build-info?update-check=1794641498941&language=en 200 in 7906ms
+ GET /sw.js 200 in 7926ms
+ ○ Compiling /home ...
+ ✓ Compiled /home in 2.4s (2281 modules)
+ GET /home 200 in 2940ms
+ ○ Compiling /student ...
+ ✓ Compiled /student in 9.9s (3985 modules)
+ GET / 307 in 10923ms
+ GET /student 200 in 10927ms
+ GET /farmer 200 in 10927ms
+ GET /home 200 in 214ms
+ ○ Compiling /offline ...
+ ✓ Compiled /offline in 1684ms (3953 modules)
+ GET /offline 200 in 2358ms
+ GET /prices 200 in 2494ms
+ GET /sw.js 200 in 39ms
+ GET /home 200 in 126ms
+ GET / 307 in 428ms
+ GET /student 200 in 435ms
+ GET /farmer 200 in 437ms
+ GET /home 200 in 75ms
+ GET /prices 200 in 103ms
+ GET /offline 200 in 103ms
+ GET /api/build-info?update-check=1794641533679&language=en 200 in 128ms
+ GET /reports 200 in 147ms
+ GET /api/build-info?update-check=1794641604077&language=en 200 in 53ms
+ GET /api/build-info?update-check=1794641604093&language=en 200 in 42ms
+ GET /sw.js 200 in 58ms
+ GET /home 200 in 83ms
+ GET / 307 in 141ms
+ GET /student 200 in 144ms
+ GET /farmer 200 in 145ms
+ GET /home 200 in 66ms
+ GET /prices 200 in 90ms
+ GET /offline 200 in 69ms
+ GET /sw.js 200 in 19ms
+ GET /reports 200 in 41ms
+ GET /api/build-info?update-check=1794641701092&language=en 200 in 58ms
+ GET /api/build-info?update-check=1794641701102&language=en 200 in 46ms
+ GET /sw.js 200 in 60ms
+ GET /home 200 in 47ms
+ GET / 307 in 122ms
+ GET /farmer 200 in 128ms
+ GET /student 200 in 129ms
+ GET /home 200 in 85ms
+ GET /prices 200 in 118ms
+ GET /offline 200 in 118ms
+ GET /sw.js 200 in 14ms
+ GET /reports 200 in 67ms
+ GET /api/build-info?update-check=1794641807149&language=en 200 in 62ms
+ GET /api/build-info?update-check=1794641807158&language=en 200 in 67ms
+ GET /sw.js 200 in 74ms
+ GET /home 200 in 60ms
+ GET /farmer 200 in 105ms
+ GET / 307 in 107ms
+ GET /student 200 in 108ms
+ GET /home 200 in 81ms
+ GET /prices 200 in 76ms
+ GET /offline 200 in 77ms
+ GET /sw.js 200 in 19ms
+ GET /reports 200 in 63ms
+ GET /api/build-info?update-check=1794641877764&language=en 200 in 68ms
+ GET /api/build-info?update-check=1794641877774&language=en 200 in 67ms
+ GET /sw.js 200 in 73ms
+ GET /home 200 in 64ms
+ GET / 307 in 115ms
+ GET /farmer 200 in 117ms
+ GET /student 200 in 119ms
+ GET /home 200 in 68ms
+ GET /prices 200 in 96ms
+ GET /offline 200 in 68ms
+ GET /sw.js 200 in 26ms
+ GET /reports 200 in 67ms
+ GET /api/build-info?update-check=1794641948354&language=en 200 in 73ms
+ GET /api/build-info?update-check=1794641948362&language=en 200 in 74ms
+ GET /sw.js 200 in 80ms
+ GET /home 200 in 50ms
+ GET / 307 in 107ms
+ GET /student 200 in 105ms
+ GET /farmer 200 in 112ms
+ GET /home 200 in 82ms
+ GET /prices 200 in 83ms
+ GET /offline 200 in 83ms
+ GET /sw.js 200 in 15ms
+ GET /reports 200 in 65ms
+ GET /api/build-info?update-check=1794642038482&language=en 200 in 65ms
+ GET /api/build-info?update-check=1794642038492&language=en 200 in 65ms
+ GET /sw.js 200 in 74ms
+ GET /home 200 in 47ms
+ GET / 307 in 99ms
+ GET /farmer 200 in 102ms
+ GET /student 200 in 103ms
+ GET /home 200 in 71ms
+ GET /prices 200 in 92ms
+ GET /offline 200 in 85ms
+ GET /sw.js 200 in 12ms
+ GET /reports 200 in 38ms
+ GET /api/build-info?update-check=1794642051563&language=en 200 in 68ms
+ GET /api/build-info?update-check=1794642051553&language=en 200 in 67ms
+ GET /sw.js 200 in 56ms
+ GET /home 200 in 60ms
+ GET / 307 in 81ms
+ GET /farmer 200 in 87ms
+ GET /student 200 in 87ms
+ GET /home 200 in 64ms
+ GET /prices 200 in 79ms
+ GET /offline 200 in 80ms
+ GET /sw.js 200 in 14ms
+ GET /reports 200 in 42ms
+ GET /api/build-info?update-check=1794642064852&language=en 200 in 57ms
+ GET /sw.js 200 in 69ms
+ GET /api/build-info?update-check=1794642064872&language=en 200 in 60ms
+ GET /home 200 in 64ms
+ GET /student 200 in 104ms
+ GET / 307 in 103ms
+ GET /farmer 200 in 109ms
+ GET /home 200 in 95ms
+ GET /prices 200 in 110ms
+ GET /offline 200 in 108ms
+ GET /sw.js 200 in 17ms
+[?25h
