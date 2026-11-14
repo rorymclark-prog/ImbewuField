@@ -2383,11 +2383,11 @@ export const REPORT_VISUAL_COPY: readonly { english: string; zu: string; st: str
     "ve": "NASA POWER (giridi ya kilima ya 50 km)"
   },
   {
-    "english": "ERA5-Land via Open-Meteo (9 km grid)",
-    "zu": "ERA5-Land nge-Open-Meteo (igridi engu-9 km)",
-    "st": "ERA5-Land ka Open-Meteo (keriti ya 9 km)",
-    "ts": "ERA5-Land hi Open-Meteo (giridi ya 9 km)",
-    "ve": "ERA5-Land nga Open-Meteo (giridi ya 9 km)"
+    "english": "Open-Meteo: ERA5-Land, ERA5, ECMWF IFS (9 km grid)",
+    "zu": "Open-Meteo: ERA5-Land, ERA5, ECMWF IFS (igridi engu-9 km)",
+    "st": "Open-Meteo: ERA5-Land, ERA5, ECMWF IFS (keriti ya 9 km)",
+    "ts": "Open-Meteo: ERA5-Land, ERA5, ECMWF IFS (giridi ya 9 km)",
+    "ve": "Open-Meteo: ERA5-Land, ERA5, ECMWF IFS (giridi ya 9 km)"
   },
   {
     "english": "climate data service",

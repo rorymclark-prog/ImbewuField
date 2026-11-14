@@ -551,7 +551,7 @@ function paragraph(p: Pen, x: number, y: number, value: string, width: number, o
   return y;
 }
 
-const rainSourceLabel = (source: string | undefined, t: Translate) => source === 'nasa-power' ? t('NASA POWER (50 km climate grid)', 'NASA POWER (igridi yesimo sezulu engu-50 km)') : source === 'open-meteo' ? t('ERA5-Land via Open-Meteo (9 km grid)', 'ERA5-Land nge-Open-Meteo (igridi engu-9 km)') : t('climate data service', 'isevisi yedatha yesimo sezulu');
+const rainSourceLabel = (source: string | undefined, t: Translate) => source === 'nasa-power' ? t('NASA POWER (50 km climate grid)', 'NASA POWER (igridi yesimo sezulu engu-50 km)') : source === 'open-meteo' ? t('Open-Meteo: ERA5-Land, ERA5, ECMWF IFS (9 km grid)', 'Open-Meteo: ERA5-Land, ERA5, ECMWF IFS (igridi engu-9 km)') : t('climate data service', 'isevisi yedatha yesimo sezulu');
 
 /** More words need more paper; a native header must never paint over the chart's first value. */
 function figureHeader(p: Pen, headline: string, detail: string, language: string, detailSize = 13): number {

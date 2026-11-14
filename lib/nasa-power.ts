@@ -4,6 +4,11 @@ import { classifyKoppen } from './koppen-global';
 import { cleanPowerValue as clean, completeMonthlyTemperatures, type MonthlyTemperatureCoverage } from './climate-temperature';
 
 const MONTH_KEYS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+// February is 28 here although POWER's climatology covers 2001-2020 (its response
+// header says so), when the mean February is 28.25 days. Kept on purpose, not by
+// oversight: changing it raises every site's February rainfall by 0.9% and can move a
+// site across the 30% source comparison below, which the archived evidence cannot
+// measure. Rory's decision; see docs/audits/2026-11-14/nasa-power-hardening-claude.md, NPH-04.
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const OPEN_METEO_START_DATE = '1991-01-01';
 const OPEN_METEO_END_DATE = '2020-12-31';
@@ -74,14 +79,25 @@ export function monthlyNormalsFromDailyRainfall(
 
 /**
  * Fetch 30-year monthly rainfall normals (1991-2020 WMO period) from the
- * Open-Meteo historical archive (ERA5-Land reanalysis, ~9km/0.1° resolution).
+ * Open-Meteo historical archive.
  *
- * ERA5-Land is significantly better-resolved than NASA POWER's 50km cells and
- * avoids the ~44% wet bias that POWER exhibits for escarpment sites in KZN.
- * Live comparison for Assegay KZN: Open-Meteo 789mm/yr vs NASA POWER 1406mm/yr
- * vs ground truth ~900mm/yr — the remaining ~12% underestimate is a known ERA5
- * trait (slight smoothing of convective rain) but is far more useful than a 56%
- * overestimate.
+ * WHICH MODEL AND WHICH GRID CELL: the provider's defaults, because the request
+ * sends neither `models` nor `cell_selection`. This comment used to say
+ * "ERA5-Land reanalysis", and the independent reviews of 11 November 2026 (Codex
+ * CBR-02, Argon ISS-04) found that was not what is asked for. Open-Meteo's
+ * documented default, as read for docs/audits/2026-11-11/calendar-rule-holdout-claude.md,
+ * is "Best Match": ERA5-Land, ERA5, and ECMWF IFS from 2017, combined; a land
+ * cell of similar elevation, adjusted to the point's elevation. The response
+ * does not say which model produced a value. Pinning one would change the
+ * rainfall growers see, so it waits for a before/after comparison on the
+ * recorded places and Rory's decision (docs/audits/2026-11-14/
+ * nasa-power-hardening-claude.md, NPH-02); tests/nasa-power.test.ts trips if a
+ * model or cell policy is added without one.
+ *
+ * Why this source at all: its ~9 km cells resolve escarpments that NASA POWER's
+ * 50 km cells average away. Live comparison for Assegay KZN, recorded when this
+ * was added: Open-Meteo 789mm/yr vs NASA POWER 1406mm/yr vs ground truth
+ * ~900mm/yr.
  *
  * Returns 12 monthly totals in mm, January-first, or null on any failure.
  */
@@ -105,6 +121,13 @@ export async function fetchOpenMeteoRainfall(lat: number, lon: number): Promise<
     if (!res.ok) return null;
 
     const json = await res.json();
+    // The archive states its unit beside the series (daily_units.precipitation_sum,
+    // 'mm' in all 118 raw responses archived on 10 and 11 November 2026). Every
+    // completeness check below passes a full series in inches just as well, and the
+    // result would be read as mm: 25.4 times too dry, and likely to win the 30%
+    // comparison against NASA. A record that states another unit, or none, is not
+    // read; null keeps NASA POWER's rainfall (Argon ISS-04).
+    if (json?.daily_units?.precipitation_sum !== 'mm') return null;
     const dates: unknown = json.daily?.time;
     const values: unknown = json.daily?.precipitation_sum;
     if (
@@ -189,9 +212,10 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   }
 
   // Resolve the Open-Meteo request that started alongside the NASA request.
-  // ERA5-Land is at 0.1°/~9km vs NASA POWER's 0.5°/~55km — much better for sites
-  // on topographic transitions (escarpments, coastal ranges) where grid-averaging
-  // produces severe wet bias in coarser datasets.
+  // Its archive (provider-default model blend, see fetchOpenMeteoRainfall) is on
+  // ~9 km cells vs NASA POWER's 0.5°/~55km — much better for sites on topographic
+  // transitions (escarpments, coastal ranges) where grid-averaging produces
+  // severe wet bias in coarser datasets.
   const openMeteoMonthly = await openMeteoRequest;
   const openMeteoAnnual = openMeteoMonthly
     ? openMeteoMonthly.reduce((a, b) => a + b, 0)
@@ -277,20 +301,28 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   const windFromSummer = wd(['DEC', 'JAN', 'FEB']);
   const windFromWinter = wd(['JUN', 'JUL', 'AUG']);
 
-  // Rainfall pattern analysis
-  // SA months: Dec(11), Jan(0), Feb(1) = austral summer; Jun(5), Jul(6), Aug(7) = austral winter.
-  const summerRain = monthly[11] + monthly[0] + monthly[1];
-  const winterRain = monthly[5] + monthly[6] + monthly[7];
+  // Rainfall pattern analysis.
+  // The test is on CALENDAR months: Dec(11)+Jan(0)+Feb(1) against Jun(5)+Jul(6)+Aug(7).
+  // The wet/dry ranges it returns are calendar months too, so they read the same on
+  // either side of the equator. Only the season WORD depends on the hemisphere: Dec–Feb
+  // is the austral summer and the boreal winter. This used to say 'summer' for a
+  // Mediterranean site in Spain because its rain falls in December (Argon ISS-05). The
+  // tie at the equator is the classifier's (summerMonthIndices: lat >= 0 is northern).
+  // The 2x and 1.5x ratios stay attached to the calendar months they were written for,
+  // so no South African result moves; they were not re-tuned for the north.
+  const northern = lat >= 0;
+  const decToFebRain = monthly[11] + monthly[0] + monthly[1];
+  const junToAugRain = monthly[5] + monthly[6] + monthly[7];
   let pattern: 'summer' | 'winter' | 'year-round';
   let wetSeason: string;
   let drySeason: string;
 
-  if (summerRain > winterRain * 2) {
-    pattern = 'summer';
+  if (decToFebRain > junToAugRain * 2) {
+    pattern = northern ? 'winter' : 'summer';
     wetSeason = 'Oct–Mar';
     drySeason = 'May–Aug';
-  } else if (winterRain > summerRain * 1.5) {
-    pattern = 'winter';
+  } else if (junToAugRain > decToFebRain * 1.5) {
+    pattern = northern ? 'summer' : 'winter';
     wetSeason = 'May–Sep';
     drySeason = 'Nov–Mar';
   } else {

@@ -2696,7 +2696,7 @@ function FacilitatorCropsPageInner() {
         ) : climateSource === 'site' ? (
           <span
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
-            title="Sowing calendar derived from satellite climate records (NASA POWER / ERA5) for this site's own coordinates"
+            title="Sowing calendar derived from gridded climate records (NASA POWER / Open-Meteo archive) for this site's own coordinates"
             style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
           >
             <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · satellite records for this site

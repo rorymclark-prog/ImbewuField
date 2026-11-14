@@ -59,7 +59,7 @@ test('native rainfall and water axes keep January-to-December identity and the o
   const wet=location.rainfall.monthly.indexOf(Math.max(...location.rainfall.monthly));const dry=location.rainfall.monthly.indexOf(Math.min(...location.rainfall.monthly));
   assert.ok(words(figure.svg).includes(`${reportVisualText('Wettest month',language)}: ${recordsMonthShort(language,wet+1)} (${figureNumber(location.rainfall.monthly[wet])} mm)`));
   assert.ok(figure.alt.includes(`${recordsMonthShort(language,dry+1)} ${figureNumber(location.rainfall.monthly[dry])} mm`));
-  const source=climateFigure({...location,rainfall:{...location.rainfall,rainfallSource:'open-meteo'}},language)!;assert.equal(source.source,reportVisualText('ERA5-Land via Open-Meteo (9 km grid)',language));
+  const source=climateFigure({...location,rainfall:{...location.rainfall,rainfallSource:'open-meteo'}},language)!;assert.equal(source.source,reportVisualText('Open-Meteo: ERA5-Land, ERA5, ECMWF IFS (9 km grid)',language));
  }
 });
 
