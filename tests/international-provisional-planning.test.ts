@@ -17,7 +17,7 @@ import { createSavedProvisionalProfile, readSavedProvisionalProfile } from '../l
 import { createProvisionalCycleContext, reviewProvisionalCycleProfile } from '../lib/international/provisional-profile.ts';
 import { syntheticTemperatureEvidence, syntheticTemperatureInput } from './fixtures/provisional-temperature.ts';
 import { createPowerTemperatureSnapshot } from '../lib/power-temperature-evidence.ts';
-import { provisionalTemperatureEvidenceKey } from '../lib/international/provisional-temperature.ts';
+import { provisionalTemperatureEvidenceKey, provisionalTemperaturePeriodSummaryLines } from '../lib/international/provisional-temperature.ts';
 import { resolvePlantingBasis } from '../lib/international/grower-cycle.ts';
 import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import type { CountrySource } from '../lib/international/countries/types.ts';
@@ -1052,6 +1052,33 @@ function periodResult(input = periodRequest()) {
   const result = resolved(input), comparison = result.temperatureComparison;
   assert.ok(comparison?.version === 2); return { result, comparison };
 }
+
+test('shared period output explains comparisons and missing months without exposing machine codes or changing stored evidence', () => {
+  const input = periodRequest('2027-01-20', 41, [18, null, 17.999]);
+  const { comparison } = periodResult(input), before = JSON.stringify(comparison);
+  const lines = provisionalTemperaturePeriodSummaryLines(comparison).join('\n');
+  assert.match(lines, /18 °C; within the reported 18–25 °C optimum/);
+  assert.match(lines, /17.999 °C; outside the reported 18–25 °C optimum/);
+  assert.match(lines, /modelled monthly mean Unknown; not available: No modelled temperature value is available for this month/);
+  assert.match(lines, /41 days; grower estimate; recorded/);
+  assert.doesNotMatch(lines, /within-reported-optimum|outside-reported-optimum|target-month-temperature-missing|grower-estimate/);
+  assert.equal(JSON.stringify(comparison), before, 'wording must not rewrite stored comparison states or provenance');
+  const html = buildProvisionalCropPreviewHtml(input, { sample: true, bedLabel: 'Synthetic bed' })!.html;
+  assert.match(html, /outside the reported 18–25 °C optimum/);
+  assert.doesNotMatch(html, /within-reported-optimum|outside-reported-optimum|target-month-temperature-missing/);
+});
+
+test('shared period output explains a withheld interval without turning it into a failed crop recommendation', () => {
+  const input = periodRequest(); delete (input as { overrides?: unknown }).overrides;
+  const { comparison } = periodResult(input), before = JSON.stringify(comparison);
+  assert.equal(comparison.reason, 'ready-field-period-unavailable');
+  const lines = provisionalTemperaturePeriodSummaryLines(comparison).join('\n');
+  assert.match(lines, /Proposed field-period monthly comparisons: not available/);
+  assert.match(lines, /valid field-entry date and a positive field-occupancy duration/);
+  assert.doesNotMatch(lines, /ready-field-period-unavailable|within-reported-optimum|outside-reported-optimum/);
+  assert.match(lines, /no whole-period suitability result/);
+  assert.equal(JSON.stringify(comparison), before);
+});
 
 test('a proposed field interval compares each touched month independently without inventing missing yield or a calendar', () => {
   const input = periodRequest('2027-01-20', 41), before = JSON.stringify(input);

@@ -1164,7 +1164,9 @@ test('the period choice saves monthly rows and occupancy or mode round trips ret
     const choice = () => ui.root().findByProps({ 'aria-label': 'Use historical irrigated tomato temperature comparison' });
     const consent = () => act(() => choice().props.onChange({ target: { checked: true } }));
     consent(); await ui.click();
-    assert.match(ui.text(), /Proposed field-period monthly comparisons: available/); assert.match(ui.text(), /2027-02: 2027-02-01 to 2027-03-01 exclusive/);
+    assert.match(ui.text(), /Proposed field-period monthly comparisons: shown by month below/); assert.match(ui.text(), /2027-02: 2027-02-01 to 2027-03-01 exclusive/);
+    assert.doesNotMatch(text(ui.root().findByProps({ 'aria-label': 'Historical temperature comparison' })),
+      /within-reported-optimum|outside-reported-optimum|target-month-temperature-missing|grower-estimate/);
     assert.match(ui.text(), /Entry window: unknown/); assert.match(ui.text(), /no whole-period suitability result/);
     const declaration = ui.root().findAllByType('input').find(row => row.props.type === 'checkbox' && row.parent && text(row.parent).includes('Save these inputs'))!;
     act(() => declaration.props.onChange({ target: { checked: true } })); await ui.click('Save provisional profile');
