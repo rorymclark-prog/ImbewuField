@@ -1,0 +1,9 @@
+/* Each segment of the ring draws in over 350 ms. Without JS, or under reduced motion,
+   the ring is simply drawn complete. */
+.segment {
+  transition: stroke-dasharray 350ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .segment { transition: none; }
+}

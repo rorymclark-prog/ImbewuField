@@ -12,7 +12,8 @@
 
 import { numberLabel } from '@/lib/format-figures';
 import { useRouter } from 'next/navigation';
-import { Eye, Sprout, Droplets, Layers, Snowflake, Mountain, AlertTriangle } from 'lucide-react';
+import { Eye, Sprout, Droplets, Layers, Snowflake, Mountain } from 'lucide-react';
+import ChallengeIcon from '@/components/ChallengeIcon';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import CompletionScore from '@/components/report/CompletionScore';
 import { DEMO_COORDS, DEMO_LOCATION, DEMO_SITE_DATA, DEMO_WATER_DATA, DEMO_COMPLETION } from '@/lib/demo-site';
@@ -302,7 +303,7 @@ function ExampleInner() {
             <div className="space-y-1.5">
               {data.biome.challenges.slice(0, 4).map((c, i) => (
                 <div key={i} className="flex gap-2 font-sans leading-relaxed" style={{ fontSize: 'clamp(13px, 1vw, 15px)', color: 'var(--text-primary)' }}>
-                  <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: 'var(--gold-dim)' }}><AlertTriangle size={12} /></span>
+                  <span className="flex-shrink-0 mt-0.5 flex items-center"><ChallengeIcon text={c} /></span>
                   {c}
                 </div>
               ))}

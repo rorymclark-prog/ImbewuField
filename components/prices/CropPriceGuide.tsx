@@ -2,6 +2,7 @@
 
 import { AlertTriangle, Calculator, CheckCircle2, ChevronLeft } from 'lucide-react';
 import { formatPrice, priceDateLabel, type PricedCrop } from './CropPriceGuide.format';
+import { PriceGapBars } from './PriceGapBars';
 import { getCropArt } from '@/lib/crop-art';
 import { translate, useLanguage } from '@/lib/i18n';
 
@@ -130,6 +131,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
           </div>
         </div>
       </div>
+      <PriceGapBars selectedKey={crop.key} />
     </div>
   );
 }

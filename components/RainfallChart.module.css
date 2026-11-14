@@ -1,0 +1,36 @@
+/* Bars grow up from the baseline once, staggered left to right. Without a phase class
+   (server render, no JS, reduced motion) the bars are simply drawn at full height. */
+.armed :global(.recharts-bar-rectangle) {
+  transform: scaleY(0);
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+
+.play :global(.recharts-bar-rectangle) {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: barGrow 500ms ease-out backwards;
+}
+
+.play :global(.recharts-bar-rectangle:nth-child(1)) { animation-delay: 0ms; }
+.play :global(.recharts-bar-rectangle:nth-child(2)) { animation-delay: 60ms; }
+.play :global(.recharts-bar-rectangle:nth-child(3)) { animation-delay: 120ms; }
+.play :global(.recharts-bar-rectangle:nth-child(4)) { animation-delay: 180ms; }
+.play :global(.recharts-bar-rectangle:nth-child(5)) { animation-delay: 240ms; }
+.play :global(.recharts-bar-rectangle:nth-child(6)) { animation-delay: 300ms; }
+.play :global(.recharts-bar-rectangle:nth-child(7)) { animation-delay: 360ms; }
+.play :global(.recharts-bar-rectangle:nth-child(8)) { animation-delay: 420ms; }
+.play :global(.recharts-bar-rectangle:nth-child(9)) { animation-delay: 480ms; }
+.play :global(.recharts-bar-rectangle:nth-child(10)) { animation-delay: 540ms; }
+.play :global(.recharts-bar-rectangle:nth-child(11)) { animation-delay: 600ms; }
+.play :global(.recharts-bar-rectangle:nth-child(12)) { animation-delay: 660ms; }
+
+@keyframes barGrow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .armed :global(.recharts-bar-rectangle) { transform: none; }
+  .play :global(.recharts-bar-rectangle) { animation: none; }
+}

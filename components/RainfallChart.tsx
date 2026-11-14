@@ -3,7 +3,10 @@
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ReferenceLine,
 } from 'recharts';
+import { useEffect, useState } from 'react';
 import { useLanguage } from '@/lib/i18n';
+import { prefersReducedMotion, useInViewOnce, type InViewPhase } from '@/lib/use-in-view-once';
+import styles from './RainfallChart.module.css';
 import type { MonthlyRainfall } from '@/lib/types';
 
 const MONTHS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
@@ -15,11 +18,36 @@ const ZU_MONTH_FULL = [
 
 interface Props { rainfall: MonthlyRainfall }
 
+// Last bar starts 11 x 60 ms in and runs 500 ms; the annual figure counts up over the same span.
+const COUNT_MS = 11 * 60 + 500;
+
+/** Counts 0 -> target while the chart plays; any other phase shows the real value. */
+function useCountUp(target: number, phase: InViewPhase): number {
+  const [value, setValue] = useState(target);
+  useEffect(() => {
+    if (phase === 'armed') { setValue(0); return; }
+    if (phase !== 'play' || prefersReducedMotion()) { setValue(target); return; }
+    let raf = 0;
+    const start = performance.now();
+    const step = (now: number) => {
+      const p = Math.min(1, (now - start) / COUNT_MS);
+      setValue(p >= 1 ? target : target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [phase, target]);
+  return phase === 'final' ? target : value;
+}
+
 export default function RainfallChart({ rainfall }: Props) {
   const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
   const text = (en: string, zu: string) => isZulu ? zu : en;
+  const { ref, phase } = useInViewOnce<HTMLDivElement>();
+  const annualShown = useCountUp(rainfall?.annual ?? 0, phase);
   if (!rainfall?.monthly?.length) return null;
+  const annualText = annualShown === rainfall.annual ? String(rainfall.annual) : String(Math.round(annualShown));
   const maxVal = Math.max(...rainfall.monthly, 10);
   const data = rainfall.monthly.map((v, i) => ({
     month: isZulu ? String(i + 1) : MONTHS[i],
@@ -49,7 +77,7 @@ export default function RainfallChart({ rainfall }: Props) {
   // w21-07: the text classes here used muted/secondary/blue utility names Tailwind never defined,
   // so every label inherited the panel colour; they now read the theme tokens directly.
   return (
-    <div>
+    <div ref={ref} className={phase === 'armed' ? styles.armed : phase === 'play' ? styles.play : undefined}>
       <div className={`mb-3 ${isZulu ? 'flex flex-col items-start gap-1' : 'flex items-center justify-between'}`}>
         <div>
           <span className="text-xs text-[var(--text-muted)] uppercase tracking-wider">
@@ -58,7 +86,7 @@ export default function RainfallChart({ rainfall }: Props) {
           {isZulu && <div className="text-xs text-[var(--text-muted)]">Uhlaka lwesiZulu olungakabuyekezwa · Unreviewed isiZulu draft</div>}
         </div>
         <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
-          <span className="text-[var(--blue)]">{isZulu ? `${rainfall.annual} mm/ngonyaka · mm/yr` : `${rainfall.annual}mm/yr`}</span>
+          <span className="text-[var(--blue)]">{isZulu ? `${annualText} mm/ngonyaka · mm/yr` : `${annualText}mm/yr`}</span>
           <span className="text-[var(--text-muted)]">{pattern}</span>
         </div>
       </div>
@@ -91,7 +119,7 @@ export default function RainfallChart({ rainfall }: Props) {
             }}
           />
           <ReferenceLine y={0} stroke="#2d4528" />
-          <Bar dataKey="mm" radius={[2, 2, 0, 0]}>
+          <Bar dataKey="mm" isAnimationActive={false} radius={[2, 2, 0, 0]}>
             {data.map((d, i) => (
               <Cell
                 key={i}
