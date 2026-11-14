@@ -1060,6 +1060,7 @@ test('shared period output explains comparisons and missing months without expos
   assert.match(lines, /18 °C; within the reported 18–25 °C optimum/);
   assert.match(lines, /17.999 °C; outside the reported 18–25 °C optimum/);
   assert.match(lines, /modelled monthly mean Unknown; not available: No modelled temperature value is available for this month/);
+  assert.doesNotMatch(lines, /this month\.\.|this month\.;/, 'the outer sentence owns its final punctuation');
   assert.match(lines, /41 days; grower estimate; recorded/);
   assert.doesNotMatch(lines, /within-reported-optimum|outside-reported-optimum|target-month-temperature-missing|grower-estimate/);
   assert.equal(JSON.stringify(comparison), before, 'wording must not rewrite stored comparison states or provenance');
@@ -1074,10 +1075,67 @@ test('shared period output explains a withheld interval without turning it into 
   assert.equal(comparison.reason, 'ready-field-period-unavailable');
   const lines = provisionalTemperaturePeriodSummaryLines(comparison).join('\n');
   assert.match(lines, /Proposed field-period monthly comparisons: not available/);
-  assert.match(lines, /valid field-entry date and a positive field-occupancy duration/);
+  assert.match(lines, /field-clear date is not ready/);
+  assert.match(lines, /entry-window and timing checks/);
   assert.doesNotMatch(lines, /ready-field-period-unavailable|within-reported-optimum|outside-reported-optimum/);
   assert.match(lines, /no whole-period suitability result/);
   assert.equal(JSON.stringify(comparison), before);
+});
+
+test('a withheld field period does not blame missing dates or positive durations when another plan check holds it', () => {
+  const own = (value: unknown, unit: string) => ({ state: 'provided', value, unit,
+    provenance: { kind: 'grower-estimate', recordedAt: temperatureRequest().recordedAt } });
+  for (const [days, changes, status] of [
+    [40, { allowedEntryMonths: own([2], 'utc-months') }, 'excluded'],
+    [30, { allowedEntryMonths: own([1], 'utc-months'), fieldEntryToFirstHarvestDays: own(25, 'days'), pickingDays: own(10, 'days') }, 'invalid-inputs'],
+  ] as const) {
+    const base = periodRequest('2027-01-20', days);
+    const input = { ...base, overrides: { ...base.overrides, ...changes } };
+    const before = JSON.stringify(input), { result, comparison } = periodResult(input);
+    assert.equal(result.assessment.schedule.fieldClearDate.status, status);
+    assert.equal(result.assessment.snapshot?.fieldEntryDate.state, 'provided');
+    assert.ok(comparison.occupancy.state === 'provided');
+    assert.equal(comparison.occupancy.value, days);
+    assert.ok(comparison.occupancy.value > 0);
+    assert.equal(comparison.reason, 'ready-field-period-unavailable');
+    assert.deepEqual(comparison.rows, []);
+    const retained = JSON.stringify(comparison), lines = provisionalTemperaturePeriodSummaryLines(comparison).join('\n');
+    assert.match(lines, /field-clear date is not ready/);
+    assert.match(lines, /entry-window and timing checks/);
+    assert.doesNotMatch(lines, /valid field-entry date and a positive field-occupancy duration/);
+    assert.equal(JSON.stringify(comparison), retained);
+    const html = buildProvisionalCropPreviewHtml(input, { sample: true, bedLabel: 'Synthetic bed' })!.html;
+    assert.match(html, /field-clear date is not ready/);
+    assert.doesNotMatch(html, /valid field-entry date and a positive field-occupancy duration/);
+    assert.equal(JSON.stringify(input), before);
+  }
+  // This engineering boundary remains available: equality is allowed by the
+  // existing arithmetic, so the wording fix must not tighten that rule.
+  const base = periodRequest('2027-01-20', 35);
+  const exact = { ...base, overrides: { ...base.overrides, allowedEntryMonths: own([1], 'utc-months'),
+    fieldEntryToFirstHarvestDays: own(25, 'days'), pickingDays: own(10, 'days') } };
+  const { result, comparison } = periodResult(exact);
+  assert.equal(result.assessment.schedule.fieldClearDate.status, 'ready');
+  assert.equal(result.assessment.schedule.fieldClearDate.value, '2027-02-24');
+  assert.equal(comparison.state, 'available');
+});
+
+test('a missing entry-month comparison and its monthly row each receive the correct outer punctuation', () => {
+  const input = periodRequest('2027-01-20', 40, [null, 18]);
+  const before = JSON.stringify(input), { comparison } = periodResult(input), retained = JSON.stringify(comparison);
+  assert.equal(comparison.state, 'available');
+  assert.equal(comparison.entryMonth.state, 'unknown');
+  const lines = provisionalTemperaturePeriodSummaryLines(comparison);
+  const entry = lines.find(line => line.startsWith('Separate entry-month comparison:'))!;
+  const row = lines.find(line => line.startsWith('2027-01:'))!;
+  assert.match(entry, /not available: No modelled temperature value is available for this month; UTC month 1;/);
+  assert.match(row, /not available: No modelled temperature value is available for this month\.$/);
+  assert.doesNotMatch(entry + row, /this month\.\.|this month\.;/);
+  const html = buildProvisionalCropPreviewHtml(input, { sample: true, bedLabel: 'Synthetic bed' })!.html;
+  assert.match(html, /not available: No modelled temperature value is available for this month; UTC month 1;/);
+  assert.doesNotMatch(html, /this month\.\.|this month\.;/);
+  assert.equal(JSON.stringify(comparison), retained);
+  assert.equal(JSON.stringify(input), before);
 });
 
 test('a proposed field interval compares each touched month independently without inventing missing yield or a calendar', () => {

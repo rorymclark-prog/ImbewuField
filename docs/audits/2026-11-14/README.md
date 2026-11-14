@@ -1,5 +1,7 @@
 # Audits for 14 November 2026
 
+- [Field-period review reasons and punctuation](provisional-review-reasons-codex.md): actual Claude R1–R3 corrections, unchanged calculation/replay contracts and fresh changed reports/calendar files; exact successor gates remain separate.
+
 - [Field-period wording and report continuity](provisional-period-wording-claude-followup-codex.md): address actual Claude Low findings with shared readable period sentences, transitive import evidence and fresh short-summary originals; successor gates remain separate.
 
 - [Buyer-page climate revision fixture](page-consumer-climate-fixture-codex.md): repair the eight full-CI harness failures and add a live revision/callback regression without application changes; successor full CI and external gates remain separate.

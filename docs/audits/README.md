@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest actual-Claude delta — [Field-period review reasons and punctuation](2026-11-14/provisional-review-reasons-codex.md). Correct withheld-date explanation, narrow the release claim and remove doubled separators; source calculations and legacy origin replay remain unchanged. Successor CI/external gates are separate.
+
 Latest actual-Claude follow-up — [Field-period wording and report continuity](2026-11-14/provisional-period-wording-claude-followup-codex.md). Shared readable comparisons and exact current report evidence; actual successor CI/reviews and agronomic limits remain separate.
 
 Latest full-CI correction — [Buyer-page climate revision fixture](2026-11-14/page-consumer-climate-fixture-codex.md). Preserve the actual page's state boundary in the extracted consumer test; all application source and farming outputs remain unchanged. Successor CI/external gates remain separate.
