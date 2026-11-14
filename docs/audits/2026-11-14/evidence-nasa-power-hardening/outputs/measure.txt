@@ -1,0 +1,10 @@
+(a) archived Open-Meteo responses: 118; daily_units.precipitation_sum values: {"'mm'": 118}
+(b) recorded places: 100; latitude >= 0: 0; most northerly lat: -22.35
+    pattern old vs new differs at: none; patterns: {'summer': 78, 'year-round': 9, 'winter': 13}
+(c) places on NASA POWER rainfall: 87 of 100 (rest on Open-Meteo, unaffected)
+    February increase at 28.25 days: min 0.05 mm, median 0.70 mm, max 1.43 mm (Underberg, Feb 160.4 mm, year 1062 mm)
+    largest change to the annual total: 0.15%
+    pattern change from the February correction alone: none
+    30% source comparison: NOT measurable here; neither archive holds the app's 1991-2020 Open-Meteo annual beside NASA's.
+archived app outputs (fetchNasaPower): 118; monthlyTempCoverage.status: {'complete': 118}
+incomplete or absent, with the class the server printed: none

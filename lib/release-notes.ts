@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '14 November 2026', sha: '4ba53e400d4e55cb5384a78ab55442dd2efcac4c', changes: [
+    'The report names the rainfall records it uses, as the provider supplies them.',
+    'North of the equator, rain from December to February is now called winter rain.',
+  ], tour: [{ title: 'See where your rainfall comes from', where: 'Menu → Reports → a site report', href: '/reports',
+    detail: 'Open a site report and look under the monthly rainfall chart. If the rainfall came from the Open-Meteo archive, the source line now names the records it combines: ERA5-Land, ERA5 and ECMWF IFS. The rainfall figures themselves have not changed.' }] },
   { when: '11 November 2026', sha: '4e095ecc74cd71a3e8e16eb0fa70279f4a254542', changes: [
     'Printed frost warnings follow the frost months you record, not a fixed winter window.',
     'Site data shows its figures and sources, without made-up sun, wind, crop or site verdicts.',

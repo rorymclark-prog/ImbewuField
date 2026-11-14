@@ -65,6 +65,16 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 14 Nov 2026 — Shared climate fetch hardening (report source line and northern season word changed; no rainfall or temperature value changed; full suite required before merge)
+
+Branch `claude/dreamy-mccarthy-c7q2al`, stacked on PR #1334. Open-Meteo rainfall that does not state mm is
+refused, so NASA POWER's rainfall is kept (NPH-01). The request's real model and cell policy (provider default
+"Best Match") is stated in the code and on the report's source line; nothing is pinned until a measured
+comparison and Rory's decision (NPH-02). North of the equator, December–February rain is called winter rain
+(NPH-04a); all 100 recorded places are southern and unchanged. Kept with reasons: the server's climate class
+from 20 °C stand-ins (NPH-03, Rory's contract; reader-side proposal) and the 28-day February (NPH-04c).
+Record: `docs/audits/2026-11-14/nasa-power-hardening-claude.md`.
+
 ### 10 Nov 2026 — Sample farm: a fixed sowing calendar of its own (no farming number changed)
 - **Record:** Update 3 in `docs/audits/2026-11-10/crop-plan-accuracy-fixes-claude.md` (CP-102). Rory: "go ahead with the
   fixed calendar for the sample farm".
