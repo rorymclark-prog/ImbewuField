@@ -1,3 +1,4 @@
+import { saskatchewanCabbageNurseryCandidates, saskatchewanNurseryFactReuse, saskatchewanNurseryResultQualifier, USASK_CABBAGE_ORIGINAL_SHA256 } from '../lib/international/providers/usask-saskatchewan-cabbage.ts';
 import { canadaCabbageCandidates, canadaCabbageFactReuse, AAFC_CANADA_CABBAGE_SOURCE, AAFC_CABBAGE_PDF_SHA256, AAFC_CABBAGE_QUALIFIER } from '../lib/international/providers/aafc-canada-cabbage.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -890,4 +891,94 @@ test('saved-cycle review context stays held rather than throwing before site con
   assert.equal(createProvisionalCycleContext(source, null, recordedAt), null);
   assert.equal(createProvisionalCycleContext(source, { countryCode: null, agriculturalRegionReference: null,
     policyFingerprint: 'fixture-policy', knownPlantingRestriction: null }, 'not-a-date'), null);
+});
+
+
+function saskatchewanRequest(basis: 'lower-bound' | 'upper-bound' = 'lower-bound'): ProvisionalDraftRequest {
+  const base = canadaRequest(5), context = { ...base.context, agriculturalRegionReference: 'Saskatoon', varietyReference: 'grower-named variety, unvalidated' };
+  return { ...base, context, candidates: saskatchewanCabbageNurseryCandidates(context, 'cabbage', base.recordedAt, true,
+    { purpose: 'seed-raised-nursery-to-outdoor', basis }),
+    fieldEntryDate: { state: 'provided', value: '2027-05-20', unit: 'utc-date', provenance: { kind: 'grower-estimate', recordedAt: base.recordedAt } } };
+}
+
+test('USask endpoints give conditional seed-start dates with independent unknowns and source-specific visible export qualifications', () => {
+  for (const [basis, days, date] of [['lower-bound', 35, '2027-04-15'], ['upper-bound', 42, '2027-04-08']] as const) {
+    const input = saskatchewanRequest(basis), r = resolved(input);
+    assert.deepEqual(input.candidates.map(c => c.field), ['nurseryDays']); assert.equal(r.activeEstablishment, 'transplant');
+    assert.equal(r.fields.nurseryDays.activeTier, 'historical-public-reference');
+    assert.equal(r.fields.nurseryDays.activeInput.state, 'provided');
+    if (r.fields.nurseryDays.activeInput.state === 'provided') assert.equal(r.fields.nurseryDays.activeInput.value, days);
+    assert.deepEqual(r.fields.nurseryDays.defaultReportedRange, [35, 42]); assert.equal(r.fields.nurseryDays.defaultPlanningValueBasis, basis);
+    assert.equal(r.assessment.schedule.nurseryStartDate.value, date); assert.equal(r.assessment.entryWindow, 'unknown');
+    assert.equal(r.assessment.estimatedPlantCount.value, null); assert.equal(r.assessment.estimatedYieldKg.value, null);
+    assert.equal(r.assessment.schedule.firstHarvestDate.value, null); assert.equal(r.assessment.schedule.nextFieldEntryDate.value, null);
+    assert.equal(r.profile.version, 1); assert.equal(r.fields.nurseryDays.sourceBindings[0].evidenceState, 'undated');
+    const full = assessGrowerPlanning({ profile: r.profile, scope: input.context.scope, measuredAreaM2: input.measuredAreaM2, fieldEntryDate: input.fieldEntryDate });
+    assert.equal(full.status, 'missing-inputs');
+    const html = buildProvisionalCropPreviewHtml(input, { sample: true, bedLabel: 'Synthetic nursery bed' })!.html;
+    assert.ok(html.includes(USASK_CABBAGE_ORIGINAL_SHA256)); assert.match(html, /approximately 5–6 weeks/);
+    assert.match(html, new RegExp(`Source choice: ${basis}, ${days} days`)); assert.match(html, /several consecutive nights/);
+    assert.match(html, /monthly means cannot substitute/); assert.match(html, /Publication\/revision unknown/);
+    // A full-width qualification cannot squeeze every output label into a tiny column.
+    assert.match(html, /<tr class="nursery-reference"><td colspan="2"><p><strong>Nursery start \(UTC\):/);
+    assert.ok(html.indexOf('Nursery source conditions') < html.indexOf('Evidence and grower edits'));
+    assert.equal(input.candidates[0].source!.licence.status, 'unknown');
+    assert.match(saskatchewanNurseryResultQualifier(r.fields)!, /not proof of readiness/);
+  }
+});
+
+test('USask admission is exact and cannot borrow known-licence or AAFC permissions for altered ranges, fields or scope', () => {
+  const input = saskatchewanRequest(), original = input.candidates[0];
+  const mutations: Array<(c: any) => void> = [
+    c => { c.input.value = 38.5; }, c => { c.reportedRange = [28, 42]; }, c => { c.planningValueBasis = 'reported-point'; },
+    c => { c.field = 'fieldEntryToFirstHarvestDays'; }, c => { c.field = 'establishment'; c.input.value = 'transplant'; c.input.unit = 'method'; },
+    c => { c.assumptions = []; }, c => { c.assumptions[1] = 'unknown hash'; }, c => { c.source.licence = { status: 'known', value: 'open' }; },
+    c => { c.source.publishedOn = '2026-01-01'; }, c => { c.source.id = 'other'; c.source.licence = { status: 'known', value: 'open' }; },
+    c => { c.temporalScope.kind = 'recurring-season'; }, c => { c.geography.regionReference = 'Saskatchewan'; },
+    c => { c.input.provenance.recordedAt = '2026-11-13T12:00:00.000Z'; }, c => { c.assumptions[2] = 'purchased seedlings'; },
+  ];
+  for (const mutate of mutations) {
+    const c = structuredClone(original); mutate(c);
+    assert.equal(saskatchewanNurseryFactReuse(c, input.context, input.recordedAt), null);
+    assert.equal(resolved({ ...input, candidates: [c] }).fields.nurseryDays.activeTier, null);
+  }
+  let accessed = 0; const accessor = structuredClone(original);
+  Object.defineProperty(accessor, 'planningValueBasis', { enumerable: true, get() { accessed++; return 'lower-bound'; } });
+  assert.equal(saskatchewanNurseryFactReuse(accessor, input.context, input.recordedAt), null); assert.equal(accessed, 0);
+  const use = { purpose: 'seed-raised-nursery-to-outdoor' as const, basis: 'lower-bound' as const };
+  for (const context of [{ ...input.context, countryCode: 'US' }, { ...input.context, agriculturalRegionReference: null },
+    { ...input.context, agriculturalRegionReference: 'Ontario' }, { ...input.context, agriculturalRegionReference: 'Saskatchewan' },
+    { ...input.context, establishment: null }, { ...input.context, establishment: 'direct' as const }]) {
+    assert.deepEqual(saskatchewanCabbageNurseryCandidates(context, 'cabbage', input.recordedAt, true, use), []);
+    assert.equal(resolved({ ...input, context }).fields.nurseryDays.activeTier, null);
+  }
+  assert.deepEqual(saskatchewanCabbageNurseryCandidates(input.context, 'cabbage', input.recordedAt, false, use), []);
+  assert.deepEqual(saskatchewanCabbageNurseryCandidates(input.context, 'cabbage', input.recordedAt, true, null), []);
+  assert.deepEqual(saskatchewanCabbageNurseryCandidates(input.context, 'cabbage', input.recordedAt, true, { ...use, purpose: 'purchased' } as any), []);
+  assert.deepEqual(saskatchewanCabbageNurseryCandidates(input.context, 'tomatoes', input.recordedAt, true, use), []);
+  const raw = { ...input.context, agriculturalRegionReference: '  SASKATCHEWAN   PRAIRIE  ' };
+  const entries = saskatchewanCabbageNurseryCandidates(raw, 'cabbage', input.recordedAt, true, use);
+  assert.equal(entries[0].geography.kind, 'region'); if (entries[0].geography.kind === 'region') assert.equal(entries[0].geography.regionReference, raw.agriculturalRegionReference);
+});
+
+test('USask independent overrides stay distinct from the retained source endpoint and unrelated exclusions still hold', () => {
+  const input = saskatchewanRequest();
+  const provided = (value: unknown, unit: string) => ({ state: 'provided', value, unit, provenance: { kind: 'grower-estimate', recordedAt: input.recordedAt } });
+  const own = resolved({ ...input, overrides: { ...input.overrides, nurseryDays: provided(40, 'days') } });
+  assert.equal(own.assessment.schedule.nurseryStartDate.value, '2027-04-10');
+  assert.match(saskatchewanNurseryResultQualifier(own.fields)!, /Active nursery duration is a grower edit/);
+  assert.equal(own.fields.nurseryDays.baselineDefault?.state, 'provided');
+  const clear = resolved({ ...input, overrides: { ...input.overrides, nurseryDays: { state: 'missing', reason: 'not-entered' } } });
+  assert.equal(clear.assessment.schedule.nurseryStartDate.value, null);
+  assert.equal(resolved(input).assessment.schedule.nurseryStartDate.value, '2027-04-15');
+  const excluded = resolved({ ...input, overrides: { ...input.overrides, allowedEntryMonths: provided([], 'utc-months') } });
+  assert.equal(excluded.assessment.entryWindow, 'excluded'); assert.equal(excluded.assessment.schedule.nurseryStartDate.value, null);
+});
+
+
+test('two admissible USask endpoint capsules conflict rather than selecting or averaging a nursery lead', () => {
+  const input = saskatchewanRequest();
+  const r = resolved({ ...input, candidates: [...input.candidates, ...saskatchewanRequest('upper-bound').candidates] });
+  assert.equal(r.fields.nurseryDays.status, 'conflict'); assert.equal(r.assessment.schedule.nurseryStartDate.value, null);
+  assert.match(saskatchewanNurseryResultQualifier(r.fields)!, /Conflicting nursery endpoints remain unresolved/);
 });

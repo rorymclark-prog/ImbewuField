@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest prairie nursery continuation — [Saskatchewan cabbage seed-start lead](2026-11-14/saskatchewan-cabbage-nursery-codex.md). Explicit approximate endpoint, retained readiness/region uncertainty, canonical saved/adopted evidence and printable qualification; full successor CI/external gates remain separate.
+
 Latest Canadian source continuation — [Aggregate cabbage transplant-month reference](2026-11-14/canadian-cabbage-month-reference-codex.md). Explicit historical programme selection, bounded fact reuse and retained unknowns; saved-row missing-condition correction, successor CI and external gates tracked separately.
 
 Latest global comparison continuation — [Optional monthly tomato comparison](2026-11-13/provisional-temperature-comparison-codex.md). Source-qualified model temperatures, retained assumptions, actual dated-cycle review and explicit unknowns; successor CI, external review and local validation remain separate.
