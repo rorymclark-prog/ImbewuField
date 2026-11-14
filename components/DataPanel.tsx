@@ -35,7 +35,8 @@ import turfArea from '@turf/area';
 import turfLength from '@turf/length';
 import { useLanguage, translate } from '@/lib/i18n';
 import { BIOME_I18N_KEYS } from '@/lib/biome';
-import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2, Users } from 'lucide-react';
+import ChallengeIcon from '@/components/ChallengeIcon';
+import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, Trash2, Snowflake, Mountain, Loader2, Users } from 'lucide-react';
 import PeoplePanel from './PeoplePanel';
 import EvidenceSheet from './EvidenceSheet';
 import EvidenceCatalogue from './EvidenceCatalogue';
@@ -1296,7 +1297,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <div className="space-y-1.5">
                 {biomeList(data.biome.code, 'challenges', data.biome.challenges, t).slice(0, 4).map((c, i) => (
                   <div key={i} className="flex gap-2 text-xs font-sans leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                    <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: 'var(--gold)' }}><AlertTriangle size={12} /></span>
+                    <span className="flex-shrink-0 mt-0.5 flex items-center"><ChallengeIcon text={c} /></span>
                     {c}
                   </div>
                 ))}

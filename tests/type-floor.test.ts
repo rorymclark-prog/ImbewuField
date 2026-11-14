@@ -153,6 +153,8 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/exchange/NewListingForm.tsx': 'wave 15 code-10: the new-listing form; no sub-12px type',
   'components/exchange/ShareListingButton.tsx': 'wave 15 code-10: the share-a-listing menu; no sub-12px type',
   'components/prices/CropPriceGuide.tsx': 'wave 15 code-10: the crop price guide; no sub-12px type',
+  'components/prices/PriceGapBars.tsx': 'wholesale vs retail gap bars under the price guide; no sub-12px type',
+  'components/ChallengeIcon.tsx': 'decorative animated challenge icon; no text, no font sizes',
   'components/LanguageDraftNote.tsx': 'the shared isiZulu-draft notice (wave 14, zu-04) is read on farmer-facing phones',
   'components/records/RecordQuantityFields.tsx': 'a farmer must read the production quantity and its unit before saving',
   'components/records/RecordQuantitySummary.tsx': 'eggs and packages need readable separate totals beside weighed harvests',

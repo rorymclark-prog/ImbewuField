@@ -130,7 +130,7 @@ const pageHooks = registerHooks({
       if (specifier.endsWith('.module.css')) return { url: cssModule, shortCircuit: true };
       // w14: /tour's header is components/layout/AppHeader now (MenuButton · BackButton · BrandLogo ·
       // title in one place); it is page chrome, not tour behaviour, so it is stubbed like the rest.
-      if (['@/components/MenuButton', '@/components/BackButton', '@/components/SettingsButton', '@/components/BrandLogo', '@/components/TabBar', '@/components/layout/AppHeader'].includes(specifier)) return { url: emptyComponent, shortCircuit: true };
+      if (['@/components/MenuButton', '@/components/BackButton', '@/components/SettingsButton', '@/components/BrandLogo', '@/components/TabBar', '@/components/layout/AppHeader', '@/components/tour/TourRoute'].includes(specifier)) return { url: emptyComponent, shortCircuit: true };
     }
     return nextResolve(specifier, context);
   },
