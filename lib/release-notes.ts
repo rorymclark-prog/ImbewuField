@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '14 November 2026', sha: '7df85c14b', changes: [
+    'Historical temperature comparisons use plain words in previews and exports.',
+  ] },
   { when: '14 November 2026', sha: 'df314b7b6', changes: [
     'Tomato previews can compare historical temperatures across your proposed field period.',
     'Each month keeps its own result and unknowns; your planting window stays separate.',

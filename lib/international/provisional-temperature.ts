@@ -234,15 +234,38 @@ export function assessProvisionalTemperatureComparison(input: unknown, context: 
 
 /** Common human lines keep the live screen, saved readback and file in agreement.
  * The raw response and private policy/account handles never enter the document. */
+function temperatureReasonText(reason: string | null): string {
+  switch (reason) {
+    case 'comparison-declaration-invalid': return 'The comparison request could not be validated. Review the selected crop, source and comparison settings.';
+    case 'criterion-not-for-this-crop': return 'This temperature reference does not cover the selected crop.';
+    case 'irrigated-field-context-required': return 'This reference requires an explicitly selected irrigated field-cropping context.';
+    case 'source-climate-evidence-unavailable-or-mismatched': return 'A qualified climate record matching this site and country is not available.';
+    case 'climate-period-or-receipt-is-in-the-future': return 'The climate period or receipt is later than the review date.';
+    case 'criterion-not-reviewed-at-this-date': return 'This temperature reference had not been reviewed at the selected date.';
+    case 'field-entry-month-not-entered': return 'A field-entry month has not been entered.';
+    case 'target-month-temperature-missing': return 'No modelled temperature value is available for this month.';
+    case 'ready-field-period-unavailable': return 'A valid field-entry date and a positive field-occupancy duration are needed to calculate the field-clear date.';
+    case 'field-period-exceeds-software-output-limit': return `The proposed period exceeds the software output limit of ${MAX_TEMPERATURE_PERIOD_ROWS} touched months. No partial list is shown.`;
+    default: return 'The historical temperature comparison could not be prepared from the current inputs.';
+  }
+}
+function monthlyComparisonText(value: MonthComparison, criterion: typeof TOMATO_MONTHLY_CRITERION): string {
+  if (value.state === 'unknown') return `not available: ${temperatureReasonText(value.reason)}`;
+  return `${value.state === 'within-reported-optimum' ? 'within' : 'outside'} the reported ${criterion.lowerC}–${criterion.upperC} °C optimum`;
+}
 export function provisionalTemperaturePeriodSummaryLines(value: ProvisionalFieldPeriodTemperatureAssessment): readonly string[] {
+  // Keep persisted discriminators intact; these shared sentences reach growers
+  // on screen, in printed evidence and in every calendar event description.
+  const provenance = { 'grower-estimate': 'grower estimate', 'grower-record': 'grower record', 'external-reference': 'external reference' };
   return [
-    `Proposed field-period monthly comparisons: ${value.state}. ${value.reason ?? ''}`.trim(),
-    `Grower-proposed UTC interval: ${value.start ?? 'Unknown'} to ${value.endExclusive ?? 'Unknown'} (exclusive). Field occupancy: ${value.occupancy.state === 'provided' ? `${value.occupancy.value} days; ${value.occupancy.provenance.kind}; recorded ${value.occupancy.provenance.recordedAt}` : 'Unknown'}.`,
-    `Separate entry-month comparison: ${value.entryMonth.state}; UTC month ${value.entryMonth.month ?? 'Unknown'}; modelled monthly mean ${value.entryMonth.valueC === null ? 'Unknown' : `${value.entryMonth.valueC} °C`}${value.entryMonth.reason ? `; ${value.entryMonth.reason}` : ''}.`,
+    value.state === 'available' ? 'Proposed field-period monthly comparisons: shown by month below. Missing monthly values remain unknown.'
+      : `Proposed field-period monthly comparisons: not available. ${temperatureReasonText(value.reason)}`,
+    `Grower-proposed UTC interval: ${value.start ?? 'Unknown'} to ${value.endExclusive ?? 'Unknown'} (exclusive). Field occupancy: ${value.occupancy.state === 'provided' ? `${value.occupancy.value} days; ${provenance[value.occupancy.provenance.kind]}; recorded ${value.occupancy.provenance.recordedAt}` : 'Unknown'}.`,
+    `Separate entry-month comparison: ${monthlyComparisonText(value.entryMonth, value.criterion)}; UTC month ${value.entryMonth.month ?? 'Unknown'}; modelled monthly mean ${value.entryMonth.valueC === null ? 'Unknown' : `${value.entryMonth.valueC} °C`}.`,
     'Application convention: each row covers the overlap with one calendar month in [entry, clear). Its whole-month historical mean is not a daily condition or forecast for those overlap days. Repeated calendar months use the same climatology, not independent yearly predictions.',
     'Each row applies the cited single-month comparison separately. There is no whole-period suitability result, growth-stage assessment, safe-day count, planting permission or inferred crop duration. Missing harvest compatibility remains unassessed.',
     `Software output limit: ${MAX_TEMPERATURE_PERIOD_ROWS} touched months, not a farming maximum. Longer periods remain unavailable rather than being truncated.`,
-    ...value.rows.map(row => `${row.yearMonth}: ${row.from} to ${row.endExclusive} exclusive; modelled monthly mean ${row.valueC === null ? 'Unknown' : `${row.valueC} °C`}; ${row.state}${row.reason ? `; ${row.reason}` : ''}.`),
+    ...value.rows.map(row => `${row.yearMonth}: ${row.from} to ${row.endExclusive} exclusive; modelled monthly mean ${row.valueC === null ? 'Unknown' : `${row.valueC} °C`}; ${monthlyComparisonText(row, value.criterion)}.`),
   ];
 }
 export function provisionalTemperatureLines(value: ProvisionalTemperatureResult): readonly string[] {

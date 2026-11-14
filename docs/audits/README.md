@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest actual-Claude follow-up — [Field-period wording and report continuity](2026-11-14/provisional-period-wording-claude-followup-codex.md). Shared readable comparisons and exact current report evidence; actual successor CI/reviews and agronomic limits remain separate.
+
 Latest full-CI correction — [Buyer-page climate revision fixture](2026-11-14/page-consumer-climate-fixture-codex.md). Preserve the actual page's state boundary in the extracted consumer test; all application source and farming outputs remain unchanged. Successor CI/external gates remain separate.
 
 Latest global comparison continuation — [Proposed field-period monthly temperatures](2026-11-14/field-period-temperature-codex.md). Explicit repeated historical comparisons preserve unknowns, exact old replay and own dates; no whole-season suitability or calendar inference.
