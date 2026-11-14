@@ -244,13 +244,15 @@ function temperatureReasonText(reason: string | null): string {
     case 'criterion-not-reviewed-at-this-date': return 'This temperature reference had not been reviewed at the selected date.';
     case 'field-entry-month-not-entered': return 'A field-entry month has not been entered.';
     case 'target-month-temperature-missing': return 'No modelled temperature value is available for this month.';
-    case 'ready-field-period-unavailable': return 'A valid field-entry date and a positive field-occupancy duration are needed to calculate the field-clear date.';
+    case 'ready-field-period-unavailable': return 'The field-clear date is not ready for this plan. Review its entry-window and timing checks.';
     case 'field-period-exceeds-software-output-limit': return `The proposed period exceeds the software output limit of ${MAX_TEMPERATURE_PERIOD_ROWS} touched months. No partial list is shown.`;
     default: return 'The historical temperature comparison could not be prepared from the current inputs.';
   }
 }
 function monthlyComparisonText(value: MonthComparison, criterion: typeof TOMATO_MONTHLY_CRITERION): string {
-  if (value.state === 'unknown') return `not available: ${temperatureReasonText(value.reason)}`;
+  // This is a clause: the entry line adds a semicolon and a month row adds a
+  // full stop. A complete reason sentence must not supply a second separator.
+  if (value.state === 'unknown') return `not available: ${temperatureReasonText(value.reason).replace(/\.$/, '')}`;
   return `${value.state === 'within-reported-optimum' ? 'within' : 'outside'} the reported ${criterion.lowerC}–${criterion.upperC} °C optimum`;
 }
 export function provisionalTemperaturePeriodSummaryLines(value: ProvisionalFieldPeriodTemperatureAssessment): readonly string[] {
