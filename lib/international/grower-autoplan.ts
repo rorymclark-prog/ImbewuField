@@ -251,7 +251,7 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
         // January comparison must not be reinterpreted as December merely
         // because the search includes nursery preparation. Actual candidates
         // below still review their own date, climate key and current context.
-        const reviewedEntry = profile.provisionalOrigin?.version === 2
+        const reviewedEntry = (profile.provisionalOrigin?.version === 2 || profile.provisionalOrigin?.version === 3)
           ? normaliseGrowerInput(readSavedProvisionalProfile(profile)?.request.fieldEntryDate, 'utc-date', isGrowerUtcDate) : null;
         const result = assess(profile, bed, reviewedEntry?.state === 'provided' ? reviewedEntry.value : start);
         if (result.status === 'missing-inputs') missing.push(...result.issues.map(issue => `${demand.profileId}:${bed.bed.id}:${issue}`));
@@ -291,6 +291,16 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
               // a suitable climate. Keep it held and search later months;
               // do not let it hide a separately reviewed January candidate.
               reasons.add(result.issues[0]);
+              // A period review binds exact overlap dates, not merely a month.
+              // Preserve the grower's reviewed date inside this month rather
+              // than skipping it when the search starts on the first day.
+              if (profile.provisionalOrigin?.version === 3) {
+                const reviewed = normaliseGrowerInput(readSavedProvisionalProfile(profile)?.request.fieldEntryDate, 'utc-date', isGrowerUtcDate);
+                if (reviewed?.state === 'provided' && reviewed.value > cursor && reviewed.value < finish) {
+                  cursor = reviewed.value;
+                  continue;
+                }
+              }
               const nextMonth = addGrowerUtcDays(`${cursor.slice(0, 7)}-01`, 32);
               cursor = nextMonth ? `${nextMonth.slice(0, 7)}-01` : null;
               continue;

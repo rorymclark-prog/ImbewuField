@@ -1147,3 +1147,66 @@ test('Saskatchewan source choices and old download callbacks cannot revive throu
     assert.deepEqual(ui.writes, []);
   } finally { files.dispose(); ui.dispose(); }
 });
+
+
+test('the period choice saves monthly rows and occupancy or mode round trips retire consent and retained actions', async () => {
+  let saved: import('../lib/international/grower-planning.ts').GrowerPlanningProfile | null = null;
+  const ui = mount({ sitePoint: { latitude: 0, longitude: 0 }, policyFingerprint: 'synthetic-policy', evidence: undefined,
+    onSaveProfile: profile => { saved = profile; return { status: 'confirmed', profileId: profile.profileId }; } });
+  const files = downloads();
+  try {
+    const evidence = syntheticTemperatureEvidence();
+    const raw = JSON.stringify({ lat: 0, lon: 0, climate: { monthlyTempReference: evidence.receipt, monthlyTempSnapshot: evidence.snapshot } });
+    window.localStorage.getItem = () => raw;
+    ui.change('Preview crop', 'tomatoes'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-01-20'); ui.change('Water regime', 'irrigated');
+    ui.change('Field occupancy (days)', '40'); ui.change('Temperature comparison period', 'period');
+    const choice = () => ui.root().findByProps({ 'aria-label': 'Use historical irrigated tomato temperature comparison' });
+    const consent = () => act(() => choice().props.onChange({ target: { checked: true } }));
+    consent(); await ui.click();
+    assert.match(ui.text(), /Proposed field-period monthly comparisons: available/); assert.match(ui.text(), /2027-02: 2027-02-01 to 2027-03-01 exclusive/);
+    assert.match(ui.text(), /Entry window: unknown/); assert.match(ui.text(), /no whole-period suitability result/);
+    const declaration = ui.root().findAllByType('input').find(row => row.props.type === 'checkbox' && row.parent && text(row.parent).includes('Save these inputs'))!;
+    act(() => declaration.props.onChange({ target: { checked: true } })); await ui.click('Save provisional profile');
+    assert.ok(saved); assert.equal((saved as import('../lib/international/grower-planning.ts').GrowerPlanningProfile).provisionalOrigin?.version, 3);
+    ui.update({ profiles: [saved] }); assert.match(ui.text(), /Saved provisional profiles/);
+    const staleDownload = ui.action('Download printable preview');
+    ui.change('Field occupancy (days)', '41'); ui.change('Field occupancy (days)', '40');
+    assert.equal(choice().props.checked, false); await act(async () => staleDownload());
+    assert.deepEqual(files.names, [], 'a retired draft callback cannot deliver the prior period');
+    consent(); await ui.click('Reset Field occupancy (days)'); assert.equal(choice().props.checked, false);
+    ui.change('Field occupancy (days)', '40'); assert.equal(choice().props.checked, false);
+    consent(); ui.change('Temperature comparison period', 'entry'); ui.change('Temperature comparison period', 'period');
+    assert.equal(choice().props.checked, false);
+  } finally { files.dispose(); ui.dispose(); }
+});
+
+for (const operation of ['download', 'save'] as const) for (const change of ['occupancy', 'mode'] as const)
+  test(`pending period ${operation} cannot survive a ${change} round trip`, async () => {
+    let delay = false, finish!: (value: { isCurrent: () => boolean }) => void, writes = 0;
+    const ui = mount({ sitePoint: { latitude: 0, longitude: 0 }, policyFingerprint: 'synthetic-policy', evidence: undefined,
+      onCheckSource: async () => delay ? new Promise(resolve => { finish = resolve; }) : { isCurrent: () => true },
+      onSaveProfile: profile => { writes++; return { status: 'confirmed', profileId: profile.profileId }; } });
+    const files = downloads();
+    try {
+      const evidence = syntheticTemperatureEvidence();
+      window.localStorage.getItem = () => JSON.stringify({ lat: 0, lon: 0, climate: { monthlyTempReference: evidence.receipt, monthlyTempSnapshot: evidence.snapshot } });
+      ui.change('Preview crop', 'tomatoes'); ui.change('Preview measured bed', 'bed-1');
+      ui.change('Preview field-entry date (UTC)', '2027-01-20'); ui.change('Water regime', 'irrigated');
+      ui.change('Field occupancy (days)', '40'); ui.change('Temperature comparison period', 'period');
+      const choice = () => ui.root().findByProps({ 'aria-label': 'Use historical irrigated tomato temperature comparison' });
+      act(() => choice().props.onChange({ target: { checked: true } })); await ui.click();
+      if (operation === 'save') {
+        const declaration = ui.root().findAllByType('input').find(row => row.props.type === 'checkbox' && row.parent && text(row.parent).includes('Save these inputs'))!;
+        act(() => declaration.props.onChange({ target: { checked: true } }));
+      }
+      delay = true; let work!: Promise<void>;
+      await act(async () => { work = ui.action(operation === 'save' ? 'Save provisional profile' : 'Download printable preview')(); });
+      assert.equal(typeof finish, 'function');
+      if (change === 'occupancy') { ui.change('Field occupancy (days)', '41'); ui.change('Field occupancy (days)', '40'); }
+      else { ui.change('Temperature comparison period', 'entry'); ui.change('Temperature comparison period', 'period'); }
+      assert.equal(choice().props.checked, false);
+      await act(async () => { finish({ isCurrent: () => true }); await work; });
+      assert.equal(writes, 0); assert.deepEqual(files.names, []);
+    } finally { files.dispose(); ui.dispose(); }
+  });

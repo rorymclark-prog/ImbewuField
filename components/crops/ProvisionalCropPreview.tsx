@@ -17,8 +17,8 @@ import type { GrowerPlanningProfile } from '@/lib/international/grower-planning'
 import { sourcePublicationText } from '@/lib/international/countries/readiness';
 import { worldvegKenyaCabbageCandidates, worldvegKenyaCabbageReference, worldvegKenyaCabbageRegionMatches } from '@/lib/international/providers/worldveg-kenya-cabbage';
 import { worldvegKenyaCowpeaCandidates, worldvegKenyaCowpeaReference, worldvegKenyaCowpeaSpacing, type CowpeaReferenceConditions } from '@/lib/international/providers/worldveg-kenya-cowpea';
-import { captureProvisionalTemperatureCache, browserTemperatureStorage, provisionalTemperatureLines, TOMATO_MONTHLY_CRITERION,
-  type ProvisionalTemperatureAssessment } from '@/lib/international/provisional-temperature';
+import { captureProvisionalTemperatureCache, browserTemperatureStorage, provisionalTemperatureLines, provisionalTemperaturePeriodSummaryLines, TOMATO_MONTHLY_CRITERION,
+  type ProvisionalTemperatureResult } from '@/lib/international/provisional-temperature';
 import { canadaCabbageReference, canadaCabbageCandidates, canadaCabbageResultQualifier, AAFC_CABBAGE_QUALIFIER, AAFC_CABBAGE_PDF_SHA256 } from '@/lib/international/providers/aafc-canada-cabbage';
 import { saskatchewanCabbageNurseryReference, saskatchewanCabbageNurseryCandidates, saskatchewanPrairieRegionMatches, saskatchewanNurseryResultQualifier, USASK_CABBAGE_QUALIFIER, USASK_CABBAGE_ORIGINAL_SHA256, type SaskatchewanNurseryBasis, type SaskatchewanNurseryUse } from '@/lib/international/providers/usask-saskatchewan-cabbage';
 import { locationDataCacheKey } from '@/lib/location-cache-key';
@@ -58,6 +58,7 @@ type Draft = {
   kenyaTomatoBasis?: KenyaTomatoNurseryBasis | '';
   kenyaTomatoConsent?: string | null;
   temperatureConsent?: string | null;
+  temperatureMode?: 'entry' | 'period';
   canadaCabbageConsent?: string | null;
   saskatchewanBasis?: SaskatchewanNurseryBasis | '';
   saskatchewanConsent?: string | null;
@@ -85,11 +86,11 @@ function savedAreaText(value: unknown) {
   return area?.state === 'provided' ? String(area.value) : 'Unknown';
 }
 
-function TemperatureAssessment({ value }: { value: ProvisionalTemperatureAssessment }) {
+function TemperatureAssessment({ value }: { value: ProvisionalTemperatureResult }) {
   return <section aria-label="Historical temperature comparison" className="space-y-2 break-words rounded border border-[var(--border)] p-3 text-sm">
     <h4 className="font-semibold">Historical temperature comparison</h4>
-    <p>{value.valueC === null ? 'A qualified temperature comparison is unavailable.'
-      : `Modelled monthly mean: ${value.valueC} °C — ${value.state === 'within-reported-optimum' ? 'within' : 'outside'} the reported ${value.criterion.lowerC}–${value.criterion.upperC} °C optimum.`}</p>
+    {value.version === 2 ? <div>{provisionalTemperaturePeriodSummaryLines(value).map((line, i) => <p key={i}>{line}</p>)}</div> : <p>{value.valueC === null ? 'A qualified temperature comparison is unavailable.'
+      : `Modelled monthly mean: ${value.valueC} °C — ${value.state === 'within-reported-optimum' ? 'within' : 'outside'} the reported ${value.criterion.lowerC}–${value.criterion.upperC} °C optimum.`}</p>}
     <p>{value.criterion.limits}</p>
     <details><summary className="cursor-pointer">Sources, assumptions and limits</summary>
       {provisionalTemperatureLines(value).map((line, i) => <p key={i}>{line}</p>)}
@@ -209,7 +210,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
     draft.variety, draft.method, draft.water, AAFC_CABBAGE_PDF_SHA256]);
   const useCanadaReference = canadaConsentKey !== null && draft.canadaCabbageConsent === canadaConsentKey
     && draft.method === 'transplant' && !draft.variety.trim();
-  const temperatureConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.date, draft.water, draft.method]);
+  const temperatureConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.date, draft.water, draft.method, draft.temperatureMode ?? 'entry',
+    Object.hasOwn(draft.values, 'fieldOccupancyDays') ? ['override', draft.values.fieldOccupancyDays] : ['default']]);
   const useTemperature = temperatureConsentKey !== null && draft.temperatureConsent === temperatureConsentKey
     && draft.crop === 'tomatoes' && draft.water === 'irrigated' && !!props.policyFingerprint;
   const spacingConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop, draft.bed, draft.variety, draft.cowpea, draft.countMode, draft.spacing]);
@@ -229,7 +231,9 @@ function Editor(props: ProvisionalCropPreviewProps) {
     if (!isCurrent()) return;
     const sourceChoiceChanged = ['crop', 'variety', 'method', 'water'].some(key => Object.hasOwn(next, key));
     const value = { ...draft, ...next, ...(sourceChoiceChanged ? { tomatoConsent: null, oatsConsent: null, kenyaTomatoConsent: null, canadaCabbageConsent: null, saskatchewanConsent: null } : {}),
-      ...(sourceChoiceChanged || Object.hasOwn(next, 'date') ? { temperatureConsent: null } : {}) }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
+      ...(sourceChoiceChanged || Object.hasOwn(next, 'date') || Object.hasOwn(next, 'temperatureMode')
+        || (Object.hasOwn(next, 'values') && (Object.hasOwn(next.values ?? {}, 'fieldOccupancyDays') !== Object.hasOwn(draft.values, 'fieldOccupancyDays')
+          || next.values?.fieldOccupancyDays !== draft.values.fieldOccupancyDays)) ? { temperatureConsent: null } : {}) }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
   }
   async function refresh() {
     if (!isCurrent()) return;
@@ -313,7 +317,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
           ...(usdaReference ? { purpose: 'cabbage-transplants', habit: 'not-applicable' } : draft.cowpea), ...draft.spacing,
           interpretationConfirmed: stationConfirmed, wholeAreaConfirmed } } : {}),
         knownPlantingRestriction: props.evidence?.knownPlantingRestriction,
-        ...(useTemperature ? { temperatureComparison: { version: 1, criterion: TOMATO_MONTHLY_CRITERION.id,
+        ...(useTemperature ? { temperatureComparison: { ...(draft.temperatureMode === 'period'
+          ? { version: 2 as const, comparisonScope: 'proposed-field-period' as const } : { version: 1 as const }), criterion: TOMATO_MONTHLY_CRITERION.id,
           criterionSnapshot: TOMATO_MONTHLY_CRITERION,
           purpose: 'irrigated-field-cropping', transfer: 'explicit-historical-methodology',
           policyFingerprint: props.policyFingerprint!, evidence: climate?.evidence ?? null } } : {}),
@@ -590,7 +595,12 @@ function Editor(props: ProvisionalCropPreviewProps) {
       </div>}
     </section>}
     {draft.crop === 'tomatoes' && <section aria-label="Optional monthly temperature comparison" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
-      <h3 className="font-semibold">Compare this month’s modelled temperature</h3>
+      <h3 className="font-semibold">Compare historical monthly temperatures</h3>
+      <label className="block">Temperature comparison period<select aria-label="Temperature comparison period" className={control}
+        value={draft.temperatureMode ?? 'entry'} onChange={e => edit({ temperatureMode: e.target.value === 'period' ? 'period' : 'entry' })}>
+        <option value="entry">Field-entry month</option><option value="period">My proposed field period</option>
+      </select></label>
+      {draft.temperatureMode === 'period' && <p>The period uses your entry date and a ready field-clear estimate from field occupancy. Missing or invalid occupancy leaves the period unavailable. Each row is a historical monthly comparison, not daily weather or whole-season suitability.</p>}
       <p>The November 2018 Ethiopian irrigation guide compares monthly mean air temperature with a reported tomato optimum of 18–25°C. This is one historical criterion, not a planting calendar or frost-safety check.</p>
       <p>Select an irrigated field-cropping context to use this method. Water availability and whole-season suitability remain unverified. Existing saved modelled climate is read first; no network request runs when you calculate.</p>
       <p><a className="underline" href={`${TOMATO_MONTHLY_CRITERION.url}#page=42`} target="_blank" rel="noreferrer">Read the original guide, printed page 20</a></p>
