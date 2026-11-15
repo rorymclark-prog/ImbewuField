@@ -11,6 +11,7 @@ import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SiteSurvey } from '@/lib/site-survey';
 import { surveyToPrompt, normaliseSiteReportPurpose, siteReportPurposeInstruction } from '@/lib/site-survey';
 import { surveyRoofEvidence } from '@/lib/survey-roof-evidence';
+import { surveyWaterEvidence } from '@/lib/report-survey-water';
 import { deriveSolar, isValidEarthLatitude } from '@/lib/solar';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { resolveReportCountryPolicy } from '@/lib/report-country-policy';
@@ -290,6 +291,7 @@ export async function POST(req: NextRequest) {
   const d = locationData;
   const annualRain = annualRainfallMm(d.rainfall);
   const surveyRoof = surveyRoofEvidence(surveyData);
+  const surveyWater = surveyWaterEvidence(surveyData);
   const monthlyRain = sourcedMonthlyRainfall(d.rainfall);
   const climateEvidence = reportClimateEvidence(d);
   const rainDescription = annualRain === null ? 'annual rainfall not known' : `${annualRain} mm annual rainfall (${d.rainfall.rainfallSource})`;
@@ -407,7 +409,7 @@ ${waterData.count} water storage feature(s) drawn — total surface area ${water
 Estimated capacity: ~${waterData.estVolumeKL.toLocaleString()} kL (${(waterData.estVolumeKL * 1000).toLocaleString()} L), assuming ${waterData.avgDepthM}m average depth.
 Treat this as an approximate capacity estimate, not available water or evidence of adequacy. Compare supply and demand only where their quantities, timing and losses are supported by the supplied evidence; otherwise state that storage adequacy and additional capacity required are unknown. Real depth may vary.` : ''}
 
-${waterPromptBlock(facts, Boolean(waterData))}
+${waterPromptBlock(facts, Boolean(waterData), surveyWater)}
 
 ${facts ? designPromptBlock(facts) : `DESIGN AS DRAWN
 No design has been drawn for this site yet. Do not describe a drawn layout, a bed count or a planted area as if one exists.`}${phasePlan && phasePlan.phases.length > 0 ? `
@@ -808,6 +810,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   const header = buildReportHeaderMarkdown({
     facts,
     surveyRoof,
+    surveyWater,
     // The cover page owns the document's single `# ` heading from here on.
     omitTitle: true,
     biomeName: ecology.biomeName,

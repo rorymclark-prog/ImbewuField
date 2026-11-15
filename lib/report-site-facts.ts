@@ -6,6 +6,7 @@ import { reportVisualText, reportElementDisplayName, reportRouteShortName } from
 import { cleanChoices, type HousingKind } from './animal-enterprises';
 import type { PlacedPlant } from './perennial-harvest';
 import type { SurveyRoofEvidence } from './survey-roof-evidence';
+import { surveyWaterSummary, SURVEY_WATER_LIMITS, type SurveyWaterEvidence } from './report-survey-water';
 // ── The farm's own measured facts, as report input ───────────────────────────────────────────
 //
 // WHY THIS EXISTS. The generated site report was generic BY CONSTRUCTION, and not because the
@@ -534,9 +535,8 @@ const BODY_MATCHERS: Record<(typeof WATER_BODY_KINDS)[number], RegExp> = {
 };
 
 /**
- * Which of the classic water bodies are genuinely absent from BOTH the drawn design and the
- * recorded map. Anything a farmer did record is removed from the denial, so the report can never
- * again tell a farmer that the dam they mapped does not exist — nor invent one they did not.
+ * Which classic water-body kinds are unrecorded in supplied map/design facts.
+ * This does not inspect the survey and never establishes physical absence.
  */
 export function absentWaterBodies(
   facts: ReportSiteFacts | null | undefined,
@@ -623,8 +623,9 @@ export function designPromptBlock(facts: ReportSiteFacts): string {
 export function waterPromptBlock(
   facts: ReportSiteFacts | null | undefined,
   hasMapWaterPolygons: boolean,
+  surveyWater?: SurveyWaterEvidence,
 ): string {
-  const lines: string[] = ['WATER ON SITE (drawn or recorded by the farmer — real)'];
+  const lines: string[] = ['WATER ON SITE (supplied map/design records; survey choices remain separate)'];
   const water = facts?.water;
   let any = false;
 
@@ -650,9 +651,19 @@ export function waterPromptBlock(
     any = true;
     lines.push(`· Water lines and earthworks traced: ${waterRoutes.map((r) => `${r.label} ${metres(r.totalLengthM)}`).join(' · ')}`);
   }
-  if (!any) {
-    lines.push('· Nothing. No tank, no water point and no water line has been drawn or recorded for this site.');
+  if (water?.bodies.length) {
+    any = true;
+    lines.push(`· Water-body records in the supplied map/design facts: ${water.bodies.map(body => `${body.name} [${body.category}]`).join(' · ')}. A record is not independent verification of physical presence, current condition or capacity.`);
   }
+  if (hasMapWaterPolygons) {
+    any = true;
+    lines.push('· A mapped water-polygon input was supplied; this flag does not identify its type, capacity, access or current condition.');
+  }
+  if (!any) {
+    lines.push('· No tank, water point, water-body record or water line is supplied in these map/design facts. This does not establish what is recorded in the separate survey or physically present.');
+  }
+  const reported = surveyWaterSummary(surveyWater);
+  if (reported) lines.push(`· Separate survey water record: ${reported} ${SURVEY_WATER_LIMITS}`);
 
   // A tank on the plan and a tank pinned on the map are very often the SAME tank. Saying so is
   // the honest reading; adding their capacities together is how a farm ends up with twice the
@@ -664,7 +675,7 @@ export function waterPromptBlock(
   const absent = absentWaterBodies(facts, hasMapWaterPolygons);
   if (absent.length) {
     lines.push(
-      `NOT RECORDED in the supplied map/survey: ${absent.join(', ')}. `
+      `NOT RECORDED in the supplied map/design facts: ${absent.join(', ')}. `
       + 'These are inventory gaps, not proof of physical absence. Do not assume existence, capacity, '
       + 'condition or a need to build/buy. Ask for status and site evidence before recommending work.',
     );
@@ -820,6 +831,7 @@ export function cropPlanPromptBlock(facts: ReportSiteFacts | null | undefined, s
 export interface ReportHeaderInput {
   facts: ReportSiteFacts | null | undefined;
   surveyRoof?: SurveyRoofEvidence;
+  surveyWater?: SurveyWaterEvidence;
   biomeName: string;
   vegUnit?: string | null;
   bruLabel?: string | null;
@@ -999,9 +1011,13 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
     row('Elevation, slope, aspect', reportEvidenceText(`Elevation estimate: ${terrain.elevationM === undefined ? 'not known' : `${terrain.elevationM} m`}; Slope estimate: ${terrain.slopeDeg === undefined ? 'not known' : `${terrain.slopeDeg}°`}; Aspect: ${terrain.aspectLabel ?? 'not known'}`, language), reportEvidenceText('Recorded terrain estimates; source and field accuracy not independently verified here', language));
   }
 
+  const reportedWater = surveyWaterSummary(input.surveyWater);
+  if (reportedWater) {
+    row(reportEvidenceText('Water choices reported in survey', language), reportEvidenceText(reportedWater, language), reportEvidenceText(SURVEY_WATER_LIMITS, language));
+  }
   const absent = absentWaterBodies(facts, input.hasMapWaterPolygons);
   if (absent.length) {
-    row(reportEvidenceText('Water inventory gaps', language), reportEvidenceText('Not recorded in supplied map/survey:', language) + ' ' + absent.map(body=>t(body)).join(', '), reportEvidenceText('This is an inventory gap, not proof of physical absence', language));
+    row(reportEvidenceText('Water inventory gaps', language), reportEvidenceText('Not recorded in supplied map/design facts:', language) + ' ' + absent.map(body=>t(body)).join(', '), reportEvidenceText('This is an inventory gap, not proof of physical absence', language));
   }
 
   out.push('');

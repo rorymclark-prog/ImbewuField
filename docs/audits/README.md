@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest report continuation — [Survey water evidence](2026-11-15/survey-water-report-evidence-codex.md). Separate source-labelled survey answers from map/design inventory gaps without inferring infrastructure, capacity or supply; successor gates remain separate.
+
 Latest report continuation — [Survey roof evidence](2026-11-15/survey-roof-report-evidence-codex.md). Preserve source-separated survey/map roof areas in the actual report, with honest missing/invalid evidence and actual PDF inspection; successor gates remain separate.
 
 Latest actual-Claude delta — [Field-period review reasons and punctuation](2026-11-14/provisional-review-reasons-codex.md). Correct withheld-date explanation, narrow the release claim and remove doubled separators; source calculations and legacy origin replay remain unchanged. Successor CI/external gates are separate.
