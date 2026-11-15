@@ -5,6 +5,7 @@ import { canonicalCoordinateSiteId, coordinateSiteIdParts } from './site-id';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { normaliseMarketEvidence, marketEvidencePromptBlock, type MarketEvidence } from './report-site-facts';
 import { normaliseElevationEvidence, normaliseSiteEnergy, siteEnergyPrompt, type ElevationEvidence, type SiteEnergyEvidence, type SurveyEnergyInputs } from './site-energy';
+import { surveyRoofEvidence } from './survey-roof-evidence';
 
 // The FAO Household Dietary Diversity Score uses these twelve food groups. This is a count of
 // reported groups, never a made-up nutrition score or an estimate of what a household eats.
@@ -275,12 +276,7 @@ function normaliseReportedProduction(value: unknown): ReportedProduction[] {
 function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
   if (!value || typeof value !== 'object' || Array.isArray(value) || !siteId) return null;
   const row = value as Partial<SiteSurvey>;
-  const roofAreaSource = row.roofAreaSource === 'auto' || row.roofAreaSource === 'manual'
-    ? row.roofAreaSource
-    : undefined;
-  const roofSecondarySource = row.roofSecondarySource === 'auto' || row.roofSecondarySource === 'manual'
-    ? row.roofSecondarySource
-    : undefined;
+  const roof = surveyRoofEvidence(row);
   const existingGrowingAreaSource = row.existingGrowingAreaSource === 'auto'
     || row.existingGrowingAreaSource === 'manual'
     ? row.existingGrowingAreaSource
@@ -303,11 +299,11 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
     waterSource: stringArray(row.waterSource),
     waterDelivery: stringArray(row.waterDelivery),
     waterStorage: stringArray(row.waterStorage),
-    roofMainM2: areaValue(row.roofMainM2),
-    roofSecondaryM2: areaValue(row.roofSecondaryM2),
+    roofMainM2: roof.mainM2,
+    roofSecondaryM2: roof.secondaryM2,
     hasGutters: row.hasGutters === true,
-    roofAreaSource,
-    roofSecondarySource,
+    roofAreaSource: roof.mainSource,
+    roofSecondarySource: roof.secondarySource,
     landPrepMethod: stringValue(row.landPrepMethod),
     soilCondition: stringValue(row.soilCondition),
     soilAmendments: stringArray(row.soilAmendments),
@@ -342,14 +338,16 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number | null, i
   // even though load/save do it, because API callers can pass decoded JSON directly.
   s = normaliseSurvey(s, stringValue(s?.siteId) || 'site:unknown')
     ?? normaliseSurvey({}, 'site:unknown')!;
-  const totalRoof = (s.roofMainM2 ?? 0) + (s.roofSecondaryM2 ?? 0);
+  const roof = surveyRoofEvidence(s);
+  const totalRoof = roof.subtotalM2;
   const rainfallMm = typeof annualRainfallMm === 'number' && Number.isFinite(annualRainfallMm) && annualRainfallMm >= 0
     ? annualRainfallMm
     : null;
   const efficiency = s.hasGutters ? 0.80 : 0.60;
-  const roofHarvestKL = totalRoof > 0 && rainfallMm !== null
+  const harvestEstimate = totalRoof !== null && totalRoof > 0 && rainfallMm !== null
     ? Math.round(totalRoof * rainfallMm * efficiency / 1000)
     : null;
+  const roofHarvestKL = harvestEstimate !== null && Number.isFinite(harvestEstimate) ? harvestEstimate : null;
 
   const goalLabels: Record<string, string> = {
     food: 'food security for household',
@@ -384,7 +382,7 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number | null, i
 
   lines.push('');
   lines.push('--- ROOF CATCHMENT ---');
-  if (totalRoof > 0) {
+  if (totalRoof !== null && totalRoof > 0) {
     if (s.roofMainM2) lines.push(`Main building roof: ${s.roofMainM2} m²`);
     if (s.roofSecondaryM2 && s.roofSecondaryM2 > 0) lines.push(`Secondary roofs (barn/shed/other): ${s.roofSecondaryM2} m²`);
     lines.push(`Gutters & downpipes in place: ${s.hasGutters ? 'Yes' : 'No (using 60% efficiency)'}`);
@@ -393,8 +391,14 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number | null, i
       lines.push(`Estimated annual roof harvest at ${rainfallMm} mm rainfall: ~${roofHarvestKL} kL`);
       lines.push(`Survey-only estimate using the reported roof area and assumed collection efficiency. If map measurements differ, retain both sources and resolve the difference before choosing a catchment area or sizing storage.`);
     } else {
-      lines.push('Estimated annual roof harvest: unavailable until annual rainfall is known.');
+      lines.push(rainfallMm === null
+        ? 'Estimated annual roof harvest: unavailable until annual rainfall is known.'
+        : 'Estimated annual roof harvest: calculation unavailable; verify the recorded roof area and rainfall inputs.');
     }
+  } else if (totalRoof === 0) {
+    lines.push('Roof area: 0 m² reported; no positive catchment area is supplied for a harvest calculation. Verify the recorded components before planning collection.');
+  } else if (roof.mainM2 !== null || roof.secondaryM2 !== null) {
+    lines.push('Roof area: reported components could not be totalled; verify the entries before calculating water yield.');
   } else {
     lines.push(`Roof area: not measured — measure or trace the roof before calculating water yield; rainfall alone cannot supply catchment volume.`);
   }

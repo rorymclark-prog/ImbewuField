@@ -5,6 +5,7 @@ import { recordsSeasonLabel } from './records-months';
 import { reportVisualText, reportElementDisplayName, reportRouteShortName } from './report-visuals';
 import { cleanChoices, type HousingKind } from './animal-enterprises';
 import type { PlacedPlant } from './perennial-harvest';
+import type { SurveyRoofEvidence } from './survey-roof-evidence';
 // ── The farm's own measured facts, as report input ───────────────────────────────────────────
 //
 // WHY THIS EXISTS. The generated site report was generic BY CONSTRUCTION, and not because the
@@ -671,15 +672,29 @@ export function waterPromptBlock(
   return lines.join('\n');
 }
 
-/** The roof-catchment line. Replaces `100m² roof` — a stranger's roof on every farm on Earth. */
-export function roofCalcLine(facts: ReportSiteFacts | null | undefined, rainfallMm: number | null): string {
+function surveyRoofSummary(roof: SurveyRoofEvidence | undefined): string | null {
+  if (!roof || (roof.mainM2 === null && roof.secondaryM2 === null)) return null;
+  if (roof.subtotalM2 === null) return 'Survey roof components could not be totalled; verify the entries before calculating collection.';
+  const source = (value: SurveyRoofEvidence['mainSource']) => value === 'manual' ? 'manual entry'
+    : value === 'auto' ? 'declared auto from map shapes' : 'entry source not recorded';
+  // Keep survey precision: map display rounding would contradict supplied components.
+  const area = (value: number | null) => value === null ? 'not recorded' : `${value} m²`;
+  return `Survey reported subtotal ${area(roof.subtotalM2)}: main roof ${area(roof.mainM2)} (${source(roof.mainSource)}); secondary roofs ${area(roof.secondaryM2)} (${source(roof.secondarySource)}). This is a survey record, not an independently verified measurement.`;
+}
+
+/** The roof-catchment line. A missing map outline must not erase a survey measurement. */
+export function roofCalcLine(facts: ReportSiteFacts | null | undefined, rainfallMm: number | null, surveyRoof?: SurveyRoofEvidence): string {
   const roof = facts?.roof;
+  const reported = surveyRoofSummary(surveyRoof);
   if (!roof || !(roof.areaM2 > 0)) {
-    return '- **Roof catchment yield:** no roof has been traced or measured for this site, so there is NO roof area to calculate from. '
-      + 'Say exactly that, give the rule (1m² of roof × 1mm of rain = 1L, × runoff coefficient '
-      + `${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT}), and ask the farmer to trace or measure their roof. Do NOT assume a roof size.`;
+    if (reported) return '- **Roof catchment yield:** no roof area is supplied in the map/design facts. '
+      + `${reported} Keep the separate SITE SURVEY roof estimate and its stated assumptions source-labelled; do not call it map-measured or say no roof was measured. `
+      + 'A reported subtotal is not proof of a complete connected catchment. Confirm dimensions, gutters, rainfall and losses before sizing collection or storage; do not invent missing values.';
+    return '- **Roof catchment yield:** no positive roof area is supplied in the map/design facts or survey for this calculation. '
+      + 'Keep the area and harvest unknown until a roof measurement is recorded. Do NOT assume a roof size.';
   }
-  if (rainfallMm === null || !Number.isFinite(rainfallMm) || rainfallMm < 0) return `- **Roof catchment yield:** roof area ${m2(roof.areaM2)} recorded; annual rainfall is not known, so annual harvest cannot be calculated.`;
+  const surveyNote = reported ? ` Separate survey evidence: ${reported} Do not add map and survey areas together or choose one silently; resolve any difference before choosing a catchment area.` : '';
+  if (rainfallMm === null || !Number.isFinite(rainfallMm) || rainfallMm < 0) return `- **Roof catchment yield:** roof area ${m2(roof.areaM2)} recorded; annual rainfall is not known, so annual harvest cannot be calculated.${surveyNote}`;
   const harvestL = roofHarvestLitres(roof.areaM2, rainfallMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT);
   const yieldL = Math.round(harvestL);
   const stored = facts?.water?.statedStorageLitres ?? 0;
@@ -691,7 +706,7 @@ export function roofCalcLine(facts: ReportSiteFacts | null | undefined, rainfall
     : ' No tank storage capacity is stated; this does not establish what happens to runoff on the ground.';
   return `- **Roof catchment yield:** the traced roof on this site is **${m2(roof.areaM2)}** (${roof.source}). `
     + `1m² of roof × 1mm of rain = 1L, so ${group(roof.areaM2)} × ${rainfallMm}mm × reviewed runoff coefficient `
-    + `${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} = **${litres(yieldL)} usable/year** (map-based scenario with an assumed coefficient, not measured collection). If survey roof areas or gutter conditions differ, present both sources and resolve them before sizing storage.${storedNote}`;
+    + `${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} = **${litres(yieldL)} usable/year** (map-based scenario with an assumed coefficient, not measured collection). If survey roof areas or gutter conditions differ, present both sources and resolve them before sizing storage.${storedNote}${surveyNote}`;
 }
 
 /** Pre-filled sizes for the Irrigation Plan table, so the model supplies method not measurements. */
@@ -804,6 +819,7 @@ export function cropPlanPromptBlock(facts: ReportSiteFacts | null | undefined, s
 
 export interface ReportHeaderInput {
   facts: ReportSiteFacts | null | undefined;
+  surveyRoof?: SurveyRoofEvidence;
   biomeName: string;
   vegUnit?: string | null;
   bruLabel?: string | null;
@@ -946,7 +962,11 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   } else if (facts?.roof && facts.roof.areaM2 > 0) {
     row('Roof catchment traced', `${m2(facts.roof.areaM2)} — annual harvest not calculated; rainfall not known`, reportRecordedSourceLabel(facts.roof.source, language));
   } else {
-    row('Roof catchment', t('Not traced or measured'), t('No roof outline on the map'));
+    row(reportEvidenceText('Roof area in supplied map/design facts', language), reportEvidenceText('Not recorded in these map/design facts', language), t('No roof outline on the map'));
+  }
+  const surveyRoof = surveyRoofSummary(input.surveyRoof);
+  if (surveyRoof) {
+    row(reportEvidenceText('Roof area reported in survey', language), reportEvidenceText(surveyRoof, language), reportEvidenceText('Survey record; retain separately from mapped roof area. Do not add or silently choose between these sources.', language));
   }
   if (facts?.crop) {
     row('Crop plan entered', t('{plantings} plantings, {crops} crops, across {beds} beds/plots',{plantings:facts.crop.plantingCount,crops:facts.crop.crops.length,beds:facts.crop.bedsPlanted}), t('Entered by the farmer in the crop planner'));
