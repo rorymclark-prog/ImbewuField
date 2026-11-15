@@ -10,6 +10,7 @@ export const maxDuration = 300;
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SiteSurvey } from '@/lib/site-survey';
 import { surveyToPrompt, normaliseSiteReportPurpose, siteReportPurposeInstruction } from '@/lib/site-survey';
+import { surveyRoofEvidence } from '@/lib/survey-roof-evidence';
 import { deriveSolar, isValidEarthLatitude } from '@/lib/solar';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { resolveReportCountryPolicy } from '@/lib/report-country-policy';
@@ -288,6 +289,7 @@ export async function POST(req: NextRequest) {
 
   const d = locationData;
   const annualRain = annualRainfallMm(d.rainfall);
+  const surveyRoof = surveyRoofEvidence(surveyData);
   const monthlyRain = sourcedMonthlyRainfall(d.rainfall);
   const climateEvidence = reportClimateEvidence(d);
   const rainDescription = annualRain === null ? 'annual rainfall not known' : `${annualRain} mm annual rainfall (${d.rainfall.rainfallSource})`;
@@ -492,7 +494,7 @@ Keep the tone and length consistent with the rest of the report.
 Describe only proposals explicitly recorded in the supplied map, survey or plan, retaining their status and recorded measurements. A drawing is not proof of site suitability or approval. If no proposal is recorded, say so; do not invent an earthwork, dimensions, construction priority or cheapest option. Identify contour, drainage, soil/infiltration, safe-overflow and local-design evidence needed before choosing work.
 
 ### Calculations
-${roofCalcLine(facts, annualRain)}
+${roofCalcLine(facts, annualRain, surveyRoof)}
 ${siteAreaForCalcM2 && annualRain !== null ? `- **Rain falling on the boundary area:** ${Math.round(siteAreaForCalcM2 * annualRain / 1000).toLocaleString()} kL/year is the rainfall volume only, NOT harvestable supply. No whole-site runoff coefficient has been measured, so do not claim a capture percentage or size storage from this number.` : '- Boundary area or annual rainfall is missing: whole-site rainfall volume is unknown.'}
 - **Earthwork spacing:** no generic slope-to-spacing formula is supported. Require a contour survey, soil/infiltration checks, safe overflow and local design review before giving dimensions.
 - **Dry season storage gap:** not calculated. Use measured demand, supported monthly rainfall, catchment and losses before sizing storage; do not invent a minimum tank size.
@@ -805,6 +807,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
 
   const header = buildReportHeaderMarkdown({
     facts,
+    surveyRoof,
     // The cover page owns the document's single `# ` heading from here on.
     omitTitle: true,
     biomeName: ecology.biomeName,

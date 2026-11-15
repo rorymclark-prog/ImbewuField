@@ -243,7 +243,8 @@ test('a farm with no design is told so, not given someone else\'s', () => {
 
 test('the roof calculation never substitutes a roof the farm does not have', () => {
   const withoutRoof = roofCalcLine({}, 800);
-  assert.match(withoutRoof, /no roof has been traced or measured/i);
+  // This helper sees supplied facts, not every measurement the farmer holds.
+  assert.match(withoutRoof, /no positive roof area is supplied/i);
   assert.doesNotMatch(withoutRoof, /100m²|100 m²/, 'the hardcoded 100 m² roof must be gone');
   assert.doesNotMatch(withoutRoof, /L usable\/year/, 'no yield may be computed from a roof that is not there');
 
@@ -334,7 +335,7 @@ test('a bare site still gets a header, and it admits what is missing', () => {
   const header = buildReportHeaderMarkdown({ ...HEADER_BASE, facts: null });
   assert.match(header, /^# Permaculture Site Report/);
   assert.match(header, /\| Property boundary \| Not traced \|/);
-  assert.match(header, /\| Roof catchment \| Not traced or measured \|/);
+  assert.match(header, /\| Roof area in supplied map\/design facts \| Not recorded in these map\/design facts \|/);
   assert.doesNotMatch(header, /Growing area drawn/);
 });
 

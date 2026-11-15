@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest report continuation — [Survey roof evidence](2026-11-15/survey-roof-report-evidence-codex.md). Preserve source-separated survey/map roof areas in the actual report, with honest missing/invalid evidence and actual PDF inspection; successor gates remain separate.
+
 Latest actual-Claude delta — [Field-period review reasons and punctuation](2026-11-14/provisional-review-reasons-codex.md). Correct withheld-date explanation, narrow the release claim and remove doubled separators; source calculations and legacy origin replay remain unchanged. Successor CI/external gates are separate.
 
 Latest actual-Claude follow-up — [Field-period wording and report continuity](2026-11-14/provisional-period-wording-claude-followup-codex.md). Shared readable comparisons and exact current report evidence; actual successor CI/reviews and agronomic limits remain separate.

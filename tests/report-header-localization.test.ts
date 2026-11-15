@@ -26,16 +26,18 @@ const tokens=(s:string)=>(s.match(/\{\w+\}/g)??[]).sort();
 const numbers=(s:string)=>(s.match(/(?<![\p{L}\p{N}])-?\d+(?:[.,]\d+)?/gu)??[]).sort();
 const rows=(s:string)=>s.split('\n').filter(l=>l.startsWith('| ')&&!l.includes('|---')).map(line=>line.slice(1,-1).split('|').map(c=>c.trim()));
 const visibleEnglish=(text:string,language:string)=>language==='en'?text:`English; translation pending: ${text}`;
-const fieldLabel=(text:string,language:string)=>['Recorded soil values','Water inventory gaps'].includes(text)?visibleEnglish(text,language):reportDocumentText(text,language);
+const fieldLabel=(text:string,language:string)=>['Recorded soil values','Water inventory gaps','Roof area in supplied map/design facts'].includes(text)?visibleEnglish(text,language):reportDocumentText(text,language);
 function cell(markdown:string,source:string,language:string){return rows(markdown).find(r=>r[0]===fieldLabel(source,language))!;}
 function soilCell(markdown:string,source:unknown,language:string){return cell(markdown,source==='soilgrids'?'Soil (0-30 cm)':'Recorded soil values',language);}
 
-// The frozen translation packet describes the old source. Only its unsupported rain rows
-// are superseded here; its original artifact/source identity remains intact.
+// The frozen translation packet describes the old source. Unsupported rain/soil/water
+// claims and the roof absence claim are superseded; its source identity remains intact.
 // Only superseded evidence claims change. Original fixtures remain byte intact;
 // all unrelated figures, rows, names and source translations stay exact.
 function currentHeaderExpectation(row: { input: ReportHeaderInput; expected: string }, language='en'): string {
  let result=row.expected;
+ // No mapped roof is a scoped inventory gap, not evidence that the survey lacks measurements.
+ result=result.replace(/^\| Roof catchment \| Not traced or measured \| No roof outline on the map \|$/m, `| ${visibleEnglish('Roof area in supplied map/design facts',language)} | ${visibleEnglish('Not recorded in these map/design facts',language)} | No roof outline on the map |`);
  if (!['nasa-power','open-meteo','grower-entered'].includes(row.input.rainfallSource ?? '')) {
   result=result.replace(/^\| Annual rainfall \|.*$/m,'| Annual rainfall | Not known | No supported rainfall source recorded |');
   if(row.input.facts?.roof) result=result.replace(/^(\| Roof catchment traced \| )(.*?)( → .*?)( \| .* \|)$/m,'$1$2 — annual harvest not calculated; rainfall not known$4');
