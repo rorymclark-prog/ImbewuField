@@ -280,7 +280,7 @@ test('the water block reports the drawn tank the report used to deny', () => {
   assert.match(block, /Municipal tap/);
   // A tank on the plan and a tank on the map are very likely one tank, counted once.
   assert.match(block, /most likely the SAME tank\. Count the storage once/);
-  assert.match(block, /NOT RECORDED in the supplied map\/survey: dam, pond/);
+  assert.match(block, /NOT RECORDED in the supplied map\/design facts: dam, pond/);
   assert.match(block, /not proof of physical absence/);
 });
 
@@ -321,7 +321,7 @@ test('the Site at a Glance table names the farm and sources every figure', () =>
   assert.match(header, /\| Growing area drawn \| 128 m² — 7 beds 44 m² \+ 4 staple plots 84 m² \|/);
   assert.match(header, /\| Property boundary \| 1 037 m²/);
   assert.match(header, /\| Roof catchment traced \| 144 m²/);
-  assert.match(header, /\| Water inventory gaps \| Not recorded in supplied map\/survey: dam, pond/);
+  assert.match(header, /\| Water inventory gaps \| Not recorded in supplied map\/design facts: dam, pond/);
   // Every row must declare where it came from — the third column is never blank.
   for (const line of header.split('\n')) {
     if (!line.startsWith('|') || /^\|\s*-+/.test(line) || line.includes('| Measure |')) continue;

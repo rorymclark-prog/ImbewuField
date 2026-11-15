@@ -29,7 +29,7 @@ test('the catalogue label pass preserves every legacy or custom name while missi
   assert.ok(c.english.includes(oldInventory));
   for(const language of ['en','af']){
    const pending=(s:string)=>language==='en'?s:`English; translation pending: ${s}`;
-   const inventory=`| ${pending('Water inventory gaps')} | ${pending('Not recorded in supplied map/survey:')} dam, pond, reservoir, borehole, well, spring, river | ${pending('This is an inventory gap, not proof of physical absence')} |`;
+   const inventory=`| ${pending('Water inventory gaps')} | ${pending('Not recorded in supplied map/design facts:')} dam, pond, reservoir, borehole, well, spring, river | ${pending('This is an inventory gap, not proof of physical absence')} |`;
    assert.equal(buildReportHeaderMarkdown(c.input,language),c.english.replace(oldInventory,inventory));
   }
   assert.deepEqual(siteReportVisuals(c.input.facts!,fixture.location),c.visuals);

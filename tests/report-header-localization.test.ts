@@ -32,6 +32,7 @@ function soilCell(markdown:string,source:unknown,language:string){return cell(ma
 
 // The frozen translation packet describes the old source. Unsupported rain/soil/water
 // claims and the roof absence claim are superseded; its source identity remains intact.
+// The inventory list is map/design-only; separate survey answers are not missing map facts.
 // Only superseded evidence claims change. Original fixtures remain byte intact;
 // all unrelated figures, rows, names and source translations stay exact.
 function currentHeaderExpectation(row: { input: ReportHeaderInput; expected: string }, language='en'): string {
@@ -44,7 +45,7 @@ function currentHeaderExpectation(row: { input: ReportHeaderInput; expected: str
  }
  if (row.input.soilSource==='lab') result=result.replace(/^\| Soil \(0-30 cm\) \| (.*?) \| Soil test you uploaded \|$/m,(_,value)=>`| ${visibleEnglish('Recorded soil values',language)} | ${value} | ${visibleEnglish('Recorded laboratory attribution; original report, sampling depth and sample/site correspondence not verified here',language)} |`);
  else if(row.input.soilSource!=='soilgrids') result=result.replace(/^\| Soil \(0-30 cm\) \|.*$/m,`| ${visibleEnglish('Recorded soil values',language)} | ${visibleEnglish('Soil values not supported by a recorded source; review existing results and field observations',language)} | No laboratory result or SoilGrids source recorded |`);
- return result.replace(/^\| Not on this site \| (.*?) \| Nothing of the kind drawn or recorded \|$/m,(_,value)=>`| ${visibleEnglish('Water inventory gaps',language)} | ${visibleEnglish('Not recorded in supplied map/survey:',language)} ${value.replace(/\b[Nn]o /g,'')} | ${visibleEnglish('This is an inventory gap, not proof of physical absence',language)} |`);
+ return result.replace(/^\| Not on this site \| (.*?) \| Nothing of the kind drawn or recorded \|$/m,(_,value)=>`| ${visibleEnglish('Water inventory gaps',language)} | ${visibleEnglish('Not recorded in supplied map/design facts:',language)} ${value.replace(/\b[Nn]o /g,'')} | ${visibleEnglish('This is an inventory gap, not proof of physical absence',language)} |`);
 }
 
 test('unchanged header facts and figures retain their original evidence while unsupported climate and soil claims are withdrawn',()=>{
@@ -113,7 +114,7 @@ test('recorded labels that happen to equal authored words stay raw and categorie
 test('missing water stays absent, recorded water is never denied and proposed storage never turns into installed water',()=>{
  const base=fixture.cases[0].input;const kinds=['dam','pond','reservoir','borehole','well','spring','river'];
  for(const lang of languages){for(const kind of kinds){const facts=structuredClone(base.facts!) as ReportSiteFacts;facts.water!.mapPoints=[{name:kind,category:kind}];facts.water!.bodies=[];
-   const absent=absentWaterBodies(facts,false);assert.ok(!absent.includes(kind));const table=buildReportHeaderMarkdown({...base,facts},lang);const denial=cell(table,'Water inventory gaps',lang)[1];assert.equal(denial,visibleEnglish('Not recorded in supplied map/survey:',lang)+' '+absent.map(body=>reportDocumentText(body,lang)).join(', '));
+   const absent=absentWaterBodies(facts,false);assert.ok(!absent.includes(kind));const table=buildReportHeaderMarkdown({...base,facts},lang);const denial=cell(table,'Water inventory gaps',lang)[1];assert.equal(denial,visibleEnglish('Not recorded in supplied map/design facts:',lang)+' '+absent.map(body=>reportDocumentText(body,lang)).join(', '));
   }
   assert.equal(cell(buildReportHeaderMarkdown({...base,facts:null,hasMapWaterPolygons:true},lang),'Water inventory gaps',lang),undefined);
   for(const state of ['proposed','existing','mixed']as const){const facts=structuredClone(base.facts!);facts.water!.tanks=facts.water!.tanks.map(t=>({...t,status:state}));const table=buildReportHeaderMarkdown({...base,facts},lang);const value=cell(table,'Water storage on the plan',lang)[1];const proposed=reportDocumentText('{value} (drawn as proposed)',lang,{value:''}).trim();assert.equal(value.endsWith(proposed),state==='proposed');}

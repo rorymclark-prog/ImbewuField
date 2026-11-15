@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    when: '15 November 2026', sha: '0ee2e63e1',
+    changes: ['Reports keep survey water choices separate from mapped water records.'],
+  },
   { when: '15 November 2026', sha: '9c1c302c1', changes: [
     'Reports keep roof areas entered in your survey separate from mapped measurements.',
   ] },
