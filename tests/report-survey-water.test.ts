@@ -86,6 +86,29 @@ test('body-only and polygon-only supplied map evidence cannot be summarized as n
   assert.match(polygon,/mapped water-polygon input was supplied/);assert.doesNotMatch(polygon,/No tank, water point, water-body record|NOT RECORDED/);
 });
 
+test('legacy delivery strings agree between report prompt and header without coercing other survey fields', () => {
+  for (const [delivery, expected] of [[' drip ', 'Drip irrigation'], ['none', 'Rain-fed only'],
+    ['historic hose', 'unrecognized reported entry: historic hose']] as const) {
+    const input = { waterDelivery: delivery, waterSource: 'borehole', waterStorage: 'jojo' };
+    const before = JSON.stringify(input);
+    const water = surveyWaterEvidence(input)!;
+    assert.deepEqual(water.delivery, [delivery.trim()]);
+    assert.deepEqual(water.sources, [], 'only delivery has a documented legacy scalar shape');
+    assert.deepEqual(water.storage, []);
+    const header = buildReportHeaderMarkdown({ ...headerBase, surveyWater: water });
+    assert.ok(header.includes(expected));
+    assert.doesNotMatch(header, /Sources: Borehole|Jojo \/ plastic tanks/);
+    const prompt = surveyToPrompt(input as unknown as SiteSurvey, 800);
+    assert.doesNotMatch(prompt, /Delivery \/ irrigation: not specified/);
+    assert.equal(JSON.stringify(input), before);
+  }
+  const escaped = buildReportHeaderMarkdown({ ...headerBase,
+    surveyWater: surveyWaterEvidence({ waterDelivery: 'historic|hose\n## Heading' }) });
+  const row = escaped.split('\n').find(line => line.startsWith('| Water choices reported in survey'))!;
+  assert.equal(row.split('|').length, 5, 'legacy delivery text cannot inject a table column');
+  assert.doesNotMatch(escaped, /\n## Heading/);
+});
+
 test('new survey water header evidence is explicitly pending translation', () => {
   const header=buildReportHeaderMarkdown({...headerBase,surveyWater:surveyWaterEvidence(survey)},'zu');
   assert.match(header,/English; translation pending: Water choices reported in survey/);
@@ -115,6 +138,7 @@ test('the real report route retains survey water sources independently of mapped
       {name:'indirect-sources',facts:null,survey:{waterSource:['municipal','rainwater','grey']}},
       {name:'unanswered-survey',facts:null,survey:{}},
       {name:'no-survey',facts:null,survey:undefined},
+      {name:'legacy-delivery',facts:null,survey:{waterDelivery:'drip'}},
     ];
     for (const example of cases) {
       const location=structuredClone(DEMO_LOCATION);
@@ -144,6 +168,11 @@ test('the real report route retains survey water sources independently of mapped
         assert.doesNotMatch(text,/Jojo \/ plastic tanks/);
       }
       if(example.name==='unanswered-survey')assert.match(body,/Sources: not recorded; delivery: not recorded; storage: not recorded/);
+      if(example.name==='legacy-delivery') {
+        assert.match(body,/delivery: Drip irrigation/);
+        assert.match(prompt,/Delivery \/ irrigation: drip irrigation/);
+        assert.match(prompt,/delivery: Drip irrigation/);
+      }
       assert.equal(JSON.stringify(input),before);
     }
   } finally {

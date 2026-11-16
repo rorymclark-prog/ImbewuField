@@ -42,6 +42,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '16 November 2026', sha: 'd48e25166',
+    changes: [
+      'Older survey watering methods stay visible when you reopen them and in reports.',
+      'Field-period reports explain when a field-clear date is not ready.',
+    ],
+  },
+  {
     when: '15 November 2026', sha: '0ee2e63e1',
     changes: ['Reports keep survey water choices separate from mapped water records.'],
   },

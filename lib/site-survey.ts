@@ -6,6 +6,7 @@ import { activeAccountLocalStorageKey } from './account-local-storage';
 import { normaliseMarketEvidence, marketEvidencePromptBlock, type MarketEvidence } from './report-site-facts';
 import { normaliseElevationEvidence, normaliseSiteEnergy, siteEnergyPrompt, type ElevationEvidence, type SiteEnergyEvidence, type SurveyEnergyInputs } from './site-energy';
 import { surveyRoofEvidence } from './survey-roof-evidence';
+import { surveyWaterDeliveryChoices } from './report-survey-water';
 
 // The FAO Household Dietary Diversity Score uses these twelve food groups. This is a count of
 // reported groups, never a made-up nutrition score or an estimate of what a household eats.
@@ -297,7 +298,7 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
     memberCount: stringValue(row.memberCount) || undefined,
     goals: stringArray(row.goals),
     waterSource: stringArray(row.waterSource),
-    waterDelivery: stringArray(row.waterDelivery),
+    waterDelivery: surveyWaterDeliveryChoices(row.waterDelivery),
     waterStorage: stringArray(row.waterStorage),
     roofMainM2: roof.mainM2,
     roofSecondaryM2: roof.secondaryM2,
