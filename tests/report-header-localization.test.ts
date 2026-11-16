@@ -37,6 +37,8 @@ function soilCell(markdown:string,source:unknown,language:string){return cell(ma
 // all unrelated figures, rows, names and source translations stay exact.
 function currentHeaderExpectation(row: { input: ReportHeaderInput; expected: string }, language='en'): string {
  let result=row.expected;
+ // Survey summaries are composed deterministically; the old denial no longer describes this table.
+ result=result.replace("Nothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.",visibleEnglish("This table summarizes supplied map, design and survey records and the data sources named beside each row. It includes calculated summaries and evidence gaps; read each row's source and limits before relying on it.",language));
  // No mapped roof is a scoped inventory gap, not evidence that the survey lacks measurements.
  result=result.replace(/^\| Roof catchment \| Not traced or measured \| No roof outline on the map \|$/m, `| ${visibleEnglish('Roof area in supplied map/design facts',language)} | ${visibleEnglish('Not recorded in these map/design facts',language)} | No roof outline on the map |`);
  if (!['nasa-power','open-meteo','grower-entered'].includes(row.input.rainfallSource ?? '')) {

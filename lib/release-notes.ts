@@ -42,6 +42,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '16 November 2026', sha: 'b8dbdc626',
+    changes: [
+      'Reports flag conflicting tank and survey storage records for you to check.',
+      'Survey reports retain mixed storage answers and show clear roof subtotals.',
+    ],
+  },
+  {
     when: '16 November 2026', sha: 'd48e25166',
     changes: [
       'Older survey watering methods stay visible when you reopen them and in reports.',

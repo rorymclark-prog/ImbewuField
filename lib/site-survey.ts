@@ -5,7 +5,7 @@ import { canonicalCoordinateSiteId, coordinateSiteIdParts } from './site-id';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { normaliseMarketEvidence, marketEvidencePromptBlock, type MarketEvidence } from './report-site-facts';
 import { normaliseElevationEvidence, normaliseSiteEnergy, siteEnergyPrompt, type ElevationEvidence, type SiteEnergyEvidence, type SurveyEnergyInputs } from './site-energy';
-import { surveyRoofEvidence } from './survey-roof-evidence';
+import { surveyRoofEvidence, surveyRoofSubtotalText } from './survey-roof-evidence';
 import { surveyWaterDeliveryChoices } from './report-survey-water';
 
 // The FAO Household Dietary Diversity Score uses these twelve food groups. This is a count of
@@ -379,7 +379,7 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number | null, i
   lines.push(`Sources available: ${s.waterSource.length ? s.waterSource.join(', ') : 'none specified'}`);
   const deliveryArr = Array.isArray(s.waterDelivery) ? s.waterDelivery : (s.waterDelivery ? [s.waterDelivery] : []);
   lines.push(`Delivery / irrigation: ${deliveryArr.map(v => deliveryLabels[v] ?? v).join(' + ') || 'not specified'}`);
-  lines.push(`On-site water storage: ${s.waterStorage.length ? s.waterStorage.filter(v => v !== 'none').join(', ') || 'none reported' : 'not recorded'}`);
+  lines.push(`On-site water storage: ${s.waterStorage.length ? s.waterStorage.length === 1 && s.waterStorage[0] === 'none' ? 'none reported' : s.waterStorage.join(', ') : 'not recorded'}`);
 
   lines.push('');
   lines.push('--- ROOF CATCHMENT ---');
@@ -387,7 +387,7 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number | null, i
     if (s.roofMainM2) lines.push(`Main building roof: ${s.roofMainM2} m²`);
     if (s.roofSecondaryM2 && s.roofSecondaryM2 > 0) lines.push(`Secondary roofs (barn/shed/other): ${s.roofSecondaryM2} m²`);
     lines.push(`Gutters & downpipes in place: ${s.hasGutters ? 'Yes' : 'No (using 60% efficiency)'}`);
-    lines.push(`Total harvestable roof area: ${totalRoof} m²`);
+    lines.push(`Total harvestable roof area: ${surveyRoofSubtotalText(roof)} m²`);
     if (roofHarvestKL !== null) {
       lines.push(`Estimated annual roof harvest at ${rainfallMm} mm rainfall: ~${roofHarvestKL} kL`);
       lines.push(`Survey-only estimate using the reported roof area and assumed collection efficiency. If map measurements differ, retain both sources and resolve the difference before choosing a catchment area or sizing storage.`);
