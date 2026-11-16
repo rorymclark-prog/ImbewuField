@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest actual-Claude compatibility follow-up — [Legacy watering methods](2026-11-16/legacy-water-delivery-codex.md). One shared reader retains old delivery text in reopened surveys and report headers without rewriting direct-read records; successor CI and external gates remain separate.
+
 Latest report continuation — [Survey water evidence](2026-11-15/survey-water-report-evidence-codex.md). Separate source-labelled survey answers from map/design inventory gaps without inferring infrastructure, capacity or supply; successor gates remain separate.
 
 Latest report continuation — [Survey roof evidence](2026-11-15/survey-roof-report-evidence-codex.md). Preserve source-separated survey/map roof areas in the actual report, with honest missing/invalid evidence and actual PDF inspection; successor gates remain separate.

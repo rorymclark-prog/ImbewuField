@@ -20,14 +20,21 @@ const STORAGE_LABELS: Record<string, string> = {
   cistern: 'Underground cistern', none: 'No storage',
 };
 
+// Match the saved survey's trim/dedupe semantics, without changing that record.
+const choices = (input: unknown): string[] => Array.isArray(input)
+    ? [...new Set(input.filter((entry): entry is string => typeof entry === 'string').map(entry => entry.trim()).filter(Boolean))]
+    : [];
+
+/** Older surveys stored one watering method as text. Keep that answer at both
+ * read/report boundaries; other multi-choice fields have no such legacy shape. */
+export function surveyWaterDeliveryChoices(value: unknown): string[] {
+  return choices(typeof value === 'string' ? [value] : value);
+}
+
 export function surveyWaterEvidence(value: unknown): SurveyWaterEvidence | undefined {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return undefined;
   const row = value as Record<string, unknown>;
-  // Match the saved survey's trim/dedupe semantics, without changing that record.
-  const choices = (input: unknown): string[] => Array.isArray(input)
-    ? [...new Set(input.filter((entry): entry is string => typeof entry === 'string').map(entry => entry.trim()).filter(Boolean))]
-    : [];
-  return { sources: choices(row.waterSource), delivery: choices(row.waterDelivery), storage: choices(row.waterStorage) };
+  return { sources: choices(row.waterSource), delivery: surveyWaterDeliveryChoices(row.waterDelivery), storage: choices(row.waterStorage) };
 }
 
 export function surveyWaterSummary(evidence: SurveyWaterEvidence | undefined): string | null {
