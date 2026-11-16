@@ -7,7 +7,7 @@ import { numberLabel } from '@/lib/format-figures';
 import type { LocationData } from './types';
 import type { ReportSiteFacts } from './report-site-facts';
 import type { SampleGarden } from './sample-gardens';
-import { buildBillOfQuantities } from './report-boq';
+import { buildBillOfQuantities, mixedPurchaseQuantityNote } from './report-boq';
 import type { ReportFigure } from './report-figures';
 
 export type ReportPresentation = 'screen' | 'colour' | 'ink';
@@ -52,7 +52,7 @@ export function siteReportVisuals(facts: ReportSiteFacts | null, location: Locat
   const boq = buildBillOfQuantities(facts);
   const groups = new Map<string, number>();
   for (const line of boq.lines) if (line.zar !== null && valid(line.zar)) groups.set(line.group, (groups.get(line.group) ?? 0) + line.zar);
-  if (boq.lines.length) charts.push({ id: 'cost', title: t('What has been priced', 'Okunamanani'), note: `${t('Planned priced subtotal', 'Isamba esinentengo esihleliwe')}: R ${n(boq.subtotalZar)}. ${boq.unpricedCount} ${t('lines still need a price or measurement. Existing items are excluded. Confirm current local quotes.', 'imigqa isadinga intengo noma isilinganiso. Izinto ezikhona azifakiwe. Qinisekisa amanani endawo.')}`, unit: 'R', kind: 'bars', rows: [...groups].map(([label, value]) => ({ label: reportVisualText(label, language), value })) });
+  if (groups.size) charts.push({ id: 'cost', title: t('What has been priced', 'Okunamanani'), note: `${t('Planned priced subtotal', 'Isamba esinentengo esihleliwe')}: R ${n(boq.subtotalZar)}. ${boq.unpricedCount} ${t('lines still need a price or measurement. Existing items are excluded. Confirm current local quotes.', 'imigqa isadinga intengo noma isilinganiso. Izinto ezikhona azifakiwe. Qinisekisa amanani endawo.')}${boq.lines.some(line=>line.unpriced==='mixed-status') ? ` ${mixedPurchaseQuantityNote(language)}` : ''}`, unit: 'R', kind: 'bars', rows: [...groups].map(([label, value]) => ({ label: reportVisualText(label, language), value })) });
   return { overviewTitle: t('The site at a glance', 'Indawo ngamafuphi'), overviewNote: t('Space, seasons and the resources behind the plan.', 'Indawo, izinkathi zonyaka nezinsiza zohlelo.'), title: facts?.farmName ?? t('Your land, your plan', 'Umhlaba wakho, uhlelo lwakho'), subtitle: `${Math.abs(location.lat).toFixed(4)}°${location.lat < 0 ? 'S' : 'N'} · ${Math.abs(location.lon).toFixed(4)}°${location.lon < 0 ? 'W' : 'E'}`, basis: t('Saved design quantities and site data. Planned work remains distinct from completed work.', 'Ubuningi bomklamo obugciniwe nedatha yendawo. Umsebenzi ohleliwe uhlukile kosewuqediwe.'), metrics, charts: charts.map(chart => language === 'en' ? chart : { ...chart, language }), ...(language === 'en' ? {} : { language }) };
 }
 

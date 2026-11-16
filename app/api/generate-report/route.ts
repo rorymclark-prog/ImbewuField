@@ -34,7 +34,7 @@ import {
   zonePromptBlock,
   type ReportSiteFacts,
 } from '@/lib/report-site-facts';
-import { buildBillOfQuantities, billOfQuantitiesMarkdown } from '@/lib/report-boq';
+import { buildBillOfQuantities, billOfQuantitiesMarkdown, unpricedRateGapCount } from '@/lib/report-boq';
 import { resolveSiteEcology } from '@/lib/site-ecology';
 import { biomeKeyForName } from '@/lib/biome';
 import { plantingColdMinimum } from '@/lib/design-elements';
@@ -867,7 +867,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     rainfallMm: annualRain,
     slopeDeg: d.elevation.slopeDeg,
     soilSource: d.soil.soilSource,
-    unpricedBoqLines: boq.unpricedCount,
+    unpricedBoqLines: unpricedRateGapCount(boq),
   },langCode);
 
   const zuluClosing = langCode === 'zu' ? zuluReportClosingNotes(facts, d) : null;

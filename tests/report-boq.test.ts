@@ -2,11 +2,15 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-import { buildBillOfQuantities, billOfQuantitiesMarkdown } from '../lib/report-boq';
+import { buildBillOfQuantities, billOfQuantitiesMarkdown, pricedBoqSubtotal, unpricedRateGapCount } from '../lib/report-boq';
 import { buildRiskRegister, riskRegisterMarkdown } from '../lib/report-risk';
 import { buildMonitoringPlan } from '../lib/report-monitoring';
 import { documentReference } from '../lib/report-cover';
 import { groupDigits, type ReportSiteFacts } from '../lib/report-site-facts';
+import { PRICE_BOOK } from '../lib/price-book';
+import { reportSummaryPages } from '../lib/report-summary';
+import { siteReportVisuals } from '../lib/report-visuals';
+import { DEMO_LOCATION } from '../lib/demo-site';
 
 const FACTS: ReportSiteFacts = {
   farmName: 'Ubhejane Creche',
@@ -82,6 +86,119 @@ test('existing items are excluded from the bill and counted separately', () => {
   const boq = buildBillOfQuantities(FACTS);
   assert.equal(boq.lines.some((l) => l.description === 'Old coop'), false);
   assert.equal(boq.existingCount, 2);
+});
+
+test('a catalogue tank mirrored by the collector is excluded from new spend only once', () => {
+  const facts: ReportSiteFacts = {
+    water:{tanks:[{name:'Renamed tank',defId:'jojo_2500',count:3,statedLitres:2500,status:'existing'}],statedStorageLitres:7500,tanksOfUnknownCapacity:0,mapPoints:[],bodies:[]},
+    design:{beds:[],bedCount:0,bedAreaM2:0,plotCount:0,plotAreaM2:0,growingAreaM2:0,routes:[],zones:[],elements:[
+      {name:'Renamed tank',defId:'jojo_2500',category:'water',count:3,status:'existing'},
+      {name:'Existing structure',defId:'chicken_coop',category:'structure',count:2,status:'existing'},
+    ]},
+  };
+  const before=JSON.stringify(facts),boq=buildBillOfQuantities(facts);
+  assert.equal(boq.existingCount,5,'the collector mirrors the three tanks; it does not record six physical tanks');
+  assert.deepEqual(boq.lines,[]);
+  assert.equal(JSON.stringify(facts),before);
+  const designOnly=structuredClone(facts);delete designOnly.water;
+  assert.equal(buildBillOfQuantities(designOnly).existingCount,5,'a missing water record must not erase known design-only inventory');
+  const legacy=structuredClone(facts);delete legacy.water!.tanks[0].defId;delete legacy.design!.elements[0].defId;
+  assert.equal(buildBillOfQuantities(legacy).existingCount,8,'same display name alone cannot establish a legacy duplicate');
+  const disagreement=structuredClone(facts);disagreement.water!.tanks[0].count=1;
+  assert.equal(buildBillOfQuantities(disagreement).existingCount,6,'different recorded counts are not silently reconciled');
+  const renamed=structuredClone(facts);renamed.design!.elements[0].name='Another tank';
+  assert.equal(buildBillOfQuantities(renamed).existingCount,8,'different labelled groups are not merged by catalogue ID');
+  const repeated=structuredClone(facts);repeated.design!.elements.push({...repeated.design!.elements[0]});
+  assert.equal(buildBillOfQuantities(repeated).existingCount,8,'one canonical group cannot erase two design groups');
+  const unknown=structuredClone(facts);unknown.water!.tanks[0].defId='jojo_unknown';unknown.design!.elements[0].defId='jojo_unknown';
+  assert.equal(buildBillOfQuantities(unknown).existingCount,8,'a catalogue-like name does not establish a known producer group');
+});
+
+test('a legacy mixed tank retains its recorded count without inventing how many to purchase', () => {
+  const facts: ReportSiteFacts = { water: { tanks: [
+    {name:'Recorded tank',count:3,statedLitres:2500,status:'mixed'},
+  ],statedStorageLitres:7500,tanksOfUnknownCapacity:0,mapPoints:[],bodies:[]} };
+  const before=JSON.stringify(facts),boq=buildBillOfQuantities(facts);
+  assert.equal(boq.lines.length,1);
+  assert.equal(boq.lines[0].quantity,'3 no.','recorded group count remains visible, not a purchase quantity');
+  assert.equal(boq.lines[0].unpriced,'mixed-status');
+  assert.equal(boq.lines[0].zar,null);
+  assert.equal(boq.lines[0].rate,null);
+  assert.equal(boq.existingCount,0,'the installed share cannot be guessed');
+  assert.equal(boq.unpricedCount,1);
+  assert.equal(JSON.stringify(facts),before);
+});
+
+test('unknown mixed purchases do not inflate a separate proposed tank or erase existing inventory', () => {
+  const facts: ReportSiteFacts = { water: { tanks: [
+    {name:'Same tank',count:3,statedLitres:2500,status:'existing'},
+    {name:'Same tank',count:2,statedLitres:2500,status:'proposed'},
+    {name:'Same tank',count:4,statedLitres:2500,status:'mixed'},
+  ],statedStorageLitres:22500,tanksOfUnknownCapacity:0,mapPoints:[],bodies:[]} };
+  const before=JSON.stringify(facts),boq=buildBillOfQuantities(facts);
+  assert.equal(boq.lines.length,2);
+  assert.equal(boq.existingCount,3);
+  assert.equal(boq.subtotalZar,2*PRICE_BOOK.tank_2500.zar);
+  assert.equal(boq.lines.filter(line=>line.zar!==null).length,1);
+  assert.equal(boq.lines.find(line=>line.unpriced==='mixed-status')?.quantity,'4 no.');
+  assert.equal(JSON.stringify(facts),before);
+});
+
+test('mixed structures need a proposed share too, while duplicate tank and bed groups remain excluded', () => {
+  const facts:ReportSiteFacts={design:{beds:[],bedCount:0,bedAreaM2:0,plotCount:0,plotAreaM2:0,growingAreaM2:0,routes:[],zones:[],elements:[
+    {name:'Recorded coop',count:2,status:'mixed',category:'animal',defId:'chicken_coop'},
+    {name:'Recorded tank',count:2,status:'mixed',category:'water',defId:'jojo_2500'},
+    {name:'Recorded bed',count:2,status:'mixed',category:'growing',defId:'veg_bed'},
+  ]}};
+  const boq=buildBillOfQuantities(facts);
+  assert.equal(boq.lines.length,1,'inventory duplicates cannot add unpriced purchase rows');
+  assert.equal(boq.lines[0].description,'Recorded coop');
+  assert.equal(boq.lines[0].unpriced,'mixed-status');
+  assert.equal(boq.lines[0].zar,null);
+});
+
+test('withheld purchase quantities stay unknown in full and short reports rather than becoming a zero budget', () => {
+  const facts:ReportSiteFacts={water:{tanks:[{name:'Recorded tank',count:1,statedLitres:null,status:'mixed'}],statedStorageLitres:0,tanksOfUnknownCapacity:1,mapPoints:[],bodies:[]}};
+  const before=JSON.stringify(facts),boq=buildBillOfQuantities(facts);
+  assert.equal(pricedBoqSubtotal(boq),null);
+  assert.equal(unpricedRateGapCount(boq),0,'unknown purchase count must not trigger the existing rate-gap risk');
+  for(const language of ['en','zu','st','ts','ve']) {
+    const md=billOfQuantitiesMarkdown(buildBillOfQuantities(facts,language),language);
+    assert.match(md,/No lines priced; build cost not established/);
+    assert.match(md,/purchase quantity not established/);
+    assert.match(md,/recorded inventory counts, not quantities to buy/);
+    assert.doesNotMatch(md,/real figure is higher|R0|R 0/);
+    if(language!=='en')assert.match(md,/English; translation pending: purchase quantity/);
+    for(const pageCount of [1,5] as const) {
+      const pages=reportSummaryPages(facts,DEMO_LOCATION,pageCount,language),text=pages.flatMap(page=>page.lines).join('\n');
+      assert.match(text,/recorded inventory counts, not quantities to buy/);
+      assert.doesNotMatch(text,/R 0(?:\D|$)/);
+    }
+    assert.ok(!siteReportVisuals(facts,DEMO_LOCATION,language).charts.some(chart=>chart.id==='cost'),'no empty zero-cost chart');
+  }
+  assert.equal(JSON.stringify(facts),before);
+});
+
+test('mixed holds preserve known priced partials, stated zero and listed-plant safety', () => {
+  const facts:ReportSiteFacts={water:{tanks:[
+    {name:'Proposed tank',count:1,statedLitres:2500,status:'proposed'},
+    {name:'Mixed tank',count:4,statedLitres:2500,status:'mixed'},
+  ],statedStorageLitres:12500,tanksOfUnknownCapacity:0,mapPoints:[],bodies:[]}};
+  const boq=buildBillOfQuantities(facts),md=billOfQuantitiesMarkdown(boq);
+  assert.equal(pricedBoqSubtotal(boq),PRICE_BOOK.tank_2500.zar);
+  assert.equal(unpricedRateGapCount(boq),0);
+  assert.match(md,/priced subtotal is incomplete/);
+  assert.doesNotMatch(md,/real figure is higher/);
+  const cost=siteReportVisuals(facts,DEMO_LOCATION).charts.find(chart=>chart.id==='cost')!;
+  assert.equal(cost.rows.reduce((sum,row)=>sum+row.value,0),PRICE_BOOK.tank_2500.zar);
+  assert.match(cost.note,/not quantities to buy/);
+  const zero={...boq,lines:[{...boq.lines[0],zar:0,rate:'R0'}],subtotalZar:0};
+  assert.equal(pricedBoqSubtotal(zero),0,'a stated zero differs from no priced lines');
+  const listed=structuredClone(FACTS);
+  listed.design!.elements=[{name:'Renamed regulated plant',defId:'tree_guava',count:2,status:'mixed',category:'growing'}];
+  const line=buildBillOfQuantities(listed).lines.find(row=>row.unpriced==='listed-plant');
+  assert.ok(line,'the safety hold is not replaced by a request to quote a mixed group');
+  assert.match(billOfQuantitiesMarkdown(buildBillOfQuantities(listed)),/do not buy or propagate/);
 });
 
 test('a saved listed plant is counted without becoming a purchase in the site report', () => {
