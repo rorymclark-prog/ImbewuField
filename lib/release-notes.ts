@@ -42,6 +42,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '16 November 2026', sha: '05d08bb12',
+    changes: [
+      'Mixed existing/planned items stay unpriced until you confirm quantities to buy.',
+      'Reports distinguish unknown purchase quantities from missing prices.',
+      'Matching catalogue tank groups are counted once across report records.',
+    ],
+  },
+  {
     when: '16 November 2026', sha: 'b8dbdc626',
     changes: [
       'Reports flag conflicting tank and survey storage records for you to check.',
