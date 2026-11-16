@@ -261,6 +261,7 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding-bottom: 6px;
+  white-space: normal;
 }
 
 .table th,
@@ -298,6 +299,7 @@
 
 @media (max-width: 640px) {
   .actions { width: 100%; }
+  .table th, .table td { padding: 6px 4px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

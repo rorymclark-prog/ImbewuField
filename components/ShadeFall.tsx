@@ -42,12 +42,13 @@ const T = {
   dayLabel: 'Day',
   objectLabel: 'Object',
   days: { december: '21 December', equinox: 'Equinox', june: '21 June' } as Record<ShadeDayKey, string>,
-  daysShort: { december: 'Dec', equinox: 'Equinox', june: 'Jun' } as Record<ShadeDayKey, string>,
+  daysShort: { december: 'Dec', equinox: 'Eq.', june: 'Jun' } as Record<ShadeDayKey, string>,
   dayLong: {
     december: '21 December, midsummer',
     equinox: 'The equinox (late March or September)',
     june: '21 June, midwinter',
   } as Record<ShadeDayKey, string>,
+  tableHead: { december: 'Dec', equinox: 'Equinox', june: 'Jun' } as Record<ShadeDayKey, string>,
   objectChip: (h: number) => `${h} m ${h <= 2 ? 'hedge' : h <= 3 ? 'wall' : 'tree row'}`,
   objectName: (h: number) => `${h} m ${h <= 2 ? 'hedge' : h <= 3 ? 'wall' : 'row of trees'}`,
   play: 'Play',
@@ -62,7 +63,7 @@ const T = {
   northWord: 'N',
   planTitleBeds: 'm south of the object',
   barsTitle: 'Hours of direct sun, by bed',
-  skyTitle: 'How high the sun climbs',
+  skyTitle: 'How high the sun climbs, by solar hour',
   keysHint: 'Use the left and right arrow keys to step through the day, and Home and End to jump to sunrise and sunset.',
   legend: {
     shadow: 'shadow now',
@@ -88,7 +89,7 @@ const HEIGHTS = SCREEN_HEIGHTS_M;
 const DEFAULT_HEIGHT_INDEX = 1;
 const EIGHT_POINT = ['north', 'north-east', 'east', 'south-east', 'south', 'south-west', 'west', 'north-west'];
 const compassWord = (az: number) => EIGHT_POINT[Math.round((((az % 360) + 360) % 360) / 45) % 8];
-const hours = (v: number) => `${numberLabel(v, 1)} h`;
+const hours = (v: number) => `${v.toFixed(1)} h`;
 const metres = (v: number) => `${numberLabel(v, v < 1 ? 2 : v < 10 ? 2 : 1)} m`;
 
 interface Props {
@@ -128,7 +129,7 @@ const tint = (P: Palette): Days<string> => ({ december: P.warn, equinox: P.viole
 interface Rect { x: number; y: number; w: number; h: number }
 interface Layout { wide: boolean; plan: Rect; sky: Rect; bars: Rect; h: number }
 
-const ROW_H = 34;
+const ROW_H = 36;
 function layoutFor(w: number): Layout {
   const barsH = 24 + BED_DISTANCES_M.length * ROW_H + 22;
   if (w >= 720) {
@@ -384,7 +385,7 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
         for (const k of SHADE_DAY_KEYS) {
           if (L.t[k] < 12 - 1e-9) continue;
           const len = res[k].noon.shadowLengthM;
-          label(`${T.daysShort[k]} ${metres(len)}`, px(SCREEN_LENGTH_M / 2 + 0.4), py(-len) + 4, { color: col[k], bold: true });
+          label(`${T.daysShort[k]} ${metres(len)}`, px(X1 - 0.3), py(-len) + 4, { align: 'right', color: col[k], bold: true });
         }
 
         // the object's name, north of it
@@ -432,7 +433,7 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
       // ───────────── Sky: how high the sun is, hour by hour ─────────────
       {
         const R = lay.sky;
-        const ml = 30; const mr = 8; const mt = 24; const mb = 22;
+        const ml = 30; const mr = 8; const mt = 30; const mb = 22;
         const x0 = R.x + ml; const x1 = R.x + R.w - mr; const y0 = R.y + R.h - mb; const y1 = R.y + mt;
         const T0 = 4.5; const T1 = 19.5; const A1 = 90;
         const tx = (h: number) => x0 + ((h - T0) / (T1 - T0)) * (x1 - x0);
@@ -481,7 +482,6 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
         ctx.globalAlpha = 1; ctx.fillStyle = P.gold; ctx.beginPath(); ctx.arc(sx, sy, 6, 0, Math.PI * 2); ctx.fill();
         ctx.strokeStyle = P.card; ctx.lineWidth = 1.6; ctx.stroke();
         ctx.restore();
-        label(`${T.solarTime} (h)`, x1, y0 + 15, { align: 'right', halo: false });
       }
 
       // ───────────── Bars: hours of direct sun, bed by bed ─────────────
@@ -511,13 +511,12 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
             ctx.globalAlpha = 0.95;
             if (got > 0.005) { ctx.beginPath(); ctx.roundRect(x0, by, Math.max(2, hx(got) - x0), 7, 2); ctx.fill(); }
             ctx.restore();
-            if (k === day) label(hours(got), hx(rr.daylightHours) + 5, by + 8, { color: col[k], bold: true, halo: false });
+            if (k === day) label(hours(got), hx(rr.daylightHours) + 5, by + 7, { color: col[k], bold: true, halo: false });
           });
         });
         // axis
         const ay = top + BED_DISTANCES_M.length * ROW_H + 8;
         for (let h = 0; h <= maxH; h += 4) label(String(h), hx(h), ay, { align: 'center', halo: false });
-        label('hours of sun', x1 + 4, ay, { align: 'left', halo: false });
       }
     };
 
@@ -666,9 +665,10 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
     if (!results) return null;
     const r = results[sel];
     const a = shadeAt(r, clock);
+    const atSet = clock >= r.setHour - 1e-6;
     return {
       clock: solarClock(clock),
-      sun: a.up ? `Sun ${numberLabel(a.sun.altitudeDeg, 0)}° high · bearing ${numberLabel(a.sun.azimuthDeg, 0)}° ${aspectLabel(a.sun.azimuthDeg)}` : T.noPlay,
+      sun: atSet ? 'Sunset: the sun is on the horizon.' : a.up ? `Sun ${numberLabel(a.sun.altitudeDeg, 0)}° high · bearing ${numberLabel(a.sun.azimuthDeg, 0)}° ${aspectLabel(a.sun.azimuthDeg)}` : T.noPlay,
       shadow: a.up && a.shadowLengthM !== null ? `Shadow ${a.shadowLengthM > 40 ? 'longer than the plot' : metres(a.shadowLengthM)}, pointing ${compassWord(a.sun.azimuthDeg + 180)}` : '',
     };
   }, [results, sel, clock]);
@@ -766,8 +766,8 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
           <caption>Hours of direct sun a day, {T.objectName(heightM)}</caption>
           <thead>
             <tr>
-              <th scope="col">Bed, south of it</th>
-              {SHADE_DAY_KEYS.map((d) => <th scope="col" key={d}>{T.days[d]}</th>)}
+              <th scope="col">Bed</th>
+              {SHADE_DAY_KEYS.map((d) => <th scope="col" key={d}>{T.tableHead[d]}</th>)}
             </tr>
           </thead>
           <tbody>
@@ -777,7 +777,7 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
             </tr>
             {BED_DISTANCES_M.map((dist, i) => (
               <tr key={dist}>
-                <th scope="row">{dist} m</th>
+                <th scope="row">{dist} m south</th>
                 {SHADE_DAY_KEYS.map((d) => {
                   const v = results[d].beds[i].sunHours;
                   return <td key={d} className={v < 0.05 ? s.cellNone : undefined}>{hours(v)}</td>;
