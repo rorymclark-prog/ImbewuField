@@ -42,6 +42,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '16 November 2026', sha: '49bf1a359',
+    changes: ['Report cost gaps ask for missing measurements, purchase quantities and quotes.'],
+  },
+  {
     when: '16 November 2026', sha: '1db007a73',
     changes: ['Entirely unpriced bills explain what to confirm without implying a subtotal.'],
   },

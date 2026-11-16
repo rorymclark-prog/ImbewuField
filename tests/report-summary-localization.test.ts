@@ -22,6 +22,14 @@ const tokens = (value: string) => (value.match(/\{\w+\}/g) ?? []).sort();
 const figures = (value: string) => (value.match(/\d+(?:[.,]\d+)?/g) ?? []).sort();
 const source = new Map(REPORT_SUMMARY_COPY.map(row => [row.english, row]));
 
+// Historical "Not recorded" describes absent records; the calculated cost
+// subtotal is instead unestablished. Preserve the original translation corpus
+// and all other output, with an explicit English/pending marker for this copy.
+const currentCostWording = (text:string,language='en') => text.replace(
+  `${reportSummaryText('Priced infrastructure subtotal',language)}: ${reportSummaryText('Not recorded',language)}`,
+  `${reportSummaryText('Priced infrastructure subtotal',language)}: ${language==='en'?'':'English; translation pending: '}Not established`);
+const currentPages = (pages:ReturnType<typeof reportSummaryPages>,language='en') => pages.map(page=>({...page,lines:page.lines.map(line=>currentCostWording(line,language))}));
+
 test('summary drafts preserve every existing source pair, placeholder and figure', () => {
   assert.equal(source.size, REPORT_SUMMARY_COPY.length, 'one wording authority per source');
   for (const pair of sourcePairs) {
@@ -53,10 +61,10 @@ test('a newly authored summary label cannot silently fall back to English', () =
 test('new summaries retain exact English output and every saved figure, identity and uncertainty distinction', () => {
   for (const row of fixture.cases) {
     const before = JSON.stringify(row);
-    assert.deepEqual(reportSummaryPages(row.facts, row.location, 1), row.expected.en.one, row.name);
-    assert.deepEqual(reportSummaryPages(row.facts, row.location, 5), row.expected.en.five, row.name);
-    assert.equal(sampleFullSiteReport(row.facts, row.location), row.expected.en.full, row.name);
-    assert.equal(sampleFullSiteReport(row.facts, row.location, 'unsupported'), row.expected.en.full);
+    assert.deepEqual(reportSummaryPages(row.facts, row.location, 1), currentPages(row.expected.en.one), row.name);
+    assert.deepEqual(reportSummaryPages(row.facts, row.location, 5), currentPages(row.expected.en.five), row.name);
+    assert.equal(sampleFullSiteReport(row.facts, row.location), currentCostWording(row.expected.en.full), row.name);
+    assert.equal(sampleFullSiteReport(row.facts, row.location, 'unsupported'), currentCostWording(row.expected.en.full,'unsupported'));
     for (const language of languages) {
       for (const count of [1, 5] as const) {
         const native = reportSummaryPages(row.facts, row.location, count, language);

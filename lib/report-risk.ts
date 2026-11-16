@@ -30,7 +30,8 @@ export interface RiskInput {
   /** Retained for old callers; a record low does not establish farm frost risk. */
   minTempC?: number;
   soilSource?: 'lab' | 'soilgrids' | 'estimate';
-  /** How many BOQ lines carry a quantity but no rate. */
+  /** Legacy name: non-mixed BOQ lines with a missing measurement or price.
+   * Callers keep unknown existing/proposed purchase splits outside this rating. */
   unpricedBoqLines: number;
 }
 
@@ -76,12 +77,14 @@ export function buildRiskRegister(input: RiskInput, language = 'en'): RiskRow[] 
     });
   }
   if (input.unpricedBoqLines > 0) {
+    // An unpriced line can lack a footprint, not just a quote. With no priced
+    // lines there is also no subtotal or established amount to call a floor.
     add({
-      risk: t('The build costs more than the bill of quantities shows'),
-      trigger: t(input.unpricedBoqLines===1?'{count} measured line in the bill carry no rate':'{count} measured lines in the bill carry no rate',{count:input.unpricedBoqLines}),
+      risk: reportEvidenceText('The bill of quantities does not establish the full build cost', language),
+      trigger: reportEvidenceText(`${input.unpricedBoqLines} bill ${input.unpricedBoqLines === 1 ? 'line has' : 'lines have'} an unconfirmed measurement or rate`, language),
       likelihood: 'High',
       impact: 'Medium',
-      mitigation: t('Get local quotes for the unpriced lines before committing a budget. The subtotal in the cost section is a floor, not a total.'),
+      mitigation: reportEvidenceText('Confirm missing purchase quantities and measurements, then get local quotes before setting a build budget. Priced lines, if any, do not establish the complete build cost.', language),
     });
   }
   if (!facts?.crop || facts.crop.plantingCount === 0) {

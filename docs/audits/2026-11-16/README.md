@@ -1,5 +1,7 @@
 # Audits for 16 November 2026
 
+- [Cost-gap report labels](report-cost-gap-labels-codex.md): actual Claude R-1 and related summary labels corrected with unchanged quantities, prices and ratings; fresh actual outputs inspected, successor gates separate.
+
 - [Entirely unpriced report wording](report-unpriced-subtotal-wording-codex.md): actual Claude C-1 corrected without implying a missing subtotal or free build; controlled actual PDFs inspected, successor gates separate.
 
 - [Mixed inventory and purchase quantities](report-mixed-purchase-quantity-codex.md): unknown purchase shares stay unpriced, known proposed partials remain and empty priced subsets do not imply free builds; actual outputs inspected, successor gates separate.

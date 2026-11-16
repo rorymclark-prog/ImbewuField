@@ -5,7 +5,7 @@ import { registerHooks } from 'node:module';
 import test from 'node:test';
 import ts from 'typescript';
 import { buildBillOfQuantities, billOfQuantitiesMarkdown } from '../lib/report-boq.ts';
-import { reportSummaryPages, sampleFullSiteReport, summaryBoqDescription } from '../lib/report-summary.ts';
+import { reportSummaryPages, sampleFullSiteReport, summaryBoqDescription, reportSummaryText } from '../lib/report-summary.ts';
 import { REPORT_DOCUMENT_COPY, reportDocumentText } from '../lib/report-localisation.ts';
 import { REPORT_VISUAL_COPY, reportElementDisplayName, reportRouteDisplayName, reportRouteShortName, reportVisualText } from '../lib/report-visuals.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
@@ -55,12 +55,16 @@ function expectedEnglishBill(c:any,lang='en'):string {
 }
 function expectedSummary(c:any,lang:string,count:1|5):any[] {
   const key=languages.includes(lang as any)?lang:'en';
-  const original=c.summary[key][count===1?'one':'five'];
+  // The historical empty-cost label is superseded, not the frozen corpus or
+  // any absent observation elsewhere in the summary.
+  const oldUnknown=`${reportSummaryText('Priced infrastructure subtotal',lang)}: ${reportSummaryText('Not recorded',lang)}`;
+  const newUnknown=`${reportSummaryText('Priced infrastructure subtotal',lang)}: ${pendingEvidence('Not established',lang)}`;
+  const original=c.summary[key][count===1?'one':'five'].map((page:any)=>({...page,lines:page.lines.map((line:string)=>line===oldUnknown?newUnknown:line)}));
   if(c.name!=='mixed')return original;
   const expected=expectedBoq(c),cost=c.summary[key].five[3].lines;
   return original.map((page:any,pageIndex:number)=>({...page,lines:page.lines.flatMap((line:string,index:number)=>{
     if(line===cost[0])return [line.replace(`R ${groupedInteger(c.boq.subtotalZar)}`,`R ${groupedInteger(expected.subtotalZar)}`)];
-    if(line===cost[1])return [line.replace(/\d+$/,String(expected.unpricedCount))];
+    if(line===cost[1])return [`${pendingEvidence('Lines needing a purchase quantity, measurement or price',lang)}: ${expected.unpricedCount}`];
     if(line===cost[2])return [line,pendingEvidence(mixedNote,lang)];
     if(count===5&&pageIndex===3&&index>=3&&mixedInventoryLine(c.boq.lines[index-3]))return [line.slice(0,line.lastIndexOf(' · ')+3)+pendingEvidence(mixedReason,lang)];
     return [line];
@@ -68,7 +72,6 @@ function expectedSummary(c:any,lang:string,count:1|5):any[] {
 }
 function expectedFull(c:any,lang:string):string {
   const key=languages.includes(lang as any)?lang:'en';
-  if(c.name!=='mixed')return c.summary[key].full;
   const old=c.summary[key].five[3],next=expectedSummary(c,lang,5)[3];
   const section=(page:any)=>`## ${page.title}\n\n${page.lines.map((line:string)=>`- ${line}`).join('\n')}`;
   assert.ok(c.summary[key].full.includes(section(old)),'historical full cost section must have one explicit replacement');
