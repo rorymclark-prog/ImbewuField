@@ -27,18 +27,32 @@ const tokens=(s:string)=>(s.match(/\{\w+\}/g)??[]).sort();
 // runoff/cost claims; their original historical packet remains unchanged.
 const retiredRisks = ['Dry-season crop failure from insufficient stored water', 'Soil loss from runoff on the slope', 'Runoff carries water and topsoil off the growing area', 'Soil recommendations are built on modelled soil, not this field', 'Roof runoff is lost — catchment traced but nothing to store it in'];
 const retiredIntro = "Each row was raised by this site's own data. The trigger column prints the figure and the threshold that produced the rating, so a reader who disagrees can argue with the number rather than the adjective.";
-const retainedRows = (c:any) => c.rows.filter((r:any)=>!retiredRisks.includes(r.risk)).map((r:any,i:number)=>({...r,id:`R${i+1}`}));
-function retainedMarkdown(c:any) {
+// CLAUDE-49BF-R-1 corrects only the old cost-gap copy: an unmeasured
+// greenhouse is not a measured line awaiting a rate. Keep the historical
+// translations/fixture unchanged and retain all counts, ratings and other rows.
+const oldCostRisk = 'The build costs more than the bill of quantities shows';
+const pendingCostCopy = (text:string,language:string) => language==='en'?text:`English; translation pending: ${text}`;
+const retainedRows = (c:any,language='en') => c.rows.filter((r:any)=>!retiredRisks.includes(r.risk)).map((r:any,i:number)=>r.risk===oldCostRisk?{
+ ...r,id:`R${i+1}`,
+ risk:pendingCostCopy('The bill of quantities does not establish the full build cost',language),
+ trigger:pendingCostCopy(`${c.input.unpricedBoqLines} bill ${c.input.unpricedBoqLines===1?'line has':'lines have'} an unconfirmed measurement or rate`,language),
+ mitigation:pendingCostCopy('Confirm missing purchase quantities and measurements, then get local quotes before setting a build budget. Priced lines, if any, do not establish the complete build cost.',language),
+}:{...r,id:`R${i+1}`});
+function retainedMarkdown(c:any,language='en') {
  if (!retainedRows(c).length) return fx.risks.find((x:any)=>x.name==='none').markdown;
  let id=0;
  return c.markdown.replace(retiredIntro+'\n\n','').split('\n').filter((line:string)=>!retiredRisks.some(risk=>line.includes(`| ${risk} |`)))
-  .map((line:string)=>line.replace(/^\| R\d+ \|/,()=>`| R${++id} |`)).join('\n');
+  .map((line:string)=>line.replace(/^\| R\d+ \|/,()=>`| R${++id} |`)).map((line:string)=>{
+   if(!line.includes(`| ${oldCostRisk} |`))return line;
+   const row=retainedRows(c,language).find((r:any)=>r.risk.includes('bill of quantities'))!;
+   return `| ${row.id} | ${row.risk} | ${row.trigger} | ${row.likelihood} | ${row.impact} | ${row.mitigation} |`;
+  }).join('\n');
 }
 const withoutEvidence = (s:string) => s.replace(/\*\*Water evidence[^\n]+\n\n/, '').replace(/\*\*Slope evidence[^\n]+\n\n/, '').replace(/\*\*Soil evidence[^\n]+\n\n/, '').replace(/\*\*Earthworks evidence[^\n]+\n\n/, '').replace(/(?:English; translation pending: )?These rows identify recorded inputs[^\n]+\n\n/, '');
 
 test('retained source rows and English markdown stay exact after retiring unsupported rainfall and slope judgements',()=>{
  assert.equal(fx.sourceSha,'013cec5286cfb6c7251e48a5907bb8548c80a25d');for(const c of fx.monitoring){assert.deepEqual(buildMonitoringPlan(c.facts),c.rows,c.name);assert.deepEqual(buildMonitoringPlan(c.facts,'af'),c.rows);assert.equal(monitoringMarkdown(buildMonitoringPlan(c.facts)),c.markdown);assert.equal(monitoringMarkdown(buildMonitoringPlan(c.facts,'af'),'af'),c.markdown);}
- for(const c of fx.risks){assert.deepEqual(buildRiskRegister(c.input),retainedRows(c),c.name);assert.deepEqual(buildRiskRegister(c.input,'af'),retainedRows(c));assert.equal(withoutEvidence(riskRegisterMarkdown(buildRiskRegister(c.input))),retainedMarkdown(c));assert.equal(withoutEvidence(riskRegisterMarkdown(buildRiskRegister(c.input,'af'),'af')),retainedMarkdown(c));}
+ for(const c of fx.risks){assert.deepEqual(buildRiskRegister(c.input),retainedRows(c),c.name);assert.deepEqual(buildRiskRegister(c.input,'af'),retainedRows(c,'af'));assert.equal(withoutEvidence(riskRegisterMarkdown(buildRiskRegister(c.input))),retainedMarkdown(c));assert.equal(withoutEvidence(riskRegisterMarkdown(buildRiskRegister(c.input,'af'),'af')),retainedMarkdown(c,'af'));}
  const facts=fx.monitoring.find((r:any)=>r.name==='saved-design').facts;const notes=zuluReportClosingNotes(facts,fx.location);assert.equal(notes.crop,fx.legacyZulu[0]);
  // Full shared costs supersede the earlier abbreviated native table; every measured line stays present.
  const nativeBill=buildBillOfQuantities(facts,'zu');const nativeCosts=billOfQuantitiesMarkdown(nativeBill,'zu');for(const line of nativeBill.lines)assert.ok(nativeCosts.includes(line.quantity));
@@ -53,13 +67,17 @@ test('monitoring and risk drafts bind every source template, figure and placehol
 
 function audit(source:string){const tree=ts.createSourceFile('source.ts',source,ts.ScriptTarget.Latest,true);
  const literal=(n:ts.Node)=>{if(ts.isStringLiteral(n))assert.ok(words.has(n.text),`unregistered monitoring/risk source: ${n.text}`);else if(ts.isConditionalExpression(n)){literal(n.whenTrue);literal(n.whenFalse);}else if(ts.isPropertyAccessExpression(n)&&['r.likelihood','r.impact'].includes(n.getText(tree))){}else assert.fail('non-source translation key');};
- const translated=(n:ts.Node)=>{if(ts.isConditionalExpression(n)){translated(n.whenTrue);translated(n.whenFalse);}else assert.ok(ts.isCallExpression(n)&&ts.isIdentifier(n.expression)&&n.expression.text==='t','untranslated authored row field');};
+ const translated=(n:ts.Node)=>{if(ts.isConditionalExpression(n)){translated(n.whenTrue);translated(n.whenFalse);}else {
+  const explicitPending=ts.isCallExpression(n)&&ts.isIdentifier(n.expression)&&n.expression.text==='reportEvidenceText'
+   && n.arguments.length===2&&ts.isIdentifier(n.arguments[1])&&n.arguments[1].text==='language';
+  assert.ok(explicitPending||(ts.isCallExpression(n)&&ts.isIdentifier(n.expression)&&n.expression.text==='t'),'untranslated authored row field');
+ }};
  function visit(n:ts.Node){if(ts.isCallExpression(n)&&ts.isIdentifier(n.expression)&&n.expression.text==='t')literal(n.arguments[0]);if(ts.isPropertyAssignment(n)&&['indicator','question','baseline','method','frequency','recordedIn','risk','trigger','mitigation'].includes(n.name.getText(tree)))translated(n.initializer);ts.forEachChild(n,visit);}visit(tree);
 }
 test('new authored row fields or translation keys fail the source audit rather than silently falling back to English',()=>{
  // Ratings are a closed canonical type, not free-text translation keys. Keep that contract checked.
  const ratings=read('lib/report-risk.ts').match(/export type RiskRating = ([^;]+);/)![1];for(const match of ratings.matchAll(/'([^']+)'/g))assert.ok(words.has(match[1]));
- for(const file of['lib/report-monitoring.ts','lib/report-risk.ts'])audit(read(file));assert.throws(()=>audit("const row={risk:'An untranslated new risk'}"),/untranslated authored row field/);assert.throws(()=>audit("const row={trigger:`${count} new English trigger`}"),/untranslated authored row field/);assert.throws(()=>audit("t('Unregistered new monitoring advice')"),/unregistered monitoring\/risk source/);assert.throws(()=>audit('t(r.unknownFreeText)'),/non-source translation key/);
+ for(const file of['lib/report-monitoring.ts','lib/report-risk.ts'])audit(read(file));assert.throws(()=>audit("const row={risk:'An untranslated new risk'}"),/untranslated authored row field/);assert.throws(()=>audit("const row={trigger:`${count} new English trigger`}"),/untranslated authored row field/);assert.throws(()=>audit("const row={risk:reportEvidenceText('New words without language') }"),/untranslated authored row field/);assert.throws(()=>audit("t('Unregistered new monitoring advice')"),/unregistered monitoring\/risk source/);assert.throws(()=>audit('t(r.unknownFreeText)'),/non-source translation key/);
 });
 
 test('every monitoring field translates while baselines retain quantities, explicit missing data and exact recorded names',()=>{

@@ -12,6 +12,52 @@ import { reportSummaryPages } from '../lib/report-summary';
 import { siteReportVisuals } from '../lib/report-visuals';
 import { DEMO_LOCATION } from '../lib/demo-site';
 
+test('cost-gap risk asks for missing measurements as well as prices without inventing a subtotal', () => {
+  for (const status of ['proposed', 'mixed'] as const) for (const language of ['en', 'zu', 'st', 'ts', 've']) {
+    const facts: ReportSiteFacts = { design: {
+      beds: [], bedCount: 0, bedAreaM2: 0, plotCount: 0, plotAreaM2: 0, growingAreaM2: 0,
+      elements: [{ name: 'Unmeasured greenhouse', defId: 'greenhouse_tunnel', category: 'structure', count: 1, status }],
+      routes: [], zones: [],
+    } };
+    const before = structuredClone(facts);
+    const boq = buildBillOfQuantities(facts, language);
+    const gaps = unpricedRateGapCount(boq);
+    const rows = buildRiskRegister({ facts, rainfallMm: null, slopeDeg: 0, unpricedBoqLines: gaps }, language);
+    const cost = rows.find(row => row.risk.includes('bill of quantities'));
+    assert.equal(Boolean(cost), status === 'proposed', 'mixed purchase counts retain their separate evidence note, not a rated price gap');
+    if (cost) {
+      assert.match(cost.trigger, /1 bill line has an unconfirmed measurement or rate/);
+      assert.match(cost.mitigation, /Confirm missing purchase quantities and measurements, then get local quotes/);
+      assert.match(cost.mitigation, /Priced lines, if any, do not establish the complete build cost/);
+      assert.doesNotMatch(cost.trigger + cost.mitigation, /measured line|carry no rate|subtotal.*floor/);
+      assert.deepEqual([cost.likelihood, cost.impact], ['High', 'Medium'], 'display clarification cannot silently change the retained rule ratings');
+      for (const field of ['risk', 'trigger', 'mitigation'] as const) assert.equal(cost[field].startsWith('English; translation pending: '), language !== 'en');
+    }
+    assert.deepEqual(facts, before);
+    assert.equal(pricedBoqSubtotal(boq), null);
+  }
+  const plural = buildRiskRegister({ facts: null, rainfallMm: null, slopeDeg: 0, unpricedBoqLines: 2 }).find(row => row.risk.includes('bill of quantities'))!;
+  assert.match(plural.trigger, /2 bill lines have an unconfirmed measurement or rate/);
+});
+
+test('short cost summaries distinguish an unestablished subtotal and unconfirmed purchase count from priced work', () => {
+  for (const language of ['en', 'zu', 'st', 'ts', 've']) for (const pages of [1, 5] as const) {
+    const facts: ReportSiteFacts = { water: {
+      tanks: [{ name: 'Mixed tank group', count: 2, statedLitres: 2500, status: 'mixed' }],
+      statedStorageLitres: 5000, tanksOfUnknownCapacity: 0, mapPoints: [], bodies: [],
+    } };
+    const lines = reportSummaryPages(facts, DEMO_LOCATION, pages, language).flatMap(page => page.lines);
+    assert.ok(lines.some(line => /: (?:English; translation pending: )?Not established$/.test(line)));
+    assert.ok(lines.includes(`${language === 'en' ? '' : 'English; translation pending: '}Lines needing a purchase quantity, measurement or price: 1`));
+    assert.ok(lines.some(line => line.includes('purchase quantity') || line.includes('Mixed existing/proposed')));
+    const known = structuredClone(facts);
+    known.water!.tanks[0].status = 'proposed';
+    assert.equal(pricedBoqSubtotal(buildBillOfQuantities(known)), 2 * PRICE_BOOK.tank_2500.zar);
+    const knownLines = reportSummaryPages(known, DEMO_LOCATION, pages, language).flatMap(page => page.lines);
+    assert.ok(knownLines.some(line => line.endsWith(`: R ${groupDigits(2 * PRICE_BOOK.tank_2500.zar)}`)), 'a priced subtotal is retained');
+  }
+});
+
 const FACTS: ReportSiteFacts = {
   farmName: 'Ubhejane Creche',
   design: {
