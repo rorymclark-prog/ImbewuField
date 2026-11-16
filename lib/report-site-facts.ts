@@ -5,7 +5,7 @@ import { recordsSeasonLabel } from './records-months';
 import { reportVisualText, reportElementDisplayName, reportRouteShortName } from './report-visuals';
 import { cleanChoices, type HousingKind } from './animal-enterprises';
 import type { PlacedPlant } from './perennial-harvest';
-import type { SurveyRoofEvidence } from './survey-roof-evidence';
+import { surveyRoofSubtotalText, type SurveyRoofEvidence } from './survey-roof-evidence';
 import { surveyWaterSummary, SURVEY_WATER_LIMITS, type SurveyWaterEvidence } from './report-survey-water';
 // ── The farm's own measured facts, as report input ───────────────────────────────────────────
 //
@@ -616,6 +616,19 @@ export function designPromptBlock(facts: ReportSiteFacts): string {
   return lines.join('\n');
 }
 
+/** A recorded tank and an explicit survey answer can disagree without establishing
+ * which is current, whether the tank works or how much water is available. */
+function storageRecordDisagreement(water: FactWater | undefined, survey: SurveyWaterEvidence | undefined): string | null {
+  if (!survey?.storage.includes('none')) return null;
+  if (water?.tanks.some(tank => tank.status === 'existing')) {
+    return 'Map/design and survey records disagree: a tank is recorded as existing, while the survey includes "No storage". Check both records and the site; neither record establishes current water availability.';
+  }
+  if (water?.tanks.some(tank => tank.status === 'mixed')) {
+    return 'Map/design and survey records need reconciliation: a tank group has mixed existing/proposed status, while the survey includes "No storage". Installed quantity is not established. Check both records and the site; neither record establishes current water availability.';
+  }
+  return null;
+}
+
 /**
  * WATER ON SITE. Replaces the blanket denial that used to fire on any farm without a water-typed
  * MAP POLYGON — which is most farms, including one with a 2 500 L tank on its own plan.
@@ -664,6 +677,8 @@ export function waterPromptBlock(
   }
   const reported = surveyWaterSummary(surveyWater);
   if (reported) lines.push(`· Separate survey water record: ${reported} ${SURVEY_WATER_LIMITS}`);
+  const disagreement = storageRecordDisagreement(water, surveyWater);
+  if (disagreement) lines.push(`· ${disagreement}`);
 
   // A tank on the plan and a tank pinned on the map are very often the SAME tank. Saying so is
   // the honest reading; adding their capacities together is how a farm ends up with twice the
@@ -690,7 +705,7 @@ function surveyRoofSummary(roof: SurveyRoofEvidence | undefined): string | null 
     : value === 'auto' ? 'declared auto from map shapes' : 'entry source not recorded';
   // Keep survey precision: map display rounding would contradict supplied components.
   const area = (value: number | null) => value === null ? 'not recorded' : `${value} m²`;
-  return `Survey reported subtotal ${area(roof.subtotalM2)}: main roof ${area(roof.mainM2)} (${source(roof.mainSource)}); secondary roofs ${area(roof.secondaryM2)} (${source(roof.secondarySource)}). This is a survey record, not an independently verified measurement.`;
+  return `Survey reported subtotal ${surveyRoofSubtotalText(roof)} m²: main roof ${area(roof.mainM2)} (${source(roof.mainSource)}); secondary roofs ${area(roof.secondaryM2)} (${source(roof.secondarySource)}). This is a survey record, not an independently verified measurement.`;
 }
 
 /** The roof-catchment line. A missing map outline must not erase a survey measurement. */
@@ -906,7 +921,7 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   }
   out.push(`## ${t('Site at a Glance')}`);
   out.push('');
-  out.push(t("Nothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it."));
+  out.push(reportEvidenceText('This table summarizes supplied map, design and survey records and the data sources named beside each row. It includes calculated summaries and evidence gaps; read each row\'s source and limits before relying on it.', language));
   out.push('');
   out.push(`| ${t('Measure')} | ${t('Value')} | ${t('Where it comes from')} |`);
   out.push('|---------|-------|---------------------|');
@@ -1014,6 +1029,10 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   const reportedWater = surveyWaterSummary(input.surveyWater);
   if (reportedWater) {
     row(reportEvidenceText('Water choices reported in survey', language), reportEvidenceText(reportedWater, language), reportEvidenceText(SURVEY_WATER_LIMITS, language));
+  }
+  const disagreement = storageRecordDisagreement(water, input.surveyWater);
+  if (disagreement) {
+    row(reportEvidenceText('Water record reconciliation', language), reportEvidenceText(disagreement, language), reportEvidenceText('Supplied map/design tank status and separate survey storage answer; neither source is chosen over the other', language));
   }
   const absent = absentWaterBodies(facts, input.hasMapWaterPolygons);
   if (absent.length) {

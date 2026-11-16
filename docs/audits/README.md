@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+Latest actual external-review corrections — [Water record reconciliation](2026-11-16/report-water-source-disagreement-codex.md). Separate existing/mixed tank and survey no-storage records, retain mixed survey answers and clear decimal roof displays; fresh current-source outputs and successor gates remain distinct.
+
 Latest actual-Claude compatibility follow-up — [Legacy watering methods](2026-11-16/legacy-water-delivery-codex.md). One shared reader retains old delivery text in reopened surveys and report headers without rewriting direct-read records; successor CI and external gates remain separate.
 
 Latest report continuation — [Survey water evidence](2026-11-15/survey-water-report-evidence-codex.md). Separate source-labelled survey answers from map/design inventory gaps without inferring infrastructure, capacity or supply; successor gates remain separate.

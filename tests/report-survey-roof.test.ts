@@ -89,9 +89,12 @@ test('malformed and overflowing survey roof entries do not become a catchment or
 });
 
 test('fractional survey components retain their precision in the header and calculation evidence', () => {
-  for (const [main, secondary, subtotal] of [[0.4, 0.4, 0.8], [60.4, 15.4, 75.8]]) {
+  for (const [main, secondary, subtotal] of [[0.4, 0.4, 0.8], [60.4, 15.4, 75.8], [60.1, 15.2, 75.3],
+    [60.2, 15.4, 75.6], [60.3, 15.1, 75.4], [0.1, 0.2, 0.3], [1e-20, 2e-20, 3e-20],
+    [1e-300, 2e-300, 3e-300], [Number.MAX_VALUE, Number.MIN_VALUE, Number.MAX_VALUE]]) {
     const input = { ...survey, roofMainM2: main, roofSecondaryM2: secondary };
     const roof = surveyRoofEvidence(input);
+    assert.equal(roof.subtotalM2, main+secondary, 'display formatting must not change calculation inputs');
     for (const text of [buildReportHeaderMarkdown({ ...headerBase, surveyRoof: roof }), roofCalcLine(null, 800, roof)]) {
       assert.ok(text.includes(`Survey reported subtotal ${subtotal} m²`));
       assert.ok(text.includes(`main roof ${main} m²`));
