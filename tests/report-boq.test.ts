@@ -235,6 +235,38 @@ test('the markdown states the subtotal is a floor when lines are unpriced', () =
   assert.match(md, /planning estimates/i);
 });
 
+test('an entirely unpriced bill explains its gaps without referring to a nonexistent subtotal', () => {
+  const examples: ReportSiteFacts[] = [
+    { water: { tanks: [{ name: 'Unmeasured tank', count: 1, statedLitres: null, status: 'proposed' }],
+      statedStorageLitres: 0, tanksOfUnknownCapacity: 1, mapPoints: [], bodies: [] } },
+    { water: { tanks: [{ name: 'Small tank', count: 1, statedLitres: 1000, status: 'proposed' }],
+      statedStorageLitres: 1000, tanksOfUnknownCapacity: 0, mapPoints: [], bodies: [] } },
+    { water: { tanks: [{ name: 'Mixed tank', count: 2, statedLitres: 2500, status: 'mixed' }],
+      statedStorageLitres: 5000, tanksOfUnknownCapacity: 0, mapPoints: [], bodies: [] } },
+    { design: { beds: [], bedCount: 0, bedAreaM2: 0, plotCount: 0, plotAreaM2: 0,
+      growingAreaM2: 0, routes: [], zones: [], elements: [
+        { name: 'Greenhouse without a footprint', category: 'structure', count: 1,
+          status: 'proposed', defId: 'greenhouse_tunnel' },
+      ] } },
+  ];
+  assert.deepEqual(examples.map(facts => buildBillOfQuantities(facts).lines[0].unpriced),
+    ['no-rate', 'out-of-range', 'mixed-status', 'no-area']);
+  for (const facts of examples) {
+    const before = JSON.stringify(facts);
+    for (const language of ['en', 'zu']) {
+      const boq = buildBillOfQuantities(facts, language);
+      assert.equal(pricedBoqSubtotal(boq), null);
+      const md = billOfQuantitiesMarkdown(boq, language);
+      assert.match(md, /No lines priced; build cost not established/);
+      assert.doesNotMatch(md, /This subtotal|The priced subtotal|Subtotal of the priced lines/);
+      assert.doesNotMatch(md, /a measured quantity but no rate|real figure is higher/);
+      assert.match(md, /Confirm the missing purchase quantities, measurements or rates shown above/);
+      if (language === 'zu') assert.match(md, /English; translation pending: Build cost is unknown/);
+    }
+    assert.equal(JSON.stringify(facts), before);
+  }
+});
+
 test('a farm with nothing drawn gets an honest empty bill, not a zero total', () => {
   const md = billOfQuantitiesMarkdown(buildBillOfQuantities(null));
   assert.match(md, /nothing has been drawn on the plan to measure/);

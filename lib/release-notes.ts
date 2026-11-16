@@ -42,6 +42,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '16 November 2026', sha: '1db007a73',
+    changes: ['Entirely unpriced bills explain what to confirm without implying a subtotal.'],
+  },
+  {
     when: '16 November 2026', sha: '05d08bb12',
     changes: [
       'Mixed existing/planned items stay unpriced until you confirm quantities to buy.',

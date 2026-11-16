@@ -1,5 +1,6 @@
 # ImbewuField audit archive
 
+- [2026-11-16 — Entirely unpriced report wording](2026-11-16/report-unpriced-subtotal-wording-codex.md): actual Claude C-1, reproduced baseline, truthful unknown-cost footer and inspected actual PDFs; successor gates separate.
 Latest cost correction — [Mixed inventory and purchase quantities](2026-11-16/report-mixed-purchase-quantity-codex.md). Retain inventory without pricing an unknown purchase share; distinguish unpriced builds from zero cost. Exact successor CI and external review remain separate.
 
 Latest actual external-review corrections — [Water record reconciliation](2026-11-16/report-water-source-disagreement-codex.md). Separate existing/mixed tank and survey no-storage records, retain mixed survey answers and clear decimal roof displays; fresh current-source outputs and successor gates remain distinct.
