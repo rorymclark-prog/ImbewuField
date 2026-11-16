@@ -1,5 +1,7 @@
 # Audits for 16 November 2026
 
+- [Entirely unpriced report wording](report-unpriced-subtotal-wording-codex.md): actual Claude C-1 corrected without implying a missing subtotal or free build; controlled actual PDFs inspected, successor gates separate.
+
 - [Mixed inventory and purchase quantities](report-mixed-purchase-quantity-codex.md): unknown purchase shares stay unpriced, known proposed partials remain and empty priced subsets do not imply free builds; actual outputs inspected, successor gates separate.
 
 - [Report water record reconciliation](report-water-source-disagreement-codex.md): actual Claude/AGY findings, qualified tank/survey warning, retained mixed answers, display-only fractional subtotals and fresh roof/water evidence; successor gates remain separate.

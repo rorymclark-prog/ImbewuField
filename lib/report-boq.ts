@@ -470,7 +470,11 @@ export function billOfQuantitiesMarkdown(boq: BillOfQuantities,language='en'): s
     : `**${t('Subtotal of the priced lines: {subtotal}',{subtotal:formatZar(subtotal)})}**`);
   out.push('');
 
-  if (hasMixed) {
+  // An entirely unpriced bill has no subtotal to qualify. Its gaps can be
+  // measurements or purchase shares as well as rates; no increase is known.
+  if (subtotal === null) {
+    out.push(reportEvidenceText('Build cost is unknown. Confirm the missing purchase quantities, measurements or rates shown above before setting a build budget.', language), '');
+  } else if (hasMixed) {
     out.push(reportEvidenceText('The priced subtotal is incomplete. Lines with unconfirmed purchase quantities, measurements or rates are not included. Confirm each line before setting a build budget.', language), '');
   } else if (boq.unpricedCount > 0) {
     out.push(t("This subtotal is NOT the cost of the build. {unpriced} a measured quantity but no rate, so the real figure is higher by whatever those cost. They are listed above with the reason, rather than left out or costed at zero \u2014 a bill that hides what it could not price reads as complete when it is not.",{unpriced:t(boq.unpricedCount===1?'{count} line carries':'{count} lines carry',{count:boq.unpricedCount})}));
