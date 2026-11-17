@@ -1,3 +1,5 @@
+import { exactReviewedFactMatch, freezeReferenceData } from './reviewed-fact-capsule';
+import { wisconsinTomatoRegionMatches } from './wisconsin-tomato-nursery';
 import { USDA_GREAT_LAKES_CABBAGE_SOURCE, USDA_CABBAGE_PDF_SHA256, usdaGreatLakesRegionMatches } from './usda-great-lakes-cabbage';
 import type { ProvisionalEvidenceContext, ProvisionalFieldCandidate } from '../provisional-crop-planning';
 
@@ -50,4 +52,45 @@ export function usdaGreatLakesTomatoCandidates(context: ProvisionalEvidenceConte
     { ...common, id: 'usda-nrcs-great-lakes-tomato-nursery', field: 'nurseryDays', planningValueBasis: 'reported-point',
       input: { state: 'provided', value: USDA_TOMATO_NURSERY.days, unit: 'days', provenance } },
   ];
+}
+
+const WISCONSIN_TRANSFER_ID = 'usda-nrcs-great-lakes-tomato-wisconsin-transfer';
+const USDA_WISCONSIN_TOMATO_SOURCE = freezeReferenceData({ ...USDA_GREAT_LAKES_TOMATO_SOURCE,
+  resolution: { ...USDA_GREAT_LAKES_TOMATO_SOURCE.resolution }, units: { ...USDA_GREAT_LAKES_TOMATO_SOURCE.units },
+  licence: { ...USDA_GREAT_LAKES_TOMATO_SOURCE.licence }, updateCadence: { ...USDA_GREAT_LAKES_TOMATO_SOURCE.updateCadence },
+  accessRequirements: { ...USDA_GREAT_LAKES_TOMATO_SOURCE.accessRequirements },
+  id: WISCONSIN_TRANSFER_ID,
+  coverage: 'Explicit grower-chosen transfer of the undated Great Lakes tomato seed-starting reference to declared Wisconsin. No mapped state coverage or current local suitability established.',
+});
+/** Separate consent and purpose: never broadens the original Great Lakes alias. */
+export function usdaWisconsinTomatoCandidates(context: ProvisionalEvidenceContext, crop: string, recordedAt: string,
+  useReference: boolean, purpose: 'seed-raised-nursery-to-outdoor' | null): readonly ProvisionalFieldCandidate[] {
+  if (!useReference || context.countryCode !== 'US' || crop !== 'tomatoes'
+    || !wisconsinTomatoRegionMatches(context.agriculturalRegionReference) || context.establishment !== 'transplant'
+    || purpose !== 'seed-raised-nursery-to-outdoor') return [];
+  const assumption = 'Grower separately consented to transfer the undated Great Lakes tomato nursery reference to explicitly declared Wisconsin. Current local applicability and site/cultivar suitability are unverified.';
+  return freezeReferenceData([{
+    id: `${WISCONSIN_TRANSFER_ID}:${purpose}:${USDA_CABBAGE_PDF_SHA256}`, cropKey: 'tomatoes', field: 'nurseryDays',
+    tier: 'climate-crop-derived', geography: { kind: 'explicit-transfer', assumption },
+    establishment: 'transplant', waterRegime: 'any', ...(context.varietyReference ? { varietyReference: context.varietyReference } : {}),
+    temporalScope: { kind: 'historical-transfer', period: 'Undated original guide; publication and revision dates unknown', assumption },
+    source: USDA_WISCONSIN_TOMATO_SOURCE, reuseReview: 'reviewed', planningValueBasis: 'reported-point',
+    input: { state: 'provided', value: USDA_TOMATO_NURSERY.days, unit: 'days', provenance: { kind: 'external-reference', recordedAt,
+      sourceUrl: USDA_WISCONSIN_TOMATO_SOURCE.url, reference: `Page5 Tomato row, WEEKS BEFORE TRANSPLANTING; Wisconsin transfer; ${purpose}; ${USDA_CABBAGE_PDF_SHA256}` } },
+    assumptions: [assumption,
+      `Original USDA PDF SHA256: ${USDA_CABBAGE_PDF_SHA256}; page5 Tomato row gives 8 weeks before transplanting; exactly 8 × 7 = 56 days.`,
+      'This is seed-sowing lead time before outdoor transplanting, not time after emergence, purchased seedling age, direct sowing or protected-production harvest. No extra germination or hardening interval is added.',
+      'Page1 names Great Lakes States and page9 Wisconsin contributors; neither establishes a formal administrative coverage boundary or current local trial. Country, coordinates or Wisconsin alone do not select this transfer.',
+      'Conditional nursery start depends on a separately entered field-entry date, which this source does not approve. Frost safety and seedling readiness remain unverified.',
+      USDA_WISCONSIN_TOMATO_SOURCE.missingDataBehavior, USDA_WISCONSIN_TOMATO_SOURCE.limitations],
+  }]);
+}
+export function isUsdaWisconsinTomatoFactCandidate(candidate: ProvisionalFieldCandidate): boolean {
+  return candidate.source?.id === WISCONSIN_TRANSFER_ID || candidate.id.startsWith(`${WISCONSIN_TRANSFER_ID}:`);
+}
+export function usdaWisconsinTomatoFactReuse(candidate: ProvisionalFieldCandidate, context: ProvisionalEvidenceContext,
+  recordedAt: string): string | null {
+  const matched = usdaWisconsinTomatoCandidates(context, 'tomatoes', recordedAt, true, 'seed-raised-nursery-to-outdoor')
+    .some(expected => exactReviewedFactMatch(candidate, expected));
+  return matched && USDA_WISCONSIN_TOMATO_SOURCE.licence.status === 'known' ? USDA_WISCONSIN_TOMATO_SOURCE.licence.value : null;
 }
