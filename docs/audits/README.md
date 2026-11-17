@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+- [2026-11-17 — Cost chart gap caption](2026-11-17/report-chart-gap-caption-codex.md): singular and unconfirmed-purchase wording; historical evidence erratum, actual outputs and successor gates distinguished.
+
 - [2026-11-16 - Cost-gap report labels](2026-11-16/report-cost-gap-labels-codex.md): actual Claude R-1 and short-summary copy corrected; baseline regressions,193affected checks and fresh actual PDFs, with successor gates separate.
 
 - [2026-11-16 — Entirely unpriced report wording](2026-11-16/report-unpriced-subtotal-wording-codex.md): actual Claude C-1, reproduced baseline, truthful unknown-cost footer and inspected actual PDFs; successor gates separate.
