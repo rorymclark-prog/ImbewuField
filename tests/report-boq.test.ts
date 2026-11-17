@@ -40,6 +40,33 @@ test('cost-gap risk asks for missing measurements as well as prices without inve
   assert.match(plural.trigger, /2 bill lines have an unconfirmed measurement or rate/);
 });
 
+test('screen cost captions name unconfirmed purchase quantities and use singular wording without changing priced bars', () => {
+  for (const language of ['en', 'zu', 'st', 'ts', 've']) {
+    const facts: ReportSiteFacts = { water: {
+      tanks: [
+        { name: 'Planned tank', count: 1, statedLitres: 2500, status: 'proposed' },
+        { name: 'Mixed tank group', count: 2, statedLitres: 2500, status: 'mixed' },
+      ], statedStorageLitres: 7500, tanksOfUnknownCapacity: 0, mapPoints: [], bodies: [],
+    } };
+    const before = structuredClone(facts);
+    const chart = siteReportVisuals(facts, DEMO_LOCATION, language).charts.find(row => row.id === 'cost')!;
+    assert.ok(chart.note.includes('1 bill line still needs a purchase quantity, measurement or price.'));
+    assert.doesNotMatch(chart.note, /1 lines|1 lines still need a price or measurement/);
+    assert.equal(chart.note.includes('English; translation pending:'), language !== 'en');
+    assert.deepEqual(chart.rows.map(row => row.value), [PRICE_BOOK.tank_2500.zar]);
+    assert.deepEqual(facts, before);
+  }
+  const measuredGap: ReportSiteFacts = {
+    water: { tanks: [{ name: 'Planned tank', count: 1, statedLitres: 2500, status: 'proposed' }], statedStorageLitres: 2500, tanksOfUnknownCapacity: 0, mapPoints: [], bodies: [] },
+    design: { beds: [], bedCount: 0, bedAreaM2: 0, plotCount: 0, plotAreaM2: 0, growingAreaM2: 0, elements: [{ name: 'Greenhouse', category: 'structure', count: 1, status: 'proposed', defId: 'greenhouse_tunnel' }], routes: [], zones: [] },
+  };
+  const gapChart = siteReportVisuals(measuredGap, DEMO_LOCATION).charts.find(row => row.id === 'cost')!;
+  assert.ok(gapChart.note.includes('1 bill line still needs a purchase quantity, measurement or price.'));
+  measuredGap.water!.tanks.push({ name: 'Mixed tanks', count: 2, statedLitres: 5000, status: 'mixed' });
+  const pluralChart = siteReportVisuals(measuredGap, DEMO_LOCATION).charts.find(row => row.id === 'cost')!;
+  assert.ok(pluralChart.note.includes('2 bill lines still need a purchase quantity, measurement or price.'));
+});
+
 test('short cost summaries distinguish an unestablished subtotal and unconfirmed purchase count from priced work', () => {
   for (const language of ['en', 'zu', 'st', 'ts', 've']) for (const pages of [1, 5] as const) {
     const facts: ReportSiteFacts = { water: {
