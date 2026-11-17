@@ -1,3 +1,5 @@
+import { isWisconsinTomatoNurseryFactCandidate, wisconsinTomatoNurseryFactReuse } from './providers/wisconsin-tomato-nursery';
+import { isUsdaWisconsinTomatoFactCandidate, usdaWisconsinTomatoFactReuse } from './providers/usda-great-lakes-tomato';
 import { isCanadaCabbageFactCandidate, canadaCabbageFactReuse } from './providers/aafc-canada-cabbage';
 import { isSaskatchewanNurseryFactCandidate, saskatchewanNurseryFactReuse } from './providers/usask-saskatchewan-cabbage';
 import { normaliseGrowerSpacingSelectionReceipt, type GrowerSpacingSelectionReceipt } from '../grower-estimate-units';
@@ -132,6 +134,8 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
   const reviewedReuse = (candidate: ProvisionalFieldCandidate): string | null => isCanadaCabbageFactCandidate(candidate)
     ? canadaCabbageFactReuse(candidate, context, request.recordedAt)
     : isSaskatchewanNurseryFactCandidate(candidate) ? saskatchewanNurseryFactReuse(candidate, context, request.recordedAt)
+    : isWisconsinTomatoNurseryFactCandidate(candidate) ? wisconsinTomatoNurseryFactReuse(candidate, context, request.recordedAt)
+    : isUsdaWisconsinTomatoFactCandidate(candidate) ? usdaWisconsinTomatoFactReuse(candidate, context, request.recordedAt)
     : candidate.source?.licence?.status === 'known' && text(candidate.source.licence.value) ? candidate.source.licence.value : null;
   const emptyInputs = Object.fromEntries(fields.map(field => [field, unknown()]));
   const makeProfile = (inputs: Record<string, unknown>, plantCountOrigin?: GrowerSpacingSelectionReceipt, positiveMonths = false) => normaliseGrowerPlanningProfile({

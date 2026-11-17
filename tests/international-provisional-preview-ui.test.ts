@@ -27,6 +27,111 @@ const hooks = registerHooks({ load(url, context, next) {
 const { default: Panel } = await import('../components/crops/ProvisionalCropPreview.tsx');
 after(() => hooks.deregister());
 
+test('a pending Wisconsin calculation cannot publish after an endpoint round trip', async () => {
+  let finish!: () => void;
+  const checked = new Promise<void>(resolve => { finish = resolve; });
+  const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Wisconsin', evidence: undefined,
+    onCheckSource: async () => { await checked; return { isCurrent: () => true }; } });
+  try {
+    ui.change('Preview crop', 'tomatoes'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-05-29'); ui.change('Preview establishment', 'transplant');
+    ui.change('Wisconsin tomato nursery interval', 'lower-bound');
+    const choice = () => ui.root().findByProps({ 'aria-label': 'Use historical Wisconsin tomato nursery reference' });
+    act(() => choice().props.onChange({ target: { checked: true } }));
+    const staleChoice = choice().props.onChange;
+    let calculation!: Promise<void>;
+    act(() => { calculation = ui.action('Calculate provisional preview')(); });
+    ui.change('Wisconsin tomato nursery interval', 'upper-bound'); ui.change('Wisconsin tomato nursery interval', 'lower-bound');
+    act(() => staleChoice({ target: { checked: true } }));
+    assert.equal(choice().props.checked, false, 'a retained checkbox callback cannot restore old consent after a round trip');
+    await act(async () => { finish(); await calculation; });
+    assert.equal(ui.root().findAllByProps({ 'aria-label': 'Provisional results' }).length, 0);
+  } finally { finish(); ui.dispose(); }
+});
+
+test('a grower can compare Wisconsin and USDA facts, save both consents and keep unknowns in printable readback', async () => {
+  const { readSavedProvisionalProfile } = await import('../lib/international/provisional-profile.ts');
+  const { buildProvisionalCropPreviewHtml } = await import('../lib/international/provisional-crop-export.ts');
+  let profile: import('../lib/international/grower-planning.ts').GrowerPlanningProfile | null = null;
+  const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Wisconsin', evidence: undefined,
+    onSaveProfile: value => { profile = value; return { status: 'confirmed', profileId: value.profileId }; } });
+  try {
+    ui.change('Preview crop', 'tomatoes'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-05-29'); ui.change('Preview establishment', 'transplant');
+    const choice = (label: string, checked: boolean) => act(() => ui.root().findByProps({ 'aria-label': label }).props.onChange({ target: { checked } }));
+    const results = () => text(ui.root().findByProps({ 'aria-label': 'Provisional results' }));
+    assert.equal(ui.root().findByProps({ 'aria-label': 'Use historical Wisconsin tomato nursery reference' }).props.disabled, true);
+    await ui.click(); assert.match(results(), /Nursery start \(UTC\): Unknown/);
+    ui.change('Wisconsin tomato nursery interval', 'lower-bound');
+    choice('Use USDA tomato reference transfer to Wisconsin', true);
+    await ui.click(); assert.match(results(), /Nursery start \(UTC\): 2027-04-03/);
+    assert.match(results(), /climate-crop-derived/);
+    choice('Use historical Wisconsin tomato nursery reference', true);
+    await ui.click();
+    assert.match(results(), /Nursery start \(UTC\): 2027-05-01/);
+    assert.match(results(), /higher evidence precedence/);
+    assert.match(results(), /Homegrown Tomatoes for Wisconsin: 28 days/);
+    assert.match(results(), /56 days; climate-crop-derived/);
+    assert.match(results(), /Entry window: unknown/); assert.match(results(), /Estimated harvest weight: Unknown/);
+    assert.match(results(), /licence.*unknown/);
+    const save = ui.root().findAllByType('input').find(row => row.props.type === 'checkbox' && row.parent && text(row.parent).includes('Save these inputs'));
+    assert.ok(save); act(() => save.props.onChange({ target: { checked: true } }));
+    await ui.click('Save provisional profile'); assert.ok(profile);
+    const saved = readSavedProvisionalProfile(profile); assert.ok(saved);
+    assert.equal(saved.origin.version, 1, 'new source facts use the existing origin format');
+    assert.equal(saved.request.candidates.length, 2);
+    assert.equal(saved.result.assessment.schedule.nurseryStartDate.value, '2027-05-01');
+    const document = buildProvisionalCropPreviewHtml(saved.request, { bedLabel: 'Synthetic measured bed', sample: false });
+    assert.ok(document); assert.match(document.html, /Consented tomato nursery references/);
+    assert.match(document.html, /higher evidence precedence/);
+    assert.match(document.html, /Revised April 2017/);
+    assert.doesNotMatch(document.html, /synthetic-owner|"originalRequestJson"/);
+    ui.update({ profiles: [profile] });
+    const savedUi = text(ui.root().findByProps({ 'aria-label': 'Saved provisional profiles' }));
+    assert.match(savedUi, /Homegrown Tomatoes for Wisconsin: 28 days/);
+    assert.match(savedUi, /56 days; climate-crop-derived/);
+    assert.match(savedUi, /higher evidence precedence/);
+    assert.equal(ui.writes.length, 0, 'the profile callback is the only writer; calculation does not write device storage');
+  } finally { ui.dispose(); }
+});
+
+test('Wisconsin edits retain the source baseline and date/context round trips retire independent source consents and old actions', async () => {
+  let checks = 0;
+  const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Wisconsin', evidence: undefined,
+    onCheckSource: async () => { checks++; return { isCurrent: () => true }; } });
+  try {
+    ui.change('Preview crop', 'tomatoes'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-05-29'); ui.change('Preview establishment', 'transplant');
+    ui.change('Wisconsin tomato nursery interval', 'lower-bound');
+    const choice = (label: string) => ui.root().findByProps({ 'aria-label': label });
+    const wi = 'Use historical Wisconsin tomato nursery reference', usda = 'Use USDA tomato reference transfer to Wisconsin';
+    const consent = () => { act(() => choice(wi).props.onChange({ target: { checked: true } })); act(() => choice(usda).props.onChange({ target: { checked: true } })); };
+    const results = () => text(ui.root().findByProps({ 'aria-label': 'Provisional results' }));
+    consent(); ui.change('Nursery duration (days)', '40'); await ui.click();
+    assert.match(results(), /Nursery start \(UTC\): 2027-04-19/);
+    assert.match(results(), /Selected source baseline retained; active nursery duration is a grower edit or withheld/);
+    ui.change('Nursery duration (days)', ''); await ui.click();
+    assert.match(results(), /Nursery start \(UTC\): Unknown/);
+    await ui.click('Reset Nursery duration (days)'); await ui.click();
+    assert.match(results(), /Nursery start \(UTC\): 2027-05-01/);
+    const staleExport = ui.action('Download printable preview');
+    ui.change('Wisconsin tomato nursery interval', 'upper-bound');
+    assert.equal(choice(wi).props.checked, false);
+    assert.equal(choice(usda).props.checked, true, 'an endpoint change retires Wisconsin choice, not the independent USDA fact');
+    act(() => choice(wi).props.onChange({ target: { checked: true } })); await ui.click();
+    assert.match(results(), /Nursery start \(UTC\): 2027-04-03/);
+    assert.match(results(), /higher evidence precedence/);
+    ui.change('Preview field-entry date (UTC)', '2027-05-30'); ui.change('Preview field-entry date (UTC)', '2027-05-29');
+    assert.equal(choice(wi).props.checked, false); assert.equal(choice(usda).props.checked, false);
+    const before = checks; await act(async () => staleExport());
+    assert.equal(checks, before, 'retired export must not start a source check or a download');
+    consent(); ui.update({ agriculturalRegionReference: 'Michigan' }); ui.update({ agriculturalRegionReference: 'Wisconsin' });
+    assert.equal(choice(wi).props.checked, false); assert.equal(choice(usda).props.checked, false);
+    consent(); ui.change('Preview establishment', 'direct'); ui.change('Preview establishment', 'transplant');
+    assert.equal(choice(wi).props.checked, false); assert.equal(choice(usda).props.checked, false);
+  } finally { ui.dispose(); }
+});
+
 // Synthetic engineering fixtures only; no agronomic numbers or source dates here are runtime defaults.
 const scope = { kind: 'mapped-site' as const, siteId: 'site:0.00000,0.00000' };
 const source: GrowerWorkflowSource = { status: 'ready', kind: 'studio-canvas', sourceId: scope.siteId,

@@ -1,4 +1,5 @@
 import { saskatchewanNurseryResultQualifier } from './providers/usask-saskatchewan-cabbage';
+import { wisconsinTomatoReferenceReceipt } from './providers/wisconsin-tomato-nursery';
 import { canadaCabbageResultQualifier } from './providers/aafc-canada-cabbage';
 import { regionalSpacingReference } from './providers/regional-spacing-reference';
 import { sourcePublicationText } from './countries/readiness';
@@ -79,6 +80,17 @@ export function buildAdoptedProvisionalCycleHtml(value: unknown, metadata: { bed
 export function provisionalEvidenceTierText(tier: string | null): string {
   return tier === 'historical-public-reference' ? 'Historical public reference (explicit transfer)' : tier ?? 'Unknown';
 }
+/** Retain separately consented competing facts without changing historical
+ * resolver fingerprints or presenting the lower-ranked source as selected. */
+export function provisionalTomatoReferenceLines(request: ProvisionalDraftRequest, fields: Readonly<Record<string, ResolvedProvisionalField>>): readonly string[] {
+  const receipt = wisconsinTomatoReferenceReceipt(request, fields);
+  if (!receipt) return [];
+  return [receipt.qualifier, ...receipt.references.flatMap(reference => [
+    `${reference.title}: ${reference.days} days; ${provisionalEvidenceTierText(reference.tier)}; ${reference.basis}. ${reference.reason}`,
+    `Source: ${reference.url}. Accessed: ${reference.accessedOn ?? 'Unknown'}. ${reference.attribution}`,
+    `Limits: ${reference.limitations} Reuse: ${reference.reuseTerms}`,
+  ])];
+}
 /** Only untouched absence can use a short row. In particular, clearing a value
  * or rejecting its evidence is a grower decision, not absence of evidence. */
 export function provisionalFieldCanUseMissingRow(key: string, field: ResolvedProvisionalField, request: ProvisionalDraftRequest): boolean {
@@ -105,6 +117,7 @@ function renderProvisionalCropDocument(request: ProvisionalDraftRequest, metadat
   const value = (item: { value: unknown; status: string }, unit = '') =>
     `${item.value === null ? 'Unknown' : `${item.value}${unit}`} (${item.status})`;
   const nurseryQualifier = saskatchewanNurseryResultQualifier(result.fields);
+  const tomatoReferences = provisionalTomatoReferenceLines(request, result.fields);
   const output = [
     ...(request.countBasis ? [['Budgeted whole stations', value(assessment.budgetedStations)]] : []),
     ['Estimated plants', value(assessment.estimatedPlantCount)],
@@ -162,7 +175,7 @@ h1{font-size:1.8rem}h2{margin-top:2rem}h3{margin:.3rem 0}p{margin:.5rem 0}.notic
 table{border-collapse:collapse;width:100%}th,td{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid #b5c1b6}
 .field{border-top:1px solid #b5c1b6;padding:14px 0}.source{border-left:3px solid #b5c1b6;padding-left:12px;margin:12px 0}
 caption{text-align:left;font-weight:bold;margin:12px 0 6px}.missing-evidence td{white-space:nowrap}
-@media print{body{padding:0;font-size:10pt}h1,h2,h3,caption{break-after:avoid}tr,.field,.notice{break-inside:avoid}.temperature{break-inside:auto}.temperature p{break-inside:avoid}.evidence-appendix .field{break-inside:auto}.evidence-appendix p{break-inside:avoid;orphans:3;widows:3}@page{margin:16mm}}
+@media print{body{padding:0;font-size:10pt}h1,h2,h3,caption{break-after:avoid}tr,.field,.notice{break-inside:avoid}.temperature{break-inside:auto}.temperature p{break-inside:avoid}.evidence-appendix .field{break-inside:auto}.evidence-appendix p{break-inside:avoid;orphans:3;widows:3}${tomatoReferences.length ? '.tomato-references{break-inside:auto}.tomato-references p{break-inside:avoid;orphans:3;widows:3}' : ''}@page{margin:16mm}}
 </style></head><body><h1>${metadata.sample ? 'DEMO · ' : ''}${record ? 'Saved provisional cycle record' : 'Provisional crop preview'}</h1>
 <div class="notice">${metadata.sample ? '<p><strong>DEMO: sample inputs, not a real farm plan.</strong></p>' : ''}
 <p><strong>${record ? 'Historical estimates as accepted. Planned, not observed crops or harvest.' : 'Conditional planning estimates. Not a saved or adopted crop plan.'}</strong></p>
@@ -200,7 +213,8 @@ ${result.profile.version === 2 ? '<p>Source reports these months; other months r
 ${output.map(([label, text]) => label === `${provisionalLabels.nurseryStartDate} (UTC)` && nurseryQualifier
   ? `<tr class="nursery-reference"><td colspan="2"><p><strong>${escape(label)}:</strong> ${escape(text)}</p><p><strong>Nursery source conditions:</strong> ${escape(nurseryQualifier)}</p></td></tr>`
   : `<tr><th scope="row">${escape(label)}</th><td>${escape(text)}</td></tr>`).join('')}</tbody></table>
-${paragraph('Uncertainties', assessment.uncertainties.length ? assessment.uncertainties.join(', ') : 'No additional resolver flags; provisional limits still apply')}
+${paragraph('Uncertainties', assessment.uncertainties.length ? assessment.uncertainties.join(', ') : 'No additional resolver flags; provisional limits still apply')}${tomatoReferences.length ? `
+<section class="field tomato-references"><h2>Consented tomato nursery references</h2>${tomatoReferences.map(line => `<p>${escape(line)}</p>`).join('')}</section>` : ''}
 ${result.temperatureComparison ? `<section class="field temperature"><h2>Historical temperature comparison</h2>${provisionalTemperatureLines(result.temperatureComparison).map(line => `<p>${escape(line)}</p>`).join('')}</section>` : ''}
 <section class="evidence-appendix"><h2>Evidence and grower edits</h2>${evidence}</section>
 ${result.rejected.length ? `<h2>Evidence not used</h2>${result.rejected.map(item => paragraph(item.id, item.reason)).join('')}` : ''}
@@ -250,6 +264,7 @@ export function buildProvisionalCycleEvidence(snapshot: GrowerPlanningSnapshot):
     if (nurseryQualifier) lines.push(`Nursery start (UTC): ${assessment.schedule.nurseryStartDate ?? 'Unknown'}.`, nurseryQualifier);
     const canadaQualifier = canadaCabbageResultQualifier(current.result.fields);
     if (canadaQualifier) lines.push(canadaQualifier);
+    lines.push(...provisionalTomatoReferenceLines(original, current.result.fields));
     if (current.result.temperatureComparison) lines.push(...provisionalTemperatureLines(current.result.temperatureComparison));
     for (const [key, field] of Object.entries(current.result.fields)) {
       const label = provisionalLabels[key];
