@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+- [2026-11-18 — Wisconsin reference disclosure](2026-11-18/wisconsin-reference-disclosure-codex.md): actual Claude F-1 readability correction, unchanged source capsules and canonical records, scoped output checks and separate successor gates.
+
 - [2026-11-17 — Wisconsin tomato competing references](2026-11-17/wisconsin-tomato-competing-references-codex.md): source-specific consent and precedence, retained comparison through save/export, actual presentation evidence and open successor gates.
 
 - [2026-11-17 — Cost chart gap caption](2026-11-17/report-chart-gap-caption-codex.md): singular and unconfirmed-purchase wording; historical evidence erratum, actual outputs and successor gates distinguished.

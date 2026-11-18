@@ -80,6 +80,12 @@ export function buildAdoptedProvisionalCycleHtml(value: unknown, metadata: { bed
 export function provisionalEvidenceTierText(tier: string | null): string {
   return tier === 'historical-public-reference' ? 'Historical public reference (explicit transfer)' : tier ?? 'Unknown';
 }
+/** The consented-reference section already prints its qualifier. Remove only
+ * that exact leading copy from the displayed details, never from saved facts. */
+export function provisionalTomatoReferenceDetail(text: string, qualifier: string | undefined): string {
+  return qualifier && (text === qualifier || text.startsWith(`${qualifier} `))
+    ? text.slice(qualifier.length).trimStart() : text;
+}
 /** Retain separately consented competing facts without changing historical
  * resolver fingerprints or presenting the lower-ranked source as selected. */
 export function provisionalTomatoReferenceLines(request: ProvisionalDraftRequest, fields: Readonly<Record<string, ResolvedProvisionalField>>): readonly string[] {
@@ -88,7 +94,7 @@ export function provisionalTomatoReferenceLines(request: ProvisionalDraftRequest
   return [receipt.qualifier, ...receipt.references.flatMap(reference => [
     `${reference.title}: ${reference.days} days; ${provisionalEvidenceTierText(reference.tier)}; ${reference.basis}. ${reference.reason}`,
     `Source: ${reference.url}. Accessed: ${reference.accessedOn ?? 'Unknown'}. ${reference.attribution}`,
-    `Limits: ${reference.limitations} Reuse: ${reference.reuseTerms}`,
+    `Limits: ${provisionalTomatoReferenceDetail(reference.limitations, receipt.qualifier)} Reuse: ${reference.reuseTerms}`,
   ])];
 }
 /** Only untouched absence can use a short row. In particular, clearing a value
@@ -118,6 +124,7 @@ function renderProvisionalCropDocument(request: ProvisionalDraftRequest, metadat
     `${item.value === null ? 'Unknown' : `${item.value}${unit}`} (${item.status})`;
   const nurseryQualifier = saskatchewanNurseryResultQualifier(result.fields);
   const tomatoReferences = provisionalTomatoReferenceLines(request, result.fields);
+  const tomatoQualifier = tomatoReferences[0];
   const output = [
     ...(request.countBasis ? [['Budgeted whole stations', value(assessment.budgetedStations)]] : []),
     ['Estimated plants', value(assessment.estimatedPlantCount)],
@@ -157,8 +164,8 @@ function renderProvisionalCropDocument(request: ProvisionalDraftRequest, metadat
     ${field.sourceBindings.map(source => `<div class="source">${paragraph('Source', `${source.title} (${source.id})`)}
       ${paragraph('URL', source.url)}${paragraph('Published', sourcePublicationText(source))}${paragraph('Accessed', source.accessedOn)}
       ${paragraph('Review due', source.reviewDueOn)}${paragraph('Reuse terms', source.reuseTerms)}
-      ${paragraph('Attribution', source.attribution)}${paragraph('Source limitations', source.limitations)}${paragraph('Evidence state', source.evidenceState)}</div>`).join('')}
-    ${field.assumptions.map(item => paragraph('Assumption', item)).join('')}
+      ${paragraph('Attribution', source.attribution)}${paragraph('Source limitations', provisionalTomatoReferenceDetail(source.limitations, tomatoQualifier))}${paragraph('Evidence state', source.evidenceState)}</div>`).join('')}
+    ${field.assumptions.map(item => provisionalTomatoReferenceDetail(item, tomatoQualifier)).filter(Boolean).map(item => paragraph('Assumption', item)).join('')}
   </section>`);
   }
   flushMissingRows();
@@ -264,7 +271,9 @@ export function buildProvisionalCycleEvidence(snapshot: GrowerPlanningSnapshot):
     if (nurseryQualifier) lines.push(`Nursery start (UTC): ${assessment.schedule.nurseryStartDate ?? 'Unknown'}.`, nurseryQualifier);
     const canadaQualifier = canadaCabbageResultQualifier(current.result.fields);
     if (canadaQualifier) lines.push(canadaQualifier);
-    lines.push(...provisionalTomatoReferenceLines(original, current.result.fields));
+    const tomatoReferences = provisionalTomatoReferenceLines(original, current.result.fields);
+    const tomatoQualifier = tomatoReferences[0];
+    lines.push(...tomatoReferences);
     if (current.result.temperatureComparison) lines.push(...provisionalTemperatureLines(current.result.temperatureComparison));
     for (const [key, field] of Object.entries(current.result.fields)) {
       const label = provisionalLabels[key];
@@ -272,8 +281,8 @@ export function buildProvisionalCycleEvidence(snapshot: GrowerPlanningSnapshot):
       if (field.activeInput.state === 'provided') lines.push(`${label} input provenance: ${field.activeInput.provenance.kind}; recorded ${field.activeInput.provenance.recordedAt}.`);
       if (field.defaultConflict) lines.push(`${label}: conflicting defaults; no average supplied.`);
       for (const option of field.defaultOptions) lines.push(`${label} default option: ${provisionalInputText(option.input)}${option.reportedRange ? `; reported range ${option.reportedRange.join('–')}` : ''}; applies to ${provisionalScopeText(option.scope)}.`);
-      for (const source of field.sourceBindings) lines.push(`${label} source: ${source.title}; ${source.url}. Published ${sourcePublicationText(source)}; accessed ${source.accessedOn ?? 'Unknown'}; review due ${source.reviewDueOn ?? 'Unknown'}; evidence state ${source.evidenceState}. Reuse: ${source.reuseTerms}. Attribution: ${source.attribution}. Limitations: ${source.limitations}.`);
-      for (const assumption of field.assumptions) lines.push(`${label} assumption: ${assumption}`);
+      for (const source of field.sourceBindings) lines.push(`${label} source: ${source.title}; ${source.url}. Published ${sourcePublicationText(source)}; accessed ${source.accessedOn ?? 'Unknown'}; review due ${source.reviewDueOn ?? 'Unknown'}; evidence state ${source.evidenceState}. Reuse: ${source.reuseTerms}. Attribution: ${source.attribution}. Limitations: ${provisionalTomatoReferenceDetail(source.limitations, tomatoQualifier)}.`);
+      for (const assumption of field.assumptions.map(item => provisionalTomatoReferenceDetail(item, tomatoQualifier)).filter(Boolean)) lines.push(`${label} assumption: ${assumption}`);
     }
     for (const rejected of current.result.rejected) {
       const candidate = original.candidates.find(row => row.id === rejected.id);

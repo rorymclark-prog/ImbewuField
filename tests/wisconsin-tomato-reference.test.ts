@@ -1,5 +1,5 @@
 import { createSavedProvisionalProfile, createProvisionalCycleContext, reviewProvisionalCycleProfile, readSavedProvisionalProfile } from '../lib/international/provisional-profile.ts';
-import { buildProvisionalCycleEvidence, buildAdoptedProvisionalCycleHtml } from '../lib/international/provisional-crop-export.ts';
+import { buildProvisionalCycleEvidence, buildAdoptedProvisionalCycleHtml, provisionalTomatoReferenceDetail, provisionalTomatoReferenceLines } from '../lib/international/provisional-crop-export.ts';
 import { generateGrowerAutoPlan } from '../lib/international/grower-autoplan.ts';
 import { createGrowerCyclePlanting, resolvePlantingBasis } from '../lib/international/grower-cycle.ts';
 import type { GrowerInput, GrowerPlanningProfile } from '../lib/international/grower-planning.ts';
@@ -7,7 +7,7 @@ import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { resolveProvisionalCropPlan, type ProvisionalDraftRequest, type ProvisionalFieldCandidate } from '../lib/international/provisional-crop-planning.ts';
-import { WISCONSIN_TOMATO_NURSERY_SOURCE, WISCONSIN_TOMATO_NURSERY, wisconsinTomatoNurseryCandidates,
+import { WISCONSIN_TOMATO_NURSERY_SOURCE, WISCONSIN_TOMATO_NURSERY, WISCONSIN_TOMATO_QUALIFIER, wisconsinTomatoNurseryCandidates,
   wisconsinTomatoNurseryFactReuse, wisconsinTomatoReferenceReceipt, type WisconsinTomatoNurseryBasis } from '../lib/international/providers/wisconsin-tomato-nursery.ts';
 import { usdaGreatLakesTomatoCandidates, usdaWisconsinTomatoCandidates, usdaWisconsinTomatoFactReuse } from '../lib/international/providers/usda-great-lakes-tomato.ts';
 
@@ -28,6 +28,23 @@ function resolved(input = request()) {
   if (result.status !== 'resolved') assert.fail(`Expected resolved partial result, got ${result.status}`);
   return result;
 }
+
+test('a qualifier already shown in the consented receipt does not bury distinct source limitations', () => {
+  const input = request(), result = resolved(input), before = JSON.stringify([input, result]);
+  const lines = provisionalTomatoReferenceLines(input, result.fields);
+  assert.equal(lines.join('\n').split(WISCONSIN_TOMATO_QUALIFIER).length - 1, 1);
+  assert.ok(lines.some(line => line.startsWith('Limits: Not time after emergence, purchased seedling age, direct field sowing or protected-production harvest.')));
+  assert.match(lines.join('\n'), /The separate hardening paragraph does not change the seed-to-outdoor interval/);
+  assert.match(lines.join('\n'), /commercial article-reproduction permission remain unknown/);
+  assert.equal(JSON.stringify([input, result]), before, 'display projection cannot rewrite source capsules, resolver results or consent');
+  const distinct = 'Not time after emergence. A distinct later source restriction must survive.';
+  assert.equal(provisionalTomatoReferenceDetail(`${WISCONSIN_TOMATO_QUALIFIER} ${distinct}`, WISCONSIN_TOMATO_QUALIFIER), distinct);
+  assert.equal(provisionalTomatoReferenceDetail(WISCONSIN_TOMATO_QUALIFIER, WISCONSIN_TOMATO_QUALIFIER), '');
+  for (const text of [distinct, `Context: ${WISCONSIN_TOMATO_QUALIFIER}`, `${WISCONSIN_TOMATO_QUALIFIER}Unseparated restriction`]) {
+    assert.equal(provisionalTomatoReferenceDetail(text, WISCONSIN_TOMATO_QUALIFIER), text);
+    assert.equal(provisionalTomatoReferenceDetail(text, undefined), text, 'without the displayed receipt no qualification may be removed');
+  }
+});
 
 test('Wisconsin seed-to-outdoor interval is an explicit endpoint historical fact with unknown document licence', () => {
   assert.deepEqual(WISCONSIN_TOMATO_NURSERY, { weeks: [4, 8], days: [28, 56] });
@@ -252,6 +269,9 @@ test('both consented nursery facts and their selection reason survive real saved
   const evidence = buildProvisionalCycleEvidence(basis.assessment.snapshot); assert.ok(evidence);
   const html = buildAdoptedProvisionalCycleHtml(canonical.growerCycle, { bedLabel: bed.label, sample: true }); assert.ok(html);
   for (const output of [evidence.lines.join('\n'), html.html]) {
+    assert.equal(output.split(WISCONSIN_TOMATO_QUALIFIER).length - 1, 1,
+      'each independent public record needs the full qualifier once, not in every evidence paragraph');
+    assert.match(output, /Not time after emergence, purchased seedling age, direct field sowing or protected-production harvest/);
     assert.match(output, /Historical Wisconsin reference, article revised April 2017/);
     assert.match(output, /Homegrown Tomatoes for Wisconsin: 28 days/);
     assert.match(output, /Community Garden Guide[^\n]*56 days/);

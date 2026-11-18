@@ -5,7 +5,7 @@ import { CROPS, MONTHS_SHORT } from '@/lib/crop-catalog';
 import { growerPlanningScopeKey, normaliseGrowerMeasuredAreaInput, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import { formatDerivedMassKilograms } from '@/lib/mass-units';
 import { downloadFile } from '@/lib/crop-export-deliver';
-import { buildProvisionalCropPreviewHtml, provisionalTomatoReferenceLines, provisionalEvidenceTierText, provisionalPlaceLabel, provisionalEntryWindowText, provisionalNumericFields as numericFields, provisionalLabels as labels, provisionalInputText as inputText, provisionalScopeText as scopeText } from '@/lib/international/provisional-crop-export';
+import { buildProvisionalCropPreviewHtml, provisionalTomatoReferenceLines, provisionalTomatoReferenceDetail, provisionalEvidenceTierText, provisionalPlaceLabel, provisionalEntryWindowText, provisionalNumericFields as numericFields, provisionalLabels as labels, provisionalInputText as inputText, provisionalScopeText as scopeText } from '@/lib/international/provisional-crop-export';
 import { growerWorkflowResourceSiteId, type GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { resolveProvisionalCropPlan, type ProvisionalFieldCandidate, type ProvisionalDraftRequest } from '@/lib/international/provisional-crop-planning';
 import { usdaGreatLakesCabbageReference, usdaGreatLakesCabbageCandidates, usdaGreatLakesRegionMatches, USDA_CABBAGE_SPACING, type UsdaCabbageNurseryBasis } from '@/lib/international/providers/usda-great-lakes-cabbage';
@@ -102,7 +102,8 @@ function TemperatureAssessment({ value }: { value: ProvisionalTemperatureResult 
   </section>;
 }
 
-function EvidenceFields({ fields, spacing }: { fields: Extract<Resolution, { status: 'resolved' }>['fields']; spacing: boolean }) {
+function EvidenceFields({ fields, spacing, request }: { fields: Extract<Resolution, { status: 'resolved' }>['fields']; spacing: boolean; request?: ProvisionalDraftRequest }) {
+  const tomatoQualifier = request ? provisionalTomatoReferenceLines(request, fields)[0] : undefined;
   return <>
       {Object.entries(fields).map(([key, value]) => <details key={key} className="min-w-0 break-words rounded border border-[var(--border)] p-2">
         <summary className="min-h-11 cursor-pointer">{labels[key]}: {inputText(value.activeInput)} · {value.status}</summary>
@@ -114,8 +115,8 @@ function EvidenceFields({ fields, spacing }: { fields: Extract<Resolution, { sta
         {value.status === 'invalid-override' && <p role="alert">Invalid override. Correct or reset this field; its default has not been substituted.</p>}
         {value.defaultOptions.map(option => <p key={option.candidateId}>Default {option.candidateId}: {inputText(option.input)}{option.reportedRange ? `; reported range ${option.reportedRange.join('–')}` : ''}. Applies to {scopeText(option.scope)}.</p>)}
         {value.defaultPlanningValueBasis && <p>Default planning value: {value.defaultPlanningValueBasis}</p>}
-        {value.sourceBindings.map((item, i) => <div key={`${item.id}:${i}`} className="break-words"><p>Source: {item.title} · {item.url}. Published: {sourcePublicationText(item)}; accessed: {item.accessedOn ?? 'Unknown'}; review due: {item.reviewDueOn ?? 'Unknown'}. Reuse: {item.reuseTerms}. Evidence state: {item.evidenceState}.</p><p>{item.attribution}</p><p>{item.limitations}</p></div>)}
-        {value.assumptions.map(item => <p key={item}>Assumption: {item}</p>)}
+        {value.sourceBindings.map((item, i) => <div key={`${item.id}:${i}`} className="break-words"><p>Source: {item.title} · {item.url}. Published: {sourcePublicationText(item)}; accessed: {item.accessedOn ?? 'Unknown'}; review due: {item.reviewDueOn ?? 'Unknown'}. Reuse: {item.reuseTerms}. Evidence state: {item.evidenceState}.</p><p>{item.attribution}</p><p>{provisionalTomatoReferenceDetail(item.limitations, tomatoQualifier)}</p></div>)}
+        {value.assumptions.map(item => provisionalTomatoReferenceDetail(item, tomatoQualifier)).filter(Boolean).map(item => <p key={item}>Assumption: {item}</p>)}
       </details>)}
   </>;
 }
@@ -453,7 +454,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
         <ul>{Object.entries(saved.result.assessment.schedule).map(([key, value]) => <li key={key}>{labels[key]} (UTC): {value.value ?? 'Unknown'} ({value.status})</li>)}</ul>
         {saskatchewanNurseryResultQualifier(saved.result.fields) && <p>{saskatchewanNurseryResultQualifier(saved.result.fields)}</p>}
         <TomatoReferences request={saved.request} fields={saved.result.fields} />
-        <EvidenceFields fields={saved.result.fields} spacing={!!saved.request.countBasis} />
+        <EvidenceFields fields={saved.result.fields} spacing={!!saved.request.countBasis} request={saved.request} />
         {!!saved.result.rejected.length && <details><summary className="min-h-11 cursor-pointer">Saved evidence not used</summary><ul>{saved.result.rejected.map((item, i) => <li key={i}>{item.id}: {item.reason}</li>)}</ul></details>}
       </details>)}
     </section>}
@@ -711,7 +712,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
       {preview && <TomatoReferences request={preview.request} fields={result.fields} />}
       {!!result.assessment.uncertainties.length && <p>Uncertainties: {result.assessment.uncertainties.join(', ')}</p>}
       <h4 className="font-semibold">Evidence and edits</h4>
-      <EvidenceFields fields={result.fields} spacing={draft.countMode === 'spacing'} />
+      <EvidenceFields fields={result.fields} spacing={draft.countMode === 'spacing'} request={preview?.request} />
       {!!result.rejected.length && <details><summary className="min-h-11 cursor-pointer">Evidence not used</summary><ul>{result.rejected.map((item, i) => <li key={i}>{item.id}: {item.reason}</li>)}</ul></details>}
       <p>Source checked at {preview?.request.recordedAt} (UTC). This is a checked snapshot, not a live source feed.</p>
       <p>{props.onSaveProfile ? 'Saving a profile keeps its evidence for review; it does not add sowings.' : 'Nothing has been saved or added.'} These are conditional planning estimates, not locally validated farming instructions.</p>
