@@ -42,6 +42,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '18 November 2026', sha: '44df84e53',
+    changes: ['Wisconsin previews and exports keep each source warning once per record.'],
+  },
+  {
     when: '17 November 2026', sha: '58e87154e',
     changes: ['Compare chosen tomato seed-starting references in Wisconsin previews and printouts.'],
   },

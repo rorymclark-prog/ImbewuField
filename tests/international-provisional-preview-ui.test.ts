@@ -74,6 +74,9 @@ test('a grower can compare Wisconsin and USDA facts, save both consents and keep
     assert.match(results(), /56 days; climate-crop-derived/);
     assert.match(results(), /Entry window: unknown/); assert.match(results(), /Estimated harvest weight: Unknown/);
     assert.match(results(), /licence.*unknown/);
+    const qualifier = 'Historical Wisconsin reference, article revised April 2017:';
+    assert.equal(results().split(qualifier).length - 1, 1, 'the live result keeps one full qualifier beside the source comparison');
+    assert.match(results(), /Not time after emergence, purchased seedling age, direct field sowing or protected-production harvest/);
     const save = ui.root().findAllByType('input').find(row => row.props.type === 'checkbox' && row.parent && text(row.parent).includes('Save these inputs'));
     assert.ok(save); act(() => save.props.onChange({ target: { checked: true } }));
     await ui.click('Save provisional profile'); assert.ok(profile);
@@ -85,12 +88,15 @@ test('a grower can compare Wisconsin and USDA facts, save both consents and keep
     assert.ok(document); assert.match(document.html, /Consented tomato nursery references/);
     assert.match(document.html, /higher evidence precedence/);
     assert.match(document.html, /Revised April 2017/);
+    assert.equal(document.html.split(qualifier).length - 1, 1, 'the independent printable record retains its own qualifier once');
     assert.doesNotMatch(document.html, /synthetic-owner|"originalRequestJson"/);
     ui.update({ profiles: [profile] });
     const savedUi = text(ui.root().findByProps({ 'aria-label': 'Saved provisional profiles' }));
     assert.match(savedUi, /Homegrown Tomatoes for Wisconsin: 28 days/);
     assert.match(savedUi, /56 days; climate-crop-derived/);
     assert.match(savedUi, /higher evidence precedence/);
+    assert.equal(savedUi.split(qualifier).length - 1, 1, 'the historical saved record retains its own qualifier once');
+    assert.match(savedUi, /Not time after emergence, purchased seedling age, direct field sowing or protected-production harvest/);
     assert.equal(ui.writes.length, 0, 'the profile callback is the only writer; calculation does not write device storage');
   } finally { ui.dispose(); }
 });
