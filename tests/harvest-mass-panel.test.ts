@@ -244,6 +244,39 @@ test('catalogue assessment and review masses use the selected display unit witho
   try { assert.ok(observations.assessments > 0); ui.massUnit('lb'); assert.match(ui.text(), new RegExp(`${formatMassKilograms(targets[0].weeklyKg!, 'lb')} lb/week`)); ui.click('Suggest target sowings'); assert.ok(observations.suggestions > 0); const reviews = ui.renderer.root.findAllByProps({ 'aria-label': 'Target sowing review' }); assert.equal(reviews.length, 1); ui.massUnit('kg'); assert.equal(ui.renderer.root.findAllByProps({ 'aria-label': 'Target sowing review' }).length, 1); assert.equal(JSON.stringify(targets), before); assert.equal(ui.calls.length, 0); } finally { ui.dispose(); }
 });
 
+test('catalogue sowings show success only for a confirmed save and hold ambiguous writes', () => {
+  const today = new Date();
+  const monthAt = (offset: number) => new Date(Date.UTC(today.getFullYear(), today.getMonth() + offset, 1)).toISOString().slice(0, 7);
+  const target: HarvestTarget = { id: 'synthetic-sowing', siteId, cropKey: 'carrots', weeklyKg: 3, startMonth: monthAt(1), endMonth: monthAt(11) };
+  for (const outcome of ['held', 'written-unconfirmed', 'saved'] as const) {
+    let saves = 0;
+    const ui = mount([target], { basis: 'catalogue', beds: Array.from({ length: 4 }, (_, index) => ({
+      id: 'bed-' + index, label: 'Synthetic measured bed', areaM2: 20, minDimM: 1,
+    })), onAccept() { saves++; return outcome; } });
+    try {
+      const irrigation = ui.renderer.root.findAllByType('label').find(node => text(node).startsWith('Reliable irrigation'))?.findByType('input');
+      assert.ok(irrigation);
+      act(() => irrigation.props.onChange({ target: { checked: true } }));
+      ui.click('Suggest target sowings');
+      const add = ui.renderer.root.findAllByType('button').find(node => /to my plan/.test(text(node)));
+      assert.ok(add, 'the real synthetic catalogue run must produce a proposal');
+      act(() => add.props.onClick());
+      assert.equal(saves, 1);
+      if (outcome === 'saved') assert.match(ui.text(), /Dated sowings added/);
+      else {
+        assert.doesNotMatch(ui.text(), /Dated sowings added/);
+        assert.match(ui.text(), outcome === 'held' ? /sowings could not be saved/ : /save could not be confirmed/);
+        assert.equal(add.props.disabled, outcome === 'written-unconfirmed');
+        if (outcome === 'written-unconfirmed') {
+          assert.equal(ui.button('Suggest target sowings').props.disabled, true);
+          act(() => add.props.onClick());
+          assert.equal(saves, 1);
+        }
+      }
+    } finally { ui.dispose(); }
+  }
+});
+
 test('independent kilogram and pound UI entries preserve the actual one-cycle eight-position and nursery-ceiling boundary', async () => {
   // Synthetic engineering capacity from the existing real source fixture. This
   // checks a discrete planning boundary, not a recommended yield or tray size.

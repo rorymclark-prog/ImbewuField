@@ -130,7 +130,9 @@ test('the actual bed grid renders in both modes and passes Simple to rows regard
 test('Simple adds one "Add a crop" action below the grid, reusing the existing add flow', () => {
   const gridEnd = CROPS.indexOf('{/* Simple mode: the grid is the screen.');
   assert.ok(gridEnd > 0, 'the Simple add-crop block must sit directly after the grid');
-  const addBlock = CROPS.slice(gridEnd, gridEnd + 1000);
+  const addAction = CROPS.indexOf('onClick={() => openPicker(beds[0].id)}', gridEnd);
+  assert.ok(addAction > gridEnd);
+  const addBlock = CROPS.slice(gridEnd, CROPS.indexOf('</button>', addAction));
   assert.match(addBlock, /\{simple && beds\.length > 0 && \(/);
   // Reuses openPicker — the same function each bed's own "+ crop" button calls — not a new flow.
   assert.match(addBlock, /onClick=\{\(\) => openPicker\(beds\[0\]\.id\)\}/);
@@ -242,8 +244,11 @@ test('a production-only map cannot open generate or accept a bed auto-suggestion
   assert.ok(disabled && ts.isJsxAttribute(disabled) && disabled.initializer && ts.isJsxExpression(disabled.initializer) && disabled.initializer.expression);
   for (const beds of [[], [{}]]) {
     for (const hasOwnRecords of [true, false]) {
-      assert.equal(evaluate(disabled.initializer.expression, { beds, hasOwnRecords }), beds.length === 0 || hasOwnRecords,
-        'catalogue auto-suggestion needs real beds and must retain own dated reservations');
+      for (const planSaveConflict of [true, false]) {
+        assert.equal(evaluate(disabled.initializer.expression, { beds, hasOwnRecords, planSaveConflict }),
+          beds.length === 0 || hasOwnRecords || planSaveConflict,
+          'catalogue auto-suggestion needs real beds and a writable plan and must retain own dated reservations');
+      }
     }
   }
   assert.match(CROPS, /Your mapped plants and animal housing are listed below/);

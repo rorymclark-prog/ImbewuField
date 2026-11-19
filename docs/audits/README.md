@@ -279,6 +279,8 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
+- [Crop-plan edits after write access is lost — 19 November 2026](2026-11-19/crop-plan-readonly-edits-codex.md) follows the planner journey’s D-2 finding through the remaining edit and save controls.
+
 Latest global/report verification continuation — [Full-suite contracts and final save-base continuity — 13 November 2026](2026-11-13/global-report-ci-contracts-codex.md). Eleven reproduced failures retain their reasons; exact-head CI, independent review and adoption remain open.
 
 

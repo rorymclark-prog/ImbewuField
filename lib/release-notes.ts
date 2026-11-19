@@ -42,8 +42,8 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
-    when: '19 November 2026', sha: '088afa397',
-    changes: ['Read-only crop plans keep crop editing unavailable until you can save.'],
+    when: '19 November 2026', sha: '7910adb7b',
+    changes: ['Read-only crop plans keep editing unavailable and retain unfinished production and stock entries in the form.'],
   },
   {
     when: '18 November 2026', sha: '44df84e53',

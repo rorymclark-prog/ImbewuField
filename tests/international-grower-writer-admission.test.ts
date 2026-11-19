@@ -51,7 +51,7 @@ async function canonical() {
   return { ...f, book, profile };
 }
 const page = ts.createSourceFile('page.tsx', readFileSync(new URL('../app/facilitator/crops/page.tsx', import.meta.url), 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
-const names = ['plannerActorIsCurrent', 'growerActorIsCurrent', 'rememberStoredPlan', 'saveGrowerProfiles',
+const names = ['plannerActorIsCurrent', 'growerActorIsCurrent', 'canEditPlanBook', 'readCurrentGrowerBook', 'acceptHarvestTargetSowings', 'rememberStoredPlan', 'saveGrowerProfiles',
   'saveWorkspaceReference', 'saveScopedGrowerInputs', 'pushPlanHistory', 'planHistoryMetadataKey', 'stageSuggestedPlanHistory', 'undoLastChange', 'acceptAutoSuggest'];
 const bodies = new Map<string,string>(); let autosave = '', mount = '', targetAccept = '', historyCommit = '';
 function visit(node: ts.Node) {
@@ -63,7 +63,8 @@ function visit(node: ts.Node) {
   }
   if (ts.isJsxSelfClosingElement(node) && node.tagName.getText(page) === 'HarvestTargetsPanel') {
     const attribute = node.attributes.properties.find(item => ts.isJsxAttribute(item) && item.name.getText(page) === 'onAccept');
-    if (attribute && ts.isJsxAttribute(attribute) && attribute.initializer && ts.isJsxExpression(attribute.initializer) && attribute.initializer.expression?.getText(page).includes('stageSuggestedPlanHistory')) targetAccept = attribute.initializer.expression.getText(page);
+    if (attribute && ts.isJsxAttribute(attribute) && attribute.initializer && ts.isJsxExpression(attribute.initializer)
+      && attribute.initializer.expression?.getText(page) === 'acceptHarvestTargetSowings') targetAccept = attribute.initializer.expression.getText(page);
   }
   ts.forEachChild(node, visit);
 }
@@ -89,6 +90,7 @@ function parent(raw?: unknown) {
     activeAccountUid:account.activeAccountUid,isSampleMode:samples.isSampleMode,isBackendConfigured:()=>probe.configured,
     getFirebase:()=>({auth:{currentUser:probe.actor?{uid:probe.actor}:null}}),
     loadCropPlanWithWriteAdmission:crop.loadCropPlanWithWriteAdmission,cropPlanWriteAdmissionMatches:crop.cropPlanWriteAdmissionMatches,
+    readRawCropPlanReceipt:crop.readRawCropPlanReceipt,
     cropPlanWriteCandidateIsLossless:crop.cropPlanWriteCandidateIsLossless,cropPlanWriteToken:crop.cropPlanWriteToken,
     saveCropPlanWithReceipt:crop.saveCropPlanWithReceipt,hasGrowerCycleMarker,
     normaliseGrowerPlanningProfiles,growerPlanningScopeKey,sanitiseHarvestTargets:crop.sanitiseHarvestTargets,sanitiseNurserySettings,harvestTargetsSourceKey,
@@ -329,12 +331,27 @@ test('actual suggestion history is detached, grants nothing for a guarded or emp
 test('actual abandoned or replayed suggestion updaters cannot create history for an uncommitted plan or duplicate its grant',async()=>{
  const row={id:'suggested-fixture',bedId:'legacy-shown',cropKey:CROPS[0].key,sowMonth:12},result={plantings:[row],notes:[{kind:'choice',text:'Action explanation'}]};
  for(const kind of ['auto','targets']){await reset();const abandoned=parent({version:1,plantings:[],updatedAt:7}),original=abandoned.state.plan;
-  abandoned.state.setPlan=(updater:any)=>{updater(abandoned.state.plan);};acceptSuggestion(abandoned,kind,result);assert.equal(abandoned.state.plan,original,kind);assert.equal(abandoned.state.planHistory.length,0,kind);
-  const replayed=parent({version:1,plantings:[],updatedAt:7});replayed.state.setPlan=(updater:any)=>{updater(replayed.state.plan);replayed.state.plan=updater(replayed.state.plan);};
+  abandoned.state.setPlan=(update:any)=>{if(typeof update==='function')update(abandoned.state.plan);};acceptSuggestion(abandoned,kind,result);assert.equal(abandoned.state.plan,original,kind);assert.equal(abandoned.state.planHistory.length,0,kind);
+  const replayed=parent({version:1,plantings:[],updatedAt:7});replayed.state.setPlan=(update:any)=>{
+    if(typeof update==='function'){update(replayed.state.plan);replayed.state.plan=update(replayed.state.plan);}
+    else replayed.state.plan=update;
+  };
   acceptSuggestion(replayed,kind,result);replayed.commitHistory();assert.equal(replayed.state.planHistory.length,1,kind);assert.equal(replayed.state.plan.plantings.length,1,kind);
   const guarded=parent({version:1,plantings:[{...row,growerCycle:{}}],updatedAt:7}),before=guarded.state.plan;acceptSuggestion(guarded,kind,result);assert.equal(guarded.state.plan,before,kind);assert.equal(guarded.state.planHistory.length,0,kind);
  }
  await reset();const duplicateOnly=parent({version:1,plantings:[row],updatedAt:7});const before=duplicateOnly.state.plan;acceptSuggestion(duplicateOnly,'targets',result);assert.equal(duplicateOnly.state.plan,before);assert.equal(duplicateOnly.state.planHistory.length,0);
+});
+
+test('a legacy target write superseded during its storage event cannot confirm or adopt another book', async () => {
+ const c=parent({version:1,plantings:[],updatedAt:7}),before=c.state.plan;
+ const newer={version:1,plantings:[],updatedAt:99};
+ events.addEventListener(crop.CROP_PLAN_CHANGED_EVENT,()=>replaceCanonicalCropPlanFixtureRaw(JSON.stringify(newer)),{once:true});
+ const row={id:'superseded-target',bedId:'legacy-shown',cropKey:CROPS[0].key,sowMonth:12};
+ assert.equal(c.runTargetAccept({plantings:[row],notes:[]}), 'written-unconfirmed');
+ assert.equal(c.state.planSaveConflict,true);
+ assert.equal(c.state.plan,before);
+ assert.deepEqual(JSON.parse(readCanonicalCropPlanFixtureRaw()),newer);
+ c.commitHistory(); assert.equal(c.state.planHistory.length,0);
 });
 
 test('an unchanged sample autosave keeps both open unit editors attached to the same saved plan', () => {

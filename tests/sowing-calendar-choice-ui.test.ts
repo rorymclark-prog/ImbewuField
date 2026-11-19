@@ -267,7 +267,7 @@ test('the admission is asked before anything is written, and the key of the rend
 
 test('choosing a calendar asks the same admission, so a retained handler cannot put its site into another plan', () => {
   const choose = page.slice(page.indexOf('  function chooseSowingCalendar('), page.indexOf('\n  }\n', page.indexOf('  function chooseSowingCalendar(')));
-  assert.match(choose, /if \(!calendarScopeId \|\| !currentPlanningScopeAllowed\(\) \|\| !growerActorIsCurrent\(\)\) return;/);
+  assert.match(choose, /if \(!calendarScopeId \|\| !growerActorIsCurrent\(\) \|\| !canEditCataloguePlan\(\)\) return;/);
   assert.ok(choose.indexOf('growerActorIsCurrent()') < choose.indexOf('setPlan('), 'the check comes before the plan is touched');
 
   // The real function, run through the same account switch as the hide handler above.
@@ -282,12 +282,17 @@ test('choosing a calendar asks the same admission, so a retained handler cannot 
     productionSiteId: mine.siteId, growerScopeKey: mine.scopeKey, plannerActorIsCurrent,
   });
   const planUpdates: unknown[] = [];
+  let writable = true;
   const chooseForSiteA = build(pageFunction('chooseSowingCalendar'), 'chooseSowingCalendar', {
-    calendarScopeId: 'site:A', currentPlanningScopeAllowed: () => world.planningScopeAllowed, growerActorIsCurrent,
+    calendarScopeId: 'site:A', canEditCataloguePlan: () => world.planningScopeAllowed && writable, growerActorIsCurrent,
     setPlan: (update: unknown) => { planUpdates.push(update); }, withSowingCalendarChoice: () => ({}),
   }) as unknown as (calendar: string | null) => void;
   chooseForSiteA('all-year');
   assert.equal(planUpdates.length, 1, 'an ordinary choice reaches the plan');
+  writable = false;
+  chooseForSiteA('summer');
+  assert.equal(planUpdates.length, 1, 'an existing editor cannot stage a change after write access is lost');
+  writable = true;
   world.mountedUid = 'B'; world.firebaseUid = 'B';
   world.context.current = { siteId: 'site:B', owner: 'B', sample: false, scopeKey: 'scope:B' };
   chooseForSiteA('summer');

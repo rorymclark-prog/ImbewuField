@@ -1073,7 +1073,7 @@ function FacilitatorCropsPageInner() {
     return next;
   }
   function undoLastChange() {
-    if (!plan || !planHistory.length) return;
+    if (!plan || !planHistory.length || planSaveConflict) return;
     const base = planWriteBase.current, previous = planHistory[planHistory.length - 1];
     const context = planHistoryContext.current.get(previous);
     if (!base || !context || context.owner !== base.owner || context.sample !== base.sample || context.scopeKey !== planningScopeKey
@@ -1381,8 +1381,8 @@ function FacilitatorCropsPageInner() {
     try { return sample || !isBackendConfigured() || (getFirebase()?.auth.currentUser?.uid ?? null) === owner; }
     catch { return false; }
   }
-  function canEditCataloguePlan(): boolean {
-    if (!currentPlanningScopeAllowed() || planSaveConflict) return false;
+  function canEditPlanBook(): boolean {
+    if (planSaveConflict) return false;
     const base = planWriteBase.current;
     if (!base || base.token === null || !plannerActorIsCurrent(base.owner, base.sample)
       || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
@@ -1391,6 +1391,9 @@ function FacilitatorCropsPageInner() {
       return false;
     }
     return true;
+  }
+  function canEditCataloguePlan(): boolean {
+    return currentPlanningScopeAllowed() && canEditPlanBook();
   }
   useEffect(() => {
     if (!plan || planSaveConflict) return;
@@ -1867,7 +1870,7 @@ function FacilitatorCropsPageInner() {
   function chooseSowingCalendar(calendar: RainPattern | null) {
     // The scope id is this render's site. A handler kept past a change of account or site must
     // not put that site into whichever plan is on screen now.
-    if (!calendarScopeId || !currentPlanningScopeAllowed() || !growerActorIsCurrent()) return;
+    if (!calendarScopeId || !growerActorIsCurrent() || !canEditCataloguePlan()) return;
     setPlan((prev) => {
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
       return { ...withSowingCalendarChoice(base, calendarScopeId, calendar), version: 1 as const, updatedAt: Date.now() };
@@ -2508,14 +2511,55 @@ function FacilitatorCropsPageInner() {
     return [...options.values()];
   }, [allowCataloguePlanning, plantings, canvasTrees, canvasAnimals, animalChoices]);
   function updateProductionRecords(productionRecords: DatedProductionRecord[]) {
-    if (!productionSiteId) return;
+    if (!productionSiteId || !growerActorIsCurrent() || !canEditPlanBook()) return false;
     pushPlanHistory();
     setPlan(previous => ({ ...(previous ?? { version: 1 as const, plantings: [] }), productionRecords: replaceProductionRecordsForSite(previous?.productionRecords, productionSiteId, productionRecords), updatedAt: Date.now() }));
+    return true;
   }
   function updatePreservedProducts(preservedProducts: PreservedFoodRecord[]) {
-    if (!productionSiteId) return;
+    if (!productionSiteId || !growerActorIsCurrent() || !canEditPlanBook()) return false;
     pushPlanHistory();
     setPlan(previous => ({ ...(previous ?? { version: 1 as const, plantings: [] }), preservedProducts: replacePreservedFoodRecordsForSite(previous?.preservedProducts, productionSiteId, preservedProducts), updatedAt: Date.now() }));
+    return true;
+  }
+
+  function acceptHarvestTargetSowings(result: AutoSuggestResult): 'saved' | 'held' | 'written-unconfirmed' {
+    if (!currentPlanningScopeAllowed() || hasOwnRecords || !canEditPlanBook()) return 'held';
+    const base = planWriteBase.current, current = readCurrentGrowerBook();
+    if (!base || current.status !== 'ready' || !current.isCurrent?.()) return 'held';
+    const shownBeds = new Set(beds.map(bed => bed.id));
+    if (current.book.plantings.some(row => shownBeds.has(row.bedId) && hasGrowerCycleMarker(row))) return 'held';
+    const ids = new Set(current.book.plantings.map(row => row.id));
+    const additions = result.plantings;
+    if (!additions.length || additions.some(row => ids.has(row.id) || !shownBeds.has(row.bedId))
+      || new Set(additions.map(row => row.id)).size !== additions.length) return 'held';
+    const now = Date.now();
+    const next = { ...current.book, plantings: [...current.book.plantings, ...additions],
+      rainPattern: pattern, planNotes: result.notes, planNotesAt: now, updatedAt: now };
+    let written = false;
+    try {
+      const receipt = saveCropPlanWithReceipt(next, {
+        writeIsCurrent: () => currentPlanningScopeAllowed() && current.isCurrent?.() === true,
+      });
+      written = receipt.saved;
+      setPlanSaveFailed(!receipt.saved);
+      if (!receipt.saved) return 'held';
+      const confirmed = loadCropPlanWithWriteAdmission(), key = JSON.stringify(confirmed.book);
+      if (confirmed.token !== receipt.token || !cropPlanWriteAdmissionMatches(confirmed.admission, key, receipt.token)
+        || cropPlanWriteToken() !== receipt.token || !currentPlanningScopeAllowed() || !growerActorIsCurrent()
+        || planWriteBase.current !== base) {
+        setPlanSaveConflict(true);
+        return 'written-unconfirmed';
+      }
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      planWriteBase.current = { owner: base.owner, sample: base.sample, token: receipt.token, planKey: key, admission: confirmed.admission };
+      setPlan(stageSuggestedPlanHistory(plan, confirmed.book));
+      return 'saved';
+    } catch {
+      if (!written) return 'held';
+      setPlanSaveConflict(true);
+      return 'written-unconfirmed';
+    }
   }
 
   function shareTasks() {
@@ -2952,7 +2996,7 @@ function FacilitatorCropsPageInner() {
               now={{ year: currentYear, month: currentMonth }} allowCatalogueForecast={false}
               saveContext={nurserySaveContext} onSettings={saveNurserySettings} />}
             <ProductionRecordsEditor key={productionSiteId ?? 'no-site'} products={productionSiteId ? recordProducts : []}
-              dates={productionGraphInput.dates} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts}
+              dates={productionGraphInput.dates} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts} readOnly={planSaveConflict}
               onProductionRecordsChange={updateProductionRecords} onPreservedProductsChange={updatePreservedProducts} />
           </div>
         </div>
@@ -3003,7 +3047,7 @@ function FacilitatorCropsPageInner() {
             <div className="flex gap-2 mb-3">
               <button
                 onClick={openAutoSuggest}
-                disabled={beds.length === 0 || hasOwnRecords}
+                disabled={beds.length === 0 || hasOwnRecords || planSaveConflict}
                 title={hasOwnRecords ? 'Own dated records need their checked reservations in the Task Planner.' : beds.length === 0 ? 'Add a vegetable bed or staple plot to auto-suggest crops.' : undefined}
                 // min-h-11 (44px), not py-2.5: the padding made this 43px, one under the house tap rule. "Clear all" beside it stretches to match.
                 className="flex-1 min-h-11 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
@@ -3014,6 +3058,7 @@ function FacilitatorCropsPageInner() {
               {!simple && planHistory.length > 0 && (
                 <button
                   onClick={undoLastChange}
+                  disabled={planSaveConflict}
                   className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
                   style={{ fontSize: 13, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}
                   title={cropUi(lang, 'Undo the last change to this plan', 'Buyisela emuva ushintsho lokugcina kulolu hlelo')}
@@ -3052,19 +3097,7 @@ function FacilitatorCropsPageInner() {
               }}
               saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
               onSaveTargets={saveHarvestTargets}
-              onAccept={(result) => {
-                if (!currentPlanningScopeAllowed() || hasOwnRecords) return;
-                const authoredMetadata = { rainPattern: pattern, planNotes: result.notes, planNotesAt: Date.now() };
-                setPlan((previous) => {
-                  if (previous?.plantings.some(p => beds.some(b => b.id === p.bedId) && hasGrowerCycleMarker(p))) return previous;
-                  const base = previous ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
-                  const savedIds = new Set(base.plantings.map((p) => p.id));
-                  const additions = result.plantings.filter((p) => !savedIds.has(p.id));
-                  if (additions.length === 0) return previous;
-                  return stageSuggestedPlanHistory(previous, { ...base, ...authoredMetadata,
-                    plantings: [...base.plantings, ...additions], updatedAt: Date.now() });
-                });
-              }}
+              onAccept={acceptHarvestTargetSowings}
             />}
 
             {productionSiteId && beds.length > 0 && <NurseryPlanPanel
@@ -3335,7 +3368,7 @@ function FacilitatorCropsPageInner() {
             {animalSaveFailed && <p role="alert" className="font-sans mt-2" style={{ color: 'var(--gold)', fontSize: 13 }}>Animal products and production months could not be saved on this device. Keep this page open and download the plan before leaving.</p>}
             <details className="rounded-2xl p-4 mt-4" style={{ border: '1px solid var(--border)', background: 'var(--bg-1)' }}><summary className="font-display font-semibold" style={{ cursor: 'pointer', minHeight: 32 }}>Food, production kg and growing space graphs</summary><ProductionAvailabilityGraphs series={productionAvailabilityGraphs} input={productionGraphInput} preservedProducts={sitePreservedProducts} /><p className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>The map supplies growing areas and plant counts. Record monthly quantities below. For crop R/m², use All tools → Food, field &amp; value → Plan-cycle value and review prices, losses and the amount sold.</p></details>
             {(unassignedProductionRecords.length > 0 || unassignedPreservedProducts.length > 0) && <p className="font-sans text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Earlier records without a site are retained outside this site's totals: {unassignedProductionRecords.length} production records and {unassignedPreservedProducts.length} stock records.</p>}
-            <ProductionRecordsEditor key={productionSiteId ?? 'no-site'} products={productionSiteId ? recordProducts : []} dates={productionGraphInput.dates} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts} onProductionRecordsChange={updateProductionRecords} onPreservedProductsChange={updatePreservedProducts} />
+            <ProductionRecordsEditor key={productionSiteId ?? 'no-site'} products={productionSiteId ? recordProducts : []} dates={productionGraphInput.dates} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts} readOnly={planSaveConflict} onProductionRecordsChange={updateProductionRecords} onPreservedProductsChange={updatePreservedProducts} />
             {simple && <CropPlanExportCard plantings={plantings} beds={beds} tasks={allTasks} yearReport={yearReport} planNotes={plan?.planNotes} planNotesAt={plan?.planNotesAt} meta={exportMeta} availability={printAvailability} treeGroups={includeTrees ? canvasTrees : undefined} treeSeasons={treeSeasons} productionGuide={productionGuide} productionProjection={productionProjection} poultryGuidance={includeAnimals ? chickenGuide : undefined} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts} />}
 
             {!simple && (
@@ -3856,6 +3889,7 @@ function FacilitatorCropsPageInner() {
           hasCurrentPlantings={plantings.length > 0}
           pattern={pattern} calendarLabel={calendarLabel} calendarBasis={calendarBasis} climateSource={climateSource} climateMissing={climateMissing} referenceName={region?.name ?? null}
           calendarChoice={chosenCalendar} automaticCalendar={calendarInUse.automatic} sampleCalendarSet={sampleCalendar !== null} canChooseCalendar={!!calendarScopeId} onCalendarChoice={chooseSowingCalendar}
+          calendarReadOnly={planSaveConflict}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
           allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
           allowMixedCropsInBed={aAllowMixedCropsInBed} onAllowMixedCropsInBed={setAAllowMixedCropsInBed}
@@ -6221,7 +6255,7 @@ function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
   groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, mixState, onSaveMix, onResetMix, rhythm, onRhythm,
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
-  pattern, calendarLabel, calendarBasis, climateSource, climateMissing, referenceName, calendarChoice, automaticCalendar, sampleCalendarSet, canChooseCalendar, onCalendarChoice, rotateCrops, onRotateCrops,
+  pattern, calendarLabel, calendarBasis, climateSource, climateMissing, referenceName, calendarChoice, automaticCalendar, sampleCalendarSet, canChooseCalendar, calendarReadOnly, onCalendarChoice, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
   siteClimate, siteObservationNotes, beds, siteId, nurserySettings, currentPlantings, now, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
@@ -6259,6 +6293,7 @@ function AutoSuggestModal({
   sampleCalendarSet: boolean;
   /** False with no site or workspace to save a choice against. */
   canChooseCalendar: boolean;
+  calendarReadOnly: boolean;
   onCalendarChoice: (calendar: RainPattern | null) => void;
   rotateCrops: boolean; onRotateCrops: (v: boolean) => void;
   allowVinesInBeds: boolean; onAllowVinesInBeds: (v: boolean) => void;
@@ -6495,7 +6530,7 @@ function AutoSuggestModal({
                   <label className="block font-sans mt-3" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
                     Sowing calendar for this site
                     <select className="mt-1 w-full rounded-lg border px-3 min-h-11 font-sans" style={{ fontSize: 14, background: 'var(--bg-0)', color: 'var(--text-primary)', borderColor: 'var(--border)' }}
-                      value={calendarChoice ?? ''} onChange={(event) => onCalendarChoice(SOWING_CALENDAR_OPTIONS.find((option) => option.value === event.target.value)?.value ?? null)}>
+                      value={calendarChoice ?? ''} disabled={calendarReadOnly} onChange={(event) => onCalendarChoice(SOWING_CALENDAR_OPTIONS.find((option) => option.value === event.target.value)?.value ?? null)}>
                       <option value="">{sampleCalendarSet ? 'Sample farm' : 'Let the app decide'}: {SOWING_CALENDAR_LABEL[automaticCalendar]}</option>
                       {SOWING_CALENDAR_OPTIONS.map((option) => <option key={option.value} value={option.value}>{sowingCalendarOptionText(option)}</option>)}
                     </select>

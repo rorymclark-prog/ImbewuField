@@ -28,7 +28,7 @@ export interface HarvestTargetsPanelProps {
   saveContext?: HarvestSaveContext | null;
   onTargets: (targets: HarvestTarget[], request?: HarvestSaveRequest) => boolean | void | HarvestSaveResult | Promise<boolean | void | HarvestSaveResult>;
   onSaveTargets?: (targets: HarvestTarget[], request?: HarvestSaveRequest) => boolean | void | HarvestSaveResult | Promise<boolean | void | HarvestSaveResult>;
-  onAccept: (result: AutoSuggestResult) => void;
+  onAccept: (result: AutoSuggestResult) => 'saved' | 'held' | 'written-unconfirmed' | void;
 }
 
 const field = 'w-full rounded-lg border px-3 py-2 text-sm bg-[var(--bg-0)] text-[var(--text-primary)] border-[var(--border)]';
@@ -93,6 +93,7 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
   const kgPerUnit = editor.pack.fields.kgPerUnit.text;
   const [error, setError] = useState(''), [saveStatus, setSaveStatus] = useState(''), [preferenceNote, setPreferenceNote] = useState('');
   const [review, setReview] = useState<{ key: string; result: AutoSuggestResult } | null>(null);
+  const [acceptError, setAcceptError] = useState('');
   const [accepted, setAccepted] = useState(false), [authorityChanged, setAuthorityChanged] = useState(false);
   const accepting = useRef(false), active = useRef(false), interacted = useRef(false), pending = useRef(false);
   // Equal source values can return under a new lease. Only this exact verified
@@ -401,7 +402,11 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
           <label className="flex gap-2 items-start min-h-8"><input type="checkbox" checked={vines} onChange={(e) => setVines(e.target.checked)} className="mt-1" />Allow space-hungry crops in beds after checking their layout</label>
         </fieldset>
         <p className="text-xs text-[var(--text-secondary)]">Rotation is checked. Sowing searches the next 12 months using the existing South African calendar and available site climate. Earlier-ending targets are placed first. Saved crops are kept; only plantings linked to a target count towards it.</p>
-        <button type="button" className={primary} onClick={() => { if (!catalogueCurrent()) return; accepting.current = false; setAccepted(false); setReview({ key, result: suggestHarvestTargets(ownTargets, siteId, answers, pattern, beds, plantings, now) }); }}>Suggest target sowings</button>
+        <button type="button" className={primary} disabled={accepting.current && !!result} onClick={() => {
+          if ((accepting.current && live.current.result) || !catalogueCurrent()) return;
+          accepting.current = false; setAcceptError(''); setAccepted(false);
+          setReview({ key, result: suggestHarvestTargets(ownTargets, siteId, answers, pattern, beds, plantings, now) });
+        }}>Suggest target sowings</button>
       </>}
 
       {result && <section aria-label="Target sowing review" className="rounded-xl border border-[var(--border)] p-3 space-y-3">
@@ -420,10 +425,22 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
         {nurseryForecast && result.plantings.length > 0 && <NurseryForecastSummary
           forecast={nurseryForecast} beds={beds} compact title="Nursery check before adding target sowings"
         />}
-        {result.plantings.length > 0 && <button type="button" className={primary} onClick={() => {
+        {result.plantings.length > 0 && <button type="button" className={primary} disabled={accepting.current} onClick={() => {
           if (accepting.current || !catalogueCurrent() || live.current.result !== result) return;
-          accepting.current = true; live.current.onAccept(result); setReview(null); setAccepted(true);
+          accepting.current = true;
+          let outcome: ReturnType<HarvestTargetsPanelProps['onAccept']>;
+          try { outcome = live.current.onAccept(result); }
+          catch { outcome = 'written-unconfirmed'; }
+          if (outcome === 'saved') {
+            setAcceptError(''); setReview(null); setAccepted(true);
+          } else if (outcome === 'written-unconfirmed') {
+            setAcceptError('The save could not be confirmed. Reopen the saved plan before trying again.');
+          } else {
+            accepting.current = false;
+            setAcceptError('The sowings could not be saved. Review the current plan before trying again.');
+          }
         }}>Add {result.plantings.length} dated sowing{result.plantings.length === 1 ? '' : 's'} to my plan</button>}
+        {acceptError && <p role="alert" className="text-sm text-[var(--gold)]">{acceptError}</p>}
       </section>}
       {accepted && <p role="status" className="text-sm">Dated sowings added. Review their preparation, sowing and harvest tasks in the calendar below. They do not repeat next year.</p>}
       <p className="text-xs text-[var(--text-secondary)]">{basis === 'catalogue' ? HARVEST_TARGET_BASIS : 'Buyer demand is separate from crop capacity, observed harvests and sales.'} Removing a target keeps its plantings.</p>

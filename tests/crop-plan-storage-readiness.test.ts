@@ -18,7 +18,7 @@ beforeEach(async () => {
 });
 after(cleanup);
 const page = ts.createSourceFile('page.tsx', readFileSync(new URL('../app/facilitator/crops/page.tsx', import.meta.url), 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
-const names = ['plannerActorIsCurrent', 'canEditCataloguePlan', 'rememberStoredPlan', 'refreshAdmittedStoredPlan', 'addPlanting', 'openAutoSuggest', 'runAutoSuggest', 'acceptAutoSuggest'];
+const names = ['plannerActorIsCurrent', 'canEditPlanBook', 'canEditCataloguePlan', 'rememberStoredPlan', 'refreshAdmittedStoredPlan', 'addPlanting', 'openAutoSuggest', 'runAutoSuggest', 'acceptAutoSuggest'];
 const bodies = new Map<string, string>();
 let mount = '', autosave = '', listeners = '', commit = '', addGuard = '';
 function inspect(node: ts.Node) {

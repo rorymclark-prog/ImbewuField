@@ -19,8 +19,9 @@ export interface ProductionRecordsEditorProps {
   dates: ProductionDate[];
   productionRecords?: DatedProductionRecord[];
   preservedProducts?: PreservedFoodRecord[];
-  onProductionRecordsChange: (records: DatedProductionRecord[]) => void;
-  onPreservedProductsChange: (records: PreservedFoodRecord[]) => void;
+  readOnly?: boolean;
+  onProductionRecordsChange: (records: DatedProductionRecord[]) => boolean | void;
+  onPreservedProductsChange: (records: PreservedFoodRecord[]) => boolean | void;
 }
 
 const unitNames: Record<ProductionUnit, string> = { kg: 'kg', litres: 'litres', eggs: 'eggs', items: 'items' };
@@ -43,7 +44,7 @@ function RecordArt({ src }: { src: string | null }) {
 
 /** Parent callbacks own saving and undo. A quantity exists only after an explicit entry,
  * and a stock observation never turns into an automatically repeated harvest or expiry. */
-export function ProductionRecordsEditor({ products, dates, productionRecords = [], preservedProducts = [],
+export function ProductionRecordsEditor({ products, dates, productionRecords = [], preservedProducts = [], readOnly = false,
   onProductionRecordsChange, onPreservedProductsChange }: ProductionRecordsEditorProps) {
   const id = useId();
   const productionRef = useRef<HTMLDetailsElement>(null);
@@ -95,7 +96,9 @@ export function ProductionRecordsEditor({ products, dates, productionRecords = [
     };
     const next = sanitiseProductionRecords([...records, candidate]);
     if (!next.some(record => record.id === candidate.id)) { setProductionError('Check the product, date and amount before adding this record.'); return; }
-    onProductionRecordsChange(next);
+    if (readOnly || onProductionRecordsChange(next) === false) {
+      setProductionError('The plan could not accept this change. Your draft is still here.'); return;
+    }
     setProductionError(''); setEditingProductionId(null); setQuantity(''); setPrice(''); setNote('');
   }
 
@@ -119,7 +122,9 @@ export function ProductionRecordsEditor({ products, dates, productionRecords = [
     };
     const next = sanitisePreservedFoodRecords([...stockRecords, candidate]);
     if (!next.some(record => record.id === candidate.id)) { setStockError('Check the food and its stock months before adding this record.'); return; }
-    onPreservedProductsChange(next);
+    if (readOnly || onPreservedProductsChange(next) === false) {
+      setStockError('The plan could not accept this change. Your draft is still here.'); return;
+    }
     setStockError(''); setEditingStockId(null); setStockLabel(''); setStockMonths([]); setStockKg({}); setStockNote('');
   }
 
@@ -139,6 +144,7 @@ export function ProductionRecordsEditor({ products, dates, productionRecords = [
 
   return <section className={styles.editor} aria-label="Production and food stock records" data-production-records-editor>
     <p className={styles.intro}>Use your own records or a locally checked estimate. Missing amounts stay unknown. Eggs, litres and kg are kept separate.</p>
+    {readOnly && <p className={styles.help} role="status">This plan is read-only. Any unfinished entry stays in the form.</p>}
     {!canRecord && <p className={styles.empty}>Add products to the plan to record their production and food in store.</p>}
     <details ref={productionRef} open={productionOpen} onToggle={event => setProductionOpen(event.currentTarget.open)} className={styles.section}>
       <summary>Record expected or actual production <span>{records.length} record{records.length === 1 ? '' : 's'}</span></summary>
@@ -156,7 +162,7 @@ export function ProductionRecordsEditor({ products, dates, productionRecords = [
           <label>Note <span className={styles.optional}>Optional</span><textarea maxLength={2000} rows={2} value={note} onChange={event => setNote(event.target.value)} placeholder="Where did this figure come from?" /></label>
           <p className={styles.help}>This price is your record, not a live market price or a profit calculation.</p>
           {productionError && <p className={styles.error} role="alert">{productionError}</p>}
-          <div className={styles.actions}><button type="submit" disabled={!canRecord} className={styles.primary}>{editingProductionId ? 'Update production record' : 'Add production record'}</button>{editingProductionId && <button type="button" onClick={() => { setEditingProductionId(null); setQuantity(''); setPrice(''); setNote(''); setProductionError(''); }}>Cancel edit</button>}</div>
+          <div className={styles.actions}><button type="submit" disabled={!canRecord || readOnly} className={styles.primary}>{editingProductionId ? 'Update production record' : 'Add production record'}</button>{editingProductionId && <button type="button" onClick={() => { setEditingProductionId(null); setQuantity(''); setPrice(''); setNote(''); setProductionError(''); }}>Cancel edit</button>}</div>
         </form>
         {records.length ? <ul className={styles.list}>{records.map(record => {
           const ownValue = record.pricePerUnit === undefined ? undefined : record.quantity * record.pricePerUnit;
@@ -170,7 +176,14 @@ export function ProductionRecordsEditor({ products, dates, productionRecords = [
               : 'Quantity × own price needs checking.'}</span>}
             {record.provenance === 'fictional-example' && <small>Made-up example record</small>}{record.note && <small>{record.note}</small>}
           </div>
-          <div className={styles.recordActions}>{eligibleProducts.some(product => product.iconKey === record.sourceIconKey) && <button type="button" onClick={() => editProduction(record)} aria-label={`Edit ${record.label} ${dateLabel(record.date)} ${record.status}`}>Edit</button>}<button type="button" onClick={() => onProductionRecordsChange(records.filter(row => row.id !== record.id))} aria-label={`Remove ${record.label} ${dateLabel(record.date)} ${record.status}`}>Remove</button></div>
+          <div className={styles.recordActions}>
+            {eligibleProducts.some(product => product.iconKey === record.sourceIconKey) && <button type="button" disabled={readOnly} onClick={() => editProduction(record)} aria-label={`Edit ${record.label} ${dateLabel(record.date)} ${record.status}`}>Edit</button>}
+            <button type="button" disabled={readOnly} onClick={() => {
+              if (!readOnly && onProductionRecordsChange(records.filter(row => row.id !== record.id)) === false) {
+                setProductionError('The plan could not remove this record.');
+              }
+            }} aria-label={`Remove ${record.label} ${dateLabel(record.date)} ${record.status}`}>Remove</button>
+          </div>
         </li>; })}</ul> : <p className={styles.empty}>No monthly production amounts recorded. Unknown does not mean zero.</p>}
       </div>
     </details>
@@ -195,7 +208,7 @@ export function ProductionRecordsEditor({ products, dates, productionRecords = [
           </fieldset>
           <label>Stock note <span className={styles.optional}>Optional</span><textarea maxLength={2000} rows={2} value={stockNote} onChange={event => setStockNote(event.target.value)} placeholder="Bought, carried stock, or kept from which harvest?" /></label>
           {stockError && <p className={styles.error} role="alert">{stockError}</p>}
-          <div className={styles.actions}><button type="submit" disabled={!canRecord} className={styles.primary}>{editingStockId ? 'Update stock record' : 'Add stock record'}</button>{editingStockId && <button type="button" onClick={() => { setEditingStockId(null); setStockLabel(''); setStockMonths([]); setStockKg({}); setStockNote(''); setStockError(''); }}>Cancel edit</button>}</div>
+          <div className={styles.actions}><button type="submit" disabled={!canRecord || readOnly} className={styles.primary}>{editingStockId ? 'Update stock record' : 'Add stock record'}</button>{editingStockId && <button type="button" onClick={() => { setEditingStockId(null); setStockLabel(''); setStockMonths([]); setStockKg({}); setStockNote(''); setStockError(''); }}>Cancel edit</button>}</div>
         </form>
         {stockRecords.length ? <ul className={styles.list}>{stockRecords.map(record => <li key={record.id}>
           <RecordArt src={preservedFoodArtUrl(record) ?? pdfIconUrl(record.sourceIconKey)} />
@@ -204,7 +217,14 @@ export function ProductionRecordsEditor({ products, dates, productionRecords = [
             {record.dates.map(date => { const amount = record.quantities?.find(quantity => dateKey(quantity) === dateKey(date)); return <span key={dateKey(date)}>{dateLabel(date)} · {amount ? `${numberLabel(amount.kg)} kg held` : 'kg unknown'}</span>; })}
             {record.note && <small>{record.note}</small>}
           </div>
-          <div className={styles.recordActions}>{eligibleProducts.some(product => product.iconKey === record.sourceIconKey) && <button type="button" onClick={() => editStock(record)} aria-label={`Edit ${record.label} stock`}>Edit</button>}<button type="button" onClick={() => onPreservedProductsChange(stockRecords.filter(row => row.id !== record.id))} aria-label={`Remove ${record.label} stock`}>Remove</button></div>
+          <div className={styles.recordActions}>
+            {eligibleProducts.some(product => product.iconKey === record.sourceIconKey) && <button type="button" disabled={readOnly} onClick={() => editStock(record)} aria-label={`Edit ${record.label} stock`}>Edit</button>}
+            <button type="button" disabled={readOnly} onClick={() => {
+              if (!readOnly && onPreservedProductsChange(stockRecords.filter(row => row.id !== record.id)) === false) {
+                setStockError('The plan could not remove this record.');
+              }
+            }} aria-label={`Remove ${record.label} stock`}>Remove</button>
+          </div>
         </li>)}</ul> : <p className={styles.empty}>No kept-food records yet. A harvest does not automatically create stored or processed food.</p>}
       </div>
     </details>

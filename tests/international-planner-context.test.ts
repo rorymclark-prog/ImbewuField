@@ -326,13 +326,15 @@ test('the real country form requires renewed confirmation and persists metadata 
 test('a current catalogue harvest callback reaches the canonical saver and appends a valid isolated fixture', async () => {
   const screen = await mount('ZA', { plantings: [], auto: false });
   try {
-    const accept = catalogueTargetProps(screen).onAccept;
     assert.equal(targetBoundaries(screen, 'own-records').length, 1);
     await screen.flushSave();
+    const accept = catalogueTargetProps(screen).onAccept;
     const raw = screen.savedRaw(), writes = screen.canonicalWrites();
     assert.deepEqual(JSON.parse(raw).plantings, [], 'The positive control starts with measured space and no incumbent sowing');
     const result = harvestSuggestion('current-catalogue-suggestion');
-    await act(async () => accept(result)); await screen.flushSave();
+    await act(async () => assert.equal(accept(result), 'saved'));
+    assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, result.plantings, 'success follows the canonical write');
+    await screen.flushSave();
     assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, result.plantings);
     assert.notEqual(screen.savedRaw(), raw, 'The real callback must change the stored canonical book');
     assert.equal(screen.canonicalWrites() - writes, 1, 'The positive control must reach the actual canonical writer once');
@@ -347,7 +349,7 @@ test('the separate own-records target callback remains an explicit no-op rather 
     const props: HarvestTargetsPanelProps = own[0].props['data-props'];
     const accept = props.onAccept;
     await screen.flushSave(); const raw = screen.savedRaw(), writes = screen.canonicalWrites();
-    await act(async () => accept(harvestSuggestion('own-records-no-op'))); await screen.flushSave();
+    await act(async () => assert.equal(accept(harvestSuggestion('own-records-no-op')), undefined)); await screen.flushSave();
     assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
     assert.equal(screen.savedRaw(), raw); assert.equal(screen.canonicalWrites() - writes, 0);
   } finally { await screen.dispose(); }
@@ -361,7 +363,7 @@ test('a stale harvest-target accept callback rereads the current country before 
     await screen.flushSave(); // Exclude setup and country-storage writes from the action control.
     const raw = screen.savedRaw(), writes = screen.canonicalWrites();
     const result = harvestSuggestion('stale-suggestion');
-    await act(async () => accept(result));
+    await act(async () => assert.equal(accept(result), 'held'));
     await screen.flushSave();
     assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
     assert.equal(screen.savedRaw(), raw, 'A stale catalogue callback cannot alter any canonical book fields');
@@ -456,7 +458,7 @@ test('a same-coordinate bed-kind change invalidates queued production and stale 
     await screen.flushSave(); // Settle the geometry event before counting this action's book writes.
     const raw = screen.savedRaw(), writes = screen.canonicalWrites();
     const result = harvestSuggestion('old-bed-kind-suggestion');
-    await act(async () => accept(result));
+    await act(async () => assert.equal(accept(result), 'held'));
     await screen.flushSave();
     assert.deepEqual(JSON.parse(screen.savedRaw()).plantings, fixturePlan.plantings);
     assert.equal(screen.savedRaw(), raw, 'A former bed-kind callback cannot alter any canonical book fields');
@@ -706,16 +708,45 @@ test('a local record edit cannot bless stale assumptions merely by queueing a ne
   const screen = await mount('KE', { auto: false, growerPlanningProfiles: [ownProfile('old-profile')] });
   try {
     const newer = { ...fixturePlan, updatedAt: 200, growerPlanningProfiles: [ownProfile('newer-profile')] };
-    screen.replaceSavedRaw(JSON.stringify(newer));
     const editor = screen.boundaries('ProductionRecordsEditor')[0].props['data-props'];
     const product = editor.products.find((item: { iconKey: string }) => item.iconKey === `crop:${crop.key}`);
     assert.ok(product);
-    await act(async () => editor.onProductionRecordsChange([{ id: 'local-observation', siteId, sourceIconKey: product.iconKey,
-      label: product.label, date: { year: 2026, month: 11 }, quantity: 0, unit: 'kg', status: 'actual', provenance: 'fictional-example' }]));
+    await act(async () => assert.equal(editor.onProductionRecordsChange([{ id: 'local-observation', siteId, sourceIconKey: product.iconKey,
+      label: product.label, date: { year: 2026, month: 11 }, quantity: 0, unit: 'kg', status: 'actual', provenance: 'fictional-example' }]), true));
+    screen.replaceSavedRaw(JSON.stringify(newer));
     await screen.flushSave();
     assert.deepEqual(JSON.parse(screen.savedRaw()), newer);
     assert.equal(screen.boundaries('ProductionRecordsEditor')[0].props['data-props'].productionRecords[0].id, 'local-observation',
       'the unsaved observation remains visible for recovery');
     assert.match(screen.text(), /The saved plan changed or could not be checked/);
+  } finally { await screen.dispose(); }
+});
+
+test('a changed book rejects new observations, food stock and legacy target sowings before staging', async () => {
+  const screen = await mount('ZA', { auto: false });
+  try {
+    await screen.flushSave();
+    const editor = screen.boundaries('ProductionRecordsEditor')[0].props['data-props'];
+    const accept = catalogueTargetProps(screen).onAccept;
+    const date = { year: 2026, month: 11 };
+    const product = editor.products.find((item: { iconKey: string }) => item.iconKey === `crop:${crop.key}`);
+    assert.ok(product);
+    const newer = JSON.stringify({ ...JSON.parse(screen.savedRaw()), updatedAt: 800 });
+    screen.replaceSavedRaw(newer);
+    const writes = screen.canonicalWrites();
+    await act(async () => {
+      assert.equal(editor.onProductionRecordsChange([{ id: 'unwritten-observation', siteId,
+        sourceIconKey: product.iconKey, label: product.label, date, quantity: 1, unit: 'kg', status: 'actual', provenance: 'fictional-example' }]), false);
+      assert.equal(editor.onPreservedProductsChange([{ id: 'unwritten-stock', siteId,
+        sourceIconKey: product.iconKey, label: 'Stored vegetables', dates: [date], method: 'stored', provenance: 'farm-record' }]), false);
+      assert.equal(accept(harvestSuggestion('unwritten-target-sowing')), 'held');
+    });
+    await screen.flushSave();
+    const held = screen.boundaries('ProductionRecordsEditor')[0].props['data-props'];
+    assert.equal(held.readOnly, true);
+    assert.deepEqual(held.productionRecords, []);
+    assert.deepEqual(held.preservedProducts, []);
+    assert.equal(screen.savedRaw(), newer);
+    assert.equal(screen.canonicalWrites(), writes);
   } finally { await screen.dispose(); }
 });

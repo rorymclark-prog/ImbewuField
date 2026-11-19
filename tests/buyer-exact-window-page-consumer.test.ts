@@ -73,6 +73,7 @@ function input(allowCataloguePlanning: boolean) {
   const saveContext = Object.freeze({ marker: 'current-save-context' });
   const saved: unknown[][] = [];
   const saveHarvestTargets = (...args: unknown[]) => { saved.push(args); };
+  const acceptHarvestTargetSowings = () => { throw Error('Consumer mount must not accept sowings automatically'); };
   const source = Object.freeze({ marker: 'current-checked-source' });
   const onReview = () => { throw Error('Consumer mount must not review automatically'); };
   // The actual section also passes current conditions and a guarded historical
@@ -86,7 +87,7 @@ function input(allowCataloguePlanning: boolean) {
   const climateState = { revision: 7 };
   return { allowCataloguePlanning, productionSiteId: siteId, growerScope: { kind: 'mapped-site', siteId }, growerScopeKey: 'current-scope-key',
     planningScopeKey: 'current-catalogue-key', markedPlantings: [], plan: { harvestTargets: targets, growerPlanningProfiles: [], plantings },
-    selectedGrowerSource: null, beds, plantings, pattern: 'mild-frost', harvestSaveContext: saveContext, saveHarvestTargets,
+    selectedGrowerSource: null, beds, plantings, pattern: 'mild-frost', harvestSaveContext: saveContext, saveHarvestTargets, acceptHarvestTargetSowings,
     canvasSite: null, design: null, designBeds: [], saveGrowerProfiles() {},
     growerActorIsCurrent: () => true, siteCountry: { status: 'unknown', context: null, siteId, placeIds: ['fictional-place'] }, planningSupport: { fingerprint: 'fixture-policy' },
     saveProvisionalProfile() { throw Error('Consumer mount must not save automatically'); },
@@ -177,7 +178,11 @@ test('the separate legacy catalogue editor keeps its actual supported-country an
   for (const country of ['ZA', 'US', undefined]) {
     const policy = support(country), fixture = input(policy.allowCataloguePlanning), editor = target(renderLegacy(fixture));
     assert.equal(!!editor, country === 'ZA');
-    if (editor) { assert.equal(editor.props.basis, undefined); assert.equal(editor.props.saveContext, fixture.harvestSaveContext); }
+    if (editor) {
+      assert.equal(editor.props.basis, undefined);
+      assert.equal(editor.props.saveContext, fixture.harvestSaveContext);
+      assert.equal(editor.props.onAccept, fixture.acceptHarvestTargetSowings);
+    }
   }
   assert.equal(target(renderLegacy({ ...input(true), productionSiteId: null })), undefined);
   assert.equal(target(renderLegacy({ ...input(true), beds: [] })), undefined);
