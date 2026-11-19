@@ -1,5 +1,6 @@
 import { saskatchewanNurseryResultQualifier } from './providers/usask-saskatchewan-cabbage';
 import { wisconsinTomatoReferenceReceipt } from './providers/wisconsin-tomato-nursery';
+import { wisconsinTomatoFirstHarvestResultQualifier } from './providers/wisconsin-tomato-first-harvest';
 import { canadaCabbageResultQualifier } from './providers/aafc-canada-cabbage';
 import { regionalSpacingReference } from './providers/regional-spacing-reference';
 import { sourcePublicationText } from './countries/readiness';
@@ -123,6 +124,8 @@ function renderProvisionalCropDocument(request: ProvisionalDraftRequest, metadat
   const value = (item: { value: unknown; status: string }, unit = '') =>
     `${item.value === null ? 'Unknown' : `${item.value}${unit}`} (${item.status})`;
   const nurseryQualifier = saskatchewanNurseryResultQualifier(result.fields);
+  const firstHarvestQualifier = assessment.schedule.firstHarvestDate.value === null ? null
+    : wisconsinTomatoFirstHarvestResultQualifier(result.fields.fieldEntryToFirstHarvestDays);
   const tomatoReferences = provisionalTomatoReferenceLines(request, result.fields);
   const tomatoQualifier = tomatoReferences[0];
   const output = [
@@ -219,6 +222,8 @@ ${result.profile.version === 2 ? '<p>Source reports these months; other months r
 <table><thead><tr><th>Output</th><th>Value and status</th></tr></thead><tbody>
 ${output.map(([label, text]) => label === `${provisionalLabels.nurseryStartDate} (UTC)` && nurseryQualifier
   ? `<tr class="nursery-reference"><td colspan="2"><p><strong>${escape(label)}:</strong> ${escape(text)}</p><p><strong>Nursery source conditions:</strong> ${escape(nurseryQualifier)}</p></td></tr>`
+  : label === `${provisionalLabels.firstHarvestDate} (UTC)` && firstHarvestQualifier
+    ? `<tr><td colspan="2"><p><strong>${escape(label)}:</strong> ${escape(text)}</p><p>${escape(firstHarvestQualifier)}</p></td></tr>`
   : `<tr><th scope="row">${escape(label)}</th><td>${escape(text)}</td></tr>`).join('')}</tbody></table>
 ${paragraph('Uncertainties', assessment.uncertainties.length ? assessment.uncertainties.join(', ') : 'No additional resolver flags; provisional limits still apply')}${tomatoReferences.length ? `
 <section class="field tomato-references"><h2>Consented tomato nursery references</h2>${tomatoReferences.map(line => `<p>${escape(line)}</p>`).join('')}</section>` : ''}

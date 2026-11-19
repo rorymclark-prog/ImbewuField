@@ -1,4 +1,8 @@
 import { isWisconsinTomatoNurseryFactCandidate, wisconsinTomatoNurseryFactReuse } from './providers/wisconsin-tomato-nursery';
+import {
+  isWisconsinTomatoFirstHarvestFactCandidate, normaliseWisconsinTomatoFirstHarvestUse,
+  wisconsinTomatoFirstHarvestFactReuse, type WisconsinTomatoFirstHarvestUse,
+} from './providers/wisconsin-tomato-first-harvest';
 import { isUsdaWisconsinTomatoFactCandidate, usdaWisconsinTomatoFactReuse } from './providers/usda-great-lakes-tomato';
 import { isCanadaCabbageFactCandidate, canadaCabbageFactReuse } from './providers/aafc-canada-cabbage';
 import { isSaskatchewanNurseryFactCandidate, saskatchewanNurseryFactReuse } from './providers/usask-saskatchewan-cabbage';
@@ -25,6 +29,7 @@ export interface ProvisionalEvidenceContext {
   readonly establishment: 'direct' | 'transplant' | null;
   readonly waterRegime: 'rain-fed' | 'irrigated' | null;
   readonly varietyReference?: string | null;
+  readonly wisconsinTomatoFirstHarvest?: WisconsinTomatoFirstHarvestUse;
 }
 
 export interface ProvisionalFieldCandidate {
@@ -131,9 +136,11 @@ function freeze<T>(value: T): T {
 export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
   const scope = normaliseGrowerPlanningScope(request.context?.scope);
   const context = request.context;
+  const firstHarvestChoice = normaliseWisconsinTomatoFirstHarvestUse(context?.wisconsinTomatoFirstHarvest);
   const reviewedReuse = (candidate: ProvisionalFieldCandidate): string | null => isCanadaCabbageFactCandidate(candidate)
     ? canadaCabbageFactReuse(candidate, context, request.recordedAt)
     : isSaskatchewanNurseryFactCandidate(candidate) ? saskatchewanNurseryFactReuse(candidate, context, request.recordedAt)
+    : isWisconsinTomatoFirstHarvestFactCandidate(candidate) ? wisconsinTomatoFirstHarvestFactReuse(candidate, context, request.recordedAt)
     : isWisconsinTomatoNurseryFactCandidate(candidate) ? wisconsinTomatoNurseryFactReuse(candidate, context, request.recordedAt)
     : isUsdaWisconsinTomatoFactCandidate(candidate) ? usdaWisconsinTomatoFactReuse(candidate, context, request.recordedAt)
     : candidate.source?.licence?.status === 'known' && text(candidate.source.licence.value) ? candidate.source.licence.value : null;
@@ -151,6 +158,7 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
     || ![null, 'direct', 'transplant'].includes(context.establishment)
     || ![null, 'rain-fed', 'irrigated'].includes(context.waterRegime)
     || !(context.varietyReference === undefined || context.varietyReference === null || text(context.varietyReference))
+    || (Object.hasOwn(context, 'wisconsinTomatoFirstHarvest') && !firstHarvestChoice)
     || (request.knownPlantingRestriction !== undefined && typeof request.knownPlantingRestriction !== 'boolean')
     || !Array.isArray(request.candidates) || Array.from(request.candidates).some(candidate => !record(candidate)
       || typeof candidate.field !== 'string' || !fields.includes(candidate.field as Field))
@@ -377,7 +385,8 @@ export function resolveProvisionalCropPlan(request: ProvisionalDraftRequest) {
     budgetedStations: { status: spacingSelection.status === 'invalid-inputs' ? 'invalid-inputs' as const : 'missing-inputs' as const, value: null, issues: [spacingSelection.issue] } } : arithmetic;
   const canonicalContext: ProvisionalEvidenceContext = { scope, countryCode: context.countryCode,
     agriculturalRegionReference: context.agriculturalRegionReference, establishment: context.establishment, waterRegime: context.waterRegime,
-    varietyReference: context.varietyReference ?? null };
+    varietyReference: context.varietyReference ?? null,
+    ...(firstHarvestChoice ? { wisconsinTomatoFirstHarvest: firstHarvestChoice } : {}) };
   const temperatureComparison = Object.hasOwn(request, 'temperatureComparison')
     ? assessProvisionalTemperatureComparison(request.temperatureComparison, canonicalContext, request.cropKey,
       entryDate?.state === 'provided' ? entryDate.value : null, assessment.schedule.fieldClearDate,
