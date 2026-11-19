@@ -16,4 +16,6 @@ The first D-2 patch verified crop add, edit and remove in a signed-out preview w
 
 Node 24 typecheck, all 208 affected tests across 13 files, whitespace and the release-note check passed on the proposed change. The local suite includes the actual storage event being superseded by a newer book during a legacy-target save.
 
+The first hosted focused run (job 135500489550 on 335ef9981) found that the update text exceeded the 90-character phone limit. The follow-up shortened the text and registered the draft-retention regression in the full-suite command.
+
 The branch requires the full current-head test job, rules and a preview. The signed-out preview exercises simulated data. Language, real account and physical-device checks are separate. This correction changes persistence and feedback; the crop catalogue, farming values, saved-data format and `PLAN_VERSION` retain their existing definitions.
