@@ -107,6 +107,32 @@ function intervalValues(screen: ReturnType<typeof mount>, bedLabel = source.beds
   return intervals(screen, bedLabel).map(row => ({ start: row.dates[0].props.value, endExclusive: row.dates[1].props.value, confirmed: row.confirm.props.checked }));
 }
 
+test('a selected bed with a saved month-only sowing explains how to continue without treating it as free', async () => {
+  const screen = mount();
+  const occupied: CropPlanState = { ...book, plantings: [
+    { id: 'fixture-unresolved-sowing', bedId: source.beds[0].id, cropKey: profile.cropKey, sowMonth: 2 },
+  ] };
+  const initial = JSON.stringify(occupied);
+  const reviews: GrowerWorkflowReview[] = [];
+  screen.defer(async draft => {
+    const result = assembleGrowerWorkflowReview({ scope, source, book: occupied, draft, recordedAt });
+    reviews.push(result);
+    return result;
+  });
+  try {
+    fill(screen);
+    await screen.click('Review automatic crop plan');
+    const [result] = reviews;
+    assert.equal(result?.status, 'held');
+    assert.ok(result.issues.includes('availability-bed-blocked'));
+    assert.match(screen.text(), /clear its availability confirmation/);
+    assert.match(screen.text(), /Choose another bed only if you have checked when it is free/);
+    assert.match(screen.text(), /correct only records that are inaccurate/);
+    assert.doesNotMatch(screen.text(), /Save all \d+ planned crop cycles/);
+    assert.equal(JSON.stringify(occupied), initial);
+  } finally { screen.dispose(); }
+});
+
 test('recurring buyer-demand decimals stay readable while the reviewed request and calculations remain exact', async () => {
   const screen = mount();
   try {

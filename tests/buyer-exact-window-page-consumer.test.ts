@@ -45,7 +45,7 @@ const legacyExpression = `(${legacyCountry.condition.getText(page)}) ? (${contai
   : (${contains(legacyCountry.whenFalse, legacyNode) ? legacyAvailability.getText(page) : 'null'})`;
 // The shared section now also mounts the provisional preview. Keep it as a
 // boundary here; its actual UI/source lifecycle has its own mounted tests.
-const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel'];
+const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel', 'Link'];
 const boundaries = Object.fromEntries(names.map(name => [name, function Boundary() { return null; }]));
 function compile(expression: string): (input: Record<string, unknown>) => unknown {
   const compiled = ts.transpileModule(`function view(){return (${expression});}`, { compilerOptions: {
@@ -85,6 +85,7 @@ function input(allowCataloguePlanning: boolean) {
   // editor rather than failing on an unrelated missing lexical binding.
   const climateState = { revision: 7 };
   return { allowCataloguePlanning, productionSiteId: siteId, growerScope: { kind: 'mapped-site', siteId }, growerScopeKey: 'current-scope-key',
+    planningWorkspaceId: null, designHref: '/design',
     planningScopeKey: 'current-catalogue-key', markedPlantings: [], plan: { harvestTargets: targets, growerPlanningProfiles: [], plantings },
     selectedGrowerSource: null, beds, plantings, pattern: 'mild-frost', harvestSaveContext: saveContext, saveHarvestTargets,
     canvasSite: null, design: null, designBeds: [], saveGrowerProfiles() {},
@@ -145,6 +146,22 @@ test('absent site, absent grower scope and unmapped workspace cannot acquire the
   for (const allowed of [false, true]) for (const change of [
     { productionSiteId: null }, { productionSiteId: '' }, { growerScope: null }, { growerScope: { kind: 'unmapped-workspace', workspaceId: 'reference-only' } },
   ]) assert.equal(target(renderOwn({ ...input(allowed), ...change })), undefined);
+});
+
+test('a virtual bed explains the measured-design requirement and leaves saved record access in place', () => {
+  const fixture = { ...input(true), planningWorkspaceId: 'virtual-bed', productionSiteId: 'virtual-bed',
+    growerScope: { kind: 'unmapped-workspace', workspaceId: 'virtual-bed' } };
+  const visible = elements(renderOwn(fixture));
+  for (const name of ['ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel']) {
+    assert.ok(!visible.some(element => element.type === boundaries[name]), name);
+  }
+  assert.ok(visible.some(element => element.type === boundaries.SavedGrowerRows));
+  assert.ok(visible.some(element => element.type === boundaries.SavedGrowerNurseryReviewPanel));
+  const design = visible.find(element => element.type === boundaries.Link);
+  assert.equal(design?.props.href, '/design');
+  assert.equal(design?.props.children, 'Open Design Studio');
+  assert.ok(visible.some(element => element.props['aria-label'] === 'Planning with measured beds'));
+  assert.equal(fixture.saved.length, 0);
 });
 
 test('mapped target entry stays reachable before bed measurements are supplied, without starting source reads or reviews', () => {

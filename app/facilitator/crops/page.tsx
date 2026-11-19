@@ -2608,33 +2608,40 @@ function FacilitatorCropsPageInner() {
       targets={plan?.harvestTargets ?? []} beds={beds} plantings={plantings} pattern={pattern} climate={{}}
       saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
       onSaveTargets={saveHarvestTargets} onAccept={() => {}} />}
-    <ProvisionalCropPreview sample={growerSample} ownerKey={`${growerOwner}:${growerSample}`} scope={growerScope}
-      sitePoint={hasSiteCoords ? { latitude: siteLat!, longitude: siteLon! } : null} policyFingerprint={planningSupport.fingerprint}
-      onClimateChanged={() => setProvisionalClimateRevision(value => value + 1)}
-      source={selectedGrowerSource} actorIsCurrent={growerActorIsCurrent}
-      sourceName={growerScope?.kind === 'mapped-site'
-        ? countryPlaces.filter(place => siteCountry.placeIds.includes(place.id)).map(place => place.name.trim()).filter(Boolean).join(' / ')
-        : design?.title || design?.bgSite?.name}
-      countryCode={siteCountry.status === 'confirmed' ? siteCountry.context?.countryCode ?? null : null}
-      agriculturalRegionReference={siteCountry.status === 'confirmed' ? siteCountry.context?.agriculturalRegionReference ?? null : null}
-      contextRevision={`${growerWorkflow.contextRevision}:${planningSupport.fingerprint}:${provisionalClimateRevision}`}
-      checking={growerWorkflow.checking} onRefresh={growerWorkflow.onRefresh} onCheckSource={growerWorkflow.onCheckPreviewSource}
-      profiles={plan?.growerPlanningProfiles ?? []} onSaveProfile={saveProvisionalProfile} />
-    <GrowerPlanningPanel scope={growerScope}
-      beds={selectedGrowerSource?.beds ?? (canvasSite || design ? [] : designBeds)}
-      measuredAreas={selectedGrowerSource?.measuredAreas} measurementsFingerprint={selectedGrowerSource?.geometryFingerprint ?? null}
-      measurementsRequired={!!canvasSite || !!design} measurementsReady={!!selectedGrowerSource}
-      checkingMeasurements={growerWorkflow.checking} onCheckMeasurements={growerWorkflow.onRefresh}
-      profiles={plan?.growerPlanningProfiles ?? []} onSaveProfiles={saveGrowerProfiles} />
-    <GrowerAutoPlanPanel key={`own-review:${growerScopeKey}:${productionSiteId}`} scope={growerScope}
-      source={growerWorkflow.source} sourceName={placeName || designTitle} sourceIssue={growerWorkflow.sourceIssue}
-      checking={growerWorkflow.checking} contextRevision={growerWorkflow.contextRevision}
-      targets={plan?.harvestTargets ?? []} targetSiteId={productionSiteId} profiles={plan?.growerPlanningProfiles ?? []}
-      onRefresh={growerWorkflow.onRefresh} onReview={growerWorkflow.onReview}
-      onAccept={growerWorkflow.onAccept} acceptance={growerWorkflow.acceptance}
-      nurseryReview={review => growerWorkflow.source && <GrowerNurseryReviewPanel review={review}
-        source={growerWorkflow.source} settings={plan?.nursery} contextRevision={growerWorkflow.contextRevision}
-        onCheckCurrent={growerWorkflow.onCheckCurrent} sample={growerSample} />} />
+    {planningWorkspaceId === 'virtual-bed' ? <section aria-label="Planning with measured beds"
+      className="mb-4 space-y-2 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] p-4 text-sm">
+      <h2 className="font-semibold">Plan with measured beds</h2>
+      <p>Provisional crop previews, growing estimates and automatic crop plans need a saved design with measured beds. This virtual bed uses an example area.</p>
+      <Link href={designHref} className="inline-flex min-h-11 items-center underline">Open Design Studio</Link>
+    </section> : <>
+      <ProvisionalCropPreview sample={growerSample} ownerKey={`${growerOwner}:${growerSample}`} scope={growerScope}
+        sitePoint={hasSiteCoords ? { latitude: siteLat!, longitude: siteLon! } : null} policyFingerprint={planningSupport.fingerprint}
+        onClimateChanged={() => setProvisionalClimateRevision(value => value + 1)}
+        source={selectedGrowerSource} actorIsCurrent={growerActorIsCurrent}
+        sourceName={growerScope?.kind === 'mapped-site'
+          ? countryPlaces.filter(place => siteCountry.placeIds.includes(place.id)).map(place => place.name.trim()).filter(Boolean).join(' / ')
+          : design?.title || design?.bgSite?.name}
+        countryCode={siteCountry.status === 'confirmed' ? siteCountry.context?.countryCode ?? null : null}
+        agriculturalRegionReference={siteCountry.status === 'confirmed' ? siteCountry.context?.agriculturalRegionReference ?? null : null}
+        contextRevision={`${growerWorkflow.contextRevision}:${planningSupport.fingerprint}:${provisionalClimateRevision}`}
+        checking={growerWorkflow.checking} onRefresh={growerWorkflow.onRefresh} onCheckSource={growerWorkflow.onCheckPreviewSource}
+        profiles={plan?.growerPlanningProfiles ?? []} onSaveProfile={saveProvisionalProfile} />
+      <GrowerPlanningPanel scope={growerScope}
+        beds={selectedGrowerSource?.beds ?? (canvasSite || design ? [] : designBeds)}
+        measuredAreas={selectedGrowerSource?.measuredAreas} measurementsFingerprint={selectedGrowerSource?.geometryFingerprint ?? null}
+        measurementsRequired={!!canvasSite || !!design} measurementsReady={!!selectedGrowerSource}
+        checkingMeasurements={growerWorkflow.checking} onCheckMeasurements={growerWorkflow.onRefresh}
+        profiles={plan?.growerPlanningProfiles ?? []} onSaveProfiles={saveGrowerProfiles} />
+      <GrowerAutoPlanPanel key={`own-review:${growerScopeKey}:${productionSiteId}`} scope={growerScope}
+        source={growerWorkflow.source} sourceName={placeName || designTitle} sourceIssue={growerWorkflow.sourceIssue}
+        checking={growerWorkflow.checking} contextRevision={growerWorkflow.contextRevision}
+        targets={plan?.harvestTargets ?? []} targetSiteId={productionSiteId} profiles={plan?.growerPlanningProfiles ?? []}
+        onRefresh={growerWorkflow.onRefresh} onReview={growerWorkflow.onReview}
+        onAccept={growerWorkflow.onAccept} acceptance={growerWorkflow.acceptance}
+        nurseryReview={review => growerWorkflow.source && <GrowerNurseryReviewPanel review={review}
+          source={growerWorkflow.source} settings={plan?.nursery} contextRevision={growerWorkflow.contextRevision}
+          onCheckCurrent={growerWorkflow.onCheckCurrent} sample={growerSample} />} />
+    </>}
     <SavedGrowerNurseryReviewPanel key={`saved-nursery:${growerOwner}:${growerSample}:${growerScopeKey}:${productionSiteId}`}
       review={growerWorkflow.savedNurseryReview} checking={growerWorkflow.savedNurseryChecking}
       settings={plan?.nursery} contextRevision={growerWorkflow.contextRevision} sample={growerSample}
