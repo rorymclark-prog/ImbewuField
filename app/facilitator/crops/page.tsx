@@ -5904,25 +5904,32 @@ function CropPickerModal({
               </div>
             ) : (
               <>
-                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>Sow month</div>
-                <div className="grid grid-cols-6 gap-1.5 mb-1.5">
+                <div id="crop-picker-sow-month" lang="en" className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>Sow month</div>
+                <div role="group" aria-labelledby="crop-picker-sow-month" lang="en" className="grid grid-cols-3 sm:grid-cols-6 gap-1.5 mb-1.5">
                   {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => {
                     const inWindow = crop.sowMonths[pattern].includes(m);
                     const selected = m === month;
                     return (
                       <button
+                        type="button"
                         key={m}
                         onClick={() => onMonth(m)}
-                        className="font-sans font-semibold rounded-lg py-1.5"
+                        aria-pressed={selected}
+                        aria-label={`${MONTH_NAMES[m - 1]}, ${inWindow ? 'in the usual sowing window' : 'outside the usual sowing window'}`}
+                        className="font-sans font-semibold rounded-lg min-h-11 px-0.5 py-1 leading-tight"
                         style={{
                           fontSize: 12,
                           background: selected ? '#1F4D2B' : inWindow ? 'rgba(63,122,60,0.12)' : 'rgba(192,122,30,0.12)',
-                          color: selected ? '#F7F2E9' : inWindow ? '#1F4D2B' : 'var(--gold)',
+                          color: selected ? '#F7F2E9' : 'var(--text-primary)',
                           border: selected ? 'none' : `1px solid ${inWindow ? 'rgba(63,122,60,0.3)' : 'rgba(192,122,30,0.35)'}`,
                           cursor: 'pointer',
                         }}
                       >
-                        {MONTHS_SHORT[m - 1]}
+                        <span className="flex items-center justify-center gap-0.5">
+                          {selected && <Check size={12} aria-hidden />}
+                          {MONTHS_SHORT[m - 1]}
+                        </span>
+                        <span className="block text-[10px] font-normal">{inWindow ? 'In window' : 'Outside window'}</span>
                       </button>
                     );
                   })}

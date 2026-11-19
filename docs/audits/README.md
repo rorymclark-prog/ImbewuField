@@ -279,6 +279,8 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
+- [Sow-month button labels and selection — 19 November 2026](2026-11-19/sow-month-accessibility-codex.md) follows Claude D-7 through the picker’s window and selection states.
+
 Latest global/report verification continuation — [Full-suite contracts and final save-base continuity — 13 November 2026](2026-11-13/global-report-ci-contracts-codex.md). Eleven reproduced failures retain their reasons; exact-head CI, independent review and adoption remain open.
 
 

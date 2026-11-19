@@ -104,3 +104,16 @@ test('"Auto-suggest a plan" and "Add a crop" are at least 44px tall', () => {
   assert.match(page, /onClick=\{openAutoSuggest\}[\s\S]{0,700}className="flex-1 min-h-11 rounded-xl/);
   assert.match(page, /onClick=\{\(\) => openPicker\(beds\[0\]\.id\)\}\s*className="w-full min-h-11 rounded-xl/);
 });
+
+test('sow months expose both selection and the usual window through text and button state', () => {
+  const picker = body(SHEETS[0].fn);
+  const group = picker.slice(picker.indexOf('role="group" aria-labelledby="crop-picker-sow-month"'), picker.indexOf('Conservative harvest window'));
+  assert.match(group, /grid-cols-3 sm:grid-cols-6/);
+  assert.match(group, /crop\.sowMonths\[pattern\]\.includes\(m\)/);
+  assert.match(group, /onClick=\{\(\) => onMonth\(m\)\}/);
+  assert.match(group, /aria-pressed=\{selected\}/);
+  assert.match(group, /aria-label=.*MONTH_NAMES\[m - 1\].*in the usual sowing window.*outside the usual sowing window/);
+  assert.match(group, /min-h-11/);
+  assert.match(group, /\{selected && <Check size=\{12\} aria-hidden/);
+  assert.match(group, /\{inWindow \? 'In window' : 'Outside window'\}/);
+});
