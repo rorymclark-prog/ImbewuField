@@ -1,0 +1,35 @@
+/* The listing the farmer has just posted: lifts into place once and a green ring fades off it.
+   Armed (waiting to be on screen) holds the lowered start pose; with no phase class, or under
+   reduced motion, the card is simply drawn in place. Opacity and transform only. */
+.fresh { position: relative; }
+
+.fresh::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border: 2px solid var(--emerald);
+  border-radius: 19px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.armed { transform: translateY(14px); opacity: 0.5; }
+
+.play { animation: listingLift 520ms var(--ease-spring) backwards; }
+.play::after { animation: listingRing 1200ms var(--ease-out) 120ms backwards; }
+
+@keyframes listingLift {
+  from { transform: translateY(14px); opacity: 0.5; }
+  to { transform: none; opacity: 1; }
+}
+
+@keyframes listingRing {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .armed { transform: none; opacity: 1; }
+  .play, .play::after { animation: none; }
+}

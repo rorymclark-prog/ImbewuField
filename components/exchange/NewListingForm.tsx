@@ -69,7 +69,8 @@ export default function NewListingForm({
 }: {
   /** The farmer's own main site, if they have saved one. PRECISE — never stored on a listing as-is. */
   mySite: { name: string; lat: number; lon: number } | null;
-  onPosted: (listings: Listing[]) => void;
+  /** `postedId` is the id of the listing just made, so the board can bring it to the reader's eye. */
+  onPosted: (listings: Listing[], postedId: string) => void;
   onCancel: () => void;
 }) {
   const { lang } = useLanguage();
@@ -228,7 +229,7 @@ export default function NewListingForm({
         </div>
         <ShareListingButton listing={listing} label={tx('Share to WhatsApp', 'Yabelana nge-WhatsApp')} />
         <button
-          onClick={() => onPosted(justPosted.all)}
+          onClick={() => onPosted(justPosted.all, justPosted.listing.id)}
           className="font-sans font-semibold rounded-xl"
           style={{
             padding: 11,
