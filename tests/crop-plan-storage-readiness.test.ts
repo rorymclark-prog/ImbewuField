@@ -18,7 +18,7 @@ beforeEach(async () => {
 });
 after(cleanup);
 const page = ts.createSourceFile('page.tsx', readFileSync(new URL('../app/facilitator/crops/page.tsx', import.meta.url), 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
-const names = ['plannerActorIsCurrent', 'rememberStoredPlan', 'refreshAdmittedStoredPlan', 'addPlanting', 'openAutoSuggest', 'runAutoSuggest', 'acceptAutoSuggest'];
+const names = ['plannerActorIsCurrent', 'canEditCataloguePlan', 'rememberStoredPlan', 'refreshAdmittedStoredPlan', 'addPlanting', 'openAutoSuggest', 'runAutoSuggest', 'acceptAutoSuggest'];
 const bodies = new Map<string, string>();
 let mount = '', autosave = '', listeners = '', commit = '', addGuard = '';
 function inspect(node: ts.Node) {
@@ -93,16 +93,41 @@ test('a cold planner mounted before asynchronous storage setup obtains a fresh a
   } finally { ui.dispose(); }
 });
 
-test('the same readiness event preserves unsaved inputs and holds their original unreadable provenance instead of replacing or blessing them', async () => {
-  legacy(); const ui = planner();
+test('a newly acquired lease preserves inputs drafted under a previous lease without rebasing them', async () => {
+  legacy(); await initialiseCropPlanFixture(); const ui = planner();
   try {
+    assert.equal(ui.state.planSaveConflict, false);
+    const originalBase = ui.state.planWriteBase.current;
     ui.edit(); const dirty = JSON.stringify(ui.state.plan);
     const draft = { marker: 'unsaved-review' }; ui.state.autoResult = draft; ui.state.pickerBedId = 'fixture-bed';
+    releaseCropPlanFixture(); await new Promise<void>(done => setImmediate(done));
     await initialiseCropPlanFixture(); ui.commit();
     assert.equal(JSON.stringify(ui.state.plan), dirty); assert.equal(ui.state.planSaveConflict, true);
     assert.equal(ui.state.autoResult, draft); assert.equal(ui.state.pickerBedId, 'fixture-bed', 'a dirty view must not have its editing inputs cleared');
-    assert.equal(ui.state.planWriteBase.current.token, null); ui.flushAutosave();
+    assert.equal(ui.state.planWriteBase.current, originalBase);
+    assert.equal(crop.cropPlanWriteAdmissionMatches(originalBase.admission, originalBase.planKey, originalBase.token), false);
+    ui.flushAutosave();
     assert.equal(ui.state.writes, 0); assert.deepEqual(readCanonicalCropPlanFixture<CropPlanState>().plantings, []);
+  } finally { ui.dispose(); }
+});
+
+test('a read-only catalogue view rejects a new crop before changing the displayed plan, then edits after gaining the lease', async () => {
+  legacy();
+  await initialiseCropPlanFixture(); releaseCropPlanFixture(); await new Promise<void>(done => setImmediate(done));
+  const saved = readCanonicalCropPlanFixtureRaw(), ui = planner();
+  try {
+    assert.equal(ui.state.planSaveConflict, true);
+    assert.equal(ui.state.planWriteBase.current.admission.status, 'held');
+    ui.edit(); ui.flushAutosave();
+    assert.deepEqual(ui.state.plan.plantings, []);
+    assert.equal(ui.state.history, 0);
+    assert.equal(ui.state.writes, 0);
+    assert.equal(readCanonicalCropPlanFixtureRaw(), saved);
+    await initialiseCropPlanFixture(); ui.commit();
+    assert.equal(ui.state.planSaveConflict, false);
+    ui.edit(); ui.flushAutosave();
+    assert.equal(ui.state.writes, 1);
+    assert.equal(readCanonicalCropPlanFixture<CropPlanState>().plantings.length, 1);
   } finally { ui.dispose(); }
 });
 

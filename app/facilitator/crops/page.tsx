@@ -1381,6 +1381,17 @@ function FacilitatorCropsPageInner() {
     try { return sample || !isBackendConfigured() || (getFirebase()?.auth.currentUser?.uid ?? null) === owner; }
     catch { return false; }
   }
+  function canEditCataloguePlan(): boolean {
+    if (!currentPlanningScopeAllowed() || planSaveConflict) return false;
+    const base = planWriteBase.current;
+    if (!base || base.token === null || !plannerActorIsCurrent(base.owner, base.sample)
+      || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)
+      || cropPlanWriteToken() !== base.token) {
+      setPlanSaveConflict(true);
+      return false;
+    }
+    return true;
+  }
   useEffect(() => {
     if (!plan || planSaveConflict) return;
     if (saveTimer.current) clearTimeout(saveTimer.current);
@@ -1837,7 +1848,7 @@ function FacilitatorCropsPageInner() {
   const bedAreaFor = (bedId: string) => beds.find((b) => b.id === bedId)?.areaM2 ?? 0;
 
   function addPlanting(bedId: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean, variety: string) {
-    if (!currentPlanningScopeAllowed() || legacyAddBlocked(bedId)) return;
+    if (!canEditCataloguePlan() || legacyAddBlocked(bedId)) return;
     pushPlanHistory();
     setPlan((prev) => {
       if (legacyAddBlocked(bedId, prev?.plantings ?? [])) return prev;
@@ -1863,7 +1874,7 @@ function FacilitatorCropsPageInner() {
     });
   }
   function updatePlanting(id: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean, variety: string) {
-    if (!currentPlanningScopeAllowed()) return;
+    if (!canEditCataloguePlan()) return;
     pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
@@ -1889,7 +1900,7 @@ function FacilitatorCropsPageInner() {
     });
   }
   function removePlanting(id: string) {
-    if (!currentPlanningScopeAllowed()) return;
+    if (!canEditCataloguePlan()) return;
     pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
@@ -1899,7 +1910,7 @@ function FacilitatorCropsPageInner() {
     });
   }
   function confirmPastSowing(id: string) {
-    if (!currentPlanningScopeAllowed()) return;
+    if (!canEditCataloguePlan()) return;
     pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
@@ -1919,7 +1930,7 @@ function FacilitatorCropsPageInner() {
   // an inline question instead — no native dialog anywhere in this flow.
   const [confirmingClear, setConfirmingClear] = useState(false);
   function clearAllPlantings() {
-    if (!currentPlanningScopeAllowed() || !legacyPlantings.length) return;
+    if (!canEditCataloguePlan() || !legacyPlantings.length) return;
     setConfirmingClear(false);
     pushPlanHistory();
     setPlan((prev) => {
@@ -2515,7 +2526,7 @@ function FacilitatorCropsPageInner() {
   }
 
   function openPicker(bedId: string) {
-    if (!currentPlanningScopeAllowed() || legacyAddBlocked(bedId)) return;
+    if (!canEditCataloguePlan() || legacyAddBlocked(bedId)) return false;
     setEditingPlantingId(null);
     setPickerBedId(bedId);
     setPickerSearch('');
@@ -2523,6 +2534,7 @@ function FacilitatorCropsPageInner() {
     setPickerFraction(1);
     setPickerExisting(false);
     setPickerVariety('');
+    return true;
   }
   // Reopens the same picker pre-filled with an existing planting's values —
   // the crop is already set so the modal opens straight on the detail view
@@ -2530,7 +2542,7 @@ function FacilitatorCropsPageInner() {
   // "pick a crop" step. confirmAdd below detects editingPlantingId and
   // updates in place instead of creating a new planting.
   function openEditPicker(p: Planting) {
-    if (!currentPlanningScopeAllowed() || hasGrowerCycleMarker(p) || legacyAddBlocked(p.bedId)) return;
+    if (!canEditCataloguePlan() || hasGrowerCycleMarker(p) || legacyAddBlocked(p.bedId)) return;
     const crop = cropByKey(p.cropKey);
     if (!crop) return;
     setEditingPlantingId(p.id);
@@ -2545,8 +2557,7 @@ function FacilitatorCropsPageInner() {
   // A gap-fill suggestion opens the ordinary picker already filled in, so the farmer sees the
   // same sowing-window note and overlap warning as any other planting before it is added.
   function planGapFill(s: GapFillSuggestion) {
-    if (!currentPlanningScopeAllowed()) return;
-    openPicker(s.bed.id);
+    if (!openPicker(s.bed.id)) return;
     setPickerCrop(s.crop);
     setPickerMonth(s.sowMonth);
     setPickerFraction(s.areaFraction);
@@ -2565,7 +2576,7 @@ function FacilitatorCropsPageInner() {
     setPickerFraction(isSpaceHungry(crop) ? 1 : pickerFraction);
   }
   function confirmAdd() {
-    if (!currentPlanningScopeAllowed() || !pickerBedId || !pickerCrop) return;
+    if (!pickerBedId || !pickerCrop || !canEditCataloguePlan()) return;
     if (pickerCrop.timingVerified === false || legacyAddBlocked(pickerBedId)) return;
     if (editingPlantingId) {
       updatePlanting(editingPlantingId, pickerCrop.key, pickerMonth, pickerFraction, pickerExisting, pickerVariety);
@@ -2974,6 +2985,7 @@ function FacilitatorCropsPageInner() {
                 </span>
                 <button
                   onClick={clearAllPlantings}
+                  disabled={planSaveConflict}
                   className="px-4 py-2 rounded-xl font-display font-semibold flex-shrink-0"
                   style={{ fontSize: 13, background: '#B33A3A', border: '1px solid #B33A3A', color: '#FFFFFF', cursor: 'pointer' }}
                 >
@@ -3012,6 +3024,7 @@ function FacilitatorCropsPageInner() {
               {!simple && legacyPlantings.length > 0 && (
                 <button
                   onClick={() => setConfirmingClear(true)}
+                  disabled={planSaveConflict}
                   className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
                   style={{ fontSize: 13, background: 'var(--bg-1)', border: '1px solid rgba(179,58,58,0.3)', color: 'var(--orange)', cursor: 'pointer' }}
                   title="Clear catalogue plantings shown here; own dated records remain saved"
@@ -3220,6 +3233,7 @@ function FacilitatorCropsPageInner() {
                           plantings={legacyPlantings.filter((p) => p.bedId === bed.id)}
                           currentMonth={currentMonth}
                           onAddCrop={() => openPicker(bed.id)}
+                          readOnly={planSaveConflict}
                           ownRecordsHeld={legacyAddBlocked(bed.id)}
                           onTapPlanting={(p) => setActivePlanting(p)}
                           simple={simple}
@@ -3269,7 +3283,8 @@ function FacilitatorCropsPageInner() {
               <div className="mb-5">
                 <button
                   onClick={() => openPicker(beds[0].id)}
-                  className="w-full min-h-11 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                  className="w-full min-h-11 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5 disabled:opacity-50"
+                  disabled={planSaveConflict}
                   style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}
                 >
                   <Plus size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Add a crop', 'Engeza isilimo')}
@@ -3307,7 +3322,7 @@ function FacilitatorCropsPageInner() {
               <p className="font-sans mt-1 mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>Their one-time sowing month has passed. Confirm what happened before the plan counts their harvest or field work.</p>
               {(plan?.plantings ?? []).filter((p) => p.awaitingSowingConfirmation && beds.some((b) => b.id === p.bedId)).map((p) => <div key={p.id} className="font-sans flex flex-wrap items-center justify-between gap-2 py-2" style={{ fontSize: 13, borderTop: '1px solid var(--border)', color: 'var(--text-primary)' }}>
                 <span><strong>{cropByKey(p.cropKey)?.name ?? p.cropKey}</strong> · {beds.find((b) => b.id === p.bedId)?.label} · {p.once}</span>
-                <div className="flex gap-2"><button type="button" onClick={() => confirmPastSowing(p.id)} className="rounded-lg px-3 py-2" style={{ background: 'var(--bg-2)', border: '1px solid var(--emerald)', cursor: 'pointer' }}>Already planted</button><button type="button" onClick={() => removePlanting(p.id)} className="rounded-lg px-3 py-2" style={{ background: 'transparent', border: '1px solid var(--border)', cursor: 'pointer' }}>Not planted</button></div>
+                <div className="flex gap-2"><button type="button" disabled={planSaveConflict} onClick={() => confirmPastSowing(p.id)} className="rounded-lg px-3 py-2 disabled:opacity-50" style={{ background: 'var(--bg-2)', border: '1px solid var(--emerald)', cursor: 'pointer' }}>Already planted</button><button type="button" disabled={planSaveConflict} onClick={() => removePlanting(p.id)} className="rounded-lg px-3 py-2 disabled:opacity-50" style={{ background: 'transparent', border: '1px solid var(--border)', cursor: 'pointer' }}>Not planted</button></div>
               </div>)}
             </div>}
 
@@ -3798,6 +3813,7 @@ function FacilitatorCropsPageInner() {
           onBack={() => setPickerCrop(null)}
           onMonth={setPickerMonth}
           onConfirm={confirmAdd}
+          readOnly={planSaveConflict}
           onClose={closePicker}
           isPlot={beds.find((b) => b.id === pickerBedId)?.kind === 'plot'}
         />
@@ -3817,6 +3833,7 @@ function FacilitatorCropsPageInner() {
           planting={activePlanting}
           bedAreaM2={bedAreaFor(activePlanting.bedId)}
           allPlantings={plantings}
+          readOnly={planSaveConflict}
           onEdit={() => { openEditPicker(activePlanting); setActivePlanting(null); }}
           onRemove={() => { removePlanting(activePlanting.id); setActivePlanting(null); }}
           onClose={() => setActivePlanting(null)}
@@ -5388,13 +5405,14 @@ function SavedGrowerRows({ rows, wholeBookRows, source, scope, conditions, onExp
   </section>;
 }
 
-function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple, ownRecordsHeld }: {
+function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple, ownRecordsHeld, readOnly }: {
   bed: PlanBed;
   plantings: Planting[];
   currentMonth: number;
   onAddCrop: () => void;
   onTapPlanting: (p: Planting) => void;
   ownRecordsHeld?: boolean;
+  readOnly: boolean;
   simple: boolean;
 }) {
   // Which food group(s) are currently in this bed — usually just one, but an
@@ -5461,8 +5479,8 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple
           <div style={{ padding: '2px 8px' }}>
             <button
               onClick={onAddCrop}
-              disabled={ownRecordsHeld}
-              className="font-sans"
+              disabled={readOnly || ownRecordsHeld}
+              className="font-sans disabled:opacity-50"
               style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'rgba(31,77,43,0.08)', border: '1px dashed rgba(31,77,43,0.3)', borderRadius: 8, padding: '3px 10px', cursor: 'pointer', minHeight: 'var(--crop-add-min-h, 26px)' }}
             >
               {ownRecordsHeld ? 'Own dated records · check Task Planner' : '+ crop'}
@@ -5719,7 +5737,7 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
 function CropPickerModal({
   search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, variety, onVariety, growingZones, overlapWarning, hasUnverifiedTiming,
   isEditing, favouriteCropKeys, onToggleFavourite, allowBedSharing, onEnableBedSharing, onPick, onBack, onMonth, onConfirm, onClose,
-  isPlot,
+  isPlot, readOnly,
 }: {
   search: string;
   onSearch: (v: string) => void;
@@ -5749,6 +5767,7 @@ function CropPickerModal({
   onClose: () => void;
   /** A staple plot takes one crop at FULL area — no fraction presets, no sharing opt-in. */
   isPlot: boolean;
+  readOnly: boolean;
 }) {
   const { lang } = useLanguage();
   // The sheet is mounted only while open, so `true`: focus lands on the search field (data-autofocus),
@@ -6037,8 +6056,8 @@ function CropPickerModal({
 
             <button
               onClick={onConfirm}
-              disabled={crop.timingVerified === false}
-              className="w-full font-display font-semibold rounded-xl py-2.5 mt-1"
+              disabled={readOnly || crop.timingVerified === false}
+              className="w-full font-display font-semibold rounded-xl py-2.5 mt-1 disabled:opacity-50"
               style={{ fontSize: 14, background: crop.timingVerified === false ? 'var(--bg-2)' : '#1F4D2B', color: crop.timingVerified === false ? 'var(--text-muted)' : '#F7F2E9', border: 'none', cursor: crop.timingVerified === false ? 'not-allowed' : 'pointer' }}
             >
               {isEditing ? cropUi(lang, 'Save changes', 'Londoloza izinguquko / Save changes') : existing ? cropUi(lang, 'Add as existing', 'Engeza njengokukhona kakade') : cropUi(lang, 'Add to bed', 'Engeza embhedeni')}
@@ -6052,10 +6071,11 @@ function CropPickerModal({
 
 // ── Planting popover ─────────────────────────────────────────────────────
 
-function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, onClose }: {
+function PlantingPopover({ planting, bedAreaM2, allPlantings, readOnly, onEdit, onRemove, onClose }: {
   planting: Planting;
   bedAreaM2: number;
   allPlantings: Planting[];
+  readOnly: boolean;
   onEdit: () => void;
   onRemove: () => void;
   onClose: () => void;
@@ -6145,7 +6165,8 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
               </button>
               <button
                 onClick={onRemove}
-                className="flex-1 font-display font-semibold rounded-xl py-2"
+                disabled={readOnly}
+                className="flex-1 font-display font-semibold rounded-xl py-2 disabled:opacity-50"
                 style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: 'var(--orange)', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
               >
                 {cropUi(lang, 'Remove crop', 'Susa isilimo / Remove crop')}
@@ -6157,14 +6178,16 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
             <button
               onClick={onEdit}
               data-autofocus
-              className="flex-1 font-display font-semibold rounded-xl py-2"
+              disabled={readOnly}
+              className="flex-1 font-display font-semibold rounded-xl py-2 disabled:opacity-50"
               style={{ fontSize: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
             >
               {cropUi(lang, 'Edit', 'Hlela')}
             </button>
             <button
               onClick={() => setConfirmingRemove(true)}
-              className="flex-1 font-display font-semibold rounded-xl py-2"
+              disabled={readOnly}
+              className="flex-1 font-display font-semibold rounded-xl py-2 disabled:opacity-50"
               style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: 'var(--orange)', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
             >
               {cropUi(lang, 'Remove', 'Susa / Remove')}

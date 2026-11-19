@@ -72,7 +72,8 @@ const transpile=(s:string,jsx=false)=>ts.transpileModule(s,{compilerOptions:{tar
 function handlers(book:CropPlanState,beds:any[],binding?:{owner:string|null;sample:boolean;token:string|null;planKey:string;admission:ReturnType<typeof loadCropPlanWithWriteAdmission>['admission']}){
   let current=book;const snapshot=structuredClone(book),state:any={plan:snapshot,beds,useMemo:(f:()=>unknown)=>f(),hasGrowerCycleMarker,
     growerScopeKey:'',growerScope:null,selectedGrowerSource:null,growerPlanningScopeKey,isProvenForeignGrowerCycle,
-    currentPlanningScopeAllowed:()=>true,pushPlanHistory(){},setterCalls:0,setPlan(fn:any){state.setterCalls++;current=typeof fn==='function'?fn(current):fn;},
+    currentPlanningScopeAllowed:()=>true,canEditCataloguePlan:()=>state.currentPlanningScopeAllowed(),
+    pushPlanHistory(){},setterCalls:0,setPlan(fn:any){state.setterCalls++;current=typeof fn==='function'?fn(current):fn;},
     planWriteBase:{current:binding??null},planSaveConflict:false,activeAccountUid,isSampleMode,getFirebase,isBackendConfigured,cropPlanWriteToken,cropPlanWriteAdmissionMatches,
     suggestedPlanHistory:{current:new WeakMap()},
     genId:()=> 'new-legacy-id',restampEditedOnce,confirmOnceSowing,currentMonth:2,currentYear:2028,
