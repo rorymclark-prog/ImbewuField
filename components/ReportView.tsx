@@ -1,5 +1,6 @@
 'use client';
 
+import Skeleton from '@/components/Skeleton';
 import { coordinateSiteIdForPlace } from '@/lib/international/site-context';
 import { currentPlanningSupport } from '@/lib/international/planning-support';
 import { currentReportCropSupport, projectReportPlanningFacts } from '@/lib/report-crop-plan';
@@ -1543,9 +1544,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
             {/* Loading shimmer */}
             {loading && !report && (
-              <div className="space-y-3 animate-pulse">
+              <div className="space-y-3" role="status" aria-busy="true">
                 {[60,90,75,50,85,70,40,95,65].map((w, i) => (
-                  <div key={i} className="h-3 rounded" style={{ width: `${w}%`, background: 'rgba(226,216,196,0.6)', animationDelay: `${i*50}ms` }} />
+                  <Skeleton key={i} height={12} width={`${w}%`} radius="sm" index={i} />
                 ))}
               </div>
             )}
