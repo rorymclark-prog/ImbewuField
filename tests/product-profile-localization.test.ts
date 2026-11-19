@@ -165,10 +165,13 @@ test('the real API gives all four targets the native saved crop page and purchas
     if(s==='@/lib/metered-ai')return{url:url("export const AI_MODELS={main:'mock'};export async function meteredAi(){return {ai:{model:m=>m,messages:{create:async()=>({usage:{},stop_reason:'end_turn',content:[{type:'text',text:'## Mocked body\\nMocked body content.'}]})}}}}"),shortCircuit:true};return next(s,c);
   }});const old=globalThis.fetch;globalThis.fetch=async()=>new Response('{}');
   try{const{POST}=await import('../app/api/generate-report/route.ts');const d=crops.location;const withProducts=structuredClone(crops.cases.find((c:any)=>c.name==='crop-plan').facts);withProducts.productionItems=[{defId:'tree_mango',status:'proposed'},{defId:'tree_other',speciesId:'strychnos-spinosa',status:'proposed'}];
-    for(const lang of languages)for(const facts of[null,withProducts]){
-      const response=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({language:lang,locationData:d,siteFacts:facts,sections:['Executive Summary']})})as any);assert.equal(response.status,200);const text=await response.text();const normal=normaliseReportSiteFacts(facts)??null;
+    // Missing coverage must not manufacture a growing zone; exercise both the
+    // legacy payload and an explicit complete-series fixture through the actual route.
+    for(const complete of [false,true])for(const lang of languages)for(const facts of[null,withProducts]){
+      const input={...d,climate:{...d.climate,monthlyTempCoverage:complete?{source:'nasa-power',status:'complete'}:undefined}};
+      const response=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({language:lang,locationData:input,siteFacts:facts,sections:['Executive Summary']})})as any);assert.equal(response.status,200);const text=await response.text();const normal=normaliseReportSiteFacts(facts)??null;
       const crop=savedCropPlanMarkdown(normal,d,lang).split('\n');assert.ok(text.includes(crop[0].slice(3)));assert.ok(text.includes(crop.slice(1).join('\n').trim()));assert.ok(!text.includes('## Saved crop plan'));
-      if(facts){const context={...productContextFromItems(normal!.productionItems??[]),animalChoices:normal!.productionEnterpriseChoices};const guide=buildProductGuidance(context,growingZonesForClimate(d.climate.monthlyTemp,d.rainfall.monthly,d.lat),undefined,lang);
+      if(facts){const context={...productContextFromItems(normal!.productionItems??[]),animalChoices:normal!.productionEnterpriseChoices};const guide=buildProductGuidance(context,complete?growingZonesForClimate(d.climate.monthlyTemp,d.rainfall.monthly,d.lat):[],undefined,lang);
         assert.ok(text.includes(productGuideText('Production purchases and variety assumptions',lang)));assert.ok(text.includes(productGuideText(disclaimer,lang)));for(const item of guide.foodForest)for(const line of item.lines)assert.ok(text.includes(line),`${lang}: missing source-backed buying/profile line`);
       }
     }

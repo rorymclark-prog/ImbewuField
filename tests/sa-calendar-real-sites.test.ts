@@ -26,6 +26,11 @@ interface Site {
   era5: { airFrostDaysPerYear: number; lowestDailyMinC: number; yearsWithFrost: number; years: number };
 }
 const SITES: Site[] = JSON.parse(readFileSync(new URL('./fixtures/sa-climate-sites-2026-11-10.json', import.meta.url), 'utf8')).sites;
+// The 56 places of the 11 November 2026 held-out test, read the same way that day. They were
+// held back from the design of the rule; two failed one criterion (CP-103, below). Now that
+// they have been seen they are regression evidence, exactly like the 44.
+const HELD_OUT_2026_11_11: Site[] = JSON.parse(readFileSync(new URL('./fixtures/sa-climate-holdout-2026-11-11.json', import.meta.url), 'utf8')).sites;
+const ALL_SITES: Site[] = [...SITES, ...HELD_OUT_2026_11_11];
 
 const payload = (site: Site, withRecordMinimum = true) => ({
   rainfall: { rainfallSource: site.rainfallSource, monthly: site.monthlyRainMm },
@@ -58,7 +63,8 @@ test('the fixture is the audited set: 44 places, each with a real record minimum
 
 test('no place with frost on its independent record is given a frost-free or light-frost calendar', () => {
   const wrong: string[] = [];
-  for (const site of SITES) {
+  // Both sets: the 56 held-out places passed these three rules without exception.
+  for (const site of ALL_SITES) {
     const { pattern } = climateOf(site);
     const { airFrostDaysPerYear: frostDays, lowestDailyMinC: lowest } = site.era5;
     // The hot-area column sows tender crops through winter: its sites must never have frozen.
@@ -87,6 +93,115 @@ test('no place that never froze in twenty years is shown the hard-frost season, 
     return climate.pattern === 'summer' && site.era5.yearsWithFrost === 0 && site.era5.lowestDailyMinC > 0 && site.recordMinC > 0;
   }).map((site) => site.name);
   assert.deepEqual(wrong, []);
+});
+
+test('the frost rules are one-sided: an answer that ignores the place can pass them, so they are not an accuracy score', () => {
+  // Independent review of 11 November 2026 (Codex, CBR-01). The frost rules above only forbid
+  // particular frost mistakes. Giving EVERY place the winter-rainfall calendar breaks none of
+  // them, at all 100 places: two rules constrain only the hot-area and light-frost answers,
+  // one allows the winter calendar at any frost count, one forbids only the hard-frost
+  // calendar. So "54 of 56 passed" is frost-constraint compliance, never the share of places
+  // given the right calendar. What pins the calendar itself is the named list for each set
+  // below, which is regression evidence, and nothing here measures sowing months or crops.
+  const breaks = (pattern: RainPattern, site: Site): boolean => {
+    const { airFrostDaysPerYear: frostDays, lowestDailyMinC: lowest, yearsWithFrost } = site.era5;
+    return (pattern === 'all-year' && (frostDays > 0 || lowest <= 0))
+      || (pattern === 'mild-frost' && frostDays >= 0.5)
+      || (frostDays >= 1 && pattern !== 'summer' && pattern !== 'winter')
+      || (pattern === 'summer' && yearsWithFrost === 0 && lowest > 0 && site.recordMinC > 0);
+  };
+  const passing = (pattern: RainPattern) => ALL_SITES.filter((site) => !breaks(pattern, site)).length;
+  assert.equal(passing('winter'), 100, 'the degenerate answer passes everywhere: the rules cannot see it');
+  // The other place-blind answers are caught, which is all these rules are for.
+  assert.equal(passing('summer'), 62);
+  assert.equal(passing('mild-frost'), 53);
+  assert.equal(passing('all-year'), 43);
+  // The app's own answers: every place except the two named in CP-103.
+  assert.deepEqual(ALL_SITES.filter((site) => breaks(climateOf(site).pattern, site)).map((site) => site.name).sort(), ['Butterworth', 'Mossel Bay']);
+  // And the app does not give the degenerate answer: 9 of 100 places are on the winter calendar.
+  assert.equal(ALL_SITES.filter((site) => climateOf(site).pattern === 'winter').length, 9);
+});
+
+// CP-103, OPEN. The held-out test of 11 November 2026 applied the rule just above to 56 new
+// places and two failed it: Butterworth (record minimum 1.4 °C, coldest month 12.9 °C) and
+// Mossel Bay (1.7 °C, 12.5 °C) never froze on either record and are given the hard-frost
+// calendar, because a record minimum between 0 and 2 °C with a coldest month under 13 °C
+// falls through to it. The rule was NOT changed: moving such a site to the light-frost
+// calendar would also move Pietermaritzburg, and today it would take away the eight crops
+// that have no light-frost months (CP-082). So this test does not claim the calendar is
+// right. It pins what makes the miss tolerable until that is decided: both places are told
+// they are close to the light-frost line, and the grower's own "no frost" moves them.
+test('CP-103 (open): the two held-out places wrongly on hard frost are told so and can be moved by the grower', () => {
+  const failing = HELD_OUT_2026_11_11.filter((site) =>
+    climateOf(site).pattern === 'summer' && site.era5.yearsWithFrost === 0 && site.era5.lowestDailyMinC > 0 && site.recordMinC > 0);
+  assert.deepEqual(failing.map((site) => site.name).sort(), ['Butterworth', 'Mossel Bay'],
+    'the held-out failures, by name: a change here is a change to the rule and needs a new held-back set');
+  for (const site of failing) {
+    assert.ok(site.recordMinC > 0 && site.recordMinC < 2, `${site.name}: in the 0-2 °C band`);
+    const climate = climateOf(site);
+    assert.equal(climate.closeCall, 'mild-frost', site.name);
+    assert.equal(climate.warmerNeighbour, 'mild-frost', site.name);
+    assert.deepEqual(calendarForGrower(climate, 'no'), { pattern: 'mild-frost', basis: 'grower-frost' }, site.name);
+    assert.deepEqual(calendarForGrower(climate, 'unknown'), { pattern: 'summer', basis: 'site-climate' }, site.name);
+    assert.match(sowingCalendarReasons(climate, { pattern: climate.pattern, basis: 'site-climate' }).join(' '),
+      /close to the line for the "Light frost at most" calendar\. If you have never seen frost on these beds, say so in the site survey/, site.name);
+  }
+});
+
+test('Eshowe is told it is close to the hot-area line, and its grower\'s "no frost" can use that calendar (Argon F-07)', () => {
+  // The only one of the 100 recorded places where a neighbour is reachable by moving both
+  // monthly means together and by neither alone (coldest 15.1 °C, hottest 23.9 °C, record
+  // minimum 2.9 °C, no frost day on the second record). Its own calendar does not change.
+  const eshowe = HELD_OUT_2026_11_11.find((site) => site.name === 'Eshowe');
+  assert.ok(eshowe);
+  assert.equal(eshowe.era5.airFrostDaysPerYear, 0, 'fixture: no frost on the second record');
+  const climate = climateOf(eshowe);
+  assert.equal(climate.pattern, 'mild-frost');
+  assert.equal(climate.closeCall, 'all-year');
+  assert.equal(climate.warmerNeighbour, 'all-year');
+  assert.deepEqual(calendarForGrower(climate, 'unknown'), { pattern: 'mild-frost', basis: 'site-climate' });
+  assert.deepEqual(calendarForGrower(climate, 'yes'), { pattern: 'mild-frost', basis: 'site-climate' });
+  assert.deepEqual(calendarForGrower(climate, 'no'), { pattern: 'all-year', basis: 'grower-frost' });
+  assert.match(sowingCalendarReasons(climate, { pattern: climate.pattern, basis: 'site-climate' }).join(' '),
+    /close to the line for the "Hot area, no frost" calendar\. If you have never seen frost on these beds, say so/);
+  // No other recorded place gained or lost a neighbour from the joint nudges: every place whose
+  // calendar changes when all twelve months move by one degree already names that calendar.
+  const shifted = (site: Site, by: number) => siteClimateFromLocationData({ ...payload(site), climate: { ...payload(site).climate, monthlyTemp: site.monthlyTempC.map((t) => t + by) } }, site.lat);
+  for (const site of ALL_SITES) {
+    const here = climateOf(site);
+    for (const by of [-1, 1]) {
+      const moved = shifted(site, by)?.pattern;
+      if (!moved || moved === here.pattern) continue;
+      assert.ok(here.closeCall === moved || here.warmerNeighbour === moved, `${site.name}: one degree ${by > 0 ? 'warmer' : 'colder'} gives '${moved}', which the site is not told about`);
+    }
+  }
+});
+
+// Where the rule puts each of the 56, as recorded on 11 November 2026. Butterworth and
+// Mossel Bay are under 'summer' because that is what the rule does, not because it is right.
+const HELD_OUT_RECORDED: Record<RainPattern, string[]> = {
+  'all-year': ['Hoedspruit', 'Giyani', 'Hazyview', 'Letsitele', 'KwaDukuza', 'Mtubatuba', 'Jozini', 'Pongola'],
+  'mild-frost': ['Malelane', 'Barberton', 'Port Shepstone', 'Eshowe', 'Makhanda', 'Qonce', 'Lusikisiki', 'Jeffreys Bay',
+    'Hermanus', 'Knysna', 'Ulundi', 'Makhado'],
+  winter: ['Paarl', 'Malmesbury', 'Clanwilliam', 'Calvinia'],
+  summer: ['Mokopane', 'Bela-Bela', 'Brits', 'Zeerust', 'Thabazimbi', 'eMalahleni', 'Standerton', 'Kroonstad', 'Welkom',
+    'Klerksdorp', 'Lichtenburg', 'Harrismith', 'Vereeniging', 'Middelburg (Mpumalanga)', 'Estcourt', 'Ladysmith',
+    'Greytown', 'Ixopo', 'Dundee', 'Aliwal North', 'Cradock', 'Butterworth', 'Swellendam', 'Mossel Bay', 'Robertson',
+    'Caledon', 'De Aar', 'Prieska', 'Kakamas', 'Colesberg', 'Victoria West', 'Vryburg'],
+};
+
+test('each of the 56 held-out places lands on the calendar recorded for it on 11 November 2026', () => {
+  assert.equal(HELD_OUT_2026_11_11.length, 56);
+  const got: Record<string, string[]> = { 'all-year': [], 'mild-frost': [], winter: [], summer: [] };
+  for (const site of HELD_OUT_2026_11_11) {
+    assert.equal(site.monthlyTempC.length, 12, site.name);
+    assert.ok(Number.isFinite(site.recordMinC), `${site.name}: no record minimum`);
+    assert.equal(site.era5.years, 20, site.name);
+    got[climateOf(site).pattern].push(site.name);
+  }
+  for (const pattern of Object.keys(HELD_OUT_RECORDED) as RainPattern[]) {
+    assert.deepEqual(got[pattern].sort(), [...HELD_OUT_RECORDED[pattern]].sort(), `places on '${pattern}'`);
+  }
 });
 
 // The audited outcome for every place. The two tests above are the rule; this is the record

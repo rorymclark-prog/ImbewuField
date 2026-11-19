@@ -1,0 +1,55 @@
+August tomato. Older harness months: Aug Sep Oct Nov Dec Jan. Bed months the planner reserves: Sep Oct Nov Dec Jan Feb Mar.
+
+44 South African places, today's catalogue and calendars: 7942 crop, sowing-month and place combinations.
+The two spans differ for 3491 of them.
+
+Frost-tender crop in a month averaging one air-frost day or more:
+  older harness span, as its own flag counted it (sowing month included): 68 combinations
+  older harness span without the sowing month (the figure the 10 November record quoted): 8 combinations at 2 places (Underberg, Sutherland)
+  bed months the planner reserves: 45 combinations at 3 places (Underberg, Bloemfontein, Sutherland)
+
+Flagged on the planner's months but not by the older span (37):
+  Underberg (summer): Green beans sown Sep: Sep 1.2 days
+  Underberg (summer): Butternut sown Dec: May 2.7 days
+  Underberg (summer): Pumpkin sown Nov: May 2.7 days
+  Underberg (summer): Tomatoes sown Oct: May 2.7 days
+  Underberg (summer): Peppers sown Oct: May 2.7 days
+  Underberg (summer): Chilli sown Oct: May 2.7 days
+  Underberg (summer): Sweet potato sown Nov: May 2.7 days
+  Underberg (summer): Potato sown Sep: Sep 1.2 days
+  Underberg (summer): Cucumber sown Sep: Sep 1.2 days
+  Underberg (summer): Watermelon sown Dec: May 2.7 days
+  Underberg (summer): Amaranth (imbuya/thepe) sown Sep: Sep 1.2 days
+  Underberg (summer): Gem squash sown Sep: Sep 1.2 days
+  Underberg (summer): Baby marrow (courgette) sown Sep: Sep 1.2 days
+  Underberg (summer): Spanspek (sweet melon) sown Sep: Sep 1.2 days
+  Underberg (summer): Sweetcorn sown Sep: Sep 1.2 days
+  Bloemfontein (summer): Butternut sown Dec: May 1.2 days
+  Bloemfontein (summer): Pumpkin sown Nov: May 1.2 days
+  Bloemfontein (summer): Tomatoes sown Oct: May 1.2 days
+  Bloemfontein (summer): Peppers sown Oct: May 1.2 days
+  Bloemfontein (summer): Chilli sown Oct: May 1.2 days
+  Bloemfontein (summer): Sweet potato sown Nov: May 1.2 days
+  Bloemfontein (summer): Watermelon sown Dec: May 1.2 days
+  Sutherland (summer): Green beans sown Sep: Sep 2.4 days
+  Sutherland (summer): Butternut sown Dec: May 1.2 days
+  Sutherland (summer): Pumpkin sown Nov: May 1.2 days
+  Sutherland (summer): Tomatoes sown Oct: May 1.2 days
+  Sutherland (summer): Peppers sown Oct: May 1.2 days
+  Sutherland (summer): Chilli sown Oct: May 1.2 days
+  Sutherland (summer): Sweet potato sown Nov: May 1.2 days
+  Sutherland (summer): Potato sown Sep: Sep 2.4 days
+  Sutherland (summer): Cucumber sown Sep: Sep 2.4 days
+  Sutherland (summer): Watermelon sown Dec: May 1.2 days
+  Sutherland (summer): Amaranth (imbuya/thepe) sown Sep: Sep 2.4 days
+  Sutherland (summer): Gem squash sown Sep: Sep 2.4 days
+  Sutherland (summer): Baby marrow (courgette) sown Sep: Sep 2.4 days
+  Sutherland (summer): Spanspek (sweet melon) sown Sep: Sep 2.4 days
+  Sutherland (summer): Sweetcorn sown Sep: Sep 2.4 days
+
+Flagged by the older span but not on the planner's months (0):
+
+The app's heat check ("too hot" on the monthly mean):
+  older harness span: 7 combinations; bed months the planner reserves: 7
+  too hot on the planner's months only (0):
+  too hot on the older span only (0):

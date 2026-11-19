@@ -133,7 +133,7 @@ after(() => {
 
 test('source review steps distinguish absent evidence, unusable dates, overdue review and dated reference without approving advice', () => {
   const source: CountrySource = { ...structuredClone(COUNTRY_PROFILES[0].sources[0]),
-    publishedOn: '2026-10-01', accessedOn: '2026-11-01', reviewDueOn: '2026-12-01', verification: 'content-read' };
+    publishedOn: '2026-10-01', publishedMonth: null, accessedOn: '2026-11-01', reviewDueOn: '2026-12-01', verification: 'content-read' };
   const cases: Array<[Partial<CountrySource>, RegExp, RegExp]> = [
     [{}, /Dated reference evidence/, /Check the recorded coverage, units and licence/],
     [{ verification: 'unavailable' }, /Full source evidence not recorded/, /Read the full official source/],
@@ -282,7 +282,7 @@ test('saved-site status distinguishes an unopened map from unconfirmed or confli
     act(() => { renderer = create(React.createElement(SiteCountryPanel, { resolution, onSaved() { throw Error('Reading status must not save'); } })); }); mounted.add(renderer);
     const summary = renderer.root.findByType('section').findAllByType('p')[0];
     descriptions.set(status, text(summary));
-    assert.doesNotMatch(text(renderer.root), /reference planning is available|Automatic crop planning is not available for this country/);
+    assert.doesNotMatch(text(renderer.root), /reference planning is available|South African catalogue planner is unavailable for this country/);
     assert.equal(renderer.root.findAllByType('form').length, status === 'missing-site' ? 0 : 1);
     assert.equal(JSON.stringify(resolution), before); assert.equal(probe.saves, 0);
   }
@@ -300,9 +300,12 @@ test('planning availability follows the saved country authority, never an unsave
       if (code === 'ZA') {
         assert.match(text(renderer.root), /South African reference planning is available/);
         assert.match(text(renderer.root), /does not verify local growing conditions/);
-        assert.doesNotMatch(text(renderer.root), /Automatic crop planning is not available for this country/);
+        assert.doesNotMatch(text(renderer.root), /South African catalogue planner is unavailable for this country/);
       } else {
-        assert.match(text(renderer.root), /Automatic crop planning is not available for this country/);
+        assert.match(text(renderer.root), /South African catalogue planner is unavailable for this country/);
+        assert.match(text(renderer.root), /Provisional crop previews in the production plan/);
+        assert.match(text(renderer.root), /missing values stay unknown/);
+        assert.doesNotMatch(text(renderer.root), /Automatic crop planning is not available for this country/);
         assert.match(text(renderer.root), /does not approve local farming advice/);
         assert.doesNotMatch(text(renderer.root), /South African reference planning is available/);
       }

@@ -1,0 +1,295 @@
+TAP version 13
+# Subtest: fixture a: no frost class, mildness or fixed-month claim; rainfall kept
+ok 1 - fixture a: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 43.251797
+  type: 'test'
+  ...
+# Subtest: fixture b: no frost class, mildness or fixed-month claim; rainfall kept
+ok 2 - fixture b: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 18.764108
+  type: 'test'
+  ...
+# Subtest: fixture c: no frost class, mildness or fixed-month claim; rainfall kept
+ok 3 - fixture c: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 10.133909
+  type: 'test'
+  ...
+# Subtest: fixture d: no frost class, mildness or fixed-month claim; rainfall kept
+ok 4 - fixture d: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 9.530325
+  type: 'test'
+  ...
+# Subtest: fixture e: no frost class, mildness or fixed-month claim; rainfall kept
+ok 5 - fixture e: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 7.409957
+  type: 'test'
+  ...
+# Subtest: fixture f: no frost class, mildness or fixed-month claim; rainfall kept
+ok 6 - fixture f: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 7.145156
+  type: 'test'
+  ...
+# Subtest: fixture g: no frost class, mildness or fixed-month claim; rainfall kept
+ok 7 - fixture g: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 5.472228
+  type: 'test'
+  ...
+# Subtest: fixture h: no frost class, mildness or fixed-month claim; rainfall kept
+ok 8 - fixture h: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 5.206706
+  type: 'test'
+  ...
+# Subtest: fixture i: no frost class, mildness or fixed-month claim; rainfall kept
+ok 9 - fixture i: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 9.440586
+  type: 'test'
+  ...
+# Subtest: fixture j: no frost class, mildness or fixed-month claim; rainfall kept
+ok 10 - fixture j: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 5.581219
+  type: 'test'
+  ...
+# Subtest: fixture k: no frost class, mildness or fixed-month claim; rainfall kept
+ok 11 - fixture k: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 6.73371
+  type: 'test'
+  ...
+# Subtest: fixture l: no frost class, mildness or fixed-month claim; rainfall kept
+ok 12 - fixture l: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 7.25604
+  type: 'test'
+  ...
+# Subtest: fixture m: no frost class, mildness or fixed-month claim; rainfall kept
+ok 13 - fixture m: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 5.547632
+  type: 'test'
+  ...
+# Subtest: fixture n: no frost class, mildness or fixed-month claim; rainfall kept
+ok 14 - fixture n: no frost class, mildness or fixed-month claim; rainfall kept
+  ---
+  duration_ms: 5.656344
+  type: 'test'
+  ...
+# Subtest: a and b: the validated record low is printed on Overview and Climate
+ok 15 - a and b: the validated record low is printed on Overview and Climate
+  ---
+  duration_ms: 10.776334
+  type: 'test'
+  ...
+# Subtest: c: a real zero is a reading
+ok 16 - c: a real zero is a reading
+  ---
+  duration_ms: 4.588187
+  type: 'test'
+  ...
+# Subtest: d and e: an untagged minimum and the -999 marker are not a record low
+ok 17 - d and e: an untagged minimum and the -999 marker are not a record low
+  ---
+  duration_ms: 12.016487
+  type: 'test'
+  ...
+# Subtest: f, g, h: Climate withholds interpretation; Overview still shows rainfall and the validated record low
+ok 18 - f, g, h: Climate withholds interpretation; Overview still shows rainfall and the validated record low
+  ---
+  duration_ms: 21.692194
+  type: 'test'
+  ...
+# Subtest: i: the northern footer names Jan as coldest and Jul or Aug as hottest, with no southern winter or August planting
+ok 19 - i: the northern footer names Jan as coldest and Jul or Aug as hottest, with no southern winter or August planting
+  ---
+  duration_ms: 4.357427
+  type: 'test'
+  ...
+# Subtest: a: footer, wind advice and the frost-card body are neutral
+ok 20 - a: footer, wind advice and the frost-card body are neutral
+  ---
+  duration_ms: 3.688936
+  type: 'test'
+  ...
+# Subtest: site summary: the frost-protection sentence needs a validated record low below 2 °C
+ok 21 - site summary: the frost-protection sentence needs a validated record low below 2 °C
+  ---
+  duration_ms: 13.656118
+  type: 'test'
+  ...
+# Subtest: source: the removed identifiers and strings are gone from DataPanel.tsx
+ok 22 - source: the removed identifiers and strings are gone from DataPanel.tsx
+  ---
+  duration_ms: 2.701125
+  type: 'test'
+  ...
+# Subtest: the Overview calendar strip no longer marks "Frost" months from monthly means
+ok 23 - the Overview calendar strip no longer marks "Frost" months from monthly means
+  ---
+  duration_ms: 12.470461
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture a: nothing fabricated on Overview or Climate
+ok 24 - CP-117 fixture a: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 6.631974
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture b: nothing fabricated on Overview or Climate
+ok 25 - CP-117 fixture b: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 7.447305
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture c: nothing fabricated on Overview or Climate
+ok 26 - CP-117 fixture c: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 7.450529
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture d: nothing fabricated on Overview or Climate
+ok 27 - CP-117 fixture d: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 7.112616
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture e: nothing fabricated on Overview or Climate
+ok 28 - CP-117 fixture e: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 7.357996
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture f: nothing fabricated on Overview or Climate
+ok 29 - CP-117 fixture f: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 4.915127
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture g: nothing fabricated on Overview or Climate
+ok 30 - CP-117 fixture g: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 4.621098
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture h: nothing fabricated on Overview or Climate
+ok 31 - CP-117 fixture h: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 4.33329
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture i: nothing fabricated on Overview or Climate
+ok 32 - CP-117 fixture i: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 7.294903
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture j: nothing fabricated on Overview or Climate
+ok 33 - CP-117 fixture j: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 5.739919
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture k: nothing fabricated on Overview or Climate
+ok 34 - CP-117 fixture k: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 5.624647
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture l: nothing fabricated on Overview or Climate
+ok 35 - CP-117 fixture l: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 5.058694
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture m: nothing fabricated on Overview or Climate
+ok 36 - CP-117 fixture m: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 4.700042
+  type: 'test'
+  ...
+# Subtest: CP-117 fixture n: nothing fabricated on Overview or Climate
+ok 37 - CP-117 fixture n: nothing fabricated on Overview or Climate
+  ---
+  duration_ms: 4.747289
+  type: 'test'
+  ...
+# Subtest: j: northern wind lines use calendar months, not seasons
+ok 38 - j: northern wind lines use calendar months, not seasons
+  ---
+  duration_ms: 5.346669
+  type: 'test'
+  ...
+# Subtest: k: southern Cwb keeps the tagged record low and the neutral class note
+ok 39 - k: southern Cwb keeps the tagged record low and the neutral class note
+  ---
+  duration_ms: 3.893553
+  type: 'test'
+  ...
+# Subtest: l: zero wind and unknown directions are not printed as facts and draw no rose
+ok 40 - l: zero wind and unknown directions are not printed as facts and draw no rose
+  ---
+  duration_ms: 9.239489
+  type: 'test'
+  ...
+# Subtest: m: NaN speed and -999 sunshine print nothing; only the known June to August direction shows
+ok 41 - m: NaN speed and -999 sunshine print nothing; only the known June to August direction shows
+  ---
+  duration_ms: 11.044556
+  type: 'test'
+  ...
+# Subtest: zu render of k: the new sentences are English by design and nothing throws
+ok 42 - zu render of k: the new sentences are English by design and nothing throws
+  ---
+  duration_ms: 4.679969
+  type: 'test'
+  ...
+# Subtest: source: CP-117 identifiers and strings are gone from DataPanel.tsx outside comments
+ok 43 - source: CP-117 identifiers and strings are gone from DataPanel.tsx outside comments
+  ---
+  duration_ms: 2.490756
+  type: 'test'
+  ...
+# (node:1141) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/format-figures.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:1142) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/climate-temperature.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the actual notice distinguishes incomplete provider inputs from legacy unknown without altering values
+ok 44 - the actual notice distinguishes incomplete provider inputs from legacy unknown without altering values
+  ---
+  duration_ms: 6.763159
+  type: 'test'
+  ...
+# Subtest: the overview no longer derives growing months from monthly means at all
+ok 45 - the overview no longer derives growing months from monthly means at all
+  ---
+  duration_ms: 1.264614
+  type: 'test'
+  ...
+# Subtest: the actual climate guard withholds zone and frost-day calculations while keeping the complete path
+ok 46 - the actual climate guard withholds zone and frost-day calculations while keeping the complete path
+  ---
+  duration_ms: 0.843407
+  type: 'test'
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 46
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2499.450394
+exit 0

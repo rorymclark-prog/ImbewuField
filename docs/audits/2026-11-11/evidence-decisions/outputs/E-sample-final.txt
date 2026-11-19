@@ -1,0 +1,12 @@
+HEAD 062b630408279519cc3b381248d288f226ee8928
+tree 7907684eb5dbcb0754d4562ed6d168180a326ffc
+status --porcelain (app components lib public package.json): []
+attempt 1
+  country panel present -> choosing ZA
+header calendar chip: ["Hot area, no frost · summer rain · set for the sample farm"]
+accept button: Add 15 plantings to my plan
+  saved crop-plan-sample-farm.pdf (891023 bytes) from "Download the plan (PDF)"; the app named it ImbewuField-Crop-Plan-Ubhejane-Creche-2026-11-11.pdf
+  saved crop-plan-sample-farm.ics (63877 bytes) from "Add 93 tasks to calendar"; the app named it ImbewuField-Crop-Plan-Ubhejane-Creche-2026-11-11.ics
+  calendar file: 93 events; first lines: ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//ImbewuField//Crop Plan//EN","CALSCALE:GREGORIAN"]
+ERRORS []
+exit 0

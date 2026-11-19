@@ -1,0 +1,351 @@
+HEAD dd9c876992c6649cd738e7c23f90a139e8b02228
+status --porcelain (app components lib public package.json): []
+== B1
+  country panel present -> choosing ZA
+B1 CONSOLE.error Failed to load resource: net::ERR_FAILED
+{
+ "tag": "B1 site chosen",
+ "options": [
+  "Choose a sowing calendar",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "",
+ "noteLine": null,
+ "notKnownLine": true,
+ "oldNames": null,
+ "grid": 0,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ },
+ "trunc": {
+  "selected": "Choose a sowing calendar",
+  "textWidthPx": 169,
+  "innerWidthPx": 314,
+  "clientWidth": 330,
+  "scrollWidth": 330,
+  "longestOption": 357
+ }
+}
+
+== B2 phone-light
+  country panel present -> choosing ZA
+{
+ "tag": "B2 site chosen phone-light",
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Hot area, no frost",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "",
+ "noteLine": "This farm's crop plan uses the \"Hot area, no frost\" calendar (from this site's climate records).",
+ "notKnownLine": false,
+ "oldNames": null,
+ "grid": 0,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ },
+ "trunc": {
+  "selected": "Choose a sowing calendar",
+  "textWidthPx": 169,
+  "innerWidthPx": 314,
+  "clientWidth": 330,
+  "scrollWidth": 330,
+  "longestOption": 357
+ }
+}
+{
+ "tag": "B2 farm picked phone-light",
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Hot area, no frost",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "farm",
+ "noteLine": "This farm's crop plan uses the \"Hot area, no frost\" calendar (from this site's climate records).",
+ "notKnownLine": false,
+ "oldNames": null,
+ "grid": 1,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ },
+ "trunc": {
+  "selected": "This farm's crop plan: Hot area, no frost",
+  "textWidthPx": 254,
+  "innerWidthPx": 314,
+  "clientWidth": 330,
+  "scrollWidth": 330,
+  "longestOption": 357
+ }
+}
+near label: id
+Good month to sow
+Hot area, no frost · this farm’s crop plan
+Showin
+
+== B3
+  country panel present -> choosing ZA
+{
+ "tag": "B3 site chosen",
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Light frost at most",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "",
+ "noteLine": "This farm's crop plan uses the \"Light frost at most\" calendar (chosen by you).",
+ "notKnownLine": false,
+ "oldNames": null,
+ "grid": 0,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ },
+ "trunc": {
+  "selected": "Choose a sowing calendar",
+  "textWidthPx": 169,
+  "innerWidthPx": 314,
+  "clientWidth": 330,
+  "scrollWidth": 330,
+  "longestOption": 357
+ }
+}
+{
+ "tag": "B3 farm picked",
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Light frost at most",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "farm",
+ "noteLine": "This farm's crop plan uses the \"Light frost at most\" calendar (chosen by you).",
+ "notKnownLine": false,
+ "oldNames": null,
+ "grid": 1,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ },
+ "trunc": {
+  "selected": "This farm's crop plan: Light frost at most",
+  "textWidthPx": 261,
+  "innerWidthPx": 314,
+  "clientWidth": 330,
+  "scrollWidth": 330,
+  "longestOption": 357
+ }
+}
+
+== B2 phone-dark
+  country panel present -> choosing ZA
+{
+ "tag": "B2 site chosen phone-dark",
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Hot area, no frost",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "",
+ "noteLine": "This farm's crop plan uses the \"Hot area, no frost\" calendar (from this site's climate records).",
+ "notKnownLine": false,
+ "oldNames": null,
+ "grid": 0,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ },
+ "trunc": {
+  "selected": "Choose a sowing calendar",
+  "textWidthPx": 169,
+  "innerWidthPx": 314,
+  "clientWidth": 330,
+  "scrollWidth": 330,
+  "longestOption": 357
+ }
+}
+{
+ "tag": "B2 farm picked phone-dark",
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Hot area, no frost",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "farm",
+ "noteLine": "This farm's crop plan uses the \"Hot area, no frost\" calendar (from this site's climate records).",
+ "notKnownLine": false,
+ "oldNames": null,
+ "grid": 1,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ },
+ "trunc": {
+  "selected": "This farm's crop plan: Hot area, no frost",
+  "textWidthPx": 254,
+  "innerWidthPx": 314,
+  "clientWidth": 330,
+  "scrollWidth": 330,
+  "longestOption": 357
+ }
+}
+near label: id
+Good month to sow
+Hot area, no frost · this farm’s crop plan
+Showin
+
+== B2 desktop
+  country panel present -> choosing ZA
+{
+ "tag": "B2 site chosen desktop",
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Hot area, no frost",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "",
+ "noteLine": "This farm's crop plan uses the \"Hot area, no frost\" calendar (from this site's climate records).",
+ "notKnownLine": false,
+ "oldNames": null,
+ "grid": 0,
+ "overflow": {
+  "sw": 1280,
+  "iw": 1280,
+  "over": false
+ },
+ "trunc": {
+  "selected": "Choose a sowing calendar",
+  "textWidthPx": 169,
+  "innerWidthPx": 1204,
+  "clientWidth": 1220,
+  "scrollWidth": 1220,
+  "longestOption": 357
+ }
+}
+{
+ "tag": "B2 farm picked desktop",
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Hot area, no frost",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "farm",
+ "noteLine": "This farm's crop plan uses the \"Hot area, no frost\" calendar (from this site's climate records).",
+ "notKnownLine": false,
+ "oldNames": null,
+ "grid": 1,
+ "overflow": {
+  "sw": 1280,
+  "iw": 1280,
+  "over": false
+ },
+ "trunc": {
+  "selected": "This farm's crop plan: Hot area, no frost",
+  "textWidthPx": 254,
+  "innerWidthPx": 1204,
+  "clientWidth": 1220,
+  "scrollWidth": 1220,
+  "longestOption": 357
+ }
+}
+near label: id
+Good month to sow
+Hot area, no frost · this farm’s crop plan
+Showin
+
+== B4
+{
+ "tag": "B4 reference",
+ "options": [
+  "Choose a sowing calendar",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "",
+ "noteLine": null,
+ "notKnownLine": false,
+ "oldNames": null,
+ "grid": 0,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ },
+ "trunc": {
+  "selected": "Choose a sowing calendar",
+  "textWidthPx": 169,
+  "innerWidthPx": 314,
+  "clientWidth": 330,
+  "scrollWidth": 330,
+  "longestOption": 357
+ }
+}
+{
+ "tag": "B4 winter",
+ "options": [
+  "Choose a sowing calendar",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "winter",
+ "noteLine": null,
+ "notKnownLine": false,
+ "oldNames": null,
+ "grid": 1,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ },
+ "trunc": {
+  "selected": "Winter rainfall (Western Cape)",
+  "textWidthPx": 196,
+  "innerWidthPx": 314,
+  "clientWidth": 330,
+  "scrollWidth": 330,
+  "longestOption": 357
+ }
+}
+
+ERRORS [
+ "CONSOLE Failed to load resource: net::ERR_FAILED"
+]

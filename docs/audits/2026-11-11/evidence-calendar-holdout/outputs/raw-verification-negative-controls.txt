@@ -1,0 +1,10 @@
+archive: raw-responses-2026-11-11.tar.xz  sha256 1df3acc7a1995aa40b3987f9b95d03765caf8c6bf79003e21a344ad3e5ab8aaf
+daily responses in the archive: 56; places to check: 56
+
+REFUSED   one day in each of 20 years (H03): dates are not the 7305 days 2001-01-01..2020-12-31 (got 20, 20 unique, first ['2001-01-01'], last ['2020-01-01'])
+REFUSED   minimum labelled Fahrenheit (H04): temperature_2m_min: unit is '°F', not '°C'
+REFUSED   one missing daily minimum (H05): temperature_2m_min: 1 missing values
+REFUSED   a duplicated date: dates are not the 7305 days 2001-01-01..2020-12-31 (got 7305, 7304 unique, first ['2001-01-01'], last ['2020-12-31'])
+REFUSED   no units stated: temperature_2m_min: unit is None, not '°C'
+
+5 of 5 corrupt records refused.

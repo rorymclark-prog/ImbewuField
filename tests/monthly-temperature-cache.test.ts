@@ -184,3 +184,38 @@ test('standalone sector and tank readers share v7 while leaving legacy storage u
   seed(location()); assert.ok(sector()?.site); assert.deepEqual(tank(), location().rainfall.monthly);
   assert.equal(storage.rows.get(old.key), old.bytes); assert.deepEqual(storage.writes, []); assert.deepEqual(storage.removals, []);
 });
+
+test('the planner is told why a mapped site has no climate reading, and is told nothing when it has one', async () => {
+  // CP-096 (decision of 11 November 2026): the fallback's wording must follow the real
+  // reason. A signed-out grower on a build that requires sign-in gets a 401 that will never
+  // "finish loading"; a network failure, a server error and a NASA-outage payload are
+  // "not available now". The reason is reported only alongside a null answer.
+  const reasons = async (prepare: () => void): Promise<{ answer: unknown; told: string[] }> => {
+    storage.rows.clear(); requests.length = 0; prepare();
+    const told: string[] = [];
+    const answer = await climate.resolveSiteClimate(point.lat, point.lon, (reason) => told.push(reason));
+    return { answer, told };
+  };
+  const refused = await reasons(() => { transport = async () => new Response(JSON.stringify({ error: 'Authentication required.' }), { status: 401 }); });
+  assert.equal(refused.answer, null); assert.deepEqual(refused.told, ['sign-in-required']); assert.deepEqual(storage.writes, []);
+  for (const status of [403, 429, 500, 503]) {
+    const failed = await reasons(() => { transport = async () => new Response('{}', { status }); });
+    assert.equal(failed.answer, null); assert.deepEqual(failed.told, ['unavailable'], `HTTP ${status}`);
+  }
+  const offline = await reasons(() => { transport = async () => { throw Error('Synthetic offline boundary'); }; });
+  assert.equal(offline.answer, null); assert.deepEqual(offline.told, ['unavailable']);
+  const outage = await reasons(() => { transport = async () => response(unproven('incomplete')); });
+  assert.equal(outage.answer, null); assert.deepEqual(outage.told, ['unavailable']);
+  const invalid: string[] = [];
+  assert.equal(await climate.resolveSiteClimate(Number.NaN, point.lon, (reason) => invalid.push(reason)), null);
+  assert.deepEqual(invalid, ['unavailable']);
+
+  const live = await reasons(() => { transport = async () => response(location()); });
+  assert.ok(live.answer); assert.deepEqual(live.told, []);
+  const told: string[] = [];
+  assert.ok(await climate.resolveSiteClimate(point.lat, point.lon, (reason) => told.push(reason)), 'the reading just cached');
+  assert.deepEqual(told, []);
+  // The two-argument call every other reader makes is unchanged.
+  storage.rows.clear(); transport = async () => new Response('{}', { status: 401 });
+  assert.equal(await climate.resolveSiteClimate(point.lat, point.lon), null);
+});

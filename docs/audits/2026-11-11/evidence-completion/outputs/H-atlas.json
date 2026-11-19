@@ -1,0 +1,1038 @@
+{
+ "script": "h-atlas.cjs",
+ "base": "http://localhost:4242",
+ "results": [
+  {
+   "case": "earth-light-soil",
+   "viewport": "390x844 @2x",
+   "dark": false,
+   "theme": "earth",
+   "themeSeen": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580",
+    "dataTheme": "earth"
+   },
+   "screenshot": "H-atlas-earth-light-soil.png",
+   "capturedUtc": "2026-11-11T13:22:13.139Z",
+   "elements": [
+    {
+     "label": "section label",
+     "found": true,
+     "text": "Soil",
+     "color": "rgb(158, 92, 8)",
+     "fontSizePx": "13px",
+     "fontWeight": "700",
+     "pixelBox": {
+      "x": 62,
+      "y": 595,
+      "w": 656,
+      "h": 38
+     }
+    },
+    {
+     "label": "mini-stat value",
+     "found": true,
+     "text": "Loam",
+     "color": "rgb(38, 27, 16)",
+     "fontSizePx": "14px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 84,
+      "y": 667,
+      "w": 164,
+      "h": 42
+     }
+    },
+    {
+     "label": "mini-stat label",
+     "found": true,
+     "text": "Texture",
+     "color": "rgb(117, 89, 66)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 84,
+      "y": 713,
+      "w": 164,
+      "h": 33
+     }
+    },
+    {
+     "label": "sand name",
+     "found": true,
+     "text": "Sand",
+     "color": "rgb(106, 80, 64)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 62,
+      "y": 821,
+      "w": 53,
+      "h": 33
+     }
+    },
+    {
+     "label": "silt name",
+     "found": true,
+     "text": "Silt",
+     "color": "rgb(106, 80, 64)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 62,
+      "y": 886,
+      "w": 35,
+      "h": 33
+     }
+    },
+    {
+     "label": "percentage",
+     "found": true,
+     "text": "45%",
+     "color": "rgb(122, 68, 8)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 670,
+      "y": 821,
+      "w": 48,
+      "h": 33
+     }
+    },
+    {
+     "label": "soil caution title",
+     "found": true,
+     "text": "Not a reading",
+     "color": "rgb(122, 68, 8)",
+     "fontSizePx": "11px",
+     "fontWeight": "700",
+     "pixelBox": {
+      "x": 130,
+      "y": 1046,
+      "w": 562,
+      "h": 33
+     }
+    },
+    {
+     "label": "soil caution text",
+     "found": true,
+     "text": "NOT A READING. No soil data was available for this point, so these are the app's",
+     "color": "rgb(38, 27, 16)",
+     "fontSizePx": "12.5px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 130,
+      "y": 1083,
+      "w": 562,
+      "h": 204
+     }
+    },
+    {
+     "label": "month letter",
+     "found": true,
+     "text": "J",
+     "color": "rgb(117, 89, 66)",
+     "fontSizePx": "11px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 81,
+      "y": 470,
+      "w": 9,
+      "h": 33
+     }
+    },
+    {
+     "label": "crop catalog note",
+     "found": false
+    },
+    {
+     "label": "crop name",
+     "found": false
+    }
+   ],
+   "pageErrors": 4
+  },
+  {
+   "case": "earth-light-grow",
+   "viewport": "390x844 @2x",
+   "dark": false,
+   "theme": "earth",
+   "themeSeen": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580",
+    "dataTheme": "earth"
+   },
+   "screenshot": "H-atlas-earth-light-grow.png",
+   "capturedUtc": "2026-11-11T13:22:14.011Z",
+   "elements": [
+    {
+     "label": "section label",
+     "found": true,
+     "text": "What could grow here",
+     "color": "rgb(158, 92, 8)",
+     "fontSizePx": "13px",
+     "fontWeight": "700",
+     "pixelBox": {
+      "x": 66,
+      "y": 492,
+      "w": 652,
+      "h": 38
+     }
+    },
+    {
+     "label": "mini-stat value",
+     "found": true,
+     "text": "1745 m",
+     "color": "rgb(38, 27, 16)",
+     "fontSizePx": "14px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 84,
+      "y": 270,
+      "w": 164,
+      "h": 42
+     }
+    },
+    {
+     "label": "mini-stat label",
+     "found": true,
+     "text": "Elevation",
+     "color": "rgb(117, 89, 66)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 84,
+      "y": 316,
+      "w": 164,
+      "h": 33
+     }
+    },
+    {
+     "label": "sand name",
+     "found": false
+    },
+    {
+     "label": "silt name",
+     "found": false
+    },
+    {
+     "label": "percentage",
+     "found": false
+    },
+    {
+     "label": "soil caution title",
+     "found": false
+    },
+    {
+     "label": "soil caution text",
+     "found": false
+    },
+    {
+     "label": "month letter",
+     "found": false
+    },
+    {
+     "label": "crop catalog note",
+     "found": true,
+     "text": "From our crop catalog: crops with a sowing window open in November under the  so",
+     "color": "rgb(117, 89, 66)",
+     "fontSizePx": "11.5px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 66,
+      "y": 545,
+      "w": 652,
+      "h": 104
+     }
+    },
+    {
+     "label": "crop name",
+     "found": true,
+     "text": "Green beans",
+     "color": "rgb(38, 27, 16)",
+     "fontSizePx": "13px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 66,
+      "y": 869,
+      "w": 264,
+      "h": 88
+     }
+    }
+   ],
+   "pageErrors": 4
+  },
+  {
+   "case": "earth-dark-soil",
+   "viewport": "390x844 @2x",
+   "dark": true,
+   "theme": "earth",
+   "themeSeen": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580 dark",
+    "dataTheme": "earth"
+   },
+   "screenshot": "H-atlas-earth-dark-soil.png",
+   "capturedUtc": "2026-11-11T13:22:37.538Z",
+   "elements": [
+    {
+     "label": "section label",
+     "found": true,
+     "text": "Soil",
+     "color": "rgb(216, 168, 64)",
+     "fontSizePx": "13px",
+     "fontWeight": "700",
+     "pixelBox": {
+      "x": 62,
+      "y": 595,
+      "w": 656,
+      "h": 38
+     }
+    },
+    {
+     "label": "mini-stat value",
+     "found": true,
+     "text": "Loam",
+     "color": "rgb(238, 228, 208)",
+     "fontSizePx": "14px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 84,
+      "y": 667,
+      "w": 164,
+      "h": 42
+     }
+    },
+    {
+     "label": "mini-stat label",
+     "found": true,
+     "text": "Texture",
+     "color": "rgb(160, 133, 100)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 84,
+      "y": 713,
+      "w": 164,
+      "h": 33
+     }
+    },
+    {
+     "label": "sand name",
+     "found": true,
+     "text": "Sand",
+     "color": "rgb(168, 144, 108)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 62,
+      "y": 821,
+      "w": 53,
+      "h": 33
+     }
+    },
+    {
+     "label": "silt name",
+     "found": true,
+     "text": "Silt",
+     "color": "rgb(168, 144, 108)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 62,
+      "y": 886,
+      "w": 35,
+      "h": 33
+     }
+    },
+    {
+     "label": "percentage",
+     "found": true,
+     "text": "45%",
+     "color": "rgb(180, 144, 64)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 670,
+      "y": 821,
+      "w": 48,
+      "h": 33
+     }
+    },
+    {
+     "label": "soil caution title",
+     "found": true,
+     "text": "Not a reading",
+     "color": "rgb(180, 144, 64)",
+     "fontSizePx": "11px",
+     "fontWeight": "700",
+     "pixelBox": {
+      "x": 130,
+      "y": 1046,
+      "w": 562,
+      "h": 33
+     }
+    },
+    {
+     "label": "soil caution text",
+     "found": true,
+     "text": "NOT A READING. No soil data was available for this point, so these are the app's",
+     "color": "rgb(238, 228, 208)",
+     "fontSizePx": "12.5px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 130,
+      "y": 1083,
+      "w": 562,
+      "h": 204
+     }
+    },
+    {
+     "label": "month letter",
+     "found": true,
+     "text": "J",
+     "color": "rgb(160, 133, 100)",
+     "fontSizePx": "11px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 81,
+      "y": 470,
+      "w": 9,
+      "h": 33
+     }
+    },
+    {
+     "label": "crop catalog note",
+     "found": false
+    },
+    {
+     "label": "crop name",
+     "found": false
+    }
+   ],
+   "pageErrors": 4
+  },
+  {
+   "case": "earth-dark-grow",
+   "viewport": "390x844 @2x",
+   "dark": true,
+   "theme": "earth",
+   "themeSeen": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580 dark",
+    "dataTheme": "earth"
+   },
+   "screenshot": "H-atlas-earth-dark-grow.png",
+   "capturedUtc": "2026-11-11T13:22:38.370Z",
+   "elements": [
+    {
+     "label": "section label",
+     "found": true,
+     "text": "What could grow here",
+     "color": "rgb(216, 168, 64)",
+     "fontSizePx": "13px",
+     "fontWeight": "700",
+     "pixelBox": {
+      "x": 66,
+      "y": 492,
+      "w": 652,
+      "h": 38
+     }
+    },
+    {
+     "label": "mini-stat value",
+     "found": true,
+     "text": "1745 m",
+     "color": "rgb(238, 228, 208)",
+     "fontSizePx": "14px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 84,
+      "y": 270,
+      "w": 164,
+      "h": 42
+     }
+    },
+    {
+     "label": "mini-stat label",
+     "found": true,
+     "text": "Elevation",
+     "color": "rgb(160, 133, 100)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 84,
+      "y": 316,
+      "w": 164,
+      "h": 33
+     }
+    },
+    {
+     "label": "sand name",
+     "found": false
+    },
+    {
+     "label": "silt name",
+     "found": false
+    },
+    {
+     "label": "percentage",
+     "found": false
+    },
+    {
+     "label": "soil caution title",
+     "found": false
+    },
+    {
+     "label": "soil caution text",
+     "found": false
+    },
+    {
+     "label": "month letter",
+     "found": false
+    },
+    {
+     "label": "crop catalog note",
+     "found": true,
+     "text": "From our crop catalog: crops with a sowing window open in November under the  so",
+     "color": "rgb(160, 133, 100)",
+     "fontSizePx": "11.5px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 66,
+      "y": 545,
+      "w": 652,
+      "h": 104
+     }
+    },
+    {
+     "label": "crop name",
+     "found": true,
+     "text": "Green beans",
+     "color": "rgb(238, 228, 208)",
+     "fontSizePx": "13px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 66,
+      "y": 869,
+      "w": 264,
+      "h": 88
+     }
+    }
+   ],
+   "pageErrors": 4
+  },
+  {
+   "case": "slate-light-soil",
+   "viewport": "390x844 @2x",
+   "dark": false,
+   "theme": "slate",
+   "themeSeen": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580",
+    "dataTheme": "slate"
+   },
+   "screenshot": "H-atlas-slate-light-soil.png",
+   "capturedUtc": "2026-11-11T13:23:00.316Z",
+   "elements": [
+    {
+     "label": "section label",
+     "found": true,
+     "text": "Soil",
+     "color": "rgb(170, 92, 8)",
+     "fontSizePx": "13px",
+     "fontWeight": "700",
+     "pixelBox": {
+      "x": 62,
+      "y": 595,
+      "w": 656,
+      "h": 38
+     }
+    },
+    {
+     "label": "mini-stat value",
+     "found": true,
+     "text": "Loam",
+     "color": "rgb(12, 21, 38)",
+     "fontSizePx": "14px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 84,
+      "y": 667,
+      "w": 164,
+      "h": 42
+     }
+    },
+    {
+     "label": "mini-stat label",
+     "found": true,
+     "text": "Texture",
+     "color": "rgb(92, 107, 125)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 84,
+      "y": 713,
+      "w": 164,
+      "h": 33
+     }
+    },
+    {
+     "label": "sand name",
+     "found": true,
+     "text": "Sand",
+     "color": "rgb(68, 82, 102)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 62,
+      "y": 821,
+      "w": 53,
+      "h": 33
+     }
+    },
+    {
+     "label": "silt name",
+     "found": true,
+     "text": "Silt",
+     "color": "rgb(68, 82, 102)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 62,
+      "y": 886,
+      "w": 35,
+      "h": 33
+     }
+    },
+    {
+     "label": "percentage",
+     "found": true,
+     "text": "45%",
+     "color": "rgb(122, 64, 8)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 670,
+      "y": 821,
+      "w": 48,
+      "h": 33
+     }
+    },
+    {
+     "label": "soil caution title",
+     "found": true,
+     "text": "Not a reading",
+     "color": "rgb(122, 64, 8)",
+     "fontSizePx": "11px",
+     "fontWeight": "700",
+     "pixelBox": {
+      "x": 130,
+      "y": 1046,
+      "w": 562,
+      "h": 33
+     }
+    },
+    {
+     "label": "soil caution text",
+     "found": true,
+     "text": "NOT A READING. No soil data was available for this point, so these are the app's",
+     "color": "rgb(12, 21, 38)",
+     "fontSizePx": "12.5px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 130,
+      "y": 1083,
+      "w": 562,
+      "h": 204
+     }
+    },
+    {
+     "label": "month letter",
+     "found": true,
+     "text": "J",
+     "color": "rgb(92, 107, 125)",
+     "fontSizePx": "11px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 81,
+      "y": 470,
+      "w": 9,
+      "h": 33
+     }
+    },
+    {
+     "label": "crop catalog note",
+     "found": false
+    },
+    {
+     "label": "crop name",
+     "found": false
+    }
+   ],
+   "pageErrors": 4
+  },
+  {
+   "case": "slate-light-grow",
+   "viewport": "390x844 @2x",
+   "dark": false,
+   "theme": "slate",
+   "themeSeen": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580",
+    "dataTheme": "slate"
+   },
+   "screenshot": "H-atlas-slate-light-grow.png",
+   "capturedUtc": "2026-11-11T13:23:01.163Z",
+   "elements": [
+    {
+     "label": "section label",
+     "found": true,
+     "text": "What could grow here",
+     "color": "rgb(170, 92, 8)",
+     "fontSizePx": "13px",
+     "fontWeight": "700",
+     "pixelBox": {
+      "x": 66,
+      "y": 492,
+      "w": 652,
+      "h": 38
+     }
+    },
+    {
+     "label": "mini-stat value",
+     "found": true,
+     "text": "1745 m",
+     "color": "rgb(12, 21, 38)",
+     "fontSizePx": "14px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 84,
+      "y": 270,
+      "w": 164,
+      "h": 42
+     }
+    },
+    {
+     "label": "mini-stat label",
+     "found": true,
+     "text": "Elevation",
+     "color": "rgb(92, 107, 125)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 84,
+      "y": 316,
+      "w": 164,
+      "h": 33
+     }
+    },
+    {
+     "label": "sand name",
+     "found": false
+    },
+    {
+     "label": "silt name",
+     "found": false
+    },
+    {
+     "label": "percentage",
+     "found": false
+    },
+    {
+     "label": "soil caution title",
+     "found": false
+    },
+    {
+     "label": "soil caution text",
+     "found": false
+    },
+    {
+     "label": "month letter",
+     "found": false
+    },
+    {
+     "label": "crop catalog note",
+     "found": true,
+     "text": "From our crop catalog: crops with a sowing window open in November under the  so",
+     "color": "rgb(92, 107, 125)",
+     "fontSizePx": "11.5px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 66,
+      "y": 545,
+      "w": 652,
+      "h": 104
+     }
+    },
+    {
+     "label": "crop name",
+     "found": true,
+     "text": "Green beans",
+     "color": "rgb(12, 21, 38)",
+     "fontSizePx": "13px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 66,
+      "y": 869,
+      "w": 264,
+      "h": 88
+     }
+    }
+   ],
+   "pageErrors": 4
+  },
+  {
+   "case": "slate-dark-soil",
+   "viewport": "390x844 @2x",
+   "dark": true,
+   "theme": "slate",
+   "themeSeen": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580 dark",
+    "dataTheme": "slate"
+   },
+   "screenshot": "H-atlas-slate-dark-soil.png",
+   "capturedUtc": "2026-11-11T13:23:24.171Z",
+   "elements": [
+    {
+     "label": "section label",
+     "found": true,
+     "text": "Soil",
+     "color": "rgb(232, 160, 48)",
+     "fontSizePx": "13px",
+     "fontWeight": "700",
+     "pixelBox": {
+      "x": 62,
+      "y": 595,
+      "w": 656,
+      "h": 38
+     }
+    },
+    {
+     "label": "mini-stat value",
+     "found": true,
+     "text": "Loam",
+     "color": "rgb(220, 228, 240)",
+     "fontSizePx": "14px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 84,
+      "y": 667,
+      "w": 164,
+      "h": 42
+     }
+    },
+    {
+     "label": "mini-stat label",
+     "found": true,
+     "text": "Texture",
+     "color": "rgb(128, 144, 172)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 84,
+      "y": 713,
+      "w": 164,
+      "h": 33
+     }
+    },
+    {
+     "label": "sand name",
+     "found": true,
+     "text": "Sand",
+     "color": "rgb(136, 152, 170)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 62,
+      "y": 821,
+      "w": 53,
+      "h": 33
+     }
+    },
+    {
+     "label": "silt name",
+     "found": true,
+     "text": "Silt",
+     "color": "rgb(136, 152, 170)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 62,
+      "y": 886,
+      "w": 35,
+      "h": 33
+     }
+    },
+    {
+     "label": "percentage",
+     "found": true,
+     "text": "45%",
+     "color": "rgb(180, 144, 64)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 670,
+      "y": 821,
+      "w": 48,
+      "h": 33
+     }
+    },
+    {
+     "label": "soil caution title",
+     "found": true,
+     "text": "Not a reading",
+     "color": "rgb(180, 144, 64)",
+     "fontSizePx": "11px",
+     "fontWeight": "700",
+     "pixelBox": {
+      "x": 130,
+      "y": 1046,
+      "w": 562,
+      "h": 33
+     }
+    },
+    {
+     "label": "soil caution text",
+     "found": true,
+     "text": "NOT A READING. No soil data was available for this point, so these are the app's",
+     "color": "rgb(220, 228, 240)",
+     "fontSizePx": "12.5px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 130,
+      "y": 1083,
+      "w": 562,
+      "h": 204
+     }
+    },
+    {
+     "label": "month letter",
+     "found": true,
+     "text": "J",
+     "color": "rgb(128, 144, 172)",
+     "fontSizePx": "11px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 81,
+      "y": 470,
+      "w": 9,
+      "h": 33
+     }
+    },
+    {
+     "label": "crop catalog note",
+     "found": false
+    },
+    {
+     "label": "crop name",
+     "found": false
+    }
+   ],
+   "pageErrors": 4
+  },
+  {
+   "case": "slate-dark-grow",
+   "viewport": "390x844 @2x",
+   "dark": true,
+   "theme": "slate",
+   "themeSeen": {
+    "htmlClass": "__variable_5c85c8 __variable_9a9580 dark",
+    "dataTheme": "slate"
+   },
+   "screenshot": "H-atlas-slate-dark-grow.png",
+   "capturedUtc": "2026-11-11T13:23:25.053Z",
+   "elements": [
+    {
+     "label": "section label",
+     "found": true,
+     "text": "What could grow here",
+     "color": "rgb(232, 160, 48)",
+     "fontSizePx": "13px",
+     "fontWeight": "700",
+     "pixelBox": {
+      "x": 66,
+      "y": 492,
+      "w": 652,
+      "h": 38
+     }
+    },
+    {
+     "label": "mini-stat value",
+     "found": true,
+     "text": "1745 m",
+     "color": "rgb(220, 228, 240)",
+     "fontSizePx": "14px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 84,
+      "y": 270,
+      "w": 164,
+      "h": 42
+     }
+    },
+    {
+     "label": "mini-stat label",
+     "found": true,
+     "text": "Elevation",
+     "color": "rgb(128, 144, 172)",
+     "fontSizePx": "11px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 84,
+      "y": 316,
+      "w": 164,
+      "h": 33
+     }
+    },
+    {
+     "label": "sand name",
+     "found": false
+    },
+    {
+     "label": "silt name",
+     "found": false
+    },
+    {
+     "label": "percentage",
+     "found": false
+    },
+    {
+     "label": "soil caution title",
+     "found": false
+    },
+    {
+     "label": "soil caution text",
+     "found": false
+    },
+    {
+     "label": "month letter",
+     "found": false
+    },
+    {
+     "label": "crop catalog note",
+     "found": true,
+     "text": "From our crop catalog: crops with a sowing window open in November under the  so",
+     "color": "rgb(128, 144, 172)",
+     "fontSizePx": "11.5px",
+     "fontWeight": "400",
+     "pixelBox": {
+      "x": 66,
+      "y": 545,
+      "w": 652,
+      "h": 104
+     }
+    },
+    {
+     "label": "crop name",
+     "found": true,
+     "text": "Green beans",
+     "color": "rgb(220, 228, 240)",
+     "fontSizePx": "13px",
+     "fontWeight": "600",
+     "pixelBox": {
+      "x": 66,
+      "y": 869,
+      "w": 264,
+      "h": 88
+     }
+    }
+   ],
+   "pageErrors": 4
+  }
+ ]
+}

@@ -41,6 +41,200 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    when: '18 November 2026', sha: '44df84e53',
+    changes: ['Wisconsin previews and exports keep each source warning once per record.'],
+  },
+  {
+    when: '17 November 2026', sha: '58e87154e',
+    changes: ['Compare chosen tomato seed-starting references in Wisconsin previews and printouts.'],
+  },
+  {
+    when: '17 November 2026', sha: 'ec3017742',
+    changes: ['Cost charts identify unconfirmed purchase quantities and singular bill-line gaps.'],
+  },
+  {
+    when: '16 November 2026', sha: '49bf1a359',
+    changes: ['Report cost gaps ask for missing measurements, purchase quantities and quotes.'],
+  },
+  {
+    when: '16 November 2026', sha: '1db007a73',
+    changes: ['Entirely unpriced bills explain what to confirm without implying a subtotal.'],
+  },
+  {
+    when: '16 November 2026', sha: '05d08bb12',
+    changes: [
+      'Mixed existing/planned items stay unpriced until you confirm quantities to buy.',
+      'Reports distinguish unknown purchase quantities from missing prices.',
+      'Matching catalogue tank groups are counted once across report records.',
+    ],
+  },
+  {
+    when: '16 November 2026', sha: 'b8dbdc626',
+    changes: [
+      'Reports flag conflicting tank and survey storage records for you to check.',
+      'Survey reports retain mixed storage answers and show clear roof subtotals.',
+    ],
+  },
+  {
+    when: '16 November 2026', sha: 'd48e25166',
+    changes: [
+      'Older survey watering methods stay visible when you reopen them and in reports.',
+      'Field-period reports explain when a field-clear date is not ready.',
+    ],
+  },
+  {
+    when: '15 November 2026', sha: '0ee2e63e1',
+    changes: ['Reports keep survey water choices separate from mapped water records.'],
+  },
+  { when: '15 November 2026', sha: '9c1c302c1', changes: [
+    'Reports keep roof areas entered in your survey separate from mapped measurements.',
+  ] },
+  { when: '14 November 2026', sha: '25c2119f8', changes: [
+    'Field-period temperature comparisons use plain words in previews and exports.',
+  ] },
+  { when: '14 November 2026', sha: 'df314b7b6', changes: [
+    'Tomato previews can compare historical temperatures across your proposed field period.',
+    'Each month keeps its own result and unknowns; your planting window stays separate.',
+  ] },
+  { when: '14 November 2026', sha: 'f6a3a0224', changes: [
+    'Provisional reports show untouched unknown inputs in a compact table.',
+    'Printed source evidence flows across pages without changing your plan.',
+  ] },
+  { when: '14 November 2026', sha: '6291b6d7b', changes: [
+    'Saskatchewan cabbage previews offer a nursery range with your endpoint choice.',
+    'Nursery dates keep their source conditions in saved plans and reports.',
+  ] },
+  { when: '14 November 2026', sha: 'ed4a368e5', changes: [
+    'Canadian cabbage previews offer a historical transplant-month reference across varieties.',
+    'Source months keep their limits beside your results and saved profiles.',
+    'Saved crop records stay visible while site conditions are unavailable.',
+  ] },
+  { when: '13 November 2026', sha: '35e158051', changes: [
+    'Tomato previews can compare modelled monthly temperature with a sourced optimum.',
+    'Temperature comparisons keep their source limits and never create a planting window.',
+    'Date searches keep looking for months you have reviewed.',
+  ] },
+  { when: '13 November 2026', sha: '2fb067569', changes: [
+    'New climate records retain their source period and genuine missing temperatures.',
+  ] },
+  { when: '13 November 2026', sha: 'c360e54d7', changes: [
+    'Kenyan tomato previews offer a sourced nursery interval with your endpoint choice.',
+  ] },
+  { when: '13 November 2026', sha: '5ef1d0a5f', changes: [
+    'Southeast Missouri oats previews offer a historical cover-crop month reference.',
+  ] },
+  { when: '13 November 2026', sha: '51872cdfe', changes: [
+    'Partial crop calendars keep unlisted months unknown instead of excluding them.',
+  ] },
+  { when: '13 November 2026', sha: '6b9de2c4b', changes: [
+    'Printable crop previews now name the selected site or workspace.',
+  ] },
+  { when: '13 November 2026', sha: 'a3fcfcda2', changes: [
+    'Short reports keep rainfall unknown when its source is missing or unsupported.',
+  ] },
+  { when: '13 November 2026', sha: '41c3ea113', changes: [
+    'Great Lakes tomato previews offer an optional sourced seed-starting lead time.',
+  ] },
+  { when: '13 November 2026', sha: 'd012bf123', changes: [
+    'Country notices now distinguish provisional previews from catalogue planning.',
+    'Supported counts and dates remain available when other crop details are unknown.',
+  ] },
+  { when: '13 November 2026', sha: '2c28cfc8a', changes: [
+    'Choosing your exact map point clears the preview-only warning.',
+    'Map previews wait for your exact location before saving a new place.',
+    'Individual DEMO work dates stay labelled as examples in calendar downloads.',
+    'Provisional calendar downloads keep source limits, regions and unknowns.',
+    'Choose Worldwide in map search, view an area, then tap your exact farm location.',
+    'Map captures wait until the selected farm location has finished loading.',
+    'Great Lakes cabbage previews offer an optional sourced nursery lead-time choice.',
+  ] },
+  { when: '13 November 2026', sha: '7791a6a2b', changes: [
+    'Reports show missing terrain estimates as unknown and retain recorded values.',
+  ] },
+  { when: '13 November 2026', sha: 'a299362b8', changes: [
+    'Reports keep missing soil and water records separate from site-risk claims.',
+    'Recorded designs stay intact; unsupported works become review steps.',
+  ] },
+  { when: '13 November 2026', sha: '54beb1e94', changes: [
+    'Reports keep slope estimates separate from unassessed runoff and erosion risk.',
+    'Missing slope no longer receives a low-risk label.',
+  ] },
+  { when: '13 November 2026', sha: 'f26680a31', changes: [
+    'Changing accounts retires a pending saved-site confirmation.',
+    'A retired save no longer writes into the next account or shows success.',
+  ] },
+  { when: '13 November 2026', sha: '3b47ecdc3', changes: [
+    'Report water needs stay unknown when demand and supply evidence is missing.',
+    'Irrigation planning uses drawn growing areas, not the whole property.',
+  ] },
+  { when: '13 November 2026', sha: '2e870fb0c', changes: [
+    'Archived crop reports retain accepted source evidence and planned dates.',
+    'Source history stays separate from current farming approval.',
+  ] },
+  { when: '13 November 2026', sha: '8e7dd204b', changes: [
+    'Review source limits before saving dated crop cycles from your own estimates.',
+    'Keep accepted evidence in saved history and nursery files; estimates stay conditional.',
+  ] },
+  { when: '13 November 2026', sha: '8c71b0be4', changes: [
+    'Save a provisional profile with its source references, choices and unknowns.',
+    'Open saved evidence later; saving a profile does not add crops to your plan.',
+  ] },
+  { when: '13 November 2026', sha: '5290c896b', changes: [
+    'Preview Great Lakes cabbage counts using an optional USDA spacing reference.',
+    'Choose spacing and survivors yourself; undated evidence and unknowns stay visible.',
+  ] },
+  { when: '12 November 2026', sha: '79ea6a0e1', changes: [
+    'Choose cowpea spacing and surviving plants to preview a conditional plant count.',
+    'The preview keeps unknown choices and prints the spacing and area assumptions.',
+  ] },
+  { when: '12 November 2026', sha: 'a0906e1ec', changes: [
+    'Preview crops from your saved measurements, source references and your own conditions.',
+    'Kenya method references keep unsupported counts, yields and dates unknown.',
+    'Soil and weather readings show their evidence without unsupported scores or risk ratings.',
+    'Printed report tables keep their headers with their rows.',
+  ] },
+  { when: '12 November 2026', sha: 'fa2d646d0', changes: [
+    'Explore rain, roof collection, household water use and tank storage on the example farm.',
+    'See why the example climate checks hold a crop back in a particular sowing month.',
+    'The example includes a rain-on-terrain film and scrolls on your phone.',
+  ] },
+  { when: '12 November 2026', sha: 'cd408331865da2de20777630d6ff831842db50d0', changes: [
+    'Report PDF table headers stay with their rows, including wrapped and continuing tables.',
+  ] },
+  { when: '12 November 2026', sha: 'c8c00515e97ae810b4e95d4e9c3898d82196a1ac', changes: [
+    'Reports keep zero and unknown rainfall distinct; seasonal water adequacy stays unassessed.',
+  ] },
+  { when: '12 November 2026', sha: '15aeada5782ba781a83d58387fea8194b4572ca4', changes: [
+    'Report storage figures no longer imply an uncalculated water deficit is known.',
+    'Report climate labels withhold missing evidence; zero harvest has no storage ratio.',
+  ] },
+  { when: '12 November 2026', sha: '627d114167ff4f5c486ba50130af86b43b6f5ce0', changes: [
+    'Soil readings keep their sources without an unsupported health score or diagnosis.',
+    'Saving a site keeps unknown rainfall unknown and preserves your existing figures.',
+    'Reports withhold unsourced weather values and separate record lows from farm frost.',
+  ] },
+  { when: '11 November 2026', sha: '1dd03688f9de3985d154b4a04e80e47bb1cd1c3f', changes: [
+    'Printed frost warnings follow the frost months you record, not a fixed winter window.',
+    'Site data marks unknown weather and wind coverage, with clearer dark-mode text.',
+    'A weekly harvest target now says when its crop could be ready too early.',
+    'The sowing calendar page uses the crop plan\'s calendar names and can show your farm\'s.',
+  ] },
+  { when: '12 November 2026', sha: 'ad2cdefcf', changes: [
+    'Choose cowpea leaf production and growth habit to see the matching source reference.',
+    'Cowpea source ranges stay separate from your density estimates and unknown harvest dates.',
+    'Returning to an earlier region requires a fresh preview and source choice.',
+    'Choose a sourced Kenya transplant method; unsupported numbers stay unknown.',
+    'Month-only source dates keep their unknown publication day visible.',
+    'Download a printable crop preview with your inputs, sources and unknowns.',
+    'Preview controls keep working overnight. Unconfirmed save warnings stay visible.',
+    'Printable previews show when saved measurements were read.',
+    'Each evidence section stays together when printing a crop preview.',
+  ] },
+  { when: '12 November 2026', sha: '8aeba000e8fbbb025a9b157174a47cd2fdd92585', changes: [
+    'Preview crop counts and dates from your measured bed and your estimates.',
+    'Your saved plan stays unchanged. Edit your inputs, then calculate a fresh preview.',
+  ] },
   { when: '10 November 2026', sha: '889438f66e2df0557bc1b07061b09a2e94b7f5a8', changes: [
     'Choose your own sowing calendar if you know your land better than the climate records.',
     'The crop plan lists planned sowings that are outside your sowing months.',

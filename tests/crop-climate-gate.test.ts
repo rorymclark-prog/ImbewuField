@@ -4,7 +4,8 @@ import assert from 'node:assert/strict';
 import { autoSuggestPlan, fillFirstSeasonGaps, observedFrostConflicts, observedFrostConflictsForPlanting, recomputeLaterThisYear, type AutoSuggestAnswers } from '../lib/crop-autosuggest.ts';
 import { CROPS, FROST_FREE_CALENDAR_CITED, cropByKey, hasVerifiedSchedule } from '../lib/crop-catalog.ts';
 import { occupiedMonthsForPlanting, type PlanBed, type Planting } from '../lib/crop-plan.ts';
-import { ECOCROP_HEAT_LIMITS_C, rainFedGrowingMonths, thornthwaitePetMm } from '../lib/crop-climate-gate.ts';
+import { ECOCROP_HEAT_LIMITS_C, climateGateFrom, judgeFieldMonths, rainFedGrowingMonths, thornthwaitePetMm } from '../lib/crop-climate-gate.ts';
+import { siteClimateFromLocationData } from '../lib/site-climate.ts';
 
 const BEDS: PlanBed[] = Array.from({ length: 6 }, (_, i) => ({ id: `b${i + 1}`, label: `Bed ${i + 1}`, areaM2: 9, minDimM: 3 }));
 const base: AutoSuggestAnswers = {
@@ -211,4 +212,75 @@ test('manual frost warnings see only a saved cohort\'s remaining field months, w
   assert.deepEqual(observedFrostConflictsForPlanting({ ...observed, finishedOnceSowing: true }, 5, [5]), []);
   const nursery: Planting = { ...observed, sowMonth: 12, inNursery: '2026-12' };
   assert.deepEqual(observedFrostConflictsForPlanting(nursery, 1, [1, 12]), [1], 'December nursery is history, January field reservation is ahead');
+});
+
+// ── Independent review of 11 November 2026 (Codex, on 9a5b102e): CBR-04, CBR-05, CBR-06 ──
+// The readings are the Mkuze sample farm's, as recorded in the 10 November fixture. The
+// corrupt versions are synthetic: no stored or fetched payload can hold a sparse array,
+// because JSON turns a hole into null and every live caller passes a reading that has
+// already been through siteClimateFromLocationData. These pin the helpers themselves.
+const MKUZE_TEMP_C = [24.71, 24.73, 23.84, 21.45, 19.37, 17.21, 16.75, 18.46, 20.62, 21.73, 22.88, 24.25];
+const MKUZE_RAIN_MM = [128.7, 100.2, 84.6, 48.6, 18, 14.4, 15.5, 18.6, 38.7, 69.8, 111.9, 119];
+const sparse = (values: readonly number[], hole: number): number[] => { const copy = [...values]; delete copy[hole]; return copy; };
+
+test('CBR-04: a rainfall year with a missing month is not a site climate', () => {
+  const payload = (monthly: unknown) => ({
+    rainfall: { rainfallSource: 'nasa-power', monthly },
+    climate: { monthlyTemp: MKUZE_TEMP_C, monthlyTempCoverage: { source: 'nasa-power', status: 'complete' }, minTemp: 5.4, minTempSource: 'nasa-power' },
+  });
+  const whole = siteClimateFromLocationData(payload(MKUZE_RAIN_MM), -27.73);
+  assert.equal(whole?.annualMm, 768);
+  assert.equal(whole?.rainSeason, 'summer');
+  // Before the fix this returned a calendar with 639 mm a year and rain "all year".
+  assert.equal(siteClimateFromLocationData(payload(sparse(MKUZE_RAIN_MM, 0)), -27.73), null, 'January missing');
+  assert.equal(siteClimateFromLocationData(payload(sparse(MKUZE_RAIN_MM, 11)), -27.73), null, 'December missing');
+  for (const bad of [null, undefined, Number.NaN, -1, '128.7']) {
+    const monthly: unknown[] = [...MKUZE_RAIN_MM]; monthly[0] = bad;
+    assert.equal(siteClimateFromLocationData(payload(monthly), -27.73), null, `January = ${String(bad)}`);
+  }
+  // A dry month is a real reading, not a missing one.
+  const dryJuly = [...MKUZE_RAIN_MM]; dryJuly[6] = 0;
+  assert.ok(siteClimateFromLocationData(payload(dryJuly), -27.73), 'zero rain in a month is valid');
+});
+
+test('CBR-05: the heat gate takes no evidence from a missing-value marker or a missing month', () => {
+  const lettuce = cropByKey('lettuce')!;
+  const complete = climateGateFrom({ siteMonthlyTempC: MKUZE_TEMP_C }, false);
+  assert.ok(complete?.tempC, 'the complete reading still gives a gate');
+  // Before the fix both of these gave a gate, and January lettuce was judged "ok" on a month nobody measured.
+  const marked = [...MKUZE_TEMP_C]; marked[0] = -999;
+  assert.equal(climateGateFrom({ siteMonthlyTempC: marked }, false), null, 'NASA POWER missing marker');
+  assert.equal(climateGateFrom({ siteMonthlyTempC: sparse(MKUZE_TEMP_C, 0) }, false), null, 'sparse January');
+  for (const bad of [-900, -901, Number.NaN, Number.POSITIVE_INFINITY]) {
+    const temps = [...MKUZE_TEMP_C]; temps[5] = bad;
+    assert.equal(climateGateFrom({ siteMonthlyTempC: temps }, false), null, `June = ${bad}`);
+  }
+  // Real cold and exactly zero are readings and stay usable.
+  const cold = [...MKUZE_TEMP_C]; cold[6] = -4; cold[5] = 0;
+  const coldGate = climateGateFrom({ siteMonthlyTempC: cold }, false);
+  assert.ok(coldGate?.tempC);
+  assert.equal(judgeFieldMonths(lettuce, [6, 7], coldGate!), 'ok', 'the heat gate judges heat only');
+  // The rain-fed gate needs twelve present, non-negative rainfall months as well.
+  assert.ok(climateGateFrom({ siteMonthlyTempC: MKUZE_TEMP_C, siteMonthlyRainMm: MKUZE_RAIN_MM, siteLatitude: -27.73 }, true)?.rainFedMonths);
+  assert.equal(climateGateFrom({ siteMonthlyTempC: MKUZE_TEMP_C, siteMonthlyRainMm: sparse(MKUZE_RAIN_MM, 3), siteLatitude: -27.73 }, true), null);
+  assert.equal(climateGateFrom({ siteMonthlyTempC: sparse(MKUZE_TEMP_C, 3), siteMonthlyRainMm: MKUZE_RAIN_MM, siteLatitude: -27.73 }, true), null);
+});
+
+test('CBR-06: a month with no rain never passes the rain-fed water screen', () => {
+  // A synthetic boundary input, not a climate and not a proposed threshold: 0 °C and 0 mm
+  // in every month. Evapotranspiration is zero, and 0 >= half of 0 used to pass all twelve.
+  const frozenDry = rainFedGrowingMonths(new Array(12).fill(0), new Array(12).fill(0), -27.73);
+  assert.deepEqual(frozenDry, new Array(12).fill(false));
+  // The screen is about water only. It has no lower thermal limit, so a cold month WITH rain
+  // still passes; cold is the frost calendars' job. This pins that limit so it is not mistaken
+  // for a growing-period model.
+  const frozenWet = rainFedGrowingMonths(new Array(12).fill(20), new Array(12).fill(0), -27.73);
+  assert.deepEqual(frozenWet, new Array(12).fill(true), 'documented limit: no thermal check here');
+  // Nothing changes for a real reading: Mkuze's months are the same with and without the rule,
+  // because every one of its months has rain and evaporative demand.
+  const pet = thornthwaitePetMm(MKUZE_TEMP_C, -27.73);
+  assert.ok(pet.every((value) => value > 0));
+  assert.deepEqual(rainFedGrowingMonths(MKUZE_RAIN_MM, MKUZE_TEMP_C, -27.73), MKUZE_RAIN_MM.map((rain, i) => rain >= 0.5 * pet[i]));
+  // Warm and rainless fails, as before.
+  assert.deepEqual(rainFedGrowingMonths(new Array(12).fill(0), MKUZE_TEMP_C, -27.73), new Array(12).fill(false));
 });

@@ -1,4 +1,6 @@
 'use client';
+import { annualRainfallMm } from '@/lib/climate-temperature';
+import { savedRainfallFields } from '@/lib/saved-places';
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -53,7 +55,7 @@ export default function ReportPreparation({location,place,onSavedPlace,onChanged
       <p>{copy('Generate with the information you have, or add more evidence first. Records present do not mean the information has been checked or the design is finished.')}</p>
       {snapshot&&<p>{copy('This checklist describes your current site. The saved report remains an earlier snapshot; generate a new report to use updated evidence.')}</p>}
       {!place&&<form className={styles.save} onSubmit={e=>{e.preventDefault();try{
-        const saved:SavedPlace={id:crypto.randomUUID(),name:name.trim(),lat:location.lat,lon:location.lon,biome:location.biome.name,rainfall:location.rainfall.annual,elevation:location.elevation.elevation,savedAt:new Date().toISOString(),label:'field'};
+        const saved:SavedPlace={id:crypto.randomUUID(),name:name.trim(),lat:location.lat,lon:location.lon,biome:location.biome.name,...savedRainfallFields(location.rainfall),elevation:location.elevation.elevation,savedAt:new Date().toISOString(),label:'field'};
         savePlace(saved);onSavedPlace(saved);setError('');
       }catch{setError('The site could not be saved. Keep this page open and try again.');}}}><label>{copy('Name and save this site to attach its evidence')}<input required maxLength={120} value={name} onChange={e=>setName(e.target.value)} placeholder={copy('Your garden or site name')}/></label><button>{copy('Save site')}</button></form>}
       {error&&<p role="alert">{copy(error)}</p>}
@@ -64,6 +66,6 @@ export default function ReportPreparation({location,place,onSavedPlace,onChanged
     </details>
     {changed&&<p role="status">{copy('Site evidence updated. Choose Generate new report to include it in the advice.')}</p>}
     {sheet&&place&&<EvidenceSheet key={`${place.id}:${sheet.group.key}`} siteId={evidenceSiteId(place.id)} group={sheet.group} item={sheet.item} onClose={()=>setSheet(null)} onChanged={refresh}/>}
-    {survey&&place&&<SiteSurveySheet placeId={place.id} coords={location} annualRainfallMm={location.rainfall.annual} locationData={location} onClose={()=>setSurvey(false)} onSaved={saved=>{setSurvey(false);onSurveySaved?.(saved);refresh();}}/>}
+    {survey&&place&&<SiteSurveySheet placeId={place.id} coords={location} annualRainfallMm={annualRainfallMm(location.rainfall) ?? undefined} locationData={location} onClose={()=>setSurvey(false)} onSaved={saved=>{setSurvey(false);onSurveySaved?.(saved);refresh();}}/>}
   </section>;
 }

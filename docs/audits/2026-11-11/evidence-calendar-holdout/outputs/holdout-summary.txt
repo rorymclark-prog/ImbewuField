@@ -1,0 +1,195 @@
+Run at 2026-11-11T04:17:21.972Z. Places 56; with an app reading 56; with an ERA5 record 56.
+Judged against H-A to H-D: 56. Passed all four: 54. Failed at least one: 2.
+
+
+== Every place ==
+place                    guide region           calendar              coldest hottest rec min | ERA5 frost/yr  lowest frost yrs | on ERA5 values      close call   result
+Hoedspruit               Lowveld                Hot area, no frost       17.0    25.4     3.9 |             0     3.7         0 | Hot area, no frost  mild-frost   passed
+Malelane                 Lowveld                Light frost at most      15.9    24.5     3.2 |             0     5.1         0 | Hot area, no frost *all-year     passed
+Giyani                   Lowveld                Hot area, no frost       17.5    26.5     4.7 |             0     4.6         0 | Hot area, no frost  -            passed
+Hazyview                 Lowveld                Hot area, no frost       16.6    24.7     4.4 |             0       4         0 | Light frost at most *mild-frost   passed
+Barberton                Lowveld                Light frost at most      14.5    22.8       2 |             0     1.6         0 | Light frost at most -            passed
+Letsitele                Lowveld                Hot area, no frost       17.0    25.9     4.2 |             0       3         0 | Light frost at most *-            passed
+Mokopane                 Middleveld             Winter frost             13.6    24.4    -1.5 |             0     1.1         0 | Light frost at most *mild-frost   passed
+Bela-Bela                Middleveld             Winter frost             13.0    24.9      -4 |             0     0.3         0 | Light frost at most *-            passed
+Brits                    Middleveld             Winter frost             12.8    24.9    -2.9 |             0     0.1         0 | Winter frost        -            passed
+Zeerust                  Middleveld             Winter frost             11.9    24.6    -2.9 |           0.8    -1.2        11 | Winter frost        -            passed
+Thabazimbi               Middleveld             Winter frost             14.0    25.8    -1.7 |          0.05    -1.1         1 | Winter frost        mild-frost   passed
+eMalahleni               Highveld               Winter frost              9.7    20.7    -5.3 |           9.7    -4.2        18 | Winter frost        -            passed
+Standerton               Highveld               Winter frost              8.5    20.5    -6.7 |          11.5    -4.8        19 | Winter frost        -            passed
+Kroonstad                Highveld               Winter frost              9.1    23.0    -5.9 |         14.95    -4.8        20 | Winter frost        -            passed
+Welkom                   Highveld               Winter frost              9.1    24.0    -5.6 |            17    -4.7        20 | Winter frost        -            passed
+Klerksdorp               Highveld               Winter frost             10.0    24.3    -5.5 |         11.15    -4.1        20 | Winter frost        -            passed
+Lichtenburg              Highveld               Winter frost             10.2    23.3    -4.8 |          4.85    -3.7        19 | Winter frost        -            passed
+Harrismith               Highveld               Winter frost             10.4    21.7    -3.7 |          13.6    -5.6        20 | Winter frost        -            passed
+Vereeniging              Highveld               Winter frost              9.5    21.9    -5.7 |         10.85    -5.5        19 | Winter frost        -            passed
+Middelburg (Mpumalanga)  Highveld               Winter frost              9.7    20.7    -5.3 |          4.85    -3.4        19 | Winter frost        -            passed
+Port Shepstone           KZN & Coast            Light frost at most      17.4    23.6     9.4 |             0     7.4         0 | Light frost at most all-year     passed
+KwaDukuza                KZN & Coast            Hot area, no frost       18.1    24.7     8.3 |             0     5.3         0 | Hot area, no frost  mild-frost   passed
+Mtubatuba                KZN & Coast            Hot area, no frost       17.7    25.5     6.6 |             0     6.6         0 | Hot area, no frost  -            passed
+Jozini                   KZN & Coast            Hot area, no frost       16.8    24.7     5.4 |             0     4.8         0 | Hot area, no frost  mild-frost   passed
+Eshowe                   KZN & Coast            Light frost at most      15.1    23.9     2.9 |             0     3.7         0 | Light frost at most -            passed
+Estcourt                 KZN Midlands           Winter frost             10.3    20.8    -3.6 |          7.45    -3.8        18 | Winter frost        -            passed
+Ladysmith                KZN Midlands           Winter frost             11.5    22.7    -2.3 |             5    -2.5        15 | Winter frost        -            passed
+Greytown                 KZN Midlands           Winter frost             11.9    21.5      -1 |           0.7    -1.6         6 | Winter frost        -            passed
+Ixopo                    KZN Midlands           Winter frost             10.6    19.5    -1.4 |          1.95    -2.8        13 | Winter frost        -            passed
+Dundee                   KZN Midlands           Winter frost             10.8    21.9    -2.8 |          1.05      -2         7 | Winter frost        -            passed
+Makhanda                 E Cape & Little Karoo  Light frost at most      13.8    22.5     3.2 |           0.1    -0.6         2 | Winter frost *      -            passed
+Qonce                    E Cape & Little Karoo  Light frost at most      14.3    22.1     3.4 |             0     0.5         0 | Light frost at most -            passed
+Aliwal North             E Cape & Little Karoo  Winter frost              7.0    22.8      -6 |         38.35    -5.6        20 | Winter frost        -            passed
+Cradock                  E Cape & Little Karoo  Winter frost              8.2    22.6    -4.7 |           6.1    -3.3        20 | Winter frost        -            passed
+Butterworth              E Cape & Little Karoo  Winter frost             12.9    21.4     1.4 |             0     2.2         0 | Light frost at most *mild-frost   FAILED H-D
+Lusikisiki               E Cape & Little Karoo  Light frost at most      14.1    22.1     2.9 |             0     3.6         0 | Light frost at most -            passed
+Jeffreys Bay             E Cape & Little Karoo  Light frost at most      14.7    21.7     6.6 |             0     5.2         0 | Light frost at most -            passed
+Paarl                    W Cape & South Coast   Winter rainfall          11.5    23.6     1.4 |           0.1    -2.2         2 | Winter rainfall     -            passed
+Malmesbury               W Cape & South Coast   Winter rainfall          11.5    23.6     1.4 |           0.6    -1.7         7 | Winter rainfall     -            passed
+Swellendam               W Cape & South Coast   Winter frost             11.6    22.5    -0.2 |          0.15    -0.5         3 | Winter frost        -            passed
+Hermanus                 W Cape & South Coast   Light frost at most      13.0    21.0     4.8 |             0     3.7         0 | Light frost at most winter       passed
+Mossel Bay               W Cape & South Coast   Winter frost             12.5    22.2     1.7 |             0       4         0 | Light frost at most *mild-frost   FAILED H-D
+Knysna                   W Cape & South Coast   Light frost at most      13.2    21.0     4.1 |             0     5.6         0 | Light frost at most -            passed
+Clanwilliam              W Cape & South Coast   Winter rainfall          11.8    24.2    -0.1 |             0     0.1         0 | Winter rainfall     -            passed
+Robertson                W Cape & South Coast   Winter frost             10.9    22.6    -0.8 |          0.25    -1.2         4 | Winter frost        -            passed
+Caledon                  W Cape & South Coast   Winter frost             10.2    21.6    -0.6 |          0.05    -0.1         1 | Winter frost        winter       passed
+De Aar                   N Cape & Great Karoo   Winter frost              8.8    26.0    -4.7 |          15.3    -5.5        20 | Winter frost        -            passed
+Calvinia                 N Cape & Great Karoo   Winter rainfall           8.6    23.8    -4.1 |          4.45    -2.6        20 | Winter frost *      -            passed
+Prieska                  N Cape & Great Karoo   Winter frost             10.3    27.2      -4 |           6.7    -3.2        19 | Winter frost        -            passed
+Kakamas                  N Cape & Great Karoo   Winter frost             11.0    28.0    -2.9 |           1.7      -2        16 | Winter frost        -            passed
+Colesberg                N Cape & Great Karoo   Winter frost              7.9    24.5    -5.5 |          21.8    -6.1        20 | Winter frost        -            passed
+Victoria West            N Cape & Great Karoo   Winter frost              7.8    23.9      -5 |         18.85    -4.7        20 | Winter frost        -            passed
+Vryburg                  N Cape & Great Karoo   Winter frost             10.5    25.6    -4.8 |           6.7    -4.3        20 | Winter frost        -            passed
+Pongola                  not scored             Hot area, no frost       16.8    24.7     5.4 |             0     3.4         0 | Hot area, no frost  mild-frost   passed
+Ulundi                   not scored             Light frost at most      13.8    22.7     1.2 |             0       2         0 | Light frost at most summer       passed
+Makhado                  not scored             Light frost at most      14.8    24.0     1.2 |             0     1.7         0 | Light frost at most summer       passed
+
+== Calendars given ==
+Winter frost           32   Mokopane, Bela-Bela, Brits, Zeerust, Thabazimbi, eMalahleni, Standerton, Kroonstad, Welkom, Klerksdorp, Lichtenburg, Harrismith, Vereeniging, Middelburg (Mpumalanga), Estcourt, Ladysmith, Greytown, Ixopo, Dundee, Aliwal North, Cradock, Butterworth, Swellendam, Mossel Bay, Robertson, Caledon, De Aar, Prieska, Kakamas, Colesberg, Victoria West, Vryburg
+Light frost at most    12   Malelane, Barberton, Port Shepstone, Eshowe, Makhanda, Qonce, Lusikisiki, Jeffreys Bay, Hermanus, Knysna, Ulundi, Makhado
+Hot area, no frost      8   Hoedspruit, Giyani, Hazyview, Letsitele, KwaDukuza, Mtubatuba, Jozini, Pongola
+Winter rainfall         4   Paarl, Malmesbury, Clanwilliam, Calvinia
+
+== Per criterion ==
+H-A: applies to 8 places; failed 0
+H-B: applies to 12 places; failed 0
+H-C: applies to 22 places; failed 0
+H-D: applies to 21 places; failed 2: Butterworth, Mossel Bay
+
+== Reported, not judged: the same rule on ERA5 monthly values gives another calendar ==
+Malelane                 app (NASA POWER) Light frost at most   on ERA5 values Hot area, no frost
+Hazyview                 app (NASA POWER) Hot area, no frost    on ERA5 values Light frost at most
+Letsitele                app (NASA POWER) Hot area, no frost    on ERA5 values Light frost at most
+Mokopane                 app (NASA POWER) Winter frost          on ERA5 values Light frost at most
+Bela-Bela                app (NASA POWER) Winter frost          on ERA5 values Light frost at most
+Makhanda                 app (NASA POWER) Light frost at most   on ERA5 values Winter frost
+Butterworth              app (NASA POWER) Winter frost          on ERA5 values Light frost at most
+Mossel Bay               app (NASA POWER) Winter frost          on ERA5 values Light frost at most
+Calvinia                 app (NASA POWER) Winter rainfall       on ERA5 values Winter frost
+
+== Reported, not judged: places the rule itself marks as close to a line ==
+Hoedspruit               Hot area, no frost    close to Light frost at most   warmer neighbour -
+Malelane                 Light frost at most   close to Hot area, no frost    warmer neighbour all-year
+Hazyview                 Hot area, no frost    close to Light frost at most   warmer neighbour -
+Mokopane                 Winter frost          close to Light frost at most   warmer neighbour mild-frost
+Thabazimbi               Winter frost          close to Light frost at most   warmer neighbour mild-frost
+Port Shepstone           Light frost at most   close to Hot area, no frost    warmer neighbour all-year
+KwaDukuza                Hot area, no frost    close to Light frost at most   warmer neighbour -
+Jozini                   Hot area, no frost    close to Light frost at most   warmer neighbour -
+Butterworth              Winter frost          close to Light frost at most   warmer neighbour mild-frost
+Hermanus                 Light frost at most   close to Winter rainfall       warmer neighbour -
+Mossel Bay               Winter frost          close to Light frost at most   warmer neighbour mild-frost
+Caledon                  Winter frost          close to Winter rainfall       warmer neighbour -
+Pongola                  Hot area, no frost    close to Light frost at most   warmer neighbour -
+Ulundi                   Light frost at most   close to Winter frost          warmer neighbour -
+Makhado                  Light frost at most   close to Winter frost          warmer neighbour -
+
+== Reported, not judged: places sharing one NASA POWER grid reading ==
+eMalahleni, Middelburg (Mpumalanga)
+Jozini, Pongola
+Paarl, Malmesbury
+
+== Reported, not judged: frost on the ERA5 record at places on the Winter rainfall calendar ==
+Paarl                    ERA5 frost days/yr    0.1  lowest   -2.2  app record minimum 1.4
+Malmesbury               ERA5 frost days/yr    0.6  lowest   -1.7  app record minimum 1.4
+Clanwilliam              ERA5 frost days/yr      0  lowest    0.1  app record minimum -0.1
+Calvinia                 ERA5 frost days/yr   4.45  lowest   -2.6  app record minimum -4.1
+
+== Reported, not judged: month overlap with the regional guide (secondary, seed-industry, 2004) ==
+agree = share of the months the app offers that the guide also lists; cover = share of the guide months the app offers.
+The app's Western Cape rows are taken from this guide, so overlap there is by construction.
+guide region           place                    calendar              agree cover  no shared month
+E Cape & Little Karoo  Aliwal North             Winter frost            78%   75%          0 of 27
+E Cape & Little Karoo  Butterworth              Winter frost            78%   75%          0 of 27
+E Cape & Little Karoo  Cradock                  Winter frost            78%   75%          0 of 27
+E Cape & Little Karoo  Jeffreys Bay             Light frost at most     61%   90%          0 of 27
+E Cape & Little Karoo  Lusikisiki               Light frost at most     61%   90%          0 of 27
+E Cape & Little Karoo  Makhanda                 Light frost at most     61%   90%          0 of 27
+E Cape & Little Karoo  Qonce                    Light frost at most     61%   90%          0 of 27
+Highveld               Harrismith               Winter frost            78%   82%          0 of 27
+Highveld               Klerksdorp               Winter frost            78%   82%          0 of 27
+Highveld               Kroonstad                Winter frost            78%   82%          0 of 27
+Highveld               Lichtenburg              Winter frost            78%   82%          0 of 27
+Highveld               Middelburg (Mpumalanga)  Winter frost            78%   82%          0 of 27
+Highveld               Standerton               Winter frost            78%   82%          0 of 27
+Highveld               Vereeniging              Winter frost            78%   82%          0 of 27
+Highveld               Welkom                   Winter frost            78%   82%          0 of 27
+Highveld               eMalahleni               Winter frost            78%   82%          0 of 27
+KZN & Coast            Eshowe                   Light frost at most     42%   52%          3 of 27
+KZN & Coast            Jozini                   Hot area, no frost      72%   85%          0 of 27
+KZN & Coast            KwaDukuza                Hot area, no frost      72%   85%          0 of 27
+KZN & Coast            Mtubatuba                Hot area, no frost      72%   85%          0 of 27
+KZN & Coast            Port Shepstone           Light frost at most     42%   52%          3 of 27
+KZN Midlands           Dundee                   Winter frost            72%   76%          0 of 27
+KZN Midlands           Estcourt                 Winter frost            72%   76%          0 of 27
+KZN Midlands           Greytown                 Winter frost            72%   76%          0 of 27
+KZN Midlands           Ixopo                    Winter frost            72%   76%          0 of 27
+KZN Midlands           Ladysmith                Winter frost            72%   76%          0 of 27
+Lowveld                Barberton                Light frost at most     42%   52%          3 of 27
+Lowveld                Giyani                   Hot area, no frost      72%   85%          0 of 27
+Lowveld                Hazyview                 Hot area, no frost      72%   85%          0 of 27
+Lowveld                Hoedspruit               Hot area, no frost      72%   85%          0 of 27
+Lowveld                Letsitele                Hot area, no frost      72%   85%          0 of 27
+Lowveld                Malelane                 Light frost at most     42%   52%          3 of 27
+Middleveld             Bela-Bela                Winter frost            80%   68%          2 of 27
+Middleveld             Brits                    Winter frost            80%   68%          2 of 27
+Middleveld             Mokopane                 Winter frost            80%   68%          2 of 27
+Middleveld             Thabazimbi               Winter frost            80%   68%          2 of 27
+Middleveld             Zeerust                  Winter frost            80%   68%          2 of 27
+N Cape & Great Karoo   Calvinia                 Winter rainfall         67%   71%          0 of 27
+N Cape & Great Karoo   Colesberg                Winter frost            73%   78%          0 of 27
+N Cape & Great Karoo   De Aar                   Winter frost            73%   78%          0 of 27
+N Cape & Great Karoo   Kakamas                  Winter frost            73%   78%          0 of 27
+N Cape & Great Karoo   Prieska                  Winter frost            73%   78%          0 of 27
+N Cape & Great Karoo   Victoria West            Winter frost            73%   78%          0 of 27
+N Cape & Great Karoo   Vryburg                  Winter frost            73%   78%          0 of 27
+W Cape & South Coast   Caledon                  Winter frost            74%   66%          0 of 27
+W Cape & South Coast   Clanwilliam              Winter rainfall         98%   87%          0 of 27
+W Cape & South Coast   Hermanus                 Light frost at most     65%   90%          1 of 27
+W Cape & South Coast   Knysna                   Light frost at most     65%   90%          1 of 27
+W Cape & South Coast   Malmesbury               Winter rainfall         98%   87%          0 of 27
+W Cape & South Coast   Mossel Bay               Winter frost            74%   66%          0 of 27
+W Cape & South Coast   Paarl                    Winter rainfall         98%   87%          0 of 27
+W Cape & South Coast   Robertson                Winter frost            74%   66%          0 of 27
+W Cape & South Coast   Swellendam               Winter frost            74%   66%          0 of 27
+
+E Cape & Little Karoo  agree  66%  cover  84%  no shared month 0 of 189
+Highveld               agree  78%  cover  82%  no shared month 0 of 243
+KZN & Coast            agree  59%  cover  72%  no shared month 6 of 135
+KZN Midlands           agree  72%  cover  76%  no shared month 0 of 135
+Lowveld                agree  61%  cover  74%  no shared month 6 of 162
+Middleveld             agree  80%  cover  68%  no shared month 10 of 135
+N Cape & Great Karoo   agree  72%  cover  77%  no shared month 0 of 189
+W Cape & South Coast   agree  78%  cover  78%  no shared month 2 of 243
+All scored places      agree  71%  cover  77%  no shared month 24 of 1431
+Without the W Cape     agree  69%  cover  77%  no shared month 22 of 1188
+
+== Reported, not judged: every crop-and-place pair sharing no sowing month with the guide ==
+guide region           crop                  calendar             app sows                    guide sows                  places
+KZN & Coast            Butternut             Light frost at most  Oct Nov Dec                 Feb Mar Apr May Jun Jul Aug Port Shepstone, Eshowe
+KZN & Coast            Pumpkin               Light frost at most  Sep Oct Nov                 Feb Mar Apr May Jun Jul Aug Port Shepstone, Eshowe
+KZN & Coast            Tomatoes              Light frost at most  Aug Sep Oct Nov Dec         Jan Feb Mar Apr May Jun Jul Port Shepstone, Eshowe
+Lowveld                Butternut             Light frost at most  Oct Nov Dec                 Feb Mar Apr May Jun Jul Aug Malelane, Barberton
+Lowveld                Pumpkin               Light frost at most  Sep Oct Nov                 Feb Mar Apr May Jun Jul Aug Malelane, Barberton
+Lowveld                Tomatoes              Light frost at most  Aug Sep Oct Nov Dec         Jan Feb Mar Apr May Jun Jul Malelane, Barberton
+Middleveld             Peas                  Winter frost         Jul Aug Sep                 Apr May Jun                 Mokopane, Bela-Bela, Brits, Zeerust, Thabazimbi
+Middleveld             Watermelon            Winter frost         Oct Nov Dec                 Aug Sep                     Mokopane, Bela-Bela, Brits, Zeerust, Thabazimbi
+W Cape & South Coast   Onions                Light frost at most  Feb Mar                     Apr May                     Hermanus, Knysna
+24 pairs in all; 22 outside the W Cape.

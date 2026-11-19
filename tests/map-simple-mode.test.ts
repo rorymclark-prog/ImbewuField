@@ -1,3 +1,5 @@
+// Keep the actual place-search handler cases in this existing full-CI entry point.
+import './map-place-search.cases.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';

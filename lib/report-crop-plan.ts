@@ -1,3 +1,4 @@
+import { buildProvisionalCycleEvidence, type ProvisionalCycleEvidenceView } from './international/provisional-crop-export';
 import { readGrowerCycleIntent, type GrowerCyclePublicIntent } from './international/grower-cycle-intent';
 import type { DesignCanvasState } from './design-canvas';
 import { bedsFromDesignCanvas, canvasMetreExtent } from './design-beds-bridge';
@@ -104,7 +105,7 @@ export function reportCropSignature(s: Pick<ReportCropSnapshot, 'beds' | 'planti
       ['existing', 'inNursery', 'confirmedOnceSowing', 'finishedOnceSowing', 'awaitingSowingConfirmation'].map(key => [key, (p as unknown as Record<string, unknown>)[key] !== undefined, (p as unknown as Record<string, unknown>)[key]])]
     : ['legacy']]), s.outlines]);
 }
-export interface ReportCropRow { key: string; name: string; cropKey?: string; where: string; sow: string; status: string; variety: string; intent?: GrowerCyclePublicIntent }
+export interface ReportCropRow { key: string; name: string; cropKey?: string; where: string; sow: string; status: string; variety: string; intent?: GrowerCyclePublicIntent; provisionalEvidence?: ProvisionalCycleEvidenceView }
 export function reportCropRows(crop: FactCropPlan): ReportCropRow[] {
   const s = crop.snapshot;
   if (s) {
@@ -121,7 +122,9 @@ export function reportCropRows(crop: FactCropPlan): ReportCropRow[] {
           === growerPlanningScopeKey({ kind: 'mapped-site', siteId: site }) ? archived : null;
         const snapshot = attachment?.assessmentSnapshot;
         const assessment = snapshot && assessGrowerPlanning({ profile: snapshot.profile, scope: snapshot.scope,
-          measuredAreaM2: snapshot.measuredAreaM2, fieldEntryDate: snapshot.fieldEntryDate });
+          measuredAreaM2: snapshot.measuredAreaM2, fieldEntryDate: snapshot.fieldEntryDate,
+          ...(snapshot.countAreaBinding ? { countAreaBinding: snapshot.countAreaBinding } : {}),
+          ...(snapshot.provisionalReview ? { provisionalContext: snapshot.provisionalReview.context } : {}) });
         const sow = assessment?.status === 'ready'
           ? `${assessment.schedule.nurseryStartDate ? `Planned nursery start ${assessment.schedule.nurseryStartDate}; ` : ''}planned field entry ${assessment.schedule.fieldEntryDate}; estimated first harvest ${assessment.schedule.firstHarvestDate}`
           : `Recorded compatibility month: ${p.once ?? MONTHS_SHORT[p.sowMonth - 1]}; own dates unavailable`;
@@ -131,7 +134,9 @@ export function reportCropRows(crop: FactCropPlan): ReportCropRow[] {
         const key = JSON.stringify([p.id, sow, status, preserveGrowerCycleMarker(p)]);
         grouped.set(key, { key, cropKey: p.cropKey, name: cropByKey(p.cropKey)?.name ?? p.cropKey,
           where: s.beds.find(b => b.id === p.bedId)?.label ?? 'Not recorded', sow, status, variety: p.variety || 'Not recorded',
-          intent: readGrowerCycleIntent(attachment ? growerCycleOriginView(attachment) : { status: 'held' }) });
+          intent: readGrowerCycleIntent(attachment ? growerCycleOriginView(attachment) : { status: 'held' }),
+          ...(assessment?.status === 'ready' && snapshot?.provisionalReview
+            ? { provisionalEvidence: buildProvisionalCycleEvidence(snapshot) ?? undefined } : {}) });
         continue;
       }
       const status = p.inNursery ? 'In nursery' : p.existing ? 'Recorded as growing' : p.once ? 'First season only' : 'Planned annual sowing';

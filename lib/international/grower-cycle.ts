@@ -1,3 +1,4 @@
+import { normaliseProvisionalCycleContext, type ProvisionalCycleContext } from './provisional-profile';
 import type { PlanBed, Planting } from '../crop-plan';
 import { normaliseGrowerAutoPlanDemand, growerDemandWindowContainsAssessment,
   type GrowerAutoPlanCycle, type GrowerAutoPlanDemand, type GrowerReadyAssessment } from './grower-autoplan';
@@ -62,6 +63,7 @@ export interface GrowerCycleContext {
   /** All beds in this current saved source, so duplicate identities cannot pick a winner. */
   readonly beds: readonly PlanBed[];
   readonly geometryFingerprint: string | null;
+  readonly provisionalContext?: ProvisionalCycleContext | null;
 }
 export type PlantingBasisResolution =
   | { readonly kind: 'legacy' }
@@ -84,10 +86,20 @@ function freeze<T>(value: T): T {
   }
   return value;
 }
-function reassess(snapshot: unknown): GrowerReadyAssessment | null {
+function reassess(value: unknown): GrowerReadyAssessment | null {
+  if (!record(value)) return null;
+  const extended = ['provisionalReview', 'countAreaBinding'].some(key => key in value);
+  if (extended && ['provisionalReview', 'countAreaBinding'].some(key => key in value && !Object.hasOwn(value, key))) return null;
+  const snapshot = extended ? detachJsonData(value) : value;
   if (!record(snapshot)) return null;
   const result = assessGrowerPlanning({ profile: snapshot.profile, scope: snapshot.scope,
-    measuredAreaM2: snapshot.measuredAreaM2, fieldEntryDate: snapshot.fieldEntryDate });
+    measuredAreaM2: snapshot.measuredAreaM2, fieldEntryDate: snapshot.fieldEntryDate,
+    ...(Object.hasOwn(snapshot, 'countAreaBinding') ? { countAreaBinding: snapshot.countAreaBinding as GrowerPlanningSnapshot['countAreaBinding'] } : {}),
+    ...(Object.hasOwn(snapshot, 'provisionalReview') ? { provisionalContext: record(snapshot.provisionalReview) ? snapshot.provisionalReview.context : null } : {}) });
+  // A marked snapshot must reproduce every review field, including version and
+  // resolver evidence. A present malformed extension never degrades to legacy.
+  if (('provisionalReview' in snapshot || 'countAreaBinding' in snapshot) && result.snapshot
+    && !sameJsonData(snapshot, result.snapshot)) return null;
   return result.status === 'ready' ? result : null;
 }
 
@@ -190,6 +202,11 @@ export function normaliseGrowerCycleAttachment(value: unknown): GrowerCycleAttac
     }
     const assessment = reassess(value.assessmentSnapshot);
     if (!assessment || assessment.fingerprint !== value.assessmentFingerprint) return null;
+    if (assessment.snapshot.countAreaBinding && assessment.snapshot.countAreaBinding.bedId !== value.bedId) return null;
+    const adoption = assessment.snapshot.provisionalReview;
+    if (adoption && (assessment.snapshot.countAreaBinding?.bedId !== value.bedId
+      || adoption.context.source.geometryFingerprint !== value.geometryFingerprint
+      || value.acceptedAt < adoption.context.reviewedAt || value.acceptedAt.slice(0, 10) !== adoption.context.asOf)) return null;
     if (origin?.kind === 'grower-entered' && origin.demandSnapshot) {
       const demand = origin.demandSnapshot;
       if (demand.profileId !== assessment.snapshot.profile.profileId
@@ -300,6 +317,17 @@ export function resolvePlantingBasis(value: unknown, context?: GrowerCycleContex
       || !Array.isArray(context.beds)) return held('current-geometry-context-required');
     if (growerPlanningScopeKey(context.scope) !== growerPlanningScopeKey(assessment.snapshot.scope)) return held('scope-mismatch');
     if (context.geometryFingerprint !== attachment.geometryFingerprint) return held('geometry-mismatch');
+    const adoption = assessment.snapshot.provisionalReview;
+    if (adoption) {
+      const current = normaliseProvisionalCycleContext(context.provisionalContext);
+      if (!current) return held('current-provisional-context-required');
+      if (current.knownPlantingRestriction === true || current.countryCode !== adoption.context.countryCode
+        || current.agriculturalRegionReference !== adoption.context.agriculturalRegionReference
+        || current.policyFingerprint !== adoption.context.policyFingerprint
+        || current.knownPlantingRestriction !== adoption.context.knownPlantingRestriction
+        || current.sourceFreshness !== adoption.context.sourceFreshness
+        || !sameJsonData(current.source, adoption.context.source)) return held('current-provisional-context-mismatch');
+    }
     const matches = context.beds.filter(bed => bed && bed.id === attachment.bedId);
     if (matches.length !== 1) return held('missing-or-ambiguous-bed');
     if (!Number.isFinite(matches[0].areaM2) || matches[0].areaM2 < 0

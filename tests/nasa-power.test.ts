@@ -38,6 +38,33 @@ function response(body: unknown, ok = true, status = 200): Response {
   } as Response;
 }
 
+test('the normal location fetch retains source-month provenance without extra requests or changing missing-month displays', async () => {
+  const payload = { ...nasaPayload({ T2M: { ...monthValues(18), APR: -999, FEB: 0 } }), type: 'Feature',
+    geometry: { type: 'Point', coordinates: [36.8123, -1.3457] },
+    parameters: { T2M: { units: 'C' } },
+    header: { range: 'Monthly Climatologies (January 2001 - December 2020)', fill_value: -999,
+      api: { version: 'test-version' }, sources: ['MERRA2'], time_standard: 'UTC' } };
+  let requests = 0;
+  await withFetch((async (input) => {
+    requests++; const url = new URL(String(input));
+    if (url.hostname !== 'power.larc.nasa.gov') return response({}, false, 503);
+    assert.equal(url.searchParams.get('latitude'), '-1.3457');
+    assert.equal(url.searchParams.get('longitude'), '36.8123');
+    return response(payload);
+  }) as typeof fetch, async () => {
+    const { climate } = await fetchNasaPower(-1.345678, 36.812345);
+    assert.equal(climate.monthlyTemp[3], 20, 'legacy display behavior is preserved, not source evidence');
+    assert.equal(climate.monthlyTempCoverage?.status, 'incomplete');
+    const receipt = climate.monthlyTempReference!; assert.ok(receipt);
+    assert.equal(receipt.monthlyC[3], null); assert.equal(receipt.monthlyC[1], 0);
+    assert.deepEqual(receipt.requestedPoint, { latitude: -1.3457, longitude: 36.8123 });
+    assert.equal(receipt.period.start, '2001-01'); assert.equal(receipt.period.end, '2020-12');
+    assert.equal(receipt.apiVersion, 'test-version');
+    assert.ok(Number.isFinite(Date.parse(receipt.receivedAt)));
+  });
+  assert.equal(requests, 2, 'only the existing NASA and Open-Meteo requests occur');
+});
+
 function dailySeries(
   startYear: number,
   endYear: number,
@@ -407,4 +434,44 @@ test('complete monthly means do not stamp absent monthly minimum readings as fro
   assert.deepEqual(absent.climate.monthlyTempCoverage, { source: 'nasa-power', status: 'complete' });
   assert.equal(absent.climate.minTempSource, undefined);
   assert.equal(absent.climate.minTemp, 5, 'the existing numeric minimum fallback stays unchanged');
+});
+
+// Missing wind becomes a compatibility zero; only a cleaned provider reading earns provenance.
+// Temperature coverage is deliberately independent: a partial wind estimate can still be useful.
+test('wind provenance distinguishes absent defaults from partial readings and measured calm', async () => {
+  for (const [wind, expected, tagged] of [
+    [{ JAN: 4, FEB: -999 }, 4, true],
+    [{ JAN: 0 }, 0, true],
+    [{ JAN: -999, FEB: -1 }, 0, false],
+    [{}, 0, false],
+  ] as const) {
+    await withFetch(async (input) => String(input).includes('power.larc.nasa.gov')
+      ? response(nasaPayload({ WS2M: wind, T2M: {} }))
+      : response({}, false, 503), async () => {
+      const { climate, rainfall } = await fetchNasaPower(-26.2, 28.05);
+      assert.equal(climate.windSpeed, expected);
+      assert.equal(climate.windSource, tagged ? 'nasa-power' : undefined);
+      assert.equal(climate.monthlyTempCoverage?.status, 'incomplete');
+      assert.equal(rainfall.rainfallSource, 'nasa-power');
+      assert.ok(rainfall.annual > 0);
+    });
+  }
+});
+
+
+test('independent wind directions and complete maximum/solar fields keep their actual producer provenance', async () => {
+  await withFetch(async () => response(nasaPayload({ WS2M: {}, WD10M: { JAN: 22.5 }, T2M_MAX: {}, ALLSKY_SFC_SW_DWN: {} })), async () => {
+    const result = await fetchNasaPower(-29, 31);
+    assert.equal(result.climate.windFromSummer, 'NNE');
+    assert.equal(result.climate.windFromWinter, '—');
+    assert.equal(result.climate.windDirectionSource, 'nasa-power');
+    assert.equal(result.climate.windSource, undefined);
+    assert.equal(result.climate.maxTempSource, undefined);
+    assert.equal(result.climate.solarSource, undefined);
+  });
+  await withFetch(async () => response(nasaPayload()), async () => {
+    const result = await fetchNasaPower(-29, 31);
+    assert.equal(result.climate.maxTempSource, 'nasa-power');
+    assert.equal(result.climate.solarSource, 'nasa-power');
+  });
 });

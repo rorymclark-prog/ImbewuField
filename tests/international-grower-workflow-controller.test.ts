@@ -9,6 +9,7 @@ import ts from 'typescript';
 import type { CropPlanState, HarvestTarget } from '../lib/crop-plan.ts';
 import type { GrowerPlanningProfile } from '../lib/international/grower-planning.ts';
 import type { GrowerWorkflowDraft, GrowerWorkflowReview } from '../lib/international/grower-workflow.ts';
+import { createSavedProvisionalProfile, type ProvisionalSiteConditions } from '../lib/international/provisional-profile.ts';
 
 class MemoryStorage {
   rows = new Map<string, string>(); failWrites = false; writes = 0;
@@ -49,9 +50,9 @@ const hooks = registerHooks({
     return next(specifier, context);
   },
   load(url, context, next) {
-    if (url.endsWith('/components/crops/useGrowerWorkflow.ts')) return { shortCircuit: true, format: 'module',
+    if ((url.endsWith('/components/crops/useGrowerWorkflow.ts') || url.endsWith('/components/crops/ProvisionalCropPreview.tsx'))) return { shortCircuit: true, format: 'module',
       source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
-        target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext,
+        target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
       } }).outputText };
     return next(url, context);
   },
@@ -64,6 +65,7 @@ const { isSampleMode } = await import('../lib/sample-mode.ts');
 const { CROPS } = await import('../lib/crop-catalog.ts');
 const { growerPlanningScopeKey, normaliseGrowerPlanningProfiles } = await import('../lib/international/grower-planning.ts');
 const { createWorkspacePlanningReference, replaceWorkspacePlanningReference, sanitiseWorkspacePlanningReferences } = await import('../lib/international/workspace-context.ts');
+const { default: Preview } = await import('../components/crops/ProvisionalCropPreview.tsx');
 const { useGrowerWorkflow } = await import('../components/crops/useGrowerWorkflow.ts');
 
 after(() => {
@@ -183,14 +185,18 @@ function cloudRow() {
     lines: [], sectors: [], bgSite: { lat: 0, lon: 0, name: 'Synthetic cloud fixture' } } };
 }
 function deferred<T>() { let resolve!: (value: T) => void; const promise = new Promise<T>(done => { resolve = done; }); return { promise, resolve }; }
-function mount(controller = parent()) {
+function mount(controller = parent(), withPreview = false) {
   boundary.raw = canvas();
   let renderer!: ReactTestRenderer, latest!: ReturnType<typeof useGrowerWorkflow>;
   const input: Parameters<typeof useGrowerWorkflow>[0] = { selection: { kind: 'studio-canvas', sourceId: siteId }, scope,
     resourceSiteId: siteId, book: controller.state.plan, actorIsCurrent: controller.growerActorIsCurrent, readCurrentBook: controller.readCurrentGrowerBook };
-  function Harness() { latest = useGrowerWorkflow(input); return null; }
+  function Harness() { latest = useGrowerWorkflow(input); return withPreview ? React.createElement(Preview, {
+    ownerKey: 'owner-a', scope: input.scope, source: latest.source, countryCode: 'KE', agriculturalRegionReference: null,
+    contextRevision: latest.contextRevision, actorIsCurrent: input.actorIsCurrent, checking: latest.checking,
+    onRefresh: latest.onRefresh, onCheckSource: latest.onCheckPreviewSource,
+  }) : null; }
   act(() => { renderer = create(React.createElement(Harness)); });
-  return { controller, input, get latest() { return latest; },
+  return { controller, input, get renderer() { return renderer; }, get latest() { return latest; },
     sourceNow: () => latest.source,
     update(changes: Partial<typeof input> = {}) { Object.assign(input, changes); act(() => renderer.update(React.createElement(Harness))); },
     async refresh() { await act(async () => { await latest.onRefresh(); }); },
@@ -206,6 +212,74 @@ async function readyReview(ui: ReturnType<typeof mount>) {
   assert.equal(result.proposal.status, 'ready'); assert.ok(result.proposal.cycles.length > 0); return result;
 }
 
+async function markedController() {
+  const ui = mount(); await ui.refresh(); const source = ui.latest.source; assert.ok(source);
+  const saved = createSavedProvisionalProfile({ profileId: 'provisional-preview', cropKey: profile().cropKey,
+    context: { scope, countryCode: 'DE', agriculturalRegionReference: null, establishment: 'direct', waterRegime: 'irrigated' },
+    recordedAt, asOf: recordedAt.slice(0, 10), candidates: [], overrides: profile().inputs,
+    measuredAreaM2: { ...own(8, 'm2'), arithmeticBasis: source.measuredAreas[0].arithmeticBasis },
+    fieldEntryDate: own('2028-12-01', 'utc-date') }, 'marked-profile', '2026-11-04T12:01:00.000Z', source, source.beds[0].id, source.beds[0].label);
+  assert.ok(saved); const initial = cropBook.loadCropPlanWithWriteAdmission();
+  const next = { ...initial.book, growerPlanningProfiles: [...initial.book.growerPlanningProfiles!, saved] };
+  const permit = cropBook.createGrowerProfileChangePermit(initial.admission, initial.book, next,
+    { kind: 'edit', profileId: saved.profileId, expectedProfile: null }); assert.ok(permit);
+  act(() => { assert.equal(cropBook.saveCropPlanWithReceipt(next, { growerProfileChange: permit }).saved, true); });
+  const loaded = cropBook.loadCropPlanWithWriteAdmission(), c = ui.controller;
+  c.state.plan = loaded.book; c.state.planWriteBase.current = { ...c.state.planWriteBase.current,
+    token: loaded.token, planKey: JSON.stringify(loaded.book), admission: loaded.admission };
+  const conditions: ProvisionalSiteConditions = { countryCode: 'DE', agriculturalRegionReference: null,
+    policyFingerprint: 'Synthetic current country/policy conditions', knownPlantingRestriction: null };
+  let currentConditions = conditions;
+  ui.update({ book: loaded.book, provisionalSiteConditions: conditions, readCurrentProvisionalSiteConditions: () => currentConditions });
+  await ui.refresh();
+  const request = { ...draft(), targetProfiles: [{ targetId: 'own-target', profileId: saved.profileId }] };
+  const review = async () => {
+    let result!: GrowerWorkflowReview; await act(async () => { result = await ui.latest.onReview(request); });
+    assert.equal(result.status, 'review', result.issues.join(',')); if (result.status !== 'review') throw Error('Marked fixture held');
+    assert.equal(result.proposal.status, 'ready', result.issues.join(',')); return result;
+  };
+  return { ui, saved, conditions, review, setCurrentConditions(value: ProvisionalSiteConditions) { currentConditions = value; } };
+}
+
+test('the mounted controller supplies new review conditions without rewriting original source history or acquiring implicit save permission', async () => {
+  const f = await markedController(); try {
+    const writes = local.writes, before = JSON.stringify([...local.rows]), result = await f.review();
+    assert.equal(result.request.provisionalContext?.asOf, new Date().toISOString().slice(0, 10));
+    assert.equal(await f.ui.current(result), true);
+    assert.deepEqual(result.proposal.cycles[0].assessment.snapshot.profile, f.saved);
+    assert.equal(result.proposal.cycles[0].assessment.snapshot.provisionalReview?.context.countryCode, 'DE');
+    f.ui.update({ commitAcceptance: () => { assert.fail('No declaration was supplied'); }, createPlantingId: () => 'never-written' });
+    let accepted!: Awaited<ReturnType<typeof f.ui.latest.onAccept>>;
+    await act(async () => { accepted = await f.ui.latest.onAccept(result); });
+    assert.equal(accepted.status, 'held'); assert.equal(local.writes, writes); assert.equal(JSON.stringify([...local.rows]), before);
+  } finally { f.ui.dispose(); }
+});
+
+test('an observed current-country mismatch retires an old review permanently even if the country returns before a render', async () => {
+  const f = await markedController(); try {
+    const result = await f.review(), writes = local.writes;
+    f.setCurrentConditions({ ...f.conditions, countryCode: 'GB' });
+    assert.equal(await f.ui.current(result), false);
+    f.setCurrentConditions(f.conditions);
+    assert.equal(await f.ui.current(result), false, 'A -> B -> A must not revive the original private generation.');
+    await f.ui.refresh(); const next = await f.review(); assert.equal(await f.ui.current(next), true);
+    assert.equal(local.writes, writes);
+  } finally { f.ui.dispose(); }
+});
+
+test('a current-review UTC day expires at midnight and a fresh next-day review preserves the historical profile', async t => {
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-11-13T23:59:59.900Z') });
+  const f = await markedController(); try {
+    const result = await f.review(), writes = local.writes;
+    assert.equal(result.request.provisionalContext?.asOf, '2026-11-13');
+    t.mock.timers.tick(1000);
+    assert.equal(await f.ui.current(result), false);
+    const next = await f.review(); assert.equal(next.request.provisionalContext?.asOf, '2026-11-14');
+    assert.equal(await f.ui.current(next), true); assert.notEqual(next.proposal.fingerprint, result.proposal.fingerprint);
+    assert.deepEqual(next.proposal.cycles[0].assessment.snapshot.profile, f.saved); assert.equal(local.writes, writes);
+  } finally { f.ui.dispose(); }
+});
+
 test('real hook reads current saved geometry and book, reviews actual engine output and rechecks the same snapshot without writing', async () => {
   const ui = mount(); try {
     const bytes = JSON.stringify([...local.rows]), writes = local.writes;
@@ -213,6 +287,32 @@ test('real hook reads current saved geometry and book, reviews actual engine out
     assert.equal(JSON.stringify([...local.rows]), bytes); assert.equal(local.writes, writes);
     assert.ok(boundary.sourceReads >= 6, 'each delivery re-reads the source around actual hashing');
     assert.equal(await ui.current({ ...review }), false, 'a copied result has no controller review binding');
+  } finally { ui.dispose(); }
+});
+
+test('preview source check rereads saved bytes, revokes equal-area revisions and never writes a crop book', async () => {
+  const ui = mount(); try {
+    await ui.refresh(); const expected = ui.latest.source!;
+    const bytes = JSON.stringify([...local.rows]), writes = local.writes, reads = boundary.sourceReads;
+    let receipt: Awaited<ReturnType<typeof ui.latest.onCheckPreviewSource>> = null;
+    await act(async () => { receipt = await ui.latest.onCheckPreviewSource(expected); });
+    assert.ok(receipt); assert.equal((receipt as { isCurrent: () => boolean }).isCurrent(), true);
+    assert.ok(boundary.sourceReads > reads);
+    (boundary.raw as ReturnType<typeof canvas>).rev++;
+    assert.equal((receipt as { isCurrent: () => boolean }).isCurrent(), false);
+    await act(async () => { receipt = await ui.latest.onCheckPreviewSource(expected); });
+    assert.equal(receipt, null); assert.equal(ui.latest.source, null);
+    assert.equal(JSON.stringify([...local.rows]), bytes); assert.equal(local.writes, writes);
+  } finally { ui.dispose(); }
+});
+
+test('preview source receipt cannot be reused after actor revocation or with a copied source', async () => {
+  const ui = mount(); try {
+    await ui.refresh(); const expected = ui.latest.source!;
+    assert.equal(await ui.latest.onCheckPreviewSource({ ...expected }), null);
+    const receipt = await ui.latest.onCheckPreviewSource(expected); assert.ok(receipt);
+    boundary.actorUid = 'owner-b'; assert.equal(receipt.isCurrent(), false);
+    assert.equal(await ui.latest.onCheckPreviewSource(expected), null);
   } finally { ui.dispose(); }
 });
 
@@ -527,5 +627,23 @@ test('a genuinely reloaded saved crop occupation invalidates the old automatic p
     const held = await ui.review(); assert.equal(held.status, 'held');
     assert.ok(held.issues.includes('availability-bed-blocked'));
     assert.equal(cropBook.loadCropPlan().plantings[0].id, 'newly-saved-occupation');
+  } finally { ui.dispose(); }
+});
+
+test('actual preview and workflow hook share the source identity and reject changed geometry without writing', async () => {
+  const ui = mount(parent(), true);
+  try {
+    await ui.refresh(); const bytes = JSON.stringify([...local.rows]), writes = local.writes;
+    const change = (label: string, value: string) => { const element = ui.renderer.root.findAllByType('label').find(n => n.children.includes(label));
+      assert.ok(element); const input = element.findAll(n => n.type === 'input' || n.type === 'select')[0]; act(() => input.props.onChange({ target: { value } })); };
+    const button = () => ui.renderer.root.findAllByType('button').find(n => n.children.includes('Calculate provisional preview'))!;
+    change('Preview crop', CROPS[0].key); change('Preview measured bed', 'bed-a'); change('Plant density (plants per m²)', '2');
+    await act(async () => { await button().props.onClick(); });
+    assert.match(JSON.stringify(ui.renderer.toJSON()), /Estimated plants:/); assert.match(JSON.stringify(ui.renderer.toJSON()), /16/);
+    assert.equal(local.writes, writes); assert.equal(JSON.stringify([...local.rows]), bytes);
+    (boundary.raw as ReturnType<typeof canvas>).rev++; ui.update();
+    assert.doesNotMatch(JSON.stringify(ui.renderer.toJSON()), /Estimated plants:/);
+    await act(async () => { await button().props.onClick(); }); assert.equal(ui.latest.source, null);
+    assert.equal(local.writes, writes); assert.equal(JSON.stringify([...local.rows]), bytes);
   } finally { ui.dispose(); }
 });

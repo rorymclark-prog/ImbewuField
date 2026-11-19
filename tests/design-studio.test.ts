@@ -194,7 +194,9 @@ test('plan water harvest derives from the shared runoff authority', () => {
 
   const plan = generateGeometryDesignPlan(
     state,
-    location({ rainfall: { annual: rainfallMm, pattern: 'summer' } }),
+    // The runoff calculation requires sourced rain; an untagged display fallback
+    // cannot establish a harvest even when its number looks plausible.
+    location({ rainfall: { annual: rainfallMm, pattern: 'summer', rainfallSource: 'nasa-power' } }),
   );
   const expected = Math.round(roofHarvestLitres(
     roofAreaM2,
@@ -208,6 +210,16 @@ test('plan water harvest derives from the shared runoff authority', () => {
     new RegExp(`× ${Math.round(WATER_SHEET_ROOF_RUNOFF_COEFFICIENT * 100)}%`),
     'the explanation drifted from the coefficient used in the calculation',
   );
+  const unknown = generateGeometryDesignPlan(state, location({ rainfall: { annual: rainfallMm, pattern: 'summer' } }));
+  assert.equal(unknown.waterCalc?.roofHarvestAnnualLitres, null);
+  assert.match(allPlanText(unknown), /Roof-water supply is not known/);
+  assert.match(allPlanText(unknown), /No storage capacity is recorded/);
+  assert.doesNotMatch(allPlanText(unknown), /weekend project that pays back|JoJo tank makes a big difference|No on-site storage yet|connect gutters to a tank|tanks sized to that volume minimum/);
+  const zero = generateGeometryDesignPlan(state, location({ rainfall: { annual: 0, pattern: 'summer', rainfallSource: 'nasa-power' } }));
+  assert.equal(zero.waterCalc?.roofHarvestAnnualLitres, 0);
+  assert.equal(zero.waterCalc?.rainfallMmUsed, 0);
+  assert.match(allPlanText(zero), /recorded annual rainfall gives no roof-water supply/);
+  assert.doesNotMatch(allPlanText(zero), /connect gutters to a tank|tanks sized to that volume minimum|weekend project that pays back/);
 });
 
 test('generated sections reference approved geometry only and preserve the saved design', () => {

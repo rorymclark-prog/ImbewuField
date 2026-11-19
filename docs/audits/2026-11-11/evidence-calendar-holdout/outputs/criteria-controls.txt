@@ -1,0 +1,33 @@
+== Part 1. Answers that ignore the place, scored on the four criteria ==
+answer given to every place          56 held-out: pass    44 development: pass
+always Winter rainfall                        56 of 56                44 of 44
+always Winter frost                           35 of 56                27 of 44
+always Light frost at most                    31 of 56                22 of 44
+always Hot area, no frost                     25 of 56                18 of 44
+the app (for comparison)                      54 of 56                44 of 44
+
+"Always Winter rainfall" passes everything: H-A and H-B only constrain the hot-area and light-frost
+answers, H-C allows the winter calendar at any frost count, and H-D forbids the hard-frost calendar only.
+So 54 of 56 is compliance with four one-sided frost constraints. It is not a share of places given the
+right calendar, and it says nothing about sowing months, crops or yields.
+
+== Part 2. POST HOC, not pre-registered: does the calendar agree with the rain timing of the independent record? ==
+The winter-rainfall calendar is meant for places whose rain falls mainly in winter. The app decides that from
+NASA POWER rain: summer half-year (October to March) share of annual rain at or below 0.35. Here the same share
+is taken from the independent record's own rain, and compared.
+
+place                    calendar               summer share, app  summer share, independent   agreement
+Paarl                    Winter rainfall                     0.21                       0.22   same side of 0.35
+Malmesbury               Winter rainfall                     0.21                       0.21   same side of 0.35
+Hermanus                 Light frost at most                 0.39                       0.35   same side of 0.35
+Clanwilliam              Winter rainfall                     0.17                       0.24   same side of 0.35
+Caledon                  Winter frost                        0.38                       0.39   same side of 0.35
+Calvinia                 Winter rainfall                     0.29                       0.39   DIFFERENT side of 0.35
+
+(only places on the winter calendar, or with an independent share of 0.40 or less, or that disagree, are listed)
+the app's winter / not-winter answer is on the same side as the independent record at 55 of 56 places
+an 'always Winter rainfall' answer would be on the wrong side at 53 of 56 places
+
+This check would reject the always-winter answer. It was chosen after the results were known, on places already
+seen, and it uses the app's own 0.35 line, so it is a description of this run and a candidate for the NEXT
+pre-registered validation. It is not evidence that the winter calendar's months are right for these places.

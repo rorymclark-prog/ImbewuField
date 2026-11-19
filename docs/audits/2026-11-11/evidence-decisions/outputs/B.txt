@@ -1,0 +1,341 @@
+== B1 fresh, /calendar directly
+  country panel present -> choosing ZA
+B1 CONSOLE.error Failed to load resource: net::ERR_FAILED
+B1 setup: opened crop plan once with /api/location-data aborted (country panel -> ZA); chip: Light frost at most · summer rain · nearest reference: Durban / KZN coast & hinterland (fallback)
+{
+ "tag": "B1 initial",
+ "contextOptions": [
+  "Choose a saved site or a separate reference guide",
+  "Ubhejane Crèche · saved site",
+  "South African reference guide · no mapped farm"
+ ],
+ "hasSowingSelect": 0,
+ "notKnown": false,
+ "oldNames": null,
+ "gridOrTable": 0,
+ "hasPicked": false,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ }
+}
+{
+ "tag": "B1 saved site chosen",
+ "contextOptions": [
+  "Choose a saved site or a separate reference guide",
+  "Ubhejane Crèche · saved site",
+  "South African reference guide · no mapped farm"
+ ],
+ "hasSowingSelect": 1,
+ "options": [
+  "Choose a sowing calendar",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "",
+ "notKnown": true,
+ "oldNames": null,
+ "gridOrTable": 0,
+ "hasPicked": false,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ }
+}
+section text: "Choose the reference context\n\nThis guide uses South African reference material. A country choice, a language or a saved sowing date cannot establish a local planting calendar for another country.\n\nCalendar context\nChoose a saved site or a separate reference guide\nUbhejane Crèche · saved site\nSouth African reference guide · no mapped farm\n\nUsing the existing South African planning references. Country confirmation is not local agronomy approval.\n\nSowing calendar\nChoose a sowing calendar\nWinter frost (Highveld, Midlands, Karoo)\nLight frost at most (warm areas and mild coasts)\nHot area, no frost (Lowveld, Limpopo valley, KZN coast)\nWinter rainfall (Western Cape)\n\nA sowing calendar chosen here is a reference, not an observation of this site’s climate. Nothing is taken from a crop plan unless you pick it.\n\nThis farm’s calendar is not known on this device yet. Open its crop plan once, or choose a calendar here."
+
+== B2 phone-light (crop plan once, then /calendar)
+  country panel present -> choosing ZA
+{
+ "tag": "B2 site chosen phone-light",
+ "contextOptions": [
+  "Choose a saved site or a separate reference guide",
+  "Ubhejane Crèche · saved site",
+  "South African reference guide · no mapped farm"
+ ],
+ "hasSowingSelect": 1,
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Hot area, no frost (from this site's climate records)",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "",
+ "notKnown": false,
+ "oldNames": null,
+ "gridOrTable": 0,
+ "hasPicked": false,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ }
+}
+{
+ "tag": "B2 farm picked phone-light",
+ "contextOptions": [
+  "Choose a saved site or a separate reference guide",
+  "Ubhejane Crèche · saved site",
+  "South African reference guide · no mapped farm"
+ ],
+ "hasSowingSelect": 1,
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Hot area, no frost (from this site's climate records)",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "farm",
+ "notKnown": false,
+ "oldNames": null,
+ "gridOrTable": 1,
+ "hasPicked": true,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ }
+}
+text near "this farm’s crop plan": "ace-shallow. Deep irrigation weekly beats shallow rain every time for root development. Protect young maize from strong wind after rain.\n\n12-Month Planting Grid\nGood month to sow\nHot area, no frost · this farm’s crop plan\nShowing the general planting guide — p"
+
+== B3 choose Light frost at most in crop plan
+  country panel present -> choosing ZA
+{
+ "tag": "B3 site chosen",
+ "contextOptions": [
+  "Choose a saved site or a separate reference guide",
+  "Ubhejane Crèche · saved site",
+  "South African reference guide · no mapped farm"
+ ],
+ "hasSowingSelect": 1,
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Light frost at most (chosen by you)",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "",
+ "notKnown": false,
+ "oldNames": null,
+ "gridOrTable": 0,
+ "hasPicked": false,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ }
+}
+{
+ "tag": "B3 farm picked",
+ "contextOptions": [
+  "Choose a saved site or a separate reference guide",
+  "Ubhejane Crèche · saved site",
+  "South African reference guide · no mapped farm"
+ ],
+ "hasSowingSelect": 1,
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Light frost at most (chosen by you)",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "farm",
+ "notKnown": false,
+ "oldNames": null,
+ "gridOrTable": 1,
+ "hasPicked": true,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ }
+}
+
+== B2 phone-dark (crop plan once, then /calendar)
+  country panel present -> choosing ZA
+{
+ "tag": "B2 site chosen phone-dark",
+ "contextOptions": [
+  "Choose a saved site or a separate reference guide",
+  "Ubhejane Crèche · saved site",
+  "South African reference guide · no mapped farm"
+ ],
+ "hasSowingSelect": 1,
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Hot area, no frost (from this site's climate records)",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "",
+ "notKnown": false,
+ "oldNames": null,
+ "gridOrTable": 0,
+ "hasPicked": false,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ }
+}
+{
+ "tag": "B2 farm picked phone-dark",
+ "contextOptions": [
+  "Choose a saved site or a separate reference guide",
+  "Ubhejane Crèche · saved site",
+  "South African reference guide · no mapped farm"
+ ],
+ "hasSowingSelect": 1,
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Hot area, no frost (from this site's climate records)",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "farm",
+ "notKnown": false,
+ "oldNames": null,
+ "gridOrTable": 1,
+ "hasPicked": true,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ }
+}
+text near "this farm’s crop plan": "ace-shallow. Deep irrigation weekly beats shallow rain every time for root development. Protect young maize from strong wind after rain.\n\n12-Month Planting Grid\nGood month to sow\nHot area, no frost · this farm’s crop plan\nShowing the general planting guide — p"
+
+== B2 desktop (crop plan once, then /calendar)
+  country panel present -> choosing ZA
+{
+ "tag": "B2 site chosen desktop",
+ "contextOptions": [
+  "Choose a saved site or a separate reference guide",
+  "Ubhejane Crèche · saved site",
+  "South African reference guide · no mapped farm"
+ ],
+ "hasSowingSelect": 1,
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Hot area, no frost (from this site's climate records)",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "",
+ "notKnown": false,
+ "oldNames": null,
+ "gridOrTable": 0,
+ "hasPicked": false,
+ "overflow": {
+  "sw": 1280,
+  "iw": 1280,
+  "over": false
+ }
+}
+{
+ "tag": "B2 farm picked desktop",
+ "contextOptions": [
+  "Choose a saved site or a separate reference guide",
+  "Ubhejane Crèche · saved site",
+  "South African reference guide · no mapped farm"
+ ],
+ "hasSowingSelect": 1,
+ "options": [
+  "Choose a sowing calendar",
+  "This farm's crop plan: Hot area, no frost (from this site's climate records)",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "farm",
+ "notKnown": false,
+ "oldNames": null,
+ "gridOrTable": 1,
+ "hasPicked": true,
+ "overflow": {
+  "sw": 1280,
+  "iw": 1280,
+  "over": false
+ }
+}
+text near "this farm’s crop plan": "ace-shallow. Deep irrigation weekly beats shallow rain every time for root development. Protect young maize from strong wind after rain.\n\n12-Month Planting Grid\nGood month to sow\nHot area, no frost · this farm’s crop plan\nShowing the general planting guide — p"
+
+== B4 reference guide
+checkboxes in section: 1
+section buttons: ["Save reference choice"]
+{
+ "tag": "B4 reference chosen",
+ "contextOptions": [
+  "Choose a saved site or a separate reference guide",
+  "Ubhejane Crèche · saved site",
+  "South African reference guide · no mapped farm"
+ ],
+ "hasSowingSelect": 1,
+ "options": [
+  "Choose a sowing calendar",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "",
+ "notKnown": false,
+ "oldNames": null,
+ "gridOrTable": 0,
+ "hasPicked": false,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ }
+}
+{
+ "tag": "B4 winter picked",
+ "contextOptions": [
+  "Choose a saved site or a separate reference guide",
+  "Ubhejane Crèche · saved site",
+  "South African reference guide · no mapped farm"
+ ],
+ "hasSowingSelect": 1,
+ "options": [
+  "Choose a sowing calendar",
+  "Winter frost (Highveld, Midlands, Karoo)",
+  "Light frost at most (warm areas and mild coasts)",
+  "Hot area, no frost (Lowveld, Limpopo valley, KZN coast)",
+  "Winter rainfall (Western Cape)"
+ ],
+ "value": "winter",
+ "notKnown": false,
+ "oldNames": null,
+ "gridOrTable": 1,
+ "hasPicked": false,
+ "overflow": {
+  "sw": 390,
+  "iw": 390,
+  "over": false
+ }
+}
+section text: "Choose the reference context\n\nThis guide uses South African reference material. A country choice, a language or a saved sowing date cannot establish a local planting calendar for another country.\n\nCalendar context\nChoose a saved site or a separate reference guide\nUbhejane Crèche · saved site\nSouth African reference guide · no mapped farm\n\nUsing South African reference assumptions for this unmapped workspace. This is not locally reviewed guidance for another country.\n\nPlanning without a mapped site\n\nThe existing planner uses South African reference assumptions. You can explicitly use that reference basis for this unmapped workspace. It does not establish your farm’s country, local planting suitability or permission to grow a crop outside South Africa.\n\nThe choice stays with this device’s crop plan and this workspace only. It never applies to a mapped site, another workspace, currency, language or measurement units.\n\nSample mode keeps this choice inside its temporary demonstration.\n\nSouth African reference planning selected for this unmapped workspace.\n\nRemove reference choice\n\nReference choice saved with this device’s crop plan. This does not confirm a farm country or local farming approval.\n\nSowing calendar\nChoose a sowing calendar\nWinter frost (Highveld, Midlands, Karoo)\nLight frost at most (warm areas and mild coasts)\nHot area, no frost (Lowveld, Limpopo valley, KZN coast)\nWinter rainfall (Western Cape)\n\nA sowing calendar chosen here is a reference, not an observation of this site’s climate. Nothing is taken from a crop plan unless you pick it."
+
+ERRORS [
+ "CONSOLE Failed to load resource: net::ERR_FAILED"
+]
