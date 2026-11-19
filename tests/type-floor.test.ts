@@ -172,6 +172,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/FieldDataStatus.tsx': 'cached and unconfirmed data need readable status',
   'components/FieldDraft.tsx': 'draft preservation and restore controls are used in the field',
   'components/FieldSyncBadge.tsx': 'offline and waiting counts must stay legible',
+  'components/SavedTick.tsx': 'the saved check and its outcome sentence; 14px type',
   'components/ProfileAvatar.tsx': 'names and profile fallbacks must remain readable on phones',
   'components/FieldVisitGuide.tsx': 'visual visit prompts are used outdoors on phones',
   'components/TourDiscovery.tsx': 'tour menu reminder is read on phones',

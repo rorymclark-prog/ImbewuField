@@ -52,6 +52,8 @@ import { isSampleMode, getSandboxProfile } from '@/lib/sample-mode';
 import { updateMyProfile } from '@/lib/db/queries';
 import type { Profile, SalesLog } from '@/lib/db/types';
 import { APP_HEADER_INSET } from '@/lib/app-header';
+import SavedTick, { type SavedTickKind } from '@/components/SavedTick';
+import savedStyles from '@/components/SavedTick.module.css';
 import { RECORD_UNITS, recordQuantity, recordUnit, normaliseRecordUnit, validRecordQuantity } from '@/lib/farm-records';
 
 interface LineItem {
@@ -304,7 +306,19 @@ export default function InvoicePage() {
   const [salesReady, setSalesReady] = useState(false);
   const [salesError, setSalesError] = useState('');
   const [saving, setSaving] = useState(false);
-  const [saveMessage, setSaveMessage] = useState('');
+  const [saveMessage, setSaveMessageState] = useState('');
+  // What the last save achieved, for the check mark beside saveMessage. Only set by announceSave;
+  // any other message (a price hint, a recovered draft) clears it and shows as plain text.
+  const [saveOutcome, setSaveOutcome] = useState<{ kind: SavedTickKind; seq: number } | null>(null);
+  const setSaveMessage = (message: string) => { setSaveMessageState(message); setSaveOutcome(null); };
+  const announceSave = (message: string, kind: SavedTickKind) => { setSaveMessageState(message); setSaveOutcome(previous => ({ kind, seq: (previous?.seq ?? 0) + 1 })); };
+  // The invoice that has just been added to the saved list, so its row can slide in once.
+  const [freshInvoiceId, setFreshInvoiceId] = useState<string | null>(null);
+  useEffect(() => {
+    if (!freshInvoiceId) return;
+    const timer = window.setTimeout(() => setFreshInvoiceId(null), 1600);
+    return () => window.clearTimeout(timer);
+  }, [freshInvoiceId]);
   const persistBusy = useRef(false);
   const persistTicket = useRef(0), statusTicket = useRef(0);
   const draftId = useRef<string | null>(null);
@@ -740,9 +754,10 @@ export default function InvoicePage() {
       addCustomer(billTo, buyerDetails);
       if (randEligible) items.forEach(item => { if (item.desc.trim()) addProduct({ desc: item.desc.trim(), unit: item.unit, price: item.price }); });
       if (!sameAccount()) return null;
+      if (showSaved && !original.invoices.some(row => row.id === id)) setFreshInvoiceId(id);
       setCurrentId(id); setSavedCurrencyBasis(inspectInvoiceCurrencyBasis(stored)); setIssuedISO(stored.dateISO); setSeq(writeBook.nextNumber);
       if (!randEligible) {
-        setSaveMessage(sample ? 'DEMO invoice kept in the sample only. Its currency remains separate from rand totals.' : 'Invoice saved on this device in its recorded currency. It remains separate from the rand sale book and rand income totals.');
+        announceSave(sample ? 'DEMO invoice kept in the sample only. Its currency remains separate from rand totals.' : 'Invoice saved on this device in its recorded currency. It remains separate from the rand sale book and rand income totals.', 'device');
       } else if (!sourceSaleId && (stored.status === 'paid' || existing?.status === 'paid' || stored.salesSyncPending)) {
         try {
           if (!sameAccount()) return null;
@@ -750,13 +765,15 @@ export default function InvoicePage() {
           await withWriteTimeout(syncInvoiceSales(stored, writeBook, sameAccount));
           if (!sameAccount()) return null;
           receive(saveInvoice({ ...stored, salesSyncPending: false }, writeBook), true);
-          setSaveMessage(sample ? 'DEMO invoice kept in the sample only.' : ui('Invoice saved.'));
+          announceSave(sample ? 'DEMO invoice kept in the sample only.' : ui('Invoice saved.'), sample ? 'device' : 'saved');
         } catch (error) {
           if (error instanceof UserFacingError) throw error;
           if (!sameAccount()) return null;
-          setSaveMessage('Invoice kept on this device. Sale-book confirmation is pending; check the existing invoice before retrying.');
+          announceSave('Invoice kept on this device. Sale-book confirmation is pending; check the existing invoice before retrying.', 'device');
         }
-      } else setSaveMessage(sample ? 'DEMO invoice kept in the sample only.' : sourceSaleId ? ui('Invoice saved and linked to the existing sale. Its quantity and income are counted once.') : ui('Invoice saved.'));
+      } else if (sample) announceSave('DEMO invoice kept in the sample only.', 'device');
+      else if (sourceSaleId) announceSave(ui('Invoice saved and linked to the existing sale. Its quantity and income are counted once.'), 'linked');
+      else announceSave(ui('Invoice saved.'), 'saved');
       return sameAccount() ? { id, book: writeBook, document: doc } : null;
     } catch (error) {
       // A timeout cannot cancel an already queued cloud write. Retain pending
@@ -953,7 +970,7 @@ export default function InvoicePage() {
       const updated = writeBook.invoices.find(row => row.id === invoice.id);
       if (!updated) throw new UserFacingError('Reopen the saved invoice to check its payment.');
       if (invoiceRandConsumerEligibility(updated).status === 'held') {
-        setSaveMessage('Payment details kept with the recorded currency on this device. Rand totals and the rand sale book remain separate.'); return;
+        announceSave('Payment details kept with the recorded currency on this device. Rand totals and the rand sale book remain separate.', 'device'); return;
       }
       if (!invoiceBookIsCurrent(writeBook)) return;
       await withWriteTimeout(syncInvoiceSales(updated, writeBook, () => sourceDelivery.isActorCurrent() && renderedGeneration === formGeneration.current));
@@ -1172,7 +1189,7 @@ export default function InvoicePage() {
                       <span />
                     </div>
                     {saved.slice(0, savedVisibleCount).map((inv) => (
-                      <div key={inv.id} className="px-3 py-2.5" style={{ borderBottom: '1px solid var(--border)' }}>
+                      <div key={inv.id} className={`px-3 py-2.5 ${inv.id === freshInvoiceId ? savedStyles.freshRow : ''}`} style={{ borderBottom: '1px solid var(--border)' }}>
                         <div className="flex items-center gap-2">
                           <button onClick={() => openSaved(inv)} className="flex-1 min-w-0 text-left" style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}>
                             <div className="font-display text-sm" style={{ color: 'var(--text-primary)' }}>
@@ -1590,7 +1607,9 @@ export default function InvoicePage() {
               style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest-800)' : 'var(--text-muted)', border: 'none' }}>
               <Save size={16} />{saving ? ui('Saving…') : ui('Save invoice')}
             </button>
-            {saveMessage && <p role="status" className="rounded-xl p-3 text-sm" style={{ background: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))', color: 'var(--emerald)' }}>{saveMessage}</p>}
+            {saveMessage && (saveOutcome
+              ? <SavedTick key={saveOutcome.seq} kind={saveOutcome.kind} message={saveMessage} />
+              : <p role="status" className="rounded-xl p-3 text-sm" style={{ background: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))', color: 'var(--emerald)' }}>{saveMessage}</p>)}
 
             <div className="flex flex-wrap gap-2">
               <button type="button" onClick={() => void deliverInvoicePdf(true)} disabled={!valid}
