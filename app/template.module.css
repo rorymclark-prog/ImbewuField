@@ -1,0 +1,26 @@
+/* Route-change fade. Opacity only: a transform here would turn this wrapper into the containing
+   block for every position:fixed descendant (tab bar, bottom sheets), which must stay pinned to
+   the viewport. The wrapper is a plain full-height block so page roots sized with h-full/h-screen
+   behave exactly as they did before it existed. */
+.frame {
+  height: 100%;
+}
+
+/* Server HTML and first paint carry no class, so they are fully visible without JS. */
+.armed {
+  opacity: 0;
+  transition: none;
+}
+
+.play {
+  opacity: 1;
+  transition: opacity 180ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .armed,
+  .play {
+    opacity: 1;
+    transition: none;
+  }
+}
