@@ -1,0 +1,32 @@
+/* One-shot transitions only: the label cross-fades when the state or the count changes, and the
+   "synced" tick draws once. Nothing here loops. */
+.stack { display: inline-grid; }
+.stack > * { grid-area: 1 / 1; }
+
+.enter { display: inline-flex; align-items: center; gap: 6px; animation: badgeIn 200ms var(--ease-out) backwards; }
+.leaving { display: inline-flex; align-items: center; pointer-events: none; animation: badgeOut 200ms linear forwards; }
+.leaving::before { content: attr(data-label); }
+
+.synced { border-color: var(--emerald) !important; color: var(--emerald) !important; }
+.tick { flex: 0 0 auto; fill: none; stroke: var(--emerald); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; animation: badgeTick 300ms var(--ease-out) 120ms backwards; }
+
+@keyframes badgeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes badgeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes badgeTick {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  10% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter, .leaving, .tick { animation: none; }
+  .leaving { display: none; }
+}

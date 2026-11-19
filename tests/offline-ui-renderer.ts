@@ -8,6 +8,7 @@ import { FIELD_PAGE_NAMES } from '../lib/field-page-downloads.ts';
 import { FIELD_CHANGED, FIELD_SYNCED } from '../lib/field-request-model.ts';
 import { fieldScope, type FieldIdentity } from '../lib/field-session.ts';
 import { canSeeNavLink } from '../lib/role-access.ts';
+import { sampleWorkspaceText } from '../lib/sample-tour-localization.ts';
 import type { DeviceRow } from '../lib/field-device-store.ts';
 
 export const offlineQaIdentity:FieldIdentity={uid:'qa-offline-user',org:'qa-offline-org',role:'mentor'};
@@ -38,7 +39,7 @@ export async function actualOfflineUi(initialLanguage:ControlLanguage,options:Of
   const window=new EventTarget(),navigator={onLine:options.online??true,storage:{persist:async()=>true}};
   const changes:string[]=[],downloads:Array<{blob:Blob;name:string}>=[],apiCalls:string[]=[],pageCalls:boolean[]=[];
   let downloadBlob:Blob;
-  const scope:Record<string,unknown>={React,...React,ChevronDown,Wifi,WifiOff,window,navigator,FIELD_PAGE_NAMES,FIELD_CHANGED,FIELD_SYNCED,fieldScope,canSeeNavLink,
+  const scope:Record<string,unknown>={React,...React,ChevronDown,Wifi,WifiOff,sampleWorkspaceText,styles:{},window,navigator,FIELD_PAGE_NAMES,FIELD_CHANGED,FIELD_SYNCED,fieldScope,canSeeNavLink,
     Link:({children,...props}:any)=>React.createElement('a',props,children),AppHeader:({title}:any)=>React.createElement('header',null,title),TabBar:()=>null,
     useLanguage:()=>({lang,t:controlT(lang)}),translate:(language:ControlLanguage,key:string)=>controlT(language)(key),useAppLevel:()=>simple?'simple':'full',
     useAuth:()=>({user:identity?{uid:identity.uid}:null,profile:identity?{org_id:identity.org,role:identity.role}:null,role:identity?.role??null}),fieldIdentity:()=>identity,isSampleMode:()=>sample,
