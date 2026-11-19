@@ -5,6 +5,12 @@ const MAX_WINDOW_DAYS = 366;
 const MAX_RETURNED_FEATURES = MAX_WINDOW_DAYS + 1;
 const MILLISECONDS_PER_DAY = 86_400_000;
 
+// ECCC archives commonly use the station's local standard time. The station zone
+// is unavailable before lookup, so UTC−08:00 is a conservative Canadian date cap.
+export function ecccLatestRequestableDay(now = new Date()): string {
+  return new Date(now.getTime() - 8 * 60 * 60 * 1000).toISOString().slice(0, 10);
+}
+
 export const ECCC_DAILY_RESPONSE_LIMIT = 1_048_576;
 export const ECCC_DAILY_ATTRIBUTION = 'Data Source: Environment and Climate Change Canada';
 export const ECCC_DAILY_LICENCE = 'https://eccc-msc.github.io/open-data/licence/readme_en/';

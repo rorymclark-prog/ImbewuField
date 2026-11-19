@@ -42,7 +42,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
-    when: '19 November 2026', sha: '1aefb02bd',
+    when: '19 November 2026', sha: '38facf169',
     changes: ['View and download Canadian station history with estimates and missing readings marked.'],
   },
   {

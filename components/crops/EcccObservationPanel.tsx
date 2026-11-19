@@ -7,7 +7,7 @@ import {
 } from '@/lib/international/eccc-observation-report';
 import { loadEcccDailyObservations, type EcccDailyLoad } from '@/lib/international/providers/eccc-daily-http';
 import {
-  ecccDailyObservationUrl, ECCC_DAILY_ATTRIBUTION, ECCC_DAILY_LICENCE, type EcccDailySelection,
+  ecccDailyObservationUrl, ecccLatestRequestableDay, ECCC_DAILY_ATTRIBUTION, ECCC_DAILY_LICENCE, type EcccDailySelection,
 } from '@/lib/international/providers/eccc-daily-observations';
 
 const blank = { stationClimateId: '', firstLocalDay: '', lastLocalDay: '' };
@@ -36,8 +36,8 @@ export default function EcccObservationPanel({ actorIsCurrent }: { actorIsCurren
   outcomeLive.current = outcome;
   const ready = outcome?.status === 'available' ? outcome : null;
   const report = ready && ecccObservationReport(ready);
-  const today = new Date().toISOString().slice(0, 10);
-  const canRead = !!ecccDailyObservationUrl(selection) && selection.lastLocalDay <= today;
+  const latestDay = ecccLatestRequestableDay();
+  const canRead = !!ecccDailyObservationUrl(selection) && selection.lastLocalDay <= latestDay;
 
   function change(key: keyof EcccDailySelection, event: ChangeEvent<HTMLInputElement>) {
     if (!active.current || !currentActor.current()) return;
@@ -80,13 +80,14 @@ export default function EcccObservationPanel({ actorIsCurrent }: { actorIsCurren
   return <details aria-label={ECCC_OBSERVATION_TITLE} className="space-y-3 rounded-lg border border-[var(--border)] p-3 text-sm">
     <summary className="min-h-11 cursor-pointer py-2 font-semibold">{ECCC_OBSERVATION_TITLE}</summary>
     <p>{ECCC_OBSERVATION_LIMITS}</p>
-    <p>Choose a public ECCC climate station ID and up to 366 historical days. The request sends only the station ID and dates.
+    <p>Choose a public ECCC climate station ID and up to 366 historical days. New dates become selectable at 08:00 UTC.
+      The request sends only the station ID and dates.
       {' '}<a className="underline" href="https://climate.weather.gc.ca/historical_data/search_historic_data_e.html" target="_blank" rel="noreferrer">Find a climate station ID</a>.</p>
     <div className="grid gap-2 sm:grid-cols-3">
       <label>Climate station ID<input className={control} value={selection.stationClimateId} maxLength={7}
         spellCheck={false} placeholder="e.g. 4057165" onChange={e => change('stationClimateId', e)} /></label>
-      <label>First station day<input className={control} type="date" max={today} value={selection.firstLocalDay} onChange={e => change('firstLocalDay', e)} /></label>
-      <label>Last station day<input className={control} type="date" max={today} value={selection.lastLocalDay} onChange={e => change('lastLocalDay', e)} /></label>
+      <label>First station day<input className={control} type="date" max={latestDay} value={selection.firstLocalDay} onChange={e => change('firstLocalDay', e)} /></label>
+      <label>Last station day<input className={control} type="date" max={latestDay} value={selection.lastLocalDay} onChange={e => change('lastLocalDay', e)} /></label>
     </div>
     <button className={button} type="button" disabled={loading || !canRead} onClick={read}>Read station history</button>
     {loading && <p role="status">Reading station history…</p>}

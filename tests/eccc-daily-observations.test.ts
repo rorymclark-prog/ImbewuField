@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { buildEcccObservationHtml } from '../lib/international/eccc-observation-report.ts';
+import { loadEcccDailyObservations } from '../lib/international/providers/eccc-daily-http.ts';
 import {
-  ecccDailyObservationUrl, parseEcccDailyObservations, type EcccDailySelection, type EcccDailySource,
+  ecccDailyObservationUrl, ecccLatestRequestableDay, parseEcccDailyObservations, type EcccDailySelection, type EcccDailySource,
 } from '../lib/international/providers/eccc-daily-observations.ts';
 
 const leapWindow = { stationClimateId: '4057165', firstLocalDay: '2020-02-28', lastLocalDay: '2020-03-01' };
@@ -150,6 +152,28 @@ test('incomplete or unreasonably large responses never masquerade as missing obs
   for (const body of ['[', 'x'.repeat(1_048_577)]) {
     assert.deepEqual(parseEcccDailyObservations(body, leapWindow, source), { status: 'held', reason: 'invalid-response' });
   }
+});
+
+test('the Canadian date cap prevents a future local-day request near UTC midnight', async t => {
+  const before = new Date('2026-11-20T07:59:59.999Z');
+  const after = new Date('2026-11-20T08:00:00.000Z');
+  assert.equal(ecccLatestRequestableDay(before), '2026-11-19');
+  assert.equal(ecccLatestRequestableDay(after), '2026-11-20');
+  t.mock.timers.enable({ apis: ['Date'], now: before });
+  const fetch = t.mock.method(globalThis, 'fetch', async () => { throw new Error('Unexpected station request'); });
+  const selection = { ...leapWindow, firstLocalDay: '2026-11-20', lastLocalDay: '2026-11-20' };
+  assert.deepEqual(await loadEcccDailyObservations(selection, new AbortController().signal),
+    { status: 'held', reason: 'invalid-selection' });
+  assert.equal(fetch.mock.callCount(), 0);
+});
+
+test('the standalone station report restricts active content and suppresses link referrers', () => {
+  const result = read([feature('2020-02-28')]);
+  assert.equal(result.status, 'available');
+  const report = buildEcccObservationHtml(result);
+  assert.ok(report.includes("<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'\">"));
+  assert.match(report, /rel="noreferrer">Original station query<\/a>/);
+  assert.match(report, /rel="noreferrer">Data licence<\/a>/);
 });
 
 test('window building admits a full leap year and holds oversize and malformed choices', () => {

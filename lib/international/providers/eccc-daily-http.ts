@@ -1,5 +1,5 @@
 import {
-  ecccDailyObservationUrl, ECCC_DAILY_RESPONSE_LIMIT, parseEcccDailyObservations,
+  ecccDailyObservationUrl, ecccLatestRequestableDay, ECCC_DAILY_RESPONSE_LIMIT, parseEcccDailyObservations,
   type EcccDailyObservations, type EcccDailySelection,
 } from './eccc-daily-observations.ts';
 
@@ -12,7 +12,7 @@ export type EcccDailyLoad = EcccDailyObservations | {
 export async function loadEcccDailyObservations(selection: EcccDailySelection, signal: AbortSignal): Promise<EcccDailyLoad> {
   const chosen = { ...selection };
   const url = ecccDailyObservationUrl(chosen);
-  if (!url || chosen.lastLocalDay > new Date().toISOString().slice(0, 10)) return { status: 'held', reason: 'invalid-selection' };
+  if (!url || chosen.lastLocalDay > ecccLatestRequestableDay()) return { status: 'held', reason: 'invalid-selection' };
   if (signal.aborted) return { status: 'held', reason: 'cancelled' };
 
   const controller = new AbortController();

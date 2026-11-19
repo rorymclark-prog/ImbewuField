@@ -43,6 +43,7 @@ export function buildEcccObservationHtml(result: AvailableEcccObservations): str
     return `<tr><th scope="row">${html(row.day)}</th>${cells}</tr>`;
   }).join('\n');
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
 <title>${ECCC_OBSERVATION_TITLE}</title><style>
 body{margin:2rem auto;padding:0 1rem;max-width:52rem;font:16px/1.45 system-ui,sans-serif;color:#172320}
 h1{line-height:1.15}p{margin:.55rem 0}table{width:100%;border-collapse:collapse;margin-block:1rem}
@@ -52,7 +53,7 @@ thead{background:#edf3ef}th[scope=row]{white-space:nowrap}a{color:#125944}
 </style></head><body><main><h1>${ECCC_OBSERVATION_TITLE}</h1>
 <p>${html(station)}</p><p>${html(period)}</p><p>${html(coverage)}</p>
 <p>${ECCC_OBSERVATION_LIMITS}</p>
-<p>${ECCC_DAILY_ATTRIBUTION} · Retrieved ${html(result.source.retrievedAt)} · <a href="${html(result.source.url)}">Original station query</a> · <a href="${ECCC_DAILY_LICENCE}">Data licence</a></p>
+<p>${ECCC_DAILY_ATTRIBUTION} · Retrieved ${html(result.source.retrievedAt)} · <a href="${html(result.source.url)}" rel="noreferrer">Original station query</a> · <a href="${ECCC_DAILY_LICENCE}" rel="noreferrer">Data licence</a></p>
 <table><caption>Daily air temperature in degrees Celsius</caption><thead><tr><th scope="col">Local date</th><th scope="col">Minimum</th><th scope="col">Mean</th><th scope="col">Maximum</th></tr></thead><tbody>
 ${body}</tbody></table></main></body></html>`;
 }
