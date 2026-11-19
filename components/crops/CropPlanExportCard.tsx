@@ -75,7 +75,11 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
     setBusy('ics');
     setStatus(null);
     try {
-      const ics = buildCropPlanIcs(tasks, { calendarName: `ImbewuField - ${meta.planTitle}`, now, stamp: new Date() });
+      const ics = buildCropPlanIcs(tasks, {
+        calendarName: `ImbewuField - ${meta.planTitle}`,
+        documentNotice: meta.documentNotice,
+        now, stamp: new Date(),
+      });
       // The charset matters: crop names carry an emoji icon and bed labels
       // carry 'ü' (Hügel). Without it some clients guess Latin-1 and the
       // farmer sees mojibake in every event title.

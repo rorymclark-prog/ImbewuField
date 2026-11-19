@@ -2142,14 +2142,18 @@ function FacilitatorCropsPageInner() {
   const exportMeta = useMemo(() => {
     const plotCount = beds.filter((b) => b.kind === 'plot').length;
     const bedCount = beds.length - plotCount;
+    const virtualWorkspace = planningWorkspaceId === 'virtual-bed';
     // Provenance travels onto paper too: a printed plan must say whether its
     // climate is the site's own satellite-derived profile or a reference city.
-    const locationLine = printedLocationLine(calendarBasis, climateSource, region?.name);
+    const locationLine = virtualWorkspace ? 'Virtual bed (no mapped site)' : printedLocationLine(calendarBasis, climateSource, region?.name);
     // Paper says whose call the calendar was, as the screen does ("chosen by you").
     const climateLine = printedSowingCalendarLine(calendarLabel, calendarBasis, climateSource);
     return {
-      planTitle: (canvasSite ? placeName : null) ?? designTitle,
-      siteLine: climateSource === 'none' && calendarBasis !== 'grower-choice' && calendarBasis !== 'sample-farm'
+      planTitle: virtualWorkspace ? 'Virtual bed' : (canvasSite ? placeName : null) ?? designTitle,
+      documentNotice: planningSupport.mode === 'south-african-reference'
+        ? `${virtualWorkspace ? 'Virtual bed. ' : ''}South African reference only. Check local growing conditions before using.`
+        : undefined,
+      siteLine: !virtualWorkspace && climateSource === 'none' && calendarBasis !== 'grower-choice' && calendarBasis !== 'sample-farm'
         ? `No site set · assuming ${calendarLabel.toLowerCase()}`
         : `${locationLine} · ${climateLine}`,
       // The same two facts as separate values, because the PDF needs them apart and recovering
@@ -2166,7 +2170,7 @@ function FacilitatorCropsPageInner() {
       lossPercent: cashflowSettings.lossPercent,
       lossAllowanceConfirmed: cashflowSettings.confirmed === true,
     };
-  }, [beds, canvasSite, placeName, designTitle, region, pattern, calendarLabel, calendarBasis, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
+  }, [beds, canvasSite, placeName, designTitle, planningWorkspaceId, planningSupport.mode, region, pattern, calendarLabel, calendarBasis, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
 
   // One account holds several maps. A shared food name and month cannot tell us which
   // farm produced it; records without a site remain saved outside this site's totals.

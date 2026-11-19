@@ -383,6 +383,25 @@ test('descriptions survive escaping with their line breaks intact', () => {
   }
 });
 
+test('each imported reference-workspace event retains its workspace and limits without changing its date or UID', () => {
+  const tasks = tasksForPlan(PLANTINGS, BEDS);
+  const documentNotice = 'Virtual bed — South African reference only. Check local growing conditions before using.';
+  const { calendar, events } = parseIcs(buildCropPlanIcs(tasks, {
+    now: NOW, stamp: STAMP, calendarName: 'ImbewuField - Virtual bed', documentNotice,
+  }));
+  assert.equal(calendar.get('X-WR-CALNAME'), 'ImbewuField - Virtual bed');
+  assert.ok(unescapeIcsText(calendar.get('X-WR-CALDESC')!).startsWith(documentNotice));
+  const schedule = (rows: typeof events) => rows.map(({ props }) =>
+    ['UID', 'DTSTART;VALUE=DATE', 'DTEND;VALUE=DATE'].map(key => props.get(key)));
+  assert.deepEqual(schedule(events), schedule(parseIcs(build(tasks)).events));
+  for (const { props } of events) {
+    const description = unescapeIcsText(props.get('DESCRIPTION')!);
+    assert.ok(description.startsWith(documentNotice));
+    assert.match(description, /works in whole months/);
+    assert.doesNotMatch(description, /is fine/);
+  }
+});
+
 // ── Odds and ends ───────────────────────────────────────────────────────────
 
 test('an empty plan still produces a valid, empty calendar', () => {

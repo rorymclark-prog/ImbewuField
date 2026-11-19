@@ -59,6 +59,8 @@ export interface IcsOptions {
   stamp?: Date;
   /** Shown as the calendar name on import (X-WR-CALNAME). */
   calendarName?: string;
+  /** A document qualification that must still be visible on imported events. */
+  documentNotice?: string;
 }
 
 // ── Line-level RFC 5545 mechanics ───────────────────────────────────────────
@@ -205,8 +207,9 @@ export function resolveCropTaskDate(task: CropTask, now: Date): { year: number; 
  * in five months has to answer, on its own: what am I doing, to which crop, on
  * which piece of ground, and how precise is this date really.
  */
-export function icsDescription(task: CropTask): string {
-  const lines: string[] = [`${taskLine(task)}.`];
+export function icsDescription(task: CropTask, documentNotice?: string): string {
+  const lines: string[] = documentNotice ? [documentNotice] : [];
+  lines.push(`${taskLine(task)}.`);
 
   // A sow task already carries spacing inside taskLine; a transplant one does
   // not, and "where does this go" is the question at transplant time.
@@ -216,7 +219,8 @@ export function icsDescription(task: CropTask): string {
   }
 
   lines.push(
-    `Any time during ${monthLong(task.month)} is fine — this plan works in whole months, `
+    (documentNotice ? `The plan lists this task for ${monthLong(task.month)} — ` : `Any time during ${monthLong(task.month)} is fine — `)
+    + 'this plan works in whole months, '
     + 'so the date on this entry is a marker for the month, not the exact day.',
   );
   lines.push('From your ImbewuField crop plan.');
@@ -259,7 +263,8 @@ export function buildCropPlanIcs(tasks: CropTask[], options: IcsOptions = {}): s
   // Non-standard, but Google and Apple both honour it: without a name the
   // import lands in a calendar called after the filename.
   pushText(out, 'X-WR-CALNAME', calendarName);
-  pushText(out, 'X-WR-CALDESC', 'Ground prep, sowing, transplanting, weeding and harvest for this crop plan.');
+  const calendarDescription = 'Ground prep, sowing, transplanting, weeding and harvest for this crop plan.';
+  pushText(out, 'X-WR-CALDESC', options.documentNotice ? `${options.documentNotice}\n${calendarDescription}` : calendarDescription);
 
   // Sorted by resolved date so the file reads chronologically if anyone opens
   // it in a text editor, and so the output order cannot depend on the order
@@ -281,7 +286,7 @@ export function buildCropPlanIcs(tasks: CropTask[], options: IcsOptions = {}): s
     push(out, 'DTSTART;VALUE=DATE', icsDate(date.year, date.month, date.day));
     push(out, 'DTEND;VALUE=DATE', icsDate(end.year, end.month, end.day));
     pushText(out, 'SUMMARY', `${task.icon} ${taskTitle(task)}`);
-    pushText(out, 'DESCRIPTION', icsDescription(task));
+    pushText(out, 'DESCRIPTION', icsDescription(task, options.documentNotice));
     pushText(out, 'LOCATION', task.bedLabel);
     push(out, 'CATEGORIES', 'ImbewuField');
     // A whole-month gardening job must not make the farmer look busy all day

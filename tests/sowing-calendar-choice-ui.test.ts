@@ -11,6 +11,9 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import { hiddenCalendarNoticeWrite } from '@/lib/sowing-calendar-review';
+import { printedLocationLine, printedSowingCalendarLine } from '@/lib/sowing-calendar-label';
+import { resolvePlanningSupport } from '@/lib/international/planning-policy';
+import { createWorkspacePlanningReference } from '@/lib/international/workspace-context';
 
 const page = readFileSync(new URL('../app/facilitator/crops/page.tsx', import.meta.url), 'utf8');
 
@@ -118,6 +121,31 @@ test('the printed plan takes its calendar line from the one rule that names a gr
   assert.match(meta, /const climateLine = printedSowingCalendarLine\(calendarLabel, calendarBasis, climateSource\);/);
   assert.match(meta, /\n\s+climateLine,\n/, 'the PDF receives that line unchanged');
   assert.doesNotMatch(meta, /climateLine: /, 'no second, differently worded climate line');
+});
+
+test('export metadata identifies a virtual bed and labels only the acknowledged reference basis', () => {
+  const body = page.match(/const exportMeta = useMemo\(\(\) => \{([\s\S]+?)\n  \}, \[/)?.[1];
+  assert.ok(body);
+  type ExportMeta = { planTitle: string; locationLine: string; documentNotice?: string };
+  const vars = {
+    beds: [{ areaM2: 10 }], canvasSite: null, placeName: null, designTitle: 'Garden design',
+    planningWorkspaceId: 'virtual-bed', planningSupport: resolvePlanningSupport({
+      places: [], siteId: null, workspaceId: 'virtual-bed',
+      workspaceReferences: [createWorkspacePlanningReference('virtual-bed', true, '2026-11-19T00:00:00.000Z')],
+    }),
+    calendarBasis: 'fallback', climateSource: 'none', region: null, pattern: 'summer',
+    calendarLabel: 'Summer rainfall', totalYieldKg: null, cashflowSettings: { lossPercent: 0, confirmed: false },
+    printedLocationLine, printedSowingCalendarLine,
+  };
+  const readMeta = new Function(...Object.keys(vars), body) as (...values: unknown[]) => ExportMeta;
+  const reference = readMeta(...Object.values(vars));
+  assert.equal(reference.planTitle, 'Virtual bed');
+  assert.equal(reference.locationLine, 'Virtual bed (no mapped site)');
+  assert.match(reference.documentNotice ?? '', /^Virtual bed\. South African reference only.*Check local growing conditions/);
+  const unacknowledged = readMeta(...Object.values({ ...vars, planningSupport: resolvePlanningSupport({
+    places: [], siteId: null, workspaceId: 'virtual-bed',
+  }) }));
+  assert.equal(unacknowledged.documentNotice, undefined);
 });
 
 // ── A RETAINED "HIDE THIS LIST" HANDLER MUST NOT WRITE ACROSS AN ACCOUNT, SAMPLE OR SITE CHANGE ──
