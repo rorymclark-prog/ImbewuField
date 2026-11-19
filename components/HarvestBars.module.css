@@ -1,0 +1,41 @@
+/* Bullet bars for plan vs actual and the harvest reconciliation card.
+   Order of arrival: benchmark outline, then logged picked, then sold. The row stagger (--d) is
+   capped in HarvestBars.tsx to about 400 ms however many rows there are. Without a phase class
+   (server render, no JS, reduced motion) every layer is simply drawn at its real width. */
+.group { min-width: 0; }
+
+.track { position: relative; background: var(--bg-2); border-radius: 3px; }
+
+.bench, .picked, .sold, .over {
+  position: absolute;
+  left: 0;
+  transition: width 360ms cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+.bench { top: 0; bottom: 0; border-radius: 3px; }
+.picked { border-radius: 2px; }
+.sold { opacity: 0.9; border-radius: 1px; }
+.mark { position: absolute; width: 2px; border-radius: 1px; opacity: 1; transition: opacity 250ms ease-out; }
+.over { border: 1px dashed; border-left: 0; border-radius: 0 2px 2px 0; box-sizing: border-box; transition: opacity 300ms ease-out; }
+
+/* Armed: every layer collapsed, nothing animates yet. */
+.armed .bench, .armed .picked, .armed .sold { width: 0 !important; transition: none; }
+.armed .over, .armed .mark { opacity: 0; transition: none; }
+
+/* Played: each layer lands after the one before it. */
+.play .bench { transition-delay: var(--d); }
+.play .picked { transition-delay: calc(var(--d) + 200ms); }
+.play .sold { transition-delay: calc(var(--d) + 380ms); }
+.play .over { transition-delay: calc(var(--d) + 740ms); }
+.play .mark { transition-delay: calc(var(--d) + 200ms); }
+.settled .bench, .settled .picked, .settled .sold, .settled .over, .settled .mark { transition-delay: 0ms; }
+
+/* The "sold more than was logged picked" note: fades in once, after the bars. */
+.flag { opacity: 1; transition: opacity 300ms ease-out; }
+.armed .flag { opacity: 0; transition: none; }
+.play .flag { transition-delay: calc(var(--d) + 740ms); }
+.settled .flag { transition-delay: 0ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bench, .picked, .sold, .over, .mark, .flag { transition: none !important; }
+  .armed .over, .armed .mark, .armed .flag { opacity: 1; }
+}

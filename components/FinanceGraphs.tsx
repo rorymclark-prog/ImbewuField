@@ -38,6 +38,7 @@ import { kgLabel } from '@/lib/format-figures';
 import { invoiceRandReviewMessage } from '@/lib/invoice-sales';
 import { cappedScale } from '@/lib/chart-scale';
 import { BreakMark, BreakEdge } from '@/components/ChartBreakMark';
+import { HarvestBarsGroup, HarvestBar, HarvestFlag } from '@/components/HarvestBars';
 import {
   countsWithScope,
   loadIncludePerennials,
@@ -517,16 +518,17 @@ function PlanView({ plan, source, wide, orchard, lang }: {
         english="Each crop’s plan benchmark, with what you have logged picking this year on top of it."
         zulu="Isilinganiso sohlelo sesitshalo ngasinye, kanye nesivuno osirekhodile salo nyaka esiboniswe phezu kwaso." />
 
-      <div className="px-4 py-3 flex flex-col" style={{ gap: 14, maxWidth: wide ? 760 : undefined }}>
+      <HarvestBarsGroup className="px-4 py-3 flex flex-col" style={{ gap: 14, maxWidth: wide ? 760 : undefined }}>
         {plan.rows.map((row, i) => (
-          <PlanRow key={row.cropKey} row={row} pct={pct} lossPercent={plan.lossPercent}
-            clipped={rowScale.isClipped(rowTotals[i])} lang={lang} />
+          <PlanRow key={row.cropKey} row={row} max={max} lossPercent={plan.lossPercent}
+            clipped={rowScale.isClipped(rowTotals[i])} lang={lang} index={i} count={plan.rows.length} />
         ))}
-      </div>
+      </HarvestBarsGroup>
 
       <div className="px-4 pb-3 flex flex-wrap items-center" style={{ gap: '4px 14px' }}>
         <Chip dot={BENCH} title={lang === 'zu' ? 'English source: plan benchmark' : undefined} label={tx('plan benchmark', 'isilinganiso sohlelo')} value="" />
         <Chip dot={SOLD} title={lang === 'zu' ? 'English source: logged picked' : undefined} label={tx('logged picked', 'okuvuniwe okurekhodiwe')} value="" />
+        <Chip dot="transparent" label={tx('sold', 'kudayisiwe')} value="" />
         {plan.lossConfirmed
           ? <Chip dot="#C07A1E"
               title={lang === 'zu' ? `English source: after your ${Math.round(plan.lossPercent)}% loss allowance` : undefined}
@@ -574,9 +576,9 @@ function PlanView({ plan, source, wide, orchard, lang }: {
   );
 }
 
-function PlanRow({ row, pct, lossPercent, clipped, lang }: {
-  row: PlanVsActualRow; pct: (kg: number) => string; lossPercent: number; clipped: boolean;
-  lang: string;
+function PlanRow({ row, max, lossPercent, clipped, lang, index, count }: {
+  row: PlanVsActualRow; max: number; lossPercent: number; clipped: boolean;
+  lang: string; index: number; count: number;
 }) {
   return (
     <div>
@@ -596,23 +598,23 @@ function PlanRow({ row, pct, lossPercent, clipped, lang }: {
           inside it, the loss allowance is the target mark. One shared scale across
           every crop, so the rows are comparable to each other and not just to
           themselves. */}
-      <div className="mt-1.5 relative" style={{ height: 14, background: 'var(--bg-2)', borderRadius: 3 }}>
-        <div style={{ position: 'absolute', inset: 0, width: pct(row.benchmarkKg), background: BENCH, borderRadius: 3 }} />
-        <div style={{ position: 'absolute', top: 3.5, left: 0, height: 7, width: pct(row.harvestedKg), background: SOLD, borderRadius: 2 }} />
-        {row.afterLossKg !== null && (
-          <div
-            title={recordsLabel(lang, 'After your {pct}% loss allowance: {kg}', 'Ngemva kwesilinganiso sakho sokulahleka esingu-{pct}%: {kg}', { pct: Math.round(lossPercent), kg: kgLabel(row.afterLossKg) })}
-            style={{ position: 'absolute', top: -1, height: 16, left: pct(row.afterLossKg), width: 2, background: '#C07A1E', borderRadius: 1 }}
-          />
-        )}
-        {clipped && <BreakEdge />}
+      <div className="mt-1.5">
+        <HarvestBar max={max} benchmarkKg={row.benchmarkKg} harvestedKg={row.harvestedKg} soldKg={row.soldKg}
+          soldExceedsHarvested={row.soldExceedsHarvested} index={index} count={count}
+          colors={{ bench: BENCH, picked: SOLD, short: SHORT, mark: '#C07A1E', sold: '#FFFEFA' }}
+          markKg={row.afterLossKg}
+          markTitle={row.afterLossKg !== null ? recordsLabel(lang, 'After your {pct}% loss allowance: {kg}', 'Ngemva kwesilinganiso sakho sokulahleka esingu-{pct}%: {kg}', { pct: Math.round(lossPercent), kg: kgLabel(row.afterLossKg) }) : undefined}>
+          {clipped && <BreakEdge />}
+        </HarvestBar>
       </div>
 
       {row.soldExceedsHarvested && (
+        <HarvestFlag index={index} count={count}>
         <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: SHORT }} lang={lang}
           template="Sold {kg} — more than was logged picked, so the green bar is short of what really came off." vars={{ kg: kgLabel(row.soldKg) }}
           english={`Sold ${kgLabel(row.soldKg)} — more than was logged picked, so the green bar is short of what really came off.`}
           zulu={`Kudayiswe ${kgLabel(row.soldKg)} — kungaphezu kwalokho okurekhodwe njengokuvuniwe, ngakho umugqa oluhlaza mfushane kunesivuno sangempela.`} />
+        </HarvestFlag>
       )}
     </div>
   );
