@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { ShieldCheck, Check, Utensils, TrendingUp, Recycle, ArrowRight } from 'lucide-react';
 import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { translate, useLanguage } from '@/lib/i18n';
+import { isBackendConfigured } from '@/lib/firebase/init';
 import {
   activeAccountLocalStorageKey,
   removeSignedInLegacyLocalStorageKey,
@@ -70,6 +71,7 @@ function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) =
 
 export default function PopiaConsent() {
   const { t, lang } = useLanguage();
+  const deviceOnly = !isBackendConfigured();
   const showEnglishSource = ENGLISH_SOURCE_LANGS.has(lang);
   const copy = (key: string) => <span><span lang={lang}>{t(key)}</span>{showEnglishSource && <small lang="en" className="block mt-1" style={{ fontSize: 12, fontWeight: 400, lineHeight: 1.4 }}><span lang={lang} className="font-semibold">{t('popiaEnglishSourceLabel')}</span> {translate('en', key)}</small>}</span>;
   // A switch has one native name; its separately tagged source stays available in the reading flow.
@@ -196,7 +198,9 @@ export default function PopiaConsent() {
                     {copy('popiaStoreLabel')}
                   </div>
                   <div className="font-sans mt-0.5" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.4 }}>
-                    {copy('popiaStoreDesc')}
+                    {deviceOnly
+                      ? <span lang="en">This setup saves your data in this browser without cloud backup.</span>
+                      : copy('popiaStoreDesc')}
                   </div>
                 </div>
                 <Toggle on={storeData} onChange={setStoreData} label={copyString('popiaStoreLabel')} />
@@ -240,7 +244,9 @@ export default function PopiaConsent() {
 
             {!storeData && (
               <p className="font-sans text-center mt-2" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-                {copy('popiaStorageRequired')}
+                {deviceOnly
+                  ? <span lang="en">Storage in this browser is required to use ImbewuField.</span>
+                  : copy('popiaStorageRequired')}
               </p>
             )}
           </>

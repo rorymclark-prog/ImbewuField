@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+- [2026-11-19 — Browser-only first-run storage wording](2026-11-19/browser-only-consent-copy-codex.md) records the no-backend consent path and the account and sample boundaries.
+
 - [2026-11-18 — Wisconsin reference disclosure](2026-11-18/wisconsin-reference-disclosure-codex.md): actual Claude F-1 readability correction, unchanged source capsules and canonical records, scoped output checks and separate successor gates.
 
 - [2026-11-17 — Wisconsin tomato competing references](2026-11-17/wisconsin-tomato-competing-references-codex.md): source-specific consent and precedence, retained comparison through save/export, actual presentation evidence and open successor gates.

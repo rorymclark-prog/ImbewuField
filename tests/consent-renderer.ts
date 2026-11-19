@@ -9,7 +9,7 @@ import { controlT, type ControlLanguage } from './control-icon-renderers.ts';
 // Exercise the shipped component, hooks and handlers with isolated storage, never a user's consent.
 const source = ts.createSourceFile('PopiaConsent.tsx', readFileSync(new URL('../components/PopiaConsent.tsx', import.meta.url), 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 const code = ts.transpileModule(source.statements.filter(s => !ts.isImportDeclaration(s)).map(s => s.getText(source)).join('\n').replace('export default ', ''), { compilerOptions: { jsx: ts.JsxEmit.React, module: ts.ModuleKind.None, target: ts.ScriptTarget.ES2022 } }).outputText;
-export function actualConsent(initialLanguage: ControlLanguage, initialStorage: Record<string,string> = { 'qa::permamap_onboarded': '1' }) {
+export function actualConsent(initialLanguage: ControlLanguage, initialStorage: Record<string,string> = { 'qa::permamap_onboarded': '1' }, backendConfigured = true) {
   let lang = initialLanguage;
   const values = new Map(Object.entries(initialStorage));
   const writes: Array<{key:string;value:string}> = [];
@@ -19,6 +19,7 @@ export function actualConsent(initialLanguage: ControlLanguage, initialStorage: 
     setItem: (key:string,value:string) => { writes.push({key,value}); values.set(key,value); },
   }, activeAccountLocalStorageKey: (key:string) => 'qa::' + key,
   removeSignedInLegacyLocalStorageKey: (key:string) => removed.push(key),
+  isBackendConfigured: () => backendConfigured,
   useLanguage: () => ({ lang, t:controlT(lang) }), useDialogFocus: () => {}, useEscapeClose: () => {},
   translate: (language:ControlLanguage,key:string) => controlT(language)(key),
   };

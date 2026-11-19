@@ -99,3 +99,22 @@ test('consent stays hidden until onboarding and after an existing account-scoped
     try{assert.equal(h.renderer.toJSON(),null);assert.equal(h.writes.length,0);}finally{h.dispose();}
   }
 });
+
+test('the browser-only setup describes local storage in both consent states', () => {
+  const h = actualConsent('en', undefined, false);
+  try {
+    assert.ok(h.text().includes('This setup saves your data in this browser without cloud backup.'));
+    assert.ok(!h.text().includes(controlT('en')('popiaStoreDesc')));
+    h.language('zu');
+    assert.ok(h.renderer.root.findAllByProps({ lang: 'en' }).some(node => node.children.includes(
+      'This setup saves your data in this browser without cloud backup.',
+    )));
+    assert.ok(!h.text().includes(controlT('zu')('popiaStoreDesc')));
+    h.click('popiaStoreLabel');
+    assert.ok(h.text().includes('Storage in this browser is required to use ImbewuField.'));
+    assert.ok(!h.text().includes(controlT('zu')('popiaStorageRequired')));
+    assert.ok(!h.text().includes(controlT('en')('popiaStorageRequired')));
+    assert.equal(h.button('popiaAgreeButton').props.disabled, true);
+    assert.equal(h.writes.length, 0);
+  } finally { h.dispose(); }
+});
