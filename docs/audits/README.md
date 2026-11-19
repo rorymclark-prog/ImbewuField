@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+- [2026-11-19 — Wisconsin tomato first-harvest reference](2026-11-19/wisconsin-tomato-first-harvest-codex.md): source interpretation, explicit grower choice, saved-profile compatibility and inspected report layout.
+
 - [2026-11-18 — Wisconsin reference disclosure](2026-11-18/wisconsin-reference-disclosure-codex.md): actual Claude F-1 readability correction, unchanged source capsules and canonical records, scoped output checks and separate successor gates.
 
 - [2026-11-17 — Wisconsin tomato competing references](2026-11-17/wisconsin-tomato-competing-references-codex.md): source-specific consent and precedence, retained comparison through save/export, actual presentation evidence and open successor gates.
@@ -278,6 +280,8 @@ and checks that have not been performed. The older audit's pending-release text
 is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
+
+Latest source and planner continuation: [Wisconsin tomato first harvest — 19 November 2026](2026-11-19/wisconsin-tomato-first-harvest-codex.md). An explicit historical reference supplies one conditional date and leaves the other crop estimates unknown. Candidate release checks remain separate.
 
 Latest global/report verification continuation — [Full-suite contracts and final save-base continuity — 13 November 2026](2026-11-13/global-report-ci-contracts-codex.md). Eleven reproduced failures retain their reasons; exact-head CI, independent review and adoption remain open.
 

@@ -27,6 +27,47 @@ const hooks = registerHooks({ load(url, context, next) {
 const { default: Panel } = await import('../components/crops/ProvisionalCropPreview.tsx');
 after(() => hooks.deregister());
 
+test('the Wisconsin first-harvest control requires separate consent and retires it on a context round trip', async () => {
+  const { readSavedProvisionalProfile } = await import('../lib/international/provisional-profile.ts');
+  let saved: unknown;
+  const ui = mount({ countryCode: 'US', agriculturalRegionReference: 'Wisconsin', evidence: undefined,
+    onSaveProfile: profile => { saved = profile; return { status: 'confirmed', profileId: profile.profileId }; } });
+  try {
+    ui.change('Preview crop', 'tomatoes'); ui.change('Preview measured bed', 'bed-1');
+    ui.change('Preview field-entry date (UTC)', '2027-06-01'); ui.change('Preview establishment', 'transplant');
+    const interval = 'Wisconsin tomato first-harvest interval';
+    const consent = () => ui.root().findByProps({ 'aria-label': 'Use historical Wisconsin first-harvest reference' });
+    assert.equal(ui.field(interval).props.value, '');
+    assert.equal(consent().props.disabled, true);
+    ui.change(interval, 'lower-bound');
+    await ui.click();
+    assert.match(ui.text(), /First harvest \(UTC\): Unknown/);
+    act(() => consent().props.onChange({ target: { checked: true } }));
+    await ui.click();
+    assert.match(ui.text(), /First harvest \(UTC\): 2027-08-05/);
+    assert.match(ui.text(), /Conditional estimate from the 1997 Wisconsin outdoor fresh-market tomato guide/);
+    assert.match(ui.text(), /Nursery start \(UTC\): Unknown/);
+    assert.match(ui.text(), /Estimated harvest weight: Unknown/);
+    const save = ui.root().findAllByType('input').find(row => row.props.type === 'checkbox' && row.parent && text(row.parent).includes('Save these inputs'));
+    assert.ok(save);
+    act(() => save.props.onChange({ target: { checked: true } }));
+    await ui.click('Save provisional profile');
+    const reopened = readSavedProvisionalProfile(saved);
+    assert.ok(reopened);
+    assert.equal(reopened.request.context.wisconsinTomatoFirstHarvest?.purpose, 'outdoor-fresh-market-transplant');
+    assert.equal(reopened.result.assessment.schedule.firstHarvestDate.value, '2027-08-05');
+    ui.update({ profiles: [reopened.profile] });
+    const savedPanel = text(ui.root().findByProps({ 'aria-label': 'Saved provisional profiles' }));
+    assert.match(savedPanel, /First harvest \(UTC\): 2027-08-05/);
+    assert.match(savedPanel, /Conditional estimate from the 1997 Wisconsin/);
+    ui.update({ agriculturalRegionReference: 'Oregon' });
+    ui.update({ agriculturalRegionReference: 'Wisconsin' });
+    assert.equal(consent().props.checked, false);
+    await ui.click();
+    assert.match(text(ui.root().findByProps({ 'aria-label': 'Provisional results' })), /First harvest \(UTC\): Unknown/);
+  } finally { ui.dispose(); }
+});
+
 test('a pending Wisconsin calculation cannot publish after an endpoint round trip', async () => {
   let finish!: () => void;
   const checked = new Promise<void>(resolve => { finish = resolve; });

@@ -11,6 +11,8 @@ import { resolveProvisionalCropPlan, type ProvisionalFieldCandidate, type Provis
 import { usdaGreatLakesCabbageReference, usdaGreatLakesCabbageCandidates, usdaGreatLakesRegionMatches, USDA_CABBAGE_SPACING, type UsdaCabbageNurseryBasis } from '@/lib/international/providers/usda-great-lakes-cabbage';
 import { usdaGreatLakesTomatoReference, usdaGreatLakesTomatoCandidates, usdaWisconsinTomatoCandidates, USDA_TOMATO_NURSERY } from '@/lib/international/providers/usda-great-lakes-tomato';
 import { wisconsinTomatoNurseryReference, wisconsinTomatoRegionMatches, wisconsinTomatoNurseryCandidates, WISCONSIN_TOMATO_ORIGINAL_SHA256, type WisconsinTomatoNurseryBasis, type WisconsinTomatoNurseryUse } from '@/lib/international/providers/wisconsin-tomato-nursery';
+import { WISCONSIN_TOMATO_FIRST_HARVEST_SOURCE, wisconsinTomatoFirstHarvestCandidates, wisconsinTomatoFirstHarvestResultQualifier,
+  type WisconsinTomatoFirstHarvestBasis, type WisconsinTomatoFirstHarvestUse } from '@/lib/international/providers/wisconsin-tomato-first-harvest';
 import { southeastMissouriOatsReference, southeastMissouriRegionMatches, southeastMissouriOatsCandidates, MISSOURI_OATS_PDF_SHA256, type MissouriOatType, type MissouriOatsReferenceUse } from '@/lib/international/providers/usda-southeast-missouri-oats';
 import { worldvegKenyaTomatoReference, worldvegKenyaTomatoCandidates, WORLDVEG_TOMATO_NURSERY, type KenyaTomatoNurseryBasis, type KenyaTomatoNurseryUse } from '@/lib/international/providers/worldveg-kenya-tomato';
 import { createSavedProvisionalProfile, readSavedProvisionalProfile, type ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
@@ -56,6 +58,8 @@ type Draft = {
   tomatoConsent?: string | null;
   wisconsinTomatoBasis?: WisconsinTomatoNurseryBasis | '';
   wisconsinTomatoConsent?: string | null;
+  wisconsinFirstHarvestBasis?: WisconsinTomatoFirstHarvestBasis | '';
+  wisconsinFirstHarvestConsent?: string | null;
   usdaWisconsinTomatoConsent?: string | null;
   oatsType?: MissouriOatType | '';
   oatsConsent?: string | null;
@@ -129,6 +133,14 @@ function TomatoReferences({ request, fields }: { request: ProvisionalDraftReques
   </details> : null;
 }
 
+function ProvisionalSchedule({ result }: { result: Extract<Resolution, { status: 'resolved' }> }) {
+  const qualifier = wisconsinTomatoFirstHarvestResultQualifier(result.fields.fieldEntryToFirstHarvestDays);
+  return <ul>{Object.entries(result.assessment.schedule).map(([key, value]) => <li key={key}>
+    {labels[key]} (UTC): {value.value ?? 'Unknown'} ({value.status})
+    {qualifier && key === 'firstHarvestDate' && value.value !== null && <span className="block">{qualifier}</span>}
+  </li>)}</ul>;
+}
+
 export default function ProvisionalCropPreview(props: ProvisionalCropPreviewProps) {
   const scopeKey = growerPlanningScopeKey(props.scope);
   return <details className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] text-[var(--text-primary)]">
@@ -197,6 +209,12 @@ function Editor(props: ProvisionalCropPreviewProps) {
     && usdaRegionMatch && draft.method !== 'direct';
   const wisconsinTomatoReference = wisconsinTomatoNurseryReference(props.countryCode, draft.crop);
   const wisconsinTomatoRegion = wisconsinTomatoRegionMatches(props.agriculturalRegionReference);
+  const firstHarvestReference = props.countryCode === 'US' && draft.crop === 'tomatoes' && wisconsinTomatoRegion;
+  const firstHarvestChoice: WisconsinTomatoFirstHarvestUse | null = draft.wisconsinFirstHarvestBasis
+    ? { version: 1, purpose: 'outdoor-fresh-market-transplant', basis: draft.wisconsinFirstHarvestBasis } : null;
+  const firstHarvestConsentKey = environment !== null && firstHarvestReference && draft.method === 'transplant'
+    && draft.date && firstHarvestChoice ? JSON.stringify([environment, generation, draft.bed, draft.date, draft.variety, draft.water, firstHarvestChoice]) : null;
+  const useFirstHarvestReference = firstHarvestConsentKey !== null && draft.wisconsinFirstHarvestConsent === firstHarvestConsentKey;
   const wisconsinTomatoUse: WisconsinTomatoNurseryUse | null = draft.wisconsinTomatoBasis === 'lower-bound' || draft.wisconsinTomatoBasis === 'upper-bound'
     ? { purpose: 'seed-raised-nursery-to-outdoor', basis: draft.wisconsinTomatoBasis } : null;
   const wisconsinTomatoConsentKey = environment === null ? null : JSON.stringify([environment, generation, draft.crop,
@@ -257,6 +275,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
     const sourceChoiceChanged = ['crop', 'variety', 'method', 'water'].some(key => Object.hasOwn(next, key));
     const value = { ...draft, ...next, ...(sourceChoiceChanged ? { tomatoConsent: null, oatsConsent: null, kenyaTomatoConsent: null, canadaCabbageConsent: null, saskatchewanConsent: null } : {}),
       ...(sourceChoiceChanged || Object.hasOwn(next, 'date') || Object.hasOwn(next, 'bed') ? { wisconsinTomatoConsent: null, usdaWisconsinTomatoConsent: null } : {}),
+      ...(sourceChoiceChanged || ['date', 'bed', 'wisconsinFirstHarvestBasis'].some(key => Object.hasOwn(next, key))
+        ? { wisconsinFirstHarvestConsent: null } : {}),
       ...(sourceChoiceChanged || Object.hasOwn(next, 'date') || Object.hasOwn(next, 'temperatureMode')
         || (Object.hasOwn(next, 'values') && (Object.hasOwn(next.values ?? {}, 'fieldOccupancyDays') !== Object.hasOwn(draft.values, 'fieldOccupancyDays')
           || next.values?.fieldOccupancyDays !== draft.values.fieldOccupancyDays)) ? { temperatureConsent: null } : {}) }; draftLive.current = value; setDraft(value); setPreview(null); setError(''); setExportMessage(''); declareSave(null); setSaveMessage('');
@@ -327,7 +347,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
       if (draft.method) overrides.establishment = supplied(draft.method, 'method');
       if (draft.months !== null) overrides.allowedEntryMonths = supplied(draft.months, 'utc-months');
       const context = { scope: props.scope, countryCode: props.countryCode, agriculturalRegionReference: props.agriculturalRegionReference,
-        establishment: draft.method || null, waterRegime: draft.water || null, varietyReference: draft.variety.trim() || null };
+        establishment: draft.method || null, waterRegime: draft.water || null, varietyReference: draft.variety.trim() || null,
+        ...(useFirstHarvestReference && firstHarvestChoice ? { wisconsinTomatoFirstHarvest: firstHarvestChoice } : {}) };
       const climate = useTemperature ? captureProvisionalTemperatureCache(browserTemperatureStorage(), props.sitePoint ?? null, context) : null;
       const request: ProvisionalDraftRequest = structuredClone({ profileId: 'provisional-preview', cropKey: draft.crop,
         context, recordedAt, asOf: recordedAt.slice(0, 10),
@@ -336,6 +357,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
           ...usdaGreatLakesCabbageCandidates(context, draft.crop, recordedAt, useUsdaMethod, usdaNurseryBasis || null),
           ...usdaGreatLakesTomatoCandidates(context, draft.crop, recordedAt, useTomatoReference),
           ...wisconsinTomatoNurseryCandidates(context, draft.crop, recordedAt, useWisconsinTomatoReference, wisconsinTomatoUse),
+          ...wisconsinTomatoFirstHarvestCandidates(context, draft.crop, recordedAt),
           ...usdaWisconsinTomatoCandidates(context, draft.crop, recordedAt, useUsdaWisconsinTomatoReference, 'seed-raised-nursery-to-outdoor'),
           ...southeastMissouriOatsCandidates(context, draft.crop, recordedAt, useOatsReference, oatsUse),
           ...worldvegKenyaTomatoCandidates(context, draft.crop, recordedAt, useKenyaTomatoReference, kenyaTomatoUse),
@@ -435,7 +457,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
     <p className="text-sm">Preview supported counts and dates using applicable evidence and your edits. Missing values stay unknown. {props.onSaveProfile ? 'Calculating does not save. Use the separate save action to keep a profile for review.' : 'Nothing here saves a profile or adds a crop.'}</p>
     <p role="note" className="text-sm">Provisional estimates: source metadata is not verification of farming accuracy. Suitability and plant legality are not established. Density is not layout clearance.</p>
     <p className="text-sm">Country: {props.countryCode ?? 'Unknown'} · Agricultural region: {props.agriculturalRegionReference ?? 'Unknown'}</p>
-    {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && !useTomatoReference && !useWisconsinTomatoReference && !useUsdaWisconsinTomatoReference && !useOatsReference && !useKenyaTomatoReference && !useCanadaReference && !useSaskatchewanReference && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
+    {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && !useTomatoReference && !useWisconsinTomatoReference && !useFirstHarvestReference && !useUsdaWisconsinTomatoReference && !useOatsReference && !useKenyaTomatoReference && !useCanadaReference && !useSaskatchewanReference && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
     {!!savedProfiles.length && <section aria-label="Saved provisional profiles" className="space-y-3 rounded-lg border border-[var(--border)] p-3">
       <h3 className="font-semibold">Saved provisional profiles</h3>
       <p>Historical evidence, not a current source check or an approved planting plan. To change conditions, calculate and save a new preview.</p>
@@ -451,7 +473,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
         {canadaCabbageResultQualifier(saved.result.fields) && <p>{canadaCabbageResultQualifier(saved.result.fields)}</p>}
         {saved.result.temperatureComparison && <TemperatureAssessment value={saved.result.temperatureComparison} />}
         {saved.result.profile.version === 2 && <p>Source reports these months; other months remain unknown. Saved date offsets are conditional calculations, not planting recommendations. Specify your own field-entry window in a new preview before automatic planning or adoption.</p>}
-        <ul>{Object.entries(saved.result.assessment.schedule).map(([key, value]) => <li key={key}>{labels[key]} (UTC): {value.value ?? 'Unknown'} ({value.status})</li>)}</ul>
+        <ProvisionalSchedule result={saved.result} />
         {saskatchewanNurseryResultQualifier(saved.result.fields) && <p>{saskatchewanNurseryResultQualifier(saved.result.fields)}</p>}
         <TomatoReferences request={saved.request} fields={saved.result.fields} />
         <EvidenceFields fields={saved.result.fields} spacing={!!saved.request.countBasis} request={saved.request} />
@@ -564,6 +586,25 @@ function Editor(props: ProvisionalCropPreviewProps) {
       </div>
       {draft.method !== 'transplant' && <p role="note">Select transplant establishment to consider these seed-starting references.</p>}
       <p>If you choose both, the historical Wisconsin reference takes precedence over the USDA transfer. Both remain visible in the results. An entered nursery-duration estimate takes precedence over either source; clearing an edited value keeps it unknown.</p>
+    </section>}
+    {firstHarvestReference && <section aria-label="Wisconsin tomato first-harvest reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
+      <h3 className="font-semibold">Wisconsin tomato first-harvest reference</h3>
+      <p>{WISCONSIN_TOMATO_FIRST_HARVEST_SOURCE.limitations}</p>
+      <a className="underline" href={`${WISCONSIN_TOMATO_FIRST_HARVEST_SOURCE.url}#page=10`} target="_blank" rel="noreferrer">Read the original guide, Table 3</a>
+      <label className="block">Wisconsin tomato first-harvest interval<select className={control}
+        value={draft.wisconsinFirstHarvestBasis ?? ''} disabled={draft.method !== 'transplant'}
+        onChange={event => edit({ wisconsinFirstHarvestBasis: event.target.value as WisconsinTomatoFirstHarvestBasis | '' })}>
+        <option value="">Choose a reported endpoint</option>
+        <option value="lower-bound">65 days · lower endpoint</option>
+        <option value="upper-bound">80 days · upper endpoint</option>
+      </select></label>
+      <label className="flex min-h-11 items-center gap-2"><input type="checkbox" aria-label="Use historical Wisconsin first-harvest reference"
+        disabled={firstHarvestConsentKey === null} checked={useFirstHarvestReference}
+        onChange={event => edit({ wisconsinFirstHarvestConsent: event.target.checked ? firstHarvestConsentKey : null })} />
+        Use this historical estimate for my outdoor fresh-market tomato transplants
+      </label>
+      {(draft.method !== 'transplant' || !draft.date) && <p>Choose transplant and enter your intended field-entry date to use this reference.</p>}
+      <p>The estimate leaves planting suitability, harvest weight and picking duration unknown unless you supply separate evidence.</p>
     </section>}
     {kenyaTomatoReference && <section aria-label="Kenya tomato nursery reference" className="space-y-2 rounded-lg border border-[var(--border)] p-3 text-sm">
       <h3 className="font-semibold">WorldVeg Kenya tomato nursery reference</h3>
@@ -707,7 +748,7 @@ function Editor(props: ProvisionalCropPreviewProps) {
       {draft.countMode === 'spacing' && <p>Budgeted whole stations: {result.assessment.budgetedStations.value ?? 'Unknown'} ({result.assessment.budgetedStations.status}). Area budget only; physical layout fit is unassessed.</p>}
       <p>Estimated plants: {result.assessment.estimatedPlantCount.value ?? 'Unknown'} ({result.assessment.estimatedPlantCount.status})</p>
       <p>Estimated harvest weight: {result.assessment.estimatedYieldKg.value === null ? 'Unknown' : `${formatDerivedMassKilograms(result.assessment.estimatedYieldKg.value, 'kg')} kg`} ({result.assessment.estimatedYieldKg.status})</p>
-      <ul>{Object.entries(result.assessment.schedule).map(([key, value]) => <li key={key}>{labels[key]} (UTC): {value.value ?? 'Unknown'} ({value.status})</li>)}</ul>
+      <ProvisionalSchedule result={result} />
       {saskatchewanNurseryResultQualifier(result.fields) && <p>{saskatchewanNurseryResultQualifier(result.fields)}</p>}
       {preview && <TomatoReferences request={preview.request} fields={result.fields} />}
       {!!result.assessment.uncertainties.length && <p>Uncertainties: {result.assessment.uncertainties.join(', ')}</p>}
