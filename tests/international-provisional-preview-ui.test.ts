@@ -18,7 +18,7 @@ Object.assign(globalThis, { __provisionalTemperatureAuth: temperatureAuth });
 const hooks = registerHooks({ load(url, context, next) {
   if (url.endsWith('/lib/api-client-auth.ts')) return { shortCircuit: true, format: 'module',
     source: 'export async function paidApiHeaders(){return globalThis.__provisionalTemperatureAuth.read();}' };
-  if (url.endsWith('/components/crops/ProvisionalCropPreview.tsx')) return { shortCircuit: true, format: 'module',
+  if (url.endsWith('/components/crops/ProvisionalCropPreview.tsx') || url.endsWith('/components/crops/EcccObservationPanel.tsx')) return { shortCircuit: true, format: 'module',
     source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
       target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
     } }).outputText };
@@ -552,6 +552,84 @@ function downloads(onAppend: () => void = () => {}) {
     if (descriptor) Object.defineProperty(globalThis, 'document', descriptor); else Reflect.deleteProperty(globalThis, 'document');
   } };
 }
+
+const stationFixture = new URL('./fixtures/eccc-saskatoon-rcs-2018-october-week.geojson', import.meta.url);
+
+function stationResponse(requestUrl: string) {
+  const sample = JSON.parse(readFileSync(stationFixture, 'utf8'));
+  sample.links = [{ rel: 'self', href: requestUrl }];
+  const response = new Response(JSON.stringify(sample), { headers: { 'content-type': 'application/json' } });
+  return Object.defineProperty(response, 'url', { value: requestUrl });
+}
+
+test('Canadian station history sends only an explicit public request and downloads attributed observations', async () => {
+  const originalFetch = globalThis.fetch;
+  const requests: URL[] = [];
+  globalThis.fetch = async (input, init) => {
+    const url = new URL(String(input));
+    requests.push(url);
+    assert.equal(init?.credentials, 'omit');
+    assert.equal(init?.redirect, 'error');
+    assert.equal(init?.referrerPolicy, 'no-referrer');
+    return stationResponse(url.href);
+  };
+  let saves = 0;
+  const ui = mount({ countryCode: 'CA', evidence: undefined, sitePoint: { latitude: 0, longitude: 0 },
+    onSaveProfile: () => { saves++; return { status: 'confirmed', profileId: 'unexpected' }; } });
+  const files = downloads();
+  try {
+    assert.equal(requests.length, 0);
+    ui.change('Climate station ID', '4057165');
+    ui.change('First station day', '2018-10-01'); ui.change('Last station day', '2018-10-07');
+    assert.equal(requests.length, 0);
+    await ui.click('Read station history');
+    assert.equal(requests.length, 1);
+    assert.equal(requests[0].origin, 'https://api.weather.gc.ca');
+    assert.deepEqual([...requests[0].searchParams.keys()], ['f', 'CLIMATE_IDENTIFIER', 'datetime', 'limit']);
+    assert.equal(requests[0].searchParams.get('CLIMATE_IDENTIFIER'), '4057165');
+    const panel = text(ui.root().findByProps({ 'aria-label': 'Station observations' }));
+    assert.match(panel, /SASKATOON RCS/);
+    assert.match(panel, /7 of 7 days returned/);
+    await ui.click('Download station history');
+    assert.deepEqual(files.names, ['station-4057165-2018-10-01.html']);
+    const exported = await files.blobs[0].text();
+    assert.match(exported, /Data Source: Environment and Climate Change Canada/);
+    assert.match(exported, /2018-10-07.*-2.9 °C.*4.3 °C.*11.4 °C/);
+    assert.match(exported, /frost safety, heat suitability or irrigation needs/);
+    assert.deepEqual(ui.writes, []);
+    assert.equal(saves, 0);
+    const oldDownload = ui.action('Download station history');
+    ui.change('Climate station ID', '4057152');
+    ui.change('Climate station ID', '4057165');
+    await act(async () => { await oldDownload(); });
+    assert.equal(files.names.length, 1);
+    assert.doesNotMatch(ui.text(), /7 of 7 days returned/);
+  } finally { globalThis.fetch = originalFetch; files.dispose(); ui.dispose(); }
+});
+
+test('a pending station read cannot publish after a Canadian workspace round trip', async () => {
+  const originalFetch = globalThis.fetch;
+  let complete!: () => void;
+  let requestedSignal: AbortSignal | null | undefined;
+  globalThis.fetch = (input, init) => {
+    requestedSignal = init?.signal;
+    return new Promise(resolve => { complete = () => resolve(stationResponse(String(input))); });
+  };
+  const ui = mount({ countryCode: 'CA', evidence: undefined });
+  try {
+    ui.change('Climate station ID', '4057165');
+    ui.change('First station day', '2018-10-01'); ui.change('Last station day', '2018-10-07');
+    let reading!: Promise<void>;
+    act(() => { reading = ui.action('Read station history')(); });
+    ui.update({ countryCode: 'US', contextRevision: 2 });
+    assert.doesNotMatch(ui.text(), /Canadian historical station weather/);
+    ui.update({ countryCode: 'CA', contextRevision: 3 });
+    assert.equal(requestedSignal?.aborted, true);
+    await act(async () => { complete(); await reading; });
+    assert.equal(ui.field('Climate station ID').props.value, '');
+    assert.doesNotMatch(ui.text(), /7 of 7 days returned|Download station history/);
+  } finally { globalThis.fetch = originalFetch; ui.dispose(); }
+});
 
 test('explicit printable download uses fresh source checks and leaves profiles untouched', async () => {
   let reads = 0;

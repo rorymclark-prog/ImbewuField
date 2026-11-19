@@ -42,6 +42,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '19 November 2026', sha: 'eb6cfcfd1',
+    changes: ['Canadian crop previews can show and download historical station temperatures, with estimates and missing readings clearly marked.'],
+  },
+  {
     when: '19 November 2026', sha: '088afa397',
     changes: ['Wisconsin tomato previews can estimate first harvest using a historical reference.'],
   },

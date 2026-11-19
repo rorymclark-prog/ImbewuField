@@ -1,6 +1,6 @@
 # Canadian daily station evidence · 19 November 2026
 
-Baseline `79adc2321ab22afdf8f921399d7f68dea23b30ad`, tree `0162f9627328f2e93f8b5614b483b2dbefda1c89`. Follow-up to the [Wisconsin harvest evidence audit](wisconsin-tomato-first-harvest-codex.md). This checkpoint covers the bounded reader and its input proofs. A grower-facing view, stale-workspace controls, normal-flow output checks and independent review follow on the same branch.
+Baseline `79adc2321ab22afdf8f921399d7f68dea23b30ad`, tree `0162f9627328f2e93f8b5614b483b2dbefda1c89`. Follow-up to the [Wisconsin harvest evidence audit](wisconsin-tomato-first-harvest-codex.md). The bounded reader and read-only planner panel share the same report wording and typed weather observations.
 
 ## Source and boundaries
 
@@ -14,6 +14,7 @@ Data Source: Environment and Climate Change Canada. The archived public Saskatoo
 | --- | --- |
 | ECCC-DAY-01 | Date coverage is counted for the requested station and window. A missing returned field, a whole day without records, a provider estimate, other flags and an observed zero remain distinct. |
 | ECCC-DAY-02 | Data held for wrong station, segment conflicts, mismatched source or units, invalid days, or incomplete response metadata. Identical overlapping daily rows count once and conflicting rows hold the series. |
-| ECCC-DAY-03 | Grower-facing results, workspace retirement, truthful export and the independent same-candidate checks remain open at this parser checkpoint. |
+| ECCC-DAY-03 | The real Production plan accepts an explicit Canadian context and station request. The 24–27 January 2012 result displayed four dates, two fully unflagged days, estimates and reads marked missing. Its downloaded HTML retains values, flags, coverage, provider attribution, licence and standalone scope. A real 0 °C maximum stayed visible at a 390 px viewport. |
+| ECCC-DAY-04 | The mounted planner regression covers a country/workspace round trip with a pending request and a station change that revokes an earlier download. The sample route saved and reopened a separately entered 35-day cabbage nursery estimate. The 27 April 2027 nursery date survived while first harvest, crop weight and entry window stayed unknown. |
 
-The reader emits evidence only. It leaves the existing planning, saved records and reference eligibility code paths untouched.
+The reader emits evidence only. It leaves the existing planning, saved records and reference eligibility code paths untouched. The browser proof used a backend-free synthetic sample and actual requests to the public station endpoint. Physical printing, real-account writes and local agronomic validation remain separate. Exact candidate CI and outside reviews must pass before release.

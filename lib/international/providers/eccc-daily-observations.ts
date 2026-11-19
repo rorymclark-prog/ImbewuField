@@ -3,9 +3,9 @@ import { addGrowerUtcDays, isGrowerRecordedAt, isGrowerUtcDate } from '../grower
 const ITEMS = 'https://api.weather.gc.ca/collections/climate-daily/items';
 const MAX_WINDOW_DAYS = 366;
 const MAX_RETURNED_FEATURES = MAX_WINDOW_DAYS + 1;
-const MAX_RESPONSE_CHARS = 1_048_576;
 const MILLISECONDS_PER_DAY = 86_400_000;
 
+export const ECCC_DAILY_RESPONSE_LIMIT = 1_048_576;
 export const ECCC_DAILY_ATTRIBUTION = 'Data Source: Environment and Climate Change Canada';
 export const ECCC_DAILY_LICENCE = 'https://eccc-msc.github.io/open-data/licence/readme_en/';
 export const ECCC_DAILY_SCHEMA = 'https://api.weather.gc.ca/collections/climate-daily/schema?f=html';
@@ -148,7 +148,7 @@ export function parseEcccDailyObservations(
 
   let raw: unknown;
   try {
-    if (body.length <= MAX_RESPONSE_CHARS) raw = JSON.parse(body);
+    if (body.length <= ECCC_DAILY_RESPONSE_LIMIT) raw = JSON.parse(body);
   } catch {
     return { status: 'held', reason: 'invalid-response' };
   }
