@@ -32,6 +32,8 @@ import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 import { isRecordsRegionalLang, recordsFill, recordsTemplate } from '@/lib/records-regional-drafts';
 import { recordsMonthLong, recordsMonthYear } from '@/lib/records-months';
+import { useInViewOnce } from '@/lib/use-in-view-once';
+import styles from './ComingUpHarvests.module.css';
 
 const rand = (n: number): string =>
   `R${numberLabel(Math.round(n))}`;
@@ -55,8 +57,6 @@ export default function ComingUpHarvests({
 }) {
   const { lang } = useLanguage();
   const text = (en: string, zu: string) => lang === 'zu' ? zu : recordsFill(lang, en);
-  const [openMonth, setOpenMonth] = useState<string | null>(null);
-
   // A fresh Date on every render would rebuild the book on every keystroke
   // elsewhere on the page; the month is what this card actually depends on.
   const now = useMemo(() => new Date(), []);
@@ -179,20 +179,31 @@ export default function ComingUpHarvests({
         english="Each figure is a whole crop’s harvest counted in the month its picking starts — not what you pick during that month. Planning estimates, not promises."
         zulu="Isibalo ngasinye siyisivuno sonke sesitshalo esibalwa enyangeni okuqala ukuvunwa ngayo — asisho okuzovunwa kuleyo nyanga kuphela. Lezi izilinganiso zokuhlela, akuzona izithembiso." />
 
-      <div style={{ borderTop: '1px solid var(--border)' }}>
-        {book.months.map((m) => (
-          <MonthRow
-            key={`${m.year}-${m.month}`}
-            month={m}
-            lang={lang}
-            open={openMonth === `${m.year}-${m.month}`}
-            onToggle={() => setOpenMonth(openMonth === `${m.year}-${m.month}` ? null : `${m.year}-${m.month}`)}
-          />
-        ))}
-      </div>
+      <MonthRows book={book} lang={lang} />
 
       <Exclusions book={book} unpriced={value.confirmed ? value.unpricedCropNames : []} lang={lang} />
     </section>
+  );
+}
+
+/** Own component so the in-view hook mounts when the book is drawn, not while the plan is still loading. */
+function MonthRows({ book, lang }: { book: ReturnType<typeof buildForwardHarvests>; lang: string }) {
+  const [openMonth, setOpenMonth] = useState<string | null>(null);
+  const { ref, phase } = useInViewOnce<HTMLDivElement>();
+  const maxKg = Math.max(0, ...book.months.map((m) => m.kg));
+  return (
+    <div ref={ref} className={phase === 'armed' ? styles.armed : phase === 'play' ? styles.play : undefined} style={{ borderTop: '1px solid var(--border)' }}>
+      {book.months.map((m) => (
+        <MonthRow
+          key={`${m.year}-${m.month}`}
+          month={m}
+          lang={lang}
+          maxKg={maxKg}
+          open={openMonth === `${m.year}-${m.month}`}
+          onToggle={() => setOpenMonth(openMonth === `${m.year}-${m.month}` ? null : `${m.year}-${m.month}`)}
+        />
+      ))}
+    </div>
   );
 }
 
@@ -205,10 +216,11 @@ function Figure({ label, value, tone = 'var(--text-primary)' }: { label: string;
   );
 }
 
-function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth; open: boolean; onToggle: () => void; lang: string }) {
+function MonthRow({ month, open, onToggle, lang, maxKg }: { month: ForwardHarvestMonth; open: boolean; onToggle: () => void; lang: string; maxKg: number }) {
   const empty = month.harvests.length === 0;
+  const isNow = month.monthsAhead === 0;
   return (
-    <div style={{ borderBottom: '1px solid var(--border)' }}>
+    <div className={isNow ? styles.nowRow : undefined} style={{ borderBottom: '1px solid var(--border)' }}>
       <button
         type="button"
         onClick={empty ? undefined : onToggle}
@@ -218,6 +230,7 @@ function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth;
       >
         <span className="flex items-center gap-2 min-w-0">
           <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{lang === 'zu' ? `${MONTH_ZU[month.month]} ${month.year}` : isRecordsRegionalLang(lang) ? recordsMonthYear(lang, month.month, month.year) : month.label}</span>
+          {isNow && <span className={styles.nowTag}>{lang === 'zu' ? 'Manje' : recordsFill(lang, 'Now')}</span>}
           {!empty && (
             <span className="font-sans truncate" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
               {month.harvests.length === 1 ? month.harvests[0].name : recordsTemplate(lang, '{n} crops', '{n} izitshalo', { n: month.harvests.length })}
@@ -234,6 +247,13 @@ function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth;
           )}
         </span>
       </button>
+      {!empty && maxKg > 0 && (
+        <div className="px-4 pb-2.5" style={{ marginTop: -2 }} aria-hidden="true">
+          <div className={styles.track}>
+            <div className={styles.bar} style={{ width: `${Math.max(2, (month.kg / maxKg) * 100)}%`, '--i': month.monthsAhead } as React.CSSProperties} />
+          </div>
+        </div>
+      )}
       {open && !empty && (
         <ul className="px-4 pb-3 pt-0.5 flex flex-col gap-1.5" style={{ listStyle: 'none', margin: 0 }}>
           {month.harvests.map((h) => (

@@ -1,0 +1,51 @@
+/* "Coming up": each month's harvest bar slides out along the month axis, starting from "now"
+   and staggering outward month by month. The "now" marker on the current month is static.
+   Without a phase class (server render, no JS, reduced motion) every bar is drawn at full length.
+   Opacity and transform only. */
+
+.track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-3);
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--color-forest-800);
+  transform-origin: left center;
+}
+
+.nowTag {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 9999px;
+  background: var(--brand-soft-2);
+  color: var(--color-forest-800);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.nowRow {
+  box-shadow: inset 3px 0 0 var(--color-forest-800);
+}
+
+.armed .bar { transform: scaleX(0); }
+
+.play .bar {
+  animation: slideOut 520ms var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 0) * 130ms);
+}
+
+@keyframes slideOut {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .armed .bar { transform: none; }
+  .play .bar { animation: none; }
+}
