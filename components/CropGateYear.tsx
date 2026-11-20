@@ -433,7 +433,11 @@ export default function CropGateYear({ site, climateSource }: Props) {
       ctx.beginPath(); ctx.moveTo(sx0, yC(ht.limitC)); ctx.lineTo(sx1, yC(ht.limitC)); ctx.stroke();
       ctx.setLineDash([]);
       ctx.font = `600 12px ${P.font}`; ctx.fillStyle = P.warn; ctx.textAlign = 'right';
-      ctx.fillText(`heat limit ${deg(ht.limitC)}`, sx1 - 2, yC(ht.limitC) - 5);
+      // Above the line, unless that would put it on the panel title's line (narrow screens, low limits):
+      // then just under it.
+      const limY = yC(ht.limitC);
+      const limLabelY = limY - 5 < g.t2 + 14 + 14 ? limY + 15 : limY - 5;
+      ctx.fillText(`heat limit ${deg(ht.limitC)}`, sx1 - 2, limLabelY);
       // temperature line
       ctx.strokeStyle = P.ink; ctx.lineWidth = 1.6; ctx.globalAlpha = 0.85; ctx.lineJoin = 'round';
       ctx.beginPath();
@@ -453,7 +457,12 @@ export default function CropGateYear({ site, climateSource }: Props) {
       ctx.font = `12px ${P.font}`; ctx.fillStyle = P.ink2;
       ctx.textAlign = hc > 8 ? 'right' : hc < 2 ? 'left' : 'center';
       const hx = hc > 8 ? colX(hc) + cw : hc < 2 ? colX(hc) + 2 : colX(hc) + cw / 2;
-      ctx.fillText(`${MONTH_SHORT[ht.hottestMonth - 1]} ${deg(ht.hottestC)}`, hx, yC(ht.hottestC) - 9);
+      // Above its point, unless the dashed heat-limit line would run through the words: then below it.
+      const hotY = yC(ht.hottestC);
+      const aboveY = hotY - 9;
+      const crosses = limY > aboveY - 12 && limY < aboveY + 4;
+      const hotLabelY = crosses ? hotY + 18 : aboveY;
+      ctx.fillText(`${MONTH_SHORT[ht.hottestMonth - 1]} ${deg(ht.hottestC)}`, hx, hotLabelY);
       ctx.restore();
 
       // ── Row 3: the crop's bed months, sliding into place.
