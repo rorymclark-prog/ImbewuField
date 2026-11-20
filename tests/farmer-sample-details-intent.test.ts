@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import ts from 'typescript';
 import { monthlyTemperatureStatus } from '../lib/climate-temperature.ts';
+import { withLocalRainfallSeason } from '../lib/rainfall-season.ts';
 
 // Execute the actual page callbacks and effects, without mounting Mapbox or
 // fetching anything. State scheduling, cache, transport, timers, translation
@@ -106,7 +107,7 @@ function harness(options: { sample?: boolean; params?: string; sheetOpen?: boole
     },
     locationRequest: { current: 0 }, siteParamHandled: { current: '' },
     loadPlaces: () => places, DEMO_SITE: demo, isSampleMode: () => settings.sample,
-    monthlyTemperatureStatus,
+    monthlyTemperatureStatus, withLocalRainfallSeason,
     // The comparison boundary distinguishes fixture sites. Five-decimal cache
     // spelling comes from the extracted cache expression, not a copied rule.
     designSiteIdFromLocation: (value: Point | null) => value ? JSON.stringify([value.lat, value.lon]) : 'unselected',
