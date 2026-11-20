@@ -492,7 +492,9 @@ export default function ExchangeBoard() {
           <div className={workspace.cards}>
             {rows.map((row) => (
               <ListingCard
-                key={row.listing.id}
+                // The fresh card remounts once so its in-view observer arms after it is flagged
+                // (it was first mounted, unflagged, behind the form).
+                key={row.listing.id === freshListingId ? `${row.listing.id}:fresh` : row.listing.id}
                 row={row}
                 nowMs={nowMs}
                 mine={isLocalListing(row.listing)}
