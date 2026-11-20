@@ -1,0 +1,47 @@
+/* Sales and costs bars grow side by side from one baseline; the contribution figure counts up in
+   step. Without a phase class (server render, no JS, reduced motion) the finished card shows. */
+.figure { font-variant-numeric: tabular-nums; }
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  margin: 0 0 10px;
+}
+
+.barCol { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
+.track {
+  display: flex;
+  align-items: flex-end;
+  width: 32px;
+  height: 52px;
+  border-bottom: 1px solid var(--border);
+}
+
+.bar {
+  display: block;
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  transform-origin: center bottom;
+}
+.barSales { background: var(--color-forest-800); }
+.barCosts { background: var(--color-harvest); }
+
+.barLabel { font-size: 12px; line-height: 1.2; color: var(--text-secondary); }
+
+.armed .bar { transform: scaleY(0); }
+
+/* Cards stagger by --card x 100 ms; each pair of bars lands over 600 ms, costs 80 ms after sales. */
+.play .bar { animation: areaBar 600ms var(--ease-out) calc(var(--card) * 100ms) backwards; }
+.play .barCosts { animation-delay: calc(var(--card) * 100ms + 80ms); }
+
+@keyframes areaBar {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .armed .bar { transform: none; }
+  .play .bar { animation: none; }
+}

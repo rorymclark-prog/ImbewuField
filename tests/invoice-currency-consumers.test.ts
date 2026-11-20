@@ -235,6 +235,8 @@ test('actual cash and area cards disclose withheld income instead of a zero resu
       return next(specifier, context);
     },
     load(url, context, next) {
+      // CSS modules: the components only read class names, so an empty map is enough here.
+      if (url.endsWith('.module.css')) return { format: 'module', shortCircuit: true, source: 'export default {};' };
       if (url.endsWith('.tsx')) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
         compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
       }).outputText };

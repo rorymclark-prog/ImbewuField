@@ -35,6 +35,8 @@ import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 import { recordsFill, recordsTemplate, recordsLabel, isRecordsRegionalLang } from '@/lib/records-regional-drafts';
 import { recordsMonthShort, recordsMonthYear } from '@/lib/records-months';
+import { useInViewOnce } from '@/lib/use-in-view-once';
+import styles from './CashflowChart.module.css';
 
 const CARD: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
 
@@ -245,6 +247,12 @@ function Panels({
 }) {
   const { W, PAD, BARS_H, GAP_H, RUN_H, barCap } = wide ? DESK : PHONE;
   const n = months.length;
+  // Plays once when the chart first scrolls into view. The <svg> is keyed on the window length
+  // below, so switching 6m / 12m / 24m remounts it and the bars and line draw again; clicking a
+  // month or any other re-render does not.
+  const { ref, phase } = useInViewOnce<HTMLDivElement>();
+  // The bar stagger is capped at about 400 ms in total however many months are on screen.
+  const step = Math.min(60, 400 / Math.max(1, n - 1));
   const plotW = W - PAD.left - PAD.right;
   const colW = plotW / n;
   const barW = Math.min(colW * 0.52, barCap);
@@ -278,8 +286,8 @@ function Panels({
   const showLabel = (i: number) => n <= 12 || i === 0 || i === n - 1 || i % 2 === 0;
 
   return (
-    <div className="px-2">
-      <svg viewBox={`0 0 ${W} ${totalH}`} width="100%" style={{ display: 'block' }} role="img"
+    <div ref={ref} className={`px-2 ${phase === 'armed' ? styles.armed : phase === 'play' ? styles.play : ''}`}>
+      <svg key={n} viewBox={`0 0 ${W} ${totalH}`} width="100%" style={{ display: 'block', ['--step' as string]: `${step.toFixed(1)}ms` }} role="img"
           aria-label={recordsLabel(lang, 'Money in and money out for each of the last {n} months, with a running total below.', 'Imali engenayo nephumayo enyangeni ngayinye kwezingu-{n} ezedlule, nesamba esiqhubekayo ngezansi.', { n })}>
         {/* Zero line for the bars, and the two extents of the shared scale. */}
         <line x1={PAD.left} x2={W - PAD.right} y1={zeroY} y2={zeroY} stroke="rgba(140,122,98,0.45)" strokeWidth="0.8" />
@@ -302,14 +310,23 @@ function Panels({
           const outH = (outScale.draw(m.moneyOutZar) / span) * BARS_H;
           const x = cx(i) - barW / 2;
           return (
-            <g key={m.key}>
+            <g key={m.key} style={{ ['--i' as string]: i }}>
               {/* Money in grows up from zero, money out grows down. Position, not
                   only colour, tells the two apart — which is what keeps the chart
-                  readable in greyscale and to a colourblind reader. */}
-              {m.moneyInZar > 0 && <rect x={x} y={zeroY - inH} width={barW} height={inH} fill={IN} rx="2" />}
-              {m.moneyOutZar > 0 && <rect x={x} y={zeroY} width={barW} height={outH} fill={OUT} rx="2" />}
-              {inScale.isClipped(m.moneyInZar) && <BreakMark x={x} y={zeroY - inH} w={barW} down />}
-              {outScale.isClipped(m.moneyOutZar) && <BreakMark x={x} y={zeroY + outH} w={barW} />}
+                  readable in greyscale and to a colourblind reader. A month with
+                  nothing in (or out) draws no bar, so it has nothing to animate. */}
+              {m.moneyInZar > 0 && (
+                <g className={`${styles.bar} ${styles.barIn}`}>
+                  <rect x={x} y={zeroY - inH} width={barW} height={inH} fill={IN} rx="2" />
+                  {inScale.isClipped(m.moneyInZar) && <BreakMark x={x} y={zeroY - inH} w={barW} down />}
+                </g>
+              )}
+              {m.moneyOutZar > 0 && (
+                <g className={`${styles.bar} ${styles.barOut}`}>
+                  <rect x={x} y={zeroY} width={barW} height={outH} fill={OUT} rx="2" />
+                  {outScale.isClipped(m.moneyOutZar) && <BreakMark x={x} y={zeroY + outH} w={barW} />}
+                </g>
+              )}
             </g>
           );
         })}
@@ -317,9 +334,9 @@ function Panels({
         {/* The running band, drawn after the bars so its line is never buried. */}
         <rect x={PAD.left} y={runTop} width={plotW} height={RUN_H} fill="rgba(35,94,134,0.045)" />
         <line x1={PAD.left} x2={W - PAD.right} y1={runZeroY} y2={runZeroY} stroke="rgba(140,122,98,0.4)" strokeWidth="0.7" strokeDasharray="2,2" />
-        <path d={runArea} fill="rgba(35,94,134,0.14)" />
-        <path d={runPath} fill="none" stroke={RUN} strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
-        <circle cx={cx(n - 1)} cy={runY(months[n - 1].runningZar)} r="2.4" fill={RUN} />
+        <path className={styles.runArea} d={runArea} fill="rgba(35,94,134,0.14)" />
+        <path className={styles.runLine} d={runPath} pathLength={1} fill="none" stroke={RUN} strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
+        <circle className={styles.runDot} cx={cx(n - 1)} cy={runY(months[n - 1].runningZar)} r="2.4" fill={RUN} />
         {runMax > 0 && (
           <text x={PAD.left - 4} y={runTop + 4} textAnchor="end" fontSize="6.5" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{randTick(runMax)}</text>
         )}

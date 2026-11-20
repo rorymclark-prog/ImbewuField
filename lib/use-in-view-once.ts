@@ -21,7 +21,15 @@ export function prefersReducedMotion(): boolean {
 
 /** Fires once when the element first scrolls into view. Server render and the first client render
  *  report 'final', so nothing flashes empty; the animation starts only after mount. */
-export function useInViewOnce<T extends Element>(): { ref: RefObject<T>; phase: InViewPhase } {
+export type InViewOptions = { threshold?: number; rootMargin?: string };
+
+/** Tall elements (taller than about 80% of the viewport) can never reach a 0.2 threshold on a phone,
+ *  so pass { threshold: 0, rootMargin: '0px 0px -25% 0px' } for those. */
+export function useInViewOnce<T extends Element>(
+  options: InViewOptions = {},
+): { ref: RefObject<T>; phase: InViewPhase } {
+  const threshold = options.threshold ?? 0.2;
+  const rootMargin = options.rootMargin ?? '0px';
   const ref = useRef<T>(null);
   const [phase, setPhase] = useState<InViewPhase>('final');
 
@@ -34,9 +42,10 @@ export function useInViewOnce<T extends Element>(): { ref: RefObject<T>; phase: 
         setPhase('play');
         io.disconnect();
       }
-    }, { threshold: 0.2 });
+    }, { threshold, rootMargin });
     io.observe(el);
     return () => io.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { ref, phase };

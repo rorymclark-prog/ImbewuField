@@ -1,0 +1,121 @@
+/* A save confirmation. The finished mark is the default state (server render, no JS, reduced
+   motion); .play replays it once from nothing. Opacity, transform and stroke-dashoffset only. */
+.line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.saved, .linked {
+  background: color-mix(in srgb, var(--emerald) 14%, var(--bg-1));
+}
+
+/* Device-only: no tint, a hairline border, muted ink. */
+.device {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.mark { flex: 0 0 24px; display: block; }
+
+.ring { fill: none; stroke-width: 1.6; transform-origin: 12px 12px; }
+.saved .ring, .linked .ring { fill: color-mix(in srgb, var(--emerald) 22%, transparent); stroke: var(--emerald); }
+.device .ring { stroke: var(--text-muted); stroke-dasharray: 2 3; }
+
+.tick {
+  fill: none;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.saved .tick, .linked .tick { stroke: var(--emerald); }
+.device .tick { stroke: var(--text-secondary); stroke-width: 1.8; }
+
+.text { flex: 1; min-width: 0; }
+
+/* The "counted once" chip: a numeral 1 in a small solid disc. */
+.once {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  background: var(--emerald);
+  color: var(--bg-1);
+}
+
+.play .text { animation: savedText var(--dur-base) var(--ease-out) 140ms backwards; }
+
+.play.saved .ring, .play.linked .ring { animation: savedPop 300ms var(--ease-spring) backwards; }
+.play.device .ring { animation: savedFade var(--dur-base) linear backwards; }
+
+.play .tick { animation: savedDraw 300ms var(--ease-out) 120ms backwards; }
+.play.device .tick { animation-duration: 240ms; }
+
+.play .once { animation: savedPop 260ms var(--ease-spring) 440ms backwards; }
+
+@keyframes savedPop {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes savedFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes savedDraw {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  10% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes savedText {
+  from { opacity: 0; transform: translateX(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .play .text, .play .ring, .play .tick, .play .once { animation: none; }
+}
+
+/* A row that has just joined a list (a saved invoice, a new record): it drops in from just above
+   and a green wash fades off it. The wash is a pseudo-element so only opacity animates. */
+.freshRow { position: relative; animation: freshIn 360ms var(--ease-out) backwards; }
+.freshRow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--emerald) 18%, transparent);
+  animation: freshWash 1100ms var(--ease-out) 200ms both;
+}
+
+@keyframes freshIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes freshWash {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .freshRow, .freshRow::before { animation: none; }
+  .freshRow::before { opacity: 0; }
+}

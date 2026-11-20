@@ -130,6 +130,14 @@ export default function ExchangeBoard() {
   const [cropKeys, setCropKeys] = useState<string[]>([]);
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<ListingSort>('newest');
+  // The listing the farmer has just posted. It gets a one-off lift and ring on the board, then
+  // this lets go so a later re-mount (a filter change) does not replay it.
+  const [freshListingId, setFreshListingId] = useState<string | null>(null);
+  useEffect(() => {
+    if (!freshListingId) return;
+    const timer = window.setTimeout(() => setFreshListingId(null), 6000);
+    return () => window.clearTimeout(timer);
+  }, [freshListingId]);
   const [withinKm, setWithinKm] = useState('');
   const [includeClosed, setIncludeClosed] = useState(false);
   const [viewpointId, setViewpointId] = useState('none');
@@ -279,7 +287,7 @@ export default function ExchangeBoard() {
       {showForm && (
         <NewListingForm
           mySite={mySite}
-          onPosted={(listings) => { setLocalListings(listings); setShowForm(false); setSort('newest'); }}
+          onPosted={(listings, postedId) => { setLocalListings(listings); setShowForm(false); setSort('newest'); setFreshListingId(postedId); }}
           onCancel={() => setShowForm(false)}
         />
       )}
@@ -484,11 +492,14 @@ export default function ExchangeBoard() {
           <div className={workspace.cards}>
             {rows.map((row) => (
               <ListingCard
-                key={row.listing.id}
+                // The fresh card remounts once so its in-view observer arms after it is flagged
+                // (it was first mounted, unflagged, behind the form).
+                key={row.listing.id === freshListingId ? `${row.listing.id}:fresh` : row.listing.id}
                 row={row}
                 nowMs={nowMs}
                 mine={isLocalListing(row.listing)}
                 hasOrigin={origin !== null}
+                fresh={row.listing.id === freshListingId}
                 onClose={(id) => setLocalListings(setLocalListingStatus(id, 'closed'))}
                 onDelete={(id) => setLocalListings(deleteLocalListing(id))}
               />

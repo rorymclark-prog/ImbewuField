@@ -1,0 +1,48 @@
+/* Bars grow from the zero line (money in upward, money out downward), then the running total
+   strokes in. Without a phase class (server render, no JS, reduced motion) everything is drawn
+   finished. Opacity, transform and stroke-dashoffset only. */
+.bar { transform-box: fill-box; }
+.barIn { transform-origin: center bottom; }
+.barOut { transform-origin: center top; }
+
+.runLine { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.runDot { transform-box: fill-box; transform-origin: center; }
+
+.armed .bar { transform: scaleY(0); }
+.armed .runLine { stroke-dashoffset: 1; opacity: 0; }
+.armed .runArea { opacity: 0; }
+.armed .runDot { opacity: 0; transform: scale(0); }
+
+/* Bars: 450 ms each, staggered by --i x --step (capped at 400 ms across the chart). The running
+   line starts as the first bars land and finishes by about 1.1 s. */
+.play .bar { animation: cashBar 450ms var(--ease-out) calc(var(--i) * var(--step, 40ms)) backwards; }
+.play .runLine { animation: cashRun 650ms ease-in-out 450ms backwards; }
+.play .runArea { animation: cashFade 300ms linear 800ms backwards; }
+.play .runDot { animation: cashDot 220ms var(--ease-spring) 1000ms backwards; }
+
+@keyframes cashBar {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes cashRun {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  6% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes cashFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes cashDot {
+  from { opacity: 0; transform: scale(0); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .armed .bar, .armed .runArea, .armed .runDot { transform: none; opacity: 1; }
+  .armed .runLine { stroke-dashoffset: 0; opacity: 1; }
+  .play .bar, .play .runLine, .play .runArea, .play .runDot { animation: none; }
+}
