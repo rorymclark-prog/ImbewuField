@@ -2,7 +2,7 @@ import { annualRainfallMm, sourcedMonthlyRainfall, monthlyTemperatureStatus, rep
 import { productContextFromItems, productPurchasingMarkdown } from '@/lib/production-product-guidance';
 import { growingZonesForClimate } from '@/lib/growing-zones';
 import { PLANTING_SUITABILITY_PROMPT, reportSectionsForGeneration } from '@/lib/report-planting-guide';
-import { listedPlantMentions, reportPlantingCandidates, REPORT_PLANTING_SAFETY_RULE } from '@/lib/report-planting-safety';
+import { listedPlantMentions, plantingFrostUnknown, reportPlantingCandidates, REPORT_PLANTING_SAFETY_RULE } from '@/lib/report-planting-safety';
 import { NextRequest } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 
@@ -308,8 +308,9 @@ export async function POST(req: NextRequest) {
   // inland site — with the fruit-tree, indigenous-tree and windbreak sections, the ones a farmer
   // plants from, using the coastal one.
   const ecology = resolveSiteEcology(d.biome, d.vegetation);
+  const plantingMinimum = plantingColdMinimum(d.climate);
   const screenedPlantingCandidates = reportPlantingCandidates(
-    biomeKeyForName(ecology.biome.name), plantingColdMinimum(d.climate),
+    biomeKeyForName(ecology.biome.name), plantingMinimum,
   );
   // Real administrative area for this point (municipality / district / province)
   const admin = await reverseGeocode(d.lat, d.lon);
@@ -380,7 +381,7 @@ Treat this as an upper bound on the property, not a measured boundary — shapes
 
 ${siteReportPurposeInstruction(reportPurpose)}
 
-SCREENED PLANTING CANDIDATES for this biome and known frost risk (a shortlist, not proof of suitability): ${screenedPlantingCandidates}
+SCREENED PLANTING CANDIDATES for this biome and known frost risk (a shortlist, not proof of suitability)${plantingFrostUnknown(plantingMinimum) ? '. The lowest temperature here is not known, so frost-tender trees and shrubs are left out; say they need a frost-free site the grower has confirmed rather than recommending one' : ''}: ${screenedPlantingCandidates}
 ${REPORT_PLANTING_SAFETY_RULE}
 
 ---

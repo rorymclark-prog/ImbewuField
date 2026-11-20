@@ -395,14 +395,13 @@ test('editing the next report settings cannot relabel the saved report; regenera
     await act(async () => button('Generate new report').props.onClick());
     assert.equal(requestBody?.tone, 'simple');
     assert.equal(requestBody?.purpose, 'potential');
-    assert.equal(loadReports().length, 1, 'generation leaves the original saved version alone');
-    assert.match(textOf(view!.toJSON()), /New report · not saved yet/);
-    await act(async () => {
-      const saveButton = view!.root.findAllByType('button').find(n => ['Save', 'Saved'].includes(textOf(n)))!;
-      saveButton.props.onClick();
-    });
-    assert.equal(loadReports().length, 2, 'saving regenerated text must create a separate report');
-    assert.equal(loadReports().find(r => r.id === 'original')?.report, initial.report);
+    // A finished report is now saved at once (SR-001, 20 November 2026): a paid
+    // report that waited for a Save tap was lost on Back, a reload or the next
+    // Generate. The claim that still matters is unchanged: regeneration is its
+    // own version and the original saved report is left exactly as it was.
+    assert.equal(loadReports().length, 2, 'regenerated text is saved as a separate report, never over the original');
+    assert.equal(loadReports().find(r => r.id === 'original')?.report, initial.report, 'generation leaves the original saved version alone');
+    assert.match(textOf(view!.toJSON()), /Saved report · /);
     assert.equal(loadReports()[0].settings?.tone, 'simple');
     assert.equal(loadReports()[0].settings?.purpose, 'potential');
     assert.equal(loadReports()[0].settings?.model, 'claude-sonnet-4-6');

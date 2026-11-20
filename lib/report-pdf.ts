@@ -66,9 +66,14 @@ export function hasOwnCover(markdown: string): boolean {
  *
  * The italic rule will not match when a word character sits against an underscore, so snake_case
  * identifiers and file names inside the text survive intact.
+ *
+ * A Markdown link printed its brackets too: "Source: [KZN DARD, Fruit and Nut Production …](https://…)"
+ * appeared fourteen times in one sample report. Paper cannot be tapped, so the address stays in
+ * full, after the label, in plain parentheses.
  */
 export function stripInlineMarkdown(text: string): string {
   return text
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '$1 ($2)')
     .replace(/\*\*(.+?)\*\*/g, '$1')
     .replace(/`([^`]+)`/g, '$1')
     .replace(/(?<![A-Za-z0-9])_([^_\n]+)_(?![A-Za-z0-9])/g, '$1')

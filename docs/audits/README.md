@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+- [2026-11-20 — Site report review and five fixes](2026-11-20/site-report-review-claude.md): saved paid reports, readable sources, phone tables, plain errors and a frost-safe tree list; ranked open findings (no real narrative reviewed since September).
+
 - [2026-11-19 — Wisconsin tomato first-harvest reference](2026-11-19/wisconsin-tomato-first-harvest-codex.md): source interpretation, explicit grower choice, saved-profile compatibility and inspected report layout.
 
 - [2026-11-18 — Wisconsin reference disclosure](2026-11-18/wisconsin-reference-disclosure-codex.md): actual Claude F-1 readability correction, unchanged source capsules and canonical records, scoped output checks and separate successor gates.
@@ -220,6 +222,8 @@ Previous audit: [Paid Whole ghost strips, crowns and export provenance — 28 Oc
 The prior audit is preserved unchanged. Source-photo seams remain open; deployment and final CI evidence belong to the implementation’s issue #35 completion ledger.
 
 ## Site reports and mapping: start here
+
+Latest review: [Site report review and five fixes — 20 November 2026](2026-11-20/site-report-review-claude.md). SR-001–SR-005 fixed on `claude/site-report-review-20261119`; SR-006 (no real model narrative reviewed since 5 September) leads the open list.
 
 Latest production-status verification and PDF follow-up: [Live annual rows and complete product qualifications — 29 October 2026](2026-10-29/annual-product-pdf-pagination-codex.md). REP-S01 and REP-V01 are verified in production `977ea31`; REP-L02's narrow PDF pagination follow-up has its own release gates.
 
