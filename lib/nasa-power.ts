@@ -279,20 +279,22 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   const windFromSummer = wd(['DEC', 'JAN', 'FEB']);
   const windFromWinter = wd(['JUN', 'JUL', 'AUG']);
 
-  // Rainfall pattern analysis
-  // SA months: Dec(11), Jan(0), Feb(1) = austral summer; Jun(5), Jul(6), Aug(7) = austral winter.
-  const summerRain = monthly[11] + monthly[0] + monthly[1];
-  const winterRain = monthly[5] + monthly[6] + monthly[7];
+  // Compare the same calendar months in both hemispheres. The existing
+  // heuristic's ranges and thresholds belong to the month groups; only the
+  // meteorological season name changes by hemisphere.
+  const decemberToFebruaryRain = monthly[11] + monthly[0] + monthly[1];
+  const juneToAugustRain = monthly[5] + monthly[6] + monthly[7];
+  const northernSeasons = lat >= 0;
   let pattern: 'summer' | 'winter' | 'year-round';
   let wetSeason: string;
   let drySeason: string;
 
-  if (summerRain > winterRain * 2) {
-    pattern = 'summer';
+  if (decemberToFebruaryRain > juneToAugustRain * 2) {
+    pattern = northernSeasons ? 'winter' : 'summer';
     wetSeason = 'Oct–Mar';
     drySeason = 'May–Aug';
-  } else if (winterRain > summerRain * 1.5) {
-    pattern = 'winter';
+  } else if (juneToAugustRain > decemberToFebruaryRain * 1.5) {
+    pattern = northernSeasons ? 'summer' : 'winter';
     wetSeason = 'May–Sep';
     drySeason = 'Nov–Mar';
   } else {
@@ -318,7 +320,7 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   // The real definition needs the twelve monthly pairs, not annual and seasonal
   // totals: the aridity threshold that separates B from everything else, and
   // the s/w/f season letter, are both defined on the driest and wettest MONTH
-  // within each half-year. Collapsing to summerRain/winterRain destroys exactly
+  // within each half-year. Collapsing to the two three-month totals destroys exactly
   // the information the letters are made of, which is why the old one could
   // never have been right however its thresholds were tuned.
   const { code: koppen, description: koppenDesc, growerNote: koppenNote } = classifyKoppen({

@@ -258,6 +258,32 @@ test('March rainfall cannot be misclassified as austral summer DJF rain', async 
   assert.equal(result.rainfall.pattern, 'year-round');
 });
 
+test('the prevailing rainfall months keep their ranges and use the local meteorological season name', async () => {
+  const cases = [
+    { months: ['DEC', 'JAN', 'FEB'], south: 'summer', north: 'winter', wet: 'Oct–Mar', dry: 'May–Aug' },
+    { months: ['JUN', 'JUL', 'AUG'], south: 'winter', north: 'summer', wet: 'May–Sep', dry: 'Nov–Mar' },
+    { months: [], south: 'year-round', north: 'year-round', wet: 'year-round', dry: 'none' },
+  ];
+
+  for (const row of cases) {
+    const precipitation = monthValues(1);
+    for (const month of row.months) precipitation[month] = 4;
+    await withFetch((async (input) => new URL(String(input)).hostname === 'power.larc.nasa.gov'
+      ? response(nasaPayload({ PRECTOTCORR: precipitation }))
+      : response({}, false, 503)) as typeof fetch, async () => {
+      const south = (await fetchNasaPower(-29, 31)).rainfall;
+      assert.equal(south.pattern, row.south);
+      assert.equal(south.wetSeason, row.wet);
+      assert.equal(south.drySeason, row.dry);
+
+      for (const latitude of [0, 46]) {
+        const rainfall = (await fetchNasaPower(latitude, 31)).rainfall;
+        assert.deepEqual(rainfall, { ...south, pattern: row.north });
+      }
+    });
+  }
+});
+
 test('a partial Open-Meteo response leaves complete NASA rainfall in charge', async () => {
   let calls = 0;
   const result = await withFetch(
