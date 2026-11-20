@@ -49,7 +49,7 @@ const T = {
   arcTitle: 'The sowing',
   gapsTitle: 'The planner’s own suggestions for an empty month',
   gapsHint: 'Choose an empty month to see which of these five crops the planner would sow for it.',
-  legend: { fresh: 'fresh vegetable coming', gap: 'none', filled: 'filled by this sowing', sow: 'sow', tray: 'tray', bed: 'in the bed', pick: 'pick' },
+  legend: { fresh: 'fresh vegetable coming', filled: 'filled by this sowing', sow: 'sow', tray: 'tray', bed: 'in the bed', pick: 'pick' },
   note: 'These are the planner’s own crop timings for this farm, not a forecast: weather, pests and how you tend the crop move them. ' +
     'The year is the sample farm’s settled one: the crop plan’s repeating plantings, with the one-off crops already in the ground left out, ' +
     'vegetables only (fruit and animal products are not counted). A sowing is placed in the bed with the most free room, as the planner’s gap filler does, ' +
@@ -207,8 +207,8 @@ export default function SowNow() {
         <div className={s.actions}>
           {!reduced && (
             <button type="button" className={`${s.play} ${s.playMain}`} onClick={togglePlay} aria-label={playing ? T.pauseLabel : T.playLabel}>
-              {playing ? <Pause size={16} aria-hidden /> : finished ? <Repeat size={16} aria-hidden /> : <Play size={16} aria-hidden />}
-              {playing ? T.pause : finished ? T.replay : T.play}
+              {playing ? <Pause size={16} aria-hidden /> : <Play size={16} aria-hidden />}
+              {playing ? T.pause : T.play}
             </button>
           )}
           <button type="button" className={`${s.play}${reduced ? ` ${s.playMain}` : ''}`} onClick={stepOnce} aria-label={T.stepLabel}>
@@ -280,7 +280,7 @@ export default function SowNow() {
 
       <div className={s.legend} aria-hidden>
         <span className={s.key}><span className={s.swFresh} />{T.legend.fresh}</span>
-        <span className={s.key}><span className={s.swGap} />{`no fresh vegetable (${T.legend.gap})`}</span>
+        <span className={s.key}><span className={s.swGap} />no fresh vegetable</span>
         <span className={s.key}><span className={s.swFilled} />{T.legend.filled}</span>
         <span className={s.key}><span className={s.swSow} />{T.legend.sow}</span>
         <span className={s.key}><span className={s.swTray} />{T.legend.tray}</span>
