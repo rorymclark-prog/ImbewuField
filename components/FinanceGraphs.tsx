@@ -66,6 +66,9 @@ const SHORT = '#B33A3A';   // sold beyond what the picking log accounts for
 const BENCH = '#E3D8C0';   // the plan's benchmark: present, recessive, never the hero
 // SOLD as TEXT: the raw fill measures ~1.9:1 on a dark card, so text follows the theme instead.
 const SOLD_TEXT = 'var(--color-forest-800)';
+// Plan-vs-actual bar layers, as theme tokens (same set HarvestReconciliation uses) so the bars and
+// their legend dots follow the theme in dark mode instead of staying a fixed light-card palette.
+const BAR_COLORS = { bench: 'var(--border)', picked: 'var(--color-forest-800)', short: 'var(--danger)', mark: 'var(--gold)', sold: 'var(--bg-1)' };
 
 type View = 'measured' | 'plan';
 const WINDOWS = [6, 12, 24];
@@ -526,11 +529,11 @@ function PlanView({ plan, source, wide, orchard, lang }: {
       </HarvestBarsGroup>
 
       <div className="px-4 pb-3 flex flex-wrap items-center" style={{ gap: '4px 14px' }}>
-        <Chip dot={BENCH} title={lang === 'zu' ? 'English source: plan benchmark' : undefined} label={tx('plan benchmark', 'isilinganiso sohlelo')} value="" />
-        <Chip dot={SOLD} title={lang === 'zu' ? 'English source: logged picked' : undefined} label={tx('logged picked', 'okuvuniwe okurekhodiwe')} value="" />
+        <Chip dot={BAR_COLORS.bench} title={lang === 'zu' ? 'English source: plan benchmark' : undefined} label={tx('plan benchmark', 'isilinganiso sohlelo')} value="" />
+        <Chip dot={BAR_COLORS.picked} title={lang === 'zu' ? 'English source: logged picked' : undefined} label={tx('logged picked', 'okuvuniwe okurekhodiwe')} value="" />
         <Chip dot="transparent" label={tx('sold', 'kudayisiwe')} value="" />
         {plan.lossConfirmed
-          ? <Chip dot="#C07A1E"
+          ? <Chip dot={BAR_COLORS.mark}
               title={lang === 'zu' ? `English source: after your ${Math.round(plan.lossPercent)}% loss allowance` : undefined}
               label={recordsTemplate(lang, 'after your {pct}% loss allowance', 'ngemva kwesilinganiso sokulahleka esingu-{pct}%', { pct: Math.round(plan.lossPercent) })} value="" />
           : (
@@ -601,7 +604,7 @@ function PlanRow({ row, max, lossPercent, clipped, lang, index, count }: {
       <div className="mt-1.5">
         <HarvestBar max={max} benchmarkKg={row.benchmarkKg} harvestedKg={row.harvestedKg} soldKg={row.soldKg}
           soldExceedsHarvested={row.soldExceedsHarvested} index={index} count={count}
-          colors={{ bench: BENCH, picked: SOLD, short: SHORT, mark: '#C07A1E', sold: '#FFFEFA' }}
+          colors={BAR_COLORS}
           markKg={row.afterLossKg}
           markTitle={row.afterLossKg !== null ? recordsLabel(lang, 'After your {pct}% loss allowance: {kg}', 'Ngemva kwesilinganiso sakho sokulahleka esingu-{pct}%: {kg}', { pct: Math.round(lossPercent), kg: kgLabel(row.afterLossKg) }) : undefined}>
           {clipped && <BreakEdge />}

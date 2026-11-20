@@ -222,8 +222,11 @@ function Figure({ label, value, tone }: { label: string; value: string; tone: st
    same month, and two separate <svg>s with independent padding would not
    guarantee that at every container width. */
 
-const PHONE = { W: 320, PAD: { left: 34, right: 8, top: 12, bottom: 16 }, BARS_H: 118, GAP_H: 10, RUN_H: 44, barCap: 15 };
-const DESK  = { W: 760, PAD: { left: 52, right: 12, top: 14, bottom: 18 }, BARS_H: 150, GAP_H: 14, RUN_H: 56, barCap: 22 };
+// GAP_H is the clear band between the two panels. The bars panel's lower axis label (money-out
+// minimum) and the running band's upper label (its maximum) both sit in it, so it has to hold two
+// lines of 7px text with air between them; at 10 on a phone they touched.
+const PHONE = { W: 320, PAD: { left: 34, right: 8, top: 12, bottom: 16 }, BARS_H: 118, GAP_H: 24, RUN_H: 44, barCap: 15 };
+const DESK  = { W: 760, PAD: { left: 52, right: 12, top: 14, bottom: 18 }, BARS_H: 150, GAP_H: 22, RUN_H: 56, barCap: 22 };
 
 type DrawableMoneyMonth = Omit<FinanceMonthPoint, 'moneyInZar' | 'netZar' | 'runningZar'> & {
   moneyInZar: number; netZar: number; runningZar: number;
