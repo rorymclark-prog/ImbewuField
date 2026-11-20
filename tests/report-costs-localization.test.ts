@@ -253,7 +253,7 @@ test('the actual API emits the full native cost bill with all measured lines, ev
   }}finally{hooks.deregister();globalThis.fetch=old;}
 });
 
-test('the actual reader gives every native cost field a label and each group one spanning heading while leaving English and unrelated tables unchanged',async()=>{
+test('the actual reader gives every cost field a label and each group one spanning heading, in English too, while leaving unrelated tables unchanged',async()=>{
   const React=await import('react');const{renderToStaticMarkup}=await import('react-dom/server');const{stripInlineMarkdown}=await import('../lib/report-pdf.ts');
   const tree=ts.createSourceFile('view.tsx',read('components/ReportView.tsx'),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);const fn=tree.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='renderReport');assert.ok(fn);
   const js=ts.transpileModule(fn.getText(tree),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.None,target:ts.ScriptTarget.ES2022}}).outputText;
@@ -276,5 +276,9 @@ test('the actual reader gives every native cost field a label and each group one
     for(let i=0;i<cells.length;i++)assert.equal(cells[i][1],headers[i%5]);
   }
   assert.match(html('| Item | Amount |\n|---|---|'), /<tbody><\/tbody>/, 'an unrelated empty table retains its original rowgroup');
-  for(const markdown of[byName('catalogue').markdown,'| Item | Price | Quantity | Amount | Note |\n|---|---|---|---|---|\n| Saved name | R1 | 1 | R1 | Saved note |'])assert.ok(!html(markdown).includes('data-native-costs'));
+  // The English bill of quantities ran 421 px wide in a 354 px column on a phone; it now gets the
+  // same labelled rows. An unrelated five-column table still keeps its original rendering.
+  {const englishOutput=html(byName('catalogue').markdown);assert.ok(englishOutput.includes('data-native-costs="true"'),'the English bill of quantities gets labelled phone rows');
+   const cells=[...englishOutput.matchAll(/<td[^>]*data-label="([^"]*)"/g)].map(m=>m[1]);assert.ok(cells.length>=5);assert.deepEqual(cells.slice(0,5),['Item','Quantity','Rate','Amount','Measured from']);}
+  assert.ok(!html('| Item | Price | Quantity | Amount | Note |\n|---|---|---|---|---|\n| Saved name | R1 | 1 | R1 | Saved note |').includes('data-native-costs'));
 });

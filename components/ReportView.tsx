@@ -134,6 +134,27 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
   const lines = text.split('\n');
   const elements: React.ReactNode[] = [];
   let i = 0;
+  // A cited source printed as raw Markdown, "Source: [KZN DARD, Fruit and Nut Production …]
+  // (https://www.kzndard.gov.za/…)", fourteen times in one sample report. The reader needs the
+  // label; the full address stays one tap away as the link itself. Only http(s) addresses become
+  // links, and the saved report text is untouched — this changes how it is shown, nothing else.
+  const inline = (value: string): React.ReactNode => {
+    const plain = (segment: string) => {
+      const stripped = stripInlineMarkdown(segment);
+      return stripped ? `${/^\s/.test(segment) ? ' ' : ''}${stripped}${/\s$/.test(segment) ? ' ' : ''}` : '';
+    };
+    const parts: React.ReactNode[] = [];
+    let last = 0;
+    for (const match of value.matchAll(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g)) {
+      const at = match.index ?? 0;
+      if (at > last) parts.push(plain(value.slice(last, at)));
+      parts.push(<a key={at} href={match[2]} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--report-green)', textDecoration: 'underline' }}>{stripInlineMarkdown(match[1])}</a>);
+      last = at + match[0].length;
+    }
+    if (!parts.length) return stripInlineMarkdown(value);
+    if (last < value.length) parts.push(plain(value.slice(last)));
+    return parts;
+  };
 
   while (i < lines.length) {
     const line = lines[i];
@@ -178,7 +199,7 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
     } else if (line.startsWith('**') && line.endsWith('**')) {
       elements.push(
         <p key={i} className="font-display font-semibold text-sm mt-3 mb-1" style={{ color: 'var(--report-ink)' }}>
-          {stripInlineMarkdown(line)}
+          {inline(line)}
         </p>
       );
     } else if (line.startsWith('| ')) {
@@ -211,12 +232,15 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
       const measurementWidths = [95,126,130];
       // A six-column native checklist hid its final actions off the phone. Exact source headers
       // identify these tables so phone rows can keep every field visible with its own label.
-      const nativeChecklistTable = REPORT_DOCUMENT_LANGUAGES.some(language =>
+      // English is included: at 390 px the English risk register put "What to do about it" and
+      // the monitoring table put "How often" off-screen, behind a sideways scroll nobody finds.
+      const fieldTableLanguages = ['en', ...REPORT_DOCUMENT_LANGUAGES];
+      const nativeChecklistTable = fieldTableLanguages.some(language =>
         [ ['Indicator','What it answers','Baseline','How to measure','How often','Recorded in'],
           ['#','Risk','What raised it','Likelihood','Impact','What to do about it'],
         ].some(labels => headers.length === labels.length && labels.every((source,index) =>
           headers[index].trim() === reportDocumentText(source,language))));
-      const nativeCostTable = REPORT_DOCUMENT_LANGUAGES.some(language =>
+      const nativeCostTable = fieldTableLanguages.some(language =>
         headers.length === 5 && ['Item','Quantity','Rate','Amount','Measured from'].every((source,index) =>
           headers[index].trim() === reportDocumentText(source,language)));
       const nativeFieldTable = nativeChecklistTable || nativeCostTable;
@@ -252,7 +276,7 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
                 <tr key={ri} role={nativeFieldTable ? 'row' : undefined} style={{ borderBottom: '1px solid var(--report-border)', background: ri % 2 === 0 ? 'transparent' : 'rgba(31,77,43,0.04)' }}>
                   {row.map((cell, ci) => (
                     <td key={ci} role={nativeFieldTable ? 'cell' : undefined} data-label={nativeFieldTable ? stripInlineMarkdown(headers[ci] ?? '') : undefined} className="py-2 px-3 leading-relaxed font-sans" style={{ color: 'var(--report-ink)', overflowWrap: nativeMeasurementTable && ci !== 1 ? 'anywhere' : undefined, minWidth: nativeMeasurementTable ? measurementWidths[ci] : undefined }}>
-                      {stripInlineMarkdown(cell)}
+                      {inline(cell)}
                     </td>
                   ))}
                 </tr>
@@ -284,7 +308,7 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
             {line.match(/^\d+/)?.[0]}.
           </span>
           <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--report-ink)' }}>
-            {stripInlineMarkdown(line.replace(/^\d+\.\s+/, ''))}
+            {inline(line.replace(/^\d+\.\s+/, ''))}
           </p>
         </div>
       );
@@ -293,17 +317,18 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
         <div key={i} className="flex gap-2 my-1">
           <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--report-green)' }}><ChevronRight size={12} /></span>
           <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--report-ink)' }}>
-            {stripInlineMarkdown(line.replace(/^[-•]\s*/, ''))}
+            {inline(line.replace(/^[-•]\s*/, ''))}
           </p>
         </div>
       );
     } else {
-      // Long source URLs extended beyond the native buying notes on a phone. Wrap their display,
-      // while preserving every citation character for copying and the saved report's original bytes.
+      // Long source URLs extended beyond the native buying notes on a phone. Wrap their display;
+      // the label is shown and the full address is the link target, so it can still be opened or
+      // copied, and the saved report's original bytes are unchanged.
       const citation=/\[[^\]]+\]\(https?:\/\/\S+\)/.test(line);
       elements.push(
         <p key={i} data-report-citation={citation || undefined} className="font-sans text-sm leading-relaxed my-1.5" style={{ color: 'var(--report-ink)', overflowWrap: citation ? 'anywhere' : undefined }}>
-          {stripInlineMarkdown(line)}
+          {inline(line)}
         </p>
       );
     }
@@ -659,6 +684,18 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setTimeout(() => setJustSaved(false), 2500);
   }, [report, activeSaved, d, siteData, waterData, language, facts, siteName, savedVersion, settings, coverChoice, siteKey, selectedMapIds]);
 
+  // A generated report is paid AI work. It waited for a tap on Save, so Back, a reload or
+  // "Generate new report" threw it away without a word and the next attempt spent the allowance
+  // again. Keep each finished version once, as soon as it arrives. A full or failing store keeps
+  // using the existing visible "not saved" notice, and the Save button still works as before.
+  const autoSavedId = useRef<string | null>(null);
+  useEffect(() => {
+    if (loading || !report || savedVersion || activeSaved?.origin !== 'generated' || !activeSaved.id) return;
+    if (autoSavedId.current === activeSaved.id) return;
+    autoSavedId.current = activeSaved.id;
+    handleSaveReport();
+  }, [loading, report, savedVersion, activeSaved, handleSaveReport]);
+
   // Once there is a report to read, a phone should be showing the report — not
   // the settings that produced it. Read the media query at call time rather than
   // closing over `isWide`, so this never acts on a stale value.
@@ -843,6 +880,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       if (!res.ok) {
         const failure = await res.json().catch(() => null);
         if (typeof failure?.code === 'string' && failure.code.startsWith('REPORT_') && typeof failure.error === 'string') throw contextError(failure.error);
+        // The server already says why in plain words ("Today's free AI for visitors is used up.
+        // Sign in…", "Please wait about 3 minutes…", "This AI feature is switched off…"). The
+        // farmer used to see only "The server returned code 429."; show its sentence instead.
+        if (typeof failure?.error === 'string' && failure.error.trim()) throw Object.assign(new Error(failure.error.trim().slice(0, 400)), { name: 'ReportServerMessage' });
         throw new Error(`HTTP ${res.status}`);
       }
       const reader = res.body!.getReader();
@@ -865,6 +906,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     } catch (err: unknown) {
       if (err instanceof Error && err.name === 'ReportCountryContextError' && abortRef.current === controller) {
         setReport(''); setGenerated(false); setError(err.message);
+      } else if (err instanceof Error && err.name === 'ReportServerMessage' && abortRef.current === controller) {
+        setError(err.message);
       } else if (err instanceof Error && err.name !== 'AbortError' && abortRef.current === controller) {
         // A dead connection surfaces as TypeError('Failed to fetch') (Chrome) or 'Load failed'
         // (Safari) — browser jargon that tells a farmer nothing. Say the true thing in her

@@ -152,7 +152,14 @@ test('the actual reader wraps complete source URLs without rewriting citation te
   const render=new Function('React','stripInlineMarkdown','ReportChapterGraphics','ChevronRight','REPORT_DOCUMENT_LANGUAGES','reportDocumentText',js+';return renderReport;')(React,stripInlineMarkdown,()=>null,()=>null,languages,reportDocumentText);
   const html=(markdown:string)=>renderToStaticMarkup(React.createElement('div',null,...render(markdown)));
   const source={label:'Original manual title, p. 32',url:'https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf'};
-  for(const lang of['en',...languages]){const text=productGuideText('Source: [{label}]({url})',lang,source),output=html(text);assert.ok(output.includes('data-report-citation="true"'));assert.ok(output.includes('overflow-wrap:anywhere'));assert.ok(output.includes(text),'citation label and full URL remain copyable source text');}
+  for(const lang of['en',...languages]){const text=productGuideText('Source: [{label}]({url})',lang,source),output=html(text);assert.ok(output.includes('data-report-citation="true"'));assert.ok(output.includes('overflow-wrap:anywhere'));
+    // The label is the visible text and the full address is the link target, so it can still be
+    // opened or copied. Raw Markdown ("[label](https://…)") printed fourteen times in one report.
+    const prefix=text.slice(0,text.indexOf('['));
+    assert.ok(output.includes(`href="${source.url}"`),'the full source address is kept as the link target');
+    assert.ok(output.includes(`>${source.label}</a>`),'the source label is the visible link text');
+    assert.ok(output.includes(prefix.trim()),'the translated lead-in before the link is kept');
+    assert.ok(!output.includes(']('),'no raw Markdown link punctuation is shown');}
   assert.ok(!html('Original plain paragraph.').includes('data-report-citation'));
 });
 

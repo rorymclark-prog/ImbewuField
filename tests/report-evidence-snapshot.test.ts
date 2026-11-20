@@ -204,8 +204,9 @@ test('generation freezes the submitted photographs even if another tab changes e
     assert.ok(generate && !generate.props.disabled);
     await act(async () => { await generate.props.onClick(); });
     assert.ok(submitted?.groundPhotos);
-    const save = view!.root.findAllByType('button').find(node => textOf(node) === 'Save')!;
-    await act(async () => { save.props.onClick(); });
+    // A generated report is paid work, so it is kept as soon as it arrives — no Save tap. The
+    // claim is unchanged: what is kept is exactly what was submitted, not the newer photo.
+    assert.equal(loadReports().length, 1, 'the generated report is saved without a tap');
     assert.deepEqual(loadReports()[0].groundPhotos, normaliseGroundPhotos(submitted.groundPhotos));
     assert.deepEqual(loadReports()[0].groundPhotos?.map(photo => photo.data), ['AAAA']);
     assert.ok(view!.root.findAllByType('img').some(node => node.props.src === jpeg('AAAA')));

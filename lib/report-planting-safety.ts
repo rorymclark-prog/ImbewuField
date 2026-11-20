@@ -27,10 +27,21 @@ export function listedPlantMentions(markdown: string): string[] {
   });
 }
 
+/** True when no usable lowest temperature is known, so the frost screen below has to fail closed. */
+export function plantingFrostUnknown(minTempC?: number | null): boolean {
+  return !(typeof minTempC === 'number' && Number.isFinite(minTempC));
+}
+
 export function reportPlantingCandidates(biomeKey: string | undefined, minTempC?: number | null): string {
+  // An unknown minimum used to switch the frost screen OFF, so the "screened" list sent to the
+  // report model offered mango, pawpaw, marula and brown ivory for a 962 m KwaZulu-Natal site
+  // whose own climate class and zone data point to frost. Unknown is not evidence of safety:
+  // screen as though frost is possible (the existing at-or-below-0 °C rule, woody perennials
+  // only) until a sourced minimum or the grower says otherwise.
+  const screenMinimum = plantingFrostUnknown(minTempC) ? 0 : minTempC;
   const species = biomeKey
-    ? paletteFor(SPECIES, biomeKey, minTempC)
-    : broadReachPalette(SPECIES, 4, minTempC);
+    ? paletteFor(SPECIES, biomeKey, screenMinimum)
+    : broadReachPalette(SPECIES, 4, screenMinimum);
   return species.map((plant) => `${plant.commonName} (${plant.botanicalName})`).join('; ');
 }
 
