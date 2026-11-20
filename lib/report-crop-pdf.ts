@@ -8,19 +8,33 @@ import type { FactCropPlan } from './report-site-facts';
 async function drawSavedCropRows(doc: jsPDF, rows: readonly ReportCropRow[], heading: string, note: string): Promise<void> {
   // Load the bundled exact-glyph font only when authored quantity evidence is
   // actually printed. Ordinary report prose keeps its existing formatter.
-  const exact = rows.some(row => row.intent?.originalQuantityEntry)
-    ? await exactPdfTextWriter(doc, () => Error('An original entered weight cannot be printed faithfully. Review the saved request or download its CSV to retain the exact text.')) : null;
+  const hasHistoricalEvidence = rows.some(row => row.provisionalEvidence);
+  const exact = rows.some(row => row.intent?.originalQuantityEntry || row.provisionalEvidence)
+    ? await exactPdfTextWriter(doc, () => Error(hasHistoricalEvidence
+      ? 'Historical crop evidence cannot be printed faithfully. Open the saved record to retain its original text.'
+      : 'An original entered weight cannot be printed faithfully. Review the saved request or download its CSV to retain the exact text.')) : null;
+  let continuationLabel: string | null = null;
+  const continuationContext = () => {
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+    const lines = continuationLabel ? doc.splitTextToSize(pdfSafe(continuationLabel), 515) as string[] : [];
+    return { lines, top: lines.length ? 62 + lines.length * 13 + 5 : 70 };
+  };
   function page(continued = false) {
     doc.addPage('a4', 'portrait'); doc.setFont('helvetica', 'bold'); doc.setFontSize(continued ? 10 : 17);
     doc.text(`${heading}${continued ? ' (continued)' : ''}`, 40, continued ? 45 : 48);
     doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+    if (continued && continuationLabel) {
+      const context = continuationContext();
+      doc.text(context.lines, 40, 62); return context.top;
+    }
+    return 70;
   }
   page();
   const lines = doc.splitTextToSize(pdfSafe(note), 515) as string[]; doc.text(lines, 40, 76);
   let y = 76 + lines.length * 13 + 14;
   function write(text: readonly string[], authored = false) {
     for (const line of text) {
-      if (y + 13 > 770) { page(true); y = 70; }
+      if (y + 13 > 770) y = page(true);
       if (authored) exact!.select(line);
       else { doc.setFont('helvetica', 'normal'); doc.setFontSize(10); }
       doc.text(line, 40, y); y += 13;
@@ -41,6 +55,21 @@ async function drawSavedCropRows(doc: jsPDF, rows: readonly ReportCropRow[], hea
         doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
         write(doc.splitTextToSize(pdfSafe(line), 515));
       }
+    }
+    if (row.provisionalEvidence) {
+      continuationLabel = `${row.name} - ${row.where}; historical source evidence as accepted`;
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+      write(doc.splitTextToSize(pdfSafe(continuationLabel), 515));
+      for (const line of row.provisionalEvidence.lines) {
+        const freshTop = continuationContext().top;
+        exact!.select(line);
+        const wrapped = doc.splitTextToSize(line, 515) as string[];
+        // The inspected PDF left a lone "Unknown" after its evidence label on
+        // the next page. Keep each source paragraph together when it fits.
+        if (wrapped.length * 13 <= 770 - freshTop && y + wrapped.length * 13 > 770) y = page(true);
+        write(wrapped, true);
+      }
+      continuationLabel = null;
     }
     y += 8;
   }

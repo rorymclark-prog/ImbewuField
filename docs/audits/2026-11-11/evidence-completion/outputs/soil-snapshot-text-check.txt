@@ -1,0 +1,13 @@
+Soil caution snapshots (tests/fixtures/report-assurance-translation/source-cases.json, atlasSoil): visible text before and after the colour-only update.
+
+source 'soilgrids': identical = True
+  Modelled — SoilGridsFrom the SoilGrids global model, which reads an area far wider than your field. Treat it as the district, not your soil. A soil test is the only way to know your own.
+
+source 'estimate': identical = True
+  Not a readingNOT A READING. No soil data was available for this point, so these are the app&#x27;s general figures — the same numbers it would show anywhere. Do not spend money on the strength of them. A soil test is the only way to know.
+
+source 'lab': identical = True
+  Your soil testFrom a soil test you uploaded for this site. This is the most reliable soil figure in the app and it overrides the global model.
+
+source None: identical = True
+  Source unknownThis reading did not record where its numbers came from. Treat it with the same caution as a model estimate.

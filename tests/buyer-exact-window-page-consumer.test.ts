@@ -43,7 +43,9 @@ assert.ok(legacyAvailability, 'Actual lower-editor availability expression must 
 assert.ok(legacyCountry, 'Lower catalogue editor must remain inside a country-support branch');
 const legacyExpression = `(${legacyCountry.condition.getText(page)}) ? (${contains(legacyCountry.whenTrue, legacyNode) ? legacyAvailability.getText(page) : 'null'})
   : (${contains(legacyCountry.whenFalse, legacyNode) ? legacyAvailability.getText(page) : 'null'})`;
-const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel'];
+// The shared section now also mounts the provisional preview. Keep it as a
+// boundary here; its actual UI/source lifecycle has its own mounted tests.
+const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel'];
 const boundaries = Object.fromEntries(names.map(name => [name, function Boundary() { return null; }]));
 function compile(expression: string): (input: Record<string, unknown>) => unknown {
   const compiled = ts.transpileModule(`function view(){return (${expression});}`, { compilerOptions: {
@@ -73,20 +75,70 @@ function input(allowCataloguePlanning: boolean) {
   const saveHarvestTargets = (...args: unknown[]) => { saved.push(args); };
   const source = Object.freeze({ marker: 'current-checked-source' });
   const onReview = () => { throw Error('Consumer mount must not review automatically'); };
+  // The actual section also passes current conditions and a guarded historical
+  // export callback to SavedGrowerRows. Keep those boundaries explicit: copying
+  // its JSX without these bindings throws before the buyer-editor assertions run.
+  const growerConditions = Object.freeze({ marker: 'current-provisional-conditions' });
+  const exportSavedGrowerRecord = () => { throw Error('Consumer mount must not export automatically'); };
+  // The actual page's preview revision now includes climate changes. Supply
+  // that state boundary too, so extracting its JSX still exercises the buyer
+  // editor rather than failing on an unrelated missing lexical binding.
+  const climateState = { revision: 7 };
   return { allowCataloguePlanning, productionSiteId: siteId, growerScope: { kind: 'mapped-site', siteId }, growerScopeKey: 'current-scope-key',
     planningScopeKey: 'current-catalogue-key', markedPlantings: [], plan: { harvestTargets: targets, growerPlanningProfiles: [], plantings },
     selectedGrowerSource: null, beds, plantings, pattern: 'mild-frost', harvestSaveContext: saveContext, saveHarvestTargets,
     canvasSite: null, design: null, designBeds: [], saveGrowerProfiles() {},
-    growerWorkflow: { source, sourceIssue: null, checking: false, contextRevision: 4, onReview, onRefresh() {}, onAccept() {}, acceptance: { status: 'idle' }, savedNurseryReview: null },
+    growerActorIsCurrent: () => true, siteCountry: { status: 'unknown', context: null, siteId, placeIds: ['fictional-place'] }, planningSupport: { fingerprint: 'fixture-policy' },
+    saveProvisionalProfile() { throw Error('Consumer mount must not save automatically'); },
+    growerWorkflow: { source, sourceIssue: null, checking: false, contextRevision: 4, onReview, onRefresh() {}, onAccept() {},
+      onCheckPreviewSource() { throw Error('Consumer mount must not read preview source automatically'); }, acceptance: { status: 'idle' }, savedNurseryReview: null },
     placeName: 'Engineering source', designTitle: 'Engineering design', growerSample: false, growerOwner: 'fixture-owner',
-    siteClimate: null, hasSiteCoords: false, siteLat: 0, siteSurvey: null, saved };
+    countryPlaces: [{ id: 'fictional-place', name: 'Engineering fixture' }],
+    siteClimate: null, hasSiteCoords: false, siteLat: 0, siteSurvey: null, saved,
+    growerConditions, exportSavedGrowerRecord,
+    get provisionalClimateRevision() { return climateState.revision; },
+    setProvisionalClimateRevision(update: (value: number) => number) { climateState.revision = update(climateState.revision); } };
 }
 
 for (const country of ['ZA', 'US', undefined]) test(`${country ?? 'unconfirmed'} mapped country can reach the own-records editor and automatic own-estimate planner together`, () => {
   const policy = support(country); assert.equal(policy.allowCataloguePlanning, country === 'ZA');
-  const fixture = input(policy.allowCataloguePlanning), tree = renderOwn(fixture), editor = target(tree); assert.ok(editor);
+  const fixture = { ...input(policy.allowCataloguePlanning), siteCountry: policy.siteCountry }, tree = renderOwn(fixture), editor = target(tree); assert.ok(editor);
   assert.equal(editor.props.basis, 'own-records'); assert.equal(editor.props.siteId, siteId);
   assert.ok(elements(tree).some(element => element.type === boundaries.GrowerAutoPlanPanel)); assert.equal(fixture.saved.length, 0);
+  const preview = elements(tree).find(element => element.type === boundaries.ProvisionalCropPreview); assert.ok(preview);
+  assert.equal(preview.props.scope, fixture.growerScope); assert.equal(preview.props.actorIsCurrent, fixture.growerActorIsCurrent);
+  assert.equal(preview.props.countryCode, policy.siteCountry.status === 'confirmed' ? country : null);
+  assert.equal(preview.props.sourceName, 'Engineering fixture', 'use current scope-matched places, not the older cover-name state');
+  assert.equal(preview.props.onSaveProfile, fixture.saveProvisionalProfile);
+  assert.equal(preview.props.onCheckSource, fixture.growerWorkflow.onCheckPreviewSource);
+  assert.equal(preview.props.profiles, fixture.plan.growerPlanningProfiles);
+});
+
+test('provisional place labels use only this mapped scope or the selected unmapped design', () => {
+  const fixture = input(false);
+  const preview = (changes: Record<string, unknown>) => elements(renderOwn({ ...fixture, ...changes }))
+    .find(element => element.type === boundaries.ProvisionalCropPreview)!;
+  assert.equal(preview({ countryPlaces: [
+    { id: 'another-place', name: 'Wrong garden' }, { id: 'fictional-place', name: 'Right garden' },
+  ], placeName: 'Old cover label' }).props.sourceName, 'Right garden');
+  assert.equal(preview({ countryPlaces: [{ id: 'another-place', name: 'Wrong garden' }] }).props.sourceName, '');
+  assert.equal(preview({ siteCountry: { ...fixture.siteCountry, placeIds: ['fictional-place', 'alias'] },
+    countryPlaces: [{ id: 'fictional-place', name: ' ' }, { id: 'alias', name: '' }] }).props.sourceName, '');
+  assert.equal(preview({ growerScope: { kind: 'unmapped-workspace', workspaceId: 'design:fixture' },
+    design: { title: 'Selected workspace' }, placeName: 'Old mapped label' }).props.sourceName, 'Selected workspace');
+});
+
+test('the actual preview mount forwards climate revision changes without reviewing or saving the buyer plan', () => {
+  const fixture = input(false), before = JSON.stringify(fixture.plan);
+  const preview = () => elements(renderOwn(fixture)).find(element => element.type === boundaries.ProvisionalCropPreview)!;
+  const initial = preview(); assert.ok(initial);
+  assert.equal(fixture.provisionalClimateRevision, 7, 'mounting must not invoke the change callback');
+  assert.equal(initial.props.contextRevision, '4:fixture-policy:7');
+  assert.equal(typeof initial.props.onClimateChanged, 'function');
+  (initial.props.onClimateChanged as () => void)();
+  assert.equal(fixture.provisionalClimateRevision, 8);
+  assert.equal(preview().props.contextRevision, '4:fixture-policy:8', 'the next actual mount must receive the changed climate revision');
+  assert.equal(JSON.stringify(fixture.plan), before); assert.equal(fixture.saved.length, 0);
 });
 
 test('absent site, absent grower scope and unmapped workspace cannot acquire the saved buyer editor', () => {
@@ -111,6 +163,10 @@ test('the actual own-records mount retains its exact key, full rows, save contex
   (editor.props.onAccept as () => void)(); assert.equal(JSON.stringify(fixture.plan), before); assert.equal(fixture.saved.length, 0);
   const auto = elements(tree).find(element => element.type === boundaries.GrowerAutoPlanPanel); assert.ok(auto);
   assert.equal(auto.props.source, fixture.growerWorkflow.source); assert.equal(auto.props.onReview, fixture.growerWorkflow.onReview);
+  const history = elements(tree).find(element => element.type === boundaries.SavedGrowerRows); assert.ok(history);
+  assert.equal(history.props.wholeBookRows, fixture.plan.plantings);
+  assert.equal(history.props.conditions, fixture.growerConditions);
+  assert.equal(history.props.onExport, fixture.exportSavedGrowerRecord);
 });
 
 test('an absent current plan passes empty target rows rather than borrowing another source', () => {

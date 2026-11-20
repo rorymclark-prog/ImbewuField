@@ -1,3 +1,4 @@
+import { normaliseProvisionalCycleContext, readSavedProvisionalProfile, type ProvisionalCycleContext } from './provisional-profile';
 import type { PlanBed } from '../crop-plan';
 import {
   addGrowerUtcDays, assessGrowerPlanning, growerPlanningScopeKey, isGrowerRecordedAt, isGrowerUtcDate,
@@ -39,6 +40,7 @@ export interface GrowerAutoPlanDemand {
 }
 export interface GrowerAutoPlanRequest {
   readonly requestedAt: string;
+  readonly provisionalContext?: ProvisionalCycleContext;
   readonly scope: GrowerPlanningScope;
   /** From the actual selected saved source; bed area alone cannot detect a moved polygon. */
   readonly geometryFingerprint: string;
@@ -176,7 +178,10 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
   const demands = (value.demands as unknown[]).map(normaliseGrowerAutoPlanDemand);
   const planningStart = normaliseGrowerInput(value.planningStart, 'utc-date', isGrowerUtcDate);
   const planningEndExclusive = normaliseGrowerInput(value.planningEndExclusive, 'utc-date', isGrowerUtcDate);
-  const invalid = [!scope && 'scope', profiles.length !== (value.profiles as unknown[]).length && 'profiles',
+  const hasContext = 'provisionalContext' in value;
+  const provisionalContext = hasContext ? normaliseProvisionalCycleContext(value.provisionalContext) : null;
+  const invalid = [hasContext && (!provisionalContext || provisionalContext.reviewedAt !== value.requestedAt
+      || provisionalContext.source.geometryFingerprint !== value.geometryFingerprint) && 'provisionalContext', !scope && 'scope', profiles.length !== (value.profiles as unknown[]).length && 'profiles',
     beds.some(row => !row) && 'beds', availability.some(row => !row) && 'availability', reserved.some(row => !row) && 'reserved',
     demands.some(row => !row) && 'demands', !planningStart && 'planningStart', !planningEndExclusive && 'planningEndExclusive',
     !isGrowerRecordedAt(value.requestedAt) && 'requestedAt',
@@ -199,7 +204,7 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
   }
   const canonicalRows = <T>(rows: T[]) => rows.sort((a, b) => compare(JSON.stringify(a), JSON.stringify(b)));
   snapshot = freeze({ countArithmetic: GROWER_COUNT_ARITHMETIC, requestedAt: value.requestedAt as string, scope, geometryFingerprint: value.geometryFingerprint as string,
-    profiles, beds: knownBeds.sort((a, b) => compare(a.bed.id, b.bed.id)), planningStart, planningEndExclusive,
+    ...(provisionalContext ? { provisionalContext } : {}), profiles, beds: knownBeds.sort((a, b) => compare(a.bed.id, b.bed.id)), planningStart, planningEndExclusive,
     availability: canonicalRows(knownAvailability), reserved: canonicalRows(knownReserved), demands: knownDemands, maxAssessments: budget });
   fingerprint = JSON.stringify(snapshot);
   const missing: string[] = [];
@@ -221,18 +226,34 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
   const generatedDate = (date: string): GrowerInput<string, 'utc-date'> => ({ state: 'provided', value: date, unit: 'utc-date',
     provenance: { kind: 'grower-estimate', recordedAt: snapshot!.requestedAt,
       note: 'Automatically selected from this request’s grower inputs; not an observed entry.' } });
+  // A source-backed or spacing profile describes its actual bed, never every
+  // bed in a multi-bed drawing. Reservations still cover the complete source.
+  const eligibleBeds = (profile: GrowerPlanningProfile) => {
+    const bound = profile.provisionalOrigin?.bedId ?? profile.plantCountOrigin?.bedId;
+    return bound ? knownBeds.filter(row => row.bed.id === bound) : knownBeds;
+  };
   const assess = (profile: GrowerPlanningProfile, bed: GrowerAutoPlanBed, date: string) => {
     spend();
-    return assessGrowerPlanning({ profile, scope, measuredAreaM2: bed.measuredAreaM2, fieldEntryDate: generatedDate(date) });
+    return assessGrowerPlanning({ profile, scope, measuredAreaM2: bed.measuredAreaM2, fieldEntryDate: generatedDate(date), countAreaBinding: { bedId: bed.bed.id },
+      ...(profile.provisionalOrigin && provisionalContext ? { provisionalContext } : {}) });
   };
   try {
     const checked = new Set<string>();
     for (const demand of positive) {
-      for (const bed of knownBeds) {
+      const profile = profileById.get(demand.profileId)!;
+      const eligible = eligibleBeds(profile);
+      if (!eligible.length) missing.push(`${demand.profileId}:bound-bed-unavailable`);
+      for (const bed of eligible) {
         const id = JSON.stringify([demand.profileId, bed.bed.id]);
         if (checked.has(id)) continue;
         checked.add(id);
-        const result = assess(profileById.get(demand.profileId)!, bed, start);
+        // This pass checks required inputs, not a proposed planting date. A
+        // January comparison must not be reinterpreted as December merely
+        // because the search includes nursery preparation. Actual candidates
+        // below still review their own date, climate key and current context.
+        const reviewedEntry = (profile.provisionalOrigin?.version === 2 || profile.provisionalOrigin?.version === 3)
+          ? normaliseGrowerInput(readSavedProvisionalProfile(profile)?.request.fieldEntryDate, 'utc-date', isGrowerUtcDate) : null;
+        const result = assess(profile, bed, reviewedEntry?.state === 'provided' ? reviewedEntry.value : start);
         if (result.status === 'missing-inputs') missing.push(...result.issues.map(issue => `${demand.profileId}:${bed.bed.id}:${issue}`));
         else if (result.status === 'invalid-inputs' || result.status === 'scope-mismatch') return held('invalid-inputs', result.issues);
       }
@@ -263,7 +284,31 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
             continue;
           }
           const result = assess(profile, bed, cursor);
-          if (result.status !== 'ready') { reasons.add(result.status); return null; }
+          if (result.status !== 'ready') {
+            if (result.status === 'missing-inputs' && result.issues.length === 1
+              && result.issues[0] === 'provisional-temperature-needs-new-preview') {
+              // This month lacks the saved comparison review, not necessarily
+              // a suitable climate. Keep it held and search later months;
+              // do not let it hide a separately reviewed January candidate.
+              reasons.add(result.issues[0]);
+              // A period review binds exact overlap dates, not merely a month.
+              // Preserve the grower's reviewed date inside this month rather
+              // than skipping it when the search starts on the first day.
+              if (profile.provisionalOrigin?.version === 3) {
+                const reviewed = normaliseGrowerInput(readSavedProvisionalProfile(profile)?.request.fieldEntryDate, 'utc-date', isGrowerUtcDate);
+                if (reviewed?.state === 'provided' && reviewed.value > cursor && reviewed.value < finish) {
+                  cursor = reviewed.value;
+                  continue;
+                }
+              }
+              const nextMonth = addGrowerUtcDays(`${cursor.slice(0, 7)}-01`, 32);
+              cursor = nextMonth ? `${nextMonth.slice(0, 7)}-01` : null;
+              continue;
+            }
+            reasons.add(result.status);
+            if (result.status === 'entry-window-excluded') { cursor = addGrowerUtcDays(cursor, 1); continue; }
+            return null;
+          }
           if (result.capacity.estimatedYieldKg === 0 || result.capacity.estimatedPlantCount === 0) {
             reasons.add('zero-estimated-cycle-capacity'); return null;
           }
@@ -297,7 +342,7 @@ export function generateGrowerAutoPlan(value: unknown): GrowerAutoPlanProposal {
       }
       const reasons = new Set<string>();
       const candidates = new Map<string, GrowerReadyAssessment>();
-      for (const bed of knownBeds) { const candidate = findCandidate(demand, bed, reasons); if (candidate) candidates.set(bed.bed.id, candidate); }
+      for (const bed of eligibleBeds(profileById.get(demand.profileId)!)) { const candidate = findCandidate(demand, bed, reasons); if (candidate) candidates.set(bed.bed.id, candidate); }
       let estimatedAllocatedKg = 0;
       while (estimatedAllocatedKg < requestedKg && candidates.size) {
         const [bedId, assessment] = [...candidates].sort((a, b) => compare(a[1].schedule.fieldEntryDate, b[1].schedule.fieldEntryDate) || compare(a[0], b[0]))[0];

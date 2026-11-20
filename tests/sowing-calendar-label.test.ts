@@ -43,10 +43,14 @@ test('calendar labels name the frost regime and add the rain season only where i
   assert.equal(sowingCalendarLabel('all-year', null), 'Hot area, no frost');
 });
 
-test('the always-shown reason quotes whole-degree climate numbers and the record minimum', () => {
+test('the always-shown reason quotes the climate numbers and the record minimum to one decimal', () => {
+  // This test asserted whole degrees ("16 °C", "27 °C", "4 °C") until 11 November 2026.
+  // Finding CP-109: the calendar rule decides on the unrounded figure, so a record minimum
+  // of 1.7 °C printed as "2 °C", the rule's own frost-free line. The readings carry one
+  // decimal and now print it. The fixture's values are unchanged: 16.4, 26.6 and 4.2.
   const [a] = sowingCalendarReasons(site(), { pattern: 'all-year', basis: 'site-climate' });
-  assert.match(a, /^Coldest month averages 16 °C and hottest 27 °C here\./);
-  assert.match(a, / The lowest temperature on record for this area is 4 °C\./);
+  assert.match(a, /^Coldest month averages 16\.4 °C and hottest 26\.6 °C here\./);
+  assert.match(a, / The lowest temperature on record for this area is 4\.2 °C\./);
   assert.match(a, /satellite-era climate records for the wider area, not a weather station on your land\.$/);
 });
 

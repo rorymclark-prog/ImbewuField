@@ -1,0 +1,289 @@
+TAP version 13
+# (node:784) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/atlas.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the display rule admits only a complete, self-consistent temperature year
+ok 1 - the display rule admits only a complete, self-consistent temperature year
+  ---
+  duration_ms: 1.133551
+  type: 'test'
+  ...
+# Subtest: the pure calendar helper keeps its narrower refusal, so its other callers are unaffected
+ok 2 - the pure calendar helper keeps its narrower refusal, so its other callers are unaffected
+  ---
+  duration_ms: 0.712694
+  type: 'test'
+  ...
+# Subtest: a year of 20 °C substitutes shows no climate type, no frost claim and no temperature (Codex FDR-01)
+ok 3 - a year of 20 °C substitutes shows no climate type, no frost claim and no temperature (Codex FDR-01)
+  ---
+  duration_ms: 10.358921
+  type: 'test'
+  ...
+# Subtest: one substituted month is enough: the real-looking months are withheld too
+ok 4 - one substituted month is enough: the real-looking months are withheld too
+  ---
+  duration_ms: 2.963022
+  type: 'test'
+  ...
+# Subtest: a payload with no coverage receipt is withheld like an incomplete one
+ok 5 - a payload with no coverage receipt is withheld like an incomplete one
+  ---
+  duration_ms: 2.205896
+  type: 'test'
+  ...
+# Subtest: complete temperatures: climate type, calendar, temperatures and the record low; no frost class
+not ok 6 - complete temperatures: climate type, calendar, temperatures and the record low; no frost class
+  ---
+  duration_ms: 5.13167
+  type: 'test'
+  location: '/home/user/ImbewuField/tests/atlas-panel-temperature-claims.test.ts:126:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Summer rain, dry winters and summers that stay warm rather than hot\. This climate type alone does not tell you whether there is frost\./. Input:
+    
+    ' 26.200°S, 28.050°E · 1745 m Climate Cwb Subtropical highland, dry winter Summer rain, dry winters, mild all year from altitude — a highland growing pattern. ≈ 641 mm/yr Sowing calendar: Winter frost Modelled record low: -4.8°C Modelled from a coarse global climate grid (~55 km) — coastal and mountain points can read as a neighbouring climate. Rainfall ≈ 641 mm / yr 127 J 81 F 73 M 43 A 16 M 7 J 3 J 7 A 16 S 57 O 89 N 122 D mm Wet: Oct to Mar Dry: May to Aug Temperature 16°C Mean 10°C Coldest month 20°C Hottest month 20 J 20 F 19 M 16 A 13 M 10 J 10 J 13 A 17 S 18 O 19 N 20 D °C Soil Loam Texture 6.2 pH near neutral 1.1% Organic C Sand 40% Silt 35% Clay 25% Source unknown This reading did not record where its numbers came from. Treat it with the same caution as a model estimate. Terrain 1745 m Elevation 2° Slope 3% N Aspect 0° What could grow here From our crop catalog: crops with a sowing window open in November under the winter frost sowing calendar. A description of the catalog, not planting advice for this site. Maize (mielies) Dry beans (sugar beans) Green beans Butternut Pumpkin Sweet potato Broccoli Cucumber Watermelon Parsley Sorghum Soybean Brinjal (eggplant) Gem squash Baby marrow (courgette) Spanspek (sweet melon) Sweetcorn Cowpea (imbumba/dinawa) Bambara groundnut (jugo bean) Sunflower (for seed) Radish Mung bean African nightshade (umsobo) '
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ' 26.200°S, 28.050°E · 1745 m Climate Cwb Subtropical highland, dry winter Summer rain, dry winters, mild all year from altitude — a highland growing pattern. ≈ 641 mm/yr Sowing calendar: Winter frost Modelled record low: -4.8°C Modelled from a coarse global climate grid (~55 km) — coastal and mountain points can read as a neighbouring climate. Rainfall ≈ 641 mm / yr 127 J 81 F 73 M 43 A 16 M 7 J 3 J 7 A 16 S 57 O 89 N 122 D mm Wet: Oct to Mar Dry: May to Aug Temperature 16°C Mean 10°C Coldest month 20°C Hottest month 20 J 20 F 19 M 16 A 13 M 10 J 10 J 13 A 17 S 18 O 19 N 20 D °C Soil Loam Texture 6.2 pH near neutral 1.1% Organic C Sand 40% Silt 35% Clay 25% Source unknown This reading did not record where its numbers came from. Treat it with the same caution as a model estimate. Terrain 1745 m Elevation 2° Slope 3% N Aspect 0° What could grow here From our crop catalog: crops with a sowing window open in November under the winter frost sowing calendar. A description of the catalog, not planting advice for this site. Maize (mielies) Dry beans (sugar beans) Green beans Butternut Pumpkin Sweet potato Broccoli Cucumber Watermelon Parsley Sorghum Soybean Brinjal (eggplant) Gem squash Baby marrow (courgette) Spanspek (sweet melon) Sweetcorn Cowpea (imbumba/dinawa) Bambara groundnut (jugo bean) Sunflower (for seed) Radish Mung bean African nightshade (umsobo) '
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/ImbewuField/tests/atlas-panel-temperature-claims.test.ts:139:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Underberg: a coldest mean of 7.37 °C no longer reads "Frost-free" beside a record low of -6.2 °C
+ok 7 - Underberg: a coldest mean of 7.37 °C no longer reads "Frost-free" beside a record low of -6.2 °C
+  ---
+  duration_ms: 11.700384
+  type: 'test'
+  ...
+# Subtest: the record low is printed only when it is a validated, source-tagged reading
+ok 8 - the record low is printed only when it is a validated, source-tagged reading
+  ---
+  duration_ms: 22.776769
+  type: 'test'
+  ...
+# Subtest: isiZulu mode: the record-low chip stays in English and is marked translation pending
+ok 9 - isiZulu mode: the record-low chip stays in English and is marked translation pending
+  ---
+  duration_ms: 4.940999
+  type: 'test'
+  ...
+# Subtest: an outage keeps its own placeholder warning and prints no temperature
+ok 10 - an outage keeps its own placeholder warning and prints no temperature
+  ---
+  duration_ms: 1.637302
+  type: 'test'
+  ...
+# Subtest: the panel source no longer derives a frost statement from a monthly mean
+ok 11 - the panel source no longer derives a frost statement from a monthly mean
+  ---
+  duration_ms: 0.394707
+  type: 'test'
+  ...
+# Subtest: the climate card paints its code, note and chips with theme tokens (CP-115)
+not ok 12 - the climate card paints its code, note and chips with theme tokens (CP-115)
+  ---
+  duration_ms: 0.634493
+  type: 'test'
+  location: '/home/user/ImbewuField/tests/atlas-panel-temperature-claims.test.ts:193:1'
+  failureType: 'testCodeFailure'
+  error: 'no fixed text colour in the climate card'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    {/* 1 — Climate headline (Köppen) */}
+          <Card accent="#1F4D2B">
+            <Label>{pairedLabel('Climate', 'Isimo sezulu', isZulu)}</Label>
+            {koppenKnown && !temperaturesRecorded ? (
+              <>
+                <p data-atlas-temperature="incomplete" className="font-display leading-relaxed" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
+                  Temperature records for this point are incomplete or could not be checked, so no climate type or sowing calendar is shown.
+                </p>
+                <div style={{ display: 'flex', gap: 7, marginTop: 12, flexWrap: 'wrap' }}>
+                  <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} mm/yr</span>
+                </div>
+              </>
+            ) : koppenKnown ? (
+              <>
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <span className="font-display font-bold" style={{ fontSize: 26, color: '#1F4D2B', letterSpacing: '-0.02em', lineHeight: 1 }}>
+                    {climate.koppen}
+                  </span>
+                  <span className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
+                    {climate.koppenDesc}
+                  </span>
+                </div>
+                {koppenNote && (
+                  <p className="font-display mt-2 leading-relaxed" style={{ fontSize: 14.5, fontStyle: 'italic', color: '#4A4030' }}>
+                    {koppenNote}
+                  </p>
+                )}
+                <div style={{ display: 'flex', gap: 7, marginTop: 12, flexWrap: 'wrap' }}>
+                  <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} mm/yr</span>
+                  {pattern && <span style={chip('#EDE7DA', '#7A6A48')}>{pairedLabel(`Sowing calendar: ${SOWING_CALENDAR_LABEL[pattern]}`, `Ikhalenda lokutshala: ${SOWING_CALENDAR_LABEL_ZU[pattern]}`, isZulu)}</span>}
+                  <span data-atlas-record-low={recordLowC === null ? 'unknown' : 'known'} style={chip('#EDE7DA', '#7A6A48')}>{heldTechnicalLabel(recordLowChip, isZulu)}</span>
+                </div>
+              </>
+            ) : (
+              <p className="font-display leading-relaxed" style={{ fontSize: 14, color: '#4A4030' }}>
+                Climate data could not be fetched for this point — the figures below are placeholders, not readings. Try the point again.
+              </p>
+            )}
+            <p className="font-sans mt-2.5" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', color: 'var(--text-muted)', lineHeight: 1.45 }}>
+              Modelled from a coarse global climate grid (~55 km) — coastal and mountain points can read as a neighbouring climate.
+            </p>
+          </Card>
+    
+          
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/ImbewuField/tests/atlas-panel-temperature-claims.test.ts:199:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# (node:785) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/user/ImbewuField/lib/koppen-global.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to /home/user/ImbewuField/package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: unusable input returns ? rather than a guess
+ok 13 - unusable input returns ? rather than a guess
+  ---
+  duration_ms: 1.111694
+  type: 'test'
+  ...
+# Subtest: the summer half-year flips with the hemisphere
+ok 14 - the summer half-year flips with the hemisphere
+  ---
+  duration_ms: 1.086349
+  type: 'test'
+  ...
+# Subtest: aridity is judged against the threshold, and outranks every other group
+ok 15 - aridity is judged against the threshold, and outranks every other group
+  ---
+  duration_ms: 0.33068
+  type: 'test'
+  ...
+# Subtest: tropical splits on the driest month, not on the annual total
+ok 16 - tropical splits on the driest month, not on the annual total
+  ---
+  duration_ms: 0.496863
+  type: 'test'
+  ...
+# Subtest: a dry season in the summer half reads differently from one in the winter half
+ok 17 - a dry season in the summer half reads differently from one in the winter half
+  ---
+  duration_ms: 0.140834
+  type: 'test'
+  ...
+# Subtest: temperate second letter distinguishes dry-summer, dry-winter and no dry season
+ok 18 - temperate second letter distinguishes dry-summer, dry-winter and no dry season
+  ---
+  duration_ms: 0.234375
+  type: 'test'
+  ...
+# Subtest: temperate third letter tracks how hot and how long the summer is
+ok 19 - temperate third letter tracks how hot and how long the summer is
+  ---
+  duration_ms: 0.233298
+  type: 'test'
+  ...
+# Subtest: cold and polar groups are separated by the coldest and warmest months
+ok 20 - cold and polar groups are separated by the coldest and warmest months
+  ---
+  duration_ms: 0.125141
+  type: 'test'
+  ...
+# Subtest: every code the classifier can emit carries a description and a grower note
+ok 21 - every code the classifier can emit carries a description and a grower note
+  ---
+  duration_ms: 0.368209
+  type: 'test'
+  ...
+# Subtest: the rainfall pattern bridge matches the planner's four patterns
+ok 22 - the rainfall pattern bridge matches the planner's four patterns
+  ---
+  duration_ms: 0.921457
+  type: 'test'
+  ...
+# Subtest: the record minimum decides frost where a mean cannot: arid sites and close calls
+ok 23 - the record minimum decides frost where a mean cannot: arid sites and close calls
+  ---
+  duration_ms: 0.337593
+  type: 'test'
+  ...
+# Subtest: the calendar choice reports rain timing separately and flags a close call
+ok 24 - the calendar choice reports rain timing separately and flags a close call
+  ---
+  duration_ms: 0.182302
+  type: 'test'
+  ...
+# Subtest: the close-call search also tries both monthly means together (Argon F-07)
+ok 25 - the close-call search also tries both monthly means together (Argon F-07)
+  ---
+  duration_ms: 1.12852
+  type: 'test'
+  ...
+# Subtest: no class note calls the year mild or frost light at a place with a sub-zero record low (CP-114)
+not ok 26 - no class note calls the year mild or frost light at a place with a sub-zero record low (CP-114)
+  ---
+  duration_ms: 9.312795
+  type: 'test'
+  location: '/home/user/ImbewuField/tests/koppen-global.test.ts:332:1'
+  failureType: 'testCodeFailure'
+  error: 'Underberg (Cwb, record low -6.2 °C): "Summer rain, dry winters, mild all year from altitude — a highland growing pattern."'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'Summer rain, dry winters, mild all year from altitude — a highland growing pattern.'
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/ImbewuField/tests/koppen-global.test.ts:351:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the three temperate notes that used to claim mildness now state the class and say it is silent on frost (CP-114)
+not ok 27 - the three temperate notes that used to claim mildness now state the class and say it is silent on frost (CP-114)
+  ---
+  duration_ms: 0.345069
+  type: 'test'
+  location: '/home/user/ImbewuField/tests/koppen-global.test.ts:361:1'
+  failureType: 'testCodeFailure'
+  error: 'Cwb'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'Summer rain, dry winters, mild all year from altitude — a highland growing pattern.'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/ImbewuField/tests/koppen-global.test.ts:369:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 23
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1395.332833
+exit 1

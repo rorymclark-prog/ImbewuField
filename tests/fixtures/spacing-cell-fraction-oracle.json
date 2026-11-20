@@ -1,0 +1,1047 @@
+{
+  "description": "SYNTHETIC_FRACTION_ORACLE_FIXTURES_NOT_AGRONOMY_OR_RELEASE_APPROVAL",
+  "oracle": "Python fractions.Fraction from original decimal strings; no product code imports",
+  "oracleSha256": "f94ecae96a1fc02814db481ed2e316ab76fad9f4aa196c92132c3e03d980cd99",
+  "cases": [
+    {
+      "id": "endpoint-spreading-50-50",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "50",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 36
+        },
+        "plants": {
+          "state": "ready",
+          "value": 36
+        }
+      }
+    },
+    {
+      "id": "endpoint-spreading-50-75",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 24
+        },
+        "plants": {
+          "state": "ready",
+          "value": 24
+        }
+      }
+    },
+    {
+      "id": "endpoint-spreading-75-50",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "50",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 24
+        },
+        "plants": {
+          "state": "ready",
+          "value": 24
+        }
+      }
+    },
+    {
+      "id": "endpoint-spreading-75-75",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 16
+        },
+        "plants": {
+          "state": "ready",
+          "value": 16
+        }
+      }
+    },
+    {
+      "id": "endpoint-erect-or-semi-erect-50-15",
+      "input": {
+        "habit": "erect-or-semi-erect",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "15",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 120
+        },
+        "plants": {
+          "state": "ready",
+          "value": 120
+        }
+      }
+    },
+    {
+      "id": "endpoint-erect-or-semi-erect-50-25",
+      "input": {
+        "habit": "erect-or-semi-erect",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "25",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 72
+        },
+        "plants": {
+          "state": "ready",
+          "value": 72
+        }
+      }
+    },
+    {
+      "id": "near-spreading-rowCm-50-below",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "49.99999999999999999999",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "rejected",
+        "stations": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "rowCm-outside-source-range"
+        },
+        "plants": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "rowCm-outside-source-range"
+        },
+        "issues": [
+          "rowCm-outside-source-range"
+        ]
+      }
+    },
+    {
+      "id": "near-spreading-rowCm-50-above",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "50.00000000000000000001",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 23
+        },
+        "plants": {
+          "state": "ready",
+          "value": 23
+        }
+      }
+    },
+    {
+      "id": "near-spreading-rowCm-75-below",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "74.99999999999999999999",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 16
+        },
+        "plants": {
+          "state": "ready",
+          "value": 16
+        }
+      }
+    },
+    {
+      "id": "near-spreading-rowCm-75-above",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75.00000000000000000001",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "rejected",
+        "stations": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "rowCm-outside-source-range"
+        },
+        "plants": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "rowCm-outside-source-range"
+        },
+        "issues": [
+          "rowCm-outside-source-range"
+        ]
+      }
+    },
+    {
+      "id": "near-spreading-inRowCm-50-below",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "49.99999999999999999999",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "rejected",
+        "stations": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "inRowCm-outside-source-range"
+        },
+        "plants": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "inRowCm-outside-source-range"
+        },
+        "issues": [
+          "inRowCm-outside-source-range"
+        ]
+      }
+    },
+    {
+      "id": "near-spreading-inRowCm-50-above",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "50.00000000000000000001",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 23
+        },
+        "plants": {
+          "state": "ready",
+          "value": 23
+        }
+      }
+    },
+    {
+      "id": "near-spreading-inRowCm-75-below",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "74.99999999999999999999",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 16
+        },
+        "plants": {
+          "state": "ready",
+          "value": 16
+        }
+      }
+    },
+    {
+      "id": "near-spreading-inRowCm-75-above",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "75.00000000000000000001",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "rejected",
+        "stations": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "inRowCm-outside-source-range"
+        },
+        "plants": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "inRowCm-outside-source-range"
+        },
+        "issues": [
+          "inRowCm-outside-source-range"
+        ]
+      }
+    },
+    {
+      "id": "near-erect-or-semi-erect-rowCm-50-below",
+      "input": {
+        "habit": "erect-or-semi-erect",
+        "rowCmDecimal": "49.99999999999999999999",
+        "inRowCmDecimal": "25",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "rejected",
+        "stations": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "rowCm-outside-source-range"
+        },
+        "plants": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "rowCm-outside-source-range"
+        },
+        "issues": [
+          "rowCm-outside-source-range"
+        ]
+      }
+    },
+    {
+      "id": "near-erect-or-semi-erect-rowCm-50-above",
+      "input": {
+        "habit": "erect-or-semi-erect",
+        "rowCmDecimal": "50.00000000000000000001",
+        "inRowCmDecimal": "25",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "rejected",
+        "stations": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "rowCm-outside-source-range"
+        },
+        "plants": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "rowCm-outside-source-range"
+        },
+        "issues": [
+          "rowCm-outside-source-range"
+        ]
+      }
+    },
+    {
+      "id": "near-erect-or-semi-erect-inRowCm-15-below",
+      "input": {
+        "habit": "erect-or-semi-erect",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "14.99999999999999999999",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "rejected",
+        "stations": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "inRowCm-outside-source-range"
+        },
+        "plants": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "inRowCm-outside-source-range"
+        },
+        "issues": [
+          "inRowCm-outside-source-range"
+        ]
+      }
+    },
+    {
+      "id": "near-erect-or-semi-erect-inRowCm-15-above",
+      "input": {
+        "habit": "erect-or-semi-erect",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "15.00000000000000000001",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 119
+        },
+        "plants": {
+          "state": "ready",
+          "value": 119
+        }
+      }
+    },
+    {
+      "id": "near-erect-or-semi-erect-inRowCm-25-below",
+      "input": {
+        "habit": "erect-or-semi-erect",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "24.99999999999999999999",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 72
+        },
+        "plants": {
+          "state": "ready",
+          "value": 72
+        }
+      }
+    },
+    {
+      "id": "near-erect-or-semi-erect-inRowCm-25-above",
+      "input": {
+        "habit": "erect-or-semi-erect",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "25.00000000000000000001",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "rejected",
+        "stations": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "inRowCm-outside-source-range"
+        },
+        "plants": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "inRowCm-outside-source-range"
+        },
+        "issues": [
+          "inRowCm-outside-source-range"
+        ]
+      }
+    },
+    {
+      "id": "reciprocal-origin-18",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "10.125"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 18
+        },
+        "plants": {
+          "state": "ready",
+          "value": 18
+        }
+      }
+    },
+    {
+      "id": "single-station-reciprocal",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "0.5625"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 1
+        },
+        "plants": {
+          "state": "ready",
+          "value": 1
+        }
+      }
+    },
+    {
+      "id": "floor-stations-before-two-survivors",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "2",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "1"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 1
+        },
+        "plants": {
+          "state": "ready",
+          "value": 2
+        }
+      }
+    },
+    {
+      "id": "multiple-survivors",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "3",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 16
+        },
+        "plants": {
+          "state": "ready",
+          "value": 48
+        }
+      }
+    },
+    {
+      "id": "stand-unknown",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": null,
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 16
+        },
+        "plants": {
+          "state": "missing-inputs",
+          "value": null,
+          "reason": "finalStand"
+        }
+      }
+    },
+    {
+      "id": "stand-zero",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "0",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 16
+        },
+        "plants": {
+          "state": "ready",
+          "value": 0
+        }
+      }
+    },
+    {
+      "id": "zero-stand-does-not-rescue-unknown-area",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "0",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": null
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "missing-inputs",
+          "value": null,
+          "reason": "measuredAreaM2"
+        },
+        "plants": {
+          "state": "missing-inputs",
+          "value": null,
+          "reason": "measuredAreaM2"
+        },
+        "issues": [
+          "measuredAreaM2"
+        ]
+      }
+    },
+    {
+      "id": "zero-stand-does-not-rescue-unknown-spacing",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": null,
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "0",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "missing",
+        "stations": {
+          "state": "missing-inputs",
+          "value": null,
+          "reason": "rowCm"
+        },
+        "plants": {
+          "state": "missing-inputs",
+          "value": null,
+          "reason": "rowCm"
+        },
+        "issues": [
+          "rowCm"
+        ]
+      }
+    },
+    {
+      "id": "zero-stand-does-not-rescue-invalid-spacing",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "0",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "0",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "rejected",
+        "stations": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "rowCm-outside-source-range"
+        },
+        "plants": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "rowCm-outside-source-range"
+        },
+        "issues": [
+          "rowCm-outside-source-range"
+        ]
+      }
+    },
+    {
+      "id": "fractional-stand",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "1.5",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "invalid-final-stand"
+        },
+        "plants": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "invalid-final-stand"
+        },
+        "issues": [
+          "invalid-final-stand"
+        ]
+      }
+    },
+    {
+      "id": "negative-stand",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "-1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "invalid-final-stand"
+        },
+        "plants": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "invalid-final-stand"
+        },
+        "issues": [
+          "invalid-final-stand"
+        ]
+      }
+    },
+    {
+      "id": "unsafe-stand",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "75",
+        "inRowCmDecimal": "75",
+        "finalStandDecimal": "9007199254740992",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "9"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "invalid-final-stand"
+        },
+        "plants": {
+          "state": "invalid-inputs",
+          "value": null,
+          "reason": "invalid-final-stand"
+        },
+        "issues": [
+          "invalid-final-stand"
+        ]
+      }
+    },
+    {
+      "id": "rectangle-downward-projection",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "50",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "saved-rectangle-metres-v1",
+          "widthMDecimal": "0.58",
+          "heightMDecimal": "100",
+          "savedAreaNumber": 57.99999999999999,
+          "areaProjectionIsAuthorityForOrigin": false
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 232
+        },
+        "plants": {
+          "state": "ready",
+          "value": 232
+        }
+      }
+    },
+    {
+      "id": "scalar-downward-projection-only",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "50",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "57.99999999999999"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 231
+        },
+        "plants": {
+          "state": "ready",
+          "value": 231
+        }
+      }
+    },
+    {
+      "id": "rectangle-upward-projection",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "50",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "saved-rectangle-metres-v1",
+          "widthMDecimal": "0.75",
+          "heightMDecimal": "1.3333333333333333",
+          "savedAreaNumber": 1.0,
+          "areaProjectionIsAuthorityForOrigin": false
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 3
+        },
+        "plants": {
+          "state": "ready",
+          "value": 3
+        }
+      }
+    },
+    {
+      "id": "scalar-upward-projection-only",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "50",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "1"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 4
+        },
+        "plants": {
+          "state": "ready",
+          "value": 4
+        }
+      }
+    },
+    {
+      "id": "stations-unsafe",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "50",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "2251799813685248"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "held",
+          "value": null,
+          "reason": "unsafe-whole-count"
+        },
+        "plants": {
+          "state": "held",
+          "value": null,
+          "reason": "unsafe-whole-count"
+        }
+      }
+    },
+    {
+      "id": "plants-unsafe-stations-safe",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "50",
+        "finalStandDecimal": "2",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "1125899906842624"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 4503599627370496
+        },
+        "plants": {
+          "state": "held",
+          "value": null,
+          "reason": "unsafe-whole-count"
+        }
+      }
+    },
+    {
+      "id": "plants-at-safe-limit",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "50",
+        "finalStandDecimal": "9007199254740991",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "0.25"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 1
+        },
+        "plants": {
+          "state": "ready",
+          "value": 9007199254740991
+        }
+      }
+    },
+    {
+      "id": "stations-below-safe-limit",
+      "input": {
+        "habit": "spreading",
+        "rowCmDecimal": "50",
+        "inRowCmDecimal": "50",
+        "finalStandDecimal": "1",
+        "area": {
+          "kind": "declared-scalar-m2",
+          "valueDecimal": "2251799813685247.5"
+        }
+      },
+      "expected": {
+        "rangeAdmission": "accepted",
+        "stations": {
+          "state": "ready",
+          "value": 9007199254740990
+        },
+        "plants": {
+          "state": "ready",
+          "value": 9007199254740990
+        }
+      }
+    }
+  ]
+}

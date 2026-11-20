@@ -3,6 +3,8 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import { REPORT_FOOTNOTE_ENGLISH_PENDING } from '@/lib/i18n-pending';
+import { reportClimateLabels } from '../lib/climate-temperature.ts';
+import { DEMO_LOCATION } from '../lib/demo-site.ts';
 
 // Last audit leftovers (swarm/w10-audit-leftovers, task 1).
 //
@@ -39,13 +41,27 @@ test('the footnote no longer interpolates raw koppenDesc / rainfall pattern / se
     'the rainfall pattern word must be routed through a translation lookup, not interpolated raw');
   assert.doesNotMatch(block, /\{d\.rainfall\.wetSeason\}/);
   assert.doesNotMatch(block, /\{d\.rainfall\.drySeason\}/);
-  assert.match(block, /koppenDescLabel\(d\.climate\.koppen, d\.climate\.koppenDesc\)/);
-  assert.match(block, /rainfallPatternLabel\(d\.rainfall\.pattern\)/);
-  assert.match(block, /seasonRangeLabel\(d\.rainfall\.wetSeason\)/);
-  assert.match(block, /seasonRangeLabel\(d\.rainfall\.drySeason\)/);
+  // The evidence gate now precedes translation. Requiring the old raw inputs
+  // would restore fallback climate claims; keep both the gate and translation.
+  assert.match(REPORT_VIEW, /const climateLabels = reportClimateLabels\(d\);/);
+  assert.match(block, /climateLabels\.koppen === null \? 'Not known'/);
+  assert.match(block, /koppenDescLabel\(climateLabels\.koppen, d\.climate\.koppenDesc\)/);
+  assert.match(block, /rainfallPatternLabel\(climateLabels\.pattern\)/);
+  assert.match(block, /seasonRangeLabel\(climateLabels\.wetSeason\)/);
+  assert.match(block, /seasonRangeLabel\(climateLabels\.drySeason\)/);
   // The BRU line's source attribution is a named organisation, not translatable jargon — it must
   // stay exactly as the data gives it.
   assert.match(block, /\{d\.bru\.attribution\}/);
+});
+
+test('translated footnote inputs retain supported literal codes but withhold untagged placeholder climate', () => {
+  const recorded = reportClimateLabels(DEMO_LOCATION);
+  assert.equal(recorded.koppen, 'Dwb', 'existing demo fixture code, not independent climate validation');
+  assert.equal(recorded.pattern, 'summer'); assert.equal(recorded.wetSeason, 'Oct–Mar'); assert.equal(recorded.drySeason, 'May–Aug');
+  const missing = structuredClone(DEMO_LOCATION);
+  delete missing.climate.monthlyTempCoverage;
+  delete missing.rainfall.rainfallSource;
+  assert.deepEqual(reportClimateLabels(missing), { pattern: null, wetSeason: null, drySeason: null, koppen: null, meanTemp: null });
 });
 
 test('every Köppen code lib/koppen-global.ts can return has a reportKoppenDesc<code> pending key', () => {

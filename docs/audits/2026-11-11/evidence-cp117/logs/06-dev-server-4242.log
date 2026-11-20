@@ -1,0 +1,139 @@
+  ▲ Next.js 14.2.18
+  - Local:        http://localhost:4242
+  - Network:      http://0.0.0.0:4242
+
+ ✓ Starting...
+ ✓ Ready in 5.6s
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 1820ms (115 modules)
+ ○ Compiling /atlas ...
+ ✓ Compiled /atlas in 32.5s (2012 modules)
+ GET /atlas 200 in 33390ms
+ GET /atlas 200 in 60ms
+ ○ Compiling /api/build-info ...
+ ✓ Compiled /api/build-info in 3.9s (1171 modules)
+ ✓ Compiled (1182 modules)
+ GET /api/build-info?update-check=1794409318217&language=en 200 in 4189ms
+ GET /api/build-info?update-check=1794409318205&language=en 200 in 4196ms
+ GET /sw.js 200 in 4471ms
+ ○ Compiling /home ...
+ ✓ Compiled /home in 5.4s (2148 modules)
+ GET /home 200 in 6493ms
+ ○ Compiling /api/location-data ...
+ ✓ Compiled /api/location-data in 5s (3948 modules)
+[api-auth] /api/location-data: unauthenticated request (missing bearer token)
+ GET / 307 in 6536ms
+ GET /student 200 in 6538ms
+ GET /farmer 200 in 6541ms
+ GET /home 200 in 316ms
+ ○ Compiling /offline ...
+ ✓ Compiled /offline in 1694ms (3979 modules)
+ GET /prices 200 in 2600ms
+ GET /offline 200 in 2593ms
+ GET /sw.js 200 in 42ms
+ GET /home 200 in 164ms
+ GET /api/location-data?lat=-26.2&lon=28.05 200 in 12986ms
+ GET / 307 in 500ms
+ GET /farmer 200 in 503ms
+ GET /student 200 in 504ms
+ GET /home 200 in 68ms
+ GET /prices 200 in 73ms
+ GET /offline 200 in 91ms
+ GET /farmer?panel=Climate 200 in 69ms
+ GET /api/build-info?update-check=1794409348934&language=en 200 in 206ms
+ GET /api/build-info?update-check=1794409348946&language=en 200 in 192ms
+ GET /sw.js 200 in 205ms
+ GET /api/build-info 200 in 25ms
+ GET /api/build-info 200 in 24ms
+ GET /home 200 in 90ms
+ GET / 307 in 108ms
+ GET /farmer 200 in 114ms
+ GET /student 200 in 116ms
+ GET /home 200 in 62ms
+ GET /prices 200 in 102ms
+ GET /offline 200 in 102ms
+ GET /sw.js 200 in 22ms
+ GET /farmer?panel=Climate 200 in 59ms
+ GET /api/build-info?update-check=1794409366757&language=en 200 in 45ms
+ GET /api/build-info?update-check=1794409366766&language=en 200 in 45ms
+ GET /sw.js 200 in 51ms
+ GET /api/build-info 200 in 77ms
+ GET /api/build-info 200 in 69ms
+ GET /home 200 in 100ms
+ GET / 307 in 133ms
+ GET /farmer 200 in 134ms
+ GET /student 200 in 139ms
+ GET /home 200 in 84ms
+ GET /prices 200 in 96ms
+ GET /offline 200 in 96ms
+ GET /sw.js 200 in 19ms
+ ○ Compiling /facilitator/crops ...
+ ✓ Compiled /facilitator/crops in 4.2s (4249 modules)
+ GET /facilitator/crops 200 in 5188ms
+ GET /api/build-info?update-check=1794409389729&language=en 200 in 237ms
+ GET /api/build-info?update-check=1794409389735&language=en 200 in 238ms
+ GET /sw.js 200 in 273ms
+ GET /home 200 in 268ms
+ GET / 307 in 660ms
+ GET /farmer 200 in 665ms
+ GET /student 200 in 664ms
+ GET /home 200 in 111ms
+ GET /prices 200 in 331ms
+ GET /offline 200 in 294ms
+ GET /sw.js 200 in 22ms
+[api-auth] /api/location-data: unauthenticated request (missing bearer token)
+ GET /api/location-data?lat=-27.726231&lon=31.963044 200 in 1114ms
+ GET /atlas 200 in 256ms
+ GET /api/build-info?update-check=1794409482241&language=en 200 in 100ms
+ GET /api/build-info?update-check=1794409482259&language=en 200 in 100ms
+ GET /sw.js 200 in 106ms
+ GET /home 200 in 99ms
+ GET / 307 in 184ms
+ GET /farmer 200 in 191ms
+ GET /student 200 in 192ms
+ GET /home 200 in 98ms
+ GET /prices 200 in 134ms
+ GET /offline 200 in 136ms
+ GET /farmer?panel=Climate 200 in 76ms
+ GET /api/build-info?update-check=1794409488450&language=en 200 in 96ms
+ GET /api/build-info?update-check=1794409488459&language=en 200 in 95ms
+ GET /sw.js 200 in 103ms
+ GET /api/build-info 200 in 67ms
+ GET /api/build-info 200 in 67ms
+ GET /home 200 in 93ms
+ GET / 307 in 178ms
+ GET /student 200 in 181ms
+ GET /farmer 200 in 180ms
+ GET /home 200 in 130ms
+ GET /offline 200 in 154ms
+ GET /prices 200 in 156ms
+ GET /sw.js 200 in 37ms
+ GET /farmer?panel=Climate 200 in 129ms
+ GET /api/build-info?update-check=1794409531750&language=en 200 in 110ms
+ GET /api/build-info?update-check=1794409531739&language=en 200 in 109ms
+ GET /sw.js 200 in 113ms
+ GET /api/build-info 200 in 64ms
+ GET /api/build-info 200 in 63ms
+ GET /home 200 in 127ms
+ GET / 307 in 183ms
+ GET /student 200 in 191ms
+ GET /farmer 200 in 192ms
+ GET /home 200 in 121ms
+ GET /prices 200 in 154ms
+ GET /offline 200 in 156ms
+ GET /sw.js 200 in 19ms
+ GET /facilitator/crops 200 in 140ms
+ GET /api/build-info?update-check=1794409575044&language=en 200 in 126ms
+ GET /api/build-info?update-check=1794409575053&language=en 200 in 126ms
+ GET /sw.js 200 in 133ms
+ GET /home 200 in 112ms
+ GET / 307 in 132ms
+ GET /farmer 200 in 143ms
+ GET /student 200 in 145ms
+ GET /home 200 in 107ms
+ GET /prices 200 in 131ms
+ GET /offline 200 in 99ms
+ GET /sw.js 200 in 22ms
+[api-auth] /api/location-data: unauthenticated request (missing bearer token)
+ GET /api/location-data?lat=-27.726231&lon=31.963044 200 in 1706ms
+[?25h

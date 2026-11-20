@@ -1,0 +1,77 @@
+Hoedspruit                 all-year    era5 frost      0/yr lowest    3.7  record min 3.9  pass
+Malelane                   mild-frost  era5 frost      0/yr lowest    5.1  record min 3.2  pass
+Giyani                     all-year    era5 frost      0/yr lowest    4.6  record min 4.7  pass
+  Hazyview: HTTP 429 {"error":true,"reason":"Minutely API request limit exceeded. Please try again in one minute."} -> waiting 30s (attempt 1)
+Hazyview                   all-year    era5 frost      0/yr lowest      4  record min 4.4  pass
+Barberton                  mild-frost  era5 frost      0/yr lowest    1.6  record min 2  pass
+Letsitele                  all-year    era5 frost      0/yr lowest      3  record min 4.2  pass
+  Mokopane: HTTP 429 {"reason":"Minutely API request limit exceeded. Please try again in one minute.","error":true} -> waiting 30s (attempt 1)
+Mokopane                   summer      era5 frost      0/yr lowest    1.1  record min -1.5  pass
+Bela-Bela                  summer      era5 frost      0/yr lowest    0.3  record min -4  pass
+Brits                      summer      era5 frost      0/yr lowest    0.1  record min -2.9  pass
+  Zeerust: HTTP 429 {"reason":"Minutely API request limit exceeded. Please try again in one minute.","error":true} -> waiting 30s (attempt 1)
+Zeerust                    summer      era5 frost    0.8/yr lowest   -1.2  record min -2.9  pass
+Thabazimbi                 summer      era5 frost   0.05/yr lowest   -1.1  record min -1.7  pass
+eMalahleni                 summer      era5 frost    9.7/yr lowest   -4.2  record min -5.3  pass
+  Standerton: HTTP 429 {"error":true,"reason":"Minutely API request limit exceeded. Please try again in one minute."} -> waiting 30s (attempt 1)
+Standerton                 summer      era5 frost   11.5/yr lowest   -4.8  record min -6.7  pass
+Kroonstad                  summer      era5 frost  14.95/yr lowest   -4.8  record min -5.9  pass
+Welkom                     summer      era5 frost     17/yr lowest   -4.7  record min -5.6  pass
+  Klerksdorp: HTTP 429 {"error":true,"reason":"Minutely API request limit exceeded. Please try again in one minute."} -> waiting 30s (attempt 1)
+Klerksdorp                 summer      era5 frost  11.15/yr lowest   -4.1  record min -5.5  pass
+Lichtenburg                summer      era5 frost   4.85/yr lowest   -3.7  record min -4.8  pass
+Harrismith                 summer      era5 frost   13.6/yr lowest   -5.6  record min -3.7  pass
+  Vereeniging: HTTP 429 {"reason":"Minutely API request limit exceeded. Please try again in one minute.","error":true} -> waiting 30s (attempt 1)
+Vereeniging                summer      era5 frost  10.85/yr lowest   -5.5  record min -5.7  pass
+Middelburg (Mpumalanga)    summer      era5 frost   4.85/yr lowest   -3.4  record min -5.3  pass
+Port Shepstone             mild-frost  era5 frost      0/yr lowest    7.4  record min 9.4  pass
+  KwaDukuza: HTTP 429 {"error":true,"reason":"Minutely API request limit exceeded. Please try again in one minute."} -> waiting 30s (attempt 1)
+KwaDukuza                  all-year    era5 frost      0/yr lowest    5.3  record min 8.3  pass
+Mtubatuba                  all-year    era5 frost      0/yr lowest    6.6  record min 6.6  pass
+Jozini                     all-year    era5 frost      0/yr lowest    4.8  record min 5.4  pass
+  Eshowe: HTTP 429 {"error":true,"reason":"Minutely API request limit exceeded. Please try again in one minute."} -> waiting 30s (attempt 1)
+Eshowe                     mild-frost  era5 frost      0/yr lowest    3.7  record min 2.9  pass
+Estcourt                   summer      era5 frost   7.45/yr lowest   -3.8  record min -3.6  pass
+Ladysmith                  summer      era5 frost      5/yr lowest   -2.5  record min -2.3  pass
+  Greytown: HTTP 429 {"error":true,"reason":"Minutely API request limit exceeded. Please try again in one minute."} -> waiting 30s (attempt 1)
+Greytown                   summer      era5 frost    0.7/yr lowest   -1.6  record min -1  pass
+Ixopo                      summer      era5 frost   1.95/yr lowest   -2.8  record min -1.4  pass
+Dundee                     summer      era5 frost   1.05/yr lowest     -2  record min -2.8  pass
+  Makhanda: HTTP 429 {"reason":"Minutely API request limit exceeded. Please try again in one minute.","error":true} -> waiting 30s (attempt 1)
+  Makhanda: HTTP 503 upstream connect error or disconnect/reset before headers. reset reason: connection timeout -> waiting 60s (attempt 2)
+Makhanda                   mild-frost  era5 frost    0.1/yr lowest   -0.6  record min 3.2  pass
+Qonce                      mild-frost  era5 frost      0/yr lowest    0.5  record min 3.4  pass
+Aliwal North               summer      era5 frost  38.35/yr lowest   -5.6  record min -6  pass
+  Cradock: HTTP 429 {"reason":"Minutely API request limit exceeded. Please try again in one minute.","error":true} -> waiting 30s (attempt 1)
+Cradock                    summer      era5 frost    6.1/yr lowest   -3.3  record min -4.7  pass
+Butterworth                summer      era5 frost      0/yr lowest    2.2  record min 1.4  FAIL H-D
+Lusikisiki                 mild-frost  era5 frost      0/yr lowest    3.6  record min 2.9  pass
+  Jeffreys Bay: HTTP 429 {"error":true,"reason":"Minutely API request limit exceeded. Please try again in one minute."} -> waiting 30s (attempt 1)
+Jeffreys Bay               mild-frost  era5 frost      0/yr lowest    5.2  record min 6.6  pass
+Paarl                      winter      era5 frost    0.1/yr lowest   -2.2  record min 1.4  pass
+Malmesbury                 winter      era5 frost    0.6/yr lowest   -1.7  record min 1.4  pass
+  Swellendam: HTTP 429 {"reason":"Minutely API request limit exceeded. Please try again in one minute.","error":true} -> waiting 30s (attempt 1)
+Swellendam                 summer      era5 frost   0.15/yr lowest   -0.5  record min -0.2  pass
+Hermanus                   mild-frost  era5 frost      0/yr lowest    3.7  record min 4.8  pass
+Mossel Bay                 summer      era5 frost      0/yr lowest      4  record min 1.7  FAIL H-D
+  Knysna: HTTP 429 {"reason":"Minutely API request limit exceeded. Please try again in one minute.","error":true} -> waiting 30s (attempt 1)
+Knysna                     mild-frost  era5 frost      0/yr lowest    5.6  record min 4.1  pass
+Clanwilliam                winter      era5 frost      0/yr lowest    0.1  record min -0.1  pass
+Robertson                  summer      era5 frost   0.25/yr lowest   -1.2  record min -0.8  pass
+  Caledon: HTTP 429 {"error":true,"reason":"Minutely API request limit exceeded. Please try again in one minute."} -> waiting 30s (attempt 1)
+Caledon                    summer      era5 frost   0.05/yr lowest   -0.1  record min -0.6  pass
+De Aar                     summer      era5 frost   15.3/yr lowest   -5.5  record min -4.7  pass
+Calvinia                   winter      era5 frost   4.45/yr lowest   -2.6  record min -4.1  pass
+  Prieska: HTTP 429 {"error":true,"reason":"Minutely API request limit exceeded. Please try again in one minute."} -> waiting 30s (attempt 1)
+Prieska                    summer      era5 frost    6.7/yr lowest   -3.2  record min -4  pass
+Kakamas                    summer      era5 frost    1.7/yr lowest     -2  record min -2.9  pass
+Colesberg                  summer      era5 frost   21.8/yr lowest   -6.1  record min -5.5  pass
+Victoria West              summer      era5 frost  18.85/yr lowest   -4.7  record min -5  pass
+  Vryburg: HTTP 429 {"reason":"Minutely API request limit exceeded. Please try again in one minute.","error":true} -> waiting 30s (attempt 1)
+Vryburg                    summer      era5 frost    6.7/yr lowest   -4.3  record min -4.8  pass
+Pongola                    all-year    era5 frost      0/yr lowest    3.4  record min 5.4  pass
+Ulundi                     mild-frost  era5 frost      0/yr lowest      2  record min 1.2  pass
+  Makhado: HTTP 429 {"reason":"Minutely API request limit exceeded. Please try again in one minute.","error":true} -> waiting 30s (attempt 1)
+Makhado                    mild-frost  era5 frost      0/yr lowest    1.7  record min 1.2  pass
+
+56 places; app reading 56; ERA5 56; failed 2

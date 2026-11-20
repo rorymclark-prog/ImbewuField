@@ -243,7 +243,8 @@ test('a farm with no design is told so, not given someone else\'s', () => {
 
 test('the roof calculation never substitutes a roof the farm does not have', () => {
   const withoutRoof = roofCalcLine({}, 800);
-  assert.match(withoutRoof, /no roof has been traced or measured/i);
+  // This helper sees supplied facts, not every measurement the farmer holds.
+  assert.match(withoutRoof, /no positive roof area is supplied/i);
   assert.doesNotMatch(withoutRoof, /100m²|100 m²/, 'the hardcoded 100 m² roof must be gone');
   assert.doesNotMatch(withoutRoof, /L usable\/year/, 'no yield may be computed from a roof that is not there');
 
@@ -279,7 +280,8 @@ test('the water block reports the drawn tank the report used to deny', () => {
   assert.match(block, /Municipal tap/);
   // A tank on the plan and a tank on the map are very likely one tank, counted once.
   assert.match(block, /most likely the SAME tank\. Count the storage once/);
-  assert.match(block, /no dam, no pond/);
+  assert.match(block, /NOT RECORDED in the supplied map\/design facts: dam, pond/);
+  assert.match(block, /not proof of physical absence/);
 });
 
 test('the irrigation table carries the real bed sizes, and says so when there are none', () => {
@@ -319,7 +321,7 @@ test('the Site at a Glance table names the farm and sources every figure', () =>
   assert.match(header, /\| Growing area drawn \| 128 m² — 7 beds 44 m² \+ 4 staple plots 84 m² \|/);
   assert.match(header, /\| Property boundary \| 1 037 m²/);
   assert.match(header, /\| Roof catchment traced \| 144 m²/);
-  assert.match(header, /\| Not on this site \| No dam, no pond/);
+  assert.match(header, /\| Water inventory gaps \| Not recorded in supplied map\/design facts: dam, pond/);
   // Every row must declare where it came from — the third column is never blank.
   for (const line of header.split('\n')) {
     if (!line.startsWith('|') || /^\|\s*-+/.test(line) || line.includes('| Measure |')) continue;
@@ -333,7 +335,7 @@ test('a bare site still gets a header, and it admits what is missing', () => {
   const header = buildReportHeaderMarkdown({ ...HEADER_BASE, facts: null });
   assert.match(header, /^# Permaculture Site Report/);
   assert.match(header, /\| Property boundary \| Not traced \|/);
-  assert.match(header, /\| Roof catchment \| Not traced or measured \|/);
+  assert.match(header, /\| Roof area in supplied map\/design facts \| Not recorded in these map\/design facts \|/);
   assert.doesNotMatch(header, /Growing area drawn/);
 });
 
@@ -643,12 +645,38 @@ test('the report collector reads market notes only from this site saved survey, 
 test('the full report header cannot turn unsourced soil placeholders into a site measurement', () => {
   for (const soilSource of [undefined, 'estimate'] as const) {
     const header = buildReportHeaderMarkdown({ ...HEADER_BASE, facts: null, soilSource });
-    assert.match(header, /Soil \(0-30 cm\) \| Not measured; arrange a soil test/);
+    assert.match(header, /Recorded soil values \| Soil values not supported by a recorded source/);
     assert.doesNotMatch(header, /pH 6\.2|1\.1% organic carbon|Sandy clay loam/);
   }
   for (const soilSource of ['lab', 'soilgrids'] as const) {
     const header = buildReportHeaderMarkdown({ ...HEADER_BASE, facts: null, soilSource });
     assert.match(header, /pH 6\.2 · 1\.1% organic carbon · Sandy clay loam/);
     assert.doesNotMatch(header, /Soil \(0-30 cm\) \| Not measured/);
+  }
+});
+
+
+import { annualRainfallMm } from '../lib/climate-temperature.ts';
+import { climateFigure, waterBudgetFigure } from '../lib/report-figures.ts';
+import { buildRiskRegister } from '../lib/report-risk.ts';
+test('an outage cannot fabricate rainfall or roof yield in deterministic report text or original figures', () => {
+  const facts = demoFacts();
+  const location = { ...DEMO_LOCATION, rainfall: { ...DEMO_LOCATION.rainfall, annual: 600, monthly: Array(12).fill(50), rainfallSource: undefined } };
+  const visuals = siteReportVisuals(facts, location);
+  assert.ok(!visuals.metrics.some(m => m.label === 'Annual rainfall'));
+  assert.ok(!visuals.charts.some(c => c.id === 'rainfall'));
+  assert.equal(climateFigure(location), null);
+  assert.equal(waterBudgetFigure(facts, location), null);
+  assert.match(roofCalcLine(facts, annualRainfallMm(location.rainfall)), /rainfall is not known/);
+  const supported = { ...location, rainfall: { ...location.rainfall, annual: 0, monthly: Array(12).fill(0), rainfallSource: 'nasa-power' } };
+  assert.match(siteReportVisuals(facts, supported).metrics.find(m => m.label === 'Annual rainfall')!.value, /^0 mm$/);
+  assert.ok(climateFigure(supported));
+  assert.ok(waterBudgetFigure(facts, supported));
+  assert.match(roofCalcLine(facts, annualRainfallMm(supported.rainfall)), /0 L usable/);
+});
+test('a record minimum cannot assign frost likelihood in the deterministic risk register', () => {
+  for (const minTempC of [-20, 0, 4, 8, undefined]) {
+    const rows = buildRiskRegister({ facts: null, rainfallMm: null, slopeDeg: 0, minTempC, soilSource: 'lab', unpricedBoqLines: 0 });
+    assert.ok(rows.every(row => !/Frost damage/.test(row.risk)));
   }
 });

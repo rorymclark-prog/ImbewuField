@@ -1,5 +1,102 @@
 # ImbewuField audit archive
 
+- [2026-11-19 — Wisconsin tomato first-harvest reference](2026-11-19/wisconsin-tomato-first-harvest-codex.md): source interpretation, explicit grower choice, saved-profile compatibility and inspected report layout.
+
+- [2026-11-18 — Wisconsin reference disclosure](2026-11-18/wisconsin-reference-disclosure-codex.md): actual Claude F-1 readability correction, unchanged source capsules and canonical records, scoped output checks and separate successor gates.
+
+- [2026-11-17 — Wisconsin tomato competing references](2026-11-17/wisconsin-tomato-competing-references-codex.md): source-specific consent and precedence, retained comparison through save/export, actual presentation evidence and open successor gates.
+
+- [2026-11-17 — Cost chart gap caption](2026-11-17/report-chart-gap-caption-codex.md): singular and unconfirmed-purchase wording; historical evidence erratum, actual outputs and successor gates distinguished.
+
+- [2026-11-16 - Cost-gap report labels](2026-11-16/report-cost-gap-labels-codex.md): actual Claude R-1 and short-summary copy corrected; baseline regressions,193affected checks and fresh actual PDFs, with successor gates separate.
+
+- [2026-11-16 — Entirely unpriced report wording](2026-11-16/report-unpriced-subtotal-wording-codex.md): actual Claude C-1, reproduced baseline, truthful unknown-cost footer and inspected actual PDFs; successor gates separate.
+Latest cost correction — [Mixed inventory and purchase quantities](2026-11-16/report-mixed-purchase-quantity-codex.md). Retain inventory without pricing an unknown purchase share; distinguish unpriced builds from zero cost. Exact successor CI and external review remain separate.
+
+Latest actual external-review corrections — [Water record reconciliation](2026-11-16/report-water-source-disagreement-codex.md). Separate existing/mixed tank and survey no-storage records, retain mixed survey answers and clear decimal roof displays; fresh current-source outputs and successor gates remain distinct.
+
+Latest actual-Claude compatibility follow-up — [Legacy watering methods](2026-11-16/legacy-water-delivery-codex.md). One shared reader retains old delivery text in reopened surveys and report headers without rewriting direct-read records; successor CI and external gates remain separate.
+
+Latest report continuation — [Survey water evidence](2026-11-15/survey-water-report-evidence-codex.md). Separate source-labelled survey answers from map/design inventory gaps without inferring infrastructure, capacity or supply; successor gates remain separate.
+
+Latest report continuation — [Survey roof evidence](2026-11-15/survey-roof-report-evidence-codex.md). Preserve source-separated survey/map roof areas in the actual report, with honest missing/invalid evidence and actual PDF inspection; successor gates remain separate.
+
+Latest actual-Claude delta — [Field-period review reasons and punctuation](2026-11-14/provisional-review-reasons-codex.md). Correct withheld-date explanation, narrow the release claim and remove doubled separators; source calculations and legacy origin replay remain unchanged. Successor CI/external gates are separate.
+
+Latest actual-Claude follow-up — [Field-period wording and report continuity](2026-11-14/provisional-period-wording-claude-followup-codex.md). Shared readable comparisons and exact current report evidence; actual successor CI/reviews and agronomic limits remain separate.
+
+Latest full-CI correction — [Buyer-page climate revision fixture](2026-11-14/page-consumer-climate-fixture-codex.md). Preserve the actual page's state boundary in the extracted consumer test; all application source and farming outputs remain unchanged. Successor CI/external gates remain separate.
+
+Latest global comparison continuation — [Proposed field-period monthly temperatures](2026-11-14/field-period-temperature-codex.md). Explicit repeated historical comparisons preserve unknowns, exact old replay and own dates; no whole-season suitability or calendar inference.
+
+Latest report presentation continuation — [Provisional evidence pagination](2026-11-14/provisional-print-pagination-codex.md). Compact untouched unknowns and readable source continuations preserve all meanings; exact successor review/CI remain separate.
+
+Latest prairie nursery continuation — [Saskatchewan cabbage seed-start lead](2026-11-14/saskatchewan-cabbage-nursery-codex.md). Explicit approximate endpoint, retained readiness/region uncertainty, canonical saved/adopted evidence and printable qualification; full successor CI/external gates remain separate.
+
+Latest Canadian source continuation — [Aggregate cabbage transplant-month reference](2026-11-14/canadian-cabbage-month-reference-codex.md). Explicit historical programme selection, bounded fact reuse and retained unknowns; saved-row missing-condition correction, successor CI and external gates tracked separately.
+
+Latest global comparison continuation — [Optional monthly tomato comparison](2026-11-13/provisional-temperature-comparison-codex.md). Source-qualified model temperatures, retained assumptions, actual dated-cycle review and explicit unknowns; successor CI, external review and local validation remain separate.
+
+Latest global climate prerequisite — [Temperature source receipts](2026-11-13/power-temperature-receipt-codex.md). Preserve the actual response statistic, averaging period and missing months; this alone is not a crop model or P04 completion.
+
+Latest conditional nursery reference — [Kenya tomato interval](2026-11-13/kenya-tomato-nursery-codex.md). Explicit source purpose and range endpoint support partial seed-start arithmetic; no source planting calendar or successor release approval.
+
+Latest regional month reference — [Southeast Missouri oats](2026-11-13/missouri-oats-reference-codex.md). Historical cover-crop/type choice, source-bound positive months and retained unknowns; successor gates remain separate.
+
+Latest global evidence continuation — [Positive-only crop months](2026-11-13/positive-month-coverage-codex.md). Omitted months remain unknown, with preserved legacy replay and conditional partial outputs; source admission and successor gates remain separate.
+
+Latest provisional export continuation — [Readable place identity](2026-11-13/provisional-export-place-label-codex.md). Current preview files name the scope-matched place/workspace without exposing raw handles; exact output/review/CI gates remain separate.
+
+Latest short-report continuation — [Rainfall evidence](2026-11-13/summary-rainfall-evidence-codex.md). One-page, five-page and prepared reports use the shared source gate; unsupported placeholders stay unknown and sourced zero remains visible. Exact successor review and CI remain separate.
+
+Latest regional source continuation — [Tomato seed-starting reference](2026-11-13/usda-tomato-nursery-codex.md). Optional undated Great Lakes lead time supports a conditional date while yield, count and suitability stay unknown; exact successor review, hosted and full CI gates remain separate.
+
+Latest global entry continuation — [Provisional planner messages](2026-11-13/provisional-entry-copy-codex.md). Country notices distinguish supported partial previews from held South African catalogue advice; exact successor visual/review/CI gates remain separate.
+
+Latest map feedback continuation — [Resolved preview warning](2026-11-13/map-preview-feedback-codex.md). Explicit own-point selection retires only obsolete preview instructions; unrelated errors and save guards remain intact. Successor hosted/CI gates remain separate.
+
+
+Latest new-place continuation — [Map preview naming guard](2026-11-13/map-new-place-preview-codex.md). Actual hosted failure reproduced; draft and selection validity now protect new-place saves. Successor hosted/review/CI gates remain separate.
+
+
+Latest preview verification — [Preview build memory — 13 November 2026](2026-11-13/preview-build-memory-codex.md). Narrow user-approved workflow exception preserves every check; actual build and hosted verification remain separate.
+
+
+Latest calendar follow-up — [Individual DEMO calendar identity — 13 November 2026](2026-11-13/calendar-individual-demo-codex.md). Actual single/bulk files share DEMO identity and guarded delivery; successor gates remain separate.
+
+
+Latest provisional calendar continuation — [Calendar evidence — 13 November 2026](2026-11-13/provisional-calendar-evidence-codex.md). Individual/bulk events retain public provenance and limitations; current-head release gates remain separate.
+
+Latest global map entry — [Worldwide place search — 13 November 2026](2026-11-13/global-place-search-codex.md). Temporary area previews require separate farm selection; successor review and CI remain open.
+
+Latest global source continuation — [Optional cabbage nursery lead time — 13 November 2026](2026-11-13/usda-cabbage-nursery-reference-codex.md). Blank-first endpoint selection preserves source range and unknown calendar; exact successor gates remain open.
+
+Latest report terrain continuation — [Missing terrain fields — 13 November 2026](2026-11-13/report-terrain-unknown-codex.md). Runtime outages must not print numeric placeholders; new outputs and successor gates remain open.
+
+Latest report soil continuation — [Soil and earthworks evidence — 13 November 2026](2026-11-13/report-soil-earthworks-evidence-codex.md). Missing evidence no longer creates risk ratings or construction instructions; source-bound outputs and successor gates remain explicit.
+
+Latest report slope continuation — [Shared unrated runoff and erosion evidence — 13 November 2026](2026-11-13/report-slope-evidence-codex.md). Missing slope no longer means low risk; source/output and successor gates remain explicit.
+
+Latest saved-site continuation — [Actor-bound nearby-site saves — 13 November 2026](2026-11-13/saved-place-actor-guard-codex.md). Retired confirmations cannot save into the next account; original source/CI failures and focused verification are retained, with exact-head release gates open.
+
+Latest report prompt continuation — [Irrigation demand and storage evidence — 13 November 2026](2026-11-13/report-irrigation-evidence-codex.md). Actual route regression reproduces the remaining contradiction; supported sizes and explicit unknown demand are retained. Successor review/CI remain open.
+
+Latest general-report continuation — [Provisional source history in reports — 13 November 2026](2026-11-13/provisional-report-history-codex.md). Valid archived cycles retain dates and source evidence without current advice permission; exact-head verification remains open.
+
+Latest adoption app/export continuation — [Provisional cycle app and exports — 13 November 2026](2026-11-13/provisional-cycle-app-exports-codex.md). Explicit acceptance, historical downloads and nursery provenance inspected; independent successor review and current-head release gates remain open.
+
+Latest adoption core — [Provisional dated-cycle adoption — 13 November 2026](2026-11-13/provisional-cycle-adoption-codex.md). Core replay and bound-bed tests pass; app/controller, exports and current-head release gates remain open.
+
+Latest global/report verification continuation — [Full-suite contracts and final save-base continuity — 13 November 2026](2026-11-13/global-report-ci-contracts-codex.md). Eleven reproduced failures retain their reasons; exact-head CI, independent review and adoption remain open.
+
+Latest provisional save continuation — [Explicit profile save and historical review — 13 November 2026](2026-11-13/provisional-profile-save-codex.md). Shared guarded append and retained source limits; context-aware sowing adoption, independent review and current-head release gates remain open.
+
+Latest regional spacing continuation — [Great Lakes cabbage reference — 13 November 2026](2026-11-13/great-lakes-spacing-codex.md). Explicit undated regional transfer; current-head release and local validation remain open.
+
+Latest conditional count continuation — [Spacing-cell preview — 12 November 2026](2026-11-12/spacing-cell-preview-codex.md). Grower-selected spacing and final stand remain distinct from source recommendations and physical layout fit.
+
+Latest provisional export — [Printable preview and review corrections — 12 November 2026](2026-11-12/provisional-preview-export.md). Original downloads inspected; successor CI/review, public adapters and adoption remain open.
+
 Latest country evidence continuation — [Review next steps and dated-evidence counts — 10 November 2026](2026-11-10/country-evidence-next-steps-codex.md). Affected source/React checks pass; changed-preview appearance remains unverified.
 
 Latest review warning continuation — [Mass-entry review warning contrast — 10 November 2026](2026-11-10/mass-review-warning-contrast-codex.md). A production dark-theme contrast failure is reproduced; changed-preview verification remains open.
@@ -184,11 +281,27 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
+Latest source and planner continuation: [Wisconsin tomato first harvest — 19 November 2026](2026-11-19/wisconsin-tomato-first-harvest-codex.md). An explicit historical reference supplies one conditional date and leaves the other crop estimates unknown. Candidate release checks remain separate.
+
+Latest global/report verification continuation — [Full-suite contracts and final save-base continuity — 13 November 2026](2026-11-13/global-report-ci-contracts-codex.md). Eleven reproduced failures retain their reasons; exact-head CI, independent review and adoption remain open.
+
+
+Latest provisional save continuation — [Explicit profile save and historical review — 13 November 2026](2026-11-13/provisional-profile-save-codex.md). Shared guarded append and retained source limits; context-aware sowing adoption, independent review and current-head release gates remain open.
+
+
+Latest preview consumer: [Provisional crop preview integration — 12 November 2026](2026-11-12/provisional-preview-integration.md). Synthetic component and freshness checks; country adapters and independent release gates remain open.
+
+Latest provisional engine continuation: [Provisional global crop resolver — 11 November 2026](2026-11-11/provisional-global-crop-resolver.md). Local evidence-selection and arithmetic work; country adapters, app integration and release review remain open.
+
+Latest bounded report correction: [12 November water and climate evidence](2026-11-12/report-water-climate-corrections-codex.md). Draft successor; current-head release gates remain pending.
+
 Shared acceptance checks: [Crop planning checklist](CROP-PLANNING-CHECKLIST.md).
 Use this with the latest dated crop record; it is a verification checklist, not a
 claim that every check has passed or that the proposed farming fixes are deployed.
 
-Latest record: [Crop plan accuracy fixes: calendar choice, sowing months and weekly-target timing — 10 November 2026](2026-11-10/crop-plan-accuracy-fixes-claude.md). What was done about CP-073–CP-083, with before and after figures for 44 places, and CP-086–CP-090. The calendar is now chosen by frost and heat; 39 sowing-month rows are corrected to their source rows; Lowveld agreement with the regional guide went from 35% to 61% and the KZN coast from 47% to 72%. A later update the same day adds a grower's own calendar choice and a list of saved sowings that are out of season (CP-089, CP-091). A second update answers the independent review: a missing-value marker read as a record low, a hidden list that did not return, a list judged against a fallback calendar, and a printed plan that did not say the grower chose the calendar are fixed (CP-092–CP-096), as are a record of hidden lists that was not kept per account (CP-100) and a retained hide handler that could write one account's site into another's record (CP-101); the 13 crop-and-place pairs that still share no month with the guide are named with a disposition each (CP-073 remaining, CP-098, CP-099); every surface the calendar reaches is listed with how it was checked. A third update gives the sample farm a fixed, labelled calendar in its own sample data, so its first screen no longer depends on a live climate call (CP-102). Guide overlap is not an accuracy figure, and the 44 places are now regression evidence, not an independent test. Still open: the calendar page and Atlas do not follow a chosen calendar (CP-097), the KZN table has not been re-read (CP-083), the heat check (CP-080), and whether an early-ready sowing should count toward a target (CP-079).
+Latest records, 11 November 2026: [Sowing-calendar rule: held-out test](2026-11-11/calendar-rule-holdout-claude.md). The rule merged on 10 November was run on 56 places it was not designed on, with the places and pass criteria committed before any data was fetched. 54 complied with four frost constraints; that is not an accuracy figure, because an answer that ignores the place passes the same constraints (Codex interim review, [dispositions](2026-11-11/codex-interim-review-dispositions-claude.md)). Butterworth and Mossel Bay never froze on either record and are given the hard-frost calendar (CP-103, open; the direct fix was measured and not adopted; three options). A second review package ([Argon's claims, dispositions](2026-11-11/argon-claims-dispositions-claude.md)) corrected one sentence of the 10 November audit: on the planner's real bed months, frost-tender crops stand in a frost month at 3 of 44 places, not 2 (CP-108, open). And [Crop plan: the four open decisions](2026-11-11/crop-plan-decisions-claude.md): weekly-target status, one set of calendar names, a truthful missing-climate message (CP-079, CP-097, CP-096, CP-094).
+
+Before that: [Crop plan accuracy fixes: calendar choice, sowing months and weekly-target timing — 10 November 2026](2026-11-10/crop-plan-accuracy-fixes-claude.md). What was done about CP-073–CP-083, with before and after figures for 44 places, and CP-086–CP-090. The calendar is now chosen by frost and heat; 39 sowing-month rows are corrected to their source rows; Lowveld agreement with the regional guide went from 35% to 61% and the KZN coast from 47% to 72%. A later update the same day adds a grower's own calendar choice and a list of saved sowings that are out of season (CP-089, CP-091). A second update answers the independent review: a missing-value marker read as a record low, a hidden list that did not return, a list judged against a fallback calendar, and a printed plan that did not say the grower chose the calendar are fixed (CP-092–CP-096), as are a record of hidden lists that was not kept per account (CP-100) and a retained hide handler that could write one account's site into another's record (CP-101); the 13 crop-and-place pairs that still share no month with the guide are named with a disposition each (CP-073 remaining, CP-098, CP-099); every surface the calendar reaches is listed with how it was checked. A third update gives the sample farm a fixed, labelled calendar in its own sample data, so its first screen no longer depends on a live climate call (CP-102). Guide overlap is not an accuracy figure, and the 44 places are now regression evidence, not an independent test. Still open: the calendar page and Atlas do not follow a chosen calendar (CP-097), the KZN table has not been re-read (CP-083), the heat check (CP-080), and whether an early-ready sowing should count toward a target (CP-079).
 
 The audit it answers: [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md). The planner's own functions run for 44 South African and 18 other locations against 20 years of independent daily weather and a published regional sowing guide: CP-073–CP-083. The arithmetic and the interior calendars hold; frost-free Lowveld, Limpopo and KZN coast sites were shown the wrong season. Findings only; no farming data changed in that record.
 
@@ -250,6 +363,15 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Sowing-calendar rule: held-out test — 11 November 2026](2026-11-11/calendar-rule-holdout-claude.md).
+- [Crop plan: the four open decisions — 11 November 2026](2026-11-11/crop-plan-decisions-claude.md).
+- [Codex interim review of the held-out test: dispositions — 11 November 2026](2026-11-11/codex-interim-review-dispositions-claude.md).
+- [Argon's claims F-07 and F-09, as reproduced by Codex: dispositions — 11 November 2026](2026-11-11/argon-claims-dispositions-claude.md).
+- [Codex final review of the crop-plan candidate: dispositions — 11 November 2026](2026-11-11/codex-final-review-dispositions-claude.md).
+- [Atlas climate card: class wording and dark mode — 11 November 2026](2026-11-11/atlas-climate-card-claude.md).
+- [Completion corrections after Codex's review of 00217575 — 11 November 2026](2026-11-11/completion-corrections-claude.md).
+- [CP-117 and the plan table's frost caveat — 11 November 2026](2026-11-11/cp117-frost-caveat-claude.md).
+- [CP-118: the site data panel's remaining unsourced verdicts — 11 November 2026](2026-11-11/cp118-site-data-claims-claude.md).
 - [Crop plan accuracy fixes: calendar choice, sowing months and weekly-target timing — 10 November 2026](2026-11-10/crop-plan-accuracy-fixes-claude.md).
 - [Crop plan accuracy audit: calculations, crop data and calendars by location — 10 November 2026](2026-11-10/crop-plan-accuracy-claude.md).
 - [Crop plan re-audit and fix, improve and polish plan — 10 November 2026](2026-11-10/crop-plan-reaudit-claude.md).

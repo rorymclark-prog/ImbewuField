@@ -873,30 +873,47 @@ test('the field sheet no longer carries an always-empty "Weather, soil and irrig
 
 // ── Frost caveat: a warning, never a sowing/harvest gate (2026-09-28 audit) ─
 
-test('a frost-tender crop whose harvest window reaches SA winter gets a caveat on a mild-frost site, and only there', () => {
+// Until 11 November 2026 this test was titled "a frost-tender crop whose harvest window reaches
+// SA winter gets a caveat on a mild-frost site, and only there". It pinned a caveat chosen by
+// the sowing calendar's name and a fixed June-July window. That window had no source (the code's
+// own comment said the catalogue has no first or last frost date), it missed an autumn frost and
+// the northern hemisphere, and it stood even when the grower had answered "no frost". Codex's
+// successor review of 11 November required it replaced by the grower's own recorded months, with
+// the unknown-frost warning when there are none. The same three plantings and the same harvest
+// months are asserted; what decides the caveat is now what the grower recorded.
+test('a frost-tender crop gets its caveat from the frost months the grower recorded, never from a calendar name or a fixed window', () => {
   const frostCases: Planting[] = [
     { id: 'tom', bedId: 'bed-1', cropKey: 'tomatoes', sowMonth: 12 },
     { id: 'pep', bedId: 'bed-2', cropKey: 'peppers', sowMonth: 11 },
     { id: 'sp', bedId: 'bed-3', cropKey: 'sweet-potato', sowMonth: 12 },
   ];
-  const CAVEAT = 'Frost-tender: finish picking before the first frost or cover on clear, still nights.';
+  const byCropOf = (rows: ReturnType<typeof buildPlanTableRows>) => new Map(rows.map((r) => [r.crop, r]));
 
-  const mildFrostRows = buildPlanTableRows(frostCases, BEDS, true);
-  const byCrop = new Map(mildFrostRows.map((r) => [r.crop, r]));
-  assert.equal(byCrop.get('Tomatoes')!.harvest, 'May-Jul');
-  assert.equal(byCrop.get('Tomatoes')!.frostCaveat, CAVEAT);
-  assert.equal(byCrop.get('Peppers')!.harvest, 'Apr-Jun');
-  assert.equal(byCrop.get('Peppers')!.frostCaveat, CAVEAT);
-  assert.equal(byCrop.get('Sweet potato')!.harvest, 'May-Jun');
-  assert.equal(byCrop.get('Sweet potato')!.frostCaveat, CAVEAT);
+  // The grower recorded frost in June and July: each crop still in the ground then is marked,
+  // and the months named are the grower's.
+  // "Now" is November, before any of the three is sown, so each whole crop cycle lies ahead.
+  const recorded = byCropOf(buildPlanTableRows(frostCases, BEDS, { kind: 'months', months: [6, 7], nowMonth: 11 }));
+  assert.equal(recorded.get('Tomatoes')!.harvest, 'May-Jul');
+  assert.equal(recorded.get('Tomatoes')!.frostCaveat, 'Frost-tender: still in the ground in Jun, Jul, when you recorded frost.');
+  assert.equal(recorded.get('Peppers')!.harvest, 'Apr-Jun');
+  assert.equal(recorded.get('Peppers')!.frostCaveat, 'Frost-tender: still in the ground in Jun, when you recorded frost.');
+  assert.equal(recorded.get('Sweet potato')!.harvest, 'May-Jun');
+  assert.equal(recorded.get('Sweet potato')!.frostCaveat, 'Frost-tender: still in the ground in Jun, when you recorded frost.');
 
-  // Never a gate: same plantings, mildFrostSite left off (the default), no caveat at all.
+  // Never a gate, and never a default: with nothing said about frost by the caller, no caveat.
   const defaultRows = buildPlanTableRows(frostCases, BEDS);
   assert.ok(defaultRows.every((r) => r.frostCaveat === null));
 
-  // A crop whose harvest window never touches Jun/Jul gets no caveat even on a mild-frost site.
+  // The grower answered "we have not seen frost here": no caveat, whatever the months.
+  assert.ok(buildPlanTableRows(frostCases, BEDS, { kind: 'no-frost-observed' }).every((r) => r.frostCaveat === null));
+
+  // A crop that is not frost-tender gets no caveat even when it stands through recorded frost.
   const noWinter: Planting[] = [{ id: 'oats-only', bedId: 'plot-1', cropKey: 'oats', sowMonth: 4 }];
-  assert.equal(buildPlanTableRows(noWinter, BEDS, true)[0].frostCaveat, null);
+  assert.equal(buildPlanTableRows(noWinter, BEDS, { kind: 'months', months: [5, 6, 7, 8], nowMonth: 4 })[0].frostCaveat, null);
+
+  // The old rule is gone from the source.
+  const benchmark = readFileSync(new URL('../lib/crop-export-benchmark.ts', import.meta.url), 'utf8');
+  assert.doesNotMatch(benchmark, /SA_WINTER_FROST_MONTHS|mildFrostSite|new Set\(\[6, 7\]\)|finish picking before the first frost/);
 });
 
 

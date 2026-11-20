@@ -5,7 +5,7 @@ import { registerHooks } from 'node:module';
 import test from 'node:test';
 import ts from 'typescript';
 import { buildBillOfQuantities, billOfQuantitiesMarkdown } from '../lib/report-boq.ts';
-import { reportSummaryPages, sampleFullSiteReport, summaryBoqDescription } from '../lib/report-summary.ts';
+import { reportSummaryPages, sampleFullSiteReport, summaryBoqDescription, reportSummaryText } from '../lib/report-summary.ts';
 import { REPORT_DOCUMENT_COPY, reportDocumentText } from '../lib/report-localisation.ts';
 import { REPORT_VISUAL_COPY, reportElementDisplayName, reportRouteDisplayName, reportRouteShortName, reportVisualText } from '../lib/report-visuals.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
@@ -20,6 +20,64 @@ const tokens = (s:string) => (s.match(/\{\w+\}/g)??[]).sort();
 const figures = (s:string) => (s.match(/\d+(?:[.,]\d+)?/g)??[]).sort();
 const byName = (name:string) => fx.cases.find((c:any)=>c.name===name);
 
+// Keep the translation corpus immutable. Its mixed case predates the purchase-
+// quantity correction; its existing case also counts five mirrored tanks twice.
+// Only those cost decisions and the duplicated exclusion count are superseded.
+// Quantities, names, sources and unrelated pages still come from the historical
+// corpus, never from the implementation under test.
+const mixedNote = 'Mixed existing/proposed groups show recorded inventory counts, not quantities to buy. Confirm the proposed share before pricing; it is not included in the priced subtotal.';
+const mixedReason = 'purchase quantity not established — confirm the existing/proposed split before pricing';
+const mixedSubtotalNote = 'The priced subtotal is incomplete. Lines with unconfirmed purchase quantities, measurements or rates are not included. Confirm each line before setting a build budget.';
+const pendingEvidence = (text:string,lang:string) => lang==='en'?text:`English; translation pending: ${text}`;
+const mixedInventoryLine = (line:any) => (line.group==='Water'||line.group==='Structures & planting')&&line.unpriced!=='listed-plant';
+const expectedBoq = (c:any) => {
+  if(c.name==='existing')return {...c.boq,existingCount:82};
+  if(c.name!=='mixed')return c.boq;
+  const lines=c.boq.lines.map((line:any)=>mixedInventoryLine(line)?{...line,rate:null,zar:null,unpriced:'mixed-status'}:{...line});
+  return {...c.boq,lines,subtotalZar:lines.reduce((sum:number,line:any)=>sum+(line.zar??0),0),unpricedCount:lines.filter((line:any)=>line.zar===null).length};
+};
+const groupedInteger = (n:number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+function expectedEnglishBill(c:any,lang='en'):string {
+  if(c.name==='existing')return c.markdown.replace('87 items marked as already on the farm are excluded from this bill. They are part of the design and not part of the spend.','82 items marked as already on the farm are excluded from this bill. They are part of the design and not part of the spend.');
+  if(c.name!=='mixed')return c.markdown;
+  const expected=expectedBoq(c);
+  let index=0;
+  return c.markdown.split('\n').map((row:string)=>{
+    if(row==='| Item | Quantity | Rate | Amount | Measured from |')return `${pendingEvidence(mixedNote,lang)}\n\n${row}`;
+    if(row.startsWith('| ')&&!row.startsWith('| **')){
+      const original=c.boq.lines[index++];
+      if(mixedInventoryLine(original))return `| ${original.description} | ${original.quantity} | — | _${pendingEvidence(mixedReason,lang)}_ | ${original.source} |`;
+    }
+    if(row===`**Subtotal of the priced lines: R${groupedInteger(c.boq.subtotalZar)}**`)return `**Subtotal of the priced lines: R${groupedInteger(expected.subtotalZar)}**`;
+    if(row.startsWith('This subtotal is NOT the cost of the build.'))return pendingEvidence(mixedSubtotalNote,lang);
+    return row;
+  }).join('\n');
+}
+function expectedSummary(c:any,lang:string,count:1|5):any[] {
+  const key=languages.includes(lang as any)?lang:'en';
+  // The historical empty-cost label is superseded, not the frozen corpus or
+  // any absent observation elsewhere in the summary.
+  const oldUnknown=`${reportSummaryText('Priced infrastructure subtotal',lang)}: ${reportSummaryText('Not recorded',lang)}`;
+  const newUnknown=`${reportSummaryText('Priced infrastructure subtotal',lang)}: ${pendingEvidence('Not established',lang)}`;
+  const original=c.summary[key][count===1?'one':'five'].map((page:any)=>({...page,lines:page.lines.map((line:string)=>line===oldUnknown?newUnknown:line)}));
+  if(c.name!=='mixed')return original;
+  const expected=expectedBoq(c),cost=c.summary[key].five[3].lines;
+  return original.map((page:any,pageIndex:number)=>({...page,lines:page.lines.flatMap((line:string,index:number)=>{
+    if(line===cost[0])return [line.replace(`R ${groupedInteger(c.boq.subtotalZar)}`,`R ${groupedInteger(expected.subtotalZar)}`)];
+    if(line===cost[1])return [`${pendingEvidence('Lines needing a purchase quantity, measurement or price',lang)}: ${expected.unpricedCount}`];
+    if(line===cost[2])return [line,pendingEvidence(mixedNote,lang)];
+    if(count===5&&pageIndex===3&&index>=3&&mixedInventoryLine(c.boq.lines[index-3]))return [line.slice(0,line.lastIndexOf(' · ')+3)+pendingEvidence(mixedReason,lang)];
+    return [line];
+  })}));
+}
+function expectedFull(c:any,lang:string):string {
+  const key=languages.includes(lang as any)?lang:'en';
+  const old=c.summary[key].five[3],next=expectedSummary(c,lang,5)[3];
+  const section=(page:any)=>`## ${page.title}\n\n${page.lines.map((line:string)=>`- ${line}`).join('\n')}`;
+  assert.ok(c.summary[key].full.includes(section(old)),'historical full cost section must have one explicit replacement');
+  return c.summary[key].full.replace(section(old),section(next));
+}
+
 test('cost drafts bind their original cautions, date basis, numbers and placeholders to a review packet',()=>{
   assert.equal(fx.sourceSha,packet.sourceSha);
   assert.match(packet.status,/Unreviewed AI drafts/);
@@ -31,28 +89,73 @@ test('cost drafts bind their original cautions, date basis, numbers and placehol
   assert.ok(packet.entries.some((r:any)=>r.english===DISCLAIMER),'the dated VAT-inclusive source disclaimer must be translated without changing its financial basis');
 });
 
-test('every original English bill, model and summary stays exact, including legacy, missing, existing and regulated records',()=>{
+test('historical bills, models and summaries stay exact except scoped mixed purchase and mirrored existing-count corrections',()=>{
   for(const c of fx.cases){
     const before=JSON.stringify(c.facts);
     for(const lang of ['en','af']){
       const boq=buildBillOfQuantities(c.facts,lang);
-      assert.deepEqual(boq,c.boq,c.name);
-      assert.equal(billOfQuantitiesMarkdown(boq,lang),c.markdown,c.name);
-      assert.deepEqual(reportSummaryPages(c.facts,fx.location,1,lang),c.summary.en.one,c.name);
-      assert.deepEqual(reportSummaryPages(c.facts,fx.location,5,lang),c.summary.en.five,c.name);
-      assert.equal(sampleFullSiteReport(c.facts,fx.location,lang),c.summary.en.full,c.name);
+      assert.deepEqual(boq,expectedBoq(c),c.name);
+      assert.equal(billOfQuantitiesMarkdown(boq,lang),expectedEnglishBill(c,lang),c.name);
+      assert.deepEqual(reportSummaryPages(c.facts,fx.location,1,lang),expectedSummary(c,lang,1),c.name);
+      assert.deepEqual(reportSummaryPages(c.facts,fx.location,5,lang),expectedSummary(c,lang,5),c.name);
+      assert.equal(sampleFullSiteReport(c.facts,fx.location,lang),expectedFull(c,lang),c.name);
     }
     assert.equal(JSON.stringify(c.facts),before,'presentation cannot mutate farmer records');
+  }
+});
+
+test('the existing corpus has exactly five fully identified tank mirrors, not five extra physical tanks',()=>{
+  const c=byName('existing');
+  const ids=['jojo_1000','jojo_2500','jojo_5000','jojo_10000','rain_barrel'];
+  assert.equal(c.boq.existingCount,87,'frozen corpus retains its historical double count');
+  assert.deepEqual(c.facts.water.tanks.map((tank:any)=>tank.defId),ids);
+  for(const id of ids){
+    const tank=c.facts.water.tanks.find((tank:any)=>tank.defId===id);
+    assert.equal(tank.status,'existing');assert.equal(tank.count,1);
+    assert.equal(c.facts.design.elements.filter((item:any)=>item.defId===id&&item.name===tank.name&&item.count===tank.count&&item.status==='existing').length,1,'one matching collector view per original tank');
+  }
+  const expected=expectedBoq(c);
+  assert.equal(expected.existingCount,c.boq.existingCount-ids.length);
+  assert.deepEqual(expected.lines,c.boq.lines,'deduplicating excluded inventory cannot change a single bill line');
+  assert.deepEqual([expected.subtotalZar,expected.unpricedCount],[c.boq.subtotalZar,c.boq.unpricedCount]);
+  assert.equal((c.markdown.match(/87 items marked as already on the farm are excluded/g)??[]).length,1,'nonempty bill has one exact exclusion notice to correct');
+});
+
+test('mixed inventory preserves known route/bed costs and all-withheld exports never imply a free build',()=>{
+  const c=byName('mixed'),expected=expectedBoq(c);
+  // Six priced routes plus the measured beds remain; no tank/tree split is invented.
+  assert.equal(expected.subtotalZar,23266);
+  assert.equal(expected.unpricedCount,81);
+  assert.equal(expected.lines.filter((line:any)=>line.unpriced==='listed-plant').length,1);
+  assert.deepEqual(expected.lines.filter((line:any)=>line.group==='Growing area'||line.group==='Earthworks & routes'),c.boq.lines.filter((line:any)=>line.group==='Growing area'||line.group==='Earthworks & routes'));
+  const facts=structuredClone(c.facts);
+  facts.design.routes=[];facts.design.beds=[];
+  facts.design.bedAreaM2=0;facts.design.plotAreaM2=0;facts.design.bedCount=0;facts.design.plotCount=0;facts.design.growingAreaM2=0;
+  for(const lang of ['en',...languages]){
+    const boq=buildBillOfQuantities(facts,lang),markdown=billOfQuantitiesMarkdown(boq,lang);
+    assert.ok(boq.lines.length>0);
+    assert.equal(boq.subtotalZar,0,'the old numeric accumulator remains a sum over no priced lines');
+    assert.ok(boq.lines.every(line=>line.zar===null&&line.rate===null));
+    assert.ok(markdown.includes(`**${pendingEvidence('No lines priced; build cost not established.',lang)}**`));
+    assert.ok(!markdown.includes(reportDocumentText('Subtotal of the priced lines: {subtotal}',lang,{subtotal:'R0'})));
+    for(const count of [1,5]as const){
+      const pages=reportSummaryPages(facts,fx.location,count,lang);
+      assert.ok(pages.some(page=>page.lines.includes(pendingEvidence(mixedNote,lang))));
+      assert.ok(!pages.some(page=>page.lines.some(line=>/subtotal.*R 0$/i.test(line))));
+      const subtotalLabel=c.summary[lang].five[3].lines[0].split(':')[0];
+      assert.ok(pages.some(page=>page.lines.some(line=>line.startsWith(subtotalLabel+': ')&&!line.endsWith('R 0'))),'native subtotal remains explicitly unknown');
+    }
   }
 });
 
 test('all native cost lines retain exact money, quantity values, order, grouping, rate decisions and provenance',()=>{
   for(const c of fx.cases)for(const lang of languages){
     const before=JSON.stringify(c.facts),boq=buildBillOfQuantities(c.facts,lang),markdown=billOfQuantitiesMarkdown(boq,lang);
-    assert.deepEqual([boq.subtotalZar,boq.unpricedCount,boq.existingCount],[c.boq.subtotalZar,c.boq.unpricedCount,c.boq.existingCount]);
+    const expected=expectedBoq(c);
+    assert.deepEqual([boq.subtotalZar,boq.unpricedCount,boq.existingCount],[expected.subtotalZar,expected.unpricedCount,expected.existingCount]);
     assert.equal(boq.lines.length,c.boq.lines.length);
     for(const [i,line] of boq.lines.entries()){
-      const original=c.boq.lines[i];
+      const original=expected.lines[i];
       assert.deepEqual([line.group,line.zar,line.unpriced,line.descriptionSource],[original.group,original.zar,original.unpriced,original.descriptionSource]);
       assert.deepEqual(figures(line.quantity),figures(original.quantity));
       assert.equal(line.quantity,original.quantity.endsWith(' no.')?reportDocumentText('{count} no.',lang,{count:original.quantity.slice(0,-4)}):original.quantity);
@@ -62,18 +165,23 @@ test('all native cost lines retain exact money, quantity values, order, grouping
       if(original.descriptionSource)assert.equal(line.description,summaryBoqDescription(original,lang));
       assert.equal(line.zar===null,line.rate===null,'unknown is unpriced, never a guessed zero');
     }
-    assert.deepEqual(figures(markdown),figures(c.markdown),`${lang}/${c.name}: printed financial or measured number changed`);
+    assert.deepEqual(figures(markdown),figures(expectedEnglishBill(c)),`${lang}/${c.name}: printed financial or measured number changed`);
     assert.ok(markdown.includes(reportDocumentText('Cost & Bill of Quantities',lang)));
     if(boq.lines.length){
       assert.ok(markdown.includes(reportDocumentText(DISCLAIMER,lang)));
       for(const group of new Set(boq.lines.map(l=>l.group)))assert.ok(markdown.includes(`| **${reportVisualText(group,lang)}** | | | | |`));
-      if(boq.unpricedCount)assert.ok(markdown.includes(reportDocumentText(boq.unpricedCount===1?'{count} line carries':'{count} lines carry',lang,{count:boq.unpricedCount})));
+      if(c.name==='mixed'){
+        assert.ok(markdown.includes(pendingEvidence(mixedNote,lang)));
+        assert.ok(markdown.includes(pendingEvidence(mixedReason,lang)));
+        assert.ok(markdown.includes(pendingEvidence(mixedSubtotalNote,lang)));
+        assert.ok(!markdown.includes(reportDocumentText('so the real figure is higher',lang)));
+      }else if(boq.unpricedCount)assert.ok(markdown.includes(reportDocumentText(boq.unpricedCount===1?'{count} line carries':'{count} lines carry',lang,{count:boq.unpricedCount})));
       if(boq.existingCount)assert.ok(markdown.includes(reportDocumentText(boq.existingCount===1?'{count} item marked as already on the farm is':'{count} items marked as already on the farm are',lang,{count:boq.existingCount})));
     }else assert.ok(markdown.includes(reportDocumentText('No priced work can be listed yet: nothing has been drawn on the plan to measure. Draw the beds, tanks, fences and paths in the Design Studio and this bill fills itself from those measurements.',lang)));
     assert.equal(JSON.stringify(c.facts),before);
-    assert.deepEqual(reportSummaryPages(c.facts,fx.location,1,lang),c.summary[lang].one,'one-page content must stay exact');
-    for(const count of [1,5]as const)assert.deepEqual(figures(JSON.stringify(reportSummaryPages(c.facts,fx.location,count,lang))),figures(JSON.stringify(count===1?c.summary.en.one:c.summary.en.five)));
-    assert.deepEqual(figures(sampleFullSiteReport(c.facts,fx.location,lang)),figures(c.summary.en.full));
+    assert.deepEqual(reportSummaryPages(c.facts,fx.location,1,lang),expectedSummary(c,lang,1),'one-page content must stay exact outside the scoped cost correction');
+    for(const count of [1,5]as const)assert.deepEqual(figures(JSON.stringify(reportSummaryPages(c.facts,fx.location,count,lang))),figures(JSON.stringify(expectedSummary(c,'en',count))));
+    assert.deepEqual(figures(sampleFullSiteReport(c.facts,fx.location,lang)),figures(expectedFull(c,'en')));
   }
 });
 

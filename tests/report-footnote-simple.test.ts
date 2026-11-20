@@ -51,8 +51,11 @@ test('All tools keeps the technical detail but routes its labels through tr(), l
   // The caveat now has one source-bound placeholder shared by all four UI languages.
   assert.match(allToolsBranch, /label\('Zone name "\{zone\}" is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk\.'\)\.replace\('\{zone\}', d\.bru\.nearestBrg\)/,
     'the caveat must remain explicit and keep the original zone name as data');
-  // Codes/identifiers stay as raw interpolated data, not translated strings.
-  assert.match(allToolsBranch, /\{d\.climate\.koppen\}/);
+  // Climate labels now require sourced monthly coverage. A raw placeholder
+  // must not regain authority merely to satisfy the older interpolation check.
+  // A supported code stays literal data; unknown remains visibly unknown.
+  assert.match(REPORT_VIEW, /const climateLabels = reportClimateLabels\(d\);/);
+  assert.match(allToolsBranch, /climateLabels\.koppen === null \? 'Not known' : `\$\{climateLabels\.koppen\}/);
   assert.match(allToolsBranch, /\{d\.bru\.brucode\}/);
   assert.match(allToolsBranch, /\{d\.bru\.bruParent\}/);
 });

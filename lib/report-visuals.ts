@@ -1,3 +1,4 @@
+import { annualRainfallMm, sourcedMonthlyRainfall } from './climate-temperature';
 import { ELEMENTS_BY_ID } from './design-elements';
 import { plantTakesCode } from './plant-codes';
 import { ROUTE_LABELS } from './design-studio-report';
@@ -6,8 +7,9 @@ import { numberLabel } from '@/lib/format-figures';
 import type { LocationData } from './types';
 import type { ReportSiteFacts } from './report-site-facts';
 import type { SampleGarden } from './sample-gardens';
-import { buildBillOfQuantities } from './report-boq';
+import { buildBillOfQuantities, mixedPurchaseQuantityNote } from './report-boq';
 import type { ReportFigure } from './report-figures';
+import { reportEvidenceText } from './report-risk';
 
 export type ReportPresentation = 'screen' | 'colour' | 'ink';
 export type ReportMetric = { label: string; value: string; note: string };
@@ -41,9 +43,9 @@ export function siteReportVisuals(facts: ReportSiteFacts | null, location: Locat
       { label: t('Staple plots', 'Iziza eziyisisekelo'), value: facts.design.plotAreaM2, detail: `${facts.design.plotCount}` },
     ].filter(r => valid(r.value)) });
   }
-  if (valid(location.rainfall.annual)) metrics.push({ label: t('Annual rainfall', 'Imvula yonyaka'), value: `${n(location.rainfall.annual)} mm`, note: t('Climate estimate', 'Isilinganiso sesimo sezulu') });
+  if (annualRainfallMm(location.rainfall) !== null) metrics.push({ label: t('Annual rainfall', 'Imvula yonyaka'), value: `${n(location.rainfall.annual)} mm`, note: t('Climate estimate', 'Isilinganiso sesimo sezulu') });
   if (facts?.water) metrics.push({ label: t('Storage in the plan', 'Amanzi ohlelweni'), value: facts.water.tanksOfUnknownCapacity && !facts.water.statedStorageLitres ? t('Not stated', 'Akubhaliwe') : `${n(facts.water.statedStorageLitres)} L`, note: facts.water.tanksOfUnknownCapacity ? `${facts.water.tanksOfUnknownCapacity} ${t('tanks have no stated capacity', 'amathangi awunawo umthamo obhaliwe')}` : t('Stated capacity; check installation', 'Umthamo obhaliwe; hlola ukufakwa') });
-  if (location.rainfall.monthly.length === 12 && location.rainfall.monthly.every(valid)) charts.push({ id: 'rainfall', title: t('Rain through the year', 'Imvula phakathi nonyaka'), note: `${location.rainfall.rainfallSource ?? t('Climate estimate', 'Isilinganiso sesimo sezulu')} · ${t('Monthly rainfall, not a weather forecast.', 'Imvula yenyanga, akusona isibikezelo sezulu.')}`, unit: 'mm', kind: 'months', rows: location.rainfall.monthly.map((value, i) => ({ label: recordsMonthShort(language, i + 1), value })) });
+  if (sourcedMonthlyRainfall(location.rainfall) !== null) charts.push({ id: 'rainfall', title: t('Rain through the year', 'Imvula phakathi nonyaka'), note: `${location.rainfall.rainfallSource ?? t('Climate estimate', 'Isilinganiso sesimo sezulu')} · ${t('Monthly rainfall, not a weather forecast.', 'Imvula yenyanga, akusona isibikezelo sezulu.')}`, unit: 'mm', kind: 'months', rows: location.rainfall.monthly.map((value, i) => ({ label: recordsMonthShort(language, i + 1), value })) });
   if (facts?.water?.tanks.length) charts.push({ id: 'water', title: t('Water storage', 'Ukugcina amanzi'), note: `${t('Capacity is not water currently available.', 'Umthamo awusho amanzi akhona manje.')} ${facts.water.tanksOfUnknownCapacity ? `${facts.water.tanksOfUnknownCapacity} ${t('tanks have no stated capacity.', 'amathangi awunawo umthamo obhaliwe.')}` : ''}`, kind: 'bars', unit: 'L', rows: facts.water.tanks.filter(r => r.statedLitres !== null).map(r => ({ label: `${reportElementDisplayName(r.name,r.defId,language)} ×${r.count}`, value: r.statedLitres! * r.count, detail: reportVisualText(r.status, language) })) });
   const cropRows = facts?.crop?.crops ?? [];
   // Chunk rather than truncate: the last crop deserves the same visibility as the first.
@@ -51,7 +53,16 @@ export function siteReportVisuals(facts: ReportSiteFacts | null, location: Locat
   const boq = buildBillOfQuantities(facts);
   const groups = new Map<string, number>();
   for (const line of boq.lines) if (line.zar !== null && valid(line.zar)) groups.set(line.group, (groups.get(line.group) ?? 0) + line.zar);
-  if (boq.lines.length) charts.push({ id: 'cost', title: t('What has been priced', 'Okunamanani'), note: `${t('Planned priced subtotal', 'Isamba esinentengo esihleliwe')}: R ${n(boq.subtotalZar)}. ${boq.unpricedCount} ${t('lines still need a price or measurement. Existing items are excluded. Confirm current local quotes.', 'imigqa isadinga intengo noma isilinganiso. Izinto ezikhona azifakiwe. Qinisekisa amanani endawo.')}`, unit: 'R', kind: 'bars', rows: [...groups].map(([label, value]) => ({ label: reportVisualText(label, language), value })) });
+  const purchaseQuantityUnconfirmed = boq.lines.some(line => line.unpriced === 'mixed-status');
+  if (groups.size) charts.push({
+    id: 'cost', title: t('What has been priced', 'Okunamanani'),
+    // Mixed groups need a purchase count before pricing; do not call that only a missing rate.
+    // New wording stays explicitly pending outside English rather than inventing a translation.
+    note: `${t('Planned priced subtotal', 'Isamba esinentengo esihleliwe')}: R ${n(boq.subtotalZar)}. ${purchaseQuantityUnconfirmed || boq.unpricedCount === 1
+      ? reportEvidenceText(`${boq.unpricedCount} bill ${boq.unpricedCount === 1 ? 'line still needs' : 'lines still need'} a purchase quantity, measurement or price. Existing items are excluded. Confirm current local quotes.`, language)
+      : `${boq.unpricedCount} ${t('lines still need a price or measurement. Existing items are excluded. Confirm current local quotes.', 'imigqa isadinga intengo noma isilinganiso. Izinto ezikhona azifakiwe. Qinisekisa amanani endawo.')}`}${purchaseQuantityUnconfirmed ? ` ${mixedPurchaseQuantityNote(language)}` : ''}`,
+    unit: 'R', kind: 'bars', rows: [...groups].map(([label, value]) => ({ label: reportVisualText(label, language), value })),
+  });
   return { overviewTitle: t('The site at a glance', 'Indawo ngamafuphi'), overviewNote: t('Space, seasons and the resources behind the plan.', 'Indawo, izinkathi zonyaka nezinsiza zohlelo.'), title: facts?.farmName ?? t('Your land, your plan', 'Umhlaba wakho, uhlelo lwakho'), subtitle: `${Math.abs(location.lat).toFixed(4)}°${location.lat < 0 ? 'S' : 'N'} · ${Math.abs(location.lon).toFixed(4)}°${location.lon < 0 ? 'W' : 'E'}`, basis: t('Saved design quantities and site data. Planned work remains distinct from completed work.', 'Ubuningi bomklamo obugciniwe nedatha yendawo. Umsebenzi ohleliwe uhlukile kosewuqediwe.'), metrics, charts: charts.map(chart => language === 'en' ? chart : { ...chart, language }), ...(language === 'en' ? {} : { language }) };
 }
 

@@ -296,3 +296,21 @@ test('explicit undefined optional values use the same captured-clock and normal-
     assert.equal(build(selected, { now: undefined, sample: undefined }), expected);
   } finally { globalThis.Date = OriginalDate; }
 });
+
+
+test('recognised provisional evidence is preserved while malformed or accessor evidence holds the complete file', () => {
+  const ordinary = task(1), marked = task(2, { provisionalEvidenceLines: ['Original evidence date: 2026-11-12.', 'Source and region limits stay with this event.'] });
+  for (const output of [buildTaskIcs(marked, clock), build([ordinary, marked])]) {
+    assert.match(unfold(output), /provisional planned cycle/); assert.match(unfold(output), /Source and region limits/);
+  }
+  for (const lines of [undefined, null, [], [''], ['valid', 3], Array(1)] as unknown[]) {
+    const bad = { ...marked, provisionalEvidenceLines: lines } as BoardTask;
+    held([ordinary, bad]); assert.equal(buildTaskIcs(bad, clock), '');
+  }
+  let calls = 0;
+  const bad = { ...marked }; Object.defineProperty(bad, 'provisionalEvidenceLines', { enumerable: true, get() { calls++; throw Error('must not run'); } });
+  held([ordinary, bad]); assert.equal(calls, 0);
+  const lines = ['valid']; Object.defineProperty(lines, '0', { enumerable: true, get() { calls++; throw Error('must not run'); } });
+  held([ordinary, { ...marked, provisionalEvidenceLines: lines }]); assert.equal(calls, 0);
+  assert.equal(build([ordinary]), build([{ ...ordinary, privateSource: { anything: 'unrelated metadata' } } as BoardTask]));
+});

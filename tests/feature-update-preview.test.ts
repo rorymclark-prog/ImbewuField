@@ -31,9 +31,10 @@ test('routine updates do not acquire a demonstration and reduced motion has a co
   assert.doesNotMatch(css, /infinite/);
 });
 
-test('acknowledging a feature keeps offers quiet, while history opens the current guide', async () => {
-  // History deliberately loads the latest release tour. A newer routine nursery
-  // stop must not inherit an older acknowledged assistant demonstration.
+test('acknowledging a feature keeps offers quiet, while history opens the current guide', async () => withArchivedReleaseTour(async () => {
+  // This exercises a release that actually offers a guide. Routine announcements
+  // can legitimately fill the current window with no tour; the helper restores
+  // that real window afterwards. Empty-current-window coverage remains below.
   const current = visibleUpdateTour()[0]; assert.ok(current);
   const h = await actualUpdateUi('en', { kind: 'guide', seenPreview: true, guide: { sha: 'qa-current-build', stops: [stop], phase: 'offer', index: 0 } });
   try {
@@ -49,7 +50,7 @@ test('acknowledging a feature keeps offers quiet, while history opens the curren
     assert.equal(h.renderer.toJSON(), null);
     assert.equal(h.storage.get('imbewu-feature-preview-seen:assistant-access'), '1');
   } finally { await h.dispose(); }
-});
+}));
 
 test('history uses routine or important current releases instead of replaying an acknowledged saved stop', async () => {
   const original = [...RELEASE_NOTES];

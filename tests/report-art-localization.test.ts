@@ -108,6 +108,7 @@ test('native prompt headings follow existing section labels and change only sele
 
 test('the actual generator sends native selected headings with the same source facts and rejects translated topic identifiers',async()=>{
  const requests:any[]=[];
+ let englishSiteData:string[]=[];
  const originalPrompts=JSON.parse(read('tests/fixtures/report-art-translation/source-prompts.json')) as {prompts:Array<{sha256:string;headings:string[]}>};
  const canonicalByTitle=new Map(canonical.map(s=>[REPORT_PROMPT_HEADINGS[s]??s,s]));
  const module=(source:string)=>'data:text/javascript,'+encodeURIComponent(source);
@@ -128,9 +129,24 @@ test('the actual generator sends native selected headings with the same source f
    assert.equal(response.status,200);await response.text();assert.ok(requests.length>1);
    const lookup=await reportHeadingLookup(language);const sent=requests.flatMap(r=>[...String(r.messages[0].content).matchAll(/^## (.+)$/gm)].map(m=>m[1]));
    assert.deepEqual(sent,originalPrompts.prompts.flatMap(p=>p.headings).map(title=>language==='en'?title:reportUiText(canonicalByTitle.get(title)!,language,lookup!)));
-   if(language==='en')assert.deepEqual(requests.map(r=>createHash('sha256').update(r.messages[0].content).digest('hex')),originalPrompts.prompts.map(p=>p.sha256));
+   // Whole-prompt hashes pinned withdrawn farming claims. Instead require the
+   // actual source block to remain exact across languages, with explicit evidence semantics.
+   const siteData=requests.map(r=>String(r.messages[0].content).split('SITE DATA\n')[1].split('BIOME KEY SPECIES:')[0]);
+   assert.ok(siteData.every(block=>block.includes('Annual rainfall: 791 mm (nasa-power)')&&block.includes('Monthly rainfall (January–December):')));
+   // This demo has tagged complete monthly rain/temperature coverage. Keep its
+   // existing literal code across languages; it is not an unknown-data fixture
+   // or independent validation that the code fits the real place.
+   assert.ok(siteData.every(block=>block.includes('Climate class: Dwb. This does not establish crop suitability.')&&!block.includes('frost likely')));
+   if(language==='en')englishSiteData=siteData;else assert.deepEqual(siteData,englishSiteData,'translation must preserve all source facts and unknowns');
    assert.ok(requests.every(r=>String(r.messages[0].content).includes(String(DEMO_LOCATION.rainfall.annual))));
    if(language!=='en')assert.ok(requests.every(r=>String(r.messages[0].content).includes('Copy each ## section heading below exactly')));
+   // Exercise genuinely absent source coverage separately, so the assertion
+   // cannot pass merely by turning all climate labels into known or unknown.
+   requests.length=0;const missing=structuredClone(DEMO_LOCATION);
+   delete missing.climate.monthlyTempCoverage;delete missing.rainfall.rainfallSource;
+   const held=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({language,sections:canonical,tone:'professional',length:'standard',locationData:missing})}) as any);
+   assert.equal(held.status,200);await held.text();assert.ok(requests.length>1);
+   assert.ok(requests.every(r=>{const block=String(r.messages[0].content).split('SITE DATA\n')[1].split('BIOME KEY SPECIES:')[0];return block.includes('Climate class: unrecorded')&&!block.includes('frost likely')&&!block.includes('Annual rainfall: 791 mm');}));
    requests.length=0;
    const invalid=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({language,sections:['Unrecognised translated topic'],locationData:DEMO_LOCATION})}) as any);assert.equal(invalid.status,400);assert.equal(requests.length,0);
   }

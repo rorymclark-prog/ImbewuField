@@ -90,6 +90,25 @@ test('unusable climate data yields null, never a guessed pattern', () => {
   assert.equal(atlasRainPattern(broken), null);
 });
 
+test('a year the server filled with display substitutes gives no sowing calendar (Argon F-05)', () => {
+  // When NASA POWER does not supply a month, the server puts 20 °C in its place so the chart
+  // can draw and marks the year 'incomplete'. Those numbers are finite, so the Atlas used to
+  // derive a sowing calendar and a crop list from them. Independent review, 11 November 2026.
+  const substituted = [23, 22, 21, 18, 15, 20, 12, 15, 19, 21, 22, 23]; // June was missing: 20 stands in for it
+  const rain = [136, 75, 82, 51, 13, 7, 3, 6, 22, 71, 98, 110];
+  const withCoverage = (status: 'complete' | 'incomplete') => ({
+    lat: -25.7, rainfall: { monthly: rain },
+    climate: { monthlyTemp: substituted, monthlyTempCoverage: { source: 'nasa-power' as const, status } },
+  });
+  assert.equal(atlasRainPattern(withCoverage('incomplete')), null, 'no calendar from a substituted month');
+  assert.notEqual(atlasRainPattern(withCoverage('complete')), null, 'the same numbers, when the provider supplied them, still classify');
+  // A year with every month substituted is the plainest case.
+  assert.equal(atlasRainPattern({ lat: -25.7, rainfall: { monthly: rain },
+    climate: { monthlyTemp: Array(12).fill(20), monthlyTempCoverage: { source: 'nasa-power', status: 'incomplete' } } }), null);
+  // A payload with no coverage receipt (older callers) behaves as before.
+  assert.equal(atlasRainPattern(PRETORIA), atlasRainPattern({ ...PRETORIA, climate: { ...PRETORIA.climate, monthlyTempCoverage: { source: 'nasa-power', status: 'complete' } } }));
+});
+
 /* ── hemisphere calendar shift ─────────────────────────────────────────── */
 
 test('southern-hemisphere months pass through unshifted', () => {

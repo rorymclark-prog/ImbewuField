@@ -9,7 +9,7 @@
 
 import type { RainPattern } from '@/lib/crop-catalog';
 import { LATE_FROST_COLDEST_MONTH_C, type RainSeason } from '@/lib/koppen-global';
-import type { SiteClimate, CalendarBasis } from '@/lib/site-climate';
+import type { SiteClimate, CalendarBasis, SiteClimateMissingReason } from '@/lib/site-climate';
 
 /** Short name of the sowing calendar (a frost regime, not rain timing). */
 export const SOWING_CALENDAR_LABEL: Record<RainPattern, string> = {
@@ -17,6 +17,18 @@ export const SOWING_CALENDAR_LABEL: Record<RainPattern, string> = {
   'mild-frost': 'Light frost at most',
   'all-year': 'Hot area, no frost',
   winter: 'Winter rainfall',
+};
+
+/**
+ * isiZulu names for the same four calendars. Unreviewed drafts: three are taken from
+ * wording these screens already carried, 'Isithwathwa sasebusika' is composed from the
+ * same words; a first-language review is still owed (CP-097).
+ */
+export const SOWING_CALENDAR_LABEL_ZU: Record<RainPattern, string> = {
+  summer: 'Isithwathwa sasebusika',
+  'mild-frost': 'Isithwathwa esincane sasebusika',
+  'all-year': 'Izindawo ezishisayo, asikho isithwathwa',
+  winter: 'Imvula yasebusika',
 };
 
 export const RAIN_SEASON_LABEL: Record<RainSeason, string> = {
@@ -54,7 +66,16 @@ export function sowingCalendarOptionText(option: { label: string; where: string 
 
 const WARMTH_ORDER: RainPattern[] = ['summer', 'mild-frost', 'all-year'];
 
-const deg = (n: number): string => `${Math.round(n)} °C`;
+/**
+ * A temperature as the grower reads it, to one decimal place where the reading has one.
+ *
+ * It was rounded to whole degrees. The calendar rule draws its lines on the unrounded
+ * figure, so a record minimum of 1.7 °C printed as "2 °C", which is the rule's frost-free
+ * line, on a site the rule had just treated as below it (finding CP-109). The same could
+ * happen to a coldest-month mean of 15.9 °C against the hot-area line of 16 °C. The
+ * provider's figures carry one decimal; printing it moves no threshold.
+ */
+const deg = (n: number): string => `${Math.round(n * 10) / 10} °C`;
 
 /** Plain sentences that tell the grower why this calendar and what to do if it looks wrong. */
 export function sowingCalendarReasons(
@@ -122,6 +143,25 @@ export function sowingCalendarReasons(
  * A printed plan is handed to mentors and funders; it must say whose call the
  * calendar was.
  */
+/**
+ * Where the printed plan says its location and climate records came from.
+ *
+ * The sample farm's sowing calendar is declared in its sample data. Its plan printed
+ * "This site (satellite climate records) · Hot area, no frost … (sowing calendar set for the
+ * sample farm)": the calendar's stated origin sat directly after a claim of satellite records,
+ * so the line read as a satellite-derived calendar (finding CP-107). The sample farm is now
+ * named as the sample farm and makes no claim about records beside its calendar.
+ */
+export function printedLocationLine(
+  basis: CalendarBasis | 'reference',
+  climateSource: 'site' | 'reference' | 'none',
+  referenceName: string | null | undefined,
+): string {
+  if (basis === 'sample-farm') return 'Sample farm';
+  if (climateSource === 'site') return 'This site (satellite climate records)';
+  return referenceName ? `Nearest reference: ${referenceName} (fallback)` : 'No site set';
+}
+
 export function printedSowingCalendarLine(
   calendarLabel: string,
   basis: CalendarBasis | 'reference',
@@ -141,3 +181,20 @@ export function printedSowingCalendarLine(
 export const SAMPLE_FARM_CALENDAR_REASON =
   'This calendar is set for the sample farm, so the tour looks the same for everyone. '
   + 'On your own farm the app reads the climate records for your site, and you can choose a calendar yourself.';
+
+/**
+ * Why a mapped site is on the regional fallback, in words that are true for the case.
+ * The screen used to say "offline or still loading" for all three, including to a
+ * signed-out grower whose request had been refused and would never load (CP-096).
+ * 'loading' is the time before the request has answered.
+ */
+export function siteClimateMissingNote(
+  reason: SiteClimateMissingReason | 'loading', referenceName: string | null,
+): string {
+  const fallback = `the nearest reference: ${referenceName ?? 'regional point'} (fallback)`;
+  if (reason === 'loading') return `Climate records for this site are still loading. Until they arrive this uses ${fallback}.`;
+  if (reason === 'sign-in-required') {
+    return `Climate records for this site are read for signed-in growers only, so this uses ${fallback}. Sign in, or choose your own sowing calendar.`;
+  }
+  return `Climate records for this site could not be read just now (no connection, or the climate service did not answer), so this uses ${fallback}. You can choose your own sowing calendar.`;
+}

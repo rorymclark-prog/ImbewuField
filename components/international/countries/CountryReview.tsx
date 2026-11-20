@@ -5,7 +5,7 @@ import Link from 'next/link';
 import MenuButton from '@/components/MenuButton';
 import { useRegisterBackControl } from '@/components/BackControl';
 import { COUNTRY_PROFILES, COUNTRY_RESEARCH_QUEUE, EUROPE_RESEARCH_NOTE } from '@/lib/international/countries/registry';
-import { evaluateCountryReadiness, sourceEvidenceState } from '@/lib/international/countries/readiness';
+import { evaluateCountryReadiness, sourceEvidenceState, sourcePublicationText } from '@/lib/international/countries/readiness';
 import { readCountryEvidenceSelection, type CountryEvidenceSelection } from '@/lib/international/countries/navigation';
 import type { CountrySource, Known } from '@/lib/international/countries/types';
 import { COUNTRY_CLIMATE_DEMOS, NASA_REFERENCE_PROVIDER, fetchCountryClimateReference, type ClimateReferenceResult, type ClimateDemoCode } from '@/lib/international/providers/nasa-reference';
@@ -67,7 +67,7 @@ export function CountryEvidenceDetails({ source, asOf }: { source: CountrySource
       <dt>Units</dt><dd>{metadata(source.units)}</dd><dt>Update cadence</dt><dd>{metadata(source.updateCadence)}</dd>
       <dt>Licence</dt><dd>{metadata(source.licence)}</dd><dt>Attribution</dt><dd>{source.attribution}</dd>
       <dt>Access</dt><dd>{metadata(source.accessRequirements)}</dd><dt>Missing data</dt><dd>{source.missingDataBehavior}</dd>
-      <dt>Accessed / published</dt><dd>{source.accessedOn ?? 'unknown'} / {source.publishedOn ?? 'unknown'}</dd>
+      <dt>Accessed / published</dt><dd>{source.accessedOn ?? 'unknown'} / {sourcePublicationText(source)}</dd>
       {source.lastModifiedOn && <><dt>Page last modified (not publication)</dt><dd>{source.lastModifiedOn}</dd></>}
       <dt>Review due</dt><dd>{source.reviewDueOn ?? 'unknown'}</dd></dl>
   </details>;

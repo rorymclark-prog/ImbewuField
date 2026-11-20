@@ -1,7 +1,9 @@
 import type { MonthlyRainfall, ClimateData } from './types';
 import { aspectLabel } from './biome';
 import { classifyKoppen } from './koppen-global';
-import { cleanPowerValue as clean, completeMonthlyTemperatures, type MonthlyTemperatureCoverage } from './climate-temperature';
+import { cleanPowerValue as clean, completeMonthlyTemperatures, powerMonthlyTemperatureReceipt, type MonthlyTemperatureCoverage } from './climate-temperature';
+import { createPowerTemperatureSnapshot } from './power-temperature-evidence';
+import { rainfallSeasonFromMonthly } from './rainfall-season';
 
 const MONTH_KEYS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -73,15 +75,9 @@ export function monthlyNormalsFromDailyRainfall(
 }
 
 /**
- * Fetch 30-year monthly rainfall normals (1991-2020 WMO period) from the
- * Open-Meteo historical archive (ERA5-Land reanalysis, ~9km/0.1° resolution).
- *
- * ERA5-Land is significantly better-resolved than NASA POWER's 50km cells and
- * avoids the ~44% wet bias that POWER exhibits for escarpment sites in KZN.
- * Live comparison for Assegay KZN: Open-Meteo 789mm/yr vs NASA POWER 1406mm/yr
- * vs ground truth ~900mm/yr — the remaining ~12% underestimate is a known ERA5
- * trait (slight smoothing of convective rain) but is far more useful than a 56%
- * overestimate.
+ * Fetch 30-year monthly precipitation normals (1991-2020 WMO period) from the
+ * Open-Meteo historical archive. The request uses the provider's default
+ * model selection, so attribution is limited to the provider.
  *
  * Returns 12 monthly totals in mm, January-first, or null on any failure.
  */
@@ -94,6 +90,7 @@ export async function fetchOpenMeteoRainfall(lat: number, lon: number): Promise<
     url.searchParams.set('start_date', OPEN_METEO_START_DATE);
     url.searchParams.set('end_date', OPEN_METEO_END_DATE);
     url.searchParams.set('daily', 'precipitation_sum');
+    url.searchParams.set('precipitation_unit', 'mm');
     url.searchParams.set('timezone', 'UTC');
 
     const res = await fetch(url.toString(), {
@@ -105,6 +102,7 @@ export async function fetchOpenMeteoRainfall(lat: number, lon: number): Promise<
     if (!res.ok) return null;
 
     const json = await res.json();
+    if (json?.daily_units?.precipitation_sum !== 'mm') return null;
     const dates: unknown = json.daily?.time;
     const values: unknown = json.daily?.precipitation_sum;
     if (
@@ -143,8 +141,9 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
     format: 'JSON',
   });
 
+  const endpoint = `https://power.larc.nasa.gov/api/temporal/climatology/point?${params}`;
   const nasaRequest = fetch(
-    `https://power.larc.nasa.gov/api/temporal/climatology/point?${params}`,
+    endpoint,
     {
       signal: AbortSignal.timeout(8000),
       next: { revalidate: 86400 },
@@ -157,6 +156,9 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
 
   if (!res.ok) throw new Error(`NASA POWER API error: ${res.status}`);
   const data = await res.json();
+  const monthlyTempReference = powerMonthlyTemperatureReceipt(data,
+    { latitude: Number(lat.toFixed(4)), longitude: Number(lon.toFixed(4)) }, new Date().toISOString());
+  const monthlyTempSnapshot = monthlyTempReference ? createPowerTemperatureSnapshot(data, endpoint) : null;
   const p: Record<string, unknown> = data?.properties?.parameter;
   if (!p || typeof p !== 'object' || Array.isArray(p)) {
     throw new Error('Incomplete NASA POWER climate data');
@@ -189,17 +191,13 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   }
 
   // Resolve the Open-Meteo request that started alongside the NASA request.
-  // ERA5-Land is at 0.1°/~9km vs NASA POWER's 0.5°/~55km — much better for sites
-  // on topographic transitions (escarpments, coastal ranges) where grid-averaging
-  // produces severe wet bias in coarser datasets.
   const openMeteoMonthly = await openMeteoRequest;
   const openMeteoAnnual = openMeteoMonthly
     ? openMeteoMonthly.reduce((a, b) => a + b, 0)
     : null;
 
-  // Prefer Open-Meteo when it is available AND disagrees with NASA POWER by > 30%.
-  // A >30% divergence almost certainly signals NASA POWER's coarse-grid overestimation
-  // (most commonly seen at KZN escarpment sites, Drakensberg foothills, Cape mountains).
+  // Preserve the existing selection rule when both series are available.
+  // Divergence alone cannot establish which series better fits the site.
   const USE_OPEN_METEO_THRESHOLD = 0.30;
   const shouldUseOpenMeteo =
     openMeteoMonthly !== null &&
@@ -243,6 +241,8 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
     status: completeMonthlyTemperatures(cleanedMonthlyTemp) ? 'complete' : 'incomplete' };
   const monthlyTemp = cleanedMonthlyTemp.map((value) => value ?? 20);
   const meanTemp = parseFloat((monthlyTemp.reduce((a: number, b: number) => a + b, 0) / 12).toFixed(1));
+  const hasMaximumReading = MONTH_KEYS.every((key) => clean(asRecord(p.T2M_MAX)[key]) !== null);
+  const hasSolarReading = MONTH_KEYS.every((key) => cleanNonNegative(asRecord(p.ALLSKY_SFC_SW_DWN)[key]) !== null);
   const hotMonthTemp = reduceParam(p.T2M_MAX, (vals) => Math.max(...vals), 25);
   const minTemperatureByMonth = asRecord(p.T2M_MIN);
   const hasMinimumReading = MONTH_KEYS.every((key) => clean(minTemperatureByMonth[key]) !== null);
@@ -253,6 +253,9 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   const solarRadiation = parseFloat((solarVals.reduce((a: number, b: number) => a + b, 0) / 12).toFixed(1));
 
   // Wind — mean speed at 2m, and dominant direction (FROM) for summer (DJF) vs winter (JJA)
+  // The location route substitutes 3 m/s on an outage. A positive speed alone cannot
+  // distinguish that default from a reading; tag valid wind independently of temperature.
+  const hasWindReading = MONTH_KEYS.some((key) => cleanNonNegative(asRecord(p.WS2M)[key]) !== null);
   const windSpeed = p.WS2M
     ? parseFloat((reduceParam(
       p.WS2M,
@@ -277,27 +280,7 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   const windFromSummer = wd(['DEC', 'JAN', 'FEB']);
   const windFromWinter = wd(['JUN', 'JUL', 'AUG']);
 
-  // Rainfall pattern analysis
-  // SA months: Dec(11), Jan(0), Feb(1) = austral summer; Jun(5), Jul(6), Aug(7) = austral winter.
-  const summerRain = monthly[11] + monthly[0] + monthly[1];
-  const winterRain = monthly[5] + monthly[6] + monthly[7];
-  let pattern: 'summer' | 'winter' | 'year-round';
-  let wetSeason: string;
-  let drySeason: string;
-
-  if (summerRain > winterRain * 2) {
-    pattern = 'summer';
-    wetSeason = 'Oct–Mar';
-    drySeason = 'May–Aug';
-  } else if (winterRain > summerRain * 1.5) {
-    pattern = 'winter';
-    wetSeason = 'May–Sep';
-    drySeason = 'Nov–Mar';
-  } else {
-    pattern = 'year-round';
-    wetSeason = 'year-round';
-    drySeason = 'none';
-  }
+  const rainfallSeason = rainfallSeasonFromMonthly(monthly, lat);
 
   const maxTemp = parseFloat(hotMonthTemp.toFixed(1));
   const minTemp = parseFloat(coldMonthTemp.toFixed(1));
@@ -316,7 +299,7 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   // The real definition needs the twelve monthly pairs, not annual and seasonal
   // totals: the aridity threshold that separates B from everything else, and
   // the s/w/f season letter, are both defined on the driest and wettest MONTH
-  // within each half-year. Collapsing to summerRain/winterRain destroys exactly
+  // within each half-year. Collapsing to the two three-month totals destroys exactly
   // the information the letters are made of, which is why the old one could
   // never have been right however its thresholds were tuned.
   const { code: koppen, description: koppenDesc, growerNote: koppenNote } = classifyKoppen({
@@ -326,7 +309,7 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   });
 
   return {
-    rainfall: { monthly, annual: parseFloat(annual.toFixed(0)), pattern, wetSeason, drySeason, rainfallSource },
-    climate: { meanTemp, maxTemp, minTemp, ...(hasMinimumReading ? { minTempSource: 'nasa-power' as const } : {}), monthlyTemp, monthlyTempCoverage, solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, windFromSummer, windFromWinter },
+    rainfall: { monthly, annual: parseFloat(annual.toFixed(0)), ...rainfallSeason, rainfallSource },
+    climate: { meanTemp, maxTemp, ...(hasMaximumReading ? { maxTempSource: 'nasa-power' as const } : {}), ...(hasSolarReading ? { solarSource: 'nasa-power' as const } : {}), minTemp, ...(hasMinimumReading ? { minTempSource: 'nasa-power' as const } : {}), monthlyTemp, monthlyTempCoverage, ...(monthlyTempReference && monthlyTempSnapshot ? { monthlyTempReference, monthlyTempSnapshot } : {}), solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, ...(hasWindReading ? { windSource: 'nasa-power' as const } : {}), ...((windFromSummer !== '—' || windFromWinter !== '—') ? { windDirectionSource: 'nasa-power' as const } : {}), windFromSummer, windFromWinter },
   };
 }

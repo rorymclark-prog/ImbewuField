@@ -41,6 +41,7 @@ import { useAuth } from '@/lib/auth';
 import { advisorRegionPresentation, observeDesignAdvisorLayout, type AdvisorVisibleRegion } from '@/lib/design-advisor-layout';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { monthlyTemperatureStatus } from '@/lib/climate-temperature';
+import { withLocalRainfallSeason } from '@/lib/rainfall-season';
 import {
   computeCanvasFrame,
   contentCountOf,
@@ -494,7 +495,7 @@ function readCachedLocationData(lat: number, lon: number): LocationData | null {
     if (!raw) return null;
     const parsed = JSON.parse(raw);
     return parsed && typeof parsed === 'object' && monthlyTemperatureStatus(parsed.climate) === 'complete'
-      ? (parsed as LocationData) : null;
+      ? withLocalRainfallSeason(parsed as LocationData) : null;
   } catch {
     return null;
   }

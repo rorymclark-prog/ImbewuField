@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useLanguage } from '@/lib/i18n';
 import { prefersReducedMotion, useInViewOnce, type InViewPhase } from '@/lib/use-in-view-once';
 import styles from './RainfallChart.module.css';
+import { annualRainfallMm, sourcedMonthlyRainfall } from '@/lib/climate-temperature';
 import type { MonthlyRainfall } from '@/lib/types';
 
 const MONTHS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
@@ -45,11 +46,14 @@ export default function RainfallChart({ rainfall }: Props) {
   const isZulu = lang === 'zu';
   const text = (en: string, zu: string) => isZulu ? zu : en;
   const { ref, phase } = useInViewOnce<HTMLDivElement>();
-  const annualShown = useCountUp(rainfall?.annual ?? 0, phase);
-  if (!rainfall?.monthly?.length) return null;
-  const annualText = annualShown === rainfall.annual ? String(rainfall.annual) : String(Math.round(annualShown));
-  const maxVal = Math.max(...rainfall.monthly, 10);
-  const data = rainfall.monthly.map((v, i) => ({
+  const monthly = sourcedMonthlyRainfall(rainfall);
+  const annual = monthly ? annualRainfallMm(rainfall) : null;
+  // Hooks run before the unavailable early return; the count-up only ever targets the validated annual figure.
+  const annualShown = useCountUp(annual ?? 0, phase);
+  if (!monthly) return <p lang="en" className="text-xs text-[var(--text-secondary)]">Monthly rainfall is unavailable.</p>;
+  const annualText = annual === null ? null : annualShown === annual ? String(annual) : String(Math.round(annualShown));
+  const maxVal = Math.max(...monthly, 10);
+  const data = monthly.map((v, i) => ({
     month: isZulu ? String(i + 1) : MONTHS[i],
     full: isZulu ? `${ZU_MONTH_FULL[i]} · ${MONTH_FULL[i]}` : MONTH_FULL[i],
     mm: Math.round(v),
@@ -86,7 +90,7 @@ export default function RainfallChart({ rainfall }: Props) {
           {isZulu && <div className="text-xs text-[var(--text-muted)]">Uhlaka lwesiZulu olungakabuyekezwa · Unreviewed isiZulu draft</div>}
         </div>
         <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
-          <span className="text-[var(--blue)]">{isZulu ? `${annualText} mm/ngonyaka · mm/yr` : `${annualText}mm/yr`}</span>
+          {annualText !== null && <span className="text-[var(--blue)]">{isZulu ? `${annualText} mm/ngonyaka · mm/yr` : `${annualText}mm/yr`}</span>}
           <span className="text-[var(--text-muted)]">{pattern}</span>
         </div>
       </div>

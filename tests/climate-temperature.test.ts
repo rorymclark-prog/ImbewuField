@@ -1,12 +1,87 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readPowerTemperatureEvidence } from '../lib/power-temperature-evidence.ts';
+import { syntheticTemperatureEvidence } from './fixtures/provisional-temperature.ts';
 
 import {
   cleanPowerValue,
   completeMonthlyTemperatures,
   monthlyTemperatureStatus,
   recordMinimumC,
+  completeMonthlyRainfallMm,
+  powerClimatologyPeriod,
+  powerMonthlyTemperatureReceipt,
 } from '../lib/climate-temperature.ts';
+
+const receiptPoint = { latitude: -1.3, longitude: 36.8 };
+const receivedAt = '2026-11-13T12:00:00.000Z';
+
+test('retained response JSON checksum is independently reproducible and rejects stale or edited metric receipts after transport', () => {
+  const evidence = syntheticTemperatureEvidence();
+  const { snapshot, receipt, sitePoint } = JSON.parse(JSON.stringify(evidence));
+  assert.equal(snapshot.responseJsonSha256, createHash('sha256').update(snapshot.responseJson).digest('hex'));
+  assert.ok(readPowerTemperatureEvidence(receipt, snapshot, sitePoint));
+  assert.equal(readPowerTemperatureEvidence({ ...receipt, monthlyC: Array(12).fill(20) }, snapshot, sitePoint), null);
+  assert.equal(readPowerTemperatureEvidence(receipt, { ...snapshot, responseJson: snapshot.responseJson.replace('17.999', '18.999') }, sitePoint), null);
+  assert.equal(readPowerTemperatureEvidence(receipt, { ...snapshot, responseJsonSha256: '0'.repeat(64) }, sitePoint), null);
+  assert.equal(readPowerTemperatureEvidence(receipt, { ...snapshot, endpoint: snapshot.endpoint.replace('latitude=0.0000', 'latitude=1.0000') }, sitePoint), null);
+  assert.equal(readPowerTemperatureEvidence(receipt, { ...snapshot, endpoint: snapshot.endpoint + '&latitude=0.0000' }, sitePoint), null);
+  assert.equal(readPowerTemperatureEvidence(receipt, snapshot, { ...sitePoint, latitude: 1 }), null);
+});
+function temperatureReceiptFixture() {
+  return { type: 'Feature', geometry: { type: 'Point', coordinates: [36.8, -1.3] },
+    header: { range: 'Meteorological Monthly & Annual Climatologies (January 2001 - December 2020)',
+      fill_value: -999, api: { version: 'v2.10.1' }, sources: ['MERRA2'], time_standard: 'UTC' },
+    parameters: { T2M: { units: 'C' } },
+    properties: { parameter: { T2M: { JAN: -8, FEB: 0, MAR: 18, APR: -999, MAY: '20', JUN: null } } } };
+}
+
+test('POWER provenance retains its returned averaging period rather than treating retrieval as climate coverage', () => {
+  const fixture = temperatureReceiptFixture();
+  assert.deepEqual(powerClimatologyPeriod(fixture.header), { start: '2001-01', end: '2020-12', description: fixture.header.range });
+  assert.deepEqual(powerClimatologyPeriod({ start: 'JAN1991', end: 'DEC2020' }),
+    { start: '1991-01', end: '2020-12', description: 'JAN1991 – DEC2020' });
+  for (const header of [{}, { start: 'JAN2020' }, { start: 'JAN2020', end: 'DEC2001' },
+    { start: 'JAN0000', end: 'DEC2020' }, { ...fixture.header, start: 'JAN1991', end: 'DEC2020' }]) {
+    assert.equal(powerClimatologyPeriod(header), null, 'missing, reversed or contradictory dates must not invent a period');
+  }
+});
+
+test('raw monthly provenance keeps valid cold and zero values but never stores a display substitute as an observation', () => {
+  const fixture = temperatureReceiptFixture();
+  const result = powerMonthlyTemperatureReceipt(fixture, receiptPoint, receivedAt)!;
+  assert.ok(result);
+  assert.deepEqual(result.monthlyC, [-8, 0, 18, null, null, null, null, null, null, null, null, null]);
+  assert.equal(result.parameter, 'T2M'); assert.equal(result.statistic, 'climatological-monthly-mean');
+  assert.equal(result.period.end, '2020-12'); assert.equal(result.receivedAt, receivedAt);
+  assert.deepEqual(result.returnedPoint, receiptPoint);
+  assert.equal(result.apiVersion, 'v2.10.1'); assert.deepEqual(result.sources, ['MERRA2']);
+  assert.equal(result.timeStandard, 'UTC');
+  fixture.properties.parameter.T2M.JAN = 99; fixture.header.sources[0] = 'changed';
+  assert.equal(result.monthlyC[0], -8); assert.deepEqual(result.sources, ['MERRA2']);
+  assert.ok(Object.isFrozen(result) && Object.isFrozen(result.monthlyC) && Object.isFrozen(result.period)
+    && Object.isFrozen(result.requestedPoint) && Object.isFrozen(result.returnedPoint));
+});
+
+test('a different point, temperature unit, period, or malformed acquisition time cannot gain a qualified receipt', () => {
+  const fixture = temperatureReceiptFixture();
+  const altered: unknown[] = [
+    { ...fixture, parameters: { T2M: { units: 'K' } } },
+    { ...fixture, geometry: { type: 'Point', coordinates: [36.8, 1.3] } },
+    { ...fixture, geometry: { type: 'Polygon', coordinates: [36.8, -1.3] } },
+    { ...fixture, header: { ...fixture.header, range: 'unknown' } },
+    { ...fixture, header: { ...fixture.header, fill_value: '-999' } },
+    { ...fixture, properties: { parameter: { T2M: [] } } },
+  ];
+  for (const input of altered) assert.equal(powerMonthlyTemperatureReceipt(input, receiptPoint, receivedAt), null);
+  for (const date of ['2026-11-13', '2026-02-30T12:00:00.000Z', 'garbage']) {
+    assert.equal(powerMonthlyTemperatureReceipt(fixture, receiptPoint, date), null);
+  }
+  assert.equal(powerMonthlyTemperatureReceipt(fixture, { ...receiptPoint, latitude: NaN }, receivedAt), null);
+  const filled = { ...fixture, header: { ...fixture.header, fill_value: 18 } };
+  assert.equal(powerMonthlyTemperatureReceipt(filled, receiptPoint, receivedAt)!.monthlyC[2], null);
+});
 
 test('cleanPowerValue retains finite numbers above -900, rejects sentinels/non-numbers, and does not coerce hostile objects', () => {
   // Valid numbers including cold and zero
@@ -257,4 +332,53 @@ test('recordMinimumC trusts only a reading tagged as NASA POWER', () => {
   const climate = { minTemp: -999, minTempSource: 'nasa-power' };
   recordMinimumC(climate);
   assert.deepEqual(climate, { minTemp: -999, minTempSource: 'nasa-power' });
+});
+
+test('completeMonthlyRainfallMm needs twelve own, present, finite, non-negative months (CBR-04)', () => {
+  const year = [128.7, 100.2, 84.6, 48.6, 18, 14.4, 15.5, 18.6, 38.7, 69.8, 111.9, 119];
+  assert.equal(completeMonthlyRainfallMm(year), true);
+  assert.equal(completeMonthlyRainfallMm(new Array(12).fill(0)), true, 'a rainless year is a reading');
+  const hole = [...year]; delete hole[0];
+  assert.equal(hole.length, 12);
+  assert.equal(hole.every((v) => typeof v === 'number' && Number.isFinite(v)), true, 'fixture: the old check skipped the hole');
+  assert.equal(completeMonthlyRainfallMm(hole), false);
+  assert.equal(completeMonthlyRainfallMm(new Array(12)), false, 'twelve holes');
+  for (const bad of [null, undefined, Number.NaN, Number.POSITIVE_INFINITY, -0.1, -999, '10', {}]) {
+    const months: unknown[] = [...year]; months[4] = bad;
+    assert.equal(completeMonthlyRainfallMm(months), false, String(bad));
+  }
+  assert.equal(completeMonthlyRainfallMm(year.slice(0, 11)), false);
+  assert.equal(completeMonthlyRainfallMm([...year, 5]), false);
+  assert.equal(completeMonthlyRainfallMm({ ...year, length: 12 }), false, 'array-like is not an array');
+  // An inherited index does not stand in for a missing month.
+  const inherited = [...year]; delete inherited[2];
+  Object.defineProperty(Array.prototype, 2, { value: 84.6, configurable: true, writable: true });
+  try { assert.equal(completeMonthlyRainfallMm(inherited), false); } finally { delete (Array.prototype as unknown as Record<number, unknown>)[2]; }
+  assert.deepEqual(year, [128.7, 100.2, 84.6, 48.6, 18, 14.4, 15.5, 18.6, 38.7, 69.8, 111.9, 119], 'the input is not changed');
+});
+
+
+import { annualRainfallMm, sourcedMonthlyRainfall, reportClimateEvidence } from '../lib/climate-temperature.ts';
+import { DEMO_LOCATION } from '../lib/demo-site.ts';
+test('outage placeholders cannot become report evidence, while independent zero and partial observations survive', () => {
+  const outage = { ...DEMO_LOCATION, rainfall: { ...DEMO_LOCATION.rainfall, annual: 600, monthly: Array(12).fill(50), rainfallSource: undefined }, climate: { ...DEMO_LOCATION.climate, windSpeed: 3, windSource: undefined, minTemp: 1, minTempSource: undefined, windFromSummer: 'NNE', windFromWinter: '—', windDirectionSource: undefined } };
+  assert.equal(annualRainfallMm(outage.rainfall), null);
+  assert.equal(sourcedMonthlyRainfall(outage.rainfall), null);
+  const missing = reportClimateEvidence(outage);
+  assert.match(missing, /Annual rainfall: not known/);
+  assert.match(missing, /Wind speed estimate: not known/);
+  assert.match(missing, /Lowest temperature on record: not known/);
+  assert.doesNotMatch(missing, /600 mm|50, 50|3 m\/s|December–February NNE/);
+  const partial = { ...outage, rainfall: { ...outage.rainfall, annual: 0, monthly: [], rainfallSource: 'nasa-power' }, climate: { ...outage.climate, windSpeed: 0, windSource: 'nasa-power' as const, windDirectionSource: 'nasa-power' as const } };
+  assert.equal(annualRainfallMm(partial.rainfall), 0);
+  assert.equal(sourcedMonthlyRainfall(partial.rainfall), null);
+  assert.match(reportClimateEvidence(partial), /Annual rainfall: 0 mm/);
+  assert.match(reportClimateEvidence(partial), /0 m\/s/);
+  assert.match(reportClimateEvidence(partial), /December–February NNE; June–August not known/);
+  const directionOnly = { ...partial, climate: { ...partial.climate, windSource: undefined } };
+  assert.match(reportClimateEvidence(directionOnly), /Wind speed estimate: not known/);
+  assert.match(reportClimateEvidence(directionOnly), /December–February NNE/);
+  assert.equal(annualRainfallMm({ annual: 1, rainfallSource: { toString: 'nasa-power' } }), null);
+  for (const bad of [-1, NaN, Infinity, '0', null]) assert.equal(annualRainfallMm({ annual: bad, rainfallSource: 'nasa-power' }), null);
+  assert.equal(sourcedMonthlyRainfall({ monthly: new Array(12), rainfallSource: 'nasa-power' }), null);
 });

@@ -1,8 +1,12 @@
+import { reportSoilEvidence, reportEvidenceText, reportTerrainValues } from './report-risk';
+import { annualRainfallMm } from './climate-temperature';
 import { reportDocumentText, REPORT_DOCUMENT_LANGUAGES, reportRecordedSourceLabel } from './report-localisation';
 import { recordsSeasonLabel } from './records-months';
 import { reportVisualText, reportElementDisplayName, reportRouteShortName } from './report-visuals';
 import { cleanChoices, type HousingKind } from './animal-enterprises';
 import type { PlacedPlant } from './perennial-harvest';
+import { surveyRoofSubtotalText, type SurveyRoofEvidence } from './survey-roof-evidence';
+import { surveyWaterSummary, SURVEY_WATER_LIMITS, type SurveyWaterEvidence } from './report-survey-water';
 // ── The farm's own measured facts, as report input ───────────────────────────────────────────
 //
 // WHY THIS EXISTS. The generated site report was generic BY CONSTRUCTION, and not because the
@@ -24,7 +28,7 @@ import type { PlacedPlant } from './perennial-harvest';
 // the API route can import it. The COLLECTOR that reads localStorage lives next door in
 // lib/report-site-facts-collect.ts and only the client imports it.
 //
-// THE ONE RULE. Absence is a fact and must be printed as one. Every optional field below means
+// THE ONE RULE. Absence from these records is not physical absence. Every optional field below means
 // "not drawn and not recorded", and every renderer here says so in words rather than substituting
 // a plausible default. The hardcoded `100m² roof` this replaces is exactly that failure: a farm
 // with no traced roof was given someone else's roof and a rainwater yield computed from it.
@@ -531,9 +535,8 @@ const BODY_MATCHERS: Record<(typeof WATER_BODY_KINDS)[number], RegExp> = {
 };
 
 /**
- * Which of the classic water bodies are genuinely absent from BOTH the drawn design and the
- * recorded map. Anything a farmer did record is removed from the denial, so the report can never
- * again tell a farmer that the dam they mapped does not exist — nor invent one they did not.
+ * Which classic water-body kinds are unrecorded in supplied map/design facts.
+ * This does not inspect the survey and never establishes physical absence.
  */
 export function absentWaterBodies(
   facts: ReportSiteFacts | null | undefined,
@@ -598,14 +601,32 @@ export function designPromptBlock(facts: ReportSiteFacts): string {
   }
 
   const proposed = d.elements.filter((g) => g.status === 'proposed');
-  const existing = d.elements.filter((g) => g.status !== 'proposed');
-  if (proposed.length && !existing.length) {
+  const existing = d.elements.filter((g) => g.status === 'existing');
+  const mixed = d.elements.filter((g) => g.status === 'mixed');
+  if (proposed.length && !existing.length && !mixed.length) {
     lines.push('· STATUS: every element above is drawn as PROPOSED — planned, not yet built. Write about them as the farmer\'s plan ("as drawn on your plan"), never as things already standing, and never as your own new idea.');
-  } else if (existing.length) {
-    lines.push(`· STATUS: already on the farm — ${existing.map((g) => g.name).join(', ')}. Everything else above is drawn as PROPOSED (planned, not yet built).`);
+  } else {
+    // A legacy mixed group has no installed/proposed quantity split. The name
+    // alone also cannot distinguish two records with different status/counts.
+    if (existing.length) lines.push(`· STATUS recorded as existing: ${existing.map((g) => `${g.name} x${g.count}`).join(', ')}.`);
+    if (mixed.length) lines.push(`· STATUS recorded as MIXED existing/proposed: ${mixed.map((g) => `${g.name} x${g.count}`).join(', ')}. Installed quantities within each mixed group are not established.`);
+    if (proposed.length) lines.push(`· STATUS recorded as PROPOSED: ${proposed.map((g) => `${g.name} x${g.count}`).join(', ')}. These are planned records, not evidence of installation or approval to build.`);
   }
   if (d.savedAt) lines.push(`· Plan last saved: ${d.savedAt}`);
   return lines.join('\n');
+}
+
+/** A recorded tank and an explicit survey answer can disagree without establishing
+ * which is current, whether the tank works or how much water is available. */
+function storageRecordDisagreement(water: FactWater | undefined, survey: SurveyWaterEvidence | undefined): string | null {
+  if (!survey?.storage.includes('none')) return null;
+  if (water?.tanks.some(tank => tank.status === 'existing')) {
+    return 'Map/design and survey records disagree: a tank is recorded as existing, while the survey includes "No storage". Check both records and the site; neither record establishes current water availability.';
+  }
+  if (water?.tanks.some(tank => tank.status === 'mixed')) {
+    return 'Map/design and survey records need reconciliation: a tank group has mixed existing/proposed status, while the survey includes "No storage". Installed quantity is not established. Check both records and the site; neither record establishes current water availability.';
+  }
+  return null;
 }
 
 /**
@@ -615,8 +636,9 @@ export function designPromptBlock(facts: ReportSiteFacts): string {
 export function waterPromptBlock(
   facts: ReportSiteFacts | null | undefined,
   hasMapWaterPolygons: boolean,
+  surveyWater?: SurveyWaterEvidence,
 ): string {
-  const lines: string[] = ['WATER ON SITE (drawn or recorded by the farmer — real)'];
+  const lines: string[] = ['WATER ON SITE (supplied map/design records; survey choices remain separate)'];
   const water = facts?.water;
   let any = false;
 
@@ -626,7 +648,8 @@ export function waterPromptBlock(
       const capacity = tank.statedLitres === null
         ? 'capacity not stated — do NOT assume one'
         : `${litres(tank.statedLitres)} stated capacity each`;
-      lines.push(`· ${tank.name} x${tank.count} — ${capacity}${tank.status === 'proposed' ? ' (drawn as PROPOSED — to buy/build, not yet standing)' : ''}`);
+      const recordedStatus = tank.status === 'mixed' ? 'recorded as MIXED existing/proposed; installed quantity not established' : tank.status === 'proposed' ? 'drawn as PROPOSED — not yet standing; not approval to build' : 'recorded as existing; current condition not verified here';
+      lines.push(`· ${tank.name} x${tank.count} — ${capacity} (${recordedStatus})`);
     }
     if (water.statedStorageLitres > 0) {
       lines.push(`· Total stated tank storage on the plan: ${litres(water.statedStorageLitres)}${water.tanksOfUnknownCapacity > 0 ? ` (plus ${water.tanksOfUnknownCapacity} tank(s) whose size is not stated and must not be guessed)` : ''}.`);
@@ -641,9 +664,21 @@ export function waterPromptBlock(
     any = true;
     lines.push(`· Water lines and earthworks traced: ${waterRoutes.map((r) => `${r.label} ${metres(r.totalLengthM)}`).join(' · ')}`);
   }
-  if (!any) {
-    lines.push('· Nothing. No tank, no water point and no water line has been drawn or recorded for this site.');
+  if (water?.bodies.length) {
+    any = true;
+    lines.push(`· Water-body records in the supplied map/design facts: ${water.bodies.map(body => `${body.name} [${body.category}]`).join(' · ')}. A record is not independent verification of physical presence, current condition or capacity.`);
   }
+  if (hasMapWaterPolygons) {
+    any = true;
+    lines.push('· A mapped water-polygon input was supplied; this flag does not identify its type, capacity, access or current condition.');
+  }
+  if (!any) {
+    lines.push('· No tank, water point, water-body record or water line is supplied in these map/design facts. This does not establish what is recorded in the separate survey or physically present.');
+  }
+  const reported = surveyWaterSummary(surveyWater);
+  if (reported) lines.push(`· Separate survey water record: ${reported} ${SURVEY_WATER_LIMITS}`);
+  const disagreement = storageRecordDisagreement(water, surveyWater);
+  if (disagreement) lines.push(`· ${disagreement}`);
 
   // A tank on the plan and a tank pinned on the map are very often the SAME tank. Saying so is
   // the honest reading; adding their capacities together is how a farm ends up with twice the
@@ -655,31 +690,49 @@ export function waterPromptBlock(
   const absent = absentWaterBodies(facts, hasMapWaterPolygons);
   if (absent.length) {
     lines.push(
-      `NOT PRESENT: there is no ${absent.join(', no ')} drawn or recorded on this site. `
-      + 'Do not describe any of them as existing, and never attach a capacity, depth, water level, '
-      + 'percentage or age to storage that is not listed above. Storage you recommend must be written '
-      + 'plainly as something to BUILD or BUY.',
+      `NOT RECORDED in the supplied map/design facts: ${absent.join(', ')}. `
+      + 'These are inventory gaps, not proof of physical absence. Do not assume existence, capacity, '
+      + 'condition or a need to build/buy. Ask for status and site evidence before recommending work.',
     );
   }
   return lines.join('\n');
 }
 
-/** The roof-catchment line. Replaces `100m² roof` — a stranger's roof on every farm on Earth. */
-export function roofCalcLine(facts: ReportSiteFacts | null | undefined, rainfallMm: number): string {
+function surveyRoofSummary(roof: SurveyRoofEvidence | undefined): string | null {
+  if (!roof || (roof.mainM2 === null && roof.secondaryM2 === null)) return null;
+  if (roof.subtotalM2 === null) return 'Survey roof components could not be totalled; verify the entries before calculating collection.';
+  const source = (value: SurveyRoofEvidence['mainSource']) => value === 'manual' ? 'manual entry'
+    : value === 'auto' ? 'declared auto from map shapes' : 'entry source not recorded';
+  // Keep survey precision: map display rounding would contradict supplied components.
+  const area = (value: number | null) => value === null ? 'not recorded' : `${value} m²`;
+  return `Survey reported subtotal ${surveyRoofSubtotalText(roof)} m²: main roof ${area(roof.mainM2)} (${source(roof.mainSource)}); secondary roofs ${area(roof.secondaryM2)} (${source(roof.secondarySource)}). This is a survey record, not an independently verified measurement.`;
+}
+
+/** The roof-catchment line. A missing map outline must not erase a survey measurement. */
+export function roofCalcLine(facts: ReportSiteFacts | null | undefined, rainfallMm: number | null, surveyRoof?: SurveyRoofEvidence): string {
   const roof = facts?.roof;
+  const reported = surveyRoofSummary(surveyRoof);
   if (!roof || !(roof.areaM2 > 0)) {
-    return '- **Roof catchment yield:** no roof has been traced or measured for this site, so there is NO roof area to calculate from. '
-      + 'Say exactly that, give the rule (1m² of roof × 1mm of rain = 1L, × runoff coefficient '
-      + `${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT}), and ask the farmer to trace or measure their roof. Do NOT assume a roof size.`;
+    if (reported) return '- **Roof catchment yield:** no roof area is supplied in the map/design facts. '
+      + `${reported} Keep the separate SITE SURVEY roof estimate and its stated assumptions source-labelled; do not call it map-measured or say no roof was measured. `
+      + 'A reported subtotal is not proof of a complete connected catchment. Confirm dimensions, gutters, rainfall and losses before sizing collection or storage; do not invent missing values.';
+    return '- **Roof catchment yield:** no positive roof area is supplied in the map/design facts or survey for this calculation. '
+      + 'Keep the area and harvest unknown until a roof measurement is recorded. Do NOT assume a roof size.';
   }
-  const yieldL = Math.round(roofHarvestLitres(roof.areaM2, rainfallMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT));
+  const surveyNote = reported ? ` Separate survey evidence: ${reported} Do not add map and survey areas together or choose one silently; resolve any difference before choosing a catchment area.` : '';
+  if (rainfallMm === null || !Number.isFinite(rainfallMm) || rainfallMm < 0) return `- **Roof catchment yield:** roof area ${m2(roof.areaM2)} recorded; annual rainfall is not known, so annual harvest cannot be calculated.${surveyNote}`;
+  const harvestL = roofHarvestLitres(roof.areaM2, rainfallMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT);
+  const yieldL = Math.round(harvestL);
   const stored = facts?.water?.statedStorageLitres ?? 0;
   const storedNote = stored > 0
-    ? ` The plan's stated tank storage is ${litres(stored)} — that is ${Math.round((stored / Math.max(yieldL, 1)) * 100)}% of one year's harvest off this roof, so state plainly what the binding constraint is (storage, or catchment).`
-    : ' No tank storage is drawn yet, so this whole harvest currently runs to waste — say so.';
+    ? ` The plan's stated tank storage is ${litres(stored)}. `
+      + (harvestL > 0 ? `That is ${Math.round((stored / harvestL) * 100)}% of the unrounded annual roof-harvest scenario. `
+        : 'Its percentage of annual roof harvest is undefined because that harvest is zero. ')
+      + 'Storage adequacy is not established: capacity is not available supply, and demand, timing and losses still need evidence.'
+    : ' No tank storage capacity is stated; this does not establish what happens to runoff on the ground.';
   return `- **Roof catchment yield:** the traced roof on this site is **${m2(roof.areaM2)}** (${roof.source}). `
     + `1m² of roof × 1mm of rain = 1L, so ${group(roof.areaM2)} × ${rainfallMm}mm × reviewed runoff coefficient `
-    + `${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} = **${litres(yieldL)} usable/year**.${storedNote}`;
+    + `${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} = **${litres(yieldL)} usable/year** (map-based scenario with an assumed coefficient, not measured collection). If survey roof areas or gutter conditions differ, present both sources and resolve them before sizing storage.${storedNote}${surveyNote}`;
 }
 
 /** Pre-filled sizes for the Irrigation Plan table, so the model supplies method not measurements. */
@@ -792,6 +845,8 @@ export function cropPlanPromptBlock(facts: ReportSiteFacts | null | undefined, s
 
 export interface ReportHeaderInput {
   facts: ReportSiteFacts | null | undefined;
+  surveyRoof?: SurveyRoofEvidence;
+  surveyWater?: SurveyWaterEvidence;
   biomeName: string;
   vegUnit?: string | null;
   bruLabel?: string | null;
@@ -799,7 +854,7 @@ export interface ReportHeaderInput {
   lat: number;
   lon: number;
   dateLabel: string;
-  rainfallMm: number;
+  rainfallMm: number | null;
   rainfallSource?: string;
   wetSeason: string;
   drySeason: string;
@@ -866,7 +921,7 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   }
   out.push(`## ${t('Site at a Glance')}`);
   out.push('');
-  out.push(t("Nothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it."));
+  out.push(reportEvidenceText('This table summarizes supplied map, design and survey records and the data sources named beside each row. It includes calculated summaries and evidence gaps; read each row\'s source and limits before relying on it.', language));
   out.push('');
   out.push(`| ${t('Measure')} | ${t('Value')} | ${t('Where it comes from')} |`);
   out.push('|---------|-------|---------------------|');
@@ -920,17 +975,25 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   if (water?.tanks.length) {
     const stated = water.statedStorageLitres > 0 ? litres(water.statedStorageLitres) : t('capacity not stated');
     const proposedOnly = water.tanks.every((t) => t.status === 'proposed');
-    const value=`${stated} — ${water.tanks.map((tank) => `${reportElementDisplayName(tank.name,tank.defId,language)} x${tank.count}`).join(', ')}`;
+    const variedStatus = new Set(water.tanks.map(tank => tank.status)).size > 1 || water.tanks.some(tank => tank.status === 'mixed');
+    const value=`${stated} — ${water.tanks.map((tank) => `${reportElementDisplayName(tank.name,tank.defId,language)} x${tank.count}${variedStatus ? ` (${reportEvidenceText(`recorded as ${tank.status}`, language)})` : ''}`).join(', ')}`;
     row('Water storage on the plan', proposedOnly?t('{value} (drawn as proposed)',{value}):value, t('Design Studio'));
   }
   if (water?.mapPoints.length) {
     row('Water points recorded', water.mapPoints.map((p) => `${p.name}${p.category && p.category !== 'Other' ? ` [${pointCategory(p.category)}]` : ''}`).join(' · '), t('Pinned on the map by the farmer'));
   }
-  if (facts?.roof && facts.roof.areaM2 > 0) {
-    const harvest = Math.round(roofHarvestLitres(facts.roof.areaM2, input.rainfallMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT));
+  const supportedRain = annualRainfallMm({ annual: input.rainfallMm, rainfallSource: input.rainfallSource });
+  if (facts?.roof && facts.roof.areaM2 > 0 && supportedRain !== null) {
+    const harvest = Math.round(roofHarvestLitres(facts.roof.areaM2, supportedRain, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT));
     row('Roof catchment traced', t('{area} → {harvest}/yr at {coefficient} runoff',{area:m2(facts.roof.areaM2),harvest:litres(harvest),coefficient:WATER_SHEET_ROOF_RUNOFF_COEFFICIENT}), reportRecordedSourceLabel(facts.roof.source,language));
+  } else if (facts?.roof && facts.roof.areaM2 > 0) {
+    row('Roof catchment traced', `${m2(facts.roof.areaM2)} — annual harvest not calculated; rainfall not known`, reportRecordedSourceLabel(facts.roof.source, language));
   } else {
-    row('Roof catchment', t('Not traced or measured'), t('No roof outline on the map'));
+    row(reportEvidenceText('Roof area in supplied map/design facts', language), reportEvidenceText('Not recorded in these map/design facts', language), t('No roof outline on the map'));
+  }
+  const surveyRoof = surveyRoofSummary(input.surveyRoof);
+  if (surveyRoof) {
+    row(reportEvidenceText('Roof area reported in survey', language), reportEvidenceText(surveyRoof, language), reportEvidenceText('Survey record; retain separately from mapped roof area. Do not add or silently choose between these sources.', language));
   }
   if (facts?.crop) {
     row('Crop plan entered', t('{plantings} plantings, {crops} crops, across {beds} beds/plots',{plantings:facts.crop.plantingCount,crops:facts.crop.crops.length,beds:facts.crop.bedsPlanted}), t('Entered by the farmer in the crop planner'));
@@ -942,7 +1005,7 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
     row('Wind observed on site', t('From the {direction}',{direction:facts.measurements.localWindFrom})+(facts.measurements.localWindStrongestFrom?t(', strongest from the {direction}',{direction:facts.measurements.localWindStrongestFrom}):''), t('Farmer\'s own observation'));
   }
 
-  row('Annual rainfall', t('{rainfall} mm — wet {wet}, dry {dry}',{rainfall:input.rainfallMm,wet:recordsSeasonLabel(language,input.wetSeason),dry:recordsSeasonLabel(language,input.drySeason)}), input.rainfallSource === 'nasa-power' ? 'NASA POWER' : input.rainfallSource === 'open-meteo' ? 'Open-Meteo' : t('Climate data service'));
+  row('Annual rainfall', supportedRain === null ? 'Not known' : t('{rainfall} mm — wet {wet}, dry {dry}', { rainfall: supportedRain, wet: recordsSeasonLabel(language, input.wetSeason), dry: recordsSeasonLabel(language, input.drySeason) }), supportedRain === null ? 'No supported rainfall source recorded' : input.rainfallSource === 'nasa-power' ? 'NASA POWER' : input.rainfallSource === 'open-meteo' ? 'Open-Meteo' : 'Grower-entered');
   if (input.vegUnit) row('Natural vegetation', input.vegUnit, 'SANBI 2018 National Vegetation Map');
   if (input.bruLabel) row('Agro-ecological zone', t('Closest to {label}',{label:input.bruLabel}), t('KZN DARD bioresource units — a best-effort climate match, not a verified classification'));
   // Location responses also carry generic placeholders. The narrative and short guide already
@@ -950,15 +1013,30 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   if (input.soilSource === 'lab' || input.soilSource === 'soilgrids') {
     // A known model class can use the diagram's existing draft; uploaded laboratory wording stays raw.
     const soilTexture=input.soilSource==='lab'||typeof input.soilTexture!=='string'?String(input.soilTexture):reportVisualText(input.soilTexture,language);
-    row('Soil (0-30 cm)', t('pH {ph} · {carbon}% organic carbon · {texture}',{ph:input.soilPh,carbon:input.soilOrganicCarbon,texture:soilTexture}), t(SOIL_SOURCE_LABEL[input.soilSource]));
+    const label = input.soilSource === 'soilgrids' ? t('Soil (0-30 cm)') : reportEvidenceText('Recorded soil values', language);
+    const source = input.soilSource === 'lab' ? reportEvidenceText('Recorded laboratory attribution; original report, sampling depth and sample/site correspondence not verified here', language) : t(SOIL_SOURCE_LABEL[input.soilSource]);
+    row(label, t('pH {ph} · {carbon}% organic carbon · {texture}',{ph:typeof input.soilPh === 'number' && Number.isFinite(input.soilPh) ? input.soilPh : 'unknown',carbon:typeof input.soilOrganicCarbon === 'number' && Number.isFinite(input.soilOrganicCarbon) && input.soilOrganicCarbon >= 0 ? input.soilOrganicCarbon : 'unknown',texture:input.soilTexture === undefined || input.soilTexture === null || input.soilTexture === '' ? 'unknown' : soilTexture}), source);
   } else {
-    row('Soil (0-30 cm)', t('Not measured; arrange a soil test'), t('No laboratory result or SoilGrids source recorded'));
+    row(reportEvidenceText('Recorded soil values', language), reportEvidenceText('Soil values not supported by a recorded source; review existing results and field observations', language), t('No laboratory result or SoilGrids source recorded'));
   }
-  row('Elevation, slope, aspect', t('{elevation} m · {slope}° · faces {aspect}',{elevation:input.elevationM,slope:input.slopeDeg,aspect:input.aspectLabel}), t('SRTM elevation model'));
+  const terrain = reportTerrainValues({ elevation: input.elevationM, slopeDeg: input.slopeDeg, aspectLabel: input.aspectLabel });
+  if (terrain.elevationM !== undefined && terrain.slopeDeg !== undefined && terrain.aspectLabel !== undefined) {
+    row('Elevation, slope, aspect', t('{elevation} m · {slope}° · faces {aspect}', { elevation: terrain.elevationM, slope: terrain.slopeDeg, aspect: terrain.aspectLabel }), t('SRTM elevation model'));
+  } else {
+    row('Elevation, slope, aspect', reportEvidenceText(`Elevation estimate: ${terrain.elevationM === undefined ? 'not known' : `${terrain.elevationM} m`}; Slope estimate: ${terrain.slopeDeg === undefined ? 'not known' : `${terrain.slopeDeg}°`}; Aspect: ${terrain.aspectLabel ?? 'not known'}`, language), reportEvidenceText('Recorded terrain estimates; source and field accuracy not independently verified here', language));
+  }
 
+  const reportedWater = surveyWaterSummary(input.surveyWater);
+  if (reportedWater) {
+    row(reportEvidenceText('Water choices reported in survey', language), reportEvidenceText(reportedWater, language), reportEvidenceText(SURVEY_WATER_LIMITS, language));
+  }
+  const disagreement = storageRecordDisagreement(water, input.surveyWater);
+  if (disagreement) {
+    row(reportEvidenceText('Water record reconciliation', language), reportEvidenceText(disagreement, language), reportEvidenceText('Supplied map/design tank status and separate survey storage answer; neither source is chosen over the other', language));
+  }
   const absent = absentWaterBodies(facts, input.hasMapWaterPolygons);
   if (absent.length) {
-    row('Not on this site', absent.map((body,index)=>t(index===0?'No {body}':'no {body}',{body:t(body)})).join(', '), t('Nothing of the kind drawn or recorded'));
+    row(reportEvidenceText('Water inventory gaps', language), reportEvidenceText('Not recorded in supplied map/design facts:', language) + ' ' + absent.map(body=>t(body)).join(', '), reportEvidenceText('This is an inventory gap, not proof of physical absence', language));
   }
 
   out.push('');
@@ -983,5 +1061,12 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
  * document that drops its caveats is worse than one that never had them.
  */
 export function assuranceMarkdown(language='en',context?:{soilSource?:string|null}): string {
-  return [`## ${planAssuranceText(ASSURANCE_TITLE,language)}`, '', ...planAssuranceParagraphs(language,context).flatMap((p) => [p, ''])].join('\n');
+  const paragraphs = planAssuranceParagraphs(language,context);
+  if (context) {
+    // These report inputs contain attribution, not an independently read original
+    // sample. Keep the global/Atlas copy intact and qualify this report's sources.
+    paragraphs[0] = reportEvidenceText('No agronomist has checked this report. It uses supplied map records, source-labelled estimates and planning references where named; these are not independent validation.', language);
+    paragraphs[2] = reportSoilEvidence(context.soilSource, language);
+  }
+  return [`## ${planAssuranceText(ASSURANCE_TITLE,language)}`, '', ...paragraphs.flatMap((p) => [p, ''])].join('\n');
 }

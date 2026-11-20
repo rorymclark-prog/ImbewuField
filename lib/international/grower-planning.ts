@@ -2,9 +2,11 @@ import { cropByKey } from '../crop-catalog';
 import { canonicalCoordinateSiteId } from '../site-id';
 import { validWorkspacePlanningId } from './workspace-context';
 import { growerEstimateSourceQuantity, normaliseGrowerEstimateSourceReceipt, type GrowerEstimateSourceReceipt,
-  type GrowerEstimateSourceField } from '../grower-estimate-units';
+  type GrowerEstimateSourceField, normaliseGrowerSpacingSelectionReceipt, growerSpacingSourceQuantities, type GrowerSpacingSelectionReceipt } from '../grower-estimate-units';
 import { addDecimalQuantity, floorDecimalQuantityRatio, floorExactDecimalQuantityRatio } from '../farm-records';
 import { INTERNATIONAL_SQUARE_FOOT_IN_SQUARE_METRES } from '../length-units';
+import { regionalSpacingReference } from './providers/regional-spacing-reference';
+import { normaliseSavedProvisionalOrigin, reviewProvisionalCycleProfile, type ProvisionalCycleContext, type SavedProvisionalOrigin } from './provisional-profile';
 
 export type GrowerPlanningScope =
   | { readonly kind: 'mapped-site'; readonly siteId: string }
@@ -42,7 +44,10 @@ export interface GrowerPlanningInputs {
 }
 
 export interface GrowerPlanningProfile {
-  readonly version: 1;
+  readonly version: 1 | 2;
+  /** Version2 preserves positive source months without excluding omissions.
+   * Older readers must reject this profile, not discard the distinction. */
+  readonly entryMonthCoverage?: 'positive-only';
   readonly profileId: string;
   /** Existing catalogue identity only; no catalogue agronomy is read. */
   readonly cropKey: string;
@@ -50,13 +55,20 @@ export interface GrowerPlanningProfile {
   readonly inputs: GrowerPlanningInputs;
   /** Optional entered-unit origin, not source verification or measured area. */
   readonly exactDensitySources?: Readonly<Partial<Record<GrowerEstimateSourceField, GrowerEstimateSourceReceipt>>>;
+  readonly plantCountOrigin?: GrowerSpacingSelectionReceipt;
+  /** Historical source/default/override review; not current sowing authority. */
+  readonly provisionalOrigin?: SavedProvisionalOrigin;
 }
+
+export interface GrowerCountAreaBinding { readonly bedId: string }
 
 export interface GrowerPlanningRequest {
   readonly profile: unknown;
   readonly scope: unknown;
   readonly measuredAreaM2: unknown;
   readonly fieldEntryDate: unknown;
+  readonly countAreaBinding?: GrowerCountAreaBinding;
+  readonly provisionalContext?: unknown;
 }
 
 export const GROWER_COUNT_ARITHMETIC = 'exact-declared-decimal-v1' as const;
@@ -67,11 +79,15 @@ export interface GrowerPlanningSnapshot {
   readonly scope: GrowerPlanningScope;
   readonly measuredAreaM2: GrowerMeasuredAreaInput;
   readonly fieldEntryDate: GrowerInput<string, 'utc-date'>;
+  /** Versioned replay evidence; absent on older unmarked reviews. */
+  readonly provisionalReview?: { readonly version: 1; readonly context: ProvisionalCycleContext; readonly resolverFingerprint: string };
+  readonly countAreaBinding?: GrowerCountAreaBinding;
 }
 
 export interface GrowerCapacityEstimate {
   readonly measuredAreaM2: number;
   readonly estimatedPlantCount: number;
+  readonly budgetedStations?: number;
   readonly estimatedYieldKg: number;
   readonly densityEstimateNotLayoutClearance: true;
 }
@@ -196,12 +212,12 @@ export function normaliseGrowerMeasuredAreaInput(value: unknown): GrowerMeasured
 }
 const days = (v: unknown): v is number => nonNegative(v) && Number.isSafeInteger(v);
 const method = (v: unknown): v is 'direct' | 'transplant' => v === 'direct' || v === 'transplant';
-const months = (v: unknown): v is number[] => Array.isArray(v)
-  && v.every(m => Number.isInteger(m) && m >= 1 && m <= 12) && new Set(v).size === v.length;
+const months = (v: unknown): v is number[] => Array.isArray(v) && v.length <= 12
+  && Array.from(v).every(m => Number.isInteger(m) && m >= 1 && m <= 12) && new Set(v).size === v.length;
 
 /** Invalid supplied data is rejected, never silently replaced with a missing/default value. */
 export function normaliseGrowerPlanningProfile(value: unknown): GrowerPlanningProfile | null {
-  if (!record(value) || value.version !== 1 || !text(value.profileId) || typeof value.cropKey !== 'string'
+  if (!record(value) || (value.version !== 1 && value.version !== 2) || !text(value.profileId) || typeof value.cropKey !== 'string'
     || !cropByKey(value.cropKey) || !record(value.inputs)) return null;
   const scope = normaliseGrowerPlanningScope(value.scope);
   const raw = value.inputs;
@@ -216,6 +232,10 @@ export function normaliseGrowerPlanningProfile(value: unknown): GrowerPlanningPr
   const allowedEntryMonths = input(raw.allowedEntryMonths, 'utc-months', months);
   if (!scope || !plantsPerM2 || !yieldKgPerM2 || !establishment || !nurseryDays || !fieldEntryToFirstHarvestDays
     || !pickingDays || !fieldOccupancyDays || !turnaroundDays || !allowedEntryMonths) return null;
+  const coverage = Object.getOwnPropertyDescriptor(value, 'entryMonthCoverage');
+  if (value.version === 1 ? 'entryMonthCoverage' in value
+    : !coverage?.enumerable || !('value' in coverage) || coverage.value !== 'positive-only' || allowedEntryMonths.state !== 'provided'
+      || !allowedEntryMonths.value.length || allowedEntryMonths.provenance.kind !== 'external-reference') return null;
   const window: GrowerPlanningInputs['allowedEntryMonths'] = allowedEntryMonths.state === 'missing' ? allowedEntryMonths
     : { ...allowedEntryMonths, value: [...allowedEntryMonths.value].sort((a, b) => a - b) };
   let exactDensitySources: GrowerPlanningProfile['exactDensitySources'];
@@ -241,10 +261,28 @@ export function normaliseGrowerPlanningProfile(value: unknown): GrowerPlanningPr
     }
     exactDensitySources = sources;
   }
-  return freeze({ version: 1, profileId: value.profileId, cropKey: value.cropKey, scope,
+  let plantCountOrigin: GrowerSpacingSelectionReceipt | null = null;
+  if ('plantCountOrigin' in value) {
+    const descriptor = Object.getOwnPropertyDescriptor(value, 'plantCountOrigin');
+    if (!descriptor || !('value' in descriptor) || !descriptor.enumerable) return null;
+    plantCountOrigin = normaliseGrowerSpacingSelectionReceipt(descriptor.value,
+      { scopeKey: growerPlanningScopeKey(scope)!, profileId: value.profileId, cropKey: value.cropKey });
+    if (!plantCountOrigin || plantsPerM2.state !== 'missing' || exactDensitySources?.plantsPerM2
+      || establishment.state !== 'provided' || establishment.value !== regionalSpacingReference(
+        plantCountOrigin.countryCode, plantCountOrigin.cropKey, plantCountOrigin.regionReference, plantCountOrigin)?.establishment) return null;
+  }
+  const profile: GrowerPlanningProfile = freeze({ version: value.version, profileId: value.profileId, cropKey: value.cropKey, scope,
     inputs: { plantsPerM2, yieldKgPerM2, establishment, nurseryDays, fieldEntryToFirstHarvestDays,
       pickingDays, fieldOccupancyDays, turnaroundDays, allowedEntryMonths: window },
-    ...(exactDensitySources ? { exactDensitySources } : {}) });
+    ...(exactDensitySources ? { exactDensitySources } : {}), ...(plantCountOrigin ? { plantCountOrigin } : {}),
+    ...(value.version === 2 ? { entryMonthCoverage: 'positive-only' as const } : {}) });
+  if ('provisionalOrigin' in value) {
+    const descriptor = Object.getOwnPropertyDescriptor(value, 'provisionalOrigin');
+    if (!descriptor?.enumerable || !('value' in descriptor)) return null;
+    const origin = normaliseSavedProvisionalOrigin(descriptor.value, profile);
+    return origin ? freeze({ ...profile, provisionalOrigin: origin }) : null;
+  }
+  return profile;
 }
 
 /** Duplicate identities are ambiguous even across scopes, or when one duplicate is
@@ -276,6 +314,148 @@ const addDays = addGrowerUtcDays;
 
 const basis: AssessmentBasis = { basis: 'grower-input-arithmetic', sourceVerification: 'not-verified' };
 
+function densityPlantCountFor(profile: GrowerPlanningProfile, area: GrowerMeasuredAreaInput): number | null {
+  if (area.state !== 'provided' || profile.inputs.plantsPerM2.state !== 'provided') return null;
+  const source = profile.exactDensitySources?.plantsPerM2;
+  const quantity = source ? growerEstimateSourceQuantity(source) : null;
+  const areaFactors = area.arithmeticBasis ? [area.arithmeticBasis.widthM, area.arithmeticBasis.heightM] : [area.value];
+  // Both assessors use the declared rectangle factors and original density receipt;
+  // a partial plan must not regain the floating-point rounding error the full plan avoids.
+  const count = source
+    ? quantity ? floorExactDecimalQuantityRatio({ factors: [...areaFactors.map(value => addDecimalQuantity(undefined, value)), quantity],
+      divisors: source.unit === 'plants/ft2' ? [addDecimalQuantity(undefined, INTERNATIONAL_SQUARE_FOOT_IN_SQUARE_METRES)] : [] })
+      : { status: 'held' as const, reason: 'source-unavailable' }
+    : floorDecimalQuantityRatio({ factors: [...areaFactors, profile.inputs.plantsPerM2.value] });
+  return count.status === 'ready' ? count.whole : null;
+}
+
+/** An area identity excludes the read timestamp, which is not a measurement. */
+export function growerCountAreaBasisKey(area: GrowerMeasuredAreaInput): string | null {
+  return area.state === 'provided' ? JSON.stringify([area.value, area.arithmeticBasis ?? null]) : null;
+}
+
+function plantCountFor(profile: GrowerPlanningProfile, area: GrowerMeasuredAreaInput, binding?: GrowerCountAreaBinding) {
+  const origin = profile.plantCountOrigin;
+  if (!origin) return { stations: null, value: densityPlantCountFor(profile, area), issue: 'plantsPerM2-or-count' };
+  const quantities = growerSpacingSourceQuantities(origin);
+  if (!quantities || area.state !== 'provided' || !binding || binding.bedId !== origin.bedId
+    || growerCountAreaBasisKey(area) !== origin.areaBasisKey) return { stations: null, value: null, issue: 'spacing-area-binding' };
+  const areaFactors = area.arithmeticBasis ? [area.arithmeticBasis.widthM, area.arithmeticBasis.heightM] : [area.value];
+  const stations = floorExactDecimalQuantityRatio({ factors: [...areaFactors, 10000].map(v => addDecimalQuantity(undefined, v)),
+    divisors: [quantities.rowCm, quantities.inRowCm] });
+  if (stations.status !== 'ready') return { stations: null, value: null, issue: 'spacing-station-range' };
+  if (!quantities.finalStand) return { stations: stations.whole, value: null, issue: 'spacing-final-stand' };
+  const plants = floorExactDecimalQuantityRatio({ factors: [addDecimalQuantity(undefined, stations.whole), quantities.finalStand] });
+  return { stations: stations.whole, value: plants.status === 'ready' ? plants.whole : null, issue: 'spacing-plant-range' };
+}
+
+export interface ProvisionalPlanningValue<T> {
+  readonly status: 'ready' | 'missing-inputs' | 'invalid-inputs' | 'excluded' | 'not-applicable';
+  readonly value: T | null;
+  readonly issues: readonly string[];
+}
+
+export interface ProvisionalGrowerPlanningAssessment extends AssessmentBasis {
+  readonly provisional: true;
+  readonly status: 'ready' | 'partial-ready' | 'held' | 'invalid-inputs' | 'scope-mismatch';
+  readonly snapshot: GrowerPlanningSnapshot | null;
+  readonly fingerprint: string | null;
+  readonly estimatedPlantCount: ProvisionalPlanningValue<number>;
+  readonly budgetedStations: ProvisionalPlanningValue<number>;
+  readonly estimatedYieldKg: ProvisionalPlanningValue<number>;
+  readonly entryWindow: 'allowed' | 'reported-positive' | 'unknown' | 'excluded' | 'missing-date';
+  readonly schedule: Readonly<Record<keyof Omit<GrowerDateEstimate, 'fieldEntryDate'>, ProvisionalPlanningValue<string>>>;
+  readonly uncertainties: readonly string[];
+}
+
+/** Missing yield should not erase a supported date calculation, and missing density
+ * should not erase a supported yield estimate. These are conditional input arithmetic,
+ * never a claim that the chosen date, evidence or crop is locally suitable. */
+export function assessProvisionalGrowerPlanning(request: GrowerPlanningRequest): ProvisionalGrowerPlanningAssessment {
+  const result = <T>(status: ProvisionalPlanningValue<T>['status'], value: T | null, issues: string[] = []): ProvisionalPlanningValue<T> =>
+    ({ status, value, issues });
+  const missing = <T>(...issues: string[]) => result<T>('missing-inputs', null, issues);
+  const invalid = <T>(...issues: string[]) => result<T>('invalid-inputs', null, issues);
+  const profile = normaliseGrowerPlanningProfile(request.profile);
+  const scope = normaliseGrowerPlanningScope(request.scope);
+  const area = normaliseGrowerMeasuredAreaInput(request.measuredAreaM2);
+  const entry = input(request.fieldEntryDate, 'utc-date', utcDate);
+  const valid = !!profile && !!scope && !!area && !!entry;
+  const snapshot = valid ? freeze({ countArithmetic: GROWER_COUNT_ARITHMETIC, profile, scope,
+    measuredAreaM2: area, fieldEntryDate: entry }) : null;
+  const fingerprint = snapshot ? JSON.stringify(snapshot) : null;
+  const emptySchedule = (issue: string) => ({ nurseryStartDate: invalid<string>(issue), firstHarvestDate: invalid<string>(issue),
+    harvestEndExclusiveDate: invalid<string>(issue), fieldClearDate: invalid<string>(issue), nextFieldEntryDate: invalid<string>(issue) });
+  if (!profile || !scope || !area || !entry) return freeze({ ...basis, provisional: true, status: 'invalid-inputs',
+    snapshot, fingerprint, estimatedPlantCount: invalid<number>('input-shape'), budgetedStations: invalid<number>('input-shape'), estimatedYieldKg: invalid<number>('input-shape'),
+    entryWindow: 'missing-date', schedule: emptySchedule('input-shape'), uncertainties: ['input-shape'] });
+  if (growerPlanningScopeKey(profile.scope) !== growerPlanningScopeKey(scope)) return freeze({ ...basis, provisional: true,
+    status: 'scope-mismatch', snapshot, fingerprint, estimatedPlantCount: invalid<number>('scope'), budgetedStations: invalid<number>('scope'), estimatedYieldKg: invalid<number>('scope'),
+    entryWindow: 'missing-date', schedule: emptySchedule('scope'), uncertainties: ['scope'] });
+
+  const values = profile.inputs;
+  const countResult = plantCountFor(profile, area, request.countAreaBinding);
+  const origin = profile.plantCountOrigin;
+  let count = missing<number>(...(area.state === 'missing' ? ['measuredAreaM2'] : []),
+    ...(!origin && values.plantsPerM2.state === 'missing' ? ['plantsPerM2'] : []));
+  let budgetedStations = result<number>('not-applicable', null);
+  if (origin) {
+    budgetedStations = countResult.stations === null ? (area.state === 'missing' ? missing<number>('measuredAreaM2') : invalid<number>(countResult.issue))
+      : result('ready', countResult.stations);
+    count = countResult.value !== null ? result('ready', countResult.value)
+      : origin.finalStand === null && countResult.stations !== null ? missing<number>('spacing-final-stand') : invalid<number>(countResult.issue);
+  } else if (area.state === 'provided' && values.plantsPerM2.state === 'provided') {
+    count = countResult.value === null || values.plantsPerM2.value === 0 ? invalid<number>('plantsPerM2-or-count') : result('ready', countResult.value);
+  }
+  let yieldKg = missing<number>(...(area.state === 'missing' ? ['measuredAreaM2'] : []),
+    ...(values.yieldKgPerM2.state === 'missing' ? ['yieldKgPerM2'] : []));
+  if (area.state === 'provided' && values.yieldKgPerM2.state === 'provided') {
+    const value = area.value * values.yieldKgPerM2.value;
+    yieldKg = Number.isFinite(value) ? result('ready', value) : invalid<number>('estimatedYieldKg');
+  }
+  const entryWindow = entry.state === 'missing' ? 'missing-date' : values.allowedEntryMonths.state === 'missing' ? 'unknown'
+    : values.allowedEntryMonths.value.includes(Number(entry.value.slice(5, 7)))
+      ? profile.version === 2 ? 'reported-positive' : 'allowed' : profile.version === 2 ? 'unknown' : 'excluded';
+  const uncertainties: string[] = [];
+  if (profile.version === 2) uncertainties.push('positive-months-only', 'needs-grower-entry-window');
+  if (entryWindow === 'unknown') uncertainties.push('entry-window-unknown');
+  if (values.establishment.state === 'missing') uncertainties.push('establishment-unknown');
+  const offset = (start: GrowerInput<string, 'utc-date'> | ProvisionalPlanningValue<string>, daysInput: GrowerInput<number, 'days'>,
+    key: string): ProvisionalPlanningValue<string> => {
+    if (entryWindow === 'excluded') return result<string>('excluded', null, ['allowedEntryMonths']);
+    const startValue = 'state' in start ? start.state === 'provided' ? start.value : null : start.status === 'ready' ? start.value : null;
+    if (!startValue || daysInput.state === 'missing') return missing<string>(...(!startValue ? ['upstream-date'] : []),
+      ...(daysInput.state === 'missing' ? [key] : []));
+    const value = addDays(startValue, daysInput.value);
+    return value === null ? invalid<string>('date-range') : result('ready', value);
+  };
+  let nurseryStartDate: ProvisionalPlanningValue<string> = missing('establishment');
+  if (values.establishment.state === 'provided') {
+    nurseryStartDate = values.establishment.value === 'direct' ? result<string>('not-applicable', null)
+      : entry.state === 'missing' || values.nurseryDays.state === 'missing' ? missing<string>('fieldEntryDate-or-nurseryDays')
+        : entryWindow === 'excluded' ? result<string>('excluded', null, ['allowedEntryMonths'])
+          : (() => { const value = addDays(entry.value, -values.nurseryDays.value);
+            return value === null ? invalid<string>('date-range') : result('ready', value); })();
+  }
+  const firstHarvestDate = offset(entry, values.fieldEntryToFirstHarvestDays, 'fieldEntryToFirstHarvestDays');
+  const harvestEndExclusiveDate = values.pickingDays.state === 'provided' && values.pickingDays.value === 0
+    ? invalid<string>('pickingDays') : offset(firstHarvestDate, values.pickingDays, 'pickingDays');
+  let fieldClearDate = offset(entry, values.fieldOccupancyDays, 'fieldOccupancyDays');
+  if (values.fieldOccupancyDays.state === 'provided') {
+    const first = values.fieldEntryToFirstHarvestDays, picking = values.pickingDays;
+    if (values.fieldOccupancyDays.value === 0 || (first.state === 'provided' && picking.state === 'provided'
+      && (!Number.isSafeInteger(first.value + picking.value) || values.fieldOccupancyDays.value < first.value + picking.value))) {
+      fieldClearDate = invalid<string>('fieldOccupancyDays');
+    } else if (first.state === 'missing' || picking.state === 'missing') uncertainties.push('occupancy-compatibility-unknown');
+  }
+  const nextFieldEntryDate = offset(fieldClearDate, values.turnaroundDays, 'turnaroundDays');
+  const schedule = { nurseryStartDate, firstHarvestDate, harvestEndExclusiveDate, fieldClearDate, nextFieldEntryDate };
+  const components = [count, yieldKg, ...Object.values(schedule)];
+  const complete = components.every(value => value.status === 'ready' || value.status === 'not-applicable') && entryWindow === 'allowed';
+  return freeze({ ...basis, provisional: true, status: complete ? 'ready' : components.some(value => value.status === 'ready') ? 'partial-ready' : 'held',
+    snapshot, fingerprint, estimatedPlantCount: count, budgetedStations, estimatedYieldKg: yieldKg, entryWindow, schedule, uncertainties });
+}
+
 /** Arithmetic readiness does not certify suitability, legality, source truth or a harvest.
  * No country-policy authority is called or overridden by this independent calculation. */
 export function assessGrowerPlanning(request: GrowerPlanningRequest): GrowerPlanningAssessment {
@@ -289,43 +469,47 @@ export function assessGrowerPlanning(request: GrowerPlanningRequest): GrowerPlan
   }
   // Normalisation constructs fresh objects in canonical field order. Unordered month
   // selections are sorted; editing input values/provenance cannot mutate this review.
-  const snapshot = freeze({ countArithmetic: GROWER_COUNT_ARITHMETIC, profile, scope, measuredAreaM2, fieldEntryDate });
+  const provisional = profile.provisionalOrigin
+    ? reviewProvisionalCycleProfile(profile, request.provisionalContext, measuredAreaM2, fieldEntryDate, request.countAreaBinding) : null;
+  const snapshot: GrowerPlanningSnapshot = freeze({ countArithmetic: GROWER_COUNT_ARITHMETIC, profile, scope, measuredAreaM2, fieldEntryDate,
+    ...(profile.plantCountOrigin || profile.provisionalOrigin ? { countAreaBinding: { bedId: request.countAreaBinding?.bedId ?? '' } } : {}),
+    ...(provisional?.status === 'ready' ? { provisionalReview: { version: 1 as const, context: provisional.context,
+      resolverFingerprint: provisional.result.fingerprint } } : {}) });
   const fingerprint = JSON.stringify(snapshot);
   const held = (status: 'missing-inputs' | 'invalid-inputs' | 'scope-mismatch' | 'entry-window-excluded', issues: string[]): GrowerPlanningAssessment =>
     freeze({ ...basis, status, issues, snapshot, fingerprint });
   if (growerPlanningScopeKey(profile.scope) !== growerPlanningScopeKey(scope)) return held('scope-mismatch', ['scope']);
+  if (provisional?.status === 'held') return held('missing-inputs', [provisional.issue]);
+  // Present extension data on an unmarked profile must not acquire a meaning by
+  // being silently discarded. Live permissions remain private to the controller.
+  if (!profile.provisionalOrigin && Object.hasOwn(request, 'provisionalContext') && request.provisionalContext !== undefined)
+    return held('invalid-inputs', ['unexpected-provisional-context']);
+  // A positive reference is useful for a partial preview, not an assertion that
+  // the grower has chosen a complete window for automatic scheduling/adoption.
+  if (profile.version === 2) return held('missing-inputs', ['needs-grower-entry-window']);
   const values = profile.inputs;
-  const required: Array<[string, GrowerInput<unknown, string>]> = Object.entries(values).filter(([key]) => key !== 'nurseryDays');
+  const required: Array<[string, GrowerInput<unknown, string>]> = Object.entries(values).filter(([key]) => key !== 'nurseryDays' && !(profile.plantCountOrigin && key === 'plantsPerM2'));
   required.push(['measuredAreaM2', measuredAreaM2], ['fieldEntryDate', fieldEntryDate]);
   if (values.establishment.state === 'provided' && values.establishment.value === 'transplant') required.push(['nurseryDays', values.nurseryDays]);
   const missing = required.filter(([, value]) => value.state === 'missing').map(([key]) => key);
+  if (profile.plantCountOrigin?.finalStand === null) missing.push('spacing-final-stand');
   if (missing.length) return held('missing-inputs', missing);
+  if (provisional?.status === 'entry-excluded') return held('entry-window-excluded', [provisional.issue]);
   // All required values were checked together so callers receive the complete missing list.
   const supplied = <T, U extends string>(value: GrowerInput<T, U>): T => {
     if (value.state !== 'provided') throw new Error('Required grower input is missing');
     return value.value;
   };
-  const area = supplied(measuredAreaM2), density = supplied(values.plantsPerM2), yieldPerM2 = supplied(values.yieldKgPerM2);
+  const area = supplied(measuredAreaM2), density = profile.plantCountOrigin ? null : supplied(values.plantsPerM2), yieldPerM2 = supplied(values.yieldKgPerM2);
   const toFirst = supplied(values.fieldEntryToFirstHarvestDays), picking = supplied(values.pickingDays);
   const occupancy = supplied(values.fieldOccupancyDays), turnaround = supplied(values.turnaroundDays);
   const invalidArithmetic: string[] = [];
   if (density === 0) invalidArithmetic.push('plantsPerM2');
   if (picking === 0) invalidArithmetic.push('pickingDays');
   if (occupancy === 0 || !Number.isSafeInteger(toFirst + picking) || occupancy < toFirst + picking) invalidArithmetic.push('fieldOccupancyDays');
-  const source = profile.exactDensitySources?.plantsPerM2;
-  const quantity = source ? growerEstimateSourceQuantity(source) : null;
-  const areaFactors = measuredAreaM2.arithmeticBasis
-    ? [measuredAreaM2.arithmeticBasis.widthM, measuredAreaM2.arithmeticBasis.heightM] : [area];
-  // The measured Number is the current area's declared canonical decimal; it
-  // does not certify the feet text or polygon precision that once produced it.
-  // Only the density's validated original source can cancel a density unit.
-  const count = source
-    ? quantity ? floorExactDecimalQuantityRatio({ factors: [...areaFactors.map(value => addDecimalQuantity(undefined, value)), quantity],
-      divisors: source.unit === 'plants/ft2' ? [addDecimalQuantity(undefined, INTERNATIONAL_SQUARE_FOOT_IN_SQUARE_METRES)] : [] })
-      : { status: 'held' as const, reason: 'source-unavailable' }
-    : floorDecimalQuantityRatio({ factors: [...areaFactors, density] });
-  const estimatedPlantCount = count.status === 'ready' ? count.whole : null, estimatedYieldKg = area * yieldPerM2;
-  if (estimatedPlantCount === null) invalidArithmetic.push('estimatedPlantCount');
+  const countResult = plantCountFor(profile, measuredAreaM2, request.countAreaBinding);
+  const estimatedPlantCount = countResult.value, estimatedYieldKg = area * yieldPerM2;
+  if (estimatedPlantCount === null) invalidArithmetic.push(countResult.issue);
   if (!Number.isFinite(estimatedYieldKg)) invalidArithmetic.push('estimatedYieldKg');
   if (invalidArithmetic.length || estimatedPlantCount === null) return held('invalid-inputs', invalidArithmetic);
   const entryDate = supplied(fieldEntryDate);
@@ -338,7 +522,8 @@ export function assessGrowerPlanning(request: GrowerPlanningRequest): GrowerPlan
   if ((supplied(values.establishment) === 'transplant' && !nurseryStartDate)
     || !firstHarvestDate || !harvestEndExclusiveDate || !fieldClearDate || !nextFieldEntryDate) return held('invalid-inputs', ['date-range']);
   return freeze({ ...basis, status: 'ready', snapshot, fingerprint,
-    capacity: { measuredAreaM2: area, estimatedPlantCount, estimatedYieldKg, densityEstimateNotLayoutClearance: true },
+    capacity: { measuredAreaM2: area, estimatedPlantCount, estimatedYieldKg,
+      ...(countResult.stations !== null ? { budgetedStations: countResult.stations } : {}), densityEstimateNotLayoutClearance: true },
     schedule: { fieldEntryDate: entryDate, nurseryStartDate, firstHarvestDate, harvestEndExclusiveDate, fieldClearDate, nextFieldEntryDate } });
 }
 

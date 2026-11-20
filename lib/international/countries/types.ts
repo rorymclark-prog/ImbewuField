@@ -20,6 +20,11 @@ export interface CountrySource {
   verification: 'content-read' | 'snippet-only' | 'unavailable' | 'not-checked';
   accessedOn: string | null;
   publishedOn: string | null;
+  /** Month-only publication evidence stays month-only; never fabricate a day.
+   * Mutually exclusive with a non-null publishedOn. */
+  publishedMonth?: string | null;
+  /** Year-only evidence; mutually exclusive with day/month precision. */
+  publishedYear?: number | null;
   /** Page modification metadata is not evidence of publication. */
   lastModifiedOn?: string | null;
   reviewDueOn: string | null;

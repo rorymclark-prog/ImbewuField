@@ -1,8 +1,46 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { sampleFullSiteReport } from '../lib/report-summary.ts';
+import { reportSummaryPages, reportSummaryText, sampleFullSiteReport } from '../lib/report-summary.ts';
 import { DEMO_LOCATION } from '../lib/demo-site.ts';
+import type { LocationData } from '../lib/types.ts';
 import type { ReportSiteFacts } from '../lib/report-site-facts.ts';
+
+test('short and prepared reports never promote rainfall placeholders to site evidence', () => {
+  const cases = [
+    { annual: 791, rainfallSource: undefined },
+    { annual: 791, rainfallSource: 'estimate' },
+    { annual: 791, rainfallSource: 'unknown-provider' },
+    ...[undefined, null, NaN, Infinity, -1, '791'].map(annual => ({ annual, rainfallSource: 'nasa-power' })),
+  ];
+  for (const rain of cases) for (const language of ['en', 'zu', 'st', 'ts', 've']) {
+    const location = { ...structuredClone(DEMO_LOCATION), rainfall: { ...DEMO_LOCATION.rainfall, ...rain } } as unknown as LocationData;
+    const original = structuredClone(location);
+    const label = reportSummaryText('Annual rainfall estimate', language);
+    const expected = `${label}: ${reportSummaryText('Not recorded', language)}`;
+    for (const count of [1, 5] as const) {
+      const lines = reportSummaryPages(null, location, count, language).flatMap(page => page.lines);
+      const rainfallLines = lines.filter(line => line.startsWith(`${label}:`));
+      assert.ok(rainfallLines.length > 0);
+      assert.ok(rainfallLines.every(line => line === expected), `${language}/${count}: ${JSON.stringify(rain)}`);
+    }
+    assert.ok(sampleFullSiteReport(null, location, language).includes(`- ${expected}`));
+    assert.deepEqual(location, original, 'rendering cannot erase the original saved placeholder');
+  }
+});
+
+test('short reports retain sourced zero and sub-millimetre rainfall without rounding or a new threshold', () => {
+  for (const rainfallSource of ['nasa-power', 'open-meteo', 'grower-entered'] as const) {
+    for (const annual of [0, 0.25, 791]) for (const language of ['en', 'zu', 'st', 'ts', 've']) {
+      const location = structuredClone(DEMO_LOCATION);
+      location.rainfall = { ...location.rainfall, annual, rainfallSource };
+      const label = reportSummaryText('Annual rainfall estimate', language);
+      for (const count of [1, 5] as const) {
+        const lines = reportSummaryPages(null, location, count, language).flatMap(page => page.lines);
+        assert.ok(lines.includes(`${label}: ${annual} mm`), `${language}/${rainfallSource}/${annual}/${count}`);
+      }
+    }
+  }
+});
 
 test('the isiZulu sample report translates its fixed basis, inventory and evidence safeguards', () => {
   const report = sampleFullSiteReport(null, DEMO_LOCATION, 'zu');

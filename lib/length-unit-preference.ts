@@ -1,6 +1,7 @@
 'use client';
 
 import { onAuthStateChanged } from 'firebase/auth';
+import { useEffect, useReducer, useRef } from 'react';
 import { activeAccountLocalStorageKey, activeAccountUid } from './account-local-storage';
 import { getFirebase, isBackendConfigured } from './firebase/init';
 import type { LengthUnit } from './length-units';
@@ -24,17 +25,19 @@ export interface InvoiceDocumentContext { readonly kind: 'invoice-document-conte
 export interface SeedWorksheetContext { readonly kind: 'seed-worksheet-context' }
 export interface WeatherReferenceContext { readonly kind: 'weather-reference-context' }
 export interface LearningSiteContext { readonly kind: 'learning-site-context' }
-type Purpose = 'field' | 'nursery' | 'harvest-mass' | 'grower-estimate' | 'field-layout-export' | 'field-layout-import' | 'journal-observation' | 'invoice-document' | 'seed-worksheet' | 'weather-reference' | 'learning-site';
+export interface SavedPlaceWriteContext { readonly kind: 'saved-place-write-context' }
+type Purpose = 'field' | 'nursery' | 'harvest-mass' | 'grower-estimate' | 'field-layout-export' | 'field-layout-import' | 'journal-observation' | 'invoice-document' | 'seed-worksheet' | 'weather-reference' | 'learning-site' | 'saved-place-write';
 const purposeKey = (purpose: Purpose) => purpose === 'field' ? KEY : purpose === 'nursery' ? NURSERY_KEY
   : purpose === 'harvest-mass' ? HARVEST_KEY : purpose === 'grower-estimate' ? GROWER_ESTIMATE_KEY
   : purpose === 'field-layout-import' ? FIELD_IMPORT_CONTEXT_KEY : purpose === 'journal-observation' ? JOURNAL_OBSERVATION_CONTEXT_KEY
   : purpose === 'invoice-document' ? 'imbewu_invoice_document_context_v1'
   : purpose === 'seed-worksheet' ? 'imbewu_seed_worksheet_context_v1'
   : purpose === 'weather-reference' ? 'imbewu_weather_reference_context_v1'
-  : purpose === 'learning-site' ? 'imbewu_learning_site_context_v1' : FIELD_LAYOUT_CONTEXT_KEY;
+  : purpose === 'learning-site' ? 'imbewu_learning_site_context_v1'
+  : purpose === 'saved-place-write' ? 'imbewu_saved_place_write_context_v1' : FIELD_LAYOUT_CONTEXT_KEY;
 export type NurseryUnitChoice = 'metric' | 'imperial';
 export interface NurseryUnitPreferenceContext { readonly kind: 'nursery-unit-preference' }
-type PreferenceContext = LengthUnitPreferenceContext | NurseryUnitPreferenceContext | HarvestMassUnitPreferenceContext | GrowerEstimateUnitPreferenceContext | FieldLayoutExportContext | FieldLayoutImportContext | JournalObservationContext | InvoiceDocumentContext | SeedWorksheetContext | WeatherReferenceContext | LearningSiteContext;
+type PreferenceContext = LengthUnitPreferenceContext | NurseryUnitPreferenceContext | HarvestMassUnitPreferenceContext | GrowerEstimateUnitPreferenceContext | FieldLayoutExportContext | FieldLayoutImportContext | JournalObservationContext | InvoiceDocumentContext | SeedWorksheetContext | WeatherReferenceContext | LearningSiteContext | SavedPlaceWriteContext;
 const SAMPLE_EVENT = 'imbewu-sample-mode-changed';
 export interface LengthUnitPreferenceContext { readonly kind: 'length-unit-preference' }
 type Result = { unit: LengthUnit; remembered: boolean; destination: 'device' | 'sample' | 'unavailable' };
@@ -87,7 +90,7 @@ function capturePreferenceContext(purpose: Purpose): PreferenceContext | null {
     if (typeof window === 'undefined') return null;
     const win = window, inSample = sample(win), owner = activeAccountUid();
     if (!actorMatches(owner, inSample)) return null;
-    const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : purpose === 'nursery' ? 'nursery-unit-preference' : purpose === 'harvest-mass' ? 'harvest-mass-unit-preference' : purpose === 'grower-estimate' ? 'grower-estimate-unit-preference' : purpose === 'field-layout-import' ? 'field-layout-import-context' : purpose === 'journal-observation' ? 'journal-observation-context' : purpose === 'invoice-document' ? 'invoice-document-context' : purpose === 'seed-worksheet' ? 'seed-worksheet-context' : purpose === 'weather-reference' ? 'weather-reference-context' : purpose === 'learning-site' ? 'learning-site-context' : 'field-layout-export-context' });
+    const scope = scopeFor(win), context: PreferenceContext = Object.freeze({ kind: purpose === 'field' ? 'length-unit-preference' : purpose === 'nursery' ? 'nursery-unit-preference' : purpose === 'harvest-mass' ? 'harvest-mass-unit-preference' : purpose === 'grower-estimate' ? 'grower-estimate-unit-preference' : purpose === 'field-layout-import' ? 'field-layout-import-context' : purpose === 'journal-observation' ? 'journal-observation-context' : purpose === 'invoice-document' ? 'invoice-document-context' : purpose === 'seed-worksheet' ? 'seed-worksheet-context' : purpose === 'weather-reference' ? 'weather-reference-context' : purpose === 'learning-site' ? 'learning-site-context' : purpose === 'saved-place-write' ? 'saved-place-write-context' : 'field-layout-export-context' });
     const proof: Proof = { purpose, win, scope, epoch: scope.epoch, owner, sample: inSample, storage: local(win),
       key: activeAccountLocalStorageKey(purposeKey(purpose)), revoked: false, listeners: new Set(),
       ...(purpose === 'nursery' ? { nurseryValueListeners: new Set() } : {}),
@@ -116,6 +119,37 @@ function revokeContext(context: PreferenceContext | null): void {
   const proof = context && proofs.get(context); if (!proof) return;
   proof.revoked = true; proof.listeners.clear(); proof.nurseryValueListeners?.clear(); proof.growerEstimateValueListeners?.clear(); proof.scope.proofs.delete(proof); proofs.delete(context!);
   if (--proof.scope.users === 0) proof.scope.stop();
+}
+
+// A nearby-site question can outlive its account's mounted page. Reuse the
+// observed actor/sample epoch without reading or writing a unit preference.
+export function captureSavedPlaceWriteContext(): SavedPlaceWriteContext | null {
+  return capturePreferenceContext('saved-place-write') as SavedPlaceWriteContext | null;
+}
+export function savedPlaceWriteContextIsCurrent(context: SavedPlaceWriteContext | null): boolean {
+  return !!context && proofs.get(context)?.purpose === 'saved-place-write' && contextIsCurrent(context);
+}
+export const revokeSavedPlaceWriteContext = (context: SavedPlaceWriteContext | null) => revokeContext(context);
+
+export function useSavedPlaceWriteContext() {
+  const current = useRef<SavedPlaceWriteContext | null>(null);
+  const [revision, renew] = useReducer((value: number) => value + 1, 0);
+  useEffect(() => {
+    const context = captureSavedPlaceWriteContext();
+    current.current = context;
+    // Tour role changes can retain this mounted view. Retire its old action
+    // immediately; after the new render, fresh clicks get a new receipt.
+    const stop = subscribeContext(context, () => {
+      if (current.current === context) current.current = null;
+      renew();
+    });
+    return () => {
+      stop();
+      if (current.current === context) current.current = null;
+      revokeSavedPlaceWriteContext(context);
+    };
+  }, [revision]);
+  return current;
 }
 export function readLengthUnitPreference(context: LengthUnitPreferenceContext | null): Result {
   try {
