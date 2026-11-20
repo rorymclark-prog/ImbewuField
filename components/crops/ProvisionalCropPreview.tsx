@@ -25,6 +25,7 @@ import { captureProvisionalTemperatureCache, browserTemperatureStorage, provisio
 import { canadaCabbageReference, canadaCabbageCandidates, canadaCabbageResultQualifier, AAFC_CABBAGE_QUALIFIER, AAFC_CABBAGE_PDF_SHA256 } from '@/lib/international/providers/aafc-canada-cabbage';
 import { saskatchewanCabbageNurseryReference, saskatchewanCabbageNurseryCandidates, saskatchewanPrairieRegionMatches, saskatchewanNurseryResultQualifier, USASK_CABBAGE_QUALIFIER, USASK_CABBAGE_ORIGINAL_SHA256, type SaskatchewanNurseryBasis, type SaskatchewanNurseryUse } from '@/lib/international/providers/usask-saskatchewan-cabbage';
 import { locationDataCacheKey } from '@/lib/location-cache-key';
+import EcccObservationPanel from './EcccObservationPanel';
 
 export interface ProvisionalCropPreviewProps {
   ownerKey: string;
@@ -457,6 +458,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
     <p className="text-sm">Preview supported counts and dates using applicable evidence and your edits. Missing values stay unknown. {props.onSaveProfile ? 'Calculating does not save. Use the separate save action to keep a profile for review.' : 'Nothing here saves a profile or adds a crop.'}</p>
     <p role="note" className="text-sm">Provisional estimates: source metadata is not verification of farming accuracy. Suitability and plant legality are not established. Density is not layout clearance.</p>
     <p className="text-sm">Country: {props.countryCode ?? 'Unknown'} · Agricultural region: {props.agriculturalRegionReference ?? 'Unknown'}</p>
+    {props.countryCode === 'CA' && !props.checking && environment !== null
+      && <EcccObservationPanel key={generation} actorIsCurrent={props.actorIsCurrent} />}
     {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && !useTomatoReference && !useWisconsinTomatoReference && !useFirstHarvestReference && !useUsdaWisconsinTomatoReference && !useOatsReference && !useKenyaTomatoReference && !useCanadaReference && !useSaskatchewanReference && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
     {!!savedProfiles.length && <section aria-label="Saved provisional profiles" className="space-y-3 rounded-lg border border-[var(--border)] p-3">
       <h3 className="font-semibold">Saved provisional profiles</h3>

@@ -42,6 +42,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '19 November 2026', sha: 'e46823075',
+    changes: ['View and download Canadian station history with estimates and missing readings marked.'],
+  },
+  {
     when: '20 November 2026', sha: '034b5254f',
     changes: [
       'Rainfall lookups and compatible cached readings use local season names.',

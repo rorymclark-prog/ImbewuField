@@ -50,7 +50,9 @@ const hooks = registerHooks({
     return next(specifier, context);
   },
   load(url, context, next) {
-    if ((url.endsWith('/components/crops/useGrowerWorkflow.ts') || url.endsWith('/components/crops/ProvisionalCropPreview.tsx'))) return { shortCircuit: true, format: 'module',
+    if (url.endsWith('/components/crops/useGrowerWorkflow.ts')
+      || url.endsWith('/components/crops/ProvisionalCropPreview.tsx')
+      || url.endsWith('/components/crops/EcccObservationPanel.tsx')) return { shortCircuit: true, format: 'module',
       source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
         target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
       } }).outputText };
