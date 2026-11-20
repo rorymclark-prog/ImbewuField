@@ -1346,7 +1346,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {report && loading && (
             <div
               role="progressbar"
-              aria-label={tr('Writing the report', 'Umbiko uyabhalwa')}
+              aria-label={tr('Generating…', 'Kuyakhiwa…')}
               className={`${styles.writingBar} no-print`}
             >
               <div className={styles.writingBarFill} />
