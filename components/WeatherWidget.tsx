@@ -7,6 +7,7 @@ import { getElementArt2 } from '@/lib/element-art-2';
 import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from './IsiZuluDraftSource';
 import { fillWeather, weatherDayKey, weatherDescKey, weatherEnglish, weatherText } from '@/lib/weather-copy';
+import Skeleton from '@/components/Skeleton';
 
 interface Props {
   lat: number;
@@ -73,9 +74,10 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
 
   if (status === 'loading' || !forecast) {
     return (
-      <div
-        className="rounded-2xl px-3.5 py-3 animate-pulse"
-        style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', height: 88 }}
+      <Skeleton
+        tone="inset"
+        height={88}
+        style={{ borderRadius: 16, background: 'var(--bg-1)', border: '1px solid var(--border)' }}
       />
     );
   }

@@ -5,6 +5,7 @@ import { TreeDeciduous, Sprout, Apple, Cherry, Nut, Bird, Loader2 } from 'lucide
 import { useLanguage } from '@/lib/i18n';
 import type { LocationData } from '@/lib/types';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import Skeleton from '@/components/Skeleton';
 
 interface PlantEntry { name: string; localName?: string; role?: string; notes?: string; season?: string }
 interface AnimalEntry { type: string; breeds?: string; notes: string; scale: 'Micro' | 'Small' | 'Medium' | 'Large' }
@@ -83,8 +84,8 @@ function AnimalCard({ a }: { a: AnimalEntry }) {
   );
 }
 
-function SkeletonLine({ w }: { w: string }) {
-  return <div className="h-3 rounded-full animate-pulse" style={{ width: w, background: 'color-mix(in srgb, var(--border) 70%, transparent)' }} />;
+function SkeletonLine({ w, index }: { w: string; index: number }) {
+  return <Skeleton height={12} width={w} radius="full" index={index} />;
 }
 
 const CACHE_PREFIX = 'imbewu_lifeguide_v1_';
@@ -145,7 +146,7 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
           <Loader2 size={14} className="animate-spin" style={{ color: 'var(--gold)' }} />
           <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('lifeGuideBuilding')}</span>
         </div>
-        {[80, 60, 90, 50, 70].map((w, i) => <SkeletonLine key={i} w={`${w}%`} />)}
+        {[80, 60, 90, 50, 70].map((w, i) => <SkeletonLine key={i} w={`${w}%`} index={i} />)}
       </div>
     );
   }
