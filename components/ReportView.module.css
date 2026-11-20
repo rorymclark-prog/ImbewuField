@@ -208,3 +208,23 @@
     display: block; padding: 0; font-size: 15px; overflow-wrap: anywhere;
   }
 }
+
+/* Indeterminate "report is being written" bar. Transform only; static fill under reduced motion. */
+.writingBar {
+  position: sticky; top: 0; left: 0; right: 0; height: 2px; z-index: 10;
+  overflow: hidden;
+  background: var(--report-border);
+}
+.writingBarFill {
+  height: 100%; width: 40%;
+  background: var(--report-green);
+  animation: writingBarSlide 1.8s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes writingBarSlide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .writingBarFill { animation: none; width: 100%; opacity: 0.45; }
+}
