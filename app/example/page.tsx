@@ -23,6 +23,7 @@ import WaterYear from '@/components/WaterYear';
 import RainOnTerrainFilm from '@/components/RainOnTerrainFilm';
 import CropGateYear from '@/components/CropGateYear';
 import ShadeFall from '@/components/ShadeFall';
+import SowNow from '@/components/SowNow';
 import workspace from '@/components/layout/Workspace.module.css';
 
 // The example farm's climate exactly as the planner reads it (site-climate.ts), for the gate figure.
@@ -279,6 +280,9 @@ function ExampleInner() {
 
         {/* Where the shade falls: one wall's shadow through a day, and the sun each bed behind it gets. */}
         <ShadeFall latDeg={DEMO_COORDS.lat} slopeDeg={data.elevation.slopeDeg} />
+
+        {/* Sow now, eat then: the sample farm's hungry months, and what one more sowing does about them. */}
+        <SowNow />
 
         <div className={workspace.twoColumns}>
           {/* Key species */}
