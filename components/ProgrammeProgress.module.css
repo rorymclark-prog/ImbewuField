@@ -17,7 +17,17 @@
 .indicators { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr)); gap:16px; }
 .indicator { padding:24px; background:var(--bg-1); border:1px solid var(--border); border-radius:16px; min-width:0; }
 .indicator .value { font:500 36px/1.2 var(--font-display),Georgia,serif; display:block; margin:12px 0; }
-.indicator progress { width:100%; height:12px; accent-color:var(--emerald); }
+.bar { display:flex; align-items:center; gap:8px; }
+.track { flex:1; min-width:0; height:12px; border-radius:6px; background:var(--bg-3); overflow:hidden; }
+.fill { display:block; height:100%; border-radius:6px; background:var(--emerald); transform-origin:left center; transform:scaleX(1); transition:transform 700ms cubic-bezier(0.22,0.8,0.3,1); }
+/* Overdue: a static amber edge on the track. No motion, never a pulse. */
+.barOverdue .track { box-shadow:inset -4px 0 0 var(--gold); }
+.tick { flex:0 0 22px; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; border-radius:50%; background:var(--emerald); color:var(--bg-1); opacity:1; transform:scale(1); }
+.armed .fill { transform:scaleX(0); transition:none; }
+.armed .tick { opacity:0; transform:scale(0.5); }
+.play .tick { animation:tickIn 320ms cubic-bezier(0.22,1.4,0.4,1) 650ms backwards; }
+@keyframes tickIn { from { opacity:0; transform:scale(0.5); } to { opacity:1; transform:scale(1); } }
+@media (prefers-reduced-motion: reduce) { .fill { transition:none !important; } .armed .fill { transform:scaleX(1); } .armed .tick { opacity:1; transform:none; } .play .tick { animation:none; } }
 .meta { display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; font-size:12px; line-height:1.6; color:var(--text-secondary); }
 .gaps { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:20px; }
 .gaps article { border-left:3px solid var(--border); padding-left:18px; }

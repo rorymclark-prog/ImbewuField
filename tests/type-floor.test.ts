@@ -98,6 +98,8 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'components/HarvestBars.tsx': 'farmers read the plan-vs-actual and harvest reconciliation bars and their sold-exceeds-harvested flag; zero-debt 12px floor',
+  'components/Skeleton.tsx': 'shared loading placeholder blocks shown on farmer screens; carries no text; zero-debt 12px floor',
   'app/invoice/page.tsx': 'farmers enter and read their own saved invoice amounts; zero-debt 12px floor',
   'components/invoice/InvoiceCurrencyChoice.tsx': 'farmers explicitly choose and review the recorded invoice currency; zero-debt 12px floor',
   'components/invoice/QuickSaleCurrencyNotice.tsx': 'growers distinguish rand quick entry from other invoice currencies before recording money; zero-debt 12px floor',

@@ -9,6 +9,9 @@ import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 import { recordsFill, recordsTemplate } from '@/lib/records-regional-drafts';
+import { cappedScale } from '@/lib/chart-scale';
+import { BreakEdge } from '@/components/ChartBreakMark';
+import { HarvestBarsGroup, HarvestBar, HarvestFlag } from '@/components/HarvestBars';
 
 interface Props {
   production: ProductionLog[];
@@ -31,7 +34,9 @@ function fmtKg(n: number): string {
 }
 
 
-function MatchedRow({ row }: { row: CropRow }) {
+const BAR_COLORS = { bench: 'var(--border)', picked: 'var(--color-forest-800)', short: 'var(--danger)', mark: 'var(--gold)', sold: 'var(--bg-1)' };
+
+function MatchedRow({ row, max, clipped, index, count }: { row: CropRow; max: number; clipped: boolean; index: number; count: number }) {
   const { lang } = useLanguage();
   return (
     <div className="px-4 py-3">
@@ -49,6 +54,12 @@ function MatchedRow({ row }: { row: CropRow }) {
         <p className="text-xs " style={{ color: 'var(--text-muted)' }}>
           {recordsTemplate(lang, 'Harvested {harvested} · Sold {sold}', 'Kuvunyiwe {harvested} · Kuthengisiwe {sold}', { harvested: fmtKg(row.harvestedKg), sold: fmtKg(row.soldKg) })}
         </p>
+      </div>
+      <div className="mt-2">
+        <HarvestBar max={max} benchmarkKg={row.intendedKg} harvestedKg={row.harvestedKg} soldKg={row.soldKg}
+          soldExceedsHarvested={row.soldExceedsHarvested} index={index} count={count} colors={BAR_COLORS} height={12}>
+          {clipped && <BreakEdge />}
+        </HarvestBar>
       </div>
       {row.intendedKg !== null && (
         <IsiZuluDraftSource className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-muted)' }} lang={lang}
@@ -68,10 +79,12 @@ function MatchedRow({ row }: { row: CropRow }) {
           causes are named because the app genuinely cannot tell them apart, and naming only the
           farmer's omission would blame her for the app's blind spot. */}
       {row.soldExceedsHarvested && (
+        <HarvestFlag index={index} count={count}>
         <IsiZuluDraftSource className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-secondary)' }} lang={lang}
           template="Sold {sold} but only {harvested} logged as harvested, so how much you kept is not known — either some picking was not written down, or these sales came from an earlier harvest." vars={{ sold: fmtKg(row.soldKg), harvested: fmtKg(row.harvestedKg) }}
           english={`Sold ${fmtKg(row.soldKg)} but only ${fmtKg(row.harvestedKg)} logged as harvested, so how much you kept is not known — either some picking was not written down, or these sales came from an earlier harvest.`}
           zulu={`Kudayiswe ${fmtKg(row.soldKg)}, kodwa kurekhodwe ukuvunwa kuka-${fmtKg(row.harvestedKg)} kuphela. Ngakho asazi ukuthi kungakanani okusele: kungenzeka ukuthi okunye ukuvunwa akubhalwanga, noma lokhu kudayisa kuvela esivunweni sangaphambilini.`} />
+        </HarvestFlag>
       )}
     </div>
   );
@@ -149,6 +162,9 @@ export default function HarvestReconciliation({ production, sales, period, now, 
     season: 'Nothing logged this season. Monthly and seasonal targets are not invented from a crop-cycle benchmark.',
     year: 'Nothing logged this year. Monthly and seasonal targets are not invented from a crop-cycle benchmark.',
   };
+  // One shared scale so the crops compare to each other; capped so one big crop cannot flatten the rest.
+  const barTotals = result.matched.map((r) => Math.max(r.intendedKg ?? 0, r.harvestedKg, r.soldKg));
+  const barScale = cappedScale(barTotals);
   const isLoading = loading || !planLoaded;
   const hasPlan = forecastAvailable === true && (forecastPlantings?.length ?? 0) > 0;
   const hasAnything = result.matched.length > 0 || result.notYetHarvested.length > 0
@@ -185,9 +201,13 @@ export default function HarvestReconciliation({ production, sales, period, now, 
         </div>
       ) : (
         <div className="divide-y" style={{ borderColor: 'var(--border)' }}>
-          {result.matched.map((row) => (
-            <MatchedRow key={row.cropKey} row={row} />
-          ))}
+          {result.matched.length > 0 && (
+            <HarvestBarsGroup className="divide-y" style={{ borderColor: 'var(--border)' }}>
+              {result.matched.map((row, i) => (
+                <MatchedRow key={row.cropKey} row={row} max={barScale.max} clipped={barScale.isClipped(barTotals[i])} index={i} count={result.matched.length} />
+              ))}
+            </HarvestBarsGroup>
+          )}
           {result.unmatchedPlanned.map((row) => (
             <SoftRow key={row.cropKey} row={row} />
           ))}

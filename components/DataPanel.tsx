@@ -46,6 +46,7 @@ import type { Profile } from '@/lib/db/types';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useAppLevel } from '@/lib/app-level';
 import { ChevronDown } from 'lucide-react';
+import Skeleton from '@/components/Skeleton';
 
 // These two are the biggest sub-panels in this file (the farm-records ledger and the full site
 // survey) and each is reachable from only one tab. Statically importing them meant every farmer —
@@ -358,17 +359,15 @@ function EmptyState() {
 }
 
 /* ── Loading skeleton ─────────────────────────────── */
-function Skeleton() {
+function DataPanelSkeleton() {
   return (
     <div className="p-5 space-y-3">
-      <div className="h-6 w-40 rounded-lg animate-pulse" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)' }} />
-      <div className="h-3 w-56 rounded animate-pulse" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)' }} />
+      <Skeleton width={160} height={24} />
+      <Skeleton width={224} height={12} radius="sm" index={1} />
       <div className="grid grid-cols-2 gap-2 mt-4">
-        {[1,2,3,4].map(i => (
-          <div key={i} className="h-20 rounded-xl animate-pulse" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)', animationDelay: `${i*80}ms` }} />
-        ))}
+        {[1,2,3,4].map(i => <Skeleton key={i} height={80} radius="lg" index={i} />)}
       </div>
-      <div className="h-28 rounded-xl animate-pulse mt-2" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)' }} />
+      <Skeleton height={112} radius="lg" index={5} className="mt-2" />
     </div>
   );
 }
@@ -811,7 +810,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     );
   }
   if (!data && !loading) return <><EmptyState />{siteSurveySheet}</>;
-  if (loading && !data) return <><Skeleton />{siteSurveySheet}</>;
+  if (loading && !data) return <><DataPanelSkeleton />{siteSurveySheet}</>;
   if (!data) return null;
 
   const temperatureStatus = monthlyTemperatureStatus(data.climate);

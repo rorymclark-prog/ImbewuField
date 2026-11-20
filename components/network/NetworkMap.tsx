@@ -84,6 +84,7 @@ import {
 import { DEMO_NETWORK_NOTICE, demoFarmerById } from '@/lib/network-demo';
 import FarmerPanel from './FarmerPanel';
 import { NETWORK_STATUS_COLOR } from './status-colors';
+import styles from './NetworkMap.module.css';
 import type { GardenStatus } from '@/lib/db/types';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -157,6 +158,8 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
         // sourceLanguageNotice for the same convention).
         mapUnsupportedTitle: 'The map cannot open on this device',
         mapUnsupportedMessage: 'Farmer details still work from the list — open a farmer to see their panel.',
+        // New copy, pending first-language review: English stands in, as for the two lines above.
+        legendFilterHint: 'Tap a status to highlight it on the map. Tap it again to show all.',
       }
     : {
         thriving: 'Thriving', establishing: 'Establishing', support: 'Needs support',
@@ -171,6 +174,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
         sourceLanguageNotice: 'Some farmer-detail descriptions may remain in English. Submitted names and evidence are shown as recorded.',
         mapUnsupportedTitle: 'The map cannot open on this device',
         mapUnsupportedMessage: 'Farmer details still work from the list — open a farmer to see their panel.',
+        legendFilterHint: 'Tap a status to highlight it on the map. Tap it again to show all.',
       };
   const mapRef = useRef<MapRef>(null);
   // sdesk-08/desk-10/nav-14: no WebGL used to leave this area a flat beige (light) or solid
@@ -184,6 +188,11 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
   }, []);
   const [zoom, setZoom] = useState(6.2);
   const [hoverId, setHoverId] = useState<string | null>(null);
+  /* Legend filter: highlighting one status dims the others (opacity only, still clickable). */
+  const [statusFilter, setStatusFilter] = useState<GardenStatus | null>(null);
+  /* Pins fade in by status the first time they appear. After that, zooming out and in again
+   * re-mounts them without replaying it. */
+  const pinsEntered = useRef(false);
   /* Collapsed by default on a phone, where the expanded card would cover most
    * of the map; open on a laptop, which is where the funder demo happens.
    * Safe to read `window` in the initialiser: this component is always mounted
@@ -275,6 +284,12 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
   }, [focusSelected]);
 
   const showSites = zoom >= SITE_ZOOM;
+  const enterPins = showSites && rows.length > 0 && !pinsEntered.current;
+  useEffect(() => {
+    if (!showSites || rows.length === 0) return;
+    const id = window.setTimeout(() => { pinsEntered.current = true; }, 900);
+    return () => window.clearTimeout(id);
+  }, [showSites, rows.length]);
 
   const maxDistrictCount = useMemo(
     () => districts.reduce((m, d) => Math.max(m, d.farmerCount), 0),
@@ -406,6 +421,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                   }}
                 >
                   <div
+                    className={`${styles.pin} ${enterPins ? styles[`enter_${farmer.status}`] ?? '' : ''} ${statusFilter && statusFilter !== farmer.status ? styles.dim : ''}`}
                     onMouseEnter={() => setHoverId(farmer.id)}
                     onMouseLeave={() => setHoverId((c) => (c === farmer.id ? null : c))}
                     style={{
@@ -550,7 +566,13 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                 {copy.colourStatus}
               </div>
               {(Object.keys(STATUS) as GardenStatus[]).map((s) => (
-                <div key={s} className="flex items-center gap-2" style={{ marginBottom: 4 }}>
+                <button
+                  type="button"
+                  key={s}
+                  aria-pressed={statusFilter === s}
+                  onClick={() => setStatusFilter((cur) => (cur === s ? null : s))}
+                  className={`flex items-center gap-2 w-full text-left ${styles.legendRow} ${statusFilter && statusFilter !== s ? styles.legendDim : ''}`}
+                >
                   <span
                     style={{
                       width: 11,
@@ -564,8 +586,11 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                   <span className="font-sans" style={{ fontSize: 12, color: INK_SOFT }}>
                     {copy[s]}
                   </span>
-                </div>
+                </button>
               ))}
+              <p className="font-sans" style={{ fontSize: 12, color: INK_MUTED, margin: '2px 0 0', lineHeight: 1.45 }}>
+                {copy.legendFilterHint}
+              </p>
 
               <div className="font-sans" style={{ fontSize: 12, color: INK_MUTED, margin: '9px 0 5px' }}>
                 {copy.sizeArea}
