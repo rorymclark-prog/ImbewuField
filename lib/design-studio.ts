@@ -1,5 +1,6 @@
 'use client';
 
+import { annualRainfallMm, recordMinimumC, sourcedMonthlyRainfall } from './climate-temperature';
 import { numberLabel } from '@/lib/format-figures';
 import turfArea from '@turf/area';
 import type { Feature, FeatureCollection, Geometry, Position } from 'geojson';
@@ -647,7 +648,8 @@ function computeWaterCalc(
   let roofHarvestAnnualLitres: number | null = null;
   let roofHarvestAnnualKL: number | null = null;
   const rainfallMm = nonNegativeNumber(annualRainfallMm);
-  if (roofAreaM2 > 0 && rainfallMm != null && rainfallMm > 0) {
+  // A sourced zero is a calculated zero yield, not missing evidence.
+  if (roofAreaM2 > 0 && rainfallMm != null) {
     // mm × m² = litres before the shared, centrally reviewed collection loss.
     roofHarvestAnnualLitres = Math.round(roofHarvestLitres(
       roofAreaM2,
@@ -701,16 +703,16 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
   const access = approved.filter((layer) => layer.layerType === 'access');
   const treeBelts = approved.filter((layer) => layer.layerType === 'tree_belt');
 
-  const annualRainfall = nonNegativeNumber(locationData?.rainfall?.annual);
+  const annualRainfall = annualRainfallMm(locationData?.rainfall);
   const slope = nonNegativeNumber(locationData?.elevation?.slopeDeg);
   const summerWind = locationData?.climate?.windFromSummer;
   const winterWind = locationData?.climate?.windFromWinter;
   const soilTexture = locationData?.soil?.textureClass;
   const biome = locationData?.biome?.name;
-  const rainfallPattern = locationData?.rainfall?.pattern;
-  const wetSeason = locationData?.rainfall?.wetSeason;
-  const drySeason = locationData?.rainfall?.drySeason;
-  const minTemp = finiteNumber(locationData?.climate?.minTemp);
+  const rainfallPattern = sourcedMonthlyRainfall(locationData?.rainfall) ? locationData?.rainfall?.pattern : undefined;
+  const wetSeason = sourcedMonthlyRainfall(locationData?.rainfall) ? locationData?.rainfall?.wetSeason : undefined;
+  const drySeason = sourcedMonthlyRainfall(locationData?.rainfall) ? locationData?.rainfall?.drySeason : undefined;
+  const minTemp = recordMinimumC(locationData?.climate);
   const elevation = finiteNumber(locationData?.elevation?.elevation);
 
   // Load site survey by siteId. loadSurvey() also runs a one-time legacy-placeId migration
@@ -783,7 +785,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
   const storagePieces = surveyWaterStorage.filter((s) => s !== 'none');
   const waterStorageNote = storagePieces.length
     ? `Existing storage: ${storagePieces.join(', ')}.`
-    : 'No on-site storage yet — even one 5 000 L JoJo tank makes a big difference.';
+    : 'No storage capacity is recorded. Record existing storage and available water before choosing a tank.';
 
   // Roof harvest human-readable
   const roofHarvestNote = waterCalc.roofHarvestAnnualKL != null
@@ -791,7 +793,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
     : roofOnly.length === 0 && (survey?.roofMainM2 ?? 0) === 0
       ? 'Roof area not yet mapped or surveyed — add it to calculate harvest potential.'
       : annualRainfall == null
-        ? 'Rainfall data not loaded — reload the location to get harvest estimates.'
+        ? 'Annual rainfall is not known from a supported source, so roof harvest cannot be calculated.'
         : null;
 
   const householdNeedNote = `Household need (${householdLabel} × 50 L/day): ~${waterCalc.householdDailyLitres} L/day, ~${Math.round(waterCalc.householdMonthlyLitres / 1000)} kL/month. A 90-day dry-season buffer needs ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL stored.`;
@@ -801,9 +803,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
     : '';
 
   // Frost / elevation note for sector map
-  const frostNote = (minTemp != null && minTemp < 2)
-    ? ` Watch for frost — minimum temperatures around ${minTemp.toFixed(0)}°C can damage tender plants.`
-    : '';
+  const frostNote = minTemp === null ? ' Farm frost observations are needed.' : ` Modelled record low: ${minTemp}°C; this does not establish frost frequency or a planting date.`;
 
   // Elevation note
   const elevationNote = elevation != null && elevation > 1200
@@ -1041,10 +1041,14 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
             ? `Rainfall at this site: ${rainfallDesc}.`
             : 'Reload location data to get rainfall figures.',
           roofHarvestNote ?? '',
-          waterCalc.roofHarvestAnnualKL != null
+          waterCalc.roofHarvestAnnualLitres != null && waterCalc.roofHarvestAnnualLitres > 0
             ? `To store a 90-day household buffer (${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL), you need tanks sized to that volume minimum. A 5 000 L JoJo tank costs roughly R2 000–R3 500 — compare that to what you currently pay for water or trucking.`
             : '',
-          hasGutters
+          annualRainfall === null
+            ? 'Roof-water supply is not known. Record supported rainfall and review the roof and gutters before choosing collection or storage equipment.'
+            : annualRainfall === 0
+            ? 'The recorded annual rainfall gives no roof-water supply. Review the rainfall source and other available water before choosing gutters or storage.'
+            : hasGutters
             ? 'Gutters in place — make sure each downpipe has a first-flush diverter (cheap to build) to keep the tank clean.'
             : 'No gutters yet — a simple IBR roof with 100 mm gutters and a downpipe to a JoJo is a weekend project that pays back for decades.',
         ].filter(Boolean).join(' '),
@@ -1083,7 +1087,11 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
         title: 'Highest-return first moves',
         body: [
           'The sequence that works on almost every SA smallholding: (1) fix the water system, (2) fence a small intensive Zone 1, (3) build soil with compost, then (4) expand planting. Skipping steps wastes effort.',
-          waterCalc.roofHarvestAnnualKL != null
+          annualRainfall === null
+            ? 'Roof-water supply is not known. Record rainfall evidence and roof measurements before deciding whether collection equipment is appropriate.'
+            : annualRainfall === 0
+            ? 'The recorded annual rainfall gives no roof-water supply. Review the rainfall evidence and other available water before buying a tank.'
+            : waterCalc.roofHarvestAnnualKL != null
             ? `Your roof can catch ~${numberLabel(waterCalc.roofHarvestAnnualKL)} kL/year — if you only do one thing this season, connect gutters to a tank.`
             : 'Start with water: map your roof area in the site survey to see what harvest is possible before buying any tanks.',
           goalNote,
@@ -1124,7 +1132,11 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
       {
         title: 'Water infrastructure upgrades',
         body: [
-          waterCalc.roofHarvestAnnualKL != null && waterCalc.dryBufferLitres90Day > 0
+          annualRainfall === null
+            ? 'Record rainfall evidence, available water and demand before sizing storage.'
+            : annualRainfall === 0
+            ? 'A tank cannot supply water from the recorded zero rainfall. Establish the available water supply before sizing storage.'
+            : waterCalc.roofHarvestAnnualKL != null && waterCalc.dryBufferLitres90Day > 0
             ? `Tank sizing guide: roof harvest ~${numberLabel(waterCalc.roofHarvestAnnualKL)} kL/year, 90-day household buffer ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL. If harvest > buffer, one good rainy season fills your reserve. If not, supplement with a borehole or grey-water reuse.`
             : 'Complete the roof harvest estimate in the site survey to size your tanks correctly.',
           waterCalc.gardenIrrigationDrySeasonDailyLitres != null

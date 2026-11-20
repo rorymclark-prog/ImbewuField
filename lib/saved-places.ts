@@ -1,3 +1,4 @@
+import { annualRainfallMm } from './climate-temperature';
 import {
   upsertPlace, removePlace, mergePlaces, upsertPlaceContextResult, DEFINITIVE_CONTEXT_REJECTIONS,
   type PlaceContextOutcome,
@@ -30,7 +31,8 @@ export interface SavedPlace {
   lat: number;
   lon: number;
   biome: string;
-  rainfall: number;
+  rainfall?: number;
+  rainfallSource?: string;
   elevation: number;
   savedAt: string; // ISO date
   updatedAt?: number; // ms — last edit time, drives cross-device newest-wins merge
@@ -60,7 +62,7 @@ export function isValidSavedPlace(value: unknown): value is SavedPlace {
     && typeof value.lat === 'number' && Number.isFinite(value.lat) && value.lat >= -90 && value.lat <= 90
     && typeof value.lon === 'number' && Number.isFinite(value.lon) && value.lon >= -180 && value.lon <= 180
     && typeof value.biome === 'string'
-    && typeof value.rainfall === 'number' && Number.isFinite(value.rainfall)
+    && (value.rainfall === undefined || (typeof value.rainfall === 'number' && Number.isFinite(value.rainfall)))
     && typeof value.elevation === 'number' && Number.isFinite(value.elevation)
     // Pre-sync local records used an empty timestamp. Keep them readable at timestamp zero;
     // network shares apply the stricter ISO requirement at their own trust boundary.
@@ -260,24 +262,45 @@ function currentUid(): string | undefined {
   return getFirebase()?.auth?.currentUser?.uid;
 }
 
-export function savePlace(place: SavedPlace): SavedPlace[] {
+/** Ephemeral caller proof, never persisted. The general store must not import
+ * client context observers: read-only consumers also load this module. */
+export interface SavedPlaceWriteGuard { isCurrent: () => boolean }
+export function savePlace(place: SavedPlace): SavedPlace[];
+export function savePlace(place: SavedPlace, guard: SavedPlaceWriteGuard | null): SavedPlace[] | null;
+export function savePlace(place: SavedPlace, guard?: SavedPlaceWriteGuard | null): SavedPlace[] | null {
+  const guarded = arguments.length > 1;
+  const isCurrent = () => {
+    if (!guarded) return true;
+    try { return guard?.isCurrent() === true; } catch { return false; }
+  };
+  if (!isCurrent()) return null;
+  // Keep the cloud destination bound to the action that chose this site. An
+  // own-change listener can switch account after the local write but before sync.
+  const owner = guarded ? currentUid() : undefined;
   if (!isValidSavedPlace(place)) throw new Error('Invalid saved place');
   // A whole-place save is a deliberate edit that mints a NEW revision. A country confirmation is
   // bound to the exact revision it described, so a copy carried in from the old row (including a
   // deliberate re-add of the same id) is dropped and the grower must confirm the place again.
   const stamped: SavedPlace = withoutStaleSiteContext({ ...place, updatedAt: Date.now() });
+  if (!isCurrent()) return null;
   if (isSampleMode()) {
+    if (!isCurrent()) return null;
     const updated = upsertSandboxPlace(stamped);
+    if (!isCurrent()) return null;
     notify();
-    return updated;
+    return isCurrent() ? updated : null;
   }
   const places = loadPlaces().filter(p => p.id !== stamped.id);
   const updated = [stamped, ...places];
-  localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(updated));
+  const key = activeAccountLocalStorageKey(KEY), raw = JSON.stringify(updated);
+  if (!isCurrent()) return null;
+  localStorage.setItem(key, raw);
+  if (!isCurrent()) return null;
   notify();
-  const uid = currentUid();
+  if (!isCurrent()) return null;
+  const uid = guarded ? owner : currentUid();
   if (uid) upsertPlace(uid, stamped).catch(() => {});
-  return updated;
+  return isCurrent() ? updated : null;
 }
 
 export function deletePlace(id: string): SavedPlace[] {
@@ -510,4 +533,15 @@ export function resolveMainSite(places: SavedPlace[]): SavedPlace | null {
     const newestTime = newest.updatedAt ?? Date.parse(newest.savedAt);
     return pTime > newestTime ? p : newest;
   }, places[0]);
+}
+
+
+/** A refresh must not replace a saved/entered value with an outage placeholder. Legacy values
+ * stay readable with their original provenance; this does not retrospectively certify them. */
+export function savedRainfallFields(rain: { annual?: unknown; rainfallSource?: string } | null | undefined, existing?: Pick<SavedPlace, 'rainfall' | 'rainfallSource'> | null): Pick<SavedPlace, 'rainfall' | 'rainfallSource'> {
+  if (existing && typeof existing.rainfall === 'number' && Number.isFinite(existing.rainfall)) {
+    return { rainfall: existing.rainfall, ...(existing.rainfallSource ? { rainfallSource: existing.rainfallSource } : {}) };
+  }
+  const value = annualRainfallMm(rain);
+  return value === null ? {} : { rainfall: value, rainfallSource: rain!.rainfallSource };
 }

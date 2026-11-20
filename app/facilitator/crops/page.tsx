@@ -29,14 +29,18 @@ import HarvestTargetsPanel from '@/components/crops/HarvestTargetsPanel';
 import NurseryPlanPanel from '@/components/crops/NurseryPlanPanel';
 import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySaveContext, beginNurserySaveRequest, commitNurserySaveRequest, readNurserySaveConfirmation, createHarvestSaveContext, beginHarvestSaveRequest, commitHarvestSaveRequest, readHarvestSaveConfirmation, harvestTargetsSourceKey, type HarvestSaveContext, type HarvestSaveRequest, type HarvestSaveResult, type NurserySaveAuthority, type NurserySaveContext, type NurserySaveRequest, type NurserySaveResult } from '@/lib/nursery-save-receipt';
 import GrowerPlanningPanel from '@/components/crops/GrowerPlanningPanel';
+import ProvisionalCropPreview from '@/components/crops/ProvisionalCropPreview';
+import { provisionalSiteConditions, createProvisionalCycleContext, type ProvisionalSiteConditions, type ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
 import GrowerAutoPlanPanel from '@/components/crops/GrowerAutoPlanPanel';
 import GrowerNurseryReviewPanel from '@/components/crops/GrowerNurseryReviewPanel';
 import SavedGrowerNurseryReviewPanel from '@/components/crops/SavedGrowerNurseryReviewPanel';
 import { useGrowerWorkflow, type GrowerWorkflowBookReceipt, type GrowerWorkflowAcceptanceCommit, type GrowerWorkflowAcceptanceResult,
   type GrowerNurseryReferenceCommit, type GrowerNurseryReferenceCommitResult } from '@/components/crops/useGrowerWorkflow';
 import { prepareGrowerNurseryBatchReferenceChanges } from '@/lib/international/grower-nursery';
-import { hasGrowerCycleMarker, isProvenForeignGrowerCycle } from '@/lib/international/grower-cycle';
+import { hasGrowerCycleMarker, isProvenForeignGrowerCycle, normaliseGrowerCycleAttachment } from '@/lib/international/grower-cycle';
 import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
+import { buildProvisionalCycleEvidence, buildAdoptedProvisionalCycleHtml } from '@/lib/international/provisional-crop-export';
+import { downloadFile } from '@/lib/crop-export-deliver';
 import GrowerCycleIntent from '@/components/crops/GrowerCycleIntent';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-workflow';
@@ -94,9 +98,9 @@ import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall, referenceSowingCalendar } from '@/lib/water-calc';
-import { SAMPLE_FARM_CALENDAR_REASON, SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons } from '@/lib/sowing-calendar-label';
+import { SAMPLE_FARM_CALENDAR_REASON, SOWING_CALENDAR_LABEL, SOWING_CALENDAR_OPTIONS, printedSowingCalendarLine, siteClimateMissingNote, sowingCalendarLabel, sowingCalendarOptionText, sowingCalendarReasons, printedLocationLine } from '@/lib/sowing-calendar-label';
 import { SOWING_CALENDAR_NOTICE_HIDDEN_KEY, calendarCanJudgeSavedSowings, hiddenCalendarNoticeWrite, outOfCalendarLine, outOfCalendarSignature, parseHiddenCalendarNotices, planMayPredateCorrection, sowingsOutsideCalendar } from '@/lib/sowing-calendar-review';
-import { sowingCalendarInUse, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate } from '@/lib/site-climate';
+import { sowingCalendarInUse, driestMonths, resolveSiteClimate, type CalendarBasis, type SiteClimate, type SiteClimateMissingReason } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { growingZonesForClimate, type GrowingZoneId } from '@/lib/growing-zones';
 import { VarietyGuidance } from '@/components/crops/VarietyGuidance';
@@ -1508,7 +1512,14 @@ function FacilitatorCropsPageInner() {
     : surveySiteId ?? (design ? 'design:local' : useVirtual ? 'virtual-bed' : null));
   const growerBookContext = useRef({ siteId: productionSiteId, owner: growerOwner, sample: growerSample, scopeKey: growerScopeKey });
   growerBookContext.current = { siteId: productionSiteId, owner: growerOwner, sample: growerSample, scopeKey: growerScopeKey };
+  const planningSupport = resolvePlanningSupport({ places: countryPlaces, siteId: surveySiteId,
+    workspaceId: planningWorkspaceId, workspaceReferences: plan?.workspaceReferences });
+  const siteCountry = planningSupport.siteCountry;
+  const [provisionalClimateRevision, setProvisionalClimateRevision] = useState(0);
+  const growerConditions = provisionalSiteConditions(planningSupport);
   const growerWorkflow = useGrowerWorkflow({ scope: growerScope, resourceSiteId: productionSiteId, book: plan,
+    provisionalSiteConditions: growerConditions,
+    readCurrentProvisionalSiteConditions: () => provisionalSiteConditions(currentPlanningSupport(surveySiteId, planningWorkspaceId)),
     selection: canvasSite ? { kind: 'studio-canvas', sourceId: canvasSite }
       : design ? chosenDesignId && chosenDesignId !== 'local' ? { kind: 'facilitator-cloud', sourceId: chosenDesignId }
         : { kind: 'facilitator-local', sourceId: 'local' } : null,
@@ -1521,7 +1532,9 @@ function FacilitatorCropsPageInner() {
         : growerWorkflow.source.kind === 'facilitator-local') ? growerWorkflow.source : null;
   const growerWriteScope = useRef({ key: growerScopeKey, owner: growerOwner, sample: growerSample });
   growerWriteScope.current = { key: growerScopeKey, owner: growerOwner, sample: growerSample };
-  function saveGrowerProfiles(value: GrowerPlanningProfile[], request?: GrowerProfileChangeRequest): boolean {
+  function saveGrowerProfiles(value: GrowerPlanningProfile[], request?: GrowerProfileChangeRequest,
+    writeIsCurrent?: () => boolean, onWritten?: (token: string) => void): boolean {
+    if (writeIsCurrent && !writeIsCurrent()) return false;
     const live = growerWriteScope.current;
     if (!plan || !growerActorIsCurrent() || planSaveConflict || !growerScopeKey || live.key !== growerScopeKey || live.owner !== growerOwner
       || activeAccountUid() !== growerOwner || live.sample !== growerSample || isSampleMode() !== growerSample) return false;
@@ -1561,14 +1574,54 @@ function FacilitatorCropsPageInner() {
     if (saveTimer.current) clearTimeout(saveTimer.current);
     const profileChange = request ? createGrowerProfileChangePermit(loaded.admission, fresh, next, request) : undefined;
     if (request && !profileChange) { setPlanSaveConflict(true); return false; }
-    const receipt = saveCropPlanWithReceipt(next, profileChange ? { growerProfileChange: profileChange } : undefined);
+    const receipt = saveCropPlanWithReceipt(next, { ...(profileChange ? { growerProfileChange: profileChange } : {}),
+      ...(writeIsCurrent ? { writeIsCurrent: () => writeIsCurrent() && growerActorIsCurrent()
+        && planWriteBase.current === base && writeIsCurrent() } : {}) });
+    if (receipt.saved) onWritten?.(receipt.token);
+    // Guarded adoption owns its admitted readback and state installation. An
+    // own write event can already have changed actor or source at this point.
+    if (writeIsCurrent) return receipt.saved;
     setPlanSaveFailed(!receipt.saved);
     if (receipt.saved) { rememberStoredPlan(next, receipt.token); setPlan(next); }
     return receipt.saved;
   }
-  const planningSupport = resolvePlanningSupport({ places: countryPlaces, siteId: surveySiteId,
-    workspaceId: planningWorkspaceId, workspaceReferences: plan?.workspaceReferences });
-  const siteCountry = planningSupport.siteCountry;
+  function saveProvisionalProfile(profile: GrowerPlanningProfile, isCurrent: () => boolean): ProvisionalProfileSaveResult {
+    let written = false;
+    let writtenToken: string | null = null;
+    try {
+      if (!plan || !isCurrent() || !growerActorIsCurrent() || !profile.provisionalOrigin
+        || growerPlanningScopeKey(profile.scope) !== growerScopeKey) return { status: 'held' };
+      const admitted = loadCropPlanWithWriteAdmission();
+      // Admission must be lossless before considering every raw profile ID;
+      // damaged/foreign rows cannot disappear through display normalization.
+      if (admitted.admission.status !== 'ready' || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)
+        || (admitted.book.growerPlanningProfiles ?? []).some(row => row.profileId === profile.profileId)
+        || (plan.growerPlanningProfiles ?? []).some(row => row.profileId === profile.profileId)) return { status: 'held' };
+      const base = planWriteBase.current;
+      if (!saveGrowerProfiles([...(plan.growerPlanningProfiles ?? []), profile],
+        { kind: 'edit', profileId: profile.profileId, expectedProfile: null }, isCurrent,
+        token => { written = true; writtenToken = token; })) return { status: 'held' };
+      written = true;
+      const confirmed = loadCropPlanWithWriteAdmission();
+      const rows = (confirmed.book.growerPlanningProfiles ?? []).filter(row => row.profileId === profile.profileId);
+      if (!isCurrent() || !growerActorIsCurrent() || !base || planWriteBase.current !== base
+        || confirmed.token !== writtenToken || cropPlanWriteToken() !== confirmed.token
+        || !cropPlanWriteAdmissionMatches(confirmed.admission, JSON.stringify(confirmed.book), confirmed.token)
+        || rows.length !== 1 || JSON.stringify(rows[0]) !== JSON.stringify(profile)
+        || !isCurrent() || !growerActorIsCurrent() || planWriteBase.current !== base) {
+        setPlanSaveConflict(true); return { status: 'superseded' };
+      }
+      planWriteBase.current = { owner: base.owner, sample: base.sample, token: confirmed.token,
+        planKey: JSON.stringify(confirmed.book), admission: confirmed.admission };
+      setPlanSaveFailed(false);
+      setPlan(confirmed.book);
+      return { status: 'confirmed', profileId: profile.profileId };
+    } catch {
+      if (written) { setPlanSaveConflict(true); return { status: 'superseded' }; }
+      return { status: 'held' };
+    }
+  }
+
   const allowCataloguePlanning = planningSupport.allowCataloguePlanning;
   const planningGeometryKey = JSON.stringify([canvasSite, chosenDesignId, beds]);
   const planningScopeKey = JSON.stringify([planningGeometryKey, planningSupport.fingerprint]);
@@ -1639,15 +1692,20 @@ function FacilitatorCropsPageInner() {
     };
   }, [surveySiteId]);
   const climateSiteKey = hasSiteCoords ? `${siteLat},${siteLon}` : null;
-  const [climateSnapshot, setClimateSnapshot] = useState<{ siteKey: string; climate: SiteClimate | null } | null>(null);
-  const siteClimate = allowCataloguePlanning && climateSnapshot?.siteKey === climateSiteKey ? climateSnapshot?.climate ?? null : null;
+  const [climateSnapshot, setClimateSnapshot] = useState<{ siteKey: string; climate: SiteClimate | null; missing: SiteClimateMissingReason | null } | null>(null);
+  const climateAnswered = allowCataloguePlanning && climateSnapshot?.siteKey === climateSiteKey;
+  const siteClimate = climateAnswered ? climateSnapshot?.climate ?? null : null;
+  // Why a mapped site has no reading of its own: still loading, refused until sign-in, or
+  // not available now. The fallback's wording follows this instead of guessing (CP-096).
+  const climateMissing: SiteClimateMissingReason | 'loading' = climateAnswered ? climateSnapshot?.missing ?? 'unavailable' : 'loading';
   useEffect(() => {
     if (!allowCataloguePlanning || !climateSiteKey) { setClimateSnapshot(null); return; }
     let cancelled = false;
     // The render guard also blocks the old site's climate before this effect runs.
     setClimateSnapshot(null);
-    resolveSiteClimate(siteLat!, siteLon!).then((sc) => {
-      if (!cancelled) setClimateSnapshot({ siteKey: climateSiteKey, climate: sc });
+    let missing: SiteClimateMissingReason | null = null;
+    resolveSiteClimate(siteLat!, siteLon!, (reason) => { missing = reason; }).then((sc) => {
+      if (!cancelled) setClimateSnapshot({ siteKey: climateSiteKey, climate: sc, missing: sc ? null : missing ?? 'unavailable' });
     });
     return () => { cancelled = true; };
   }, [allowCataloguePlanning, climateSiteKey, siteLat, siteLon]);
@@ -2086,9 +2144,7 @@ function FacilitatorCropsPageInner() {
     const bedCount = beds.length - plotCount;
     // Provenance travels onto paper too: a printed plan must say whether its
     // climate is the site's own satellite-derived profile or a reference city.
-    const locationLine = climateSource === 'site'
-      ? 'This site (satellite climate records)'
-      : region ? `Nearest reference: ${region.name} (fallback)` : 'No site set';
+    const locationLine = printedLocationLine(calendarBasis, climateSource, region?.name);
     // Paper says whose call the calendar was, as the screen does ("chosen by you").
     const climateLine = printedSowingCalendarLine(calendarLabel, calendarBasis, climateSource);
     return {
@@ -2150,7 +2206,8 @@ function FacilitatorCropsPageInner() {
     const held = (reason: string): GrowerWorkflowAcceptanceResult => ({ status: 'held', reasons: [reason] });
     let written = false;
     try {
-      if (!plan || !growerActorIsCurrent() || planSaveConflict || !request.isCurrent()) return held('context-changed');
+      if (!plan || !growerActorIsCurrent() || planSaveConflict || !request.isCurrent()
+        || (request.sourceIsCurrent ? !request.sourceIsCurrent() : !!request.review.request.provisionalContext)) return held('context-changed');
       const base = planWriteBase.current;
       if (!base || base.owner !== growerOwner || base.sample !== growerSample || base.planKey !== JSON.stringify(plan)
         || !cropPlanWriteAdmissionMatches(base.admission, base.planKey, base.token)) return held('pending-plan-edits');
@@ -2165,7 +2222,8 @@ function FacilitatorCropsPageInner() {
       // Only the hook supplies its private original data binding. The pure
       // helper receives no functions or reconstructed display fingerprints.
       const prepared = prepareGrowerWorkflowAcceptance({ review: request.review, binding: request.binding,
-        scope: growerScope, source: request.source, book: current.book, acceptedAt: request.acceptedAt, plantingIds: request.plantingIds });
+        scope: growerScope, source: request.source, book: current.book, acceptedAt: request.acceptedAt, plantingIds: request.plantingIds,
+        ...(request.binding.provisionalSiteConditions ? { provisionalSiteConditions: provisionalSiteConditions(currentPlanningSupport(surveySiteId, planningWorkspaceId)) } : {}) });
       if (prepared.status === 'held') return { status: 'held', reasons: prepared.reasons };
       if (!cropPlanWriteCandidateIsLossless(prepared.book)) return held('acceptance-write-lossy');
       if (!request.isCurrent() || !growerActorIsCurrent() || planWriteBase.current !== base
@@ -2173,14 +2231,19 @@ function FacilitatorCropsPageInner() {
         || !cropPlanWriteAdmissionMatches(admitted.admission, JSON.stringify(admitted.book), admitted.token)
         || cropPlanWriteToken() !== current.token) return held('saved-plan-changed');
       if (saveTimer.current) clearTimeout(saveTimer.current);
-      const receipt = saveCropPlanWithReceipt(prepared.book);
+      const receipt = saveCropPlanWithReceipt(prepared.book, { writeIsCurrent: () => request.isCurrent()
+        && (request.sourceIsCurrent?.() ?? true) && growerActorIsCurrent()
+        && cropPlanWriteToken() === current.token && planWriteBase.current === base });
+      // Retain the actual write before state callbacks or readback can fail.
+      if (receipt.saved) written = true;
       setPlanSaveFailed(!receipt.saved);
-      if (!receipt.saved) return { status: 'failed' };
-      written = true;
-      if (!growerActorIsCurrent() || planWriteBase.current !== base) { setPlanSaveConflict(true); return { status: 'superseded' }; }
+      if (!receipt.saved) return !request.isCurrent() || !(request.sourceIsCurrent?.() ?? true)
+        ? held('context-changed') : { status: 'failed' };
+      if (!(request.sourceIsCurrent?.() ?? true) || !growerActorIsCurrent() || planWriteBase.current !== base) { setPlanSaveConflict(true); return { status: 'superseded' }; }
       const confirmed = loadCropPlanWithWriteAdmission(), key = JSON.stringify(confirmed.book);
       if (confirmed.token !== receipt.token || !cropPlanWriteAdmissionMatches(confirmed.admission, key, receipt.token)
-        || !growerActorIsCurrent() || planWriteBase.current !== base || cropPlanWriteToken() !== receipt.token) {
+        || cropPlanWriteToken() !== receipt.token || !(request.sourceIsCurrent?.() ?? true)
+        || !growerActorIsCurrent() || planWriteBase.current !== base) {
         setPlanSaveConflict(true); return { status: 'superseded' };
       }
       // The raw appended book can legitimately project old once-row settlement.
@@ -2192,6 +2255,24 @@ function FacilitatorCropsPageInner() {
       if (written) { setPlanSaveConflict(true); return { status: 'superseded' }; }
       return held('acceptance-check-failed');
     }
+  }
+  async function exportSavedGrowerRecord(row: Planting): Promise<boolean> {
+    try {
+      const base = planWriteBase.current, receipt = readCurrentGrowerBook();
+      if (!base || receipt.status !== 'ready') return false;
+      const matches = receipt.book.plantings.filter(candidate => candidate.id === row.id);
+      if (matches.length !== 1 || JSON.stringify(matches[0]) !== JSON.stringify(row)) return false;
+      const attachment = normaliseGrowerCycleAttachment(matches[0].growerCycle);
+      if (!attachment?.assessmentSnapshot.profile.provisionalOrigin) return false;
+      const current = () => growerActorIsCurrent() && receipt.isCurrent?.() === true && planWriteBase.current === base;
+      if (!current()) return false;
+      const document = buildAdoptedProvisionalCycleHtml(attachment, {
+        bedLabel: attachment.assessmentSnapshot.profile.provisionalOrigin.bedLabel, sample: growerSample,
+      });
+      if (!document || !current()) return false;
+      return await downloadFile(new Blob([document.html], { type: 'text/html;charset=utf-8' }),
+        `ImbewuField${growerSample ? '-demo' : ''}-saved-provisional-cycle.html`, async () => current(), current) === 'downloaded';
+    } catch { return false; }
   }
   function commitNurseryBatchReferences(request: GrowerNurseryReferenceCommit): GrowerNurseryReferenceCommitResult {
     const held = (...reasons: string[]): GrowerNurseryReferenceCommitResult => ({ status: 'held', reasons });
@@ -2521,12 +2602,24 @@ function FacilitatorCropsPageInner() {
 
   const loading = design === undefined || plan === null || !mounted;
   const growerPlanningPanel = <>
-    <SavedGrowerRows rows={markedPlantings} wholeBookRows={plan?.plantings ?? []} source={selectedGrowerSource} scope={growerScope} />
+    <SavedGrowerRows rows={markedPlantings} wholeBookRows={plan?.plantings ?? []} source={selectedGrowerSource} scope={growerScope} conditions={growerConditions} onExport={exportSavedGrowerRecord} />
     {productionSiteId && growerScope?.kind === 'mapped-site' && <HarvestTargetsPanel
       key={`own-targets:${productionSiteId}:${growerScopeKey}`} basis="own-records" siteId={productionSiteId}
       targets={plan?.harvestTargets ?? []} beds={beds} plantings={plantings} pattern={pattern} climate={{}}
       saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
       onSaveTargets={saveHarvestTargets} onAccept={() => {}} />}
+    <ProvisionalCropPreview sample={growerSample} ownerKey={`${growerOwner}:${growerSample}`} scope={growerScope}
+      sitePoint={hasSiteCoords ? { latitude: siteLat!, longitude: siteLon! } : null} policyFingerprint={planningSupport.fingerprint}
+      onClimateChanged={() => setProvisionalClimateRevision(value => value + 1)}
+      source={selectedGrowerSource} actorIsCurrent={growerActorIsCurrent}
+      sourceName={growerScope?.kind === 'mapped-site'
+        ? countryPlaces.filter(place => siteCountry.placeIds.includes(place.id)).map(place => place.name.trim()).filter(Boolean).join(' / ')
+        : design?.title || design?.bgSite?.name}
+      countryCode={siteCountry.status === 'confirmed' ? siteCountry.context?.countryCode ?? null : null}
+      agriculturalRegionReference={siteCountry.status === 'confirmed' ? siteCountry.context?.agriculturalRegionReference ?? null : null}
+      contextRevision={`${growerWorkflow.contextRevision}:${planningSupport.fingerprint}:${provisionalClimateRevision}`}
+      checking={growerWorkflow.checking} onRefresh={growerWorkflow.onRefresh} onCheckSource={growerWorkflow.onCheckPreviewSource}
+      profiles={plan?.growerPlanningProfiles ?? []} onSaveProfile={saveProvisionalProfile} />
     <GrowerPlanningPanel scope={growerScope}
       beds={selectedGrowerSource?.beds ?? (canvasSite || design ? [] : designBeds)}
       measuredAreas={selectedGrowerSource?.measuredAreas} measurementsFingerprint={selectedGrowerSource?.geometryFingerprint ?? null}
@@ -2701,7 +2794,7 @@ function FacilitatorCropsPageInner() {
         ) : region ? (
           <span
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
-            title="No per-site climate available (offline or not yet fetched) — using the nearest regional reference point instead"
+            title={siteClimateMissingNote(climateMissing, region.name)}
             style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
           >
             <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {calendarLabel} · nearest reference: {region.name} (fallback)
@@ -3744,7 +3837,7 @@ function FacilitatorCropsPageInner() {
           planTiming={aPlanTiming} onPlanTiming={setAPlanTiming}
           generating={autoGenerating} idealMeta={idealMeta}
           hasCurrentPlantings={plantings.length > 0}
-          pattern={pattern} calendarLabel={calendarLabel} calendarBasis={calendarBasis} climateSource={climateSource} referenceName={region?.name ?? null}
+          pattern={pattern} calendarLabel={calendarLabel} calendarBasis={calendarBasis} climateSource={climateSource} climateMissing={climateMissing} referenceName={region?.name ?? null}
           calendarChoice={chosenCalendar} automaticCalendar={calendarInUse.automatic} sampleCalendarSet={sampleCalendar !== null} canChooseCalendar={!!calendarScopeId} onCalendarChoice={chooseSowingCalendar}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
           allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
@@ -5260,23 +5353,37 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
   );
 }
 
-function SavedGrowerRows({ rows, wholeBookRows, source, scope }: {
+function SavedGrowerRows({ rows, wholeBookRows, source, scope, conditions, onExport }: {
   rows: readonly Planting[]; wholeBookRows: readonly Planting[];
   source: GrowerWorkflowSource | null; scope: GrowerPlanningScope | null;
+  conditions: ProvisionalSiteConditions; onExport: (row: Planting) => Promise<boolean>;
 }) {
+  const [exportMessage, setExportMessage] = useState('');
   if (!rows.length) return null;
-  const projection = source ? projectGrowerCycles(wholeBookRows, { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint }) : null;
+  const provisionalContext = source ? createProvisionalCycleContext(source, conditions, new Date().toISOString()) : null;
+  const projection = source ? projectGrowerCycles(wholeBookRows, { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint,
+    ...(provisionalContext ? { provisionalContext } : {}) }) : null;
   return <section aria-label="Saved own dated records" className="my-4 rounded-xl border p-4 text-sm" style={{ borderColor: 'var(--border)' }}>
     <h2 className="font-display text-lg font-semibold">Saved own dated records</h2>
     <p>These records remain saved. Catalogue dates, quantities and complete food or free-land coverage are withheld for them. Legacy controls cannot edit or clear them.</p>
     {!source && <p role="status">Current saved source not checked. These records are held until their site, geometry and measured space are checked again.</p>}
     <ul className="my-2 space-y-2">{rows.map((row, i) => {
       const cycle = projection?.ownCycles.find(cycle => cycle.plantingId === row.id);
+      const history = normaliseGrowerCycleAttachment(row.growerCycle);
+      const evidence = history ? buildProvisionalCycleEvidence(history.assessmentSnapshot) : null;
       return <li key={`${row.id}:${i}`}><strong>{cropByKey(row.cropKey)?.name ?? 'Saved crop record'}</strong> · {cycle
         ? `Own estimates: field entry ${cycle.assessment.schedule.fieldEntryDate}; next field entry ${cycle.assessment.schedule.nextFieldEntryDate}. Planned, not an observation.`
         : 'Held: source, scope, geometry or record identity needs review. No replacement catalogue schedule is supplied.'}
-        {cycle && <GrowerCycleIntent view={cycle.origin} />}</li>;
+        {cycle && <GrowerCycleIntent view={cycle.origin} />}
+        {evidence && <details className="min-w-0 [overflow-wrap:anywhere]"><summary className="min-h-11 cursor-pointer font-semibold">Historical evidence as accepted</summary>
+          <p>Saved estimates, not observed crops or current farming approval. Current operations may be held while this history remains readable.</p>
+          <ul className="space-y-2">{evidence.lines.map((line, index) => <li key={index}>{line}</li>)}</ul>
+          <button type="button" className="my-2 min-h-11 rounded-lg border px-3 py-2" onClick={async () => {
+            setExportMessage(await onExport(row) ? 'Historical record download requested. Open the HTML file in a browser to print it.' : 'The saved record changed or could not be checked. Reopen it before downloading.');
+          }}>Download historical record</button>
+        </details>}</li>;
     })}</ul>
+    {exportMessage && <p role="status">{exportMessage}</p>}
     <Link href="/cropplan" className="underline">Open Task Planner</Link>
   </section>;
 }
@@ -6091,7 +6198,7 @@ function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
   groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, mixState, onSaveMix, onResetMix, rhythm, onRhythm,
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
-  pattern, calendarLabel, calendarBasis, climateSource, referenceName, calendarChoice, automaticCalendar, sampleCalendarSet, canChooseCalendar, onCalendarChoice, rotateCrops, onRotateCrops,
+  pattern, calendarLabel, calendarBasis, climateSource, climateMissing, referenceName, calendarChoice, automaticCalendar, sampleCalendarSet, canChooseCalendar, onCalendarChoice, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
   siteClimate, siteObservationNotes, beds, siteId, nurserySettings, currentPlantings, now, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
@@ -6117,6 +6224,8 @@ function AutoSuggestModal({
   calendarBasis: CalendarBasis;
   /** Where the pattern came from: the site's own satellite climate, the nearest reference region, or no site at all. */
   climateSource: 'site' | 'reference' | 'none';
+  /** Why a mapped site is on the fallback (read only when climateSource is 'reference'). */
+  climateMissing: SiteClimateMissingReason | 'loading';
   /** Reference-region name when climateSource is 'reference'. */
   referenceName: string | null;
   /** The calendar the grower chose for this site, or null when the app decides. */
@@ -6379,7 +6488,7 @@ function AutoSuggestModal({
                   : climateSource === 'site'
                   ? 'Derived from satellite climate records for this site. You do not need to choose a sowing calendar.'
                   : climateSource === 'reference'
-                    ? `Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: ${referenceName ?? 'regional point'} (fallback).`
+                    ? siteClimateMissingNote(climateMissing, referenceName)
                     : 'No mapped location is attached, so the planner is using the cautious winter-frost fallback. Map the garden for a location-based climate profile.'}
               </p>
             </div>

@@ -1,5 +1,21 @@
 import assert from 'node:assert/strict';
+import { pdfPages } from './pdf-page-text.ts';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import ts from 'typescript';
+import * as reportCropPlan from '../lib/report-crop-plan.ts';
+import * as reportLocalisation from '../lib/report-localisation.ts';
+import { drawReportCropSummary } from '../lib/report-crop-pdf.ts';
+
 import test from 'node:test';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { createSavedProvisionalProfile, createProvisionalCycleContext } from '../lib/international/provisional-profile.ts';
+import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
+import { usdaGreatLakesCabbageCandidates } from '../lib/international/providers/usda-great-lakes-cabbage.ts';
+import { buildProvisionalCycleEvidence } from '../lib/international/provisional-crop-export.ts';
+
+
 import { CROPS } from '../lib/crop-catalog.ts';
 import type { CropPlanState, Planting } from '../lib/crop-plan.ts';
 import { buildDemoDesignCanvasState } from '../lib/demo-farm.ts';
@@ -51,6 +67,114 @@ function crop(snapshot: ReturnType<typeof captureReportCropPlan>): FactCropPlan 
     crops: snapshot.plantings.map(planting => ({ name: CROPS.find(crop => crop.key === planting.cropKey)?.name ?? planting.cropKey,
       sowMonths: [], bedLabels: [snapshot.beds.find(bed => bed.id === planting.bedId)!.label], alreadyGrowing: false, firstSeasonOnlyMonths: [] })), snapshot };
 }
+
+async function provisionalFixture() {
+  const base = fixture('transplant');
+  const source = await fingerprintGrowerWorkflowSource(inspectGrowerWorkflowSource({ kind: 'studio-canvas', sourceId: scope.siteId,
+    raw: base.canvas, sourceRevision: 'private-historical-report-source' }));
+  assert.equal(source.status, 'ready'); if (source.status !== 'ready') throw Error('Synthetic source held');
+  const area = { ...provided(base.bed.areaM2, 'm2'), arithmeticBasis: source.measuredAreas[0].arithmeticBasis };
+  const evidenceAt = '2026-11-12T12:00:00.000Z';
+  const evidenceContext = { scope, countryCode: 'US', agriculturalRegionReference: 'Great Lakes States', establishment: 'transplant' as const, waterRegime: 'irrigated' as const };
+  const { establishment: _method, ...overrides } = base.row.growerCycle.assessmentSnapshot.profile.inputs;
+  const profile = createSavedProvisionalProfile({ profileId: 'provisional-preview', cropKey: 'cabbage',
+    context: evidenceContext, recordedAt: evidenceAt, asOf: evidenceAt.slice(0, 10),
+    candidates: usdaGreatLakesCabbageCandidates(evidenceContext, 'cabbage', evidenceAt, true), overrides,
+    measuredAreaM2: area, fieldEntryDate: provided('2028-02-29', 'utc-date') },
+    'private-historical-report-profile', '2026-11-12T12:01:00.000Z', source, base.bed.id, base.bed.label);
+  assert.ok(profile);
+  const context = createProvisionalCycleContext(source, { countryCode: 'US', agriculturalRegionReference: 'Great Lakes States',
+    policyFingerprint: 'private-historical-report-policy', knownPlantingRestriction: null }, '2026-11-13T12:00:00.000Z');
+  assert.ok(context);
+  const assessment = assessGrowerPlanning({ profile, scope, measuredAreaM2: area, fieldEntryDate: provided('2028-02-29', 'utc-date'),
+    countAreaBinding: { bedId: base.bed.id }, provisionalContext: context });
+  assert.equal(assessment.status, 'ready'); if (assessment.status !== 'ready') throw Error('Synthetic assessment held');
+  const cycle: GrowerAutoPlanCycle = { cycleId: 'private-report-cycle', demandId: 'private-report-demand', profileId: profile.profileId,
+    cropKey: 'cabbage', bedId: base.bed.id, scope, requestFingerprint: 'private-report-request', fingerprint: 'private-report-fingerprint', assessment };
+  const row = createGrowerCyclePlanting(cycle, { plantingId: 'private-report-row', acceptedAt: context.reviewedAt, geometryFingerprint: source.geometryFingerprint });
+  assert.ok(row);
+  const snapshot = normaliseReportCropSnapshot(JSON.parse(JSON.stringify(captureReportCropPlan(base.canvas,
+    { ...base.plan, plantings: [row] }, scope.siteId, capturedAt, { allowCataloguePlanning: false }))));
+  assert.ok(snapshot);
+  return { ...base, source, row, snapshot, fact: crop(snapshot) };
+}
+
+test('a valid provisional cycle keeps its archived dates and evidence after report capture instead of being relabelled unsupported', async () => {
+  const f = await provisionalFixture(), before = JSON.stringify(f.snapshot), row = reportCropRows(f.fact)[0];
+  assert.match(row.status, /archived inputs/);
+  assert.match(row.sow, /Planned nursery start 2028-02-19/);
+  assert.match(row.sow, /planned field entry 2028-02-29; estimated first harvest 2028-03-01/);
+  assert.equal(JSON.stringify(f.snapshot), before);
+  assert.deepEqual(row.provisionalEvidence, buildProvisionalCycleEvidence(f.row.growerCycle.assessmentSnapshot));
+  const evidence = row.provisionalEvidence!.lines.join(' ');
+  assert.match(evidence, /Country: US/); assert.match(evidence, /Published Unknown/); assert.match(evidence, /evidence state undated/);
+  assert.match(evidence, /www.nrcs.usda.gov/); assert.match(evidence, /No country-wide or global default/);
+  assert.doesNotMatch(evidence, /private-historical-report|private-report|geometryFingerprint|sourceRevision/);
+  assert.equal(reportCropWorkingInput(f.snapshot, 'Synthetic').plantings.length, 0, 'Archived evidence cannot grant catalogue advice.');
+});
+
+test('damaged or foreign archived provisional records retain their raw marker without borrowing valid dates or evidence', async () => {
+  const f = await provisionalFixture();
+  for (const fault of ['missing-review', 'country', 'area-binding', 'foreign-site'] as const) {
+    const snapshot = structuredClone(f.snapshot), attachment = snapshot.plantings[0].growerCycle as typeof f.row.growerCycle;
+    if (fault === 'missing-review') Reflect.deleteProperty(attachment.assessmentSnapshot, 'provisionalReview');
+    if (fault === 'country') Object.assign(attachment.assessmentSnapshot.provisionalReview!.context, { countryCode: 'GB' });
+    if (fault === 'area-binding') Object.assign(attachment.assessmentSnapshot.countAreaBinding!, { bedId: 'another-bed' });
+    if (fault === 'foreign-site') snapshot.siteId = 'site:2.00000,2.00000';
+    const result = reportCropRows(crop(snapshot))[0];
+    assert.match(result.status, /held/); assert.match(result.sow, /own dates unavailable/);
+    assert.equal(result.provisionalEvidence, undefined, fault);
+    assert.equal(hasGrowerCycleMarker(snapshot.plantings[0]), true);
+  }
+});
+
+test('the actual report component and PDF preserve archived provisional source limits and zero yield', async () => {
+  const f = await provisionalFixture();
+  const runtime = await import('react/jsx-runtime');
+  const source = readFileSync(new URL('../components/report/ReportCropPlan.tsx', import.meta.url), 'utf8');
+  const compiled = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2022,
+    module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true } }).outputText;
+  const unused = () => { throw Error('Rendering archived evidence cannot invoke an export or write.'); };
+  const modules: Record<string, unknown> = {
+    react: React, 'react/jsx-runtime': runtime,
+    '@/lib/i18n': { useLanguage: () => ({ lang: 'en', t: (key: string) => key }) },
+    '@/lib/report-localisation': reportLocalisation, '@/lib/report-crop-plan': reportCropPlan,
+    '@/lib/crop-plan': { loadCropPlan: unused, CROP_PLAN_CHANGED_EVENT: 'synthetic-book-event' },
+    '@/lib/design-canvas': { loadCanvasState: unused, DESIGN_CANVAS_CHANGED_EVENT: 'synthetic-design-event' },
+    '@/lib/crop-art': { getCropArt: () => null }, '@/lib/crop-export-pdf': { buildCropPlanPdf: unused, cropPlanPdfFilename: unused },
+    '@/lib/report-pdf': { deliverPdf: unused }, './ReportCropPlan.module.css': { __esModule: true, default: new Proxy({}, { get: (_target, key) => String(key) }) },
+    './ProductionYearOverview': { __esModule: true, default: () => null },
+  };
+  const module = { exports: {} as { default: React.ComponentType<Record<string, unknown>> } };
+  new Function('require', 'module', 'exports', compiled)((id: string) => {
+    assert.ok(Object.hasOwn(modules, id), `Uncontrolled component dependency ${id}`); return modules[id];
+  }, module, module.exports);
+  const body = renderToStaticMarkup(React.createElement(module.exports.default, { crop: f.fact, siteName: 'Synthetic report',
+    siteId: scope.siteId, includeWorking: false, onIncludeWorking: unused, language: 'en' }));
+  assert.match(body, /class="evidencePrint"/); assert.match(body, /Historical source evidence as accepted/); assert.match(body, /2028-02-29/);
+  assert.match(body, /Country: US/); assert.match(body, /Great Lakes States/); assert.match(body, /Published Unknown/);
+  assert.match(body, /evidence state undated/); assert.match(body, /not establish agricultural accuracy/);
+  assert.doesNotMatch(body, /private-historical-report|private-report|sourceRevision|geometryFingerprint|own dates unavailable/);
+  const output = process.env.PROVISIONAL_REPORT_OUTPUT;
+  if (output) {
+    mkdirSync(output, { recursive: true });
+    const css = readFileSync(new URL('../components/report/ReportCropPlan.module.css', import.meta.url), 'utf8');
+    writeFileSync(join(output, 'historical-report.html'), `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Synthetic archived report fixture</title><style>:root{--report-ink:#182a20;--report-muted:#4b5e52;--report-border:#d6e1d8;--report-panel:#f3f7f3;--font-sans:Arial;--font-display:Georgia}body{font:16px system-ui;margin:24px}@media(prefers-color-scheme:dark){:root{--report-ink:#edf5ef;--report-muted:#b4c7ba;--report-border:#3a5142;--report-panel:#1e3025}body{background:#0d0a06;color:var(--report-ink)}}p{overflow-wrap:anywhere}${css}</style>${body}</html>`);
+    writeFileSync(join(output, 'report-fact.json'), JSON.stringify(f.fact, null, 2));
+  }
+  const { jsPDF } = await import('jspdf');
+  for (const allow of [false, true]) {
+    const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+    doc.text('Synthetic archived crop-report fixture', 40, 48);
+    await drawReportCropSummary(doc, f.fact, 0, 'en', allow);
+    const bytes = new Uint8Array(doc.output('arraybuffer')), text = pdfPages(bytes).join(' ');
+    for (const expected of ['historical source evidence as accepted', '2028-02-29', 'Country: US', 'Great Lakes States', 'Published Unknown', 'evidence state undated', '0 kg'])
+      assert.ok(text.includes(expected), `Actual PDF lost ${expected}`);
+    assert.doesNotMatch(text, /private-historical-report|private-report|sourceRevision|geometryFingerprint|own dates unavailable/);
+    assert.match(text, /not establish agricultural accuracy/);
+    if (output) writeFileSync(join(output, `historical-report-${allow ? 'with-calendar' : 'records'}.pdf`), bytes);
+  }
+});
 
 test('report capture and actual facts JSON normalisation retain detached own dates, provenance and zero inputs', () => {
   const { canvas, plan, row } = fixture();

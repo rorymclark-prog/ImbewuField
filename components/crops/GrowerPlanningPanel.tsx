@@ -365,6 +365,9 @@ function Editor({ scope, beds, profiles, current, sourceKey, measuredAreas, meas
     if (!draftIsCurrent()) return;
     if (!latest || !shownSignature || latest.signature !== shownSignature) { setReview(null); setError(changedSourceMessage); return; }
     const value = latest.profile;
+    if (value.version === 2) { setError('This profile retains positive source months; other months are unknown. Use the source-aware provisional preview to deliberately specify your own window. This editor cannot convert its source evidence.'); return; }
+    if (value.provisionalOrigin) { setError('This profile preserves provisional source evidence. Open its saved evidence in Provisional crop preview; this estimate editor cannot replace that evidence.'); return; }
+    if (value.plantCountOrigin) { setError('This estimate uses spacing cells. This editor cannot change that count basis; the original choices remain saved.'); return; }
     dirty(); replaceSession(value); setCropKey(value.cropKey);
     setNumbers(Object.fromEntries(numericFields.map(([name]) => [name, name === 'plantsPerM2' || name === 'yieldKgPerM2' ? '' : value.inputs[name].state === 'provided' ? String(value.inputs[name].value) : ''])) as Record<NumericKey, string>);
     commitDensity(densityPair(key, densityLive.current.choice, value.inputs.plantsPerM2.state === 'provided' ? value.inputs.plantsPerM2.value : undefined,
@@ -400,7 +403,7 @@ function Editor({ scope, beds, profiles, current, sourceKey, measuredAreas, meas
           // under an old button's identity and silently treat it as reviewed.
           const shownSignature = profileSignature(item), shownProfileId = item.profileId;
           return <li key={`${item.profileId}:${index}`} className="flex flex-wrap items-center gap-2 rounded-lg border border-[var(--border)] p-2">
-            <span className="flex-1 text-sm">{cropByKey(item.cropKey)?.name ?? 'Unknown crop identity'} · saved estimates</span>
+            <span className="flex-1 text-sm">{cropByKey(item.cropKey)?.name ?? 'Unknown crop identity'} · {item.provisionalOrigin ? 'saved provisional evidence; review above' : 'saved estimates'}</span>
             <button type="button" className={button} onClick={() => edit(shownProfileId, shownSignature)}>Edit {cropByKey(item.cropKey)?.name ?? 'profile'}</button>
             <button type="button" className={button} onClick={() => remove(shownProfileId, shownSignature)}>Remove {cropByKey(item.cropKey)?.name ?? 'profile'}</button>
           </li>;

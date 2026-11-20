@@ -1,3 +1,4 @@
+import { buildProvisionalCycleEvidence, type ProvisionalCycleEvidenceView } from './provisional-crop-export';
 import { readGrowerCycleIntentField, type GrowerCyclePublicIntent } from './grower-cycle-intent';
 import { cropByKey } from '../crop-catalog';
 import { decimalQuantityProduct } from '../farm-records';
@@ -105,6 +106,7 @@ export interface GrowerNurseryBatch {
   readonly reference?: GrowerNurseryBatchReferenceView;
   /** Always supplied by the real builder; optional for older constructed DTOs. */
   readonly origin?: GrowerNurseryOriginView;
+  readonly provisionalEvidence?: ProvisionalCycleEvidenceView;
 }
 export interface GrowerNurseryResourceBudget extends NurseryResourceForecast {
   readonly resourceKind: 'container' | 'space';
@@ -347,6 +349,7 @@ interface CycleFact {
   plantingIds: string[]; bedId: string; targetPositions: number; start: string; endExclusive: string;
   reference: GrowerNurseryBatchReferenceView;
   origin: GrowerNurseryOriginView;
+  provisionalEvidence?: ProvisionalCycleEvidenceView;
 }
 interface SourceFacts {
   status: 'proposed' | 'saved-planned'; scope: GrowerPlanningScope; geometryFingerprint: string;
@@ -360,6 +363,8 @@ function sourceFacts(source: GrowerNurserySource): SourceFacts | null {
     // output. Use the freshly generated real assessment, never fake saved rows.
     const fresh = generateGrowerAutoPlan(source.currentRequest);
     if (fresh.status !== 'ready' && fresh.status !== 'with-gaps') return null;
+    const evidence = new Map(fresh.cycles.map(cycle => [cycle.cycleId, buildProvisionalCycleEvidence(cycle.assessment.snapshot)]));
+    if (fresh.cycles.some(cycle => cycle.assessment.snapshot.profile.provisionalOrigin && !evidence.get(cycle.cycleId))) return null;
     return { status: 'proposed', scope: fresh.snapshot.scope, geometryFingerprint: fresh.snapshot.geometryFingerprint,
       beds: fresh.snapshot.beds.map(row => row.bed), snapshot: { kind: 'proposal', request: fresh.snapshot,
         proposalFingerprint: fresh.fingerprint, competingDemand: source.competingDemand ?? 'unknown' },
@@ -372,6 +377,7 @@ function sourceFacts(source: GrowerNurserySource): SourceFacts | null {
         plantingIds: [], bedId: cycle.bedId, targetPositions: cycle.assessment.capacity.estimatedPlantCount,
         start: cycle.assessment.schedule.nurseryStartDate, endExclusive: cycle.assessment.schedule.fieldEntryDate,
         reference: { status: 'proposed' as const }, origin: { status: 'proposed' as const },
+        ...(evidence.get(cycle.cycleId) ? { provisionalEvidence: evidence.get(cycle.cycleId)! } : {}),
       }]) };
   }
   if (source.kind !== 'saved-cycles' || !source.cycleContext || !normaliseGrowerPlanningScope(source.cycleContext.scope)) return null;
@@ -379,6 +385,8 @@ function sourceFacts(source: GrowerNurserySource): SourceFacts | null {
   const prepared = nurseryReferenceSource(source.rows, source.cycleContext);
   if (!prepared) return null;
   const { rows: storedRows, context, projection } = prepared;
+  const evidence = new Map(projection.ownCycles.map(cycle => [cycle.plantingId, buildProvisionalCycleEvidence(cycle.assessment.snapshot)]));
+  if (projection.ownCycles.some(cycle => cycle.assessment.snapshot.profile.provisionalOrigin && !evidence.get(cycle.plantingId))) return null;
   return { status: 'saved-planned', scope: normaliseGrowerPlanningScope(context.scope)!, geometryFingerprint: context.geometryFingerprint ?? '',
     beds: context.beds, snapshot: { kind: 'saved-cycles', rows: storedRows, cycleContext: context }, fieldReservationIds: [],
     issues: [...(projection.heldRows.length ? ['held-cycle-demand-unresolved'] : []), ...(projection.legacyRows.length ? ['legacy-nursery-demand-unassessed'] : [])],
@@ -387,6 +395,7 @@ function sourceFacts(source: GrowerNurserySource): SourceFacts | null {
       plantingIds: [cycle.plantingId], bedId: cycle.bedId, targetPositions: cycle.nurseryDemand.targetPositions,
       ...cycle.nurseryDemand.interval,
       reference: resolveNurseryReference(prepared, cycle.plantingId), origin: cycle.origin ?? { status: 'not-recorded' as const },
+      ...(evidence.get(cycle.plantingId) ? { provisionalEvidence: evidence.get(cycle.plantingId)! } : {}),
     }]) };
 }
 function batchFor(cycle: CycleFact, status: SourceFacts['status'], settings: NurserySettings, siteId: string): GrowerNurseryBatch {
@@ -438,7 +447,7 @@ function batchFor(cycle: CycleFact, status: SourceFacts['status'], settings: Nur
     startDate: cycle.start, endDateExclusive: cycle.endExclusive, targetPositions: cycle.targetPositions,
     starts, seeds, trays, areaM2, trayFootprintM2, model: recipe?.model ?? null,
     ...(container ? {containerId: container.id} : {}), ...(space ? {spaceId: space.id} : {}), basis, issues, incomplete: issues.length > 0,
-    reference: cycle.reference, origin: cycle.origin };
+    reference: cycle.reference, origin: cycle.origin, ...(cycle.provisionalEvidence ? { provisionalEvidence: cycle.provisionalEvidence } : {}) };
 }
 
 /** Own dated nursery demand, independent of the catalogue/country forecast gate. */
@@ -614,6 +623,7 @@ export interface GrowerNurseryPreparationGroup {
     readonly reference?: GrowerNurseryBatchReferenceView;
     /** Preserve each member’s accepted intent; grouped quantities are not demand totals. */
     readonly intent?: GrowerCyclePublicIntent;
+    readonly provisionalEvidence?: ProvisionalCycleEvidenceView;
   }[];
   readonly fieldPositions: GrowerNurseryPreparationMetric;
   readonly startsToRaise: GrowerNurseryPreparationMetric;
@@ -642,7 +652,7 @@ export interface GrowerNurseryPreparation {
 const preparationGuidance = 'Planned grower estimates from represented transplant raising batches only, not observed sowings, stock or seedling readiness. Direct sowings and unresolved or omitted work are not included. Known subtotals cover only represented batches with known counts; unknown or overflowing counts never become complete totals. Complete group counts do not establish whole-farm seed demand or resource availability. Grower-entered planned references do not verify varieties, seed lots or interchangeability. No purchasing quantities, pack sizes, seed weights, prices or local crop instructions are inferred. All dates are UTC; field-entry end dates are exclusive.';
 const preparationCount = (value: unknown): value is number => finite(value) && Number.isSafeInteger(value);
 type PreparationBatch = Pick<GrowerNurseryBatch, 'id' | 'cycleId' | 'demandId' | 'profileId' | 'cropKey' | 'sourceStatus'
-  | 'startDate' | 'endDateExclusive' | 'targetPositions' | 'starts' | 'seeds' | 'plantingIds' | 'bedIds' | 'incomplete' | 'issues' | 'reference'>;
+  | 'startDate' | 'endDateExclusive' | 'targetPositions' | 'starts' | 'seeds' | 'plantingIds' | 'bedIds' | 'incomplete' | 'issues' | 'reference' | 'provisionalEvidence'>;
 function preparationBatch(value: unknown, sourceStatus: GrowerNurseryResult['sourceStatus']): value is PreparationBatch {
   return record(value) && [value.id, value.cycleId, value.demandId, value.profileId, value.cropKey].every(identity)
     && sourceStatus !== null && value.sourceStatus === sourceStatus
@@ -680,6 +690,43 @@ function preparationReference(batch: PreparationBatch, source: NurseryReferenceS
     return referenceDataKey(detachJsonData(descriptor.value)) === referenceDataKey(expected) ? expected
       : freeze({ status: 'held', reason: 'reference-result-changed' });
   } catch { return freeze({ status: 'held', reason: 'reference-unreadable' }); }
+}
+
+function preparationProvisionalEvidence(result: GrowerNurseryResult): Map<string, ProvisionalCycleEvidenceView> | null {
+  try {
+    const source = result.snapshot?.source;
+    if (!record(source)) return result.batches.some(batch => 'provisionalEvidence' in batch) ? null : new Map();
+    const markedRequest = source.kind === 'proposal' && record(source.request) && Array.isArray(source.request.profiles)
+      && source.request.profiles.some(profile => record(profile) && 'provisionalOrigin' in profile);
+    const markedRows = source.kind === 'saved-cycles' && Array.isArray(source.rows) && source.rows.some(row => record(row)
+      && record(row.growerCycle) && record(row.growerCycle.assessmentSnapshot) && record(row.growerCycle.assessmentSnapshot.profile)
+      && 'provisionalOrigin' in row.growerCycle.assessmentSnapshot.profile);
+    if (!markedRequest && !markedRows && !result.batches.some(batch => 'provisionalEvidence' in batch)) return new Map();
+    const evidence = new Map<string, ProvisionalCycleEvidenceView>();
+    if (source.kind === 'proposal') {
+      const fresh = generateGrowerAutoPlan(source.request);
+      if ((fresh.status !== 'ready' && fresh.status !== 'with-gaps') || fresh.fingerprint !== source.proposalFingerprint) return null;
+      for (const cycle of fresh.cycles) if (cycle.assessment.schedule.nurseryStartDate !== null && cycle.assessment.snapshot.profile.provisionalOrigin) {
+        const view = buildProvisionalCycleEvidence(cycle.assessment.snapshot); if (!view) return null;
+        evidence.set(cycle.fingerprint, view);
+      }
+    } else if (source.kind === 'saved-cycles') {
+      const saved = nurseryReferenceSource(source.rows, source.cycleContext as GrowerCycleContext | null); if (!saved) return null;
+      for (const cycle of saved.projection.ownCycles) if (cycle.nurseryDemand && cycle.assessment.snapshot.profile.provisionalOrigin) {
+        const view = buildProvisionalCycleEvidence(cycle.assessment.snapshot); if (!view) return null;
+        evidence.set(cycle.plantingId, view);
+      }
+    } else return null;
+    for (const batch of result.batches) {
+      const expected = evidence.get(batch.id), descriptor = Object.getOwnPropertyDescriptor(batch, 'provisionalEvidence');
+      if (expected ? !descriptor || !('value' in descriptor) || referenceDataKey(detachJsonData(descriptor.value)) !== referenceDataKey(expected)
+        : 'provisionalEvidence' in batch) return null;
+    }
+    return evidence;
+  } catch {
+    // Present but unreadable evidence is a validation hold, never absence.
+    return null;
+  }
 }
 
 /** Aggregate the existing calculated batch counts once. This is a detached view,
@@ -721,6 +768,8 @@ export function projectGrowerNurseryPreparation(result: GrowerNurseryResult): Gr
         if (record(source) && source.kind === 'saved-cycles') referenceSource = nurseryReferenceSource(source.rows, source.cycleContext as GrowerCycleContext | null);
       } catch { /* Known counts stay independent of unreadable reference evidence. */ }
     }
+    const provisionalEvidence = preparationProvisionalEvidence(result);
+    if (!provisionalEvidence) return fail('preparation-provisional-evidence-changed');
     const ids = new Set<string>(), grouped = new Map<string, PreparationBatch[]>();
     for (const batch of result.batches) {
       if (!preparationBatch(batch, result.sourceStatus) || ids.has(batch.id)) return fail('preparation-batch-invalid-or-ambiguous');
@@ -741,6 +790,7 @@ export function projectGrowerNurseryPreparation(result: GrowerNurseryResult): Gr
         startDate: first.startDate, batchIds: batches.map(batch => batch.id), members: batches.map(batch => ({
           batchId: batch.id, cycleId: batch.cycleId, plantingIds: [...batch.plantingIds], bedIds: [...batch.bedIds], endDateExclusive: batch.endDateExclusive,
           reference: preparationReference(batch, referenceSource), intent: readGrowerCycleIntentField(batch),
+          ...(provisionalEvidence.get(batch.id) ? { provisionalEvidence: provisionalEvidence.get(batch.id)! } : {}),
         })), fieldPositions, startsToRaise, seedsToSow, outsideReviewHorizon,
         incomplete: batches.some(batch => batch.incomplete) || issues.length > 0
           || [fieldPositions, startsToRaise, seedsToSow].some(metric => metric.status !== 'complete'), issues };

@@ -1,0 +1,34 @@
+== A  full stack of the first Atlas page error
+no page error at load
+
+== B  /farmer, saved place, phone light
+  Climate tab reached: false
+  page now shows: ["Back","Map","Design studio","Saved on this device only.","Offline canvas · saved drawings and pins. Satellite imagery and terrain need a connection.","Ubhejane Crèche","200 km","Find your land","+","−","z5.2","Tap your area or search a town","Places","Add","Details","tap to close","ImbewuField","Tap anywhere in South Africa to get a full permaculture plan for your land."]
+
+== B  /farmer, saved place, phone dark
+  Climate tab reached: false
+  page now shows: ["Back","Map","Design studio","Saved on this device only.","Offline canvas · saved drawings and pins. Satellite imagery and terrain need a connection.","Ubhejane Crèche","200 km","Find your land","+","−","z5.2","Tap your area or search a town","Places","Add","Details","tap to close","ImbewuField","Tap anywhere in South Africa to get a full permaculture plan for your land."]
+
+== C  record frost months through the survey, then export
+  country panel present -> choosing ZA
+  survey open: 1
+  first screen buttons: ["","Site potential\n\nUnderstand the site, constraints and possibilities before detailed design.","Complete site plan\n\nBring the site survey, saved maps and whole-year production plan together. Missing evidence stays visible.","5 sections + review\nShort & simple\n\nStart with the essentials for your household and garden. Simple choices, with space for your own notes.\n\nPeople & goals · land · growing · water · challenges","7 sections + review\nComprehensive\n\nBuild a fuller picture of your site, including production, harvest months, household use and sales.\n\nEverything in the short survey, plus detailed production records and separate livestock and sales sections.","Start survey"]
+  frost question reached: true
+FAIL locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('[role=dialog][aria-label="Site questionnaire"]').getByText('Yes, we have seen frost here').first()[22m
+[2m    - locator resolved to <div class="font-sans font-semibold">Yes, we have seen frost here</div>[22m
+[2m  - attempting click action[22m
+[2m    2 × waiting for element to be visible, enabled and stable[22m
+[2m      - element is not visible[22m
+[2m    - retrying click action[22m
+[2m    - waiting 20ms[22m
+[2m    2 × waiting for element to be visible, enabled and stable[22m
+[2m      - element is not visible[22m
+[2m    - retrying click action[22m
+[2m      - waiting 100ms[22m
+[2m    58 × waiting for element to be visible, enabled and stable[22m
+[2m       - element is not visible[22m
+[2m     - retrying click action[22m
+[2m       - waiting 500ms[22m
+

@@ -1,4 +1,6 @@
 'use client';
+import { savedRainfallFields } from '@/lib/saved-places';
+import { useSavedPlaceWriteContext, savedPlaceWriteContextIsCurrent } from '@/lib/length-unit-preference';
 
 import { useState, useEffect } from 'react';
 import { loadPlaces, savePlace, deletePlace, generateId, promptNearbyUpdate, type SavedPlace } from '@/lib/saved-places';
@@ -25,6 +27,7 @@ function timeAgo(iso: string, t: (key: string) => string): string {
 export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
   const { t } = useLanguage();
   const appConfirm = useAppConfirm();
+  const placeSaveContext = useSavedPlaceWriteContext();
   const [places, setPlaces] = useState<SavedPlace[]>([]);
   const [saving, setSaving] = useState(false);
   const [name, setName] = useState('');
@@ -51,6 +54,8 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
 
   async function handleSave() {
     if (!coords || !locationData || !name.trim()) return;
+    const context = placeSaveContext.current;
+    if (!savedPlaceWriteContextIsCurrent(context)) return;
     const trimmedName = name.trim();
     const trimmedNotes = notes.trim() || undefined;
 
@@ -68,12 +73,14 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
         lat: coords.lat,
         lon: coords.lon,
         biome: locationData.biome.name,
-        rainfall: locationData.rainfall.annual,
+        ...savedRainfallFields(locationData.rainfall, nearby),
         elevation: locationData.elevation.elevation,
         name: trimmedName || nearby.name,
         notes: trimmedNotes ?? nearby.notes,
       };
-      setPlaces(savePlace(updated));
+      const saved = savePlace(updated, { isCurrent: () => savedPlaceWriteContextIsCurrent(context) });
+      if (!saved) return;
+      setPlaces(saved);
       setSaving(false);
       setSaved(true);
       setNotes('');
@@ -87,12 +94,14 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
       lat: coords.lat,
       lon: coords.lon,
       biome: locationData.biome.name,
-      rainfall: locationData.rainfall.annual,
+      ...savedRainfallFields(locationData.rainfall),
       elevation: locationData.elevation.elevation,
       savedAt: new Date().toISOString(),
       notes: trimmedNotes,
     };
-    setPlaces(savePlace(place));
+    const saved = savePlace(place, { isCurrent: () => savedPlaceWriteContextIsCurrent(context) });
+    if (!saved) return;
+    setPlaces(saved);
     setSaving(false);
     setSaved(true);
     setNotes('');
@@ -194,7 +203,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
                       </span>
                     </div>
                     <div className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
-                      {place.biome} · {place.elevation}m · {place.rainfall}mm
+                      {place.biome} · {place.elevation}m · {place.rainfall === undefined ? 'Rainfall not known' : `${place.rainfall}mm`}
                     </div>
                     {place.notes && (
                       <div className="text-xs font-display mt-1 leading-relaxed" style={{ color: 'var(--text-secondary)', opacity: 0.8 }}>

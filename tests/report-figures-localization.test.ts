@@ -22,6 +22,9 @@ const fixture = JSON.parse(read('tests/fixtures/report-figures-translation/sourc
 const before = JSON.parse(read('tests/fixtures/report-figures-translation/source-pairs.json')) as {
   pairs: Array<{english:string;zu:string}>; catalogueSources:string[];
 };
+// This known-series drawing fixture predates coverage receipts. Supply an explicit
+// synthetic receipt for the complete-series layout case; the no-receipt case is tested separately.
+fixture.location.climate.monthlyTempCoverage = { source: 'nasa-power', status: 'complete' };
 const languages = ['zu','st','ts','ve'] as const;
 const sources = new Map(REPORT_VISUAL_COPY.map(row=>[row.english,row]));
 const selected = new Set(['site-plan','land-use','status']);
@@ -57,7 +60,12 @@ test('the three translated drawings retain every existing source pair and new di
 
 test('English drawings remain exact and native drawings keep all original figures and inputs',()=>{
   const snapshot=JSON.stringify(fixture);
-  assert.deepEqual(all('en'),fixture.figures.en);
+  const english=all('en');
+  assert.deepEqual(english.filter(f=>f.id!=='soil'),fixture.figures.en.filter(f=>f.id!=='soil'));
+  const soil=english.find(f=>f.id==='soil')!,oldSoil=fixture.figures.en.find(f=>f.id==='soil')!;
+  // Withdrawing a universal vegetable pH target must retain all recorded values and source metadata.
+  assert.deepEqual({...soil,svg:undefined},{...oldSoil,svg:undefined});
+  assert.equal(words(soil.svg),words(oldSoil.svg).replace('most vegetables: 6 to 7 ',''));
   for(const language of languages){
     const figures=all(language);
     assert.deepEqual(figures.map(f=>f.id),fixture.figures.en.map(f=>f.id),'no drawing disappears behind the aggregator catch');

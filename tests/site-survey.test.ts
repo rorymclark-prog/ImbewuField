@@ -228,6 +228,32 @@ test('direct loads repair types and bind the record to the requested site', () =
   assert.equal(loaded.hasGutters, false);
 });
 
+test('a legacy single watering method survives account-scoped reads without rewriting stored answers', () => {
+  const { local } = installBrowser();
+  const siteId = 'site:-29.00000,31.00000';
+  bindMountedAccountLocalStorageUid('legacy-water-owner');
+  try {
+    const storageKey = activeAccountLocalStorageKey(`imbewu_site_survey_${siteId}`);
+    const cases: [unknown, string[]][] = [
+      [' drip ', ['drip']], ['none', ['none']], ['historic hose', ['historic hose']],
+      ['', []], ['  ', []], [null, []], [7, []], [{ drip: true }, []],
+      [[' drip ', 'drip', 'none'], ['drip', 'none']],
+    ];
+    for (const [value, expected] of cases) {
+      const raw = JSON.stringify({ ...survey(), waterDelivery: value });
+      local.setItem(storageKey, raw);
+      const loaded = loadSurvey(siteId)!;
+      assert.deepEqual(loaded.waterDelivery, expected);
+      assert.equal(local.getItem(storageKey), raw, 'read compatibility must not rewrite the original record');
+      if (expected.includes('drip')) assert.match(surveyToPrompt(loaded, 800), /Delivery \/ irrigation: drip irrigation/);
+      bindMountedAccountLocalStorageUid('different-water-owner');
+      assert.equal(loadSurvey(siteId), null, 'legacy shape must not cross accounts');
+      bindMountedAccountLocalStorageUid('legacy-water-owner');
+      assert.equal(local.getItem(storageKey), raw);
+    }
+  } finally { bindMountedAccountLocalStorageUid(null); }
+});
+
 test('saving stamps, normalises and notifies after the new survey is readable', () => {
   const { target } = installBrowser();
   let observed: SiteSurvey | null = null;
@@ -301,6 +327,23 @@ test('a legacy place-id survey migrates once to its coordinate site key', () => 
   assert.ok(migrated);
   assert.equal(migrated.siteId, siteId);
   assert.ok(local.getItem(`imbewu_site_survey_${siteId}`));
+});
+
+test('legacy watering text survives existing place migration and an explicit save in the current array format', () => {
+  const { local } = installBrowser();
+  const siteId = 'site:-29.00000,31.00000';
+  local.setItem('permamap_saved_places', JSON.stringify([{ id: 'farm', name: 'Farm', lat: -29, lon: 31,
+    biome: '', rainfall: 0, elevation: 0, savedAt: '2026-01-01T00:00:00.000Z' }]));
+  const raw = JSON.stringify({ ...survey(), siteId: 'legacy', waterDelivery: 'bucket' });
+  local.setItem('imbewu_site_survey_farm', raw);
+  const migrated = loadSurvey(siteId)!;
+  assert.deepEqual(migrated.waterDelivery, ['bucket']);
+  assert.equal(migrated.savedAt, survey().savedAt);
+  assert.equal(local.getItem('imbewu_site_survey_farm'), raw, 'original legacy receipt remains intact');
+  assert.deepEqual(JSON.parse(local.getItem(`imbewu_site_survey_${siteId}`)!).waterDelivery, ['bucket']);
+  const saved = saveSurvey(migrated)!;
+  assert.deepEqual(saved.waterDelivery, ['bucket']);
+  assert.deepEqual(loadSurvey(siteId)?.waterDelivery, ['bucket']);
 });
 
 test('SSR and broken JSON degrade to no survey', () => {

@@ -6902,14 +6902,6 @@
       "rows": [
         {
           "id": "R1",
-          "risk": "Frost damage to tender crops and young trees",
-          "trigger": "minimum -2 °C, below the 5 °C threshold",
-          "likelihood": "Medium",
-          "impact": "Medium",
-          "mitigation": "Keep tender crops off the lowest ground, where cold air settles. Plant frost-sensitive trees after the last frost date, not before."
-        },
-        {
-          "id": "R2",
           "risk": "No crop plan — the growing area has no sowing schedule behind it",
           "trigger": "nothing entered in the crop planner",
           "likelihood": "Medium",
@@ -6917,7 +6909,7 @@
           "mitigation": "Build the crop plan before the next sowing window. Beds without a plan sit empty through the months that matter."
         }
       ],
-      "markdown": "## Risk Register\n\nEach row was raised by this site's own data. The trigger column prints the figure and the threshold that produced the rating, so a reader who disagrees can argue with the number rather than the adjective.\n\n| # | Risk | What raised it | Likelihood | Impact | What to do about it |\n|---|------|----------------|------------|--------|---------------------|\n| R1 | Frost damage to tender crops and young trees | minimum -2 °C, below the 5 °C threshold | Medium | Medium | Keep tender crops off the lowest ground, where cold air settles. Plant frost-sensitive trees after the last frost date, not before. |\n| R2 | No crop plan — the growing area has no sowing schedule behind it | nothing entered in the crop planner | Medium | High | Build the crop plan before the next sowing window. Beds without a plan sit empty through the months that matter. |\n"
+      "markdown": "## Risk Register\n\nEach row was raised by this site's own data. The trigger column prints the figure and the threshold that produced the rating, so a reader who disagrees can argue with the number rather than the adjective.\n\n| # | Risk | What raised it | Likelihood | Impact | What to do about it |\n|---|------|----------------|------------|--------|---------------------|\n| R1 | No crop plan — the growing area has no sowing schedule behind it | nothing entered in the crop planner | Medium | High | Build the crop plan before the next sowing window. Beds without a plan sit empty through the months that matter. |\n"
     },
     {
       "name": "frost-before",
@@ -7178,14 +7170,6 @@
       "rows": [
         {
           "id": "R1",
-          "risk": "Frost damage to tender crops and young trees",
-          "trigger": "minimum 5 °C, below the 5 °C threshold",
-          "likelihood": "Medium",
-          "impact": "Medium",
-          "mitigation": "Keep tender crops off the lowest ground, where cold air settles. Plant frost-sensitive trees after the last frost date, not before."
-        },
-        {
-          "id": "R2",
           "risk": "No crop plan — the growing area has no sowing schedule behind it",
           "trigger": "nothing entered in the crop planner",
           "likelihood": "Medium",
@@ -7193,7 +7177,7 @@
           "mitigation": "Build the crop plan before the next sowing window. Beds without a plan sit empty through the months that matter."
         }
       ],
-      "markdown": "## Risk Register\n\nEach row was raised by this site's own data. The trigger column prints the figure and the threshold that produced the rating, so a reader who disagrees can argue with the number rather than the adjective.\n\n| # | Risk | What raised it | Likelihood | Impact | What to do about it |\n|---|------|----------------|------------|--------|---------------------|\n| R1 | Frost damage to tender crops and young trees | minimum 5 °C, below the 5 °C threshold | Medium | Medium | Keep tender crops off the lowest ground, where cold air settles. Plant frost-sensitive trees after the last frost date, not before. |\n| R2 | No crop plan — the growing area has no sowing schedule behind it | nothing entered in the crop planner | Medium | High | Build the crop plan before the next sowing window. Beds without a plan sit empty through the months that matter. |\n"
+      "markdown": "## Risk Register\n\nEach row was raised by this site's own data. The trigger column prints the figure and the threshold that produced the rating, so a reader who disagrees can argue with the number rather than the adjective.\n\n| # | Risk | What raised it | Likelihood | Impact | What to do about it |\n|---|------|----------------|------------|--------|---------------------|\n| R1 | No crop plan — the growing area has no sowing schedule behind it | nothing entered in the crop planner | Medium | High | Build the crop plan before the next sowing window. Beds without a plan sit empty through the months that matter. |\n"
     },
     {
       "name": "frost-edge",
@@ -9679,14 +9663,6 @@
         },
         {
           "id": "R3",
-          "risk": "Frost damage to tender crops and young trees",
-          "trigger": "minimum -2 °C, below the 5 °C threshold",
-          "likelihood": "Medium",
-          "impact": "Medium",
-          "mitigation": "Keep tender crops off the lowest ground, where cold air settles. Plant frost-sensitive trees after the last frost date, not before."
-        },
-        {
-          "id": "R4",
           "risk": "Soil recommendations are built on modelled soil, not this field",
           "trigger": "no soil data for this point — the app's generic defaults were used",
           "likelihood": "High",
@@ -9694,7 +9670,7 @@
           "mitigation": "Take one soil sample and send it for a test. It is the cheapest way to replace every estimated soil figure in this report with a measured one."
         },
         {
-          "id": "R5",
+          "id": "R4",
           "risk": "Every area figure is provisional — no property boundary was traced",
           "trigger": "no traced boundary on the map",
           "likelihood": "Medium",
@@ -9702,7 +9678,7 @@
           "mitigation": "Walk and trace the boundary. Until then, treat site area, and anything divided by it, as unconfirmed."
         },
         {
-          "id": "R6",
+          "id": "R5",
           "risk": "The build costs more than the bill of quantities shows",
           "trigger": "2 measured lines in the bill carry no rate",
           "likelihood": "High",
@@ -9710,7 +9686,7 @@
           "mitigation": "Get local quotes for the unpriced lines before committing a budget. The subtotal in the cost section is a floor, not a total."
         },
         {
-          "id": "R7",
+          "id": "R6",
           "risk": "No crop plan — the growing area has no sowing schedule behind it",
           "trigger": "nothing entered in the crop planner",
           "likelihood": "Medium",
@@ -9718,7 +9694,7 @@
           "mitigation": "Build the crop plan before the next sowing window. Beds without a plan sit empty through the months that matter."
         }
       ],
-      "markdown": "## Risk Register\n\nEach row was raised by this site's own data. The trigger column prints the figure and the threshold that produced the rating, so a reader who disagrees can argue with the number rather than the adjective.\n\n| # | Risk | What raised it | Likelihood | Impact | What to do about it |\n|---|------|----------------|------------|--------|---------------------|\n| R1 | Dry-season crop failure from insufficient stored water | 499 mm/yr, below the 500 mm threshold this register uses for a water-limited site | High | High | Build storage before expanding planted area. Size the tanks against the roof catchment figure in the water section, and plant the dry months from stored water only. |\n| R2 | Soil loss from runoff on the slope | 10° slope, at or above the 10° threshold | High | High | Keep the ground covered at all times, and put earthworks on contour above the growing area before breaking any more soil. |\n| R3 | Frost damage to tender crops and young trees | minimum -2 °C, below the 5 °C threshold | Medium | Medium | Keep tender crops off the lowest ground, where cold air settles. Plant frost-sensitive trees after the last frost date, not before. |\n| R4 | Soil recommendations are built on modelled soil, not this field | no soil data for this point — the app's generic defaults were used | High | Medium | Take one soil sample and send it for a test. It is the cheapest way to replace every estimated soil figure in this report with a measured one. |\n| R5 | Every area figure is provisional — no property boundary was traced | no traced boundary on the map | Medium | Medium | Walk and trace the boundary. Until then, treat site area, and anything divided by it, as unconfirmed. |\n| R6 | The build costs more than the bill of quantities shows | 2 measured lines in the bill carry no rate | High | Medium | Get local quotes for the unpriced lines before committing a budget. The subtotal in the cost section is a floor, not a total. |\n| R7 | No crop plan — the growing area has no sowing schedule behind it | nothing entered in the crop planner | Medium | High | Build the crop plan before the next sowing window. Beds without a plan sit empty through the months that matter. |\n"
+      "markdown": "## Risk Register\n\nEach row was raised by this site's own data. The trigger column prints the figure and the threshold that produced the rating, so a reader who disagrees can argue with the number rather than the adjective.\n\n| # | Risk | What raised it | Likelihood | Impact | What to do about it |\n|---|------|----------------|------------|--------|---------------------|\n| R1 | Dry-season crop failure from insufficient stored water | 499 mm/yr, below the 500 mm threshold this register uses for a water-limited site | High | High | Build storage before expanding planted area. Size the tanks against the roof catchment figure in the water section, and plant the dry months from stored water only. |\n| R2 | Soil loss from runoff on the slope | 10° slope, at or above the 10° threshold | High | High | Keep the ground covered at all times, and put earthworks on contour above the growing area before breaking any more soil. |\n| R3 | Soil recommendations are built on modelled soil, not this field | no soil data for this point — the app's generic defaults were used | High | Medium | Take one soil sample and send it for a test. It is the cheapest way to replace every estimated soil figure in this report with a measured one. |\n| R4 | Every area figure is provisional — no property boundary was traced | no traced boundary on the map | Medium | Medium | Walk and trace the boundary. Until then, treat site area, and anything divided by it, as unconfirmed. |\n| R5 | The build costs more than the bill of quantities shows | 2 measured lines in the bill carry no rate | High | Medium | Get local quotes for the unpriced lines before committing a budget. The subtotal in the cost section is a floor, not a total. |\n| R6 | No crop plan — the growing area has no sowing schedule behind it | nothing entered in the crop planner | Medium | High | Build the crop plan before the next sowing window. Beds without a plan sit empty through the months that matter. |\n"
     },
     {
       "name": "none",
@@ -10558,7 +10534,7 @@
         "unpricedBoqLines": 0
       },
       "rows": [],
-      "markdown": "## Risk Register\n\nNo risk in this register's rule set was triggered by this site's data. That is not the same as no risk — it means the specific thresholds this report checks (rainfall, slope, frost, soil basis, traced boundary, unpriced work, crop plan) were all clear.\n"
+      "markdown": "## Risk Register\n\nNo risk rows were produced from the available inputs. Missing evidence and farm frost conditions have not been assessed; this is not a finding of low risk.\n"
     }
   ],
   "location": {

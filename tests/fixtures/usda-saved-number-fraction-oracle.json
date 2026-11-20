@@ -1,0 +1,5756 @@
+{
+  "schemaVersion": 1,
+  "kind": "ADDITIVE_SAVED_ECMASCRIPT_NUMBER_AREA_MAPPING_ORACLE",
+  "scope": "Synthetic arithmetic of current saved-number area representation; no raw-decimal saved geometry proposal or application approval.",
+  "representationContract": {
+    "areaScalarAndRectangleFactors": "ECMAScript Number(original token), followed by String(number).",
+    "spacingAndStand": "Original raw decimal strings retained byte-for-byte; missing null retained.",
+    "scientificNotation": "Canonical Node strings preserved; exact Fraction expanded finite decimals used solely to call original independent parser.",
+    "rectangleProjection": "String(Number(length) * Number(width)) recorded separately; exact canonical-factor product drives arithmetic.",
+    "invalidStand": "Resolver may withhold both stations and plants. Original and mapped station counts are diagnostics, not required UI outputs.",
+    "largeFiniteValues": "Mathematical support does not override app input-size restrictions.",
+    "agriculturalValidation": false
+  },
+  "nodeVersion": "v26.5.0",
+  "bindings": [
+    {
+      "file": "USDA-FRACTION-ORACLE.json",
+      "sha256": "8a8fb0e0e84f80379dbb2e390496948f8f511ae6b53bf5d9efe9b14ab85e863a",
+      "bytes": 40548
+    },
+    {
+      "file": "generate_usda_fraction_oracle.py",
+      "sha256": "b5da1e5aefde0d5a84fb5fa23af790cc0fe7e5365e3d84f387ba07b35033c88a",
+      "bytes": 12578
+    },
+    {
+      "file": "generate_usda_saved_number_oracle.py",
+      "sha256": "ca850892881163541eacd55416b60b1e17dca90bb88ebe4a0761819c04f06505",
+      "bytes": 9567
+    }
+  ],
+  "caseCount": 43,
+  "summary": {
+    "changedExactAreaIds": [
+      "lower-below-one-cell",
+      "lower-above-one-cell",
+      "upper-below-one-cell",
+      "upper-above-one-cell",
+      "count-max-safe",
+      "count-overflow",
+      "count-overflow-zero-stand",
+      "count-plant-overflow",
+      "count-plant-below-overflow",
+      "rectangle-factor-product-not-rounded",
+      "rectangle-factor-product-above"
+    ],
+    "changedAreaTokenIds": [
+      "lower-below-one-cell",
+      "lower-above-one-cell",
+      "upper-below-one-cell",
+      "upper-above-one-cell",
+      "count-max-safe",
+      "count-overflow",
+      "count-overflow-zero-stand",
+      "count-plant-overflow",
+      "count-plant-below-overflow",
+      "rectangle-factor-product-not-rounded",
+      "rectangle-factor-product-above",
+      "rectangle-large-small-exact-factors"
+    ],
+    "projectionDiffersFromSavedFactorsIds": [],
+    "changedCountIds": [
+      "lower-below-one-cell",
+      "upper-below-one-cell",
+      "count-overflow",
+      "count-overflow-zero-stand",
+      "count-plant-overflow",
+      "count-plant-below-overflow",
+      "rectangle-factor-product-not-rounded"
+    ],
+    "invalidStandDiagnosticIds": [
+      "stand-fractional",
+      "stand-negative",
+      "stand-nonfinite",
+      "stand-unsafe",
+      "stand-fractional-rounds-to-one"
+    ]
+  },
+  "cases": [
+    {
+      "id": "lower-one-cell",
+      "originalCase": {
+        "id": "lower-one-cell",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.3483864"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 1,
+          "plantCount": 1,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "1",
+            "denominator": "1"
+          },
+          "exactWholeStations": "1",
+          "exactWholePlants": "1"
+        },
+        "reason": "Exact converted source endpoint and one whole cell."
+      },
+      "savedAreaMapping": {
+        "id": "lower-one-cell",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.3483864",
+            "canonicalToken": "0.3483864",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.3483864}",
+        "projection": {
+          "canonicalToken": "0.3483864",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 1,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "1"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "lower-below-one-cell",
+      "originalCase": {
+        "id": "lower-below-one-cell",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.348386399999999999999999999999"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 0,
+          "plantCount": 0,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "348386399999999999999999999999",
+            "denominator": "1000000000000000000000000000000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "348386399999999999999999999999",
+            "denominator": "348386400000000000000000000000"
+          },
+          "exactWholeStations": "0",
+          "exactWholePlants": "0"
+        },
+        "reason": "A positive decimal just below one cell must floor to zero."
+      },
+      "savedAreaMapping": {
+        "id": "lower-below-one-cell",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.348386399999999999999999999999",
+            "canonicalToken": "0.3483864",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": true,
+            "exactValueChanged": true
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.3483864}",
+        "projection": {
+          "canonicalToken": "0.3483864",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "348386399999999999999999999999",
+          "denominator": "1000000000000000000000000000000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactAreaChanged": true,
+        "anyFieldTokenChanged": true,
+        "anyFieldExactValueChanged": true,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "projectionDiffersFromOriginalExactArea": true,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 1,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "1"
+      },
+      "expectationDifferences": {
+        "exactAreaM2": {
+          "original": {
+            "numerator": "348386399999999999999999999999",
+            "denominator": "1000000000000000000000000000000"
+          },
+          "mapped": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          }
+        },
+        "exactUnflooredCells": {
+          "original": {
+            "numerator": "348386399999999999999999999999",
+            "denominator": "348386400000000000000000000000"
+          },
+          "mapped": {
+            "numerator": "1",
+            "denominator": "1"
+          }
+        },
+        "exactWholePlants": {
+          "original": "0",
+          "mapped": "1"
+        },
+        "exactWholeStations": {
+          "original": "0",
+          "mapped": "1"
+        },
+        "plantCount": {
+          "original": 0,
+          "mapped": 1
+        },
+        "stationCount": {
+          "original": 0,
+          "mapped": 1
+        }
+      },
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "lower-above-one-cell",
+      "originalCase": {
+        "id": "lower-above-one-cell",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.348386400000000000000000000001"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 1,
+          "plantCount": 1,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "348386400000000000000000000001",
+            "denominator": "1000000000000000000000000000000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "348386400000000000000000000001",
+            "denominator": "348386400000000000000000000000"
+          },
+          "exactWholeStations": "1",
+          "exactWholePlants": "1"
+        },
+        "reason": "A decimal just above one cell still gives one station."
+      },
+      "savedAreaMapping": {
+        "id": "lower-above-one-cell",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.348386400000000000000000000001",
+            "canonicalToken": "0.3483864",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": true,
+            "exactValueChanged": true
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.3483864}",
+        "projection": {
+          "canonicalToken": "0.3483864",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "348386400000000000000000000001",
+          "denominator": "1000000000000000000000000000000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactAreaChanged": true,
+        "anyFieldTokenChanged": true,
+        "anyFieldExactValueChanged": true,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "projectionDiffersFromOriginalExactArea": true,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 1,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "1"
+      },
+      "expectationDifferences": {
+        "exactAreaM2": {
+          "original": {
+            "numerator": "348386400000000000000000000001",
+            "denominator": "1000000000000000000000000000000"
+          },
+          "mapped": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          }
+        },
+        "exactUnflooredCells": {
+          "original": {
+            "numerator": "348386400000000000000000000001",
+            "denominator": "348386400000000000000000000000"
+          },
+          "mapped": {
+            "numerator": "1",
+            "denominator": "1"
+          }
+        }
+      },
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "lower-two-survivors",
+      "originalCase": {
+        "id": "lower-two-survivors",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "2",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.5225796"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 1,
+          "plantCount": 2,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "1306449",
+            "denominator": "2500000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "3",
+            "denominator": "2"
+          },
+          "exactWholeStations": "1",
+          "exactWholePlants": "2"
+        },
+        "reason": "floor(1.5 cells)*2 = 2, not floor(3) = 3."
+      },
+      "savedAreaMapping": {
+        "id": "lower-two-survivors",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.5225796"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.5225796",
+            "canonicalToken": "0.5225796",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.5225796}",
+        "projection": {
+          "canonicalToken": "0.5225796",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "2",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.5225796"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "2",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.5225796"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "1306449",
+          "denominator": "2500000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "1306449",
+          "denominator": "2500000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "1306449",
+          "denominator": "2500000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 2,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "1306449",
+          "denominator": "2500000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "3",
+          "denominator": "2"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "lower-subcell-three-survivors",
+      "originalCase": {
+        "id": "lower-subcell-three-survivors",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "3",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.2612898"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 0,
+          "plantCount": 0,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "1306449",
+            "denominator": "5000000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "3",
+            "denominator": "4"
+          },
+          "exactWholeStations": "0",
+          "exactWholePlants": "0"
+        },
+        "reason": "No whole cell means zero plants even with multiple survivors."
+      },
+      "savedAreaMapping": {
+        "id": "lower-subcell-three-survivors",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.2612898"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.2612898",
+            "canonicalToken": "0.2612898",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.2612898}",
+        "projection": {
+          "canonicalToken": "0.2612898",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "3",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.2612898"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "3",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.2612898"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "1306449",
+          "denominator": "5000000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "1306449",
+          "denominator": "5000000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "1306449",
+          "denominator": "5000000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 0,
+        "plantCount": 0,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "1306449",
+          "denominator": "5000000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "3",
+          "denominator": "4"
+        },
+        "exactWholeStations": "0",
+        "exactWholePlants": "0"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "upper-one-cell",
+      "originalCase": {
+        "id": "upper-one-cell",
+        "input": {
+          "withinRowCm": "60.96",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.4645152"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 1,
+          "plantCount": 1,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "145161",
+            "denominator": "312500"
+          },
+          "exactCellM2": {
+            "numerator": "145161",
+            "denominator": "312500"
+          },
+          "exactUnflooredCells": {
+            "numerator": "1",
+            "denominator": "1"
+          },
+          "exactWholeStations": "1",
+          "exactWholePlants": "1"
+        },
+        "reason": "Exact converted source endpoint and one whole cell."
+      },
+      "savedAreaMapping": {
+        "id": "upper-one-cell",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.4645152"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.4645152",
+            "canonicalToken": "0.4645152",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.4645152}",
+        "projection": {
+          "canonicalToken": "0.4645152",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "60.96",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.4645152"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "60.96",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.4645152"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 1,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactCellM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "1"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "upper-below-one-cell",
+      "originalCase": {
+        "id": "upper-below-one-cell",
+        "input": {
+          "withinRowCm": "60.96",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.464515199999999999999999999999"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 0,
+          "plantCount": 0,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "464515199999999999999999999999",
+            "denominator": "1000000000000000000000000000000"
+          },
+          "exactCellM2": {
+            "numerator": "145161",
+            "denominator": "312500"
+          },
+          "exactUnflooredCells": {
+            "numerator": "464515199999999999999999999999",
+            "denominator": "464515200000000000000000000000"
+          },
+          "exactWholeStations": "0",
+          "exactWholePlants": "0"
+        },
+        "reason": "A positive decimal just below one cell must floor to zero."
+      },
+      "savedAreaMapping": {
+        "id": "upper-below-one-cell",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.4645152"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.464515199999999999999999999999",
+            "canonicalToken": "0.4645152",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": true,
+            "exactValueChanged": true
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.4645152}",
+        "projection": {
+          "canonicalToken": "0.4645152",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "60.96",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.4645152"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "60.96",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.4645152"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "464515199999999999999999999999",
+          "denominator": "1000000000000000000000000000000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactAreaChanged": true,
+        "anyFieldTokenChanged": true,
+        "anyFieldExactValueChanged": true,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "projectionDiffersFromOriginalExactArea": true,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 1,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactCellM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "1"
+      },
+      "expectationDifferences": {
+        "exactAreaM2": {
+          "original": {
+            "numerator": "464515199999999999999999999999",
+            "denominator": "1000000000000000000000000000000"
+          },
+          "mapped": {
+            "numerator": "145161",
+            "denominator": "312500"
+          }
+        },
+        "exactUnflooredCells": {
+          "original": {
+            "numerator": "464515199999999999999999999999",
+            "denominator": "464515200000000000000000000000"
+          },
+          "mapped": {
+            "numerator": "1",
+            "denominator": "1"
+          }
+        },
+        "exactWholePlants": {
+          "original": "0",
+          "mapped": "1"
+        },
+        "exactWholeStations": {
+          "original": "0",
+          "mapped": "1"
+        },
+        "plantCount": {
+          "original": 0,
+          "mapped": 1
+        },
+        "stationCount": {
+          "original": 0,
+          "mapped": 1
+        }
+      },
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "upper-above-one-cell",
+      "originalCase": {
+        "id": "upper-above-one-cell",
+        "input": {
+          "withinRowCm": "60.96",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.464515200000000000000000000001"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 1,
+          "plantCount": 1,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "464515200000000000000000000001",
+            "denominator": "1000000000000000000000000000000"
+          },
+          "exactCellM2": {
+            "numerator": "145161",
+            "denominator": "312500"
+          },
+          "exactUnflooredCells": {
+            "numerator": "464515200000000000000000000001",
+            "denominator": "464515200000000000000000000000"
+          },
+          "exactWholeStations": "1",
+          "exactWholePlants": "1"
+        },
+        "reason": "A decimal just above one cell still gives one station."
+      },
+      "savedAreaMapping": {
+        "id": "upper-above-one-cell",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.4645152"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.464515200000000000000000000001",
+            "canonicalToken": "0.4645152",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": true,
+            "exactValueChanged": true
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.4645152}",
+        "projection": {
+          "canonicalToken": "0.4645152",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "60.96",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.4645152"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "60.96",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.4645152"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "464515200000000000000000000001",
+          "denominator": "1000000000000000000000000000000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactAreaChanged": true,
+        "anyFieldTokenChanged": true,
+        "anyFieldExactValueChanged": true,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "projectionDiffersFromOriginalExactArea": true,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 1,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactCellM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "1"
+      },
+      "expectationDifferences": {
+        "exactAreaM2": {
+          "original": {
+            "numerator": "464515200000000000000000000001",
+            "denominator": "1000000000000000000000000000000"
+          },
+          "mapped": {
+            "numerator": "145161",
+            "denominator": "312500"
+          }
+        },
+        "exactUnflooredCells": {
+          "original": {
+            "numerator": "464515200000000000000000000001",
+            "denominator": "464515200000000000000000000000"
+          },
+          "mapped": {
+            "numerator": "1",
+            "denominator": "1"
+          }
+        }
+      },
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "upper-two-survivors",
+      "originalCase": {
+        "id": "upper-two-survivors",
+        "input": {
+          "withinRowCm": "60.96",
+          "survivorsPerStation": "2",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.6967728"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 1,
+          "plantCount": 2,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "625000"
+          },
+          "exactCellM2": {
+            "numerator": "145161",
+            "denominator": "312500"
+          },
+          "exactUnflooredCells": {
+            "numerator": "3",
+            "denominator": "2"
+          },
+          "exactWholeStations": "1",
+          "exactWholePlants": "2"
+        },
+        "reason": "floor(1.5 cells)*2 = 2, not floor(3) = 3."
+      },
+      "savedAreaMapping": {
+        "id": "upper-two-survivors",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.6967728"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.6967728",
+            "canonicalToken": "0.6967728",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.6967728}",
+        "projection": {
+          "canonicalToken": "0.6967728",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "60.96",
+        "survivorsPerStation": "2",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.6967728"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "60.96",
+        "survivorsPerStation": "2",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.6967728"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "625000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "625000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "625000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 2,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "625000"
+        },
+        "exactCellM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactUnflooredCells": {
+          "numerator": "3",
+          "denominator": "2"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "upper-subcell-three-survivors",
+      "originalCase": {
+        "id": "upper-subcell-three-survivors",
+        "input": {
+          "withinRowCm": "60.96",
+          "survivorsPerStation": "3",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.3483864"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 0,
+          "plantCount": 0,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactCellM2": {
+            "numerator": "145161",
+            "denominator": "312500"
+          },
+          "exactUnflooredCells": {
+            "numerator": "3",
+            "denominator": "4"
+          },
+          "exactWholeStations": "0",
+          "exactWholePlants": "0"
+        },
+        "reason": "No whole cell means zero plants even with multiple survivors."
+      },
+      "savedAreaMapping": {
+        "id": "upper-subcell-three-survivors",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.3483864",
+            "canonicalToken": "0.3483864",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.3483864}",
+        "projection": {
+          "canonicalToken": "0.3483864",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "60.96",
+        "survivorsPerStation": "3",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "60.96",
+        "survivorsPerStation": "3",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 0,
+        "plantCount": 0,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactCellM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactUnflooredCells": {
+          "numerator": "3",
+          "denominator": "4"
+        },
+        "exactWholeStations": "0",
+        "exactWholePlants": "0"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "below-lower-binary64-collapse",
+      "originalCase": {
+        "id": "below-lower-binary64-collapse",
+        "input": {
+          "withinRowCm": "45.719999999999999999999999999999",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "1"
+          }
+        },
+        "expected": {
+          "spacing": "invalid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": null,
+          "plantCount": null,
+          "blockers": [
+            "spacing-invalid"
+          ],
+          "exactAreaM2": {
+            "numerator": "1",
+            "denominator": "1"
+          }
+        },
+        "reason": "Exact outside-range token rounds to lower endpoint in binary64."
+      },
+      "savedAreaMapping": {
+        "id": "below-lower-binary64-collapse",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "1",
+            "canonicalToken": "1",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":1}",
+        "projection": {
+          "canonicalToken": "1",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.719999999999999999999999999999",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.719999999999999999999999999999",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "invalid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": null,
+        "plantCount": null,
+        "blockers": [
+          "spacing-invalid"
+        ],
+        "exactAreaM2": {
+          "numerator": "1",
+          "denominator": "1"
+        }
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "above-upper-binary64-collapse",
+      "originalCase": {
+        "id": "above-upper-binary64-collapse",
+        "input": {
+          "withinRowCm": "60.960000000000000000000000000001",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "1"
+          }
+        },
+        "expected": {
+          "spacing": "invalid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": null,
+          "plantCount": null,
+          "blockers": [
+            "spacing-invalid"
+          ],
+          "exactAreaM2": {
+            "numerator": "1",
+            "denominator": "1"
+          }
+        },
+        "reason": "Exact outside-range token rounds to upper endpoint in binary64."
+      },
+      "savedAreaMapping": {
+        "id": "above-upper-binary64-collapse",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "1",
+            "canonicalToken": "1",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":1}",
+        "projection": {
+          "canonicalToken": "1",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "60.960000000000000000000000000001",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "60.960000000000000000000000000001",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "invalid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": null,
+        "plantCount": null,
+        "blockers": [
+          "spacing-invalid"
+        ],
+        "exactAreaM2": {
+          "numerator": "1",
+          "denominator": "1"
+        }
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "inside-lower-binary64-collapse",
+      "originalCase": {
+        "id": "inside-lower-binary64-collapse",
+        "input": {
+          "withinRowCm": "45.720000000000000000000000000001",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "1"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 2,
+          "plantCount": 2,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "1",
+            "denominator": "1"
+          },
+          "exactCellM2": {
+            "numerator": "17419320000000000000000000000000381",
+            "denominator": "50000000000000000000000000000000000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "50000000000000000000000000000000000",
+            "denominator": "17419320000000000000000000000000381"
+          },
+          "exactWholeStations": "2",
+          "exactWholePlants": "2"
+        },
+        "reason": "Exact inside-range token must remain valid."
+      },
+      "savedAreaMapping": {
+        "id": "inside-lower-binary64-collapse",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "1",
+            "canonicalToken": "1",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":1}",
+        "projection": {
+          "canonicalToken": "1",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.720000000000000000000000000001",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.720000000000000000000000000001",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 2,
+        "plantCount": 2,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactCellM2": {
+          "numerator": "17419320000000000000000000000000381",
+          "denominator": "50000000000000000000000000000000000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "50000000000000000000000000000000000",
+          "denominator": "17419320000000000000000000000000381"
+        },
+        "exactWholeStations": "2",
+        "exactWholePlants": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "inside-upper-binary64-collapse",
+      "originalCase": {
+        "id": "inside-upper-binary64-collapse",
+        "input": {
+          "withinRowCm": "60.959999999999999999999999999999",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "1"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 2,
+          "plantCount": 2,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "1",
+            "denominator": "1"
+          },
+          "exactCellM2": {
+            "numerator": "23225759999999999999999999999999619",
+            "denominator": "50000000000000000000000000000000000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "50000000000000000000000000000000000",
+            "denominator": "23225759999999999999999999999999619"
+          },
+          "exactWholeStations": "2",
+          "exactWholePlants": "2"
+        },
+        "reason": "Exact inside-range token must remain valid."
+      },
+      "savedAreaMapping": {
+        "id": "inside-upper-binary64-collapse",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "1",
+            "canonicalToken": "1",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":1}",
+        "projection": {
+          "canonicalToken": "1",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "60.959999999999999999999999999999",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "60.959999999999999999999999999999",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 2,
+        "plantCount": 2,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactCellM2": {
+          "numerator": "23225759999999999999999999999999619",
+          "denominator": "50000000000000000000000000000000000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "50000000000000000000000000000000000",
+          "denominator": "23225759999999999999999999999999619"
+        },
+        "exactWholeStations": "2",
+        "exactWholePlants": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "interior-grower-choice",
+      "originalCase": {
+        "id": "interior-grower-choice",
+        "input": {
+          "withinRowCm": "50",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "1"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 2,
+          "plantCount": 2,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "1",
+            "denominator": "1"
+          },
+          "exactCellM2": {
+            "numerator": "381",
+            "denominator": "1000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "1000",
+            "denominator": "381"
+          },
+          "exactWholeStations": "2",
+          "exactWholePlants": "2"
+        },
+        "reason": "Synthetic grower choice, not a recommended midpoint/default."
+      },
+      "savedAreaMapping": {
+        "id": "interior-grower-choice",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "1",
+            "canonicalToken": "1",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":1}",
+        "projection": {
+          "canonicalToken": "1",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "50",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "50",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 2,
+        "plantCount": 2,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactCellM2": {
+          "numerator": "381",
+          "denominator": "1000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1000",
+          "denominator": "381"
+        },
+        "exactWholeStations": "2",
+        "exactWholePlants": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "equivalent-endpoint-token",
+      "originalCase": {
+        "id": "equivalent-endpoint-token",
+        "input": {
+          "withinRowCm": "045.720000",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "1"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 2,
+          "plantCount": 2,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "1",
+            "denominator": "1"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "1250000",
+            "denominator": "435483"
+          },
+          "exactWholeStations": "2",
+          "exactWholePlants": "2"
+        },
+        "reason": "Equivalent finite decimal has the same exact value."
+      },
+      "savedAreaMapping": {
+        "id": "equivalent-endpoint-token",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "1",
+            "canonicalToken": "1",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":1}",
+        "projection": {
+          "canonicalToken": "1",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "045.720000",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "045.720000",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 2,
+        "plantCount": 2,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1250000",
+          "denominator": "435483"
+        },
+        "exactWholeStations": "2",
+        "exactWholePlants": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "spacing-unknown",
+      "originalCase": {
+        "id": "spacing-unknown",
+        "input": {
+          "withinRowCm": null,
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "1"
+          }
+        },
+        "expected": {
+          "spacing": "unknown",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": null,
+          "plantCount": null,
+          "blockers": [
+            "spacing-missing"
+          ],
+          "exactAreaM2": {
+            "numerator": "1",
+            "denominator": "1"
+          }
+        },
+        "reason": ""
+      },
+      "savedAreaMapping": {
+        "id": "spacing-unknown",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "1",
+            "canonicalToken": "1",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":1}",
+        "projection": {
+          "canonicalToken": "1",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": null,
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": null,
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "unknown",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": null,
+        "plantCount": null,
+        "blockers": [
+          "spacing-missing"
+        ],
+        "exactAreaM2": {
+          "numerator": "1",
+          "denominator": "1"
+        }
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "area-unknown",
+      "originalCase": {
+        "id": "area-unknown",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": null
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "unknown",
+          "stand": "valid",
+          "stationCount": null,
+          "plantCount": null,
+          "blockers": [
+            "area-missing"
+          ]
+        },
+        "reason": ""
+      },
+      "savedAreaMapping": {
+        "id": "area-unknown",
+        "area": null,
+        "fields": {},
+        "savedAreaJson": "null",
+        "projection": null
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": null
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": null
+      },
+      "areaIdentity": {
+        "originalExactM2": null,
+        "savedFactorsExactM2": null,
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": null,
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "unknown",
+        "stand": "valid",
+        "stationCount": null,
+        "plantCount": null,
+        "blockers": [
+          "area-missing"
+        ]
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "stand-unknown",
+      "originalCase": {
+        "id": "stand-unknown",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": null,
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.870966"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "unknown",
+          "stationCount": 2,
+          "plantCount": null,
+          "blockers": [
+            "stand-missing"
+          ],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "500000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "5",
+            "denominator": "2"
+          },
+          "exactWholeStations": "2"
+        },
+        "reason": "Stand is explicit; missing is not zero or one; only nonnegative safe whole numbers qualify."
+      },
+      "savedAreaMapping": {
+        "id": "stand-unknown",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.870966",
+            "canonicalToken": "0.870966",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.870966}",
+        "projection": {
+          "canonicalToken": "0.870966",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": null,
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": null,
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "unknown",
+        "stationCount": 2,
+        "plantCount": null,
+        "blockers": [
+          "stand-missing"
+        ],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "5",
+          "denominator": "2"
+        },
+        "exactWholeStations": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "stand-zero",
+      "originalCase": {
+        "id": "stand-zero",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "0",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.870966"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 2,
+          "plantCount": 0,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "500000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "5",
+            "denominator": "2"
+          },
+          "exactWholeStations": "2",
+          "exactWholePlants": "0"
+        },
+        "reason": "Stand is explicit; missing is not zero or one; only nonnegative safe whole numbers qualify."
+      },
+      "savedAreaMapping": {
+        "id": "stand-zero",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.870966",
+            "canonicalToken": "0.870966",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.870966}",
+        "projection": {
+          "canonicalToken": "0.870966",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "0",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "0",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 2,
+        "plantCount": 0,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "5",
+          "denominator": "2"
+        },
+        "exactWholeStations": "2",
+        "exactWholePlants": "0"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "stand-one",
+      "originalCase": {
+        "id": "stand-one",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.870966"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 2,
+          "plantCount": 2,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "500000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "5",
+            "denominator": "2"
+          },
+          "exactWholeStations": "2",
+          "exactWholePlants": "2"
+        },
+        "reason": "Stand is explicit; missing is not zero or one; only nonnegative safe whole numbers qualify."
+      },
+      "savedAreaMapping": {
+        "id": "stand-one",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.870966",
+            "canonicalToken": "0.870966",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.870966}",
+        "projection": {
+          "canonicalToken": "0.870966",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 2,
+        "plantCount": 2,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "5",
+          "denominator": "2"
+        },
+        "exactWholeStations": "2",
+        "exactWholePlants": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "stand-multiple",
+      "originalCase": {
+        "id": "stand-multiple",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "3",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.870966"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 2,
+          "plantCount": 6,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "500000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "5",
+            "denominator": "2"
+          },
+          "exactWholeStations": "2",
+          "exactWholePlants": "6"
+        },
+        "reason": "Stand is explicit; missing is not zero or one; only nonnegative safe whole numbers qualify."
+      },
+      "savedAreaMapping": {
+        "id": "stand-multiple",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.870966",
+            "canonicalToken": "0.870966",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.870966}",
+        "projection": {
+          "canonicalToken": "0.870966",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "3",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "3",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 2,
+        "plantCount": 6,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "5",
+          "denominator": "2"
+        },
+        "exactWholeStations": "2",
+        "exactWholePlants": "6"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "stand-fractional",
+      "originalCase": {
+        "id": "stand-fractional",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1.5",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.870966"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "invalid",
+          "stationCount": 2,
+          "plantCount": null,
+          "blockers": [
+            "stand-invalid"
+          ],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "500000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "5",
+            "denominator": "2"
+          },
+          "exactWholeStations": "2"
+        },
+        "reason": "Stand is explicit; missing is not zero or one; only nonnegative safe whole numbers qualify."
+      },
+      "savedAreaMapping": {
+        "id": "stand-fractional",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.870966",
+            "canonicalToken": "0.870966",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.870966}",
+        "projection": {
+          "canonicalToken": "0.870966",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1.5",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1.5",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "invalid",
+        "stationCount": 2,
+        "plantCount": null,
+        "blockers": [
+          "stand-invalid"
+        ],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "5",
+          "denominator": "2"
+        },
+        "exactWholeStations": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": true,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "stand-negative",
+      "originalCase": {
+        "id": "stand-negative",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "-1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.870966"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "invalid",
+          "stationCount": 2,
+          "plantCount": null,
+          "blockers": [
+            "stand-invalid"
+          ],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "500000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "5",
+            "denominator": "2"
+          },
+          "exactWholeStations": "2"
+        },
+        "reason": "Stand is explicit; missing is not zero or one; only nonnegative safe whole numbers qualify."
+      },
+      "savedAreaMapping": {
+        "id": "stand-negative",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.870966",
+            "canonicalToken": "0.870966",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.870966}",
+        "projection": {
+          "canonicalToken": "0.870966",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "-1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "-1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "invalid",
+        "stationCount": 2,
+        "plantCount": null,
+        "blockers": [
+          "stand-invalid"
+        ],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "5",
+          "denominator": "2"
+        },
+        "exactWholeStations": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": true,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "stand-nonfinite",
+      "originalCase": {
+        "id": "stand-nonfinite",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "NaN",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.870966"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "invalid",
+          "stationCount": 2,
+          "plantCount": null,
+          "blockers": [
+            "stand-invalid"
+          ],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "500000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "5",
+            "denominator": "2"
+          },
+          "exactWholeStations": "2"
+        },
+        "reason": "Stand is explicit; missing is not zero or one; only nonnegative safe whole numbers qualify."
+      },
+      "savedAreaMapping": {
+        "id": "stand-nonfinite",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.870966",
+            "canonicalToken": "0.870966",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.870966}",
+        "projection": {
+          "canonicalToken": "0.870966",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "NaN",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "NaN",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "invalid",
+        "stationCount": 2,
+        "plantCount": null,
+        "blockers": [
+          "stand-invalid"
+        ],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "5",
+          "denominator": "2"
+        },
+        "exactWholeStations": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": true,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "stand-unsafe",
+      "originalCase": {
+        "id": "stand-unsafe",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "9007199254740992",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.870966"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "invalid",
+          "stationCount": 2,
+          "plantCount": null,
+          "blockers": [
+            "stand-invalid"
+          ],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "500000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "5",
+            "denominator": "2"
+          },
+          "exactWholeStations": "2"
+        },
+        "reason": "Stand is explicit; missing is not zero or one; only nonnegative safe whole numbers qualify."
+      },
+      "savedAreaMapping": {
+        "id": "stand-unsafe",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.870966",
+            "canonicalToken": "0.870966",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.870966}",
+        "projection": {
+          "canonicalToken": "0.870966",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "9007199254740992",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "9007199254740992",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "invalid",
+        "stationCount": 2,
+        "plantCount": null,
+        "blockers": [
+          "stand-invalid"
+        ],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "5",
+          "denominator": "2"
+        },
+        "exactWholeStations": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": true,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "stand-fractional-rounds-to-one",
+      "originalCase": {
+        "id": "stand-fractional-rounds-to-one",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1.000000000000000000000000000001",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.870966"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "invalid",
+          "stationCount": 2,
+          "plantCount": null,
+          "blockers": [
+            "stand-invalid"
+          ],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "500000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "5",
+            "denominator": "2"
+          },
+          "exactWholeStations": "2"
+        },
+        "reason": "Stand is explicit; missing is not zero or one; only nonnegative safe whole numbers qualify."
+      },
+      "savedAreaMapping": {
+        "id": "stand-fractional-rounds-to-one",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.870966",
+            "canonicalToken": "0.870966",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.870966}",
+        "projection": {
+          "canonicalToken": "0.870966",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1.000000000000000000000000000001",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1.000000000000000000000000000001",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.870966"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "invalid",
+        "stationCount": 2,
+        "plantCount": null,
+        "blockers": [
+          "stand-invalid"
+        ],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "500000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "5",
+          "denominator": "2"
+        },
+        "exactWholeStations": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": true,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "stand-max-safe-one-cell",
+      "originalCase": {
+        "id": "stand-max-safe-one-cell",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "9007199254740991",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.3483864"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 1,
+          "plantCount": 9007199254740991,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "1",
+            "denominator": "1"
+          },
+          "exactWholeStations": "1",
+          "exactWholePlants": "9007199254740991"
+        },
+        "reason": ""
+      },
+      "savedAreaMapping": {
+        "id": "stand-max-safe-one-cell",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.3483864",
+            "canonicalToken": "0.3483864",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.3483864}",
+        "projection": {
+          "canonicalToken": "0.3483864",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "9007199254740991",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "9007199254740991",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.3483864"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 9007199254740991,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "9007199254740991"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "stand-max-safe-two-cells-overflow",
+      "originalCase": {
+        "id": "stand-max-safe-two-cells-overflow",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "9007199254740991",
+          "area": {
+            "kind": "measured-m2",
+            "value": "0.6967728"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 2,
+          "plantCount": null,
+          "blockers": [
+            "plant-overflow"
+          ],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "625000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "2",
+            "denominator": "1"
+          },
+          "exactWholeStations": "2",
+          "exactWholePlants": "18014398509481982"
+        },
+        "reason": ""
+      },
+      "savedAreaMapping": {
+        "id": "stand-max-safe-two-cells-overflow",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.6967728"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "0.6967728",
+            "canonicalToken": "0.6967728",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":0.6967728}",
+        "projection": {
+          "canonicalToken": "0.6967728",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "9007199254740991",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.6967728"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "9007199254740991",
+        "area": {
+          "kind": "measured-m2",
+          "value": "0.6967728"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "625000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "625000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "625000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 2,
+        "plantCount": null,
+        "blockers": [
+          "plant-overflow"
+        ],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "625000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "2",
+          "denominator": "1"
+        },
+        "exactWholeStations": "2",
+        "exactWholePlants": "18014398509481982"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "count-max-safe",
+      "originalCase": {
+        "id": "count-max-safe",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "3137985722441896.7869224"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 9007199254740991,
+          "plantCount": 9007199254740991,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "3922482153052370983653",
+            "denominator": "1250000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "9007199254740991",
+            "denominator": "1"
+          },
+          "exactWholeStations": "9007199254740991",
+          "exactWholePlants": "9007199254740991"
+        },
+        "reason": "Use exact rational arithmetic before safe-integer export checks; no clipping or wrapping."
+      },
+      "savedAreaMapping": {
+        "id": "count-max-safe",
+        "area": {
+          "kind": "measured-m2",
+          "value": "3137985722441897"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "3137985722441896.7869224",
+            "canonicalToken": "3137985722441897",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": true,
+            "exactValueChanged": true
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":3137985722441897}",
+        "projection": {
+          "canonicalToken": "3137985722441897",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "3137985722441897"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "3137985722441897"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "3922482153052370983653",
+          "denominator": "1250000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "3137985722441897",
+          "denominator": "1"
+        },
+        "exactAreaChanged": true,
+        "anyFieldTokenChanged": true,
+        "anyFieldExactValueChanged": true,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "3137985722441897",
+          "denominator": "1"
+        },
+        "projectionDiffersFromOriginalExactArea": true,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 9007199254740991,
+        "plantCount": 9007199254740991,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "3137985722441897",
+          "denominator": "1"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "3922482153052371250000",
+          "denominator": "435483"
+        },
+        "exactWholeStations": "9007199254740991",
+        "exactWholePlants": "9007199254740991"
+      },
+      "expectationDifferences": {
+        "exactAreaM2": {
+          "original": {
+            "numerator": "3922482153052370983653",
+            "denominator": "1250000"
+          },
+          "mapped": {
+            "numerator": "3137985722441897",
+            "denominator": "1"
+          }
+        },
+        "exactUnflooredCells": {
+          "original": {
+            "numerator": "9007199254740991",
+            "denominator": "1"
+          },
+          "mapped": {
+            "numerator": "3922482153052371250000",
+            "denominator": "435483"
+          }
+        }
+      },
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "count-overflow",
+      "originalCase": {
+        "id": "count-overflow",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "measured-m2",
+            "value": "3137985722441897.1353088"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": null,
+          "plantCount": null,
+          "blockers": [
+            "station-overflow"
+          ],
+          "exactAreaM2": {
+            "numerator": "245155134565773213696",
+            "denominator": "78125"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "9007199254740992",
+            "denominator": "1"
+          },
+          "exactWholeStations": "9007199254740992"
+        },
+        "reason": "Use exact rational arithmetic before safe-integer export checks; no clipping or wrapping."
+      },
+      "savedAreaMapping": {
+        "id": "count-overflow",
+        "area": {
+          "kind": "measured-m2",
+          "value": "3137985722441897"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "3137985722441897.1353088",
+            "canonicalToken": "3137985722441897",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": true,
+            "exactValueChanged": true
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":3137985722441897}",
+        "projection": {
+          "canonicalToken": "3137985722441897",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "3137985722441897"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "measured-m2",
+          "value": "3137985722441897"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "245155134565773213696",
+          "denominator": "78125"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "3137985722441897",
+          "denominator": "1"
+        },
+        "exactAreaChanged": true,
+        "anyFieldTokenChanged": true,
+        "anyFieldExactValueChanged": true,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "3137985722441897",
+          "denominator": "1"
+        },
+        "projectionDiffersFromOriginalExactArea": true,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 9007199254740991,
+        "plantCount": 9007199254740991,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "3137985722441897",
+          "denominator": "1"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "3922482153052371250000",
+          "denominator": "435483"
+        },
+        "exactWholeStations": "9007199254740991",
+        "exactWholePlants": "9007199254740991"
+      },
+      "expectationDifferences": {
+        "blockers": {
+          "original": [
+            "station-overflow"
+          ],
+          "mapped": []
+        },
+        "exactAreaM2": {
+          "original": {
+            "numerator": "245155134565773213696",
+            "denominator": "78125"
+          },
+          "mapped": {
+            "numerator": "3137985722441897",
+            "denominator": "1"
+          }
+        },
+        "exactUnflooredCells": {
+          "original": {
+            "numerator": "9007199254740992",
+            "denominator": "1"
+          },
+          "mapped": {
+            "numerator": "3922482153052371250000",
+            "denominator": "435483"
+          }
+        },
+        "exactWholePlants": {
+          "original": null,
+          "mapped": "9007199254740991"
+        },
+        "exactWholeStations": {
+          "original": "9007199254740992",
+          "mapped": "9007199254740991"
+        },
+        "plantCount": {
+          "original": null,
+          "mapped": 9007199254740991
+        },
+        "stationCount": {
+          "original": null,
+          "mapped": 9007199254740991
+        }
+      },
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "count-overflow-zero-stand",
+      "originalCase": {
+        "id": "count-overflow-zero-stand",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "0",
+          "area": {
+            "kind": "measured-m2",
+            "value": "3137985722441897.1353088"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": null,
+          "plantCount": null,
+          "blockers": [
+            "station-overflow"
+          ],
+          "exactAreaM2": {
+            "numerator": "245155134565773213696",
+            "denominator": "78125"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "9007199254740992",
+            "denominator": "1"
+          },
+          "exactWholeStations": "9007199254740992"
+        },
+        "reason": "Use exact rational arithmetic before safe-integer export checks; no clipping or wrapping."
+      },
+      "savedAreaMapping": {
+        "id": "count-overflow-zero-stand",
+        "area": {
+          "kind": "measured-m2",
+          "value": "3137985722441897"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "3137985722441897.1353088",
+            "canonicalToken": "3137985722441897",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": true,
+            "exactValueChanged": true
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":3137985722441897}",
+        "projection": {
+          "canonicalToken": "3137985722441897",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "0",
+        "area": {
+          "kind": "measured-m2",
+          "value": "3137985722441897"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "0",
+        "area": {
+          "kind": "measured-m2",
+          "value": "3137985722441897"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "245155134565773213696",
+          "denominator": "78125"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "3137985722441897",
+          "denominator": "1"
+        },
+        "exactAreaChanged": true,
+        "anyFieldTokenChanged": true,
+        "anyFieldExactValueChanged": true,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "3137985722441897",
+          "denominator": "1"
+        },
+        "projectionDiffersFromOriginalExactArea": true,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 9007199254740991,
+        "plantCount": 0,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "3137985722441897",
+          "denominator": "1"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "3922482153052371250000",
+          "denominator": "435483"
+        },
+        "exactWholeStations": "9007199254740991",
+        "exactWholePlants": "0"
+      },
+      "expectationDifferences": {
+        "blockers": {
+          "original": [
+            "station-overflow"
+          ],
+          "mapped": []
+        },
+        "exactAreaM2": {
+          "original": {
+            "numerator": "245155134565773213696",
+            "denominator": "78125"
+          },
+          "mapped": {
+            "numerator": "3137985722441897",
+            "denominator": "1"
+          }
+        },
+        "exactUnflooredCells": {
+          "original": {
+            "numerator": "9007199254740992",
+            "denominator": "1"
+          },
+          "mapped": {
+            "numerator": "3922482153052371250000",
+            "denominator": "435483"
+          }
+        },
+        "exactWholePlants": {
+          "original": null,
+          "mapped": "0"
+        },
+        "exactWholeStations": {
+          "original": "9007199254740992",
+          "mapped": "9007199254740991"
+        },
+        "plantCount": {
+          "original": null,
+          "mapped": 0
+        },
+        "stationCount": {
+          "original": null,
+          "mapped": 9007199254740991
+        }
+      },
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "count-plant-overflow",
+      "originalCase": {
+        "id": "count-plant-overflow",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "2",
+          "area": {
+            "kind": "measured-m2",
+            "value": "1568992861220948.5676544"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 4503599627370496,
+          "plantCount": null,
+          "blockers": [
+            "plant-overflow"
+          ],
+          "exactAreaM2": {
+            "numerator": "122577567282886606848",
+            "denominator": "78125"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "4503599627370496",
+            "denominator": "1"
+          },
+          "exactWholeStations": "4503599627370496",
+          "exactWholePlants": "9007199254740992"
+        },
+        "reason": "Use exact rational arithmetic before safe-integer export checks; no clipping or wrapping."
+      },
+      "savedAreaMapping": {
+        "id": "count-plant-overflow",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1568992861220948.5"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "1568992861220948.5676544",
+            "canonicalToken": "1568992861220948.5",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": true,
+            "exactValueChanged": true
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":1568992861220948.5}",
+        "projection": {
+          "canonicalToken": "1568992861220948.5",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "2",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1568992861220948.5"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "2",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1568992861220948.5"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "122577567282886606848",
+          "denominator": "78125"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "3137985722441897",
+          "denominator": "2"
+        },
+        "exactAreaChanged": true,
+        "anyFieldTokenChanged": true,
+        "anyFieldExactValueChanged": true,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "3137985722441897",
+          "denominator": "2"
+        },
+        "projectionDiffersFromOriginalExactArea": true,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 4503599627370495,
+        "plantCount": 9007199254740990,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "3137985722441897",
+          "denominator": "2"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1961241076526185625000",
+          "denominator": "435483"
+        },
+        "exactWholeStations": "4503599627370495",
+        "exactWholePlants": "9007199254740990"
+      },
+      "expectationDifferences": {
+        "blockers": {
+          "original": [
+            "plant-overflow"
+          ],
+          "mapped": []
+        },
+        "exactAreaM2": {
+          "original": {
+            "numerator": "122577567282886606848",
+            "denominator": "78125"
+          },
+          "mapped": {
+            "numerator": "3137985722441897",
+            "denominator": "2"
+          }
+        },
+        "exactUnflooredCells": {
+          "original": {
+            "numerator": "4503599627370496",
+            "denominator": "1"
+          },
+          "mapped": {
+            "numerator": "1961241076526185625000",
+            "denominator": "435483"
+          }
+        },
+        "exactWholePlants": {
+          "original": "9007199254740992",
+          "mapped": "9007199254740990"
+        },
+        "exactWholeStations": {
+          "original": "4503599627370496",
+          "mapped": "4503599627370495"
+        },
+        "plantCount": {
+          "original": null,
+          "mapped": 9007199254740990
+        },
+        "stationCount": {
+          "original": 4503599627370496,
+          "mapped": 4503599627370495
+        }
+      },
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "count-plant-below-overflow",
+      "originalCase": {
+        "id": "count-plant-below-overflow",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "2",
+          "area": {
+            "kind": "measured-m2",
+            "value": "1568992861220948.219268"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 4503599627370495,
+          "plantCount": 9007199254740990,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "392248215305237054817",
+            "denominator": "250000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "4503599627370495",
+            "denominator": "1"
+          },
+          "exactWholeStations": "4503599627370495",
+          "exactWholePlants": "9007199254740990"
+        },
+        "reason": "Use exact rational arithmetic before safe-integer export checks; no clipping or wrapping."
+      },
+      "savedAreaMapping": {
+        "id": "count-plant-below-overflow",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1568992861220948.2"
+        },
+        "fields": {
+          "value": {
+            "originalToken": "1568992861220948.219268",
+            "canonicalToken": "1568992861220948.2",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": true,
+            "exactValueChanged": true
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"measured-m2\",\"value\":1568992861220948.2}",
+        "projection": {
+          "canonicalToken": "1568992861220948.2",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "2",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1568992861220948.2"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "2",
+        "area": {
+          "kind": "measured-m2",
+          "value": "1568992861220948.2"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "392248215305237054817",
+          "denominator": "250000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "7844964306104741",
+          "denominator": "5"
+        },
+        "exactAreaChanged": true,
+        "anyFieldTokenChanged": true,
+        "anyFieldExactValueChanged": true,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "7844964306104741",
+          "denominator": "5"
+        },
+        "projectionDiffersFromOriginalExactArea": true,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 4503599627370494,
+        "plantCount": 9007199254740988,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "7844964306104741",
+          "denominator": "5"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1961241076526185250000",
+          "denominator": "435483"
+        },
+        "exactWholeStations": "4503599627370494",
+        "exactWholePlants": "9007199254740988"
+      },
+      "expectationDifferences": {
+        "exactAreaM2": {
+          "original": {
+            "numerator": "392248215305237054817",
+            "denominator": "250000"
+          },
+          "mapped": {
+            "numerator": "7844964306104741",
+            "denominator": "5"
+          }
+        },
+        "exactUnflooredCells": {
+          "original": {
+            "numerator": "4503599627370495",
+            "denominator": "1"
+          },
+          "mapped": {
+            "numerator": "1961241076526185250000",
+            "denominator": "435483"
+          }
+        },
+        "exactWholePlants": {
+          "original": "9007199254740990",
+          "mapped": "9007199254740988"
+        },
+        "exactWholeStations": {
+          "original": "4503599627370495",
+          "mapped": "4503599627370494"
+        },
+        "plantCount": {
+          "original": 9007199254740990,
+          "mapped": 9007199254740988
+        },
+        "stationCount": {
+          "original": 4503599627370495,
+          "mapped": 4503599627370494
+        }
+      },
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "rectangle-one-lower-cell",
+      "originalCase": {
+        "id": "rectangle-one-lower-cell",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "rectangle-m",
+            "length": "0.762",
+            "width": "0.4572"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 1,
+          "plantCount": 1,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "1",
+            "denominator": "1"
+          },
+          "exactWholeStations": "1",
+          "exactWholePlants": "1"
+        },
+        "reason": ""
+      },
+      "savedAreaMapping": {
+        "id": "rectangle-one-lower-cell",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.762",
+          "width": "0.4572"
+        },
+        "fields": {
+          "length": {
+            "originalToken": "0.762",
+            "canonicalToken": "0.762",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          },
+          "width": {
+            "originalToken": "0.4572",
+            "canonicalToken": "0.4572",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"rectangle-m\",\"length\":0.762,\"width\":0.4572}",
+        "projection": {
+          "canonicalToken": "0.3483864",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.762",
+          "width": "0.4572"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.762",
+          "width": "0.4572"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 1,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "1"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "rectangle-one-upper-cell",
+      "originalCase": {
+        "id": "rectangle-one-upper-cell",
+        "input": {
+          "withinRowCm": "60.96",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "rectangle-m",
+            "length": "0.762",
+            "width": "0.6096"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 1,
+          "plantCount": 1,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "145161",
+            "denominator": "312500"
+          },
+          "exactCellM2": {
+            "numerator": "145161",
+            "denominator": "312500"
+          },
+          "exactUnflooredCells": {
+            "numerator": "1",
+            "denominator": "1"
+          },
+          "exactWholeStations": "1",
+          "exactWholePlants": "1"
+        },
+        "reason": ""
+      },
+      "savedAreaMapping": {
+        "id": "rectangle-one-upper-cell",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.762",
+          "width": "0.6096"
+        },
+        "fields": {
+          "length": {
+            "originalToken": "0.762",
+            "canonicalToken": "0.762",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          },
+          "width": {
+            "originalToken": "0.6096",
+            "canonicalToken": "0.6096",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"rectangle-m\",\"length\":0.762,\"width\":0.6096}",
+        "projection": {
+          "canonicalToken": "0.4645152",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "60.96",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.762",
+          "width": "0.6096"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "60.96",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.762",
+          "width": "0.6096"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 1,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactCellM2": {
+          "numerator": "145161",
+          "denominator": "312500"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "1"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "rectangle-ten-lower-cells",
+      "originalCase": {
+        "id": "rectangle-ten-lower-cells",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "rectangle-m",
+            "length": "7.62",
+            "width": "0.4572"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 10,
+          "plantCount": 10,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "125000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "10",
+            "denominator": "1"
+          },
+          "exactWholeStations": "10",
+          "exactWholePlants": "10"
+        },
+        "reason": ""
+      },
+      "savedAreaMapping": {
+        "id": "rectangle-ten-lower-cells",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "7.62",
+          "width": "0.4572"
+        },
+        "fields": {
+          "length": {
+            "originalToken": "7.62",
+            "canonicalToken": "7.62",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          },
+          "width": {
+            "originalToken": "0.4572",
+            "canonicalToken": "0.4572",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"rectangle-m\",\"length\":7.62,\"width\":0.4572}",
+        "projection": {
+          "canonicalToken": "3.483864",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "7.62",
+          "width": "0.4572"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "7.62",
+          "width": "0.4572"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "125000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "125000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "125000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 10,
+        "plantCount": 10,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "125000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "10",
+          "denominator": "1"
+        },
+        "exactWholeStations": "10",
+        "exactWholePlants": "10"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "rectangle-factor-product-not-rounded",
+      "originalCase": {
+        "id": "rectangle-factor-product-not-rounded",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "rectangle-m",
+            "length": "0.762",
+            "width": "0.457199999999999999999999999999"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 0,
+          "plantCount": 0,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "174193199999999999999999999999619",
+            "denominator": "500000000000000000000000000000000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "457199999999999999999999999999",
+            "denominator": "457200000000000000000000000000"
+          },
+          "exactWholeStations": "0",
+          "exactWholePlants": "0"
+        },
+        "reason": "Exact product is below one cell although binary64 factors collapse to one cell."
+      },
+      "savedAreaMapping": {
+        "id": "rectangle-factor-product-not-rounded",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.762",
+          "width": "0.4572"
+        },
+        "fields": {
+          "length": {
+            "originalToken": "0.762",
+            "canonicalToken": "0.762",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          },
+          "width": {
+            "originalToken": "0.457199999999999999999999999999",
+            "canonicalToken": "0.4572",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": true,
+            "exactValueChanged": true
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"rectangle-m\",\"length\":0.762,\"width\":0.4572}",
+        "projection": {
+          "canonicalToken": "0.3483864",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.762",
+          "width": "0.4572"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.762",
+          "width": "0.4572"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "174193199999999999999999999999619",
+          "denominator": "500000000000000000000000000000000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactAreaChanged": true,
+        "anyFieldTokenChanged": true,
+        "anyFieldExactValueChanged": true,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "projectionDiffersFromOriginalExactArea": true,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 1,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "1"
+      },
+      "expectationDifferences": {
+        "exactAreaM2": {
+          "original": {
+            "numerator": "174193199999999999999999999999619",
+            "denominator": "500000000000000000000000000000000"
+          },
+          "mapped": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          }
+        },
+        "exactUnflooredCells": {
+          "original": {
+            "numerator": "457199999999999999999999999999",
+            "denominator": "457200000000000000000000000000"
+          },
+          "mapped": {
+            "numerator": "1",
+            "denominator": "1"
+          }
+        },
+        "exactWholePlants": {
+          "original": "0",
+          "mapped": "1"
+        },
+        "exactWholeStations": {
+          "original": "0",
+          "mapped": "1"
+        },
+        "plantCount": {
+          "original": 0,
+          "mapped": 1
+        },
+        "stationCount": {
+          "original": 0,
+          "mapped": 1
+        }
+      },
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "rectangle-factor-product-above",
+      "originalCase": {
+        "id": "rectangle-factor-product-above",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "rectangle-m",
+            "length": "0.762",
+            "width": "0.457200000000000000000000000001"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 1,
+          "plantCount": 1,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "174193200000000000000000000000381",
+            "denominator": "500000000000000000000000000000000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "457200000000000000000000000001",
+            "denominator": "457200000000000000000000000000"
+          },
+          "exactWholeStations": "1",
+          "exactWholePlants": "1"
+        },
+        "reason": ""
+      },
+      "savedAreaMapping": {
+        "id": "rectangle-factor-product-above",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.762",
+          "width": "0.4572"
+        },
+        "fields": {
+          "length": {
+            "originalToken": "0.762",
+            "canonicalToken": "0.762",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          },
+          "width": {
+            "originalToken": "0.457200000000000000000000000001",
+            "canonicalToken": "0.4572",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": true,
+            "exactValueChanged": true
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"rectangle-m\",\"length\":0.762,\"width\":0.4572}",
+        "projection": {
+          "canonicalToken": "0.3483864",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.762",
+          "width": "0.4572"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.762",
+          "width": "0.4572"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "174193200000000000000000000000381",
+          "denominator": "500000000000000000000000000000000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactAreaChanged": true,
+        "anyFieldTokenChanged": true,
+        "anyFieldExactValueChanged": true,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "projectionDiffersFromOriginalExactArea": true,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 1,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "1"
+      },
+      "expectationDifferences": {
+        "exactAreaM2": {
+          "original": {
+            "numerator": "174193200000000000000000000000381",
+            "denominator": "500000000000000000000000000000000"
+          },
+          "mapped": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          }
+        },
+        "exactUnflooredCells": {
+          "original": {
+            "numerator": "457200000000000000000000000001",
+            "denominator": "457200000000000000000000000000"
+          },
+          "mapped": {
+            "numerator": "1",
+            "denominator": "1"
+          }
+        }
+      },
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "rectangle-large-small-exact-factors",
+      "originalCase": {
+        "id": "rectangle-large-small-exact-factors",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "rectangle-m",
+            "length": "762000000000000000000000000000",
+            "width": "0.0000000000000000000000000000004572"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 1,
+          "plantCount": 1,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "1",
+            "denominator": "1"
+          },
+          "exactWholeStations": "1",
+          "exactWholePlants": "1"
+        },
+        "reason": "Exact reciprocal scale factors make one cell; factor magnitude alone is not a count overflow."
+      },
+      "savedAreaMapping": {
+        "id": "rectangle-large-small-exact-factors",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "7.62e+29",
+          "width": "4.572e-31"
+        },
+        "fields": {
+          "length": {
+            "originalToken": "762000000000000000000000000000",
+            "canonicalToken": "7.62e+29",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": true,
+            "exactValueChanged": false
+          },
+          "width": {
+            "originalToken": "0.0000000000000000000000000000004572",
+            "canonicalToken": "4.572e-31",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": true,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"rectangle-m\",\"length\":7.62e+29,\"width\":4.572e-31}",
+        "projection": {
+          "canonicalToken": "0.3483864",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "7.62e+29",
+          "width": "4.572e-31"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "762000000000000000000000000000",
+          "width": "0.0000000000000000000000000000004572"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": true,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 1,
+        "plantCount": 1,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "exactWholeStations": "1",
+        "exactWholePlants": "1"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "rectangle-area-not-packing",
+      "originalCase": {
+        "id": "rectangle-area-not-packing",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "rectangle-m",
+            "length": "0.381",
+            "width": "1.8288"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "valid",
+          "stand": "valid",
+          "stationCount": 2,
+          "plantCount": 2,
+          "blockers": [],
+          "exactAreaM2": {
+            "numerator": "435483",
+            "denominator": "625000"
+          },
+          "exactCellM2": {
+            "numerator": "435483",
+            "denominator": "1250000"
+          },
+          "exactUnflooredCells": {
+            "numerator": "2",
+            "denominator": "1"
+          },
+          "exactWholeStations": "2",
+          "exactWholePlants": "2"
+        },
+        "reason": "Area-based method gives two cells; this does not assert two physically placeable rows or oriented layout."
+      },
+      "savedAreaMapping": {
+        "id": "rectangle-area-not-packing",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.381",
+          "width": "1.8288"
+        },
+        "fields": {
+          "length": {
+            "originalToken": "0.381",
+            "canonicalToken": "0.381",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          },
+          "width": {
+            "originalToken": "1.8288",
+            "canonicalToken": "1.8288",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"rectangle-m\",\"length\":0.381,\"width\":1.8288}",
+        "projection": {
+          "canonicalToken": "0.6967728",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.381",
+          "width": "1.8288"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0.381",
+          "width": "1.8288"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "625000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "625000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "625000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "valid",
+        "stand": "valid",
+        "stationCount": 2,
+        "plantCount": 2,
+        "blockers": [],
+        "exactAreaM2": {
+          "numerator": "435483",
+          "denominator": "625000"
+        },
+        "exactCellM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactUnflooredCells": {
+          "numerator": "2",
+          "denominator": "1"
+        },
+        "exactWholeStations": "2",
+        "exactWholePlants": "2"
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "rectangle-negative-factors",
+      "originalCase": {
+        "id": "rectangle-negative-factors",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "rectangle-m",
+            "length": "-0.762",
+            "width": "-0.4572"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "invalid",
+          "stand": "valid",
+          "stationCount": null,
+          "plantCount": null,
+          "blockers": [
+            "area-invalid"
+          ]
+        },
+        "reason": "Positive product cannot rescue negative physical dimensions."
+      },
+      "savedAreaMapping": {
+        "id": "rectangle-negative-factors",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "-0.762",
+          "width": "-0.4572"
+        },
+        "fields": {
+          "length": {
+            "originalToken": "-0.762",
+            "canonicalToken": "-0.762",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          },
+          "width": {
+            "originalToken": "-0.4572",
+            "canonicalToken": "-0.4572",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"rectangle-m\",\"length\":-0.762,\"width\":-0.4572}",
+        "projection": {
+          "canonicalToken": "0.3483864",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "-0.762",
+          "width": "-0.4572"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "-0.762",
+          "width": "-0.4572"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "435483",
+          "denominator": "1250000"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "invalid",
+        "stand": "valid",
+        "stationCount": null,
+        "plantCount": null,
+        "blockers": [
+          "area-invalid"
+        ]
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    },
+    {
+      "id": "rectangle-zero-dimension",
+      "originalCase": {
+        "id": "rectangle-zero-dimension",
+        "input": {
+          "withinRowCm": "45.72",
+          "survivorsPerStation": "1",
+          "area": {
+            "kind": "rectangle-m",
+            "length": "0",
+            "width": "0.4572"
+          }
+        },
+        "expected": {
+          "spacing": "valid",
+          "area": "invalid",
+          "stand": "valid",
+          "stationCount": null,
+          "plantCount": null,
+          "blockers": [
+            "area-invalid"
+          ]
+        },
+        "reason": ""
+      },
+      "savedAreaMapping": {
+        "id": "rectangle-zero-dimension",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0",
+          "width": "0.4572"
+        },
+        "fields": {
+          "length": {
+            "originalToken": "0",
+            "canonicalToken": "0",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          },
+          "width": {
+            "originalToken": "0.4572",
+            "canonicalToken": "0.4572",
+            "finite": true,
+            "negativeZero": false,
+            "tokenChanged": false,
+            "exactValueChanged": false
+          }
+        },
+        "savedAreaJson": "{\"kind\":\"rectangle-m\",\"length\":0,\"width\":0.4572}",
+        "projection": {
+          "canonicalToken": "0",
+          "finite": true,
+          "negativeZero": false
+        }
+      },
+      "canonicalInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0",
+          "width": "0.4572"
+        }
+      },
+      "fractionCalculationInput": {
+        "withinRowCm": "45.72",
+        "survivorsPerStation": "1",
+        "area": {
+          "kind": "rectangle-m",
+          "length": "0",
+          "width": "0.4572"
+        }
+      },
+      "areaIdentity": {
+        "originalExactM2": {
+          "numerator": "0",
+          "denominator": "1"
+        },
+        "savedFactorsExactM2": {
+          "numerator": "0",
+          "denominator": "1"
+        },
+        "exactAreaChanged": false,
+        "anyFieldTokenChanged": false,
+        "anyFieldExactValueChanged": false,
+        "numberProjectionExactDecimalM2": {
+          "numerator": "0",
+          "denominator": "1"
+        },
+        "projectionDiffersFromOriginalExactArea": false,
+        "projectionDiffersFromSavedFactorsExactProduct": false,
+        "countAuthority": "Canonical scalar decimal or exact product of canonical rectangle-factor decimals; never substitute rounded rectangle projection."
+      },
+      "mappedExpected": {
+        "spacing": "valid",
+        "area": "invalid",
+        "stand": "valid",
+        "stationCount": null,
+        "plantCount": null,
+        "blockers": [
+          "area-invalid"
+        ]
+      },
+      "expectationDifferences": {},
+      "countComparisonPolicy": {
+        "stationCountDiagnosticOnlyWhenStandInvalid": false,
+        "resolverMayHoldBothCountsForInvalidStand": true,
+        "note": "These arithmetic diagnostics do not prescribe resolver admission or UI status. Preserve invalid stand as invalid; do not require station display."
+      }
+    }
+  ],
+  "unchangedOriginalsVerified": true,
+  "notVerified": [
+    "Live implementation",
+    "Frozen successor execution",
+    "UI status precedence",
+    "Agronomic accuracy",
+    "Release gates"
+  ]
+}

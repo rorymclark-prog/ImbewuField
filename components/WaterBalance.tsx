@@ -3,6 +3,7 @@
 import type { LocationData, WaterData } from '@/lib/types';
 import type { SiteSurvey } from '@/lib/site-survey';
 import { useLanguage } from '@/lib/i18n';
+import { annualRainfallMm, sourcedMonthlyRainfall } from '@/lib/climate-temperature';
 import { numberLabel } from '@/lib/format-figures';
 import { LITRES_PER_PERSON_DAY, peopleFromAdults } from '@/lib/household';
 import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT } from '@/lib/roof-runoff';
@@ -54,7 +55,17 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
   const MONTHS = lang === 'zu' ? MONTHS_ZU : MONTHS_EN;
   const MONTH_FULL = MONTH_FULL_KEYS.map(key => t(key));
   const { rainfall } = locationData;
-  if (!rainfall?.monthly?.length) return null;
+  const monthlyRainfall = sourcedMonthlyRainfall(rainfall);
+  const annualRainfall = annualRainfallMm(rainfall);
+  const capacity = waterData?.estVolumeKL ?? 0;
+  if (!monthlyRainfall || annualRainfall === null) return (
+    <div className="space-y-3">
+      <p lang="en" className="text-xs text-[var(--text-secondary)]">The water balance needs a complete monthly rainfall record and an annual total.</p>
+      {Number.isFinite(capacity) && capacity > 0 && (
+        <StatBox label={t('waterBalanceStorageCapacity')} value={litresLabel(capacity, t)} color="#1F4D2B" />
+      )}
+    </div>
+  );
 
   // ── Demand estimates ───────────────────────────────────────────────────────
   const people = peopleFromAdults(survey?.adults);
@@ -66,7 +77,7 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
   const area       = siteAreaHa ?? 0;
   const vegM2      = hasVeg   ? Math.min(area * 10000 * 0.15, 2000) : 0; // up to 15% of land, max 2000m²
   const fruitTrees = hasFruit ? Math.max(5, Math.round(area * 50))  : 0; // ~50 trees/ha
-  const avgMonthlyRain = rainfall.annual / 12;
+  const avgMonthlyRain = annualRainfall / 12;
 
   // ── Catchment (roof harvest) ───────────────────────────────────────────────
   const roofM2 = (survey?.roofMainM2 ?? 0) + (survey?.roofSecondaryM2 ?? 0);
@@ -75,7 +86,7 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
   const efficiency = survey?.hasGutters ? WATER_SHEET_ROOF_RUNOFF_COEFFICIENT : 0.60;
 
   // ── Per-month calculations ─────────────────────────────────────────────────
-  const months = rainfall.monthly.map((mm, i) => {
+  const months = monthlyRainfall.map((mm, i) => {
     const isDry = mm < avgMonthlyRain * 0.7;
 
     // Catchment kL
@@ -90,7 +101,6 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
   });
 
   // ── Tank level simulation ──────────────────────────────────────────────────
-  const capacity = waterData?.estVolumeKL ?? 0;
   const minSafe = Math.max(monthlyHouseKL * 2, capacity * 0.15); // 2 months household or 15% of capacity
 
   // Month-end level: last month's level plus this month's catch minus its demand, held between
@@ -286,12 +296,12 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
   );
 }
 
-function StatBox({ label, value, sub, color }: { label: string; value: string; sub: string; color: string }) {
+function StatBox({ label, value, sub, color }: { label: string; value: string; sub?: string; color: string }) {
   return (
     <div className="rounded-xl p-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
       <p className="text-xs" style={{ color: 'var(--text-muted)', marginBottom: 2 }}>{label}</p>
       <p className="font-display font-semibold" style={{ fontSize: 16, color, lineHeight: 1.2 }}>{value}</p>
-      <p className="text-xs mt-1" style={{ color: 'var(--text-muted)', fontSize: 12 }}>{sub}</p>
+      {sub && <p className="text-xs mt-1" style={{ color: 'var(--text-muted)', fontSize: 12 }}>{sub}</p>}
     </div>
   );
 }

@@ -1,0 +1,30 @@
+  country panel present -> choosing ZA
+MODE desktop chip ok
+
+== Target 1: Carrots 3 kg/week 2027-06..2027-08
+save status: [ 'Buyer targets saved on this device.' ]
+after save: [
+ {
+  "title": "Carrots · 3 kg/week",
+  "coverage": "short",
+  "status": "Not covered yet",
+  "text": "Carrots · 3 kg/week\n\nJun 2027 – Aug 2027 · 92 days\n\nNot covered yet\n\nEdit\n\nTotal demand\n39.4 kg\n\nCrop-cycle area needed\n19.7 m²\n\nBenchmark before allowance\n0 kg\n\nUnallocated volume\n39.4 kg\n\nNo linked picking window: Jun 2027, Jul 2027, Aug 2027.\n\nArea is summed across crop cycles; successive crops may reuse ground. Weekly supply remains unverified."
+ }
+]
+  ticking Reliable irrigation for every crop cycle checked before: false
+  ticking Allow standard bed shares (whole open fields stay whole) checked before: false
+T1 review present: 1
+REVIEW TEXT: "Review 6 proposed sowings\n\nCarrots · 3 kg/week: 40 kg linked cycle capacity after adding (unadjusted benchmark); 0 kg still unallocated. 0.571 kg above total demand. A picking window reaches each requested month; weekly quantities remain unverified. Without them, this target would be 32.4 kg short and Jun 2027, Jul 2027 would have no picking window.\n\nProposed additions — saved crops stay in place\nGrowing area\tCrop\tSow\tShare\nBed 1\tCarrots\tFeb 2027\tWhole area\nBed 2\tCarrots\tFeb 2027\t25%\nBed 2\tCarrots\tMar 2027\t50%\nBed 3\tCarrots\tMar 2027\tWhole area\nBed 2\tCarrots\tApr 2027\t25%\nBed 4\tCarrots\tApr 2027\t33.3%\nCrop-cycle capacity uses the catalogue’s South African planning yields and picking windows. It does not forecast kilograms each week. Check local suitability, losses and actual harvest records before promising deliveries.\nOnly dated plantings linked to each target count towards its volume. Existing crops stay unchanged. Whole open fields and standard bed shares can create surplus. Pack weights and saleable shares use only the grower’s entries; no allowance is applied when none is entered.\nNursery check before adding target sowings\n\nA forecast from crop-plan allocations, not an observation of seedling or empty-tray stock. Months provide coarse envelopes; weekly rows do not imply exact sowing or transplanting dates.\n\nPeak simultaneous trays\n0\n\nPeak simultaneous footprint\n0 m²\n\nSeasonal tray fills\n0\n\nSeasonal fills count repeated uses. Owned containers are compared with the simultaneous peak, so a tray reused later is not counted as a second item of stock.\n\nNo nursery cohorts in this forecast. Accepted dated transplant sowings and active nursery cohorts appear here; direct-sown crops do not need trays.\n\nCoarse monthly planning envelopes, not exact sowing dates. Upper range ends budget nursery space against the grower’s net usable surface. No aisle allowance or geometric packing guarantee is inferred. Incomplete estimates show known assigned demand only; unknown or unassigned demand is not zero and prevents a spare-capacity claim. Shortages on incomplete budgets are known lower bounds. Seasonal tray uses are separate from peak simultaneous stock. Field dates, tasks and yields stay unchanged.\n\nAdd 6 dated sowings to my plan"
+  accepted
+T1 status: ["Reload saved harvest targets to continue editing.","Buyer targets saved on this device.","Dated sowings added. Review their preparation, sowing and harvest tasks in the calendar below. They do not repeat next year."]
+after accept: [
+ {
+  "title": "Carrots · 3 kg/week",
+  "coverage": "covered-may-be-early",
+  "status": "Covered on paper, may be early",
+  "text": "Carrots · 3 kg/week\n\nJun 2027 – Aug 2027 · 92 days\n\nCovered on paper, may be early\n\nEdit\n\nTotal demand\n39.4 kg\n\nCrop-cycle area needed\n19.7 m²\n\nBenchmark before allowance\n40 kg\n\nUnallocated volume\n0 kg\n\n0.571 kg above total demand because whole fields or standard bed shares are used.\n\n4 linked sowings could be ready before Jun 2027, as early as Apr 2027. The plan counts the latest likely month, so a bed is not given away too soon. If the buyer cannot take it early, sow later. Without them, this target would be 32.4 kg short and Jun 2027, Jul 2027 would have no picking window.\n\nArea is summed across crop cycles; successive crops may reuse ground. Weekly supply remains unverified."
+ }
+]
+overflow {"sw":1280,"iw":1280,"over":false}
+
+ERRORS []

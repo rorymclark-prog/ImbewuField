@@ -2,11 +2,13 @@ import { reportElementDisplayName, reportRouteDisplayName } from './report-visua
 import { numberLabel } from '@/lib/format-figures';
 import type { LocationData } from './types';
 import { marketEvidenceLines, type ReportSiteFacts } from './report-site-facts';
-import { buildBillOfQuantities } from './report-boq';
+import { buildBillOfQuantities, pricedBoqSubtotal, mixedPurchaseQuantityNote, mixedPurchaseQuantityReason } from './report-boq';
 import { registerReportPdfFont, reportPdfText } from './report-pdf-font.ts';
 import { recordsMonthShort } from './records-months.ts';
 import type { BoqLine } from './report-boq';
 import type { SavedReport } from './saved-reports';
+import { annualRainfallMm } from './climate-temperature';
+import { reportEvidenceText } from './report-risk';
 
 export type ReportSummaryPage = { title: string; lines: string[] };
 
@@ -30,6 +32,9 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
   const amount = (value: number) => `R ${numberLabel(value, 0)}`;
   const boq = buildBillOfQuantities(facts,language);
   const soilKnown = location.soil.soilSource === 'lab' || location.soil.soilSource === 'soilgrids';
+  // Short exports must not turn the saved outage placeholder into a rainfall
+  // reading after the full report has correctly withheld it.
+  const rainfallMm = annualRainfallMm(location.rainfall);
   const title = facts?.farmName ?? t('Site summary', 'Isifinyezo sendawo');
   const factsLines = [
     `${Math.abs(location.lat).toFixed(4)}°${location.lat < 0 ? 'S' : 'N'}, ${Math.abs(location.lon).toFixed(4)}°${location.lon < 0 ? 'W' : 'E'}`,
@@ -38,7 +43,7 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
     `${t('Vegetable beds', 'Imibhede yemifino')}: ${facts?.design?.bedCount ?? unknown} · ${area(facts?.design?.bedAreaM2)}`,
     `${t('Staple plots', 'Iziza zezitshalo eziyisisekelo')}: ${facts?.design?.plotCount ?? unknown} · ${area(facts?.design?.plotAreaM2)}`,
     t('Mapped space is not confirmation that all of it is currently in production.', 'Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.'),
-    `${t('Annual rainfall estimate', 'Isilinganiso semvula yonyaka')}: ${location.rainfall.annual} mm`,
+    `${t('Annual rainfall estimate', 'Isilinganiso semvula yonyaka')}: ${rainfallMm === null ? unknown : `${rainfallMm} mm`}`,
     `${t('Soil', 'Umhlabathi')}: ${soilKnown ? `pH ${location.soil.ph} · ${location.soil.soilSource === 'lab' ? t('lab result', 'umphumela wokuhlolwa') : t('SoilGrids model; confirm on site', 'imodeli ye-SoilGrids; qinisekisa endaweni')}` : t('Not measured. Arrange a soil test.', 'Awukahlolwa. Hlela ukuhlolwa komhlabathi.')}`,
     `${t('Stated tank capacity in the design', 'Umthamo wamathangi obhalwe emklamweni')}: ${facts?.water ? `${numberLabel(facts.water.statedStorageLitres)} L` : unknown}`,
     t('Capacity is not water currently available; check which tanks are already installed.', 'Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.'),
@@ -57,16 +62,17 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
   ] : [];
   const cropNotes = [t('This is the saved planting plan, not a harvest or sales record. Check actual bed clearance before each next planting.', 'Lolu uhlelo lokutshala olugciniwe, alulona irekhodi lesivuno noma ukuthengisa. Hlola ukuthi umbhede usukhululekile ngaphambi kokutshala okulandelayo.'), t('For seed quantities, use the crop planner’s seed list. Do not buy seed from an inferred yield or monthly availability chart.', 'Ngobuningi bembewu, sebenzisa uhlu lwembewu kuhlelo lwezitshalo. Ungathengi imbewu ngokwesivuno esiqageliwe noma ishadi lokutholakala kwenyanga.')];
   const costLines = [
-    `${t('Priced infrastructure subtotal', 'Isamba sezindleko zengqalasizinda ezinentengo')}: ${boq.lines.length ? amount(boq.subtotalZar) : unknown}`,
-    `${t('Lines awaiting a price or measurement', 'Imigqa elinde intengo noma isilinganiso')}: ${boq.lines.length ? boq.unpricedCount : unknown}`,
+    `${t('Priced infrastructure subtotal', 'Isamba sezindleko zengqalasizinda ezinentengo')}: ${pricedBoqSubtotal(boq) === null ? reportEvidenceText('Not established', language) : amount(boq.subtotalZar)}`,
+    `${boq.lines.some(line => line.unpriced === 'mixed-status') ? reportEvidenceText('Lines needing a purchase quantity, measurement or price', language) : t('Lines awaiting a price or measurement', 'Imigqa elinde intengo noma isilinganiso')}: ${boq.lines.length ? boq.unpricedCount : unknown}`,
     t('Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.', 'Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni.'),
+    ...(boq.lines.some(line => line.unpriced === 'mixed-status') ? [mixedPurchaseQuantityNote(language)] : []),
   ];
   if (pageCount === 1) return [{ title, lines: [...factsLines, `${t('Crop rows', 'Imigqa yezitshalo')}: ${facts?.crop?.plantingCount ?? unknown}`, ...cropLines.slice(0, 4), ...(cropLines.length > 4 ? [t('More crop rows are listed in the five-page or full report.', 'Eminye imigqa yezitshalo isembikweni wamakhasi amahlanu noma ogcwele.')] : []), ...costLines, t('Next: verify the land measurements, soil and water supply; confirm the crop plan and obtain missing quotes.', 'Okulandelayo: qinisekisa izilinganiso zomhlaba, umhlabathi namanzi; qinisekisa uhlelo lwezitshalo uthole namanani angekho.')] }];
   return [
     { title, lines: factsLines },
     { title: t('Crop plan', 'Uhlelo lwezitshalo'), lines: [...productionNotes, ...cropNotes, ...cropLines] },
     { title: t('Water, soil and the mapped site', 'Amanzi, umhlabathi nendawo ebalazwe'), lines: [factsLines[7], ...factsLines.slice(8), `${t('Traced roof', 'Uphahla olulinganisiwe')}: ${area(facts?.roof?.areaM2)}`, ...(facts?.water?.tanks.map(tank => `${reportElementDisplayName(tank.name,tank.defId,language)} ×${tank.count} · ${tank.status === 'existing' ? t('existing', 'ikhona') : tank.status === 'proposed' ? t('planned', 'ihleliwe') : t('mixed status', 'isimo esixubile')}`) ?? []), ...(facts?.design?.routes.map(r => `${reportRouteDisplayName(r.label,r.kind,language)}: ${numberLabel(r.totalLengthM)} m`) ?? []), t('Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases.', 'Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi.')] },
-    { title: t('Bill of quantities', 'Uhlu lobuningi nezindleko'), lines: [...costLines, ...boq.lines.map(l => `${summaryBoqDescription(l, language)} · ${l.quantity} · ${l.zar === null ? l.unpriced === 'existing' ? t('existing; excluded from new spend', 'ikhona; ayifakiwe ezindlekweni ezintsha') : t('quote / measurement needed', 'kudingeka intengo / isilinganiso') : amount(l.zar)}`)] },
+    { title: t('Bill of quantities', 'Uhlu lobuningi nezindleko'), lines: [...costLines, ...boq.lines.map(l => `${summaryBoqDescription(l, language)} · ${l.quantity} · ${l.zar === null ? l.unpriced === 'mixed-status' ? mixedPurchaseQuantityReason(language) : l.unpriced === 'existing' ? t('existing; excluded from new spend', 'ikhona; ayifakiwe ezindlekweni ezintsha') : t('quote / measurement needed', 'kudingeka intengo / isilinganiso') : amount(l.zar)}`)] },
     { title: t('Next actions and checks', 'Izinyathelo ezilandelayo nokuhlola'), lines: [
       ...(facts?.marketEvidence ? [
         ...(translated ? ['Local market evidence (English notes)'] : []),

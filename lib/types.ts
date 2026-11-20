@@ -1,4 +1,5 @@
-import type { MonthlyTemperatureCoverage } from './climate-temperature';
+import type { MonthlyTemperatureCoverage, PowerMonthlyTemperatureReceipt } from './climate-temperature';
+import type { PowerTemperatureSnapshot } from './power-temperature-evidence';
 
 export interface LatLon { lat: number; lon: number }
 
@@ -33,18 +34,27 @@ export interface MonthlyRainfall {
 export interface ClimateData {
   meanTemp: number;
   maxTemp: number;
+  maxTempSource?: 'nasa-power';
   minTemp: number;
   /** Present only when all twelve NASA POWER T2M_MIN values were available. */
   minTempSource?: 'nasa-power';
   monthlyTemp: number[];
   /** Parser coverage of raw monthly means, before display substitutes; not a farm observation. */
   monthlyTempCoverage?: MonthlyTemperatureCoverage;
+  /** Optional raw metric provenance; older caches have no receipt, not an inferred period. */
+  monthlyTempReference?: PowerMonthlyTemperatureReceipt;
+  /** Retained response used to validate the metric receipt after cache/JSON transport. */
+  monthlyTempSnapshot?: PowerTemperatureSnapshot;
   solarRadiation: number;
+  solarSource?: 'nasa-power';
   koppen: string;
   koppenDesc: string;
   /** One sentence a grower can act on, from the Köppen class. Optional — stored climate predates it. */
   koppenNote?: string;
-  windSpeed: number;        // m/s, annual mean at 2m
+  windSpeed: number;        // m/s estimate at 2m; time coverage may be partial
+  /** Present only when at least one valid WS2M month was returned; absent means unknown provenance. */
+  windSource?: 'nasa-power';
+  windDirectionSource?: 'nasa-power';
   windFromSummer: string;   // compass label wind blows FROM in summer (DJF)
   windFromWinter: string;   // compass label wind blows FROM in winter (JJA)
 }

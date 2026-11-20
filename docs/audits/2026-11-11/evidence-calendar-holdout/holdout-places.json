@@ -1,0 +1,370 @@
+{
+ "_about": "Places held back from the design of the sowing-calendar rule, chosen and written here BEFORE any climate data was fetched for them. Coordinates are town centres typed from memory to two decimals; an error of a few kilometres selects a neighbouring grid cell and is accepted. guideRegion is the auditor's assignment to a column of the SANSOR regional guide, made before seeing any result; null means the place is not scored against the guide.",
+ "ruleUnderTest": {
+  "commit": "84e42a24e48932e386eaae58343fc01eb51ded8e",
+  "function": "lib/site-climate.ts siteClimateFromLocationData -> lib/koppen-global.ts sowingCalendarFor",
+  "frozen": "No threshold, month or rule may change between this commit and the reported result. If one changes afterwards, these places become regression evidence and a new held-back set is needed."
+ },
+ "independentRecord": "ERA5 daily minimum 2 m air temperature, 2001-01-01 to 2020-12-31, Open-Meteo archive, nearest grid cell. A gridded estimate, not a station or a farm.",
+ "criteria": [
+  {
+   "id": "H-A",
+   "rule": "A place on the hot, frost-free calendar ('all-year') must have no air-frost day in the 20 years and a lowest daily minimum above 0 C."
+  },
+  {
+   "id": "H-B",
+   "rule": "A place on the light-frost calendar ('mild-frost') must average fewer than 0.5 air-frost days a year."
+  },
+  {
+   "id": "H-C",
+   "rule": "A place averaging 1 or more air-frost days a year must be on 'summer' (hard frost) or 'winter' (Western Cape)."
+  },
+  {
+   "id": "H-D",
+   "rule": "A place with no frost year, a lowest daily minimum above 0 C and an app record minimum above 0 C must not be on 'summer'."
+  }
+ ],
+ "reportedNotJudged": [
+  "whether NASA POWER and ERA5 monthly values give the same calendar",
+  "close-call flags",
+  "month overlap with the regional guide per place and region, and every crop-and-place pair sharing no month (overlap with one secondary guide is not an accuracy figure)"
+ ],
+ "places": [
+  {
+   "name": "Hoedspruit",
+   "lat": -24.35,
+   "lon": 30.96,
+   "guideRegion": "Lowveld"
+  },
+  {
+   "name": "Malelane",
+   "lat": -25.48,
+   "lon": 31.52,
+   "guideRegion": "Lowveld"
+  },
+  {
+   "name": "Giyani",
+   "lat": -23.31,
+   "lon": 30.71,
+   "guideRegion": "Lowveld"
+  },
+  {
+   "name": "Hazyview",
+   "lat": -25.05,
+   "lon": 31.13,
+   "guideRegion": "Lowveld"
+  },
+  {
+   "name": "Barberton",
+   "lat": -25.79,
+   "lon": 31.05,
+   "guideRegion": "Lowveld"
+  },
+  {
+   "name": "Letsitele",
+   "lat": -23.88,
+   "lon": 30.4,
+   "guideRegion": "Lowveld"
+  },
+  {
+   "name": "Mokopane",
+   "lat": -24.19,
+   "lon": 29.01,
+   "guideRegion": "Middleveld"
+  },
+  {
+   "name": "Bela-Bela",
+   "lat": -24.88,
+   "lon": 28.29,
+   "guideRegion": "Middleveld"
+  },
+  {
+   "name": "Brits",
+   "lat": -25.63,
+   "lon": 27.78,
+   "guideRegion": "Middleveld"
+  },
+  {
+   "name": "Zeerust",
+   "lat": -25.54,
+   "lon": 26.08,
+   "guideRegion": "Middleveld"
+  },
+  {
+   "name": "Thabazimbi",
+   "lat": -24.59,
+   "lon": 27.41,
+   "guideRegion": "Middleveld"
+  },
+  {
+   "name": "eMalahleni",
+   "lat": -25.87,
+   "lon": 29.23,
+   "guideRegion": "Highveld"
+  },
+  {
+   "name": "Standerton",
+   "lat": -26.95,
+   "lon": 29.24,
+   "guideRegion": "Highveld"
+  },
+  {
+   "name": "Kroonstad",
+   "lat": -27.65,
+   "lon": 27.23,
+   "guideRegion": "Highveld"
+  },
+  {
+   "name": "Welkom",
+   "lat": -27.98,
+   "lon": 26.73,
+   "guideRegion": "Highveld"
+  },
+  {
+   "name": "Klerksdorp",
+   "lat": -26.87,
+   "lon": 26.67,
+   "guideRegion": "Highveld"
+  },
+  {
+   "name": "Lichtenburg",
+   "lat": -26.15,
+   "lon": 26.16,
+   "guideRegion": "Highveld"
+  },
+  {
+   "name": "Harrismith",
+   "lat": -28.27,
+   "lon": 29.13,
+   "guideRegion": "Highveld"
+  },
+  {
+   "name": "Vereeniging",
+   "lat": -26.67,
+   "lon": 27.93,
+   "guideRegion": "Highveld"
+  },
+  {
+   "name": "Middelburg (Mpumalanga)",
+   "lat": -25.77,
+   "lon": 29.46,
+   "guideRegion": "Highveld"
+  },
+  {
+   "name": "Port Shepstone",
+   "lat": -30.74,
+   "lon": 30.45,
+   "guideRegion": "KZN & Coast"
+  },
+  {
+   "name": "KwaDukuza",
+   "lat": -29.33,
+   "lon": 31.29,
+   "guideRegion": "KZN & Coast"
+  },
+  {
+   "name": "Mtubatuba",
+   "lat": -28.41,
+   "lon": 32.18,
+   "guideRegion": "KZN & Coast"
+  },
+  {
+   "name": "Jozini",
+   "lat": -27.43,
+   "lon": 32.07,
+   "guideRegion": "KZN & Coast"
+  },
+  {
+   "name": "Eshowe",
+   "lat": -28.89,
+   "lon": 31.47,
+   "guideRegion": "KZN & Coast"
+  },
+  {
+   "name": "Estcourt",
+   "lat": -29.0,
+   "lon": 29.87,
+   "guideRegion": "KZN Midlands"
+  },
+  {
+   "name": "Ladysmith",
+   "lat": -28.56,
+   "lon": 29.78,
+   "guideRegion": "KZN Midlands"
+  },
+  {
+   "name": "Greytown",
+   "lat": -29.06,
+   "lon": 30.59,
+   "guideRegion": "KZN Midlands"
+  },
+  {
+   "name": "Ixopo",
+   "lat": -30.15,
+   "lon": 30.06,
+   "guideRegion": "KZN Midlands"
+  },
+  {
+   "name": "Dundee",
+   "lat": -28.16,
+   "lon": 30.23,
+   "guideRegion": "KZN Midlands"
+  },
+  {
+   "name": "Makhanda",
+   "lat": -33.31,
+   "lon": 26.53,
+   "guideRegion": "E Cape & Little Karoo"
+  },
+  {
+   "name": "Qonce",
+   "lat": -32.88,
+   "lon": 27.39,
+   "guideRegion": "E Cape & Little Karoo"
+  },
+  {
+   "name": "Aliwal North",
+   "lat": -30.69,
+   "lon": 26.71,
+   "guideRegion": "E Cape & Little Karoo"
+  },
+  {
+   "name": "Cradock",
+   "lat": -32.17,
+   "lon": 25.62,
+   "guideRegion": "E Cape & Little Karoo"
+  },
+  {
+   "name": "Butterworth",
+   "lat": -32.33,
+   "lon": 28.15,
+   "guideRegion": "E Cape & Little Karoo"
+  },
+  {
+   "name": "Lusikisiki",
+   "lat": -31.36,
+   "lon": 29.57,
+   "guideRegion": "E Cape & Little Karoo"
+  },
+  {
+   "name": "Jeffreys Bay",
+   "lat": -34.05,
+   "lon": 24.92,
+   "guideRegion": "E Cape & Little Karoo"
+  },
+  {
+   "name": "Paarl",
+   "lat": -33.73,
+   "lon": 18.97,
+   "guideRegion": "W Cape & South Coast"
+  },
+  {
+   "name": "Malmesbury",
+   "lat": -33.46,
+   "lon": 18.73,
+   "guideRegion": "W Cape & South Coast"
+  },
+  {
+   "name": "Swellendam",
+   "lat": -34.02,
+   "lon": 20.44,
+   "guideRegion": "W Cape & South Coast"
+  },
+  {
+   "name": "Hermanus",
+   "lat": -34.42,
+   "lon": 19.24,
+   "guideRegion": "W Cape & South Coast"
+  },
+  {
+   "name": "Mossel Bay",
+   "lat": -34.18,
+   "lon": 22.14,
+   "guideRegion": "W Cape & South Coast"
+  },
+  {
+   "name": "Knysna",
+   "lat": -34.04,
+   "lon": 23.05,
+   "guideRegion": "W Cape & South Coast"
+  },
+  {
+   "name": "Clanwilliam",
+   "lat": -32.18,
+   "lon": 18.89,
+   "guideRegion": "W Cape & South Coast"
+  },
+  {
+   "name": "Robertson",
+   "lat": -33.8,
+   "lon": 19.88,
+   "guideRegion": "W Cape & South Coast"
+  },
+  {
+   "name": "Caledon",
+   "lat": -34.23,
+   "lon": 19.43,
+   "guideRegion": "W Cape & South Coast"
+  },
+  {
+   "name": "De Aar",
+   "lat": -30.65,
+   "lon": 24.01,
+   "guideRegion": "N Cape & Great Karoo"
+  },
+  {
+   "name": "Calvinia",
+   "lat": -31.47,
+   "lon": 19.78,
+   "guideRegion": "N Cape & Great Karoo"
+  },
+  {
+   "name": "Prieska",
+   "lat": -29.67,
+   "lon": 22.75,
+   "guideRegion": "N Cape & Great Karoo"
+  },
+  {
+   "name": "Kakamas",
+   "lat": -28.78,
+   "lon": 20.62,
+   "guideRegion": "N Cape & Great Karoo"
+  },
+  {
+   "name": "Colesberg",
+   "lat": -30.72,
+   "lon": 25.1,
+   "guideRegion": "N Cape & Great Karoo"
+  },
+  {
+   "name": "Victoria West",
+   "lat": -31.4,
+   "lon": 23.12,
+   "guideRegion": "N Cape & Great Karoo"
+  },
+  {
+   "name": "Vryburg",
+   "lat": -26.95,
+   "lon": 24.73,
+   "guideRegion": "N Cape & Great Karoo"
+  },
+  {
+   "name": "Pongola",
+   "lat": -27.38,
+   "lon": 31.62,
+   "guideRegion": null
+  },
+  {
+   "name": "Ulundi",
+   "lat": -28.33,
+   "lon": 31.42,
+   "guideRegion": null
+  },
+  {
+   "name": "Makhado",
+   "lat": -23.04,
+   "lon": 29.9,
+   "guideRegion": null
+  }
+ ]
+}

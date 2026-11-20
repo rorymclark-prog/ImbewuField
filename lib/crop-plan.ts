@@ -964,12 +964,14 @@ export function cropPlanWriteCandidateIsLossless(candidate: CropPlanState, prepa
   } catch { return false; }
 }
 
-function existingExactDensitySourcesPreserved(previous: CropPlanState, candidate: CropPlanState): boolean {
+function existingCountOriginsPreserved(previous: CropPlanState, candidate: CropPlanState): boolean {
   const next = candidate.growerPlanningProfiles ?? [];
   return (previous.growerPlanningProfiles ?? []).every(profile => {
-    if (!profile.exactDensitySources) return true;
+    if (!profile.exactDensitySources && !profile.plantCountOrigin && !profile.provisionalOrigin) return true;
     const retained = next.find(row => row.profileId === profile.profileId);
-    return !!retained && cropPlanDataKey(retained.exactDensitySources ?? null) === cropPlanDataKey(profile.exactDensitySources);
+    return !!retained && cropPlanDataKey(retained.exactDensitySources ?? null) === cropPlanDataKey(profile.exactDensitySources ?? null)
+      && cropPlanDataKey(retained.plantCountOrigin ?? null) === cropPlanDataKey(profile.plantCountOrigin ?? null)
+      && cropPlanDataKey(retained.provisionalOrigin ?? null) === cropPlanDataKey(profile.provisionalOrigin ?? null);
   });
 }
 
@@ -991,6 +993,10 @@ function growerProfileChangeIsExplicit(previous: CropPlanState, candidate: CropP
     || cropPlanDataKey(expected) !== cropPlanDataKey(prior)) return false;
   if (request.kind === 'remove') return !next;
   if (!next) return false;
+  // The existing editor has no spacing-basis switch. Even an otherwise valid
+  // edit permit cannot discard or rewrite the original denominator/area choice.
+  if (prior.plantCountOrigin && cropPlanDataKey(prior.plantCountOrigin) !== cropPlanDataKey(next.plantCountOrigin ?? null)) return false;
+  if (prior.provisionalOrigin && cropPlanDataKey(prior.provisionalOrigin) !== cropPlanDataKey(next.provisionalOrigin ?? null)) return false;
   // An intentional edit may replace origin with newly validated source, or
   // explicitly clear the density. A still-provided Number cannot justify
   // silently falling back from its original source digits to legacy arithmetic.
@@ -1108,7 +1114,7 @@ export function saveCropPlanWithReceipt(s: CropPlanState, options?: { readonly g
         || loaded.token !== profileChange.token || cropPlanDataKey(loaded.book) !== profileChange.loadedKey
         || cropPlanDataKey(saved) !== profileChange.candidateKey
         || !cropPlanWriteAdmissionMatches(profileChange.admission, JSON.stringify(loaded.book), profileChange.token)) return { saved: false, token: null };
-    } else if (!existingExactDensitySourcesPreserved(loaded.book, saved)) return { saved: false, token: null };
+    } else if (!existingCountOriginsPreserved(loaded.book, saved)) return { saved: false, token: null };
     if (sample) {
       const { token } = sampleCropPlanSnapshot(saved);
       if (profileChange && (profileChange.revoked || typeof window === 'undefined' || window !== profileChange.win)) return { saved: false, token: null };
@@ -1456,12 +1462,19 @@ function benchmarkAreaConflictBeds(
     if (period && (datedStart === null || datedStart > period.endIndex - period.startIndex
       || (oneTime && datedSpan > 0 && datedStart + datedSpan - 1 < 0))) continue;
     const fraction = planting.areaFraction ?? 1;
-    // A share above a whole bed is only detectable as invalid where the
-    // rolling walk runs; the year-free walk has always let it through into the
-    // month totals instead. Keep each branch's own rule.
-    const invalidShare = nowMonth !== undefined || period
-      ? (!Number.isFinite(fraction) || fraction <= 0 || fraction > 1.0001)
-      : (!Number.isFinite(fraction) || fraction <= 0);
+    // A share above a whole bed is flagged as invalid where the rolling walk
+    // runs. The year-free walk has always let a RECURRING oversized row through
+    // into the month totals instead, which flag it there; that rule is kept.
+    // A ONE-TIME row never reaches those totals (it is skipped below), so on the
+    // year-free path nothing checked its share at all: a saved `once` row with a
+    // share of 2.5 produced no conflict and a kilogram benchmark scaled to two
+    // and a half beds, while the rolling path withheld the same plan
+    // (independent review of 11 November 2026, Argon F-09 reproduced by Codex).
+    // Its own share is therefore checked here.
+    const oversized = fraction > 1.0001;
+    const skippedByYearFreeWalk = typeof planting.once === 'string';
+    const invalidShare = !Number.isFinite(fraction) || fraction <= 0
+      || (oversized && (nowMonth !== undefined || !!period || skippedByYearFreeWalk));
     if (invalidShare) {
       const record = recordFor(bed.id);
       record.plantingIds.add(planting.id);

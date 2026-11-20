@@ -1,3 +1,4 @@
+import { provisionalCalendarFixture } from './provisional-calendar-fixture.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
@@ -154,6 +155,48 @@ function events(content: string) {
   });
 }
 const icsText = (value: string) => value.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r\n|\r|\n/g, '\\n');
+
+for (const mode of ['ordinary', 'prop', 'device'] as const) test(`${mode} individual calendar keeps the same event identity and qualifications as its bulk counterpart`, async () => {
+  if (mode === 'device') assert.equal(enterSampleMode(), true);
+  const transport = delivery(), ui = mount(mode === 'prop' ? { sample: true } : {});
+  try {
+    await invoke(ui.handler('Download planned-date calendar'));
+    await invoke(ui.handler());
+    assert.equal(transport.downloads.length, 2);
+    const singleContent = await transport.blobs[0].text(), bulkContent = await transport.blobs[1].text();
+    const single = events(singleContent), bulk = events(bulkContent);
+    assert.equal(single.length, 1); assert.deepEqual(single[0], bulk[0]);
+    if (mode === 'ordinary') {
+      assert.doesNotMatch(singleContent, /DEMO|demo-/);
+      assert.doesNotMatch(transport.downloads[0].filename, /DEMO/);
+    } else {
+      assert.match(transport.downloads[0].filename, /^DEMO-/);
+      assert.match(single[0].uid!, /^demo-/);
+      assert.match(single[0].summary!, /^DEMO/); assert.match(single[0].description!, /^DEMO/);
+      assert.match(singleContent.replace(/\r\n[ \t]/g, ''), /X-WR-CALNAME:DEMO/);
+    }
+    assert.equal(local.writes, 0);
+  } finally { ui.dispose(); transport.restore(); exitSampleMode(); }
+});
+
+for (const transition of ['sample-prop', 'device-demo', 'checker', 'current-callback'] as const) {
+  test(`individual calendar cannot revive after a ${transition} round trip while checking its source`, async () => {
+    const gate = deferred<boolean>(), transport = delivery(), ui = mount({ checkCurrent: () => gate.promise });
+    try {
+      const old = ui.handler('Download planned-date calendar'), original = ui.props;
+      await invoke(old);
+      if (transition === 'sample-prop') { ui.update({ sample: true }); ui.update({ sample: original.sample }); }
+      if (transition === 'device-demo') { act(() => { enterSampleMode(); }); act(() => exitSampleMode()); }
+      if (transition === 'checker') { ui.update({ checkCurrent: async () => true }); ui.update({ checkCurrent: original.checkCurrent }); }
+      if (transition === 'current-callback') { ui.update({ isCurrent: () => false }); ui.update({ isCurrent: original.isCurrent }); }
+      await resolveCheck(gate);
+      await invoke(old);
+      assert.equal(transport.downloads.length, 0); assert.equal(transport.blobs.length, 0);
+      assert.equal(local.writes, 0);
+      await invoke(ui.handler('Download planned-date calendar')); assert.equal(transport.downloads.length, 1);
+    } finally { ui.dispose(); transport.restore(); exitSampleMode(); }
+  });
+}
 
 test('one bulk action downloads every displayed accepted event, including done items, with exact one-time UTC dates', async () => {
   const state = ready();
@@ -443,3 +486,33 @@ for (const action of ['Mark checklist item done', 'Download planned-date calenda
     });
   }
 }
+
+
+test('actual individual and detached bulk downloads retain a provisional cycle’s public evidence and current-source guards', async () => {
+  const f = await provisionalCalendarFixture(), state = { status: 'ready' as const,
+    book: { version: 1 as const, plantings: [f.row], updatedAt: 1 }, contexts: [f.context], heldSources: [] };
+  const transport = delivery(), ui = mount({ state, sample: false });
+  try {
+    assert.match(ui.text(), /Provisional evidence and limits/); assert.match(ui.text(), /mipmcar9781.pdf/);
+    await invoke(ui.handler()); assert.equal(transport.blobs.length, 1);
+    const all = await transport.blobs[0].text(); assert.equal(events(all).length, 6);
+    for (const event of events(all)) { assert.match(event.description!, /provisional planned cycle/); assert.match(event.description!, /mipmcar9781.pdf/); }
+    await invoke(ui.handler('Download planned-date calendar')); assert.equal(transport.blobs.length, 2);
+    assert.match((await transport.blobs[1].text()).replace(/\r\n[ \t]/g, ''), /mipmcar9781.pdf/);
+    ui.update({ state: { ...state, contexts: [{ ...f.context, provisionalContext: { ...f.context.provisionalContext, countryCode: 'GB' } }] } });
+    assert.doesNotMatch(ui.text(), /mipmcar9781.pdf/); assert.equal(ui.buttons(allLabel).length, 0);
+  } finally { transport.restore(); ui.dispose(); }
+});
+
+test('pending provisional calendar cannot deliver its captured evidence after a country/source round trip', async () => {
+  const f = await provisionalCalendarFixture(), state = { status: 'ready' as const,
+    book: { version: 1 as const, plantings: [f.row], updatedAt: 1 }, contexts: [f.context], heldSources: [] };
+  const gate = deferred<boolean>(), transport = delivery(), ui = mount({ state, checkCurrent: () => gate.promise });
+  try {
+    const old = ui.handler(); await invoke(old); assert.equal(transport.blobs.length, 0);
+    ui.update({ state: { ...state, contexts: [{ ...f.context, provisionalContext: { ...f.context.provisionalContext, countryCode: 'GB' } }] } });
+    ui.update({ state }); await resolveCheck(gate);
+    assert.equal(transport.blobs.length, 0); assert.equal(transport.downloads.length, 0);
+    await invoke(old); assert.equal(transport.downloads.length, 0);
+  } finally { transport.restore(); ui.dispose(); }
+});

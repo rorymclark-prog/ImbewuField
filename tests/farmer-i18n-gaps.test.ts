@@ -122,7 +122,10 @@ test('farmer-facing English source stays present while only isiZulu gains marked
   // is marked by the page-level note instead of inside the pill.
   assert.doesNotMatch(farmerPageSource, /designStudioZuluDraftBadge['")][\s\S]{0,40}English: Design Studio/, 'the Design Studio draft marker must not grow the nav pill to two lines any more');
   assert.match(dataPanelSource, /<LanguageDraftNote lang=\{lang\} scope="farmer" \/>/, 'the Design Studio draft is not visibly marked');
-  assert.match(dataPanelSource, /translate\('en', imp\.key\)/, 'soil advice must retain the English source even if a draft is added');
+  // Unsupported soil prescriptions were withdrawn; retaining historical draft
+  // dictionaries must not reactivate them on the farmer's panel.
+  assert.doesNotMatch(dataPanelSource, /imp\.key|soilImprovementPhAcidic/);
+  assert.match(dataPanelSource, /These soil figures do not establish a soil health score or a compaction diagnosis\./);
   const zu = blocks.find((b) => b.locale === 'zu')!.block;
   for (const key of ENGLISH_SOURCE_KEYS.filter((key) => key.startsWith('soilImprovement'))) {
     assert.match(zu, new RegExp(`^  ${key}ZuDraft: ['"]`, 'm'), `${key} has no marked isiZulu draft`);
@@ -152,8 +155,10 @@ test('the remaining 29 English UI sources have marked isiZulu drafts and keep th
       assert.doesNotMatch(block, new RegExp(`^  ${key}ZuDraft:`, 'm'), `${locale} must not use an unreviewed isiZulu draft`);
     }
   }
-  assert.match(dataPanelSource, /soilImprovementZuluDraftNotice/);
-  assert.match(dataPanelSource, /translate\('en', imp\.key\)/, 'soil advice must keep the English wording beside each draft');
+  assert.doesNotMatch(dataPanelSource, /soilImprovementZuluDraftNotice|imp\.key/,
+    'historical soil drafts remain inactive after their unsupported advice was withdrawn');
+  assert.match(dataPanelSource, /<p lang="en"[^>]*>[\s\S]*?These soil figures do not establish/,
+    'the replacement source explanation must be explicitly English, not an unreviewed translated diagnosis');
   for (const key of ['elementCountFewer', 'elementCountMore']) {
     assert.match(
       mapSource,
@@ -297,7 +302,7 @@ test('the Design Studio pill, Details/Results toggle, and close controls read fr
   assert.doesNotMatch(farmerPageSource, /^\s+tap to close\s*$/m, 'bottom-sheet close label regressed to a hard-coded string');
 });
 
-test('soil "Priority improvements" advice is built from translated fixed phrases with interpolated values, not raw template literals', () => {
+test('withdrawn soil prescriptions stay inactive while historical source and draft bindings are preserved', () => {
   const soilKeys = [
     'soilImprovementPhAcidic',
     'soilImprovementPhAlkaline',
@@ -307,11 +312,11 @@ test('soil "Priority improvements" advice is built from translated fixed phrases
     'soilImprovementSandy',
   ];
   for (const key of soilKeys) {
-    assert.match(dataPanelSource, new RegExp(`t\\('${key}'\\)`), `${key} is not referenced by DataPanel`);
+    assert.doesNotMatch(dataPanelSource, new RegExp(key), `${key} must not reactivate unsupported soil advice`);
   }
 
-  // Each translated phrase carries a {placeholder} that DataPanel fills with .replace(), the same
-  // interpolation pattern already used by insightSemiArid / insightLowSoilCarbon etc.
+  // These historical dictionary pairs remain unchanged for provenance. Their
+  // preserved numeric placeholders do not authorise showing the prescriptions.
   const en = localeBlocks().find((b) => b.locale === 'en')!.block;
   assert.match(en, /soilImprovementPhAcidic: '[^']*\{ph\}[^']*'/);
   assert.match(en, /soilImprovementLowCarbon: '[^']*\{oc\}[^']*'/);

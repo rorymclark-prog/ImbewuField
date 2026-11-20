@@ -1,6 +1,8 @@
 import { reportDocumentText } from './report-localisation';
 import { reportElementDisplayName, reportRouteDisplayName, reportVisualText } from './report-visuals';
 import { summaryBoqDescription } from './report-summary';
+import { reportEvidenceText } from './report-risk';
+import { TANK_IDS } from './water-system';
 /**
  * report-boq.ts — the BILL OF QUANTITIES and COST SUMMARY for the site report.
  *
@@ -68,6 +70,8 @@ export type UnpricedReason =
   | 'out-of-range'
   /** Already on the farm — a cost to no one. */
   | 'existing'
+  /** A legacy group combines existing/proposed units without a purchase split. */
+  | 'mixed-status'
   /** A saved plan cannot turn a regulated plant into a purchase recommendation. */
   | 'listed-plant';
 
@@ -183,7 +187,7 @@ const ROUTE_RATE_BY_KIND: Record<string, string> = {
 // asserted that lib/report-site-facts.ts "carries the same rule and the same reason" — it did not,
 // it grouped with a comma, and the same document printed both conventions.
 
-const UNPRICED_TEXT: Record<UnpricedReason, string> = {
+const UNPRICED_TEXT: Record<Exclude<UnpricedReason, 'mixed-status'>, string> = {
   'no-rate': 'no researched rate — get a local quote',
   'no-area': 'quantity not measured — trace its footprint to price it',
   'out-of-range': 'outside the price book\'s size range — get a local quote',
@@ -212,17 +216,30 @@ function areaQty(n: number): string {
 }
 
 /**
- * Existing items are recorded, not billed. 'mixed' is billed — part of it is still to build.
- *
- * Right in principle, and it used to be wrong in amount: a mixed group arrived carrying only a
- * COMBINED count, so billing it charged for the existing units too — one tank already standing
- * and one to buy quoted R14,000 against a R7,000 build. Fresh reports no longer produce 'mixed'
- * at all, because summariseDesignStudio now groups by status, so counts arrive already separated.
- * This branch stays for saved reports written before that split, where the information needed to
- * bill only the proposed share was never recorded and cannot be recovered here.
+ * Existing items are recorded, not billed. A legacy mixed group has no recorded
+ * purchase split; neither its full count nor an invented fraction can be charged.
  */
 function isExisting(status: FactStatus): boolean {
   return status === 'existing';
+}
+
+/** An empty priced subset is not a zero-cost build. The numeric accumulator stays
+ * unchanged for old callers; renderers distinguish absent prices from a stated zero. */
+export function pricedBoqSubtotal(boq: BillOfQuantities): number | null {
+  return boq.lines.some(line => line.zar !== null) ? boq.subtotalZar : null;
+}
+
+/** Unknown purchase counts must not acquire the existing rate-gap risk rating. */
+export function unpricedRateGapCount(boq: BillOfQuantities): number {
+  return boq.lines.filter(line => line.zar === null && line.unpriced !== 'mixed-status').length;
+}
+
+export function mixedPurchaseQuantityNote(language = 'en'): string {
+  return reportEvidenceText('Mixed existing/proposed groups show recorded inventory counts, not quantities to buy. Confirm the proposed share before pricing; it is not included in the priced subtotal.', language);
+}
+
+export function mixedPurchaseQuantityReason(language = 'en'): string {
+  return reportEvidenceText('purchase quantity not established — confirm the existing/proposed split before pricing', language);
 }
 
 /**
@@ -264,6 +281,10 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined,
     if (isExisting(tank.status)) { existingCount += tank.count; continue; }
     const source = t('Placed in the Design Studio');
     const name = reportElementDisplayName(tank.name,tank.defId,language);
+    if (tank.status === 'mixed') {
+      unpriced('Water', tank.statedLitres === null ? name : `${name} (${groupDigits(tank.statedLitres)} L)`, countQty(tank.count,language), 'mixed-status', source);
+      continue;
+    }
     // A tank's price follows its STATED capacity, and an unstated capacity stays unpriced —
     // FactTank.statedLitres is null precisely so a size is never guessed from a name.
     if (tank.statedLitres === null) {
@@ -335,8 +356,18 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined,
   }
 
   // ── Everything else placed on the plan ──
+  // The collector mirrors catalogue tanks in both views. Match only complete,
+  // equal labelled groups, once each; names alone cannot reconcile legacy data.
+  const existingTankMirrors = (facts?.water?.tanks ?? []).filter(tank => tank.status === 'existing' && tank.defId);
   for (const group of design?.elements ?? []) {
-    if (isExisting(group.status)) { existingCount += group.count; continue; }
+    if (isExisting(group.status)) {
+      const mirror = group.defId && TANK_IDS.has(group.defId)
+        ? existingTankMirrors.findIndex(tank => tank.defId === group.defId && tank.name === group.name && tank.count === group.count)
+        : -1;
+      if (mirror >= 0) existingTankMirrors.splice(mirror, 1);
+      else existingCount += group.count;
+      continue;
+    }
     const source = t('Placed in the Design Studio');
     const defId = group.defId;
     const name = reportElementDisplayName(group.name,defId,language);
@@ -348,6 +379,11 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined,
     if (defId && (defId in TANK_RATE_BY_DEF_ID || defId.startsWith('jojo_') || defId === 'rain_barrel')) continue;
     // Beds are billed above from their traced area — see BED_DEF_ID_SET.
     if (defId && BED_DEF_ID_SET.has(defId)) continue;
+
+    if (group.status === 'mixed') {
+      unpriced('Structures & planting', name, countQty(group.count,language), 'mixed-status', source);
+      continue;
+    }
 
     if (!defId) {
       unpriced('Structures & planting', name, countQty(group.count,language), 'no-rate', source);
@@ -410,6 +446,8 @@ export function billOfQuantitiesMarkdown(boq: BillOfQuantities,language='en'): s
 
   out.push(t('Every quantity below is measured off this farm\'s own plan. Nothing here was estimated from a typical farm, and no line was added because a design "usually has one".'));
   out.push('');
+  const hasMixed = boq.lines.some(line => line.unpriced === 'mixed-status');
+  if (hasMixed) out.push(mixedPurchaseQuantityNote(language), '');
   out.push(`| ${t('Item')} | ${t('Quantity')} | ${t('Rate')} | ${t('Amount')} | ${t('Measured from')} |`);
   out.push('|------|----------|------|--------|---------------|');
 
@@ -419,17 +457,26 @@ export function billOfQuantitiesMarkdown(boq: BillOfQuantities,language='en'): s
     out.push(`| **${reportVisualText(group,language)}** | | | | |`);
     for (const line of groupLines) {
       const amount = line.zar === null
-        ? `_${t(UNPRICED_TEXT[line.unpriced ?? 'no-rate'])}_`
+        ? `_${line.unpriced === 'mixed-status' ? mixedPurchaseQuantityReason(language) : t(UNPRICED_TEXT[line.unpriced ?? 'no-rate'])}_`
         : formatZar(line.zar);
       out.push(`| ${line.description} | ${line.quantity} | ${line.rate ?? '—'} | ${amount} | ${line.source} |`);
     }
   }
 
   out.push('');
-  out.push(`**${t('Subtotal of the priced lines: {subtotal}',{subtotal:formatZar(boq.subtotalZar)})}**`);
+  const subtotal = pricedBoqSubtotal(boq);
+  out.push(subtotal === null
+    ? `**${reportEvidenceText('No lines priced; build cost not established.', language)}**`
+    : `**${t('Subtotal of the priced lines: {subtotal}',{subtotal:formatZar(subtotal)})}**`);
   out.push('');
 
-  if (boq.unpricedCount > 0) {
+  // An entirely unpriced bill has no subtotal to qualify. Its gaps can be
+  // measurements or purchase shares as well as rates; no increase is known.
+  if (subtotal === null) {
+    out.push(reportEvidenceText('Build cost is unknown. Confirm the missing purchase quantities, measurements or rates shown above before setting a build budget.', language), '');
+  } else if (hasMixed) {
+    out.push(reportEvidenceText('The priced subtotal is incomplete. Lines with unconfirmed purchase quantities, measurements or rates are not included. Confirm each line before setting a build budget.', language), '');
+  } else if (boq.unpricedCount > 0) {
     out.push(t("This subtotal is NOT the cost of the build. {unpriced} a measured quantity but no rate, so the real figure is higher by whatever those cost. They are listed above with the reason, rather than left out or costed at zero \u2014 a bill that hides what it could not price reads as complete when it is not.",{unpriced:t(boq.unpricedCount===1?'{count} line carries':'{count} lines carry',{count:boq.unpricedCount})}));
     out.push('');
   }
