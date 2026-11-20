@@ -57,7 +57,12 @@ Five existing assertions encoded the old behaviour (raw citation text kept, Engl
 - Typecheck: clean (`tsc --noEmit --incremental false`, Node 22.23.4). An earlier run hit missing `.next/types` files because the dev server was restarted mid-run; the clean re-run is the result.
 - Affected tests: 126 of 126 pass across eleven report files, including the registry, `tests/saved-reports.test.ts` and new `tests/site-report-reader-fixes.test.ts`; the release-note checks pass separately.
 - Adverse control: with the source changes reverted and the new tests kept, 5 checks fail (the new file and four rewritten assertions); with only auto-save switched off, the rewritten `saved-reports` check fails. Restored afterwards.
-- Full suite: see the PR or issue #35 for the result. It is not claimed here.
+- Full suite (`npm test`, 904 files), run in this container in two parts because the first run hit the session time limit:
+  - Files 1–450: 11,052 passed, 9 failed.
+  - Files 451–904: 5,876 of 5,876 passed.
+  - One of the 9 failures was the `saved-reports` assertion described above. It is rewritten, and its file re-run alone passes 23 of 23.
+  - The other eight are paired-slide preflight tests. They stop because this container lacks `DejaVuSerif-Italic.ttf` (package `fonts-dejavu-extra`). This branch changes no slide code.
+  - The suite was not re-run as one uninterrupted pass after the rewrite. CI should confirm.
 - Whitespace: clean. Release notes: a new 20 November entry stamped `79adc232`; the pending-notes check passes.
 - Output inspected: the real report screen at 390 px (links, tables, error message, saved store) and the app's exported PDF (28 pages), before and after the fixes.
 - Limits: no real model output, no signed-in account, no physical phone. The PDF character loss in SR-018 is not reproduced. The screen was mounted through a temporary local fixture route, never committed. `PLAN_VERSION` is untouched; this changes report presentation, not map pictures.
@@ -70,4 +75,4 @@ Five existing assertions encoded the old behaviour (raw citation text kept, Engl
 4. SR-013, SR-014: product decisions on default length, hedging and cost display.
 5. SR-017, SR-018, SR-016.
 
-Branch `claude/site-report-review-20261119` at `52b77266` plus this record. It could not be pushed from this session (repository not authorised for push); a patch was handed to Rory instead. Issue #35 is not yet updated.
+Branch `claude/site-report-review-20261119`: the fixes in `52b77266`, this record, and the `saved-reports` test rewrite in `d02d1c90`. It could not be pushed from this session (repository not authorised for push); a patch was handed to Rory instead. Issue #35 is not yet updated.
