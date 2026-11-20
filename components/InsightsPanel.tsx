@@ -7,6 +7,7 @@ import { useLanguage } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLocalAdviceContext } from '@/lib/use-local-advice-context';
 import { requestLocalAdvice, localAdviceHoldMessage, localAdviceUnavailableMessage, LOCAL_ADVICE_SITE_HOLD, LOCAL_ADVICE_BASIS } from '@/lib/local-advice-client';
+import Skeleton from '@/components/Skeleton';
 
 interface Props { locationData: LocationData | null }
 
@@ -170,9 +171,9 @@ export default function InsightsPanel({ locationData }: Props) {
 
       {/* Loading shimmer */}
       {loading && !insights && (
-        <div className="space-y-2.5 animate-pulse">
+        <div className="space-y-2.5" aria-busy="true">
           {[70, 100, 85, 60, 95, 75, 50].map((w, i) => (
-            <div key={i} className="h-3 rounded" style={{ width: `${w}%`, background: 'rgba(226,216,196,0.70)', animationDelay: `${i * 60}ms` }} />
+            <Skeleton key={i} height={12} width={`${w}%`} radius="sm" index={i} />
           ))}
         </div>
       )}

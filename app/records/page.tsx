@@ -79,6 +79,7 @@ import { recordQuantity, recordUnit, recordQuantityPayload, recordWeightKg, quan
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, isRecordsRegionalLang, recordsDraftNotice } from '@/lib/records-regional-drafts';
 import { recordsDate } from '@/lib/records-months';
+import Skeleton from '@/components/Skeleton';
 
 // When a save last finished, so the ledger list can tell a row the farmer just added (slide it in)
 // from rows that simply arrived with the first load or a sync.
@@ -194,16 +195,8 @@ function recordsMessage(lang: string, message: string): string {
   return translations[message] ?? recordsFill(lang, message);
 }
 
-/* ── Skeleton loader ─────────────────────────────────────────────────────── */
+/* Loading placeholders use the shared Skeleton (components/Skeleton.tsx). */
 
-function Skeleton({ className = '', style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <div
-      className={`animate-pulse rounded-lg ${className}`}
-      style={{ background: 'color-mix(in srgb, var(--border) 55%, transparent)', ...style }}
-    />
-  );
-}
 
 /* ── Summary cards ───────────────────────────────────────────────────────── */
 
@@ -299,8 +292,8 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
           <div style={{ color: card.color }}>{card.icon}</div>
           {loading ? (
             <>
-              <Skeleton className="h-5 w-3/4" />
-              <Skeleton className="h-3 w-full" />
+              <Skeleton height={20} width="75%" />
+              <Skeleton height={12} width="100%" />
             </>
           ) : (
             <>
@@ -500,10 +493,10 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
           {[0, 1, 2].map((i) => (
             <div key={i} className="flex items-center justify-between gap-3">
               <div className="flex-1 space-y-1.5">
-                <Skeleton className="h-4 w-2/3" style={{ animationDelay: `${i * 80}ms` }} />
-                <Skeleton className="h-3 w-1/3" style={{ animationDelay: `${i * 80 + 40}ms` }} />
+                <Skeleton height={16} width="66.6667%" index={i} />
+                <Skeleton height={12} width="33.3333%" index={i + 0.5} />
               </div>
-              <Skeleton className="h-4 w-16" style={{ animationDelay: `${i * 80}ms` }} />
+              <Skeleton height={16} width={64} index={i} />
             </div>
           ))}
         </div>
@@ -1739,14 +1732,10 @@ export default function RecordsPage() {
           <>
             <div className="grid grid-cols-3 gap-3">
               {[0, 1, 2].map((i) => (
-                <Skeleton
-                  key={i}
-                  className="h-20 rounded-2xl"
-                  style={{ animationDelay: `${i * 80}ms` }}
-                />
+                <Skeleton key={i} height={80} index={i} style={{ borderRadius: 16 }} />
               ))}
             </div>
-            <Skeleton className="h-48 rounded-2xl" />
+            <Skeleton height={192} style={{ borderRadius: 16 }} />
           </>
         ) : !user && !isSampleMode() ? (
           <SignInPrompt />
