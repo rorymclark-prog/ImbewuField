@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 November 2026', sha: '750a767ef', changes: [
+    'The example farm shows which months have no fresh vegetable from its crop plan.',
+    'Pick a crop and drag its sowing month to see which of those empty months it would fill.',
+  ], tour: [{ title: 'Fill a hungry month', where: 'Example farm → Sow now, eat then', href: '/example',
+    detail: 'Below "Where the shade falls", pick a crop and drag "Sow in". The second row shows when it is sown, goes in the bed and is picked. A green tick marks an empty month that sowing would fill. Choose an empty month at the bottom to see what the planner itself would sow for it.' }] },
   { when: '20 November 2026', sha: '90064872a', changes: [
     'The example farm shows where a wall, hedge or tree row casts shade through the day.',
     'See how many hours of sun each bed behind it gets in December, at the equinox and in June.',
