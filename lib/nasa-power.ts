@@ -74,15 +74,9 @@ export function monthlyNormalsFromDailyRainfall(
 }
 
 /**
- * Fetch 30-year monthly rainfall normals (1991-2020 WMO period) from the
- * Open-Meteo historical archive (ERA5-Land reanalysis, ~9km/0.1° resolution).
- *
- * ERA5-Land is significantly better-resolved than NASA POWER's 50km cells and
- * avoids the ~44% wet bias that POWER exhibits for escarpment sites in KZN.
- * Live comparison for Assegay KZN: Open-Meteo 789mm/yr vs NASA POWER 1406mm/yr
- * vs ground truth ~900mm/yr — the remaining ~12% underestimate is a known ERA5
- * trait (slight smoothing of convective rain) but is far more useful than a 56%
- * overestimate.
+ * Fetch 30-year monthly precipitation normals (1991-2020 WMO period) from the
+ * Open-Meteo historical archive. The request uses the provider's default
+ * model selection, so attribution is limited to the provider.
  *
  * Returns 12 monthly totals in mm, January-first, or null on any failure.
  */
@@ -196,17 +190,13 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   }
 
   // Resolve the Open-Meteo request that started alongside the NASA request.
-  // ERA5-Land is at 0.1°/~9km vs NASA POWER's 0.5°/~55km — much better for sites
-  // on topographic transitions (escarpments, coastal ranges) where grid-averaging
-  // produces severe wet bias in coarser datasets.
   const openMeteoMonthly = await openMeteoRequest;
   const openMeteoAnnual = openMeteoMonthly
     ? openMeteoMonthly.reduce((a, b) => a + b, 0)
     : null;
 
-  // Prefer Open-Meteo when it is available AND disagrees with NASA POWER by > 30%.
-  // A >30% divergence almost certainly signals NASA POWER's coarse-grid overestimation
-  // (most commonly seen at KZN escarpment sites, Drakensberg foothills, Cape mountains).
+  // Preserve the existing selection rule when both series are available.
+  // Divergence alone cannot establish which series better fits the site.
   const USE_OPEN_METEO_THRESHOLD = 0.30;
   const shouldUseOpenMeteo =
     openMeteoMonthly !== null &&
