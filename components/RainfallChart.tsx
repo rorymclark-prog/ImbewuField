@@ -4,6 +4,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ReferenceLine,
 } from 'recharts';
 import { useLanguage } from '@/lib/i18n';
+import { annualRainfallMm, sourcedMonthlyRainfall } from '@/lib/climate-temperature';
 import type { MonthlyRainfall } from '@/lib/types';
 
 const MONTHS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
@@ -19,9 +20,11 @@ export default function RainfallChart({ rainfall }: Props) {
   const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
   const text = (en: string, zu: string) => isZulu ? zu : en;
-  if (!rainfall?.monthly?.length) return null;
-  const maxVal = Math.max(...rainfall.monthly, 10);
-  const data = rainfall.monthly.map((v, i) => ({
+  const monthly = sourcedMonthlyRainfall(rainfall);
+  if (!monthly) return <p lang="en" className="text-xs text-[var(--text-secondary)]">Monthly rainfall is unavailable.</p>;
+  const annual = annualRainfallMm(rainfall);
+  const maxVal = Math.max(...monthly, 10);
+  const data = monthly.map((v, i) => ({
     month: isZulu ? String(i + 1) : MONTHS[i],
     full: isZulu ? `${ZU_MONTH_FULL[i]} · ${MONTH_FULL[i]}` : MONTH_FULL[i],
     mm: Math.round(v),
@@ -58,7 +61,7 @@ export default function RainfallChart({ rainfall }: Props) {
           {isZulu && <div className="text-xs text-[var(--text-muted)]">Uhlaka lwesiZulu olungakabuyekezwa · Unreviewed isiZulu draft</div>}
         </div>
         <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
-          <span className="text-[var(--blue)]">{isZulu ? `${rainfall.annual} mm/ngonyaka · mm/yr` : `${rainfall.annual}mm/yr`}</span>
+          {annual !== null && <span className="text-[var(--blue)]">{isZulu ? `${annual} mm/ngonyaka · mm/yr` : `${annual}mm/yr`}</span>}
           <span className="text-[var(--text-muted)]">{pattern}</span>
         </div>
       </div>

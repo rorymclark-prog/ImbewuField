@@ -72,6 +72,35 @@ test('a complete last site round-trips without sharing mutable references', () =
   assert.notEqual(loaded?.locationData, input.locationData);
 });
 
+test('an old northern provider label is corrected on read without rewriting the cached record', () => {
+  const legacy = validSite();
+  legacy.locationData.lat = 46;
+  legacy.locationData.rainfall = {
+    monthly: [90, 90, 10, 10, 10, 10, 10, 10, 10, 10, 10, 90],
+    annual: 360,
+    rainfallSource: 'nasa-power',
+    pattern: 'summer',
+    wetSeason: 'Oct–Mar',
+    drySeason: 'May–Aug',
+  };
+  seed(legacy);
+  const raw = storage.rows.get(KEY);
+  const corrected = getLastSite();
+  assert.deepEqual(corrected?.locationData.rainfall, { ...legacy.locationData.rainfall, pattern: 'winter' });
+  assert.deepEqual(corrected?.locationData.climate, legacy.locationData.climate);
+  assert.equal(storage.rows.get(KEY), raw);
+
+  for (const rainfall of [
+    { ...legacy.locationData.rainfall, rainfallSource: 'grower-entered' },
+    { ...legacy.locationData.rainfall, rainfallSource: undefined },
+    { ...legacy.locationData.rainfall, monthly: Array(12).fill(30) },
+    { ...legacy.locationData.rainfall, drySeason: 'Jun–Aug' },
+  ]) {
+    seed({ ...legacy, locationData: { ...legacy.locationData, rainfall } });
+    assert.deepEqual(getLastSite()?.locationData.rainfall, JSON.parse(JSON.stringify(rainfall)));
+  }
+});
+
 test('truthy JSON and partial old records cannot masquerade as LastSite', () => {
   const invalid: unknown[] = [
     42,

@@ -18,6 +18,7 @@ import LanguageDraftNote from '@/components/LanguageDraftNote';
 import type { LocationData } from '@/lib/types';
 import { deriveSectorModel, type SectorModel, type SectorSite } from '@/lib/sector';
 import { isValidEarthLatitude } from '@/lib/solar';
+import { withLocalRainfallSeason } from '@/lib/rainfall-season';
 import { formatDesignTranslation, sectorCompassWord, type DesignStudioTranslate } from '@/lib/design-studio-i18n';
 import { translate, useLanguage } from '@/lib/i18n';
 
@@ -48,7 +49,8 @@ function resolveSectorContext(): { lat: number; lon: number; site: SectorSite | 
     if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
     // Key + version must match app/design/page.tsx's readCachedLocationData / TankCalculator.
     const raw = localStorage.getItem(`imbewu_loc_v7_${lat.toFixed(5)}_${lon.toFixed(5)}`);
-    const parsed = raw ? (JSON.parse(raw) as LocationData) : null;
+    const cached = raw ? (JSON.parse(raw) as LocationData | null) : null;
+    const parsed = cached ? withLocalRainfallSeason(cached) : null;
     // Same shape app/design/page.tsx builds for glossySite (a superset of {biome, rainfallMm}).
     const site: SectorSite | null = parsed
       ? {

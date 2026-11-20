@@ -30,6 +30,7 @@ import { DEMO_SITE } from '@/lib/demo-farm';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { monthlyTemperatureStatus } from '@/lib/climate-temperature';
+import { withLocalRainfallSeason } from '@/lib/rainfall-season';
 import { networkFailureMessage } from '@/lib/network-failure';
 import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
@@ -297,7 +298,7 @@ function HomeInner() {
         const parsed = JSON.parse(cached);
         if (designSiteIdFromLocation(parsed) === designSiteIdFromLocation({ lat, lon })
           && monthlyTemperatureStatus(parsed?.climate) === 'complete') {
-          setData(parsed); setLoading(false); return;
+          setData(withLocalRainfallSeason(parsed)); setLoading(false); return;
         }
       }
     } catch { /* ignore parse errors */ }
