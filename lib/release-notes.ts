@@ -42,9 +42,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
-    when: '20 November 2026', sha: '21de3f5bf',
+    when: '20 November 2026', sha: '5cf1f3322',
     changes: [
-      'New rainfall lookups use the season names for your hemisphere.',
+      'Rainfall lookups and compatible cached readings use local season names.',
       'Rainfall and roof-water charts show Open-Meteo as the data source.',
     ],
   },
