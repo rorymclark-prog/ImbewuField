@@ -95,6 +95,7 @@ export async function fetchOpenMeteoRainfall(lat: number, lon: number): Promise<
     url.searchParams.set('start_date', OPEN_METEO_START_DATE);
     url.searchParams.set('end_date', OPEN_METEO_END_DATE);
     url.searchParams.set('daily', 'precipitation_sum');
+    url.searchParams.set('precipitation_unit', 'mm');
     url.searchParams.set('timezone', 'UTC');
 
     const res = await fetch(url.toString(), {
@@ -106,6 +107,7 @@ export async function fetchOpenMeteoRainfall(lat: number, lon: number): Promise<
     if (!res.ok) return null;
 
     const json = await res.json();
+    if (json?.daily_units?.precipitation_sum !== 'mm') return null;
     const dates: unknown = json.daily?.time;
     const values: unknown = json.daily?.precipitation_sum;
     if (
