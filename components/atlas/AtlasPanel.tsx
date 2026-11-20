@@ -22,7 +22,7 @@
  *    receipt says the provider supplied all twelve (lib/atlas.ts,
  *    atlasTemperaturesRecorded). Otherwise some may be 20 °C stand-ins, so the
  *    climate type, the sowing calendar, the crop list and every temperature figure
- *    are withheld and the panel says why. Rainfall is still shown.
+ *    are withheld and the panel says why. Supported rainfall can still be shown.
  *  - Frost is never read from a monthly MEAN. The chip used to say "Frost-free" for
  *    a coldest-month mean of 5 °C or more: Johannesburg (mean 9.9 °C, record low
  *    -4.8 °C) and Underberg (mean 7.4 °C, record low -6.2 °C) both read "Frost-free".
@@ -35,7 +35,7 @@ import { AlertTriangle, Sprout, Mountain, Droplets, Thermometer, Layers, Leaf } 
 import type { LocationData } from '@/lib/types';
 import { planSoilCaution, planSoilCautionTitle } from '@/lib/plan-assurance';
 import { getCropArt } from '@/lib/crop-art';
-import { recordMinimumC } from '@/lib/climate-temperature';
+import { annualRainfallMm, recordMinimumC, sourcedMonthlyRainfall } from '@/lib/climate-temperature';
 import { useLanguage } from '@/lib/i18n';
 import { SOWING_CALENDAR_LABEL, SOWING_CALENDAR_LABEL_ZU } from '@/lib/sowing-calendar-label';
 import {
@@ -186,11 +186,12 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
   const temps = climate.monthlyTemp ?? [];
   const tMin = temps.length ? Math.min(...temps) : climate.minTemp;
   const tMax = temps.length ? Math.max(...temps) : climate.maxTemp;
-  const annualRain = Math.round(rainfall.annual);
-  const rainMax = Math.max(...rainfall.monthly, 1);
-  const rainAvg = annualRain / 12;
+  const annual = annualRainfallMm(rainfall);
+  const annualRain = annual === null ? null : Math.round(annual);
+  const monthlyRain = sourcedMonthlyRainfall(rainfall);
+  const rainAvg = (annualRain ?? monthlyRain?.reduce((total, value) => total + value, 0) ?? 0) / 12;
 
-  const pattern = temperaturesRecorded ? atlasRainPattern(data) : null;
+  const pattern = temperaturesRecorded && monthlyRain ? atlasRainPattern(data) : null;
   // A validated, source-tagged gridded minimum, or null. Never minTemp read directly:
   // an outage default and POWER's missing-value marker both arrive as plain numbers.
   const recordLowC = recordMinimumC(climate);
@@ -232,7 +233,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
               Temperature records for this point are incomplete or could not be checked, so no climate type or sowing calendar is shown.
             </p>
             <div style={{ display: 'flex', gap: 7, marginTop: 12, flexWrap: 'wrap' }}>
-              <span style={chip(CHIP_WATER)}>≈ {annualRain} mm/yr</span>
+              {annualRain !== null && <span style={chip(CHIP_WATER)}>≈ {annualRain} mm/yr</span>}
             </div>
           </>
         ) : koppenKnown ? (
@@ -251,14 +252,14 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
               </p>
             )}
             <div style={{ display: 'flex', gap: 7, marginTop: 12, flexWrap: 'wrap' }}>
-              <span style={chip(CHIP_WATER)}>≈ {annualRain} mm/yr</span>
+              {annualRain !== null && <span style={chip(CHIP_WATER)}>≈ {annualRain} mm/yr</span>}
               {pattern && <span style={chip(CHIP_NEUTRAL)}>{pairedLabel(`Sowing calendar: ${SOWING_CALENDAR_LABEL[pattern]}`, `Ikhalenda lokutshala: ${SOWING_CALENDAR_LABEL_ZU[pattern]}`, isZulu)}</span>}
               <span data-atlas-record-low={recordLowC === null ? 'unknown' : 'known'} style={chip(CHIP_NEUTRAL)}>{heldTechnicalLabel(recordLowChip, isZulu)}</span>
             </div>
           </>
         ) : (
           <p className="font-display leading-relaxed" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
-            Climate data could not be fetched for this point — the figures below are placeholders, not readings. Try the point again.
+            Climate data could not be fetched for this point. Try the point again.
           </p>
         )}
         <p className="font-sans mt-2.5" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', color: 'var(--text-muted)', lineHeight: 1.45 }}>
@@ -267,24 +268,28 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
       </Card>
 
       {/* 2 — Rainfall */}
-      {rainfall.monthly?.length === 12 && (
-        <Card>
-          <div className="flex items-baseline justify-between">
-            <Label icon={<Droplets size={12} />}>{pairedLabel('Rainfall', 'Imvula', isZulu)}</Label>
-            <span className="font-sans font-bold" style={{ fontSize: 12.5, color: 'var(--blue)' }}>≈ {annualRain} mm / yr</span>
-          </div>
-          <MonthBars
-            values={rainfall.monthly}
-            unit="mm"
-            colorFor={(v) => (v > rainAvg * 0.9 ? '#3F92C9' : '#A6C9DF')}
-            height={86}
-          />
-          <div className="flex justify-between font-sans mt-1" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-            <span>{pairedLabel('Wet:', 'Isikhathi sezimvula:', isZulu)} <b style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{rainfall.wetSeason}</b></span>
-            <span>{pairedLabel('Dry:', 'Isikhathi esomile:', isZulu)} <b style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{rainfall.drySeason}</b></span>
-          </div>
-        </Card>
-      )}
+      <Card>
+        <div className="flex items-baseline justify-between">
+          <Label icon={<Droplets size={12} />}>{pairedLabel('Rainfall', 'Imvula', isZulu)}</Label>
+          {annualRain !== null && <span className="font-sans font-bold" style={{ fontSize: 12.5, color: 'var(--blue)' }}>≈ {annualRain} mm / yr</span>}
+        </div>
+        {monthlyRain ? (
+          <>
+            <MonthBars
+              values={monthlyRain}
+              unit="mm"
+              colorFor={(v) => (v > rainAvg * 0.9 ? '#3F92C9' : '#A6C9DF')}
+              height={86}
+            />
+            <div className="flex justify-between font-sans mt-1" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+              <span>{pairedLabel('Wet:', 'Isikhathi sezimvula:', isZulu)} <b style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{rainfall.wetSeason}</b></span>
+              <span>{pairedLabel('Dry:', 'Isikhathi esomile:', isZulu)} <b style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{rainfall.drySeason}</b></span>
+            </div>
+          </>
+        ) : (
+          <p lang="en" className="font-display" style={{ color: 'var(--text-secondary)' }}>Monthly rainfall is unavailable for this point.</p>
+        )}
+      </Card>
 
       {/* 3 — Temperature */}
       <Card>

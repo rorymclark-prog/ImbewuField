@@ -36,7 +36,10 @@ registerHooks({
   },
 });
 const { default: AtlasPanel } = await import('../components/atlas/AtlasPanel.tsx');
+const { default: RainfallChart } = await import('../components/RainfallChart.tsx');
+const { default: WaterBalance } = await import('../components/WaterBalance.tsx');
 const { Ctx } = await import('../lib/i18n-context.ts');
+const { translate } = await import('../lib/i18n.tsx');
 
 const RAIN = [127, 81, 73, 43, 16, 7, 3, 7, 16, 57, 89, 122];
 // Johannesburg-like monthly means: the coldest month's mean is 10 °C, and it has frost.
@@ -50,7 +53,7 @@ function place(climate: Partial<LocationData['climate']>): LocationData {
       koppen: 'Cwb', koppenDesc: 'Subtropical highland, dry winter', windSpeed: 3, windFromSummer: 'N', windFromWinter: 'S',
       ...climate,
     },
-    rainfall: { monthly: RAIN, annual: RAIN.reduce((a, b) => a + b, 0), pattern: 'summer', wetSeason: 'Oct to Mar', drySeason: 'May to Aug' },
+    rainfall: { monthly: RAIN, annual: RAIN.reduce((a, b) => a + b, 0), pattern: 'summer', wetSeason: 'Oct to Mar', drySeason: 'May to Aug', rainfallSource: 'nasa-power' },
     soil: { textureClass: 'Loam', ph: 6.2, organicCarbon: 1.1, sand: 40, silt: 35, clay: 25 },
     elevation: { elevation: 1745, slopeDeg: 2, slopePct: 3, aspectLabel: 'N', aspectDeg: 0 },
   } as unknown as LocationData;
@@ -178,9 +181,33 @@ test('isiZulu mode: the record-low chip stays in English and is marked translati
 
 test('an outage keeps its own placeholder warning and prints no temperature', () => {
   // The route's outage answer: climate label '?', no receipt, placeholder rainfall.
-  const seen = text(render(place({ koppen: '?', koppenDesc: '' })));
-  assert.match(seen, /Climate data could not be fetched for this point — the figures below are placeholders, not readings\./);
-  assert.doesNotMatch(seen, /Coldest month|°C|Sowing calendar:/);
+  const outage = place({ koppen: '?', koppenDesc: '' });
+  outage.rainfall = { ...outage.rainfall, monthly: Array(12).fill(50), annual: 600, rainfallSource: undefined };
+  const seen = text(render(outage));
+  assert.match(seen, /Climate data could not be fetched for this point/);
+  assert.match(seen, /Monthly rainfall is unavailable for this point/);
+  assert.doesNotMatch(seen, /Coldest month|°C|Sowing calendar:|600\s*mm|Oct to Mar/);
+});
+
+test('rainfall and the water balance reject unproven months and retain a supported zero', () => {
+  const location = place(TAGGED);
+  location.rainfall = { ...location.rainfall, monthly: Array(12).fill(50), annual: 600, rainfallSource: undefined };
+  const rainfall = () => text(renderToStaticMarkup(React.createElement(RainfallChart, { rainfall: location.rainfall })));
+  const balance = () => renderToStaticMarkup(React.createElement(Ctx.Provider, {
+    value: { lang: 'en', setLang() {}, t: (key: string) => translate('en', key), onboarded: true, completeOnboarding() {} },
+  }, React.createElement(WaterBalance, {
+    locationData: location, survey: null, waterData: { count: 1, areaM2: 10, estVolumeKL: 5, avgDepthM: 0.5 },
+  })));
+  assert.match(rainfall(), /Monthly rainfall is unavailable/);
+  assert.doesNotMatch(rainfall(), /600\s*mm|Oct to Mar/);
+  assert.match(text(balance()), /The water balance needs a complete monthly rainfall record/);
+  assert.match(text(balance()), /5[ ,\u00a0\u202f]000/);
+  assert.doesNotMatch(balance(), /<svg/);
+
+  location.rainfall = { ...location.rainfall, monthly: Array(12).fill(0), annual: 0, rainfallSource: 'grower-entered' };
+  assert.match(rainfall(), /0mm\/yr/);
+  assert.match(balance(), /<svg/);
+  assert.match(text(render(location)), /≈ 0 mm\/yr/);
 });
 
 test('the panel source no longer derives a frost statement from a monthly mean', () => {
