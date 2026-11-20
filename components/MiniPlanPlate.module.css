@@ -1,0 +1,42 @@
+/* MiniPlanPlate: the plan assembles in layers when it scrolls into view: staple plot, then beds,
+   then canopy, then water and structures. Opacity only, because a plate can hold many polygons.
+   Without a phase class (server render, no JS, reduced motion) the finished plate is drawn.
+   --lag is the plate's own start offset, so several plates on screen do not all fire at once. */
+
+.armed .plot,
+.armed .bed,
+.armed .canopy,
+.armed .water,
+.armed .structure { opacity: 0; }
+
+.play .plot,
+.play .bed,
+.play .canopy,
+.play .water,
+.play .structure {
+  animation: plateIn 280ms ease-out backwards;
+}
+
+.play .plot { animation-delay: var(--lag, 0ms); }
+.play .bed { animation-delay: calc(var(--lag, 0ms) + 150ms); }
+.play .canopy { animation-delay: calc(var(--lag, 0ms) + 300ms); }
+.play .water,
+.play .structure { animation-delay: calc(var(--lag, 0ms) + 450ms); }
+
+@keyframes plateIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .armed .plot,
+  .armed .bed,
+  .armed .canopy,
+  .armed .water,
+  .armed .structure { opacity: 1; }
+  .play .plot,
+  .play .bed,
+  .play .canopy,
+  .play .water,
+  .play .structure { animation: none; }
+}

@@ -1,6 +1,8 @@
 'use client';
 
-import { useId } from 'react';
+import { useId, useRef } from 'react';
+import { useInViewOnce } from '@/lib/use-in-view-once';
+import styles from './MiniPlanPlate.module.css';
 import { MINI_H, MINI_W, type MiniPlan, type MiniPaint } from '@/lib/mini-plan';
 
 /**
@@ -27,19 +29,35 @@ const INK: Record<MiniPaint, { fill: string; fillOpacity: number; stroke: string
   water: { fill: 'var(--mini-plate-water, #3E6B7A)', fillOpacity: 0.32, stroke: 'var(--mini-plate-water, #3E6B7A)', strokeWidth: 0.8 },
 };
 
+// Plates that come into view in the same moment (a list of saved sites) start a little apart, so
+// the grid ripples instead of flashing. The offset is capped well under half a second.
+let lastStart = 0;
+let burst = 0;
+function nextLagMs(): number {
+  const now = typeof performance !== 'undefined' ? performance.now() : 0;
+  burst = now - lastStart < 150 ? burst + 1 : 0;
+  lastStart = now;
+  return Math.min(burst * 70, 350);
+}
+
 export default function MiniPlanPlate({ plan, className }: { plan: MiniPlan; className?: string }) {
   // Unique per instance — several plates share one document, and duplicate
   // pattern ids would make every plot on the page take the first plate's hatch.
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   const hatchId = `mini-hatch-${uid}`;
+  const { ref, phase } = useInViewOnce<SVGSVGElement>();
+  const lag = useRef<number | null>(null);
+  if (phase === 'play' && lag.current === null) lag.current = nextLagMs();
+  const phaseClass = phase === 'armed' ? styles.armed : phase === 'play' ? styles.play : '';
 
   return (
     <svg
+      ref={ref}
       viewBox={`0 0 ${MINI_W} ${MINI_H}`}
-      className={className}
+      className={[className, phaseClass].filter(Boolean).join(' ') || undefined}
       role="presentation"
       aria-hidden="true"
-      style={{ display: 'block', width: '100%', height: 'auto', background: 'var(--mini-plate-bg, #F6F1E6)' }}
+      style={{ display: 'block', width: '100%', height: 'auto', background: 'var(--mini-plate-bg, #F6F1E6)', ...(lag.current ? { '--lag': `${lag.current}ms` } as React.CSSProperties : null) }}
     >
       <defs>
         <pattern id={hatchId} width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
@@ -57,15 +75,17 @@ export default function MiniPlanPlate({ plan, className }: { plan: MiniPlan; cla
           strokeWidth: ink.strokeWidth,
           strokeOpacity: 0.75,
         };
+        const cls = styles[s.paint];
         if (s.kind === 'poly') {
-          return <polygon key={i} points={s.points.map(([x, y]) => `${x},${y}`).join(' ')} {...common} />;
+          return <polygon key={i} className={cls} points={s.points.map(([x, y]) => `${x},${y}`).join(' ')} {...common} />;
         }
         if (s.kind === 'ellipse') {
-          return <ellipse key={i} cx={s.cx} cy={s.cy} rx={Math.max(s.w / 2, 1.2)} ry={Math.max(s.h / 2, 1.2)} {...common} />;
+          return <ellipse key={i} className={cls} cx={s.cx} cy={s.cy} rx={Math.max(s.w / 2, 1.2)} ry={Math.max(s.h / 2, 1.2)} {...common} />;
         }
         return (
           <rect
             key={i}
+            className={cls}
             x={s.cx - s.w / 2}
             y={s.cy - s.h / 2}
             width={Math.max(s.w, 2)}
