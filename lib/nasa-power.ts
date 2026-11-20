@@ -3,6 +3,7 @@ import { aspectLabel } from './biome';
 import { classifyKoppen } from './koppen-global';
 import { cleanPowerValue as clean, completeMonthlyTemperatures, powerMonthlyTemperatureReceipt, type MonthlyTemperatureCoverage } from './climate-temperature';
 import { createPowerTemperatureSnapshot } from './power-temperature-evidence';
+import { rainfallSeasonFromMonthly } from './rainfall-season';
 
 const MONTH_KEYS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -279,29 +280,7 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   const windFromSummer = wd(['DEC', 'JAN', 'FEB']);
   const windFromWinter = wd(['JUN', 'JUL', 'AUG']);
 
-  // Compare the same calendar months in both hemispheres. The existing
-  // heuristic's ranges and thresholds belong to the month groups; only the
-  // meteorological season name changes by hemisphere.
-  const decemberToFebruaryRain = monthly[11] + monthly[0] + monthly[1];
-  const juneToAugustRain = monthly[5] + monthly[6] + monthly[7];
-  const northernSeasons = lat >= 0;
-  let pattern: 'summer' | 'winter' | 'year-round';
-  let wetSeason: string;
-  let drySeason: string;
-
-  if (decemberToFebruaryRain > juneToAugustRain * 2) {
-    pattern = northernSeasons ? 'winter' : 'summer';
-    wetSeason = 'Oct–Mar';
-    drySeason = 'May–Aug';
-  } else if (juneToAugustRain > decemberToFebruaryRain * 1.5) {
-    pattern = northernSeasons ? 'summer' : 'winter';
-    wetSeason = 'May–Sep';
-    drySeason = 'Nov–Mar';
-  } else {
-    pattern = 'year-round';
-    wetSeason = 'year-round';
-    drySeason = 'none';
-  }
+  const rainfallSeason = rainfallSeasonFromMonthly(monthly, lat);
 
   const maxTemp = parseFloat(hotMonthTemp.toFixed(1));
   const minTemp = parseFloat(coldMonthTemp.toFixed(1));
@@ -330,7 +309,7 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   });
 
   return {
-    rainfall: { monthly, annual: parseFloat(annual.toFixed(0)), pattern, wetSeason, drySeason, rainfallSource },
+    rainfall: { monthly, annual: parseFloat(annual.toFixed(0)), ...rainfallSeason, rainfallSource },
     climate: { meanTemp, maxTemp, ...(hasMaximumReading ? { maxTempSource: 'nasa-power' as const } : {}), ...(hasSolarReading ? { solarSource: 'nasa-power' as const } : {}), minTemp, ...(hasMinimumReading ? { minTempSource: 'nasa-power' as const } : {}), monthlyTemp, monthlyTempCoverage, ...(monthlyTempReference && monthlyTempSnapshot ? { monthlyTempReference, monthlyTempSnapshot } : {}), solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, ...(hasWindReading ? { windSource: 'nasa-power' as const } : {}), ...((windFromSummer !== '—' || windFromWinter !== '—') ? { windDirectionSource: 'nasa-power' as const } : {}), windFromSummer, windFromWinter },
   };
 }
