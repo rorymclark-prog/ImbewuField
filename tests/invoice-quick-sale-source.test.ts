@@ -85,6 +85,7 @@ const scope:Record<string,unknown>={React,...React,...records,parseDecimalInput,
  RecordQuantityFields:quantity,Card:boundary,SectionLabel:boundary,FieldLabel:boundary,Input:(props:Record<string,unknown>)=>React.createElement('input',props),
  SubmitBtn:({loading,children}:{loading:boolean;children:React.ReactNode})=>React.createElement('button',{type:'submit',disabled:loading},children),
  Link:({children,href}:{children:React.ReactNode;href:string})=>React.createElement('a',{href},children),
+ SavedTick:({message}:{message:string})=>React.createElement('p',{role:'status'},message),lastRecordSaveAt:0,
  addSale:async(row:Partial<SalesLog>,source?:InvoiceBookRead)=>{
   probe.calls.push({row,source});
   return saveSaleInvoice(row,async()=>{probe.syncs++;if(probe.gate)await probe.gate;},source);
