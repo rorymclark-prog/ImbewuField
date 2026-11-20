@@ -1,5 +1,6 @@
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import { activeAccountLocalStorageKey } from './account-local-storage';
+import { withLocalRainfallSeason } from './rainfall-season';
 
 // Remembers the farmer's most recently analysed site so the global chat
 // assistant stays site-aware on every page (not just the map).
@@ -108,7 +109,8 @@ export function getLastSite(): LastSite | null {
   if (typeof window === 'undefined') return null;
   try {
     const raw = window.localStorage.getItem(activeAccountLocalStorageKey(KEY));
-    return raw ? normaliseLastSite(JSON.parse(raw)) : null;
+    const site = raw ? normaliseLastSite(JSON.parse(raw)) : null;
+    return site ? { ...site, locationData: withLocalRainfallSeason(site.locationData) } : null;
   } catch {
     return null;
   }

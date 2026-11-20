@@ -552,7 +552,7 @@ function paragraph(p: Pen, x: number, y: number, value: string, width: number, o
   return y;
 }
 
-const rainSourceLabel = (source: string | undefined, t: Translate) => source === 'nasa-power' ? t('NASA POWER (50 km climate grid)', 'NASA POWER (igridi yesimo sezulu engu-50 km)') : source === 'open-meteo' ? t('ERA5-Land via Open-Meteo (9 km grid)', 'ERA5-Land nge-Open-Meteo (igridi engu-9 km)') : source === 'grower-entered' ? 'Grower-entered rainfall' : 'Rainfall source not recorded';
+const rainSourceLabel = (source: string | undefined, t: Translate) => source === 'nasa-power' ? t('NASA POWER (50 km climate grid)', 'NASA POWER (igridi yesimo sezulu engu-50 km)') : source === 'open-meteo' ? 'Open-Meteo' : source === 'grower-entered' ? 'Grower-entered rainfall' : 'Rainfall source not recorded';
 
 /** More words need more paper; a native header must never paint over the chart's first value. */
 function figureHeader(p: Pen, headline: string, detail: string, language: string, detailSize = 13): number {

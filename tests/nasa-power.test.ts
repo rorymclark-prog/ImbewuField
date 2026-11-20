@@ -8,6 +8,7 @@ import {
 } from '../lib/nasa-power.ts';
 
 const MONTH_KEYS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+const OPEN_METEO_MM_UNITS = { time: 'iso8601', precipitation_sum: 'mm' };
 
 function monthValues(value: number): Record<string, number> {
   return Object.fromEntries(MONTH_KEYS.map((month) => [month, value]));
@@ -153,6 +154,7 @@ test('Open-Meteo outage, bad status and partial payload all return null', async 
   );
   await withFetch(
     (async () => response({
+      daily_units: OPEN_METEO_MM_UNITS,
       daily: {
         time: ['1991-01-01', '1991-01-02'],
         precipitation_sum: [1, 1],
@@ -256,6 +258,32 @@ test('March rainfall cannot be misclassified as austral summer DJF rain', async 
   assert.equal(result.rainfall.pattern, 'year-round');
 });
 
+test('the prevailing rainfall months keep their ranges and use the local meteorological season name', async () => {
+  const cases = [
+    { months: ['DEC', 'JAN', 'FEB'], south: 'summer', north: 'winter', wet: 'Oct–Mar', dry: 'May–Aug' },
+    { months: ['JUN', 'JUL', 'AUG'], south: 'winter', north: 'summer', wet: 'May–Sep', dry: 'Nov–Mar' },
+    { months: [], south: 'year-round', north: 'year-round', wet: 'year-round', dry: 'none' },
+  ];
+
+  for (const row of cases) {
+    const precipitation = monthValues(1);
+    for (const month of row.months) precipitation[month] = 4;
+    await withFetch((async (input) => new URL(String(input)).hostname === 'power.larc.nasa.gov'
+      ? response(nasaPayload({ PRECTOTCORR: precipitation }))
+      : response({}, false, 503)) as typeof fetch, async () => {
+      const south = (await fetchNasaPower(-29, 31)).rainfall;
+      assert.equal(south.pattern, row.south);
+      assert.equal(south.wetSeason, row.wet);
+      assert.equal(south.drySeason, row.dry);
+
+      for (const latitude of [0, 46]) {
+        const rainfall = (await fetchNasaPower(latitude, 31)).rainfall;
+        assert.deepEqual(rainfall, { ...south, pattern: row.north });
+      }
+    });
+  }
+});
+
 test('a partial Open-Meteo response leaves complete NASA rainfall in charge', async () => {
   let calls = 0;
   const result = await withFetch(
@@ -264,6 +292,7 @@ test('a partial Open-Meteo response leaves complete NASA rainfall in charge', as
       return calls === 1
         ? response(nasaPayload())
         : response({
+          daily_units: OPEN_METEO_MM_UNITS,
           daily: {
             time: ['1991-01-01', '1991-01-02'],
             precipitation_sum: [20, 20],
@@ -281,11 +310,15 @@ test('a complete, materially different Open-Meteo normal can replace coarse NASA
   const openMeteo = dailySeries(1991, 2020, 10);
   let calls = 0;
   const result = await withFetch(
-    (async () => {
+    (async (input) => {
       calls += 1;
+      if (calls === 2) {
+        assert.equal(new URL(String(input)).searchParams.get('precipitation_unit'), 'mm');
+      }
       return calls === 1
         ? response(nasaPayload())
         : response({
+          daily_units: OPEN_METEO_MM_UNITS,
           daily: {
             time: openMeteo.dates,
             precipitation_sum: openMeteo.values,
@@ -299,6 +332,35 @@ test('a complete, materially different Open-Meteo normal can replace coarse NASA
   assert.deepEqual(
     result.rainfall.monthly,
     monthlyNormalsFromDailyRainfall(openMeteo.dates, openMeteo.values),
+  );
+});
+
+test('complete Open-Meteo precipitation with absent or unexpected units leaves NASA rainfall in charge', async () => {
+  const { dates, values } = dailySeries(1991, 2020, 10);
+  const daily = { time: dates, precipitation_sum: values };
+  for (const units of [undefined, { time: 'iso8601' }, { precipitation_sum: 'inch' }, { precipitation_sum: 'MM' }]) {
+    const body = { daily, ...(units && { daily_units: units }) };
+    await withFetch(
+      (async () => response(body)) as typeof fetch,
+      async () => assert.equal(await fetchOpenMeteoRainfall(-29, 31), null),
+    );
+    await withFetch(
+      (async input => response(new URL(String(input)).hostname === 'power.larc.nasa.gov' ? nasaPayload() : body)) as typeof fetch,
+      async () => {
+        const { rainfall } = await fetchNasaPower(-29, 31);
+        assert.equal(rainfall.rainfallSource, 'nasa-power');
+        assert.equal(rainfall.annual, 365);
+      },
+    );
+  }
+});
+
+test('verified millimetres retain a complete series with real zero precipitation', async () => {
+  const { dates, values } = dailySeries(1991, 2020, 0);
+  const body = { daily_units: OPEN_METEO_MM_UNITS, daily: { time: dates, precipitation_sum: values } };
+  await withFetch(
+    (async () => response(body)) as typeof fetch,
+    async () => assert.deepEqual(await fetchOpenMeteoRainfall(-29, 31), Array(12).fill(0)),
   );
 });
 

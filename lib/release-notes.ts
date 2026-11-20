@@ -42,13 +42,21 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
-    when: '20 November 2026', sha: '79adc232',
+    when: '20 November 2026', sha: 'e46823075',
     changes: [
       'A new site report is saved as soon as it finishes, so Back no longer loses it.',
       'Report sources show a readable title link instead of a raw web address.',
       'Cost, monitoring and risk tables now fit a phone screen in English too.',
       'If a report cannot be written, it now says why, such as free AI being used up.',
       'With no known coldest temperature, reports leave frost-tender trees off the list.',
+    ],
+  },
+  {
+    when: '20 November 2026', sha: '034b5254f',
+    changes: [
+      'Rainfall lookups and compatible cached readings use local season names.',
+      'Rainfall and roof-water charts show Open-Meteo as the data source.',
+      'Atlas and Water show when monthly rainfall is unavailable.',
     ],
   },
   {
