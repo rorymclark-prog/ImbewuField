@@ -13,7 +13,9 @@
   pointer-events: none;
 }
 
-.armed { transform: translateY(14px); opacity: 0.5; }
+/* !important: the card carries an inline opacity, which would otherwise beat this class and make
+   the armed pose snap from 1 to 0.5 when the animation starts. */
+.armed { transform: translateY(14px); opacity: 0.5 !important; }
 
 .play { animation: listingLift 520ms var(--ease-spring) backwards; }
 .play::after { animation: listingRing 1200ms var(--ease-out) 120ms backwards; }
@@ -30,6 +32,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .armed { transform: none; opacity: 1; }
+  .armed { transform: none; opacity: 1 !important; }
   .play, .play::after { animation: none; }
 }

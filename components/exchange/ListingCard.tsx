@@ -81,7 +81,7 @@ export default function ListingCard({
   const zu = lang === 'zu';
   const tx = (en: string, dz: string) => zu ? dz : en;
   // The ref is attached to the fresh card only, so the other cards on the board set up no observer.
-  const { ref: freshRef, phase: freshPhase } = useInViewOnce<HTMLElement>();
+  const { ref: freshRef, phase: freshPhase } = useInViewOnce<HTMLElement>({ enabled: fresh });
   const { listing, km, distanceLabel } = row;
   const crop = listingCrop(listing);
   const qty = quantityLabel(listing);
