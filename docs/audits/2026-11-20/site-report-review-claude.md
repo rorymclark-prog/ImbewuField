@@ -21,7 +21,7 @@ Between 12 and 19 November, Codex removed many invented or unsupported statement
 | SR-004 | A refused request showed "The server returned code 429" although the server sent a plain sentence ("Today's free AI for visitors is used up…"). | Fixed; verified on screen | A simulated 429 now shows the server's sentence. |
 | SR-005 | With no sourced lowest temperature, the frost screen switched off: the "screened" list sent to the model offered mango, pawpaw, marula and brown ivory for a 962 m KZN site with Köppen Dwb and a −6.5 °C zone minimum. | Fixed; verified in the captured prompt | Unknown now screens as frost-possible (the existing ≤ 0 °C rule, woody perennials only) and the prompt says why. A sourced warm minimum still allows them. |
 
-Four existing assertions encoded the old behaviour (raw citation text kept, English tables unchanged, a manual Save tap). They are rewritten with their reasons in the test files. Each new or rewritten check fails on the previous code (adverse control run).
+Five existing assertions encoded the old behaviour (raw citation text kept, English tables unchanged, a manual Save tap, a regenerated report left unsaved). They are rewritten with their reasons in the test files. The fifth, in `tests/saved-reports.test.ts`, was missed by the first affected-test list and caught by the full suite; it still requires that regeneration never overwrites the original saved version. Each new or rewritten check fails on the previous code (adverse control run).
 
 ## Open findings, most harmful first
 
@@ -55,8 +55,8 @@ Four existing assertions encoded the old behaviour (raw citation text kept, Engl
 ## Verification
 
 - Typecheck: clean (`tsc --noEmit --incremental false`, Node 22.23.4). An earlier run hit missing `.next/types` files because the dev server was restarted mid-run; the clean re-run is the result.
-- Affected tests: 103 of 103 pass across ten files, including the release-note, registry and new `tests/site-report-reader-fixes.test.ts`.
-- Adverse control: with the source changes reverted and the new tests kept, 5 checks fail (the new file and four rewritten assertions). Restored afterwards.
+- Affected tests: 126 of 126 pass across eleven report files, including the registry, `tests/saved-reports.test.ts` and new `tests/site-report-reader-fixes.test.ts`; the release-note checks pass separately.
+- Adverse control: with the source changes reverted and the new tests kept, 5 checks fail (the new file and four rewritten assertions); with only auto-save switched off, the rewritten `saved-reports` check fails. Restored afterwards.
 - Full suite: see the PR or issue #35 for the result. It is not claimed here.
 - Whitespace: clean. Release notes: a new 20 November entry stamped `79adc232`; the pending-notes check passes.
 - Output inspected: the real report screen at 390 px (links, tables, error message, saved store) and the app's exported PDF (28 pages), before and after the fixes.
