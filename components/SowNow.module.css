@@ -1,0 +1,326 @@
+/* "Sow now, eat then": a twelve-month strip and the arc of one sowing laid on it.
+   Colour from theme tokens only. */
+
+.card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: clamp(16px, 1.6vw, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.head { min-width: 0; }
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(16px, 1.3vw, 19px);
+  color: var(--text-primary);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.sub {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 2px 0 0;
+  line-height: 1.4;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 20px;
+}
+
+.group { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+
+.groupLabel {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.chip {
+  min-height: 44px;
+  padding: 4px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-strong, var(--border));
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color var(--dur-fast, 120ms) ease, border-color var(--dur-fast, 120ms) ease, color var(--dur-fast, 120ms) ease;
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+  color: var(--bg-1);
+}
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.play {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 14px;
+  border-radius: 9999px;
+  border: 1px solid var(--border-strong, var(--border));
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.playMain {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+  color: var(--bg-1);
+}
+
+.play:focus-visible,
+.chip:focus-visible,
+.range:focus-visible,
+.details summary:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.scrub {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* The floating assistant button sits at the bottom-right of a phone screen: keep the slider's
+     thumb travel clear of that corner. */
+  padding-right: 8px;
+}
+
+.range {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  accent-color: var(--text-primary);
+  cursor: pointer;
+}
+
+.sowReadout {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text-primary);
+  min-width: 5.5em;
+  text-align: right;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.warn {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--orange);
+  margin: 0;
+}
+
+.stripWrap { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+
+.rowTitle {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+}
+
+.strip {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.cell,
+.arc {
+  min-width: 0;
+  min-height: 62px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  transition: background-color 260ms ease, border-color 260ms ease, transform 260ms ease;
+}
+
+.mLetter,
+.mShort { font-size: 11px; font-weight: 600; line-height: 1; color: var(--text-secondary); }
+.mShort { display: none; }
+
+.mark {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.cell[data-state='fresh'] { background: var(--bg-2); border: 1px solid var(--border); }
+.cell[data-state='fresh'] .mark { color: var(--emerald); }
+.cell[data-state='gap'] { background: transparent; border: 1.5px dashed var(--gold); }
+.cell[data-state='gap'] .mark { color: var(--gold); }
+.cell[data-state='gap'][data-would] { border-color: var(--blue); }
+.cell[data-state='gap'][data-would] .mark { color: var(--blue); }
+.cell[data-state='filled'] { background: var(--emerald); border: 1.5px solid var(--emerald); transform: translateY(-2px); }
+.cell[data-state='filled'] .mark,
+.cell[data-state='filled'] .mLetter,
+.cell[data-state='filled'] .mShort { color: var(--bg-1); }
+
+.arc { border: 1px solid var(--border); background: transparent; }
+.arc[data-empty] { border-style: dotted; }
+.arc[data-stage='sow'] { background: var(--gold); border-color: var(--gold); }
+.arc[data-stage='tray'] { background: var(--violet); border-color: var(--violet); }
+.arc[data-stage='bed'] { background: var(--text-secondary); border-color: var(--text-secondary); }
+.arc[data-stage='pick'] { background: var(--blue); border-color: var(--blue); }
+.arc[data-stage] .stage,
+.arc[data-stage] .mLetter,
+.arc[data-stage] .mShort { color: var(--bg-1); }
+
+.stage { font-size: 9px; font-weight: 700; line-height: 1; letter-spacing: 0; min-height: 9px; }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.key { display: inline-flex; align-items: center; gap: 6px; }
+
+.swFresh, .swGap, .swFilled, .swSow, .swTray, .swBed, .swPick {
+  display: inline-block;
+  flex-shrink: 0;
+  border-radius: 3px;
+  width: 14px;
+  height: 12px;
+  box-sizing: border-box;
+}
+.swFresh { background: var(--bg-2); border: 1px solid var(--border); }
+.swGap { border: 1.5px dashed var(--gold); }
+.swFilled { background: var(--emerald); }
+.swSow { background: var(--gold); }
+.swTray { background: var(--violet); }
+.swBed { background: var(--text-secondary); }
+.swPick { background: var(--blue); }
+
+.caption {
+  font-family: var(--font-display);
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin: 0;
+  min-height: 4.5em;
+}
+
+.gaps { display: flex; flex-direction: column; gap: 6px; }
+.hint { font-family: var(--font-sans); font-size: 13px; line-height: 1.4; color: var(--text-secondary); margin: 0; }
+.suggest { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.details summary {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  min-height: 32px;
+}
+
+.tableWrap { overflow-x: auto; min-width: 0; }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.table caption {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 6px 0;
+  white-space: normal;
+}
+
+.table th,
+.table td { padding: 6px 8px; text-align: right; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.table th:first-child,
+.table td:first-child { text-align: left; padding-left: 0; }
+.table thead th { font-weight: 600; color: var(--text-secondary); }
+.table tbody th { font-weight: 500; }
+.cellNone { color: var(--orange); font-weight: 600; }
+
+.note {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+@media (min-width: 560px) {
+  .mLetter { display: none; }
+  .mShort { display: block; }
+  .cell, .arc { min-height: 72px; }
+  .stage { font-size: 11px; }
+}
+
+@media (max-width: 640px) {
+  .actions { width: 100%; }
+  .table th, .table td { padding: 6px 4px; }
+  .sowReadout { min-width: 4.8em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip, .cell, .arc { transition: none; }
+}
