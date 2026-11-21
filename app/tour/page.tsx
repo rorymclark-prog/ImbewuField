@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Sprout, Map, BookOpen, ReceiptText, Users, Building2, BarChart3, FileText, MessageCircle, type LucideIcon } from 'lucide-react';
+import TourRoute from '@/components/tour/TourRoute';
 import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import { useProductTour } from '@/components/ProductTourProvider';
@@ -56,6 +57,7 @@ export default function TourPage() {
     <p className={styles.notice}>{ui('Try the app with prepared records. Your own project stays unchanged.', 'Zama uhlelo ngamarekhodi alungisiwe. Iphrojekthi yakho ayishintshi.')}</p>
     {['zu','st','ts','ve'].includes(lang) && <p className={styles.notice} role="note">{tourUi('draftDisclosure', '')}</p>}
     {tried > 0 && !tour?.active && <section className={styles.complete}><h2>{tried === PRODUCT_TOUR.length ? ui('You’ve explored the whole tour.', 'Usuhlole lonke uhambo.') : ui('Keep exploring at your own pace.', 'Qhubeka uhlole ngejubane lakho.')}</h2><p>{ui("{tried} of {total} stops marked as explored. These are your checklist choices, not a training certificate.", "Izindawo ezingu-{tried} kwezingu-{total} zimakwe njengezihloliwe. Lokhu kuwuhlu lokuzihlola kwakho, akusona isitifiketi sokuqeqeshwa.", {tried: tried, total: PRODUCT_TOUR.length})}</p><div className={styles.controls}><Link href="/samples">{ui('Explore another role', 'Hlola enye indima')}</Link><Link href="/feedback">{ui('Request a feature or ask about customisation', 'Cela isici noma ubuze ngokwenza uhlelo lufanele wena')}</Link></div></section>}
+    <TourRoute onOpen={openStop} canOpen={(i) => !!tour?.ready && tour.allowed(i) && pendingStop === null} />
     <h2>{ui('Nine stops, one connected story.', 'Izindawo eziyisishiyagalolunye, indaba eyodwa exhunyiwe.')}</h2>
     <p className={styles.hint}>{ui('Choose any stop below to open its screen and guide. Use the Tour button beside the menu to return to the tips or move to another stop.', 'Khetha noma iyiphi indawo ngezansi ukuze uvule isikrini nomhlahlandlela wayo. Sebenzisa inkinobho ethi Tour eduze kwemenyu ukuze ubuyele emacebisweni noma uye kwenye indawo.')}</p>
     {tour?.active && <><p aria-live="polite">{ui("{tried} of {total} stops explored", "Kuhlolwe izindawo ezingu-{tried} kwezingu-{total}", {tried: tried, total: PRODUCT_TOUR.length})}</p><progress className={styles.progress} value={tried} max={PRODUCT_TOUR.length} aria-label={ui('Tour progress', 'Inqubekela phambili yohambo')}/></>}

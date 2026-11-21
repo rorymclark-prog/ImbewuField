@@ -24,6 +24,11 @@ import type { LocationData } from '../lib/types.ts';
 const root = new URL('../', import.meta.url).href;
 registerHooks({
   load(url, context, next) {
+    // CSS modules (RainfallChart's in-view animation) load as a plain class-name map, as in the other UI tests.
+    if (url.startsWith(root) && url.endsWith('.module.css')) {
+      const classes = Object.fromEntries([...readFileSync(new URL(url), 'utf8').matchAll(/\.([A-Za-z][\w-]*)/g)].map(match => [match[1], match[1]]));
+      return { format: 'module', shortCircuit: true, source: `export default ${JSON.stringify(classes)};` };
+    }
     if (url.startsWith(root) && url.endsWith('.tsx')) {
       return {
         format: 'module', shortCircuit: true,

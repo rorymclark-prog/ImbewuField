@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import WelcomeScene from '@/components/onboarding/WelcomeScene';
 import { APP_LANGS, useLanguage, translate, loadLocale } from '@/lib/i18n';
 
 export default function Onboarding() {
@@ -35,6 +36,8 @@ export default function Onboarding() {
       style={{ background: 'rgba(4,10,6,0.92)', backdropFilter: 'blur(8px)' }}>
       <div className="w-full max-w-md rounded-2xl p-6"
         style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 4px 24px rgba(32,25,15,0.10)' }}>
+
+        <WelcomeScene />
 
         {/* Hero */}
         <div className="text-center mb-6">
