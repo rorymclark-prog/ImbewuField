@@ -245,7 +245,7 @@ export function suggestGapFills(input: GapFillInput): GapFillMonth[] {
  * share offered is the largest picker share that fits; a sprawling vine needs the whole bed,
  * which is also what the picker defaults it to.
  */
-function roomiestBed(
+export function roomiestBed(
   beds: readonly PlanBed[],
   crop: CropDef,
   entry: number,

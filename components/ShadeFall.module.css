@@ -1,0 +1,307 @@
+/* "Where the shade falls" — one screen's shadow through a day, and the sun each bed gets.
+   Colour comes from theme tokens only; the canvas reads the same tokens at draw time. */
+
+.card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: clamp(16px, 1.6vw, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(16px, 1.3vw, 19px);
+  color: var(--text-primary);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.sub {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 2px 0 0;
+  line-height: 1.4;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 20px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.groupLabel {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  min-height: 44px;
+  padding: 4px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-strong, var(--border));
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color var(--dur-fast, 120ms) ease, border-color var(--dur-fast, 120ms) ease, color var(--dur-fast, 120ms) ease;
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+  color: var(--bg-1);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.play {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 14px;
+  border-radius: 9999px;
+  border: 1px solid var(--border-strong, var(--border));
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.playMain {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+  color: var(--bg-1);
+}
+
+.play:focus-visible,
+.chip:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.now {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  min-height: 28px;
+}
+
+.clock {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 2vw, 26px);
+  color: var(--text-primary);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.readout {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.canvas:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.scrub {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* The floating assistant button sits at the bottom-right of a phone screen: keep the slider's
+     thumb travel clear of that corner. */
+  padding-right: 8px;
+}
+
+.range {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  accent-color: var(--text-primary);
+  cursor: pointer;
+}
+
+.range:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.swDec,
+.swEq,
+.swJun,
+.swShadow,
+.swBed,
+.swSun {
+  display: inline-block;
+  flex-shrink: 0;
+  border-radius: 2px;
+  width: 16px;
+  height: 10px;
+}
+
+.swDec { background: var(--orange); opacity: 0.85; }
+.swEq { background: var(--violet); opacity: 0.85; }
+.swJun { background: var(--blue); opacity: 0.85; }
+.swShadow { background: var(--text-primary); opacity: 0.38; }
+.swBed { background: var(--emerald); opacity: 0.4; }
+.swSun { width: 11px; height: 11px; border-radius: 50%; background: var(--gold); }
+
+.caption {
+  font-family: var(--font-display);
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin: 0;
+  min-height: 4.5em;
+}
+
+.summary {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  min-width: 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.table caption {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-bottom: 6px;
+  white-space: normal;
+}
+
+.table th,
+.table td {
+  padding: 6px 8px;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.table th:first-child,
+.table td:first-child {
+  text-align: left;
+  padding-left: 0;
+}
+
+.table thead th {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.table tbody th {
+  font-weight: 500;
+}
+
+.cellNone { color: var(--orange); font-weight: 600; }
+
+.note {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .actions { width: 100%; }
+  .table th, .table td { padding: 6px 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip { transition: none; }
+}
