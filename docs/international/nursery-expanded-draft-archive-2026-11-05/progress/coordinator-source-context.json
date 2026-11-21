@@ -1,0 +1,221 @@
+{
+  "checkedAtUtc": "2026-11-05T20:41:43.083366+00:00",
+  "currentHead": "e4d717602ace5fce2bcde7b6af2a9e9e10959ef7",
+  "generationSourceSha256": "5227aca3622f1ce508290d62d7664fd10637fe127db4388b1ac6ef2b0044a328",
+  "scope": "Historical frozen translation input preserved; selected English text located under whitespace normalization only. Not runtime JSX/DOM or full-file binding approval; changed historical hashes never overwritten.",
+  "files": [
+    {
+      "path": "components/crops/NurseryProgressObservationForm.tsx",
+      "actualSha256": "cfdc75929692534d084c0f95337aac945bf13e49f3ffe27f10016158adb09a35",
+      "generationSha256": "cfdc75929692534d084c0f95337aac945bf13e49f3ffe27f10016158adb09a35",
+      "wholeFileFingerprintMatched": true
+    },
+    {
+      "path": "components/journal/JournalNurseryProgressSummary.tsx",
+      "actualSha256": "8ac0577b7e37f0d8e44e430a507b27b8158bbc6cb5dfe02c0d87300ff0f023ce",
+      "generationSha256": "8ac0577b7e37f0d8e44e430a507b27b8158bbc6cb5dfe02c0d87300ff0f023ce",
+      "wholeFileFingerprintMatched": true
+    },
+    {
+      "path": "components/crops/SavedGrowerNurseryReviewPanel.tsx",
+      "actualSha256": "1111cb197e328db72300121c1d50c038a360917e5d8a6655fd8b604cc7f314b3",
+      "generationSha256": "d8e6a1246895cf10785644cd7082c1b69544fb2ba6cf1e649e4c75f104ed4804",
+      "wholeFileFingerprintMatched": false
+    }
+  ],
+  "selectedMessages": [
+    {
+      "key": "nurseryProgress.message.01",
+      "messageSha256": "b3d63e90e7c6113cc7fdbbdb1ce28ea3dc565e8c6af8568e547ef74a48d9b14b",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.02",
+      "messageSha256": "5d7553d59425793d39f186b723fc4ed3dcfe791ac70eb51963e56e57b459a701",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.03",
+      "messageSha256": "952c69c5b9a67ed1709f4775e081c24474bf97e6ee754e3ecf524883d21778cf",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.04",
+      "messageSha256": "98ffc3f26ac1dfa02616b9de00c5e84943f55e0a2e2f5d591c1f76b0d6a145b5",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.05",
+      "messageSha256": "921c0851b058d2e2cbcb6ab914c53828fcfe2fb158a60199c2e46cd6f57381a7",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.06",
+      "messageSha256": "a740ab409a6c02198962aa1ee6a2d2c4e2df4ec1f575b1d27c4d8cef7d9d4701",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.07",
+      "messageSha256": "6f405d89084464e2ede1027f8941505a4423d9d5a8bacbb8175bf2fbc5b7ffe8",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.08",
+      "messageSha256": "dfd590b09da291f2f57905f5d2af654a1feb9497981695051dd01acc1d47d2c1",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx",
+        "components/journal/JournalNurseryProgressSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.09",
+      "messageSha256": "3032763b0e678458e373c225c5319c2b7f6a6abd4fac0b7add3d82394abd3705",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx",
+        "components/journal/JournalNurseryProgressSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.10",
+      "messageSha256": "293b3f51d8c9741af2d2569bfd272acfb0bff2dc72b9e0f9ecb7ed87d4222ede",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.11",
+      "messageSha256": "500dcb0cc4c69c67eac2a0cc31678cc92ff7b3834f67ca823841f7fcd9ac4c36",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.12",
+      "messageSha256": "454856f16d16d0203a4d5bc1b9f77854ef721bd6955eb6d46710beec909a530d",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.13",
+      "messageSha256": "682427eedefc2d22fa566b3b4ee8e66e1569f7cb5b0f6a0684b7d779b918317e",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx",
+        "components/journal/JournalNurseryProgressSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.14",
+      "messageSha256": "5362014ff1b510b2e1c7b4a8591bf144d70c7a56eed94202d357c19adb442056",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx",
+        "components/journal/JournalNurseryProgressSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.15",
+      "messageSha256": "415bb03f949817eb54b109a7a4d17518c33200a13628b9ea359f2b6bce26f2c6",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.16",
+      "messageSha256": "2e94c74555012476974ebd52895f25ccf6ebaea0add29020b6d0cc9eb66251eb",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.17",
+      "messageSha256": "8f3ddf68ae28504280d9ee361e7802625c17e323ae6651452bb0d3d7286284a0",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.18",
+      "messageSha256": "4e37e342a73b05338f85c0379dec3b26dc7b11397b807b25964f4dac514c6bfd",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.19",
+      "messageSha256": "5d3a964c80aa44de9a3da6496b0a49137d11c0fe9727fc1af0470380d485f45c",
+      "textLocatedIn": [
+        "components/crops/NurseryProgressObservationForm.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.20",
+      "messageSha256": "53bd3ce36a3e17b453c5b6ea5998bec5c47b94b066b103c5469c0dce48cec0f6",
+      "textLocatedIn": [
+        "components/journal/JournalNurseryProgressSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.21",
+      "messageSha256": "230cea7058bcf01f2f8af4ce99451d1dc5f86ff6beaa4931399485b92421b12a",
+      "textLocatedIn": [
+        "components/journal/JournalNurseryProgressSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.22",
+      "messageSha256": "aa8a5badb61978af5d22dd73345f775dc4a42ea36308bd1ec797ad07a23237dc",
+      "textLocatedIn": [
+        "components/journal/JournalNurseryProgressSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.23",
+      "messageSha256": "8459f387bef3153b0598e3369c91e7dd0c296c4d68c9aebc7bff2516e4d45058",
+      "textLocatedIn": [
+        "components/journal/JournalNurseryProgressSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.24",
+      "messageSha256": "5bfed112f20c44a508eb90adb64c857c4c11f1cfe95271da2f1b7f7011770343",
+      "textLocatedIn": [
+        "components/journal/JournalNurseryProgressSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.25",
+      "messageSha256": "3ef59ac97e0074e701e2c94955e94d6779e61552d26c1c6c0c8699646dc793ca",
+      "textLocatedIn": [
+        "components/journal/JournalNurseryProgressSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.26",
+      "messageSha256": "43f8596fe5bf0588349673d4040f4da24ed1f043a757c87e7265c607a9a17331",
+      "textLocatedIn": [
+        "components/journal/JournalNurseryProgressSummary.tsx"
+      ]
+    },
+    {
+      "key": "nurseryProgress.message.27",
+      "messageSha256": "2c713c282d20c86cde00f21b0b5f847df6cdf830f772c3703458f7be7ef4709f",
+      "textLocatedIn": [
+        "components/crops/SavedGrowerNurseryReviewPanel.tsx"
+      ]
+    }
+  ]
+}

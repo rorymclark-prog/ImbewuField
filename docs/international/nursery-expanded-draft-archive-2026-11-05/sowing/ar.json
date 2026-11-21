@@ -1,0 +1,200 @@
+{
+  "locale": "ar",
+  "sourceSha256": "92b5e2975d1537e0bf11bc3be3159fd91bdeb4966942349570fd20bc8a7b84fc",
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "messages": [
+    {
+      "key": "nurserySowing.message.01",
+      "english": "The journal outcome could not be confirmed. Inspect the journal before recording this observation again.",
+      "messageSha256": "ed1a727605b8c1978268ac32d7568ef9d80f6fc09c039abd7105664bebdeebbb",
+      "translation": "تعذر تأكيد نتيجة السجل. تفقد السجل قبل تسجيل هذه الملاحظة مرة أخرى."
+    },
+    {
+      "key": "nurserySowing.message.02",
+      "english": "This observed-sowing form belongs to an earlier checked batch. Check saved nursery batches before opening a new observation.",
+      "messageSha256": "eabf14576daab6e350e98644ecffd962dbe342d6b9103b40985e061d2a68b55c",
+      "translation": "ينتمي نموذج البذر الملاحظ هذا إلى دفعة سابقة تم فحصها. تحقق من دفعات المشتل المحفوظة قبل فتح ملاحظة جديدة."
+    },
+    {
+      "key": "nurserySowing.message.03",
+      "english": "Record observed nursery sowing",
+      "messageSha256": "31e649db516ea20d26998bedc6bb2a913f517cfc65dbc3c2af3c9ce1df070bec",
+      "translation": "تسجيل بذر المشتل الملاحظ"
+    },
+    {
+      "key": "nurserySowing.message.04",
+      "english": "Record actual nursery sowing",
+      "messageSha256": "de534391d54a77e99a833770f30d0212f7d58b59fe4c2ebc852e47269103f4da",
+      "translation": "تسجيل بذر المشتل الفعلي"
+    },
+    {
+      "key": "nurserySowing.message.05",
+      "english": "Enter what you observed, separately from the planned dates and quantities. This journal note does not change stock, tasks or nursery estimates.",
+      "messageSha256": "a05cf1b09e9d93292e3f3efe1df975eccc0b3ae800863a7c5b848a0cff6df2cb",
+      "translation": "أدخل ما لاحظته، بشكل منفصل عن التواريخ والكميات المخططة. لا تغير هذه الملاحظة في السجل المخزون أو المهام أو تقديرات المشتل."
+    },
+    {
+      "key": "nurserySowing.message.06",
+      "english": "DEMO — this observation stays in the sample session.",
+      "messageSha256": "885bc7d92ee53522fb5a9912b6f47c8957ceec127fea6e5921b51f3901debe43",
+      "translation": "DEMO — تبقى هذه الملاحظة في جلسة العينة."
+    },
+    {
+      "key": "nurserySowing.message.07",
+      "english": "Checked labels to snapshot with this observation; they do not verify seed identity:",
+      "messageSha256": "bff0cc6684d557846d286ae704a2ca4309a5efbed0183a8b46d4b9fec18c3e6a",
+      "translation": "الملصقات التي تم فحصها لتصويرها مع هذه الملاحظة؛ وهي لا تؤكد هوية البذور:"
+    },
+    {
+      "key": "nurserySowing.message.08",
+      "english": "Seed-lot reference",
+      "messageSha256": "c0097ff0629eec6bcf86365c96e8574efea05b0d0630f63916af2cf4ac58158d",
+      "translation": "مرجع دفعة البذور"
+    },
+    {
+      "key": "nurserySowing.message.09",
+      "english": "Raising-batch reference",
+      "messageSha256": "33f8c91ff914e03ea773c89c1f2b649aafc41dc9946859c10d4d1830ea47bc78",
+      "translation": "مرجع دفعة التربية"
+    },
+    {
+      "key": "nurserySowing.message.10",
+      "english": "Not recorded",
+      "messageSha256": "b37c7879f6c359f633ed1c478dc9ffac47ad7aac648653bb4a4d509a25fdb3b0",
+      "translation": "غير مسجل"
+    },
+    {
+      "key": "nurserySowing.message.11",
+      "english": "Actual observed day",
+      "messageSha256": "695ed5ae7ff666916dfe84fdb0088338bd167792171e89b313d1adbcb8041048",
+      "translation": "اليوم الملاحظ الفعلي"
+    },
+    {
+      "key": "nurserySowing.message.12",
+      "english": "What you observed",
+      "messageSha256": "9714203997dd1813c87bf6d61abf6c0d9caed3c1466df7e362291bff2fbb798d",
+      "translation": "ما لاحظته"
+    },
+    {
+      "key": "nurserySowing.message.13",
+      "english": "Physical trays used (optional)",
+      "messageSha256": "45d4fb68fda12bdf0bcc6c828f507c3523b655997434297ef3bb9c60ca9a49b4",
+      "translation": "الصواني الفعلية المستخدمة (اختياري)"
+    },
+    {
+      "key": "nurserySowing.message.14",
+      "english": "Count whole physical trays used, including partly filled trays. Leave blank for unknown or other containers. An entered 0 means zero trays.",
+      "messageSha256": "64c48afbdb5d7c6868e56b957473f079db5c22816c0c6467a4bce3bb85bde5ee",
+      "translation": "احسب الصواني الفعلية الكاملة المستخدمة، بما في ذلك الصواني الممتلئة جزئيا. اتركه فارغا للحاويات غير المعروفة أو الأخرى. إدخال 0 يعني صفر صينية."
+    },
+    {
+      "key": "nurserySowing.message.15",
+      "english": "I confirm this day, note and tray count describe what I observed.",
+      "messageSha256": "f385bd12e520b7edb1d46f29998b4c20d06e32b755d7a1d8c2096a9e2df930af",
+      "translation": "أؤكد أن هذا اليوم والملاحظة وعدد الصواني تصف ما لاحظته."
+    },
+    {
+      "key": "nurserySowing.message.16",
+      "english": "Recording observed sowing…",
+      "messageSha256": "9a5912d95a801e8a47773faf8364ce609b33cb578c0d5a831e498c17baf5f006",
+      "translation": "جار تسجيل البذر الملاحظ…"
+    },
+    {
+      "key": "nurserySowing.message.17",
+      "english": "Save nursery sowing observation",
+      "messageSha256": "94c877a7fad35462f9c3ec3543803f968c60d0d7146d0ab937da680d4d818c60",
+      "translation": "حفظ ملاحظة بذر المشتل"
+    },
+    {
+      "key": "nurserySowing.message.18",
+      "english": "Inspect the journal before recording again. There is no automatic retry. After reviewing the journal and checking saved batches, start a new observation only if needed.",
+      "messageSha256": "d0b4ceb65699aefb11b44cf5d161f01417f8874b629cd8450ea83f9e6b6a3eae",
+      "translation": "تفقد السجل قبل التسجيل مرة أخرى. لا توجد إعادة محاولة تلقائية. بعد مراجعة السجل والتحقق من الدفعات المحفوظة، ابدأ ملاحظة جديدة فقط عند الحاجة."
+    },
+    {
+      "key": "nurserySowing.message.19",
+      "english": "Open journal",
+      "messageSha256": "1844ec9cd35935c176f9556bb1a498f725cf939158a8df7187a50e7e9a36c2b8",
+      "translation": "فتح السجل"
+    },
+    {
+      "key": "nurserySowing.message.20",
+      "english": "Record another nursery sowing",
+      "messageSha256": "fcc41dd8ecbc68eb05c9f3fcdd5ed53b2c3bc73f6560fce20d888b0c9b805641",
+      "translation": "تسجيل بذر مشتل آخر"
+    },
+    {
+      "key": "nurserySowing.message.21",
+      "english": "Nursery sowing observation needs review",
+      "messageSha256": "d1a00359195895a46a1cd1ca6cea62f0c7d5134b2bf6479d7ce6351d55901abd",
+      "translation": "ملاحظة بذر المشتل تحتاج إلى مراجعة"
+    },
+    {
+      "key": "nurserySowing.message.22",
+      "english": "Stored nursery sowing evidence needs review. Its count and reference labels are withheld; this has not been treated as an ordinary unlinked note.",
+      "messageSha256": "764a71739b54240c377bec3dc1d91698e1a766674ddd9195b9b14d2a998f6576",
+      "translation": "أدلة بذر المشتل المخزنة تحتاج إلى مراجعة. تم حجب عددها وملصقات المراجع الخاصة بها؛ ولم يتم التعامل معها كملاحظة عادية غير مرتبطة."
+    },
+    {
+      "key": "nurserySowing.message.23",
+      "english": "Recorded nursery sowing observation",
+      "messageSha256": "b8794a33dc05962b79445ae84b172c4e58dd85d1ec4b80708d6aff32710d5aa0",
+      "translation": "ملاحظة بذر المشتل المسجلة"
+    },
+    {
+      "key": "nurserySowing.message.24",
+      "english": "Recorded nursery sowing",
+      "messageSha256": "e072cbb2fe3c59347e1b80f9df87f689b8bb386f8625d839f9ee8019b350d9d6",
+      "translation": "بذر المشتل المسجل"
+    },
+    {
+      "key": "nurserySowing.message.25",
+      "english": "Physical trays used, including partly filled",
+      "messageSha256": "b95dee0fd9675586bcd66580357df79b1ee181bc3f34c3f0d37897e67347028b",
+      "translation": "الصواني الفعلية المستخدمة، بما في ذلك الممتلئة جزئيا"
+    },
+    {
+      "key": "nurserySowing.message.26",
+      "english": "Unknown",
+      "messageSha256": "b764cdc0eab7137467211272fa539f1260d1bf2e71bcf6ff3bdc960f5c16aa14",
+      "translation": "غير معروف"
+    },
+    {
+      "key": "nurserySowing.message.27",
+      "english": "Variety / cultivar at observation",
+      "messageSha256": "65953babacde253657c761e41c2b5c46353465a14bb8b4a981a26ade99084f46",
+      "translation": "الصنف / المستنبت عند الملاحظة"
+    },
+    {
+      "key": "nurserySowing.message.28",
+      "english": "Seed-lot reference at observation",
+      "messageSha256": "2b7ffb6c892d41f65d557a54dc3f1e1901b8bbb9cd8d5f370fb06b9d199f1a1d",
+      "translation": "مرجع دفعة البذور عند الملاحظة"
+    },
+    {
+      "key": "nurserySowing.message.29",
+      "english": "Raising-batch reference at observation",
+      "messageSha256": "70b0bdf21bcd887d5e685656b16920ee00fe81d95f8f9f47e7b9c530950d6e26",
+      "translation": "مرجع دفعة التربية عند الملاحظة"
+    },
+    {
+      "key": "nurserySowing.message.30",
+      "english": "These stored labels do not verify seed identity. This observation does not record stock movement or replace planned quantities.",
+      "messageSha256": "ee0f72e18b484c0c8326190dbea4b8fc3058f8889fed221e35bcbf6a864212de",
+      "translation": "لا تؤكد هذه الملصقات المخزنة هوية البذور. لا تسجل هذه الملاحظة حركة المخزون أو تحل محل الكميات المخططة."
+    },
+    {
+      "key": "nurserySowing.message.31",
+      "english": "Record nursery sowing",
+      "messageSha256": "4ec92c1bb86019e01a224a2758dcce7fc39fd8e51cdc4efc2708ab85ec34a999",
+      "translation": "تسجيل بذر المشتل"
+    },
+    {
+      "key": "nurserySowing.message.32",
+      "english": "Variety / cultivar",
+      "messageSha256": "a6151a38bb0bfd89dd91b906f05cc5d9fb12dae19ee028d1558ea8917aad85ba",
+      "translation": "الصنف / المستنبت"
+    }
+  ]
+}

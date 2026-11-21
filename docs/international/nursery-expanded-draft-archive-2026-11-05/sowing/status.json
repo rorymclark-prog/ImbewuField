@@ -1,0 +1,17 @@
+{
+  "executor": "AGY",
+  "locales": [
+    "ar",
+    "ur",
+    "ne",
+    "vi"
+  ],
+  "pairs": 128,
+  "sourceSha256": "92b5e2975d1537e0bf11bc3be3159fd91bdeb4966942349570fd20bc8a7b84fc",
+  "humanApproval": false,
+  "runtimeActivation": false,
+  "commandsRun": false,
+  "testsRun": false,
+  "validation": "UNKNOWN",
+  "workersActive": 0
+}

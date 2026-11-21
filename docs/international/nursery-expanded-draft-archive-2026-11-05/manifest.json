@@ -1,0 +1,185 @@
+{
+  "version": 1,
+  "status": "unreviewed-ai-draft",
+  "runtimeActivation": false,
+  "humanFluentApproval": false,
+  "browserRtlPrintApproved": false,
+  "allCurrentSourceFingerprintsMatched": false,
+  "referenceHead": "5c12307aa26cdb5d9ebb57814a69b6d4cb0d1f1e",
+  "preparedAtUtc": "2026-11-05T21:32:57.869537+00:00",
+  "totalTranslationPairs": 348,
+  "locales": [
+    "ar",
+    "ur",
+    "ne",
+    "vi"
+  ],
+  "scope": "Recoverable review-only source-paired handoffs; no runtime adoption, local agronomy/country approval or human translation certification. Original generation source/context/status bytes preserved, even when old source hashes differ. Phrase presence is not full-file current binding.",
+  "families": [
+    {
+      "id": "sowing",
+      "generationJob": "agy-nursery-sowing-expanded-languages-2026-11-05",
+      "messagesPerLocale": 32,
+      "pairs": 128,
+      "sourceSha256": "92b5e2975d1537e0bf11bc3be3159fd91bdeb4966942349570fd20bc8a7b84fc",
+      "notesWords": 98,
+      "notesWordCap": 120,
+      "independentChecks": "Exact source/key/message hashes/order/literals/schema/status plus independently exercised damaged-packet controls; not fluent/RTL/runtime approval",
+      "damagedControlsRejectedPerLocale": 24,
+      "historicalSourceFilesMatched": 1,
+      "historicalSourceFilesChanged": 2,
+      "files": [
+        {
+          "path": "sowing/source.json",
+          "bytes": 8091,
+          "sha256": "92b5e2975d1537e0bf11bc3be3159fd91bdeb4966942349570fd20bc8a7b84fc"
+        },
+        {
+          "path": "sowing/ar.json",
+          "bytes": 10669,
+          "sha256": "efc5e3346e5931fc89b1bb02e0f29b57d5585f145350882e762174d59478e706"
+        },
+        {
+          "path": "sowing/ur.json",
+          "bytes": 11230,
+          "sha256": "e5dc2bb390afb4e006089e2df1109c92c5511e236cb53bd0ce7ded44c8525e06"
+        },
+        {
+          "path": "sowing/ne.json",
+          "bytes": 13030,
+          "sha256": "aada0f064e7030cc4e10205ef5e92e4e54bed717108b7a4ffd599764a5442a56"
+        },
+        {
+          "path": "sowing/vi.json",
+          "bytes": 10544,
+          "sha256": "74cc488e5089e40418f7027cce37567be64eda4c6e31d3a0288b3aeaefdecce0"
+        },
+        {
+          "path": "sowing/review-notes.md",
+          "bytes": 683,
+          "sha256": "176b7211c906c64ce54d915f7945c9958f973bda1af64d51293879f7f5a82c95"
+        },
+        {
+          "path": "sowing/status.json",
+          "bytes": 335,
+          "sha256": "75402e1dd322bf83f360859733191399514f37e0b30fc218056c37b61f474974"
+        },
+        {
+          "path": "sowing/coordinator-source-context.json",
+          "bytes": 9556,
+          "sha256": "58b8038a7c8814c14bb4a5472ca02c115f3317822730229c1c069fa21c5cf991"
+        }
+      ]
+    },
+    {
+      "id": "progress",
+      "generationJob": "agy-nursery-progress-expanded-languages-2026-11-05",
+      "messagesPerLocale": 27,
+      "pairs": 108,
+      "sourceSha256": "5227aca3622f1ce508290d62d7664fd10637fe127db4388b1ac6ef2b0044a328",
+      "notesWords": 99,
+      "notesWordCap": 120,
+      "independentChecks": "Exact source/key/message hashes/order/literals/schema/status plus independently exercised damaged-packet controls; not fluent/RTL/runtime approval",
+      "damagedControlsRejectedPerLocale": 22,
+      "historicalSourceFilesMatched": 2,
+      "historicalSourceFilesChanged": 1,
+      "files": [
+        {
+          "path": "progress/source.json",
+          "bytes": 7053,
+          "sha256": "5227aca3622f1ce508290d62d7664fd10637fe127db4388b1ac6ef2b0044a328"
+        },
+        {
+          "path": "progress/ar.json",
+          "bytes": 8666,
+          "sha256": "4b3d3626b203093d7916da23b9951e08b5f7f2159d6e95a1f34ac5d2dbae82a3"
+        },
+        {
+          "path": "progress/ur.json",
+          "bytes": 9149,
+          "sha256": "b66ab1aa8cef4a2299555cd57e4db4a04437401e3b96daa1bc1033d4124dffd6"
+        },
+        {
+          "path": "progress/ne.json",
+          "bytes": 10556,
+          "sha256": "ec9d9d0595aff167af936030d846ef69d112979451820ffde8adb9608e21449b"
+        },
+        {
+          "path": "progress/vi.json",
+          "bytes": 8674,
+          "sha256": "ed721e730ef5911a4cfa8459b743d207a7c65ff863daf5a52474bc6aff32635a"
+        },
+        {
+          "path": "progress/review-notes.md",
+          "bytes": 657,
+          "sha256": "da9a436655278df248e013cb859ca4a6e30b49ce8aacfe2c9ec62ff28ba95cae"
+        },
+        {
+          "path": "progress/status.json",
+          "bytes": 335,
+          "sha256": "f2506c6b65553d8ea577a4c7eb698a7c7ec61b374be4458d8059291f8bd27bc9"
+        },
+        {
+          "path": "progress/coordinator-source-context.json",
+          "bytes": 8204,
+          "sha256": "fd2ca5790e81f3d7e65b533ed479d0735a51ec8bb2e508d88707848cfe00e604"
+        }
+      ]
+    },
+    {
+      "id": "batch-references",
+      "generationJob": "agy-nursery-batch-reference-expanded-languages-2026-11-05",
+      "messagesPerLocale": 28,
+      "pairs": 112,
+      "sourceSha256": "cbca068b3b5bbe87b07cd4f1c8a1973fdf5414e7283a2198b50d0a1f99df8002",
+      "notesWords": 99,
+      "notesWordCap": 120,
+      "independentChecks": "Exact source/key/message hashes/order/literals/schema/status plus independently exercised damaged-packet controls; not fluent/RTL/runtime approval",
+      "damagedControlsRejectedPerLocale": 22,
+      "historicalSourceFilesMatched": 0,
+      "historicalSourceFilesChanged": 1,
+      "files": [
+        {
+          "path": "batch-references/source.json",
+          "bytes": 7930,
+          "sha256": "cbca068b3b5bbe87b07cd4f1c8a1973fdf5414e7283a2198b50d0a1f99df8002"
+        },
+        {
+          "path": "batch-references/ar.json",
+          "bytes": 11773,
+          "sha256": "d73e0fc32fba008bbe2eaf4264488e2b775e140e0b384ef171560f3f9525e705"
+        },
+        {
+          "path": "batch-references/ur.json",
+          "bytes": 12484,
+          "sha256": "dfc87296bcabea1156b921c40e4e1848c5f5e0e3092af8706bddf6654a767eb7"
+        },
+        {
+          "path": "batch-references/ne.json",
+          "bytes": 15179,
+          "sha256": "7c3efc5833429e36318e2aa08954d11a27f53e68c7f901a2c76452e084cc4eb4"
+        },
+        {
+          "path": "batch-references/vi.json",
+          "bytes": 11594,
+          "sha256": "42c20c78adf7e74160e7a36c5152bf10c0a15fbdad69545218706742f11adff0"
+        },
+        {
+          "path": "batch-references/review-notes.md",
+          "bytes": 681,
+          "sha256": "6c55dd137cc320960732d142e34b3b373aaaac5e410dc1029137e692e03508dc"
+        },
+        {
+          "path": "batch-references/status.json",
+          "bytes": 335,
+          "sha256": "a6a46c4924511970500b424959e5e2335e29ed90588822e8d8e8da0415bb87e6"
+        },
+        {
+          "path": "batch-references/coordinator-source-context.json",
+          "bytes": 7707,
+          "sha256": "cd894693ff2d1111df159e7a3f0ebd2ee24287e0c572a38191cf5003bd8efbe2"
+        }
+      ]
+    }
+  ]
+}
