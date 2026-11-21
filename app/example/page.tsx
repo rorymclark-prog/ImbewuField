@@ -22,6 +22,7 @@ import Illustration from '@/components/Illustration';
 import WaterYear from '@/components/WaterYear';
 import RainOnTerrainFilm from '@/components/RainOnTerrainFilm';
 import CropGateYear from '@/components/CropGateYear';
+import ShadeFall from '@/components/ShadeFall';
 import workspace from '@/components/layout/Workspace.module.css';
 
 // The example farm's climate exactly as the planner reads it (site-climate.ts), for the gate figure.
@@ -275,6 +276,9 @@ function ExampleInner() {
             climateSource="NASA POWER monthly averages for this point"
           />
         )}
+
+        {/* Where the shade falls: one wall's shadow through a day, and the sun each bed behind it gets. */}
+        <ShadeFall latDeg={DEMO_COORDS.lat} slopeDeg={data.elevation.slopeDeg} />
 
         <div className={workspace.twoColumns}>
           {/* Key species */}

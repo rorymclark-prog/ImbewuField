@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 November 2026', sha: '90064872a', changes: [
+    'The example farm shows where a wall, hedge or tree row casts shade through the day.',
+    'See how many hours of sun each bed behind it gets in December, at the equinox and in June.',
+  ], tour: [{ title: 'Watch the shade move', where: 'Example farm → Where the shade falls', href: '/example',
+    detail: 'Below "Why not this month?", press Play all three. The shadow swings through 21 December, the equinox and 21 June. The bars show the hours of direct sun for beds at different distances south of the object.' }] },
   {
     when: '20 November 2026', sha: '034b5254f',
     changes: [
