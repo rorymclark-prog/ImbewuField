@@ -73,6 +73,7 @@ const T = {
     noSun: 'bed in shade',
   },
   noPlay: 'The sun is below the horizon.',
+  atRise: 'The sun is on the horizon, so shadows are at their longest.',
   notes: (o: { slopeDeg: number; lengthM: number; declDeg: number; latDeg: number }) =>
     `The model: flat ground (this site’s slope is ${numberLabel(o.slopeDeg, 1)}°, treated as flat), a geometric horizon with no ridges, buildings or other trees, ` +
     `and a single opaque screen ${o.lengthM} m long running east to west, with no thickness. There is no atmospheric refraction and no diffuse light, so ` +
@@ -232,11 +233,11 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
   const togglePlay = useCallback(() => {
     const L = live.current;
     if (!L.res) return;
-    if (L.playing) { L.playing = false; setPlaying(false); setCapKey((k) => k + 1); return; }
+    if (L.playing) { L.playing = false; setPlaying(false); push(); setCapKey((k) => k + 1); return; }
     const r = L.res[L.sel];
     if (L.t[L.sel] >= r.setHour - 1e-6) { startDay(L.sel, 'one'); return; }
     L.playing = true; L.mode = L.mode ?? 'one'; setPlaying(true); setMode(L.mode);
-  }, [startDay]);
+  }, [startDay, push]);
 
   const seek = useCallback((hour: number) => {
     const L = live.current;
@@ -637,18 +638,21 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
     };
   }, [results, heightM]);
 
-  const caption = useMemo(() => {
-    const L = live.current;
+  // One sentence for a day and a time. The VISIBLE caption follows the clock as the day plays; the
+  // SPOKEN copy (aria-live) is rewritten only on events (start, pause, a day ending, a seek), so a
+  // screen reader is not flooded ten times a second. Before 21 Nov 2026 one caption did both jobs,
+  // and sighted viewers read "05:05 … the sun is below the horizon" for the whole run.
+  const captionFor = useCallback((day: ShadeDayKey, t: number): string => {
     if (!results) return '';
-    const r = results[L.sel];
-    const t = L.t[L.sel];
+    const r = results[day];
     const obj = T.objectName(heightM);
+    if (t <= r.riseHour + 1e-6) return `${T.dayLong[day]}, sunrise at ${solarClock(r.riseHour)} solar time. ${T.atRise}`;
     if (t >= r.setHour - 1e-6) {
       const bits = r.beds.map((b) => `${b.distanceM} m ${hours(b.sunHours)}`).join(', ');
-      return `${T.dayLong[L.sel]}, sunset at ${solarClock(r.setHour)} solar time. Hours of direct sun behind the ${obj}, by bed: ${bits}, out of ${hours(r.daylightHours)} of daylight.`;
+      return `${T.dayLong[day]}, sunset at ${solarClock(r.setHour)} solar time. Hours of direct sun behind the ${obj}, by bed: ${bits}, out of ${hours(r.daylightHours)} of daylight.`;
     }
     const a = shadeAt(r, t);
-    if (!a.up) return `${T.dayLong[L.sel]}, ${solarClock(t)} solar time. ${T.noPlay}`;
+    if (!a.up) return `${T.dayLong[day]}, ${solarClock(t)} solar time. ${T.noPlay}`;
     const noon = Math.abs(t - 12) < 1.5 / 60;
     const lit = BED_DISTANCES_M.filter((_, i) => a.lit[i]).map((d) => `${d} m`);
     const dark = BED_DISTANCES_M.filter((_, i) => !a.lit[i]).map((d) => `${d} m`);
@@ -657,18 +661,25 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
     const len = a.shadowLengthM ?? 0;
     const lenText = len > 40 ? 'longer than the plot' : metres(len);
     const dir = compassWord(a.sun.azimuthDeg + 180);
-    return `${T.dayLong[L.sel]}, ${solarClock(t)} solar time. The sun is ${numberLabel(a.sun.altitudeDeg, 0)}° high, bearing ${numberLabel(a.sun.azimuthDeg, 0)}° (${compassWord(a.sun.azimuthDeg)}). The ${obj}’s shadow is ${lenText} long and points ${dir}.${noon ? ' In the southern hemisphere the midday sun stands in the north, so midday shadows point south.' : ''} ${beds}`;
+    return `${T.dayLong[day]}, ${solarClock(t)} solar time. The sun is ${numberLabel(a.sun.altitudeDeg, 0)}° high, bearing ${numberLabel(a.sun.azimuthDeg, 0)}° (${compassWord(a.sun.azimuthDeg)}). The ${obj}’s shadow is ${lenText} long and points ${dir}.${noon ? ' In the southern hemisphere the midday sun stands in the north, so midday shadows point south.' : ''} ${beds}`;
+  }, [results, heightM]);
+
+  const spokenCaption = useMemo(() => {
+    const L = live.current;
+    return captionFor(L.sel, L.t[L.sel]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [capKey, results, heightM]);
+  }, [capKey, captionFor]);
+  const shownCaption = useMemo(() => captionFor(sel, clock), [captionFor, sel, clock]);
 
   const readout = useMemo(() => {
     if (!results) return null;
     const r = results[sel];
     const a = shadeAt(r, clock);
     const atSet = clock >= r.setHour - 1e-6;
+    const atRise = clock <= r.riseHour + 1e-6;
     return {
       clock: solarClock(clock),
-      sun: atSet ? 'Sunset: the sun is on the horizon.' : a.up ? `Sun ${numberLabel(a.sun.altitudeDeg, 0)}° high · bearing ${numberLabel(a.sun.azimuthDeg, 0)}° ${aspectLabel(a.sun.azimuthDeg)}` : T.noPlay,
+      sun: atSet ? 'Sunset: the sun is on the horizon.' : atRise ? 'Sunrise: the sun is on the horizon.' : a.up ? `Sun ${numberLabel(a.sun.altitudeDeg, 0)}° high · bearing ${numberLabel(a.sun.azimuthDeg, 0)}° ${aspectLabel(a.sun.azimuthDeg)}` : T.noPlay,
       shadow: a.up && a.shadowLengthM !== null ? `Shadow ${a.shadowLengthM > 40 ? 'longer than the plot' : metres(a.shadowLengthM)}, pointing ${compassWord(a.sun.azimuthDeg + 180)}` : '',
     };
   }, [results, sel, clock]);
@@ -758,7 +769,8 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
         <span className={s.key}><span className={s.swSun} />{T.legend.sun}</span>
       </div>
 
-      <p className={s.caption} aria-live="polite">{caption}</p>
+      <p className={s.caption} aria-hidden="true">{shownCaption}</p>
+      <p className={s.srOnly} aria-live="polite">{spokenCaption}</p>
       <p className={s.summary}>{sentences.noon} {sentences.beds}</p>
 
       <div className={s.tableWrap}>
