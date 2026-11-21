@@ -7,6 +7,7 @@ import type { SavedPlace } from '@/lib/saved-places';
 
 const state = { uid: 'account-a' as string | null, docs: new Map<string, Record<string, unknown>>(),
   writes: [] as string[], backend: true, failTransactions: false, gate: null as Promise<void> | null,
+  postCommitGate: null as Promise<void> | null,
   listeners: [] as { ref: string; callback: (snap: unknown) => void }[] };
 Object.assign(globalThis, { __imbewuSiteContextTransport: state });
 const moduleUrl = (source: string) => `data:text/javascript,${encodeURIComponent(source)}`;
@@ -23,8 +24,10 @@ export const getDoc = async ref => snapshot(ref);
 export const setDoc = async (ref, data) => { state.docs.set(ref, structuredClone(data)); state.writes.push(ref); };
 export const runTransaction = async (_db, update) => {
   if (state.failTransactions) throw new Error('network unavailable');
-  return update({ get: async ref => { if (state.gate) await state.gate; return snapshot(ref); },
+  const result = await update({ get: async ref => { if (state.gate) await state.gate; return snapshot(ref); },
     set: (ref, data) => { state.docs.set(ref, structuredClone(data)); state.writes.push(ref); } });
+  if (state.postCommitGate) await state.postCommitGate;
+  return result;
 };
 export const onSnapshot = (ref, callback) => {
   const entry = { ref, callback }; state.listeners.push(entry);
@@ -100,7 +103,7 @@ const reconcile = async (uid = 'account-a') => {
 
 test.beforeEach(() => {
   local.clear(); session.clear(); state.docs.clear(); state.writes.length = 0; events.length = 0;
-  state.failTransactions = false; state.listeners = []; state.gate = null;
+  state.failTransactions = false; state.listeners = []; state.gate = null; state.postCommitGate = null;
   state.uid = 'account-a'; state.backend = true; bindMountedAccountLocalStorageUid('account-a');
 });
 
@@ -537,6 +540,48 @@ for (const scenario of ['accepted', 'rejected'] as const) {
     assert.equal(local.getItem(accountLocalStorageKey(key, 'account-a')), aAfterLocalSave, 'no late rollback either');
     assert.equal(local.getItem(accountLocalStorageKey(key, 'account-b')), bRaw);
     assert.equal(await upsertPlaceContext('account-a', bound(zaContext)), 'account-changed');
+  });
+}
+
+for (const transition of ['none', 'mounted owner', 'Firebase user'] as const) {
+  test(`a committed country save reports only while both account identities remain current (${transition})`, async () => {
+    const placeA = basePlace();
+    const placeB = basePlace('b-place');
+    const keyA = accountLocalStorageKey(key, 'account-a');
+    const keyB = accountLocalStorageKey(key, 'account-b');
+    seed([placeA]);
+    seedRemote([placeA]);
+    seed([placeB], keyB);
+    seedRemote([placeB], 'account-b');
+    const bLocal = local.getItem(keyB);
+    const bRemote = structuredClone(state.docs.get(cloudPath('account-b')));
+
+    let release = () => {};
+    state.postCommitGate = new Promise<void>(resolve => { release = resolve; });
+    const { reports, report } = collect();
+    let aLocal: string | null = null;
+    try {
+      assert.equal(updateSiteCountryContext(siteId, context, report).status, 'local-saved');
+      aLocal = local.getItem(keyA);
+      await setImmediate();
+      // The write has landed in the mock, but its delivery is still held.
+      assert.deepEqual(state.writes, [cloudPath()]);
+      assert.deepEqual(remotePlaces(), [{ ...placeA, siteCountryContext: bound(context, placeA) }]);
+      assert.equal(reports.length, 0);
+
+      if (transition === 'mounted owner') bindMountedAccountLocalStorageUid('account-b');
+      if (transition === 'Firebase user') state.uid = 'account-b';
+    } finally {
+      release();
+      await setImmediate();
+    }
+
+    assert.deepEqual(reports.map(item => item.outcome), transition === 'none' ? ['applied'] : []);
+    assert.deepEqual(state.writes, [cloudPath()]);
+    assert.deepEqual(remotePlaces(), [{ ...placeA, siteCountryContext: bound(context, placeA) }]);
+    assert.deepEqual(state.docs.get(cloudPath('account-b')), bRemote);
+    assert.equal(local.getItem(keyA), aLocal);
+    assert.equal(local.getItem(keyB), bLocal);
   });
 }
 
