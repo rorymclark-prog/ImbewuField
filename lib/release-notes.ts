@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 November 2026', sha: '3786a167e', changes: [
+    'On the example farm, the shade figure\'s caption now keeps time with the sun as the day plays.',
+  ], tour: [{ title: 'Read the shade as it moves', where: 'Example farm → Where the shade falls', href: '/example',
+    detail: 'Press Play this day. The sentence under the figure now gives the solar time, the sun\'s height and its bearing as they change, not just the sunrise.' }] },
   { when: '20 November 2026', sha: '750a767ef', changes: [
     'The example farm shows which months have no fresh vegetable from its crop plan.',
     'Pick a crop and drag its sowing month to see which of those empty months it would fill.',
