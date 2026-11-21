@@ -13,6 +13,8 @@ import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL, ZU_CATEGORY_LA
 import { produceLabel } from '@/lib/produce-label';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
+import { useInViewOnce } from '@/lib/use-in-view-once';
+import styles from './ListingCard.module.css';
 
 /**
  * Distance is coloured by bucket so a scan down the board reads as a map:
@@ -51,6 +53,7 @@ export default function ListingCard({
   nowMs,
   mine,
   hasOrigin,
+  fresh = false,
   onClose,
   onDelete,
 }: {
@@ -66,12 +69,19 @@ export default function ListingCard({
    * vantage point reads as broken data rather than a missing setting.
    */
   hasOrigin: boolean;
+  /**
+   * True for the listing the farmer has just posted. It lifts into place and gets a green ring once,
+   * and only when it is actually on screen; a card that is not fresh never observes anything.
+   */
+  fresh?: boolean;
   onClose: (id: string) => void;
   onDelete: (id: string) => void;
 }) {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
   const tx = (en: string, dz: string) => zu ? dz : en;
+  // The ref is attached to the fresh card only, so the other cards on the board set up no observer.
+  const { ref: freshRef, phase: freshPhase } = useInViewOnce<HTMLElement>({ enabled: fresh });
   const { listing, km, distanceLabel } = row;
   const crop = listingCrop(listing);
   const qty = quantityLabel(listing);
@@ -84,7 +94,9 @@ export default function ListingCard({
 
   return (
     <article
-      className="rounded-2xl"
+      ref={fresh ? freshRef : undefined}
+      data-fresh={fresh ? 'true' : undefined}
+      className={`rounded-2xl ${fresh ? `${styles.fresh} ${freshPhase === 'armed' ? styles.armed : freshPhase === 'play' ? styles.play : ''}` : ''}`}
       style={{
         background: EX.card,
         border: `1px solid ${EX.border}`,

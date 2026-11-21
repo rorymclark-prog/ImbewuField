@@ -36,6 +36,9 @@ export function isRecordsRegionalLang(lang: string): lang is RecordsRegionalLang
 // New financial/source qualifications stay in English until their exact meaning
 // has a paired review. This records a hold, not a translation or approval.
 export const RECORDS_ENGLISH_HOLDS: Readonly<Record<string, string>> = Object.freeze({
+  "Now": "One-word tag marking the current month on the coming-up harvests list, added with its animation; held for first-language review, English shows meanwhile.",
+  "Sales": "Two-word bar caption added with the area-return animation; held for financial-language review, English shows meanwhile.",
+  "Costs": "Two-word bar caption added with the area-return animation; held for financial-language review, English shows meanwhile.",
   "Saved invoice currency summary": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
   "Saved invoices on this device, across all loaded dates. Choose one currency to view its recorded amounts.": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",
   "Summary currency": "Saved invoice-only summary wording needs paired financial-language review. Preserve issued, recorded paid, unpaid, held and excluded records without implying bank verification, complete income, profit or currency conversion.",

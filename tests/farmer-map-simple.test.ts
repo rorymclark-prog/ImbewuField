@@ -73,7 +73,7 @@ test('a saved-site survey stays open when location data is unavailable in sample
   const loadingState = DATA_PANEL.slice(DATA_PANEL.indexOf('if (loading && !data) return'), DATA_PANEL.indexOf('if (!data) return null;'));
   assert.match(emptyState, /<EmptyState \/>[\s\S]*siteSurveySheet/,
     'a 401 empty state must still render the requested survey for its saved place');
-  assert.match(loadingState, /<Skeleton \/>[\s\S]*siteSurveySheet/,
+  assert.match(loadingState, /<DataPanelSkeleton \/>[\s\S]*siteSurveySheet/,
     'the survey must remain available while the saved place has no local data yet');
   assert.match(DATA_PANEL.slice(surveyElement, surveyElement + 450), /placeId=\{activePlaceId\}[\s\S]*coords=\{coords\}/,
     'the survey must use the selected saved place and its coordinates without an API response');

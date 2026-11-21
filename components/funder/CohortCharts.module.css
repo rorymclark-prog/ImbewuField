@@ -1,0 +1,51 @@
+/* Cohort month bars. Produced bars grow first, then the sold portion overlays them.
+   Without a phase class (server render, no JS, reduced motion) every bar is drawn finished.
+   Per-column stagger comes from --d, capped in CohortCharts.tsx so the whole row of columns
+   starts within about 400 ms however many months are shown. */
+
+/* A later change of the series (a new window, a new filter): bars move to their new heights. */
+.h { transition: height 400ms cubic-bezier(0.22, 0.8, 0.3, 1); }
+
+.stack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transform-origin: center bottom;
+}
+.grow, .growLate, .over { transform-origin: center bottom; }
+
+/* Armed: collapsed, waiting for the chart to scroll into view. */
+.armed .stack, .armed .grow, .armed .growLate { transform: scaleY(0); transition: none; }
+.armed .over { opacity: 0; }
+.armed .soldSeg { background: var(--picked-fill) !important; }
+.armed .soldSeg::before { transform: scaleY(0); }
+
+/* The sold part of a stacked bar is painted over the produced colour, so the bar first grows as
+   "produced" and the sold share then fills in from the bottom. */
+.soldSeg { position: relative; }
+.armed .soldSeg::before, .play .soldSeg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--sold-fill);
+  border-radius: inherit;
+  transform-origin: center bottom;
+}
+.play .soldSeg { background: var(--picked-fill) !important; }
+
+.play .stack, .play .grow { animation: barGrow 420ms cubic-bezier(0.22, 0.8, 0.3, 1) var(--d, 0ms) backwards; }
+.play .growLate { animation: barGrow 380ms cubic-bezier(0.22, 0.8, 0.3, 1) calc(var(--d, 0ms) + 320ms) backwards; }
+.play .soldSeg::before { animation: barGrow 340ms ease-out calc(var(--d, 0ms) + 360ms) backwards; }
+.play .over { animation: fadeIn 300ms ease-out calc(var(--d, 0ms) + 700ms) backwards; }
+
+@keyframes barGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .h { transition: none; }
+  .stack, .grow, .growLate, .over, .soldSeg::before { animation: none !important; transition: none !important; }
+  .armed .stack, .armed .grow, .armed .growLate { transform: none; }
+  .armed .over { opacity: 1; }
+}

@@ -7,6 +7,8 @@ import { annualRainfallMm, sourcedMonthlyRainfall } from '@/lib/climate-temperat
 import { numberLabel } from '@/lib/format-figures';
 import { LITRES_PER_PERSON_DAY, peopleFromAdults } from '@/lib/household';
 import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT } from '@/lib/roof-runoff';
+import { useInViewOnce } from '@/lib/use-in-view-once';
+import styles from './WaterBalance.module.css';
 
 interface Props {
   locationData: LocationData;
@@ -51,6 +53,7 @@ function litresLabel(kl: number, t: (key: string) => string): string {
 
 export default function WaterBalance({ locationData, waterData, survey, siteAreaHa }: Props) {
   const { t, lang } = useLanguage();
+  const { ref, phase } = useInViewOnce<HTMLDivElement>();
   // Full isiZulu names do not fit the chart's narrow monthly ticks; numbers avoid English initials.
   const MONTHS = lang === 'zu' ? MONTHS_ZU : MONTHS_EN;
   const MONTH_FULL = MONTH_FULL_KEYS.map(key => t(key));
@@ -157,7 +160,7 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
   const noSurvey  = !survey;
 
   return (
-    <div className="space-y-3">
+    <div ref={ref} className={`space-y-3${phase === 'armed' ? ` ${styles.armed}` : phase === 'play' ? ` ${styles.play}` : ''}`}>
       {/* Heading */}
       <div className="flex items-center justify-between">
         <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--blue)' }}>{t('waterBalanceTitle')}</span>
@@ -181,7 +184,7 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
           {months.map(({ demand }, i) => {
             const h = (demand / maxVal) * chartH;
             return (
-              <rect key={i} x={xBar(i) + barW + 1} y={PAD.top + chartH - h} width={barW} height={h}
+              <rect key={i} className={styles.bar} style={{ '--i': i } as React.CSSProperties} x={xBar(i) + barW + 1} y={PAD.top + chartH - h} width={barW} height={h}
                 fill={demand > (months[i].catchment + (capacity > 0 ? capacity : 0)) ? 'rgba(192,90,30,0.45)' : 'rgba(192,122,30,0.35)'}
                 rx="1.5" />
             );
@@ -191,16 +194,16 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
           {months.map(({ catchment }, i) => {
             const h = (catchment / maxVal) * chartH;
             return (
-              <rect key={i} x={xBar(i)} y={PAD.top + chartH - h} width={barW} height={h}
+              <rect key={i} className={styles.bar} style={{ '--i': i } as React.CSSProperties} x={xBar(i)} y={PAD.top + chartH - h} width={barW} height={h}
                 fill="rgba(35,94,134,0.55)" rx="1.5" />
             );
           })}
 
           {/* Capacity bar (right edge, faint) */}
           {capacity > 0 && (
-            <line x1={W - PAD.right - 2} x2={W - PAD.right - 2}
-              y1={PAD.top + yScale(capacity)} y2={PAD.top + chartH}
-              stroke="rgba(31,77,43,0.3)" strokeWidth="4" />
+            <rect className={styles.tank} x={W - PAD.right - 4} width="4"
+              y={PAD.top + yScale(capacity)} height={chartH - yScale(capacity)}
+              fill="rgba(31,77,43,0.3)" />
           )}
 
           {/* Min safe level */}
@@ -211,11 +214,11 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
 
           {/* Tank level line */}
           {capacity > 0 && (
-            <path d={tankPath} fill="none" stroke="#1F4D2B" strokeWidth="1.8" strokeLinejoin="round" />
+            <path className={styles.level} d={tankPath} pathLength={1} fill="none" stroke="#1F4D2B" strokeWidth="1.8" strokeLinejoin="round" />
           )}
           {/* Tank level dots */}
           {capacity > 0 && tankLevels.map((v, i) => (
-            <circle key={i} cx={xPoint(i)} cy={PAD.top + yScale(v)} r="2"
+            <circle key={i} className={styles.dot} style={{ '--i': i } as React.CSSProperties} cx={xPoint(i)} cy={PAD.top + yScale(v)} r="2"
               fill={v <= minSafe ? '#C03C1E' : '#1F4D2B'} />
           ))}
 

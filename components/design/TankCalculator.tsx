@@ -9,10 +9,14 @@
 // (imbewu_loc_v7_{lat}_{lon}, keyed off the ?lat/?lon URL params) — so the card works standalone
 // without threading a prop through the page. If nothing is cached, it degrades honestly.
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronDown, ChevronUp, Droplets } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
-import { computeTankSizing } from '@/lib/tank-sizing';
+import { computeTankSizing, type TankSizingResult } from '@/lib/tank-sizing';
+import { numberLabel } from '@/lib/format-figures';
+import { sampleWorkspaceText } from '@/lib/sample-tour-localization';
+import { prefersReducedMotion } from '@/lib/use-in-view-once';
+import styles from './TankCalculator.module.css';
 import { translate, useLanguage } from '@/lib/i18n';
 
 type TankChromeKey =
@@ -58,6 +62,7 @@ const OCHRE = '#C07A1E';
 // paints the fixed PAPER constant in every theme, and dark mode's --gold-dim (#B49040) is ~2.6:1 on it.
 const GOLD_DIM = '#7A4408';
 const BLUE = '#3E8FBF'; // STEP_ACCENT.water
+const RED = '#B83A18'; // the same shortfall red as the app's --orange token
 
 const DEFAULT_ROOF_M2 = 80;
 /** Read the same cached LocationData the /design page writes, using the ?lat/?lon URL params. */
@@ -79,6 +84,116 @@ function resolveCachedRainfall(): number[] | null {
   } catch {
     return null;
   }
+}
+
+// ── Figures ────────────────────────────────────────────────────────────────────────────────────
+// Numbers tick from the old value to the new exact one, and the dry-months tile pulses once, but
+// only after the farmer has stopped typing for a moment so a half-typed roof area does not thrash
+// the screen. First render, reduced motion, and a roof that cannot meet the demand all show the
+// real values at once with no motion.
+const TICK_DEBOUNCE_MS = 250;
+const TICK_MS = 450;
+
+function useTickedFigures(result: TankSizingResult) {
+  const target = { harvest: result.annualHarvestL, use: result.annualUseL, store: result.recommendedStorageL, dry: result.dryMonths };
+  const [shown, setShown] = useState(target);
+  const [pulse, setPulse] = useState(0);
+  const shownRef = useRef(target);
+  const lastDry = useRef(result.dryMonths);
+  const key = `${target.harvest}|${target.use}|${target.store}|${target.dry}|${result.waterNegative}`;
+
+  useEffect(() => {
+    const t = { harvest: result.annualHarvestL, use: result.annualUseL, store: result.recommendedStorageL, dry: result.dryMonths };
+    const from = shownRef.current;
+    const set = (v: typeof t) => { shownRef.current = v; setShown(v); };
+    const settle = () => {
+      set(t);
+      if (t.dry !== lastDry.current && t.dry > 0 && !result.waterNegative) setPulse((n) => n + 1);
+      lastDry.current = t.dry;
+    };
+    if (from.harvest === t.harvest && from.use === t.use && from.store === t.store && from.dry === t.dry) {
+      lastDry.current = t.dry;
+      return;
+    }
+    if (result.waterNegative || prefersReducedMotion()) { set(t); lastDry.current = t.dry; return; }
+    let raf = 0;
+    const timer = window.setTimeout(() => {
+      const start = performance.now();
+      const step = (now: number) => {
+        const p = Math.min(1, (now - start) / TICK_MS);
+        if (p >= 1) { settle(); return; }
+        const e = 1 - Math.pow(1 - p, 3);
+        set({
+          harvest: Math.round(from.harvest + (t.harvest - from.harvest) * e),
+          use: Math.round(from.use + (t.use - from.use) * e),
+          store: Math.round(from.store + (t.store - from.store) * e),
+          dry: Math.round(from.dry + (t.dry - from.dry) * e),
+        });
+        raf = requestAnimationFrame(step);
+      };
+      raf = requestAnimationFrame(step);
+    }, TICK_DEBOUNCE_MS);
+    return () => { window.clearTimeout(timer); cancelAnimationFrame(raf); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
+
+  return { shown, pulse };
+}
+
+function TankFigures({ result }: { result: TankSizingResult }) {
+  const { lang } = useLanguage();
+  const text = (en: string, zu: string) => sampleWorkspaceText(lang, en, zu);
+  const { shown, pulse } = useTickedFigures(result);
+  const litres = (n: number) => `${numberLabel(n)} ℓ`;
+  const gapL = Math.max(0, result.annualUseL - result.annualHarvestL);
+  const caughtShare = result.annualUseL > 0 ? Math.min(100, (result.annualHarvestL / result.annualUseL) * 100) : 0;
+
+  const tile = (label: string, value: string, extra?: { className?: string; key?: string | number; color?: string }) => (
+    <div
+      key={extra?.key}
+      className={extra?.className}
+      style={{ flex: '1 1 96px', minWidth: 0, padding: '6px 8px', borderRadius: 8, background: PAPER, border: '1px solid rgba(11,18,11,0.12)' }}
+    >
+      <div style={{ fontSize: 12, lineHeight: 1.3, color: 'rgba(11,18,11,0.7)' }}>{label}</div>
+      <div style={{ marginTop: 2, fontSize: 15, fontWeight: 800, color: extra?.color ?? DARK, fontVariantNumeric: 'tabular-nums' }}>{value}</div>
+    </div>
+  );
+
+  if (result.waterNegative) {
+    return (
+      <div style={{ marginTop: 8 }}>
+        <div
+          role="img"
+          aria-label={text(
+            `The roof catches ${litres(result.annualHarvestL)} a year against ${litres(result.annualUseL)} needed.`,
+            `Uphahla luqoqa ${litres(result.annualHarvestL)} ngonyaka kuma-${litres(result.annualUseL)} adingekayo.`,
+          )}
+          style={{ display: 'flex', height: 14, borderRadius: 7, overflow: 'hidden', border: `1px solid ${RED}`, background: PAPER }}
+        >
+          <div style={{ width: `${caughtShare}%`, background: BLUE }} />
+          <div style={{ flex: 1, background: `repeating-linear-gradient(-45deg, ${RED} 0 2px, ${PAPER} 2px 6px)` }} />
+        </div>
+        <div style={{ marginTop: 6, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+          {tile(text('Roof catches a year', 'Uphahla luqoqa ngonyaka'), litres(shown.harvest))}
+          {tile(text('Household uses a year', 'Umndeni usebenzisa ngonyaka'), litres(shown.use))}
+          {tile(text('Roof is short by', 'Uphahla lunciphile ngo'), litres(gapL), { color: RED })}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+      {tile(text('Roof catches a year', 'Uphahla luqoqa ngonyaka'), litres(shown.harvest))}
+      {tile(text('Household uses a year', 'Umndeni usebenzisa ngonyaka'), litres(shown.use))}
+      {tile(text('Tank to store', 'Ithangi lokugcina'), litres(shown.store))}
+      {result.dryMonths > 0 && tile(
+        text('Dry months in a row', 'Izinyanga ezomile ngokulandelana'),
+        numberLabel(shown.dry),
+        { className: pulse > 0 ? styles.pulse : undefined, key: pulse, color: GOLD_DIM },
+      )}
+    </div>
+  );
 }
 
 export interface TankCalculatorProps {
@@ -196,6 +311,7 @@ export default function TankCalculator({
                     }}
                   >
                     <div style={{ fontSize: 12.5, lineHeight: 1.5, color: DARK }}>{result.summary}</div>
+                    <TankFigures result={result} />
                     {!result.waterNegative && result.dryMonths > 0 && (
                       <div
                         style={{

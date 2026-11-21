@@ -27,12 +27,15 @@ import {
   type HeatHeadroom,
   type SowingVerdict,
 } from '@/lib/crop-gate-year';
+import { useInViewOnce } from '@/lib/use-in-view-once';
 import s from './CropGateYear.module.css';
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const MONTH_SHORT = MONTH_NAMES.map((m) => m.slice(0, 3));
 const STEP_SECONDS = 2.6;
 const SLIDE_SECONDS = 0.45;
+/** The verdict strip sweeps across the 12 months, left to right, in under half a second. */
+const SWEEP_SECONDS = 0.48;
 
 // The planner's own names for the regional calendars (crop-autosuggest.ts CALENDAR_NAME).
 const CALENDAR_NAME: Record<RainPattern, string> = {
@@ -166,6 +169,8 @@ const colOf = (month: number) => GATE_YEAR_ORDER.indexOf(month as (typeof GATE_Y
 
 export default function CropGateYear({ site, climateSource }: Props) {
   const crops = useMemo(() => gateFigureCrops(), []);
+  // The figure is taller than most of a phone screen, so it arms on its upper part, not 20% of it.
+  const { ref: sectionRef, phase } = useInViewOnce<HTMLElement>({ threshold: 0, rootMargin: '0px 0px -25% 0px' });
   const year = useMemo(() => climateYear(site), [site]);
   const dry = useMemo(() => (year ? dryMonthsOf(year) : []), [year]);
   const [cropKey, setCropKey] = useState(crops[0]?.key ?? '');
@@ -193,6 +198,8 @@ export default function CropGateYear({ site, climateSource }: Props) {
     col: 0,
     fromCol: 0,
     slide: 1,
+    sweep: 1,
+    sweeping: false,
     playing: true,
     reduced: false,
     visible: true,
@@ -216,6 +223,26 @@ export default function CropGateYear({ site, climateSource }: Props) {
   }, [year, verdicts, heat, crop, rainFed]);
 
   useEffect(() => { live.current.playing = playing && !reduced; }, [playing, reduced]);
+
+  // The verdict strip: hidden while armed, swept in when the figure comes into view, and swept again
+  // whenever the farmer switches crop or water (the verdicts are then genuinely different). A reduced
+  // motion or off-screen figure just shows the strip.
+  const startSweep = useCallback(() => {
+    const L = live.current;
+    if (L.reduced || !L.visible) { L.sweep = 1; L.sweeping = false; L.draw?.(); return; }
+    L.sweep = 0; L.sweeping = true; L.draw?.();
+  }, []);
+  const firstRender = useRef(true);
+  useEffect(() => {
+    const L = live.current;
+    if (phase === 'armed') { L.sweep = 0; L.sweeping = false; L.draw?.(); return; }
+    if (phase === 'play') startSweep();
+  }, [phase, startSweep]);
+  useEffect(() => {
+    if (firstRender.current) { firstRender.current = false; return; }
+    if (phase !== 'armed') startSweep();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cropKey, rainFed]);
 
   const goTo = useCallback((c: number, slide: boolean) => {
     const L = live.current;
@@ -406,7 +433,11 @@ export default function CropGateYear({ site, climateSource }: Props) {
       ctx.beginPath(); ctx.moveTo(sx0, yC(ht.limitC)); ctx.lineTo(sx1, yC(ht.limitC)); ctx.stroke();
       ctx.setLineDash([]);
       ctx.font = `600 12px ${P.font}`; ctx.fillStyle = P.warn; ctx.textAlign = 'right';
-      ctx.fillText(`heat limit ${deg(ht.limitC)}`, sx1 - 2, yC(ht.limitC) - 5);
+      // Above the line, unless that would put it on the panel title's line (narrow screens, low limits):
+      // then just under it.
+      const limY = yC(ht.limitC);
+      const limLabelY = limY - 5 < g.t2 + 14 + 14 ? limY + 15 : limY - 5;
+      ctx.fillText(`heat limit ${deg(ht.limitC)}`, sx1 - 2, limLabelY);
       // temperature line
       ctx.strokeStyle = P.ink; ctx.lineWidth = 1.6; ctx.globalAlpha = 0.85; ctx.lineJoin = 'round';
       ctx.beginPath();
@@ -426,7 +457,12 @@ export default function CropGateYear({ site, climateSource }: Props) {
       ctx.font = `12px ${P.font}`; ctx.fillStyle = P.ink2;
       ctx.textAlign = hc > 8 ? 'right' : hc < 2 ? 'left' : 'center';
       const hx = hc > 8 ? colX(hc) + cw : hc < 2 ? colX(hc) + 2 : colX(hc) + cw / 2;
-      ctx.fillText(`${MONTH_SHORT[ht.hottestMonth - 1]} ${deg(ht.hottestC)}`, hx, yC(ht.hottestC) - 9);
+      // Above its point, unless the dashed heat-limit line would run through the words: then below it.
+      const hotY = yC(ht.hottestC);
+      const aboveY = hotY - 9;
+      const crosses = limY > aboveY - 12 && limY < aboveY + 4;
+      const hotLabelY = crosses ? hotY + 18 : aboveY;
+      ctx.fillText(`${MONTH_SHORT[ht.hottestMonth - 1]} ${deg(ht.hottestC)}`, hx, hotLabelY);
       ctx.restore();
 
       // ── Row 3: the crop's bed months, sliding into place.
@@ -493,9 +529,18 @@ export default function CropGateYear({ site, climateSource }: Props) {
       GATE_YEAR_ORDER.forEach((month, c) => {
         const vv = vs[month - 1];
         const x = colX(c) + 2.5; const y = g.r4; const tw = cw - 5; const th = g.strip;
+        // Sweep: each tile fades and settles in a beat after its left neighbour.
+        let fade = 1;
+        const pr = Math.min(1, Math.max(0, (L.sweep - c * 0.045) / 0.45));
+        if (pr <= 0) return;
         ctx.save();
+        if (pr < 1) {
+          const sc = 0.82 + 0.18 * ease(pr);
+          fade = ease(pr); ctx.globalAlpha = fade;
+          ctx.translate(x + tw / 2, y + th / 2); ctx.scale(sc, sc); ctx.translate(-(x + tw / 2), -(y + th / 2));
+        }
         if (!vv.inCalendar) {
-          ctx.strokeStyle = P.muted; ctx.globalAlpha = 0.6; ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+          ctx.strokeStyle = P.muted; ctx.globalAlpha = 0.6 * fade; ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
           ctx.beginPath(); ctx.roundRect(x, y, tw, th, 5); ctx.stroke();
           ctx.setLineDash([]);
           ctx.beginPath(); ctx.moveTo(x + tw / 2 - 4, y + th / 2); ctx.lineTo(x + tw / 2 + 4, y + th / 2); ctx.stroke();
@@ -506,14 +551,14 @@ export default function CropGateYear({ site, climateSource }: Props) {
           const cx = x + tw / 2; const cy = y + th / 2;
           ctx.beginPath(); ctx.moveTo(cx - 5, cy); ctx.lineTo(cx - 1.5, cy + 4); ctx.lineTo(cx + 5.5, cy - 4.5); ctx.stroke();
         } else {
-          ctx.fillStyle = P.warn; ctx.globalAlpha = 0.9;
+          ctx.fillStyle = P.warn; ctx.globalAlpha = 0.9 * fade;
           ctx.beginPath(); ctx.roundRect(x, y, tw, th, 5); ctx.fill();
-          ctx.globalAlpha = 1; ctx.strokeStyle = P.card; ctx.lineWidth = 2; ctx.lineCap = 'round';
+          ctx.globalAlpha = fade; ctx.strokeStyle = P.card; ctx.lineWidth = 2; ctx.lineCap = 'round';
           const cx = x + tw / 2; const cy = y + th / 2; const r = 4.5;
           ctx.beginPath(); ctx.moveTo(cx - r, cy - r); ctx.lineTo(cx + r, cy + r); ctx.moveTo(cx + r, cy - r); ctx.lineTo(cx - r, cy + r); ctx.stroke();
         }
         if (c === L.col) {
-          ctx.globalAlpha = 1; ctx.strokeStyle = P.ink; ctx.lineWidth = 2; ctx.setLineDash([]);
+          ctx.globalAlpha = fade; ctx.strokeStyle = P.ink; ctx.lineWidth = 2; ctx.setLineDash([]);
           ctx.beginPath(); ctx.roundRect(x - 2, y - 2, tw + 4, th + 4, 7); ctx.stroke();
         }
         ctx.restore();
@@ -544,6 +589,11 @@ export default function CropGateYear({ site, climateSource }: Props) {
       if (L.reduced || !L.visible) { last = 0; return; }
       let dirty = false;
       if (L.slide < 1) { L.slide = Math.min(1, L.slide + dt / SLIDE_SECONDS); dirty = true; }
+      if (L.sweeping) {
+        L.sweep = Math.min(1, L.sweep + dt / SWEEP_SECONDS);
+        if (L.sweep >= 1) L.sweeping = false;
+        dirty = true;
+      }
       if (L.playing) {
         L.t += dt;
         if (L.t >= STEP_SECONDS) { L.t = 0; L.setCol(L.col + 1); }
@@ -618,7 +668,7 @@ export default function CropGateYear({ site, climateSource }: Props) {
   const verdictWord = !v.inCalendar ? 'Not in the sowing calendar' : v.verdict === 'too-dry' ? 'Refused: too dry without irrigation' : v.verdict === 'too-hot' ? 'Refused: too hot' : 'Allowed';
 
   return (
-    <section className={s.card} aria-labelledby="crop-gate-title">
+    <section ref={sectionRef} className={s.card} aria-labelledby="crop-gate-title">
       <div className={s.head}>
         <div>
           <h2 id="crop-gate-title" className={s.title}>Why not this month?</h2>

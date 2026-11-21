@@ -138,7 +138,9 @@ test('the finances Log sale/cost form tells a timeout apart from a real failure'
   assert.match(branch, /saved on your phone/i, 'the timeout message must say the entry is safe, not just stop spinning');
   // Reuses the SAME navigator.onLine-derived `online` signal the read-side banner already
   // tracks (app/records/page.tsx) rather than inventing a second offline mechanism.
-  assert.match(branch, /error: online\s*\n?\s*\?/, 'the wording must branch on the existing `online` signal, not a new one');
+  // The kept entry is announced through the quiet device mark (announceSave) rather than the
+  // red error line; either way the wording still branches on that one `online` signal.
+  assert.match(branch, /(?:error: |announceSave\()online\s*\n?\s*\?/, 'the wording must branch on the existing `online` signal, not a new one');
 });
 
 test('a timed-out save clears the entered values so a re-tap cannot log the same entry twice', () => {

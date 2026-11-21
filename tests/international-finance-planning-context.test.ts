@@ -48,6 +48,7 @@ export function buildPlanVsActual(...args){p.comparisonCalls++;if(p.forbidden)th
     return nextResolve(specifier, context);
   },
   load(url, context, nextLoad) {
+    if (url.endsWith('.module.css')) return { format: 'module', shortCircuit: true, source: 'export default new Proxy({}, { get: (_, k) => typeof k === "string" ? k : undefined });' };
     if (url.startsWith(rootUrl) && url.endsWith('.tsx')) return { format: 'module', shortCircuit: true,
       source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
         target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,

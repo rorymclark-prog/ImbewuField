@@ -9,6 +9,8 @@ import { TrendingUp, Scale, Receipt, Plus, Sprout, FileText, Download, Camera, L
 import ReceiptPreview, { ReceiptPaper } from '@/components/records/ReceiptPreview';
 import CropIcon from '@/components/CropIcon';
 import styles from './Records.module.css';
+import SavedTick, { type SavedTickKind } from '@/components/SavedTick';
+import savedStyles from '@/components/SavedTick.module.css';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import {
@@ -77,6 +79,11 @@ import { recordQuantity, recordUnit, recordQuantityPayload, recordWeightKg, quan
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, isRecordsRegionalLang, recordsDraftNotice } from '@/lib/records-regional-drafts';
 import { recordsDate } from '@/lib/records-months';
+import Skeleton from '@/components/Skeleton';
+
+// When a save last finished, so the ledger list can tell a row the farmer just added (slide it in)
+// from rows that simply arrived with the first load or a sync.
+let lastRecordSaveAt = 0;
 
 // The shared subscriber emits the event read by the finance source hook.
 const onFinancePlacesReceived = () => {};
@@ -188,16 +195,8 @@ function recordsMessage(lang: string, message: string): string {
   return translations[message] ?? recordsFill(lang, message);
 }
 
-/* ── Skeleton loader ─────────────────────────────────────────────────────── */
+/* Loading placeholders use the shared Skeleton (components/Skeleton.tsx). */
 
-function Skeleton({ className = '', style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <div
-      className={`animate-pulse rounded-lg ${className}`}
-      style={{ background: 'color-mix(in srgb, var(--border) 55%, transparent)', ...style }}
-    />
-  );
-}
 
 /* ── Summary cards ───────────────────────────────────────────────────────── */
 
@@ -293,8 +292,8 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
           <div style={{ color: card.color }}>{card.icon}</div>
           {loading ? (
             <>
-              <Skeleton className="h-5 w-3/4" />
-              <Skeleton className="h-3 w-full" />
+              <Skeleton height={20} width="75%" />
+              <Skeleton height={12} width="100%" />
             </>
           ) : (
             <>
@@ -440,6 +439,24 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
   const allRows = toPhoneRows(sales, expenses, invoices, lang);
   const rows = only ? allRows.filter((r) => r.positive === (only === 'in')) : allRows;
 
+  // A row that appears within a few seconds of the farmer's own save slides in once. Rows that
+  // arrive with the first load, a period change or a background sync stay still.
+  const knownRowKeys = useRef<Set<string> | null>(null);
+  const [freshRowKeys, setFreshRowKeys] = useState<string[]>([]);
+  const rowKeyList = rows.map((r) => `${r.kind}-${r.id}`).join('|');
+  useEffect(() => {
+    if (loading) return;
+    const keys = rowKeyList ? rowKeyList.split('|') : [];
+    if (!knownRowKeys.current) { knownRowKeys.current = new Set(keys); return; }
+    const known = knownRowKeys.current;
+    const added = keys.filter((k) => !known.has(k));
+    added.forEach((k) => known.add(k));
+    if (added.length === 0 || Date.now() - lastRecordSaveAt > 8000) return;
+    setFreshRowKeys(added);
+    const timer = window.setTimeout(() => setFreshRowKeys([]), 1600);
+    return () => window.clearTimeout(timer);
+  }, [rowKeyList, loading]);
+
   // Two-tap delete: first tap arms (shows confirm), second tap within 3.5s deletes.
   const [pendingDelete, setPendingDelete] = useState<string | null>(null);
   const pendingTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -476,19 +493,19 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
           {[0, 1, 2].map((i) => (
             <div key={i} className="flex items-center justify-between gap-3">
               <div className="flex-1 space-y-1.5">
-                <Skeleton className="h-4 w-2/3" style={{ animationDelay: `${i * 80}ms` }} />
-                <Skeleton className="h-3 w-1/3" style={{ animationDelay: `${i * 80 + 40}ms` }} />
+                <Skeleton height={16} width="66.6667%" index={i} />
+                <Skeleton height={12} width="33.3333%" index={i + 0.5} />
               </div>
-              <Skeleton className="h-4 w-16" style={{ animationDelay: `${i * 80}ms` }} />
+              <Skeleton height={16} width={64} index={i} />
             </div>
           ))}
         </div>
       ) : rows.length === 0 ? (
         <EmptyState message={emptyMessage} />
       ) : (
-        <div className="divide-y" style={{ borderColor: 'var(--color-border)' }}>
+        <div className="divide-y divide-[color:var(--color-border)]">
           {rows.map((item) => (
-            <div key={`${item.kind}-${item.id}`} className="flex items-start justify-between gap-3 px-4 py-3">
+            <div key={`${item.kind}-${item.id}`} className={`flex items-start justify-between gap-3 px-4 py-3 ${freshRowKeys.includes(`${item.kind}-${item.id}`) ? savedStyles.freshRow : ''}`}>
               <div className="flex-1 min-w-0">
                 <p
                   className="text-sm font-display font-medium leading-snug truncate"
@@ -596,7 +613,13 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
   const [receiptPhoto, setReceiptPhoto] = useState<File | null>(null);
   const [receiptUrl, setReceiptUrl] = useState('');
   const [readingPhoto, setReadingPhoto] = useState(false);
-  const [saveNote, setSaveNote] = useState('');
+  const [saveNote, setSaveNoteState] = useState('');
+  const [saveKind, setSaveKind] = useState<{ kind: SavedTickKind; seq: number } | null>(null);
+  const setSaveNote = (note: string) => { setSaveNoteState(note); setSaveKind(null); };
+  const announceSave = (note: string, kind: SavedTickKind) => { lastRecordSaveAt = Date.now(); setSaveNoteState(note); setSaveKind(previous => ({ kind, seq: (previous?.seq ?? 0) + 1 })); };
+  const saveNoteLine = (className: string) => saveNote ? (saveKind
+    ? <SavedTick key={saveKind.seq} kind={saveKind.kind} message={saveNote} className={className} />
+    : <p role="status" className={`text-sm ${className}`} style={{ color: 'var(--color-ink)' }}>{saveNote}</p>) : null;
   const slipInputRef = useRef<HTMLInputElement>(null);
   const slipUploadRef = useRef<HTMLInputElement>(null);
   const receiptScopeRef = useRef(expenseReceiptScope());
@@ -764,7 +787,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
           // to the original actor, not to the now-obsolete pre-write token.
           if (!mounted.current || attempt !== saleSequence.current || !invoiceSource.isActorCurrent()) return;
           reset();
-          setSaveNote(sampling ? 'DEMO sale recorded. Your personal invoice records are unchanged.' : 'Sale and invoice saved.');
+          announceSave(sampling ? 'DEMO sale recorded. Your personal invoice records are unchanged.' : 'Sale and invoice saved.', sampling ? 'device' : 'saved');
           invoiceSource.reload();
           if (!invoiceSource.isActorCurrent()) return;
           setOpen(false); onCancelEdit();
@@ -793,7 +816,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         });
       }
       if (!mounted.current || (!isIn && !receiptScopeIsCurrent(receiptScopeRef.current))) return;
-      setSaveNote(recordsText(lang, !isIn && receiptPhoto ? 'Cost saved. Its original receipt photo is saved on this device only.' : 'Entry saved.', !isIn && receiptPhoto ? 'Izindleko zilondoloziwe. Isithombe sokuqala serisidi sigcinwe kule divayisi kuphela.' : 'Okufakiwe kulondoloziwe.'));
+      announceSave(recordsText(lang, !isIn && receiptPhoto ? 'Cost saved. Its original receipt photo is saved on this device only.' : 'Entry saved.', !isIn && receiptPhoto ? 'Izindleko zilondoloziwe. Isithombe sokuqala serisidi sigcinwe kule divayisi kuphela.' : 'Okufakiwe kulondoloziwe.'), 'saved');
       reset();
       setOpen(false);
       onCancelEdit();
@@ -810,12 +833,11 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         // tapping Save again can't accidentally log the same sale or cost twice — the ledger has
         // never forgiven that (see lib/duplicate-income.ts). Leave the form open so she can read it.
         clearReceiptDraft();
-        setForm(() => ({
-          ...emptyForm(),
-          error: online
-            ? recordsInstruction(lang, 'The entry is saved on your phone, waiting for the server to confirm. Any attached receipt photo stays on this device only.', 'Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele ukuqinisekiswa yiseva. Isithombe serisidi esifakiwe sigcinwa kule divayisi kuphela.')
-            : recordsInstruction(lang, "You're offline. The entry is saved on your phone, waiting to send. Any attached receipt photo stays on this device only.", 'Awuxhunyiwe. Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele ukuthunyelwa. Isithombe serisidi esifakiwe sigcinwa kule divayisi kuphela.'),
-        }));
+        // Not an error: the entry is kept. A quiet device-only mark, never a celebration.
+        setForm(() => emptyForm());
+        announceSave(online
+          ? recordsInstruction(lang, 'The entry is saved on your phone, waiting for the server to confirm. Any attached receipt photo stays on this device only.', 'Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele ukuqinisekiswa yiseva. Isithombe serisidi esifakiwe sigcinwa kule divayisi kuphela.')
+          : recordsInstruction(lang, "You're offline. The entry is saved on your phone, waiting to send. Any attached receipt photo stays on this device only.", 'Awuxhunyiwe. Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele ukuthunyelwa. Isithombe serisidi esifakiwe sigcinwa kule divayisi kuphela.'), 'device');
         setScanNote('');
         onSaved();
         return;
@@ -837,7 +859,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
   if (!open && !alwaysOpen) {
     return (
       <div>
-      {saveNote && <p role="status" className="text-sm mb-2" style={{ color: 'var(--color-ink)' }}>{saveNote}</p>}
+      {saveNoteLine('mb-2')}
       <button
         type="button"
         onClick={() => { setSaveNote(''); setOpen(true); }}
@@ -1006,7 +1028,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         )}
 
         {form.error && <p role="alert" className="text-sm font-sans" style={{ color: 'var(--record-negative)' }}>{form.error}</p>}
-        {saveNote && <p role="status" className="text-sm">{saveNote}</p>}
+        {saveNoteLine('')}
 
         <div className="flex gap-2 pt-1">
           <button type="button" onClick={closeForm}
@@ -1358,7 +1380,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
       ) : metrics.crops.length === 0 ? (
         <p className="px-4 py-6 text-sm font-display" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, `No crop activity or crop plan for this ${period}.`, `Akukho msebenzi wezitshalo noma uhlelo lwezitshalo lwale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}.`)}</p>
       ) : (
-        <div className="divide-y" style={{ borderColor: 'var(--border)' }}>
+        <div className="divide-y divide-[color:var(--border)]">
           {metrics.crops.map((crop) => (
             <div key={crop.cropKey ?? crop.cropName} className="px-4 py-3">
               <div className="flex items-baseline justify-between gap-3 mb-2">
@@ -1710,14 +1732,10 @@ export default function RecordsPage() {
           <>
             <div className="grid grid-cols-3 gap-3">
               {[0, 1, 2].map((i) => (
-                <Skeleton
-                  key={i}
-                  className="h-20 rounded-2xl"
-                  style={{ animationDelay: `${i * 80}ms` }}
-                />
+                <Skeleton key={i} height={80} index={i} style={{ borderRadius: 16 }} />
               ))}
             </div>
-            <Skeleton className="h-48 rounded-2xl" />
+            <Skeleton height={192} style={{ borderRadius: 16 }} />
           </>
         ) : !user && !isSampleMode() ? (
           <SignInPrompt />

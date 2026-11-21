@@ -1,0 +1,18 @@
+/* Tank calculator figures: when the sizing result changes, the numbers tick to the new values
+   (done in TankCalculator.tsx, debounced) and the dry-months tile pulses once. A result where the
+   roof cannot meet the demand gets no pulse and no tick: a plain gap bar, drawn still.
+   Transform only. Colours come from the card itself (it keeps a fixed paper surface in every theme). */
+
+.pulse {
+  animation: tankPulse 620ms var(--ease-spring);
+}
+
+@keyframes tankPulse {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.07); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse { animation: none; }
+}

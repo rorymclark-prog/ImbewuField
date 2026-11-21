@@ -1,0 +1,32 @@
+/* Shared loading placeholder. One colour, one rhythm: a slow opacity breath, offset per row by
+   the --i index passed from Skeleton.tsx. Opacity only, so it is cheap on a low-end phone. */
+.block {
+  /* Ink, not --border: half of --border matched --bg-2/--bg-3 in the dark themes (1.00:1, an
+     invisible placeholder on a card). 8% of --text-primary holds 1.17-1.23:1 on every surface in
+     earth and slate, light and dark — the same lift the old mix gave on the light page. */
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  animation: skeletonBreath 1.8s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 80ms);
+  max-width: 100%;
+}
+.inset { background: var(--bg-3); }
+
+.sm { border-radius: 4px; }
+.md { border-radius: 8px; }
+.lg { border-radius: 12px; }
+.full { border-radius: 9999px; }
+
+@keyframes skeletonBreath {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Still grey blocks for anyone who asked the OS for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  .block { animation: none; }
+}
+
+/* A loading placeholder is never worth ink. */
+@media print {
+  .block { display: none; }
+}
