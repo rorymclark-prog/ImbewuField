@@ -23,17 +23,6 @@ const MONTH_FULL_KEYS = [
   'waterBalanceMonthSep', 'waterBalanceMonthOct', 'waterBalanceMonthNov', 'waterBalanceMonthDec',
 ] as const;
 
-
-function formatDrySeason(drySeason: string, t: (key: string) => string, lang: string): string {
-  if (lang !== 'zu') return drySeason;
-  const sourceLabels: Record<string, [string, string]> = {
-    'May–Aug': [t('waterBalanceMonthMay'), t('waterBalanceMonthAug')],
-    'Nov–Mar': [t('waterBalanceMonthNov'), t('waterBalanceMonthMar')],
-  };
-  const translated = sourceLabels[drySeason];
-  return translated ? `${translated[0]}–${translated[1]} (${drySeason})` : drySeason;
-}
-
 // 'kL' (kilolitres) is a unit only an expert would know; litres is what a farmer buys a tank in,
 // and once the amount is large, counting it in standard 5 000 L tanks is easier to picture than a
 // bare litre figure. Same helper as components/DataPanel.tsx's litresLabel, kept local here to
@@ -281,14 +270,13 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
         </p>
       )}
 
-      {/* Dry season shortfall warning */}
+      {/* The simulated tank shortfall cannot justify irrigation dates from a fixed season label. */}
       {capacity > 0 && tankLevels.some(v => v <= minSafe) && (
         <div className="p-3 rounded-xl" style={{ background: 'rgba(192,60,30,0.07)', border: '1px solid rgba(192,60,30,0.25)' }}>
           <p className="text-xs font-display font-semibold mb-1" style={{ color: '#C03C1E' }}>{t('waterBalancePossibleShortfall')}</p>
           <p className="text-xs font-display" style={{ color: 'var(--text-secondary)' }}>
             {t('waterBalanceShortfallDetail')
-              .replace('{month}', MONTH_FULL[tankLevels.indexOf(Math.min(...tankLevels))])
-              .replace('{season}', formatDrySeason(rainfall.drySeason, t, lang))}
+              .replace('{month}', MONTH_FULL[tankLevels.indexOf(Math.min(...tankLevels))])}
           </p>
         </div>
       )}

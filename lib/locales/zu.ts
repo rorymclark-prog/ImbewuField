@@ -310,7 +310,7 @@ const dict: Dict = {
   waterBalanceAddRoofArea: 'Faka ubukhulu bophahla ocwaningweni lwendawo ukuze kubalwe amanzi angeqoqwa ngenyanga.',
   waterBalanceDrawHarvestArea: 'Dweba indawo yokuqoqa amanzi ebalazweni ukuze ulinganise ukuthi ungakha umthamo ongakanani wokugcina amanzi.',
   waterBalancePossibleShortfall: 'Ukushoda okungenzeka ngenkathi eyomile',
-  waterBalanceShortfallDetail: 'Izinga lethangi lehla libe ngaphansi kobuncane obuphephile ngo-{month}. Okungakhethwa: wandise umthamo wokugcina amanzi, wengeze ithangi lesibili, noma unciphise ukunisela ngesikhathi se-{season}.',
+  waterBalanceShortfallDetail: 'Izinga lethangi lehla libe ngaphansi kobuncane obuphephile ngo-{month}. Okungakhethwa: wandise umthamo wokugcina amanzi, wengeze ithangi lesibili, noma unciphise ukunisela.',
   waterBalanceMonthJan: 'uMasingana',
   waterBalanceMonthFeb: 'uNhlolanja',
   waterBalanceMonthMar: 'uNdasa',

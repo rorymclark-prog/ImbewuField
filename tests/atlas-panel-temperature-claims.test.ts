@@ -39,7 +39,7 @@ const { default: AtlasPanel } = await import('../components/atlas/AtlasPanel.tsx
 const { default: RainfallChart } = await import('../components/RainfallChart.tsx');
 const { default: WaterBalance } = await import('../components/WaterBalance.tsx');
 const { Ctx } = await import('../lib/i18n-context.ts');
-const { translate } = await import('../lib/i18n.tsx');
+const { translate, loadLocale } = await import('../lib/i18n.tsx');
 
 const RAIN = [127, 81, 73, 43, 16, 7, 3, 7, 16, 57, 89, 122];
 // Johannesburg-like monthly means: the coldest month's mean is 10 °C, and it has frost.
@@ -208,6 +208,35 @@ test('rainfall and the water balance reject unproven months and retain a support
   assert.match(rainfall(), /0mm\/yr/);
   assert.match(balance(), /<svg/);
   assert.match(text(render(location)), /≈ 0 mm\/yr/);
+});
+
+for (const lang of ['en', 'zu']) test(`${lang}: a simulated September shortfall does not prescribe irrigation dates from a legacy season label`, async () => {
+  await loadLocale(lang);
+  const location = place(TAGGED);
+  // Deliberately unlike the fixed May–Aug label: only September has no rain.
+  // Synthetic inputs exercise the consumer, not local rainfall or irrigation accuracy.
+  const monthly = Array.from({ length: 12 }, (_, i) => i === 8 ? 0 : 100);
+  location.rainfall = { ...location.rainfall, monthly, annual: 1100, drySeason: 'May–Aug', rainfallSource: 'grower-entered' };
+  const before = structuredClone(location);
+  const balance = () => renderToStaticMarkup(React.createElement(Ctx.Provider, {
+    value: { lang, setLang() {}, t: (key: string) => translate(lang, key), onboarded: true, completeOnboarding() {} },
+  }, React.createElement(WaterBalance, {
+    locationData: location,
+    survey: { adults: '2-5', roofMainM2: 200, hasGutters: true } as import('../lib/site-survey.ts').SiteSurvey,
+    waterData: { count: 1, areaM2: 10, estVolumeKL: 20, avgDepthM: 2 },
+  })));
+  const html = balance();
+  const warning = text(html).split(translate(lang, 'waterBalancePossibleShortfall'))[1];
+  assert.ok(warning, 'the case must actually reach the shortfall warning');
+  assert.ok(warning.includes(translate(lang, 'waterBalanceMonthSep')), 'retain the actual simulated lowest month');
+  assert.doesNotMatch(warning, /May|Aug|\{month\}|\{season\}/);
+  for (const key of ['waterBalanceMonthMay', 'waterBalanceMonthAug']) {
+    assert.ok(!warning.includes(translate(lang, key)), 'no translated endpoint from the fixed season');
+  }
+  location.rainfall.drySeason = 'Nov–Mar';
+  assert.equal(balance(), html, 'changing only a heuristic season cannot change any Water output, including advice and the chart');
+  location.rainfall.drySeason = before.rainfall.drySeason;
+  assert.deepEqual(location, before, 'rendering must leave stored inputs untouched');
 });
 
 test('the panel source no longer derives a frost statement from a monthly mean', () => {

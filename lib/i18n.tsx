@@ -301,7 +301,7 @@ export const T_en: Dict = {
   waterBalanceAddRoofArea: 'Add roof area in the site survey to calculate monthly catchment potential.',
   waterBalanceDrawHarvestArea: 'Draw a water harvesting area on the map to model how much storage you can build.',
   waterBalancePossibleShortfall: 'Possible dry-season shortfall',
-  waterBalanceShortfallDetail: 'Tank level dips below the safe minimum in {month}. Options: increase storage, add a second tank, or reduce irrigation during {season}.',
+  waterBalanceShortfallDetail: 'Tank level dips below the safe minimum in {month}. Options: increase storage, add a second tank, or reduce irrigation.',
   waterBalanceMonthJan: 'January',
   waterBalanceMonthFeb: 'February',
   waterBalanceMonthMar: 'March',
