@@ -32,5 +32,9 @@ test('w22-08: the Lima launcher parks bottom-right on desktop, except over the /
   // the chat panel opens on the same side as its launcher
   assert.match(w, /\$\{fabRightOnDesktop \? 'lg:left-auto lg:right-6' : ''\}/);
   // the top-right network map legend now stops above the launcher instead of growing onto it
-  assert.match(read('components/network/NetworkMap.tsx'), /maxHeight: 'calc\(100% - 100px - var\(--lima-fab-clearance, 0px\)\)',\s*overflowY: 'auto',/);
+  // …but never below a floor: on a short phone map the clearance alone drove it negative and hid
+  // the toggle, so the closed legend keeps 48px and an open one keeps up to 240px of the map.
+  const map = read('components/network/NetworkMap.tsx');
+  assert.match(map, /'max\(min\(240px, calc\(100% - var\(--legend-top, 100px\) - 12px\)\), calc\(100% - var\(--legend-top, 100px\) - var\(--lima-fab-clearance, 0px\)\)\)'/);
+  assert.match(map, /: 'max\(48px, calc\(100% - var\(--legend-top, 100px\) - var\(--lima-fab-clearance, 0px\)\)\)',\s*overflowY: 'auto',/);
 });

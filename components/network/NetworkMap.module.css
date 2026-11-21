@@ -25,6 +25,11 @@
 .legendRow[aria-pressed="true"] { background: var(--bg-3); }
 .legendRow:focus-visible { outline: 2px solid var(--emerald); outline-offset: 1px; }
 .legendDim { opacity: 0.5; }
+/* Touch screens: each status is a filter button now, so give it a full 44px target. */
+@media (pointer: coarse) { .legendRow { min-height: 44px; } }
+/* Below sm the district hint sits on a second row (top-14) and can wrap to two lines;
+ * start the legend under it rather than under the zoom buttons alone. */
+@media (max-width: 639px) { .legendBelowHint { --legend-top: 124px; } }
 
 @media (prefers-reduced-motion: reduce) {
   .pin, .legendRow { transition: none; }
