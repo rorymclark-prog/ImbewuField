@@ -503,7 +503,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
       ) : rows.length === 0 ? (
         <EmptyState message={emptyMessage} />
       ) : (
-        <div className="divide-y" style={{ borderColor: 'var(--color-border)' }}>
+        <div className="divide-y divide-[color:var(--color-border)]">
           {rows.map((item) => (
             <div key={`${item.kind}-${item.id}`} className={`flex items-start justify-between gap-3 px-4 py-3 ${freshRowKeys.includes(`${item.kind}-${item.id}`) ? savedStyles.freshRow : ''}`}>
               <div className="flex-1 min-w-0">
@@ -1380,7 +1380,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
       ) : metrics.crops.length === 0 ? (
         <p className="px-4 py-6 text-sm font-display" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, `No crop activity or crop plan for this ${period}.`, `Akukho msebenzi wezitshalo noma uhlelo lwezitshalo lwale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}.`)}</p>
       ) : (
-        <div className="divide-y" style={{ borderColor: 'var(--border)' }}>
+        <div className="divide-y divide-[color:var(--border)]">
           {metrics.crops.map((crop) => (
             <div key={crop.cropKey ?? crop.cropName} className="px-4 py-3">
               <div className="flex items-baseline justify-between gap-3 mb-2">

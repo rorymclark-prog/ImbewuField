@@ -186,7 +186,7 @@ export default function HarvestReconciliation({ production, sales, period, now, 
           <p className="font-display text-sm font-semibold">{recordsFill(lang, 'Crop-plan benchmark unavailable')}</p>
           <p className="mt-1 font-sans text-xs" style={{ color: 'var(--text-secondary)' }}>{recordsFill(lang, forecastReason ?? 'Confirm the planning basis before comparing with local crop benchmarks.')}</p>
           <p className="mt-2 font-sans text-xs" style={{ color: 'var(--text-secondary)' }}>{recordsFill(lang, 'Recorded harvest and sales stay in their original books. Missing planning evidence is not a zero yield.')}</p>
-          <div className="mt-3 divide-y">{result.unplannedActivity.map(row => <UnplannedRowView key={row.label} row={row} />)}</div>
+          <div className="mt-3 divide-y divide-[color:var(--border)]">{result.unplannedActivity.map(row => <UnplannedRowView key={row.label} row={row} />)}</div>
         </div>
       ) : !hasPlan ? (
         <div className="flex flex-col items-center justify-center gap-2 py-8 px-4 text-center">
@@ -200,9 +200,9 @@ export default function HarvestReconciliation({ production, sales, period, now, 
           <IsiZuluDraftSource lang={lang} zulu={`Akukho okurekhodiwe ${periodLabel}. Asenzi izinhloso zenyanga noma zesizini ngokuthatha isilinganiso somjikelezo wezitshalo njengesisekelo.`} english={NOTHING_LOGGED[period]} />
         </div>
       ) : (
-        <div className="divide-y" style={{ borderColor: 'var(--border)' }}>
+        <div className="divide-y divide-[color:var(--border)]">
           {result.matched.length > 0 && (
-            <HarvestBarsGroup className="divide-y" style={{ borderColor: 'var(--border)' }}>
+            <HarvestBarsGroup className="divide-y divide-[color:var(--border)]">
               {result.matched.map((row, i) => (
                 <MatchedRow key={row.cropKey} row={row} max={barScale.max} clipped={barScale.isClipped(barTotals[i])} index={i} count={result.matched.length} />
               ))}
