@@ -556,7 +556,7 @@ function ChipRow({ label, children }: { label: string; children: React.ReactNode
       >
         {label}
       </div>
-      <div className="flex gap-1.5 flex-wrap">{children}</div>
+      <div className="flex gap-x-1.5 gap-y-2.5 flex-wrap">{children}</div>
     </div>
   );
 }
@@ -577,12 +577,16 @@ function Chip({
       onClick={onClick}
       disabled={disabled}
       aria-pressed={on}
-      className="font-sans font-semibold"
+      // 36px chip, 44px tap area: the pseudo-element reaches 5px above and below (it sits inside
+      // the 1px border), and ChipRow's 10px row gap keeps neighbouring rows from overlapping
+      // (phone scan, 23 Nov: chips measured 32-37px tall).
+      className="relative font-sans font-semibold before:absolute before:inset-x-0 before:-inset-y-[5px] before:content-['']"
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         gap: 4,
         padding: '6px 11px',
+        minHeight: 36,
         borderRadius: 100,
         fontSize: 12,
         cursor: disabled ? 'default' : 'pointer',
