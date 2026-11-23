@@ -771,8 +771,10 @@ export default function InvoicePage() {
           if (!sameAccount()) return null;
           announceSave('Invoice kept on this device. Sale-book confirmation is pending; check the existing invoice before retrying.', 'device');
         }
-      } else if (sample) announceSave('DEMO invoice kept in the sample only.', 'device');
-      else if (sourceSaleId) announceSave(ui('Invoice saved and linked to the existing sale. Its quantity and income are counted once.'), 'linked');
+      // A linked save says so in the sample too: the link to the existing sale is the point of the
+      // save, and the demo has real sales to link to. It still says DEMO and stays in the sample.
+      } else if (sourceSaleId) announceSave(sample ? 'DEMO invoice kept in the sample only, linked to the existing sale. Its quantity and income are counted once.' : ui('Invoice saved and linked to the existing sale. Its quantity and income are counted once.'), 'linked');
+      else if (sample) announceSave('DEMO invoice kept in the sample only.', 'device');
       else announceSave(ui('Invoice saved.'), 'saved');
       return sameAccount() ? { id, book: writeBook, document: doc } : null;
     } catch (error) {
