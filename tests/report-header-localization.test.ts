@@ -36,7 +36,8 @@ function soilCell(markdown:string,source:unknown,language:string){return cell(ma
 // Only superseded evidence claims change. Original fixtures remain byte intact;
 // all unrelated figures, rows, names and source translations stay exact.
 function currentHeaderExpectation(row: { input: ReportHeaderInput; expected: string }, language='en'): string {
- let result=row.expected;
+ // Annual measurements do not support the legacy month ranges attributed to the same source.
+ let result=row.expected.replace(/^(\| Annual rainfall \| [^|]+? mm) — wet [^|]+( \|)/m,'$1$2');
  // Survey summaries are composed deterministically; the old denial no longer describes this table.
  result=result.replace("Nothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.",visibleEnglish("This table summarizes supplied map, design and survey records and the data sources named beside each row. It includes calculated summaries and evidence gaps; read each row's source and limits before relying on it.",language));
  // No mapped roof is a scoped inventory gap, not evidence that the survey lacks measurements.
@@ -130,7 +131,10 @@ test('shared seasonal labels retain every source month and diagram season mark, 
   assert.equal(recordsSeasonLabel('en',source),source);assert.equal(recordsSeasonLabel('af',source),source);
  }
  for(const lang of languages){for(const row of RECORDS_SEASON_COPY)assert.equal(recordsSeasonLabel(lang,row.english),row[lang]);for(const text of ['Recorded wet period','not specified','Jan / Feb','constructor','JAN–MAR custom'])assert.equal(recordsSeasonLabel(lang,text),text);
-  const input={...fixture.cases[0].input,wetSeason:'year-round',drySeason:'none'};const native=buildReportHeaderMarkdown(input,lang);assert.ok(native.includes(recordsSeasonLabel(lang,'year-round')));assert.ok(native.includes(recordsSeasonLabel(lang,'none')));
+  const original=fixture.cases[0].input;
+  const legacy={...original,wetSeason:'year-round',drySeason:'none'};
+  assert.equal(buildReportHeaderMarkdown(legacy,lang),buildReportHeaderMarkdown(original,lang),
+    'season metadata cannot change the annual rainfall measurement row');
   const expected=visual.figures.en.find((f:any)=>f.id==='climate');const figure=climateFigure(visual.location,lang)!;// Native captions already move the plot down. Preserve each month mark's identity and size,
   // rather than pinning the English page position; every native mark must still share one row.
   const marks=(svg:string)=>[...svg.matchAll(/<rect[^>]+height="7"[^>]*>/g)].map(m=>m[0].replace(/ y="[^"]+"/,''));assert.deepEqual(marks(figure.svg),marks(expected.svg));

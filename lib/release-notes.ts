@@ -41,8 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '21 November 2026', sha: '5069baeaa', changes: [
-    'The Water warning keeps the estimated lowest-tank month without choosing irrigation dates from a fixed season label.',
+  { when: '23 November 2026', sha: '7c7bcd99a', changes: [
+    'Water shows the month your tank could run low. Check your crops before watering.',
+    'Water and Atlas show where the rainfall figures came from.',
   ] },
   { when: '20 November 2026', sha: '750a767ef', changes: [
     'The example farm shows which months have no fresh vegetable from its crop plan.',

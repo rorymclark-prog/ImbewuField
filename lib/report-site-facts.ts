@@ -1,7 +1,6 @@
 import { reportSoilEvidence, reportEvidenceText, reportTerrainValues } from './report-risk';
 import { annualRainfallMm } from './climate-temperature';
 import { reportDocumentText, REPORT_DOCUMENT_LANGUAGES, reportRecordedSourceLabel } from './report-localisation';
-import { recordsSeasonLabel } from './records-months';
 import { reportVisualText, reportElementDisplayName, reportRouteShortName } from './report-visuals';
 import { cleanChoices, type HousingKind } from './animal-enterprises';
 import type { PlacedPlant } from './perennial-harvest';
@@ -856,8 +855,6 @@ export interface ReportHeaderInput {
   dateLabel: string;
   rainfallMm: number | null;
   rainfallSource?: string;
-  wetSeason: string;
-  drySeason: string;
   soilPh: number;
   soilOrganicCarbon: number;
   soilTexture: string;
@@ -1005,7 +1002,7 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
     row('Wind observed on site', t('From the {direction}',{direction:facts.measurements.localWindFrom})+(facts.measurements.localWindStrongestFrom?t(', strongest from the {direction}',{direction:facts.measurements.localWindStrongestFrom}):''), t('Farmer\'s own observation'));
   }
 
-  row('Annual rainfall', supportedRain === null ? 'Not known' : t('{rainfall} mm — wet {wet}, dry {dry}', { rainfall: supportedRain, wet: recordsSeasonLabel(language, input.wetSeason), dry: recordsSeasonLabel(language, input.drySeason) }), supportedRain === null ? 'No supported rainfall source recorded' : input.rainfallSource === 'nasa-power' ? 'NASA POWER' : input.rainfallSource === 'open-meteo' ? 'Open-Meteo' : 'Grower-entered');
+  row('Annual rainfall', supportedRain === null ? 'Not known' : `${supportedRain} mm`, supportedRain === null ? 'No supported rainfall source recorded' : input.rainfallSource === 'nasa-power' ? 'NASA POWER' : input.rainfallSource === 'open-meteo' ? 'Open-Meteo' : 'Grower-entered');
   if (input.vegUnit) row('Natural vegetation', input.vegUnit, 'SANBI 2018 National Vegetation Map');
   if (input.bruLabel) row('Agro-ecological zone', t('Closest to {label}',{label:input.bruLabel}), t('KZN DARD bioresource units — a best-effort climate match, not a verified classification'));
   // Location responses also carry generic placeholders. The narrative and short guide already

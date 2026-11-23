@@ -100,7 +100,10 @@ test('rain is drawn only from twelve real months', () => {
   assert.equal(climateFigure(rain(location.rainfall.monthly.slice(0, 11))), null, 'eleven months');
   // Zero is a legitimate sourced reading. Missing provenance, rather than magnitude, withholds it.
   const zero = { ...rain(new Array(12).fill(0)), rainfall: { ...location.rainfall, annual: 0, monthly: Array(12).fill(0) } };
-  assert.match(climateFigure(zero)!.alt, /0 mm a year/);
+  const zeroFigure = climateFigure(zero)!;
+  assert.match(zeroFigure.alt, /0 mm a year/);
+  assert.match(zeroFigure.alt, /Same rainfall in every month: 0 mm/);
+  assert.doesNotMatch(zeroFigure.svg, /Wettest month|Driest month|Wet season|Dry season/);
   assert.equal(climateFigure({ ...zero, rainfall: { ...zero.rainfall, rainfallSource: undefined } }), null);
   assert.equal(climateFigure(rain([...location.rainfall.monthly.slice(0, 11), -4])), null, 'a negative month');
   assert.ok(waterBudgetFigure(facts, zero));

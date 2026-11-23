@@ -3,7 +3,7 @@ import { savedRainfallFields } from '@/lib/saved-places';
 import { useSavedPlaceWriteContext, savedPlaceWriteContextIsCurrent } from '@/lib/length-unit-preference';
 
 import { numberLabel } from '@/lib/format-figures';
-import { annualRainfallMm, modelledWindSpeed, monthlyTemperatureStatus, recordMinimumC } from '@/lib/climate-temperature';
+import { annualRainfallMm, hasRainfallVariation, sourcedMonthlyRainfall, modelledWindSpeed, monthlyTemperatureStatus, recordMinimumC } from '@/lib/climate-temperature';
 import { koppenClassName } from '@/lib/koppen-global';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import dynamic from 'next/dynamic';
@@ -793,7 +793,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     // harvesting is essential" and "check dry-season supply before planning year-round crops":
     // advice from an unsourced cut-off (finding CP-118). Not yet translated, so the isiZulu
     // summary carries the same English sentence until a reviewed translation exists.
-    const englishWater = rainfallKnown ? `Modelled annual rainfall: about ${r} mm.` : 'Annual rainfall is not known for this site.';
+    const englishWater = !rainfallKnown ? 'Annual rainfall is not known for this site.'
+      : data.rainfall.rainfallSource === 'grower-entered' ? `Grower-entered annual rainfall: ${r} mm.`
+      : `Modelled annual rainfall: about ${r} mm.`;
     const zuluWater = englishWater;
     const englishSoil = translate('en', soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
     const zuluSoil = t(soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
@@ -1240,12 +1242,6 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <Card>
               <RainfallChart rainfall={data.rainfall} />
             </Card>
-            <Card>
-              <Label>{t('waterHarvestingStrategyHeader')}</Label>
-              <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                {biomeText(data.biome.code, 'water', data.biome.waterStrategy, t)}
-              </p>
-            </Card>
           </>
         )}
 
@@ -1329,13 +1325,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             </p>
           );
           const MS = ['J','F','M','A','M','J','J','A','S','O','N','D'];
-          const monthly = data.rainfall.monthly ?? [];
+          const monthly = sourcedMonthlyRainfall(data.rainfall);
           const temps = data.climate.monthlyTemp;
           const annualRain = Math.round(data.rainfall.annual);
           const kmh = Math.round(data.climate.windSpeed * 3.6);
           const tMin = Math.min(...temps);
           const tMax = Math.max(...temps);
-          const rainMax = Math.max(...monthly, 1);
+          const rainMax = Math.max(...(monthly ?? []), 1);
 
           const kp = data.climate.koppen;
           // Conventional class name from the classifier (CP-117): no nicknames,
@@ -1396,17 +1392,17 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 </p>
                 <div style={{ display: 'flex', gap: 8, marginTop: 13, flexWrap: 'wrap' }}>
                   {rainfallKnown ? <><span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} {t('chipRainPerYear')}</span>
-                  <span style={chip('#EDE7DA', '#7A6A48')}>{patternChip}</span></> : <span lang="en" style={chip('#EDE7DA', '#7A6A48')}>Rainfall: not known</span>}
+                  {hasRainfallVariation(monthly) && <span style={chip('#EDE7DA', '#7A6A48')}>{patternChip}</span>}</> : <span lang="en" style={chip('#EDE7DA', '#7A6A48')}>Rainfall: not known</span>}
                   <span data-record-low={recordLowC === null ? 'unknown' : 'known'} lang="en" style={chip('#EDE7DA', '#7A6A48')}>{recordLowC === null ? 'Record low: not known' : `Modelled record low: ${recordLowC}°C`}</span>
                 </div>
               </div>
 
               {/* 2 — Rainfall mm/month */}
-              {rainfallKnown && monthly.length === 12 && (
+              {monthly && (
                 <div style={cardSt}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
                     <div style={ovlSt}>{t('rainfallMmMonth')}</div>
-                    <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, color: '#3A6E92' }}>≈ {annualRain} mm / yr</div>
+                    {rainfallKnown && <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, color: '#3A6E92' }}>≈ {annualRain} mm / yr</div>}
                   </div>
                   <div style={{ display: 'flex', alignItems: 'flex-end', gap: 5, height: 150, paddingTop: 2 }}>
                     {monthly.map((r, i) => (

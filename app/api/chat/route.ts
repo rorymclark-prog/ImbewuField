@@ -1,3 +1,4 @@
+import { rainfallAdviceEvidence } from '@/lib/climate-temperature';
 import { NextRequest } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
@@ -82,7 +83,7 @@ function buildContext(ctx?: Ctx): string {
 Location: ${loc.lat.toFixed(4)}°S, ${loc.lon.toFixed(4)}°E
 Biome: ${loc.biome.name} (${loc.biome.code})
 Climate: Köppen ${loc.climate.koppen}; mean ${loc.climate.meanTemp}°C (winter min ${loc.climate.minTemp}°C, summer max ${loc.climate.maxTemp}°C)
-Rainfall: ${loc.rainfall.annual}mm/yr, ${loc.rainfall.pattern} pattern (wet ${loc.rainfall.wetSeason}, dry ${loc.rainfall.drySeason})
+${rainfallAdviceEvidence(loc.rainfall)}
 Terrain: ${loc.elevation.elevation}m ASL, slope ${loc.elevation.slopeDeg}°, ${loc.elevation.aspectLabel}-facing
 Soil: ${loc.soil.textureClass}, pH ${loc.soil.ph}, organic carbon ${loc.soil.organicCarbon}%`
       + (loc.bru ? `\nKZN Bioresource Unit: zone ${loc.bru.brucode}, closest to ${loc.bru.nearestBrg} Bioresource Group (best-effort climate match, not confirmed), zone temps ${loc.bru.tmin}–${loc.bru.tmax}°C — extra local zone context only, do not quote its rainfall figure, use the Rainfall above` : '')

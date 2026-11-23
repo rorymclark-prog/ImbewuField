@@ -56,7 +56,6 @@ import { evidenceKeyLabel } from '@/lib/evidence-catalogue';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 // Canonical section names — every literal used in sections.includes() checks below
 // plus the batch logic. Any value not in this set is silently dropped before any
@@ -119,28 +118,6 @@ const LANGUAGES: Record<string, string> = {
   ss: 'siSwati',
   nr: 'isiNdebele',
 };
-
-const MONTH_INDEX = new Map(MONTHS.map((month, index) => [month.toLowerCase(), index]));
-
-function drySeasonMonthIndices(drySeason: string, pattern: string): number[] {
-  const namedMonths = [...drySeason.matchAll(/Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec/gi)]
-    .map((match) => MONTH_INDEX.get(match[0].toLowerCase()))
-    .filter((month): month is number => month !== undefined);
-  if (namedMonths.length >= 2) {
-    const [start, end] = namedMonths;
-    const months: number[] = [];
-    for (let month = start, count = 0; count < 12; count += 1) {
-      months.push(month);
-      if (month === end) return months;
-      month = (month + 1) % 12;
-    }
-    return months;
-  }
-  if (namedMonths.length === 1) return namedMonths;
-  if (pattern === 'summer') return [4, 5, 6, 7]; // May–Aug, the catalogued summer-rainfall dry season
-  if (pattern === 'winter') return [10, 11, 0, 1, 2]; // Nov–Mar, the catalogued winter-rainfall dry season
-  return [];
-}
 
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/generate-report');
@@ -297,8 +274,6 @@ export async function POST(req: NextRequest) {
   const rainDescription = annualRain === null ? 'annual rainfall not known' : `${annualRain} mm annual rainfall (${d.rainfall.rainfallSource})`;
   const climateLabels = reportClimateLabels(d);
   const rainPattern = climateLabels.pattern ?? 'unrecorded';
-  const wetSeason = climateLabels.wetSeason ?? 'unrecorded';
-  const drySeason = climateLabels.drySeason ?? 'unrecorded';
   const climateClass = climateLabels.koppen ?? 'unrecorded';
   const purchasingGuidance = productPurchasingMarkdown({ ...productContextFromItems(facts?.productionItems ?? []), animalChoices: facts?.productionEnterpriseChoices }, monthlyRain && monthlyTemperatureStatus(d.climate) === 'complete' ? growingZonesForClimate(d.climate.monthlyTemp, monthlyRain, d.lat) : [], surveyData?.productionConditions,langCode);
   // ONE ANSWER TO "WHAT GROWS HERE" — see lib/site-ecology.ts. Before this, sections took the
@@ -532,7 +507,7 @@ Their beds are: ${facts.design.beds.filter((bed) => bed.kind === 'bed').map((bed
 Build the rotation table with ONE COLUMN PER BED, using these EXACT bed names in this order. Do not renumber them, do not invent a bed, and do not fall back to a generic "Bed 1–4" example. Rows: one per season for a full cycle, showing which rotation group lands in which bed.${facts.design.plotCount > 0 ? ` Add one line for the staple plots, which rotate on their own longer cycle.` : ''}` : `### Example 4-bed rotation
 | Season | Bed 1 | Bed 2 | Bed 3 | Bed 4 |
 |--------|-------|-------|-------|-------|
-| ${monthlyRain ? (rainPattern === 'winter' ? 'Autumn' : 'Spring') : 'Timing not established'} | [group] | [group] | [group] | [group] |
+| Timing not established | [group] | [group] | [group] | [group] |
 | Next season | [shift each bed one group along] | | | |
 
 (No beds have been drawn for this site, so this is a generic example — say so.)`}
@@ -541,7 +516,7 @@ One or two short rules to remember (e.g. "never plant the same family in the sam
 
 ` : ''}${sections.includes('Irrigation Plan') ? `## Irrigation Plan — How Much Water You Need
 
-Assess the evidence for irrigating the growing areas through the dry season (${drySeason}).
+Use recorded soil moisture, available water and crop needs to assess irrigation timing. Where these are missing, leave timing unknown.
 - Crop water demand is unknown unless the supplied evidence supports it for the crop, growth stage and period. Do not apply a universal daily watering depth or invent daily litres, dry-season totals or days of storage coverage. Name the missing demand, effective rainfall, available supply and loss information instead.
 - Unit conversion only: 1mm over 1m² = 1 litre. This does not supply a watering recommendation.
 
@@ -822,8 +797,6 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     dateLabel,
     rainfallMm: annualRain,
     rainfallSource: d.rainfall.rainfallSource,
-    wetSeason,
-    drySeason,
     soilPh: d.soil.ph,
     soilOrganicCarbon: d.soil.organicCarbon,
     soilTexture: d.soil.textureClass,

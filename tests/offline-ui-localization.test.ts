@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { act } from 'react-test-renderer';
 import { actualOfflineUi,offlineNodeText,offlineQaRows } from './offline-ui-renderer.ts';
 import { controlLocales,controlT,type ControlLanguage } from './control-icon-renderers.ts';
-import { beforeOfflineDeviceDictionary,beforeOfflineDeviceTranslations,beforeUpdateNoticeTranslations, beforeAccountTranslations, beforeCommunityProfileTranslations,beforeCommunityMemberTranslations,beforeCommunityThreadTranslations ,beforePhotoViewerTranslations} from './ui-dictionary-preservation.ts';
+import { beforeWaterCopy, beforeOfflineDeviceDictionary,beforeOfflineDeviceTranslations,beforeUpdateNoticeTranslations, beforeAccountTranslations, beforeCommunityProfileTranslations,beforeCommunityMemberTranslations,beforeCommunityThreadTranslations ,beforePhotoViewerTranslations} from './ui-dictionary-preservation.ts';
 const read=(p:string)=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const packet=JSON.parse(read('docs/translation/four-language-completion/offline-device-drafts.json'));
 const langs=['zu','st','ts','ve']as const;
@@ -13,7 +13,7 @@ const hash=(s:string)=>createHash('sha256').update(s).digest('hex');
 const placeholders=(s:string)=>(s.match(/\{\w+\}/g)??[]).sort();
 
 test('device-page drafts keep exact English, existing isiZulu, placeholders and undeclared locale bytes',()=>{
-  assert.equal(hash(read('lib/i18n.tsx')),packet.sourceSha256['lib/i18n.tsx']);
+  assert.equal(hash(beforeWaterCopy(read('lib/i18n.tsx'), 'en')),packet.sourceSha256['lib/i18n.tsx']);
   for(const lang of langs){
     for(const row of packet.entries){if(typeof row[lang]!=='string')continue;assert.equal(controlT(lang)(row.key),row[lang]);assert.equal(controlT('en')(row.key),row.english);assert.notEqual(row[lang],row.english);assert.deepEqual(placeholders(row[lang]),placeholders(row.english));assert.deepEqual(row[lang].match(/\d+/g)??[],row.english.match(/\d+/g)??[]);}
     for(const row of packet.sourceControls)if(!packet.entries.some((e:any)=>e.key===row.key&&typeof e[lang]==='string'))assert.equal(controlLocales[lang][row.key]??null,row[lang]);

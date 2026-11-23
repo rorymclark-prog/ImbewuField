@@ -50,11 +50,11 @@ function visit(node: ts.Node) {
 visit(ast);
 assert.ok(footnote);
 const renderFootnote = new Function('React', 'd', 'tr', 'koppenDescLabel', 'rainfallPatternLabel',
-  'seasonRangeLabel', 'monthlyTemperatureStatus', 'reportClimateLabels', ts.transpileModule(
+  'seasonRangeLabel', 'reportVisualText', 'language', 'monthlyTemperatureStatus', 'reportClimateLabels', ts.transpileModule(
     declaration + `return (${footnote});`, { compilerOptions: { target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.React } }).outputText);
 function render(d: typeof DEMO_LOCATION) {
   return renderToStaticMarkup(renderFootnote(React, d, (en: string) => en, (_: string, desc: string) => desc,
-    (s: string) => s, (s: string) => s, climateEvidence.monthlyTemperatureStatus,
+    (s: string) => s, (s: string) => s, (s: string) => s, 'en', climateEvidence.monthlyTemperatureStatus,
     (climateEvidence as any).reportClimateLabels));
 }
 test('outage footnote withholds placeholder class and seasons and names the unknown temperature', () => {
@@ -71,6 +71,7 @@ test('complete rainfall retains its seasons independently of missing temperature
   const d = structuredClone(DEMO_LOCATION);
   delete d.climate.monthlyTempCoverage;
   const output = render(d);
+  assert.match(output, /Estimated season ranges/);
   assert.ok(output.includes(d.rainfall.wetSeason));
   assert.match(output, /Köppen climate class Not known/);
   d.climate.monthlyTempCoverage = { source: 'nasa-power', status: 'complete' };

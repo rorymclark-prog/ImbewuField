@@ -35,7 +35,7 @@ import { AlertTriangle, Sprout, Mountain, Droplets, Thermometer, Layers, Leaf } 
 import type { LocationData } from '@/lib/types';
 import { planSoilCaution, planSoilCautionTitle } from '@/lib/plan-assurance';
 import { getCropArt } from '@/lib/crop-art';
-import { annualRainfallMm, recordMinimumC, sourcedMonthlyRainfall } from '@/lib/climate-temperature';
+import { annualRainfallMm, rainfallSourceName, recordMinimumC, sourcedMonthlyRainfall } from '@/lib/climate-temperature';
 import { useLanguage } from '@/lib/i18n';
 import { SOWING_CALENDAR_LABEL, SOWING_CALENDAR_LABEL_ZU } from '@/lib/sowing-calendar-label';
 import {
@@ -281,10 +281,9 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
               colorFor={(v) => (v > rainAvg * 0.9 ? '#3F92C9' : '#A6C9DF')}
               height={86}
             />
-            <div className="flex justify-between font-sans mt-1" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-              <span>{pairedLabel('Wet:', 'Isikhathi sezimvula:', isZulu)} <b style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{rainfall.wetSeason}</b></span>
-              <span>{pairedLabel('Dry:', 'Isikhathi esomile:', isZulu)} <b style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{rainfall.drySeason}</b></span>
-            </div>
+            <p className="font-sans mt-1 text-xs text-[var(--text-secondary)]">
+              {pairedLabel('Rainfall source', 'Umthombo wemininingwane yemvula', isZulu)} · {rainfallSourceName(rainfall.rainfallSource)}
+            </p>
           </>
         ) : (
           <p lang="en" className="font-display" style={{ color: 'var(--text-secondary)' }}>Monthly rainfall is unavailable for this point.</p>

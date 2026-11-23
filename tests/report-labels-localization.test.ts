@@ -32,7 +32,8 @@ test('the catalogue label pass preserves every legacy or custom name while missi
    const inventory=`| ${pending('Water inventory gaps')} | ${pending('Not recorded in supplied map/design facts:')} dam, pond, reservoir, borehole, well, spring, river | ${pending('This is an inventory gap, not proof of physical absence')} |`;
    // The intro must acknowledge calculated survey summaries; retain the frozen source and every row.
    const intro="This table summarizes supplied map, design and survey records and the data sources named beside each row. It includes calculated summaries and evidence gaps; read each row's source and limits before relying on it.";
-   const expected=c.english.replace(oldInventory,inventory).replace("Nothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.",pending(intro));
+   // Annual rainfall retains its recorded value and source; season ranges have no field receipt.
+   const expected=c.english.replace(/^(\| Annual rainfall \| [^|]+? mm) — wet [^|]+( \|)/m,'$1$2').replace(oldInventory,inventory).replace("Nothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.",pending(intro));
    assert.equal(buildReportHeaderMarkdown(c.input,language),expected);
   }
   assert.deepEqual(siteReportVisuals(c.input.facts!,fixture.location),c.visuals);

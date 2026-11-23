@@ -43,7 +43,7 @@ export function siteReportVisuals(facts: ReportSiteFacts | null, location: Locat
       { label: t('Staple plots', 'Iziza eziyisisekelo'), value: facts.design.plotAreaM2, detail: `${facts.design.plotCount}` },
     ].filter(r => valid(r.value)) });
   }
-  if (annualRainfallMm(location.rainfall) !== null) metrics.push({ label: t('Annual rainfall', 'Imvula yonyaka'), value: `${n(location.rainfall.annual)} mm`, note: t('Climate estimate', 'Isilinganiso sesimo sezulu') });
+  if (annualRainfallMm(location.rainfall) !== null) metrics.push({ label: t('Annual rainfall', 'Imvula yonyaka'), value: `${n(location.rainfall.annual)} mm`, note: location.rainfall.rainfallSource === 'grower-entered' ? reportVisualText('Grower-entered rainfall', language) : t('Climate estimate', 'Isilinganiso sesimo sezulu') });
   if (facts?.water) metrics.push({ label: t('Storage in the plan', 'Amanzi ohlelweni'), value: facts.water.tanksOfUnknownCapacity && !facts.water.statedStorageLitres ? t('Not stated', 'Akubhaliwe') : `${n(facts.water.statedStorageLitres)} L`, note: facts.water.tanksOfUnknownCapacity ? `${facts.water.tanksOfUnknownCapacity} ${t('tanks have no stated capacity', 'amathangi awunawo umthamo obhaliwe')}` : t('Stated capacity; check installation', 'Umthamo obhaliwe; hlola ukufakwa') });
   if (sourcedMonthlyRainfall(location.rainfall) !== null) charts.push({ id: 'rainfall', title: t('Rain through the year', 'Imvula phakathi nonyaka'), note: `${location.rainfall.rainfallSource ?? t('Climate estimate', 'Isilinganiso sesimo sezulu')} · ${t('Monthly rainfall, not a weather forecast.', 'Imvula yenyanga, akusona isibikezelo sezulu.')}`, unit: 'mm', kind: 'months', rows: location.rainfall.monthly.map((value, i) => ({ label: recordsMonthShort(language, i + 1), value })) });
   if (facts?.water?.tanks.length) charts.push({ id: 'water', title: t('Water storage', 'Ukugcina amanzi'), note: `${t('Capacity is not water currently available.', 'Umthamo awusho amanzi akhona manje.')} ${facts.water.tanksOfUnknownCapacity ? `${facts.water.tanksOfUnknownCapacity} ${t('tanks have no stated capacity.', 'amathangi awunawo umthamo obhaliwe.')}` : ''}`, kind: 'bars', unit: 'L', rows: facts.water.tanks.filter(r => r.statedLitres !== null).map(r => ({ label: `${reportElementDisplayName(r.name,r.defId,language)} ×${r.count}`, value: r.statedLitres! * r.count, detail: reportVisualText(r.status, language) })) });
@@ -1608,6 +1608,34 @@ export const REPORT_VISUAL_COPY: readonly { english: string; zu: string; st: str
     "st": "Pula le mofuthu ho pholletsa le selemo",
     "ts": "Mpfula ni ku kufumela lembe hinkwaro",
     "ve": "Mvula na mufhiso kha ṅwaha woṱhe"
+  },
+  {
+    "english": "Grower-entered rainfall",
+    "zu": "Imvula efakwe umlimi",
+    "st": "Pula e kentsweng ke molemi",
+    "ts": "Mpfula leyi nghenisiweke hi murimi",
+    "ve": "Mvula yo dzheniswaho nga mulimi"
+  },
+  {
+    "english": "Same rainfall in every month",
+    "zu": "Imvula iyafana kuzo zonke izinyanga",
+    "st": "Pula e a lekana dikgweding tsohle",
+    "ts": "Mpfula ya ringana eka tin’weti hinkwato",
+    "ve": "Mvula i a lingana kha miṅwedzi yoṱhe"
+  },
+  {
+    "english": "Estimated season ranges",
+    "zu": "Izikhathi zonyaka ezilinganiselwe",
+    "st": "Linako tsa selemo tse hakanyelitsoeng",
+    "ts": "Minkarhi ya lembe leyi ringanyetiweke",
+    "ve": "Zwifhinga zwa ṅwaha zwo anganyelwaho"
+  },
+  {
+    "english": "Wet and dry season ranges are estimates. Check soil moisture and crop needs before watering.",
+    "zu": "Izikhathi zemvula nesomiso ziyizilinganiso. Hlola umhlabathi nezidingo zezitshalo ngaphambi kokunisela.",
+    "st": "Linako tsa pula le komello ke likhakanyo. Hlahloba mobu le litlhoko tsa lijalo pele o nosetsa.",
+    "ts": "Minkarhi ya mpfula ni ya dyandza i mpimanyeto. Kambela misava ni swilaveko swa swimilana u nga si cheleta.",
+    "ve": "Zwifhinga zwa mvula na gomelelo ndi nyanganyelo. Ṱolani mavu na ṱhoḓea dza zwimela musi ni sa athu sheledza."
   },
   {
     "english": "Long-term monthly averages for this location, not a forecast. Any one year can be much wetter or much drier than this.",

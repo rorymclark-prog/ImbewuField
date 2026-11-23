@@ -160,6 +160,21 @@ for (const route of routes) {
     assert.ok(probe.reads.every(owner => owner === uid));
   });
 
+  test(`${route}: the advice input separates recorded zero from an outage and withholds legacy watering dates`, async () => {
+    for (const source of ['grower-entered', undefined]) {
+      const body = payload(route);
+      const loc = body.locationData ?? body.context!.locationData;
+      Object.assign(loc.rainfall, { annual: source ? 0 : 600, monthly: Array(12).fill(source ? 0 : 50),
+        rainfallSource: source, wetSeason: 'TEST WET RANGE', drySeason: 'TEST DRY RANGE' });
+      assert.equal((await post(route, body)).status, 200);
+      const input = JSON.stringify(probe.inputs.at(-1));
+      assert.doesNotMatch(input, /TEST (?:WET|DRY) RANGE|Annual rainfall: 600/);
+      assert.match(input, /farm observations and crop water needs/);
+      assert.ok(input.includes(source ? 'Annual rainfall: 0 mm (grower-entered)' : 'Annual rainfall: not known'));
+      assert.ok(input.includes(source ? Array(12).fill(0).join(', ') + ' mm' : 'Monthly rainfall (January–December): not known'));
+    }
+  });
+
   test(`${route}: missing scope, stale fingerprint, unreadable places and a forged guest demo never spend`, async () => {
     const missing = payload(route) as { adviceContext?: unknown }; delete missing.adviceContext;
     await held(await post(route, missing), false); untouched();

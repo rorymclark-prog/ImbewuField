@@ -1,3 +1,4 @@
+import { rainfallAdviceEvidence } from '@/lib/climate-temperature';
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData } from '@/lib/types';
@@ -74,7 +75,8 @@ Drainage patterns, dry riverbeds, wet spots, erosion channels, or water infrastr
 Slope, aspect, and topography you can assess from this view.
 
 ## ⚠ Key Observations
-The 3–5 most important site-specific findings for the design. Tie to the ${locationData.biome.name} biome and ${locationData.rainfall.annual}mm annual rainfall.
+The 3–5 most important site-specific findings for the design. Use the ${locationData.biome.name} biome as regional context. Use only the supported rainfall evidence below.
+${rainfallAdviceEvidence(locationData.rainfall)}
 
 ## ✅ Existing Assets
 What's already working that a permaculture design should build on.

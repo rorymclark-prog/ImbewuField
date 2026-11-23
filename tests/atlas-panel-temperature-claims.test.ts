@@ -104,7 +104,9 @@ test('a year of 20 °C substitutes shows no climate type, no frost claim and no 
   // Rainfall is a separate series and stays useful.
   assert.match(seen, /≈ 641 mm\/yr/);
   assert.match(seen, /Rainfall/);
-  assert.match(seen, /Oct to Mar/);
+  assert.match(seen, /127 J 81 F 73 M/);
+  assert.match(seen, /NASA POWER/);
+  assert.doesNotMatch(seen, /Oct to Mar/, 'a fixed season label is not a monthly reading');
 });
 
 test('one substituted month is enough: the real-looking months are withheld too', () => {
@@ -205,6 +207,12 @@ test('rainfall and the water balance reject unproven months and retain a support
   assert.doesNotMatch(balance(), /<svg/);
 
   location.rainfall = { ...location.rainfall, monthly: Array(12).fill(0), annual: 0, rainfallSource: 'grower-entered' };
+  location.rainfall.wetSeason = 'TEST WET RANGE';
+  location.rainfall.drySeason = 'TEST DRY RANGE';
+  for (const html of [rainfall(), render(location)]) {
+    assert.match(html, /Grower-entered/);
+    assert.doesNotMatch(html, /TEST (?:WET|DRY) RANGE/);
+  }
   assert.match(rainfall(), /0mm\/yr/);
   assert.match(balance(), /<svg/);
   assert.match(text(render(location)), /≈ 0 mm\/yr/);
@@ -226,6 +234,7 @@ for (const lang of ['en', 'zu']) test(`${lang}: a simulated September shortfall 
     waterData: { count: 1, areaM2: 10, estVolumeKL: 20, avgDepthM: 2 },
   })));
   const html = balance();
+  assert.doesNotMatch(text(html), / L kL/, 'the minimum already includes its unit');
   const warning = text(html).split(translate(lang, 'waterBalancePossibleShortfall'))[1];
   assert.ok(warning, 'the case must actually reach the shortfall warning');
   assert.ok(warning.includes(translate(lang, 'waterBalanceMonthSep')), 'retain the actual simulated lowest month');

@@ -4,13 +4,18 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { actualConsent, consentRecord } from './consent-renderer.ts';
 import { controlLocales, controlT, type ControlLanguage } from './control-icon-renderers.ts';
-import { beforeConsentDictionary, beforeConsentTranslations, beforeOfflineDeviceTranslations, beforeUpdateNoticeTranslations, beforeAccountTranslations, beforeCommunityProfileTranslations,beforeCommunityMemberTranslations,beforeCommunityThreadTranslations ,beforePhotoViewerTranslations} from './ui-dictionary-preservation.ts';
+import { beforeWaterCopy, beforeConsentDictionary, beforeConsentTranslations, beforeOfflineDeviceTranslations, beforeUpdateNoticeTranslations, beforeAccountTranslations, beforeCommunityProfileTranslations,beforeCommunityMemberTranslations,beforeCommunityThreadTranslations ,beforePhotoViewerTranslations} from './ui-dictionary-preservation.ts';
 const read=(p:string)=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const packet=JSON.parse(read('docs/translation/four-language-completion/consent-drafts.json'));
 const languages=['zu','st','ts','ve'] as const;
 
 test('consent drafts bind to exact prior wording and retain every original English policy clause',()=>{
-  assert.equal(createHash('sha256').update(read('lib/i18n.tsx')).digest('hex'),packet.englishSourceSha256);
+  // The consent packet predates the Water warning. Every other English source byte is still pinned.
+  const english = read('lib/i18n.tsx');
+  assert.equal(createHash('sha256').update(beforeWaterCopy(english, 'en')).digest('hex'),packet.englishSourceSha256);
+  const altered = english.replace('Possible tank shortfall', 'Altered tank warning');
+  assert.notEqual(altered, english);
+  assert.equal(beforeWaterCopy(altered, 'en'), altered, 'a partial Water change must remain visible to the hash');
   assert.match(packet.status,/Unreviewed/);
   let changed=0;
   for(const lang of languages){

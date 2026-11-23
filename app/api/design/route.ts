@@ -1,3 +1,4 @@
+import { rainfallAdviceEvidence } from '@/lib/climate-temperature';
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData } from '@/lib/types';
@@ -98,7 +99,7 @@ Produce a practical permaculture DESIGN laid out on THEIR sketch — refer to th
 SITE DATA
 Biome: ${d.biome.name}${d.vegetation ? ` · exact vegetation: ${d.vegetation.vegUnit}` : ''}
 Coordinates: ${Math.abs(d.lat).toFixed(3)}°S, ${d.lon.toFixed(3)}°E · Elevation ${d.elevation.elevation}m · Slope ${d.elevation.slopeDeg}° facing ${d.elevation.aspectLabel}
-Rainfall: ${d.rainfall.annual}mm/yr, ${d.rainfall.pattern} (wet ${d.rainfall.wetSeason}, dry ${d.rainfall.drySeason})
+${rainfallAdviceEvidence(d.rainfall)}
 Temperature: ${d.climate.minTemp}–${d.climate.maxTemp}°C · Soil: ${d.soil.textureClass}, pH ${d.soil.ph}
 Wind: from ${d.climate.windFromSummer} (summer) / ${d.climate.windFromWinter} (winter). ${sunNote}
 ${photoAnalysis ? `\nGROUND PHOTO NOTES:\n${photoAnalysis}\n` : ''}

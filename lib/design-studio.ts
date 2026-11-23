@@ -1,6 +1,6 @@
 'use client';
 
-import { annualRainfallMm, recordMinimumC, sourcedMonthlyRainfall } from './climate-temperature';
+import { annualRainfallMm, hasRainfallVariation, rainfallSourceName, recordMinimumC, sourcedMonthlyRainfall } from './climate-temperature';
 import { numberLabel } from '@/lib/format-figures';
 import turfArea from '@turf/area';
 import type { Feature, FeatureCollection, Geometry, Position } from 'geojson';
@@ -709,9 +709,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
   const winterWind = locationData?.climate?.windFromWinter;
   const soilTexture = locationData?.soil?.textureClass;
   const biome = locationData?.biome?.name;
-  const rainfallPattern = sourcedMonthlyRainfall(locationData?.rainfall) ? locationData?.rainfall?.pattern : undefined;
-  const wetSeason = sourcedMonthlyRainfall(locationData?.rainfall) ? locationData?.rainfall?.wetSeason : undefined;
-  const drySeason = sourcedMonthlyRainfall(locationData?.rainfall) ? locationData?.rainfall?.drySeason : undefined;
+  const rainfallPattern = hasRainfallVariation(sourcedMonthlyRainfall(locationData?.rainfall)) ? locationData?.rainfall?.pattern : undefined;
   const minTemp = recordMinimumC(locationData?.climate);
   const elevation = finiteNumber(locationData?.elevation?.elevation);
 
@@ -796,10 +794,10 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
         ? 'Annual rainfall is not known from a supported source, so roof harvest cannot be calculated.'
         : null;
 
-  const householdNeedNote = `Household need (${householdLabel} × 50 L/day): ~${waterCalc.householdDailyLitres} L/day, ~${Math.round(waterCalc.householdMonthlyLitres / 1000)} kL/month. A 90-day dry-season buffer needs ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL stored.`;
+  const householdNeedNote = `Household need (${householdLabel} × 50 L/day): ~${waterCalc.householdDailyLitres} L/day, ~${Math.round(waterCalc.householdMonthlyLitres / 1000)} kL/month. The model’s 90-day household scenario uses ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL.`;
 
   const gardenIrrigNote = waterCalc.gardenIrrigationDrySeasonDailyLitres != null
-    ? `Estimated dry-season garden irrigation for ${formatDesignArea(waterCalc.cultivationAreaM2)} of beds: ~${numberLabel(waterCalc.gardenIrrigationDrySeasonDailyLitres)} L/day (at 3.5 L/m²).`
+    ? `Garden scenario for ${formatDesignArea(waterCalc.cultivationAreaM2)} of beds: ~${numberLabel(waterCalc.gardenIrrigationDrySeasonDailyLitres)} L/day using the model assumption of 3.5 L/m² per day. Check actual crop needs and soil moisture.`
     : '';
 
   // Frost / elevation note for sector map
@@ -812,7 +810,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
 
   // Rainfall pattern for wind / sector advice
   const rainfallDesc = annualRainfall != null
-    ? `${Math.round(annualRainfall)} mm/year (${rainfallPattern ?? 'unknown'} rainfall${wetSeason ? `, wet season: ${wetSeason}` : ''}${drySeason ? `, dry season: ${drySeason}` : ''})`
+    ? `${Math.round(annualRainfall)} mm/year (${rainfallSourceName(locationData?.rainfall.rainfallSource)}${rainfallPattern ? `, ${rainfallPattern} pattern` : ''})`
     : 'rainfall data not loaded';
 
   // Build fencing note
@@ -917,9 +915,6 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
           treeBelts.length
             ? `You have ${treeBelts.length} tree/shelter layer${treeBelts.length > 1 ? 's' : ''} mapped${treeBeltAreaLabel}: ${layerList(treeBelts, '')}. Confirm they are on the windward side and fill any gaps.`
             : 'No tree belts mapped yet — even a double row of fast-growing indigenous trees (buffalo thorn, fever tree, wild olive) reduces wind damage within 2–3 seasons.',
-          annualRainfall != null
-            ? `At ${Math.round(annualRainfall)} mm/year${drySeason ? `, dry season ${drySeason}` : ''}, wind-driven moisture loss is a real yield killer — shelter pays for itself.`
-            : '',
         ].filter(Boolean).join(' '),
         layerIds: treeBelts.map((layer) => layer.id),
       },
@@ -1020,17 +1015,8 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
           waterSourceNote,
           waterStorageNote,
           annualRainfall != null
-            ? `Annual rainfall here: ${rainfallDesc}. ${
-                annualRainfall < 300
-                  ? 'Below 300 mm/year — this is serious water stress territory. Every drop must be caught, stored, and used twice.'
-                  : annualRainfall < 600
-                    ? 'Between 300–600 mm/year — water is the main limiting factor. Fill tanks from every roof and harvest every drop of rain that falls on site.'
-                    : annualRainfall < 900
-                      ? 'Between 600–900 mm/year — enough to grow well with good water management. Focus on eliminating runoff.'
-                      : 'Above 900 mm/year — good rainfall, but it often arrives unevenly. Store the surplus from wet season to carry through the dry.'
-              }`
-            : 'Reload location data to get rainfall figures.',
-          drySeason ? `Dry season (${drySeason}) is the critical period — plan storage and irrigation to cover these months without relying on rain.` : '',
+            ? `Annual rainfall here: ${rainfallDesc}. Check soil moisture, water supply and crop needs before choosing when to irrigate.`
+            : 'Annual rainfall is unknown.',
         ].filter(Boolean).join(' '),
         layerIds: water.map((layer) => layer.id),
       },
@@ -1137,12 +1123,10 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
             : annualRainfall === 0
             ? 'A tank cannot supply water from the recorded zero rainfall. Establish the available water supply before sizing storage.'
             : waterCalc.roofHarvestAnnualKL != null && waterCalc.dryBufferLitres90Day > 0
-            ? `Tank sizing guide: roof harvest ~${numberLabel(waterCalc.roofHarvestAnnualKL)} kL/year, 90-day household buffer ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL. If harvest > buffer, one good rainy season fills your reserve. If not, supplement with a borehole or grey-water reuse.`
+            ? `Estimated roof harvest: ~${numberLabel(waterCalc.roofHarvestAnnualKL)} kL/year. The 90-day household scenario uses ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL. Seasonal supply depends on when rain arrives and how much water is used.`
             : 'Complete the roof harvest estimate in the site survey to size your tanks correctly.',
-          waterCalc.gardenIrrigationDrySeasonDailyLitres != null
-            ? `Dry-season garden irrigation for ${formatDesignArea(cultivationTotalM2)}: roughly ${numberLabel(waterCalc.gardenIrrigationDrySeasonDailyLitres)} L/day. Drip irrigation reduces this by 40–60% versus overhead watering.`
-            : '',
-          surveyChallenges.includes('drought') ? 'Drought is your main challenge — invest in shade cloth (30–40%), thick mulch (10 cm minimum), and drip lines before the dry season. These three together can halve your irrigation demand.' : '',
+          gardenIrrigNote,
+          surveyChallenges.includes('drought') ? 'You recorded drought as a challenge. Check available water, soil moisture and crop needs before choosing irrigation measures.' : '',
           surveyChallenges.includes('flooding') ? 'Flooding challenge noted — raised beds (30 cm above current grade) and swale cut-off drains above the growing area keep production going through wet spells.' : '',
         ].filter(Boolean).join(' '),
         layerIds: [...water, ...roof].map((layer) => layer.id),

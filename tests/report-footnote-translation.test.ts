@@ -58,6 +58,13 @@ test('translated footnote inputs retain supported literal codes but withhold unt
   const recorded = reportClimateLabels(DEMO_LOCATION);
   assert.equal(recorded.koppen, 'Dwb', 'existing demo fixture code, not independent climate validation');
   assert.equal(recorded.pattern, 'summer'); assert.equal(recorded.wetSeason, 'Oct–Mar'); assert.equal(recorded.drySeason, 'May–Aug');
+  // A measured zero stays in the report. An inherited seasonal range has no support in a flat series.
+  const flat = structuredClone(DEMO_LOCATION);
+  flat.rainfall.monthly = Array(12).fill(0);
+  flat.rainfall.annual = 0;
+  const uniform = reportClimateLabels(flat);
+  assert.deepEqual([uniform.pattern, uniform.wetSeason, uniform.drySeason], [null, null, null]);
+  assert.equal(uniform.koppen, recorded.koppen);
   const missing = structuredClone(DEMO_LOCATION);
   delete missing.climate.monthlyTempCoverage;
   delete missing.rainfall.rainfallSource;

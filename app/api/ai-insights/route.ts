@@ -1,3 +1,4 @@
+import { rainfallAdviceEvidence } from '@/lib/climate-temperature';
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData } from '@/lib/types';
@@ -7,10 +8,7 @@ import { resolveLocalAdvicePolicy, localAdviceDecisionCurrent } from '@/lib/loca
 import type { LocalAdviceDecision } from '@/lib/local-advice-types';
 import { selectLocalAdviceSystem } from '@/lib/local-advice-prompts';
 
-const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
 function buildPrompt(d: LocationData): string {
-  const rain = d.rainfall.monthly.map((v, i) => `${MONTH_NAMES[i]}:${Math.round(v)}`).join(' ');
   const facingNote = d.elevation.aspectLabel.includes('N')
     ? '(north-facing — WARM & DRY in southern hemisphere, more sun)'
     : d.elevation.aspectLabel.includes('S')
@@ -26,11 +24,9 @@ Known biome challenges: ${d.biome.challenges.join('; ')}${d.bru ? `\nKZN Bioreso
 
 CLIMATE
 - Köppen: ${d.climate.koppen} (${d.climate.koppenDesc})
-- Annual rainfall: ${d.rainfall.annual}mm (${d.rainfall.pattern} rainfall pattern)
-- Wet season: ${d.rainfall.wetSeason} · Dry season: ${d.rainfall.drySeason}
+${rainfallAdviceEvidence(d.rainfall)}
 - Mean temp: ${d.climate.meanTemp}°C · Summer max: ${d.climate.maxTemp}°C · Winter min: ${d.climate.minTemp}°C
 - Solar radiation: ${d.climate.solarRadiation} kWh/m²/day (annual avg)
-- Monthly rainfall (mm): ${rain}
 
 TERRAIN
 - Elevation: ${d.elevation.elevation}m ASL
@@ -45,24 +41,23 @@ SOIL (ISRIC SoilGrids 0–30cm)
 - Bulk density: ${d.soil.bulkDensity} g/cm³
 
 --- BIOME NOTES FROM DATABASE ---
-Water strategy: ${d.biome.waterStrategy}
 Soil strategy: ${d.biome.soilStrategy}
 Key indigenous species: ${d.biome.keySpecies.join(', ')}
 
 --- GENERATE 5 SECTIONS ---
-Be specific to THIS location. Reference the actual numbers — slope, rainfall timing, biome, soil pH, OC content. Give concrete recommendations, not generic permaculture theory.
+Be specific to THIS location. Reference supported site measurements. Treat biome notes as regional context. Give concrete recommendations, not generic permaculture theory.
 
 ## 🌧 Water Harvesting
-Based on ${d.rainfall.annual}mm of ${d.rainfall.pattern} rainfall and ${d.elevation.slopeDeg}° slope: specific earthworks strategy. Calculate swale spacing. Dam viability. Tank sizing (give actual litres per 100m² of roof). Which earthworks to do first and when (tie to rainfall season).
+Use the supplied rainfall evidence and slope to discuss water harvesting. Identify the local measurements needed for siting and sizing. Leave timing, irrigation amounts and storage needs unknown where the evidence is missing.
 
 ## 🌱 Soil Building
 Based on pH ${d.soil.ph} and OC ${d.soil.organicCarbon}%: what to add, what to avoid, target numbers. pH correction strategy. Organic matter building plan. What grows naturally in this biome that improves the soil.
 
 ## 🌳 Plant Guilds
-3 specific guild designs for this exact biome and climate. Name actual species (indigenous first, useful exotics second). Include: canopy / sub-canopy / shrub / nitrogen-fixer / groundcover / root-crop layer. Reference the specific season and rainfall pattern.
+3 specific guild designs for this exact biome and climate. Name actual species (indigenous first, useful exotics second). Include: canopy / sub-canopy / shrub / nitrogen-fixer / groundcover / root-crop layer. State what local observations are needed to assess suitability.
 
 ## 📅 Seasonal Action Calendar
-Month-by-month key activities tied to the actual rainfall pattern (${d.rainfall.wetSeason} wet, ${d.rainfall.drySeason} dry). Earthworks timing, planting windows, harvest, soil-building activities.
+Use locally recorded dates when available. Describe the field observations needed before planting, watering or starting earthworks. Leave unsupported dates open.
 
 ## ⚡ Year-1 Quick Wins
 3 high-impact actions specific to this site's biggest constraints and opportunities. Be direct and practical.`;

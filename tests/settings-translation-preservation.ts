@@ -1,4 +1,4 @@
-import { beforeUiDictionary } from './ui-dictionary-preservation.ts';
+import { beforeUiDictionary, beforeWaterCopy } from './ui-dictionary-preservation.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { beforeDeclaredUiTranslations, type UiTranslationPacket } from './navigation-translation-preservation.ts';
@@ -13,6 +13,7 @@ export function beforeSettingsTranslations(source: string, locale: 'zu' | 'st' |
 }
 
 export function englishBeforeSettingsTranslations(source: string): string {
+  source = beforeWaterCopy(source, 'en');
   const added = ["import { REPORT_VIEWER_ENGLISH_PENDING } from '@/lib/i18n-pending';\n", '  ...REPORT_VIEWER_ENGLISH_PENDING,\n', "import { CORE_ENTRY_ENGLISH_PENDING } from '@/lib/i18n-pending';\n", '  ...CORE_ENTRY_ENGLISH_PENDING,\n', "import { SETTINGS_ENGLISH_PENDING } from '@/lib/i18n-pending';\n", '  ...SETTINGS_ENGLISH_PENDING,\n'];
   for (const line of added) {
     assert.equal(source.split(line).length, 2, 'exactly one declared app UI source import and spread');

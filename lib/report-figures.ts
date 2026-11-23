@@ -595,8 +595,12 @@ export function climateFigure(location: LocationData | null | undefined, languag
   const left = 50, right = W - 14, slot = (right - left) / 12;
 
   const month = (index: number) => recordsMonthShort(language, index + 1);
-  const offset = figureHeader(p, `${figureNumber(annual)} mm ${t('of rain in an average year', 'yemvula ngonyaka ojwayelekile')}`,
-    `${t('Wettest month', 'Inyanga enemvula kakhulu')}: ${month(wettest)} (${figureNumber(monthly[wettest])} mm)   ·   ${t('Driest month', 'Inyanga eyome kakhulu')}: ${month(driest)} (${figureNumber(monthly[driest])} mm)`, language);
+  const uniform = monthly[wettest] === monthly[driest];
+  const sameRain = uniform ? `${reportVisualText('Same rainfall in every month', language)}: ${figureNumber(monthly[0])} mm` : '';
+  const offset = figureHeader(p, rain.rainfallSource === 'grower-entered'
+    ? `${t('Annual rainfall', 'Imvula yonyaka')}: ${figureNumber(annual)} mm`
+    : `${figureNumber(annual)} mm ${t('of rain in an average year', 'yemvula ngonyaka ojwayelekile')}`,
+    sameRain || `${t('Wettest month', 'Inyanga enemvula kakhulu')}: ${month(wettest)} (${figureNumber(monthly[wettest])} mm)   ·   ${t('Driest month', 'Inyanga eyome kakhulu')}: ${month(driest)} (${figureNumber(monthly[driest])} mm)`, language);
 
   const top = 82 + offset, base = 226 + offset, scale = axis(Math.max(...monthly));
   p.text(left - 8, top - 12, 'mm', { size: 11, fill: MUTED, anchor: 'end' });
@@ -608,12 +612,12 @@ export function climateFigure(location: LocationData | null | undefined, languag
   monthly.forEach((value, i) => {
     const w = slot * 0.62, x = left + slot * i + (slot - w) / 2, h = (value / scale.top) * (base - top);
     p.path(barPath(x, base, w, h), { fill: BLUE });
-    const strong = i === wettest || i === driest;
+    const strong = !uniform && (i === wettest || i === driest);
     p.text(x + w / 2, base - h - 5, figureNumber(value), { size: 11, anchor: 'middle', weight: strong ? 700 : 400, fill: strong ? INK : MUTED });
   });
 
   // The season strip says in shape, not only colour, which months the record calls wet and dry.
-  const wet = seasonMonths(rain.wetSeason), dry = seasonMonths(rain.drySeason);
+  const wet = uniform ? [] : seasonMonths(rain.wetSeason), dry = uniform ? [] : seasonMonths(rain.drySeason);
   const dryHatch = dry.length ? p.hatch('dry', AMBER, 5, 1.4) : '';
   if (wet.length || dry.length) for (let i = 0; i < 12; i++) {
     const x = left + slot * i + 1, w = slot - 2, y = base + 6;
@@ -625,6 +629,8 @@ export function climateFigure(location: LocationData | null | undefined, languag
   const entries: KeyEntry[] = [];
   if (wet.length) entries.push({ label: `${t('Wet season', 'Isikhathi semvula')} (${figureSeason(rain.wetSeason, language)})`, draw: (x, y) => p.rect(x, y - 5, 20, 9, { fill: BLUE }) });
   if (dry.length) entries.push({ label: `${t('Dry season', 'Isikhathi sesomiso')} (${figureSeason(rain.drySeason, language)})`, draw: (x, y) => p.rect(x, y - 5, 20, 9, { fill: dryHatch, stroke: AMBER, width: 1 }) });
+  // The enlarged image travels without its report caption. Keep the season limit in its legend.
+  if (entries.length) entries[entries.length - 1].label += ` · ${reportVisualText('Estimated season ranges', language)}`;
   let height = entries.length ? keyRow(p, left, base + 52, entries, W - 14, language) : base + 42;
 
   const temps = location?.climate?.monthlyTemp;
@@ -652,9 +658,12 @@ export function climateFigure(location: LocationData | null | undefined, languag
   return {
     id: 'climate', width: W, height: Math.ceil(height), svg: p.done(height),
     title: t('Rain and warmth through the year', 'Imvula nokufudumala phakathi nonyaka'),
-    note: t('Long-term monthly averages for this location, not a forecast. Any one year can be much wetter or much drier than this.', 'Izilinganiso zesikhathi eside zale ndawo, akusona isibikezelo. Noma yimuphi unyaka ungaba nemvula eningi noma ube womile kakhulu kunalokhu.'),
+    note: [
+      rain.rainfallSource === 'grower-entered' ? '' : t('Long-term monthly averages for this location, not a forecast. Any one year can be much wetter or much drier than this.', 'Izilinganiso zesikhathi eside zale ndawo, akusona isibikezelo. Noma yimuphi unyaka ungaba nemvula eningi noma ube womile kakhulu kunalokhu.'),
+      reportVisualText('Wet and dry season ranges are estimates. Check soil moisture and crop needs before watering.', language),
+    ].filter(Boolean).join(' '),
     source: rainSourceLabel(rain.rainfallSource, t),
-    alt: `${t('Rain by month', 'Imvula ngenyanga')}: ${figureNumber(annual)} mm ${t('a year', 'ngonyaka')}; ${t('wettest', 'enemvula kakhulu')} ${month(wettest)} ${figureNumber(monthly[wettest])} mm, ${t('driest', 'eyome kakhulu')} ${month(driest)} ${figureNumber(monthly[driest])} mm.${tempAlt}`,
+    alt: `${t('Rain by month', 'Imvula ngenyanga')}: ${figureNumber(annual)} mm ${t('a year', 'ngonyaka')}; ${sameRain || `${t('wettest', 'enemvula kakhulu')} ${month(wettest)} ${figureNumber(monthly[wettest])} mm, ${t('driest', 'eyome kakhulu')} ${month(driest)} ${figureNumber(monthly[driest])} mm`}.${tempAlt}`,
   };
 }
 

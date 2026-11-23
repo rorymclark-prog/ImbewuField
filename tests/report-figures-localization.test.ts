@@ -61,7 +61,11 @@ test('the three translated drawings retain every existing source pair and new di
 test('English drawings remain exact and native drawings keep all original figures and inputs',()=>{
   const snapshot=JSON.stringify(fixture);
   const english=all('en');
-  assert.deepEqual(english.filter(f=>f.id!=='soil'),fixture.figures.en.filter(f=>f.id!=='soil'));
+  // The caption and standalone legend qualify season estimates. All chart geometry stays byte-exact.
+  const expected = fixture.figures.en.map(figure => figure.id === 'climate'
+    ? { ...figure, svg: figure.svg.replace('Dry season (May–Aug)</text>', 'Dry season (May–Aug) · Estimated season ranges</text>'), note: figure.note + ' Wet and dry season ranges are estimates. Check soil moisture and crop needs before watering.' }
+    : figure);
+  assert.deepEqual(english.filter(f => f.id !== 'soil'), expected.filter(f => f.id !== 'soil'));
   const soil=english.find(f=>f.id==='soil')!,oldSoil=fixture.figures.en.find(f=>f.id==='soil')!;
   // Withdrawing a universal vegetable pH target must retain all recorded values and source metadata.
   assert.deepEqual({...soil,svg:undefined},{...oldSoil,svg:undefined});

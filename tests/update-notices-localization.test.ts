@@ -10,7 +10,7 @@ import { updateDateLabel } from '../lib/update-copy-date.ts';
 import { recordsMonthLong } from '../lib/records-months.ts';
 import { RELEASE_NOTES,visibleNotes,visibleUpdateTour } from '../lib/release-notes.ts';
 import { UPDATE_GUIDE_KEY,OPEN_UPDATE_GUIDE_EVENT } from '../lib/update-tour.ts';
-import { beforeUpdateNoticeTranslations,beforeUpdateNoticeDictionary,beforeAccountTranslations, beforeCommunityProfileTranslations,beforeCommunityMemberTranslations,beforeCommunityThreadTranslations ,beforePhotoViewerTranslations} from './ui-dictionary-preservation.ts';
+import { beforeWaterCopy, beforeUpdateNoticeTranslations,beforeUpdateNoticeDictionary,beforeAccountTranslations, beforeCommunityProfileTranslations,beforeCommunityMemberTranslations,beforeCommunityThreadTranslations ,beforePhotoViewerTranslations} from './ui-dictionary-preservation.ts';
 const read=(p:string)=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const packet=JSON.parse(read('docs/translation/four-language-completion/update-notice-drafts.json'));
 const langs=['zu','st','ts','ve']as const;
@@ -52,7 +52,7 @@ function oneHistorySource(source:string):typeof RELEASE_NOTES{
 test('update drafts preserve source history, existing control wording, quantities and original locale bytes',async()=>{
  // New releases prepend entries; the full original archived suffix must stay exact.
  assert.deepEqual(RELEASE_NOTES.slice(-packet.historyBefore.length),packet.historyBefore,'the complete archived source, order, dates, links and tours survive');
- assert.equal(hash(read('lib/i18n.tsx')),packet.sourceSha256['lib/i18n.tsx']);
+ assert.equal(hash(beforeWaterCopy(read('lib/i18n.tsx'), 'en')),packet.sourceSha256['lib/i18n.tsx']);
  for(const lang of langs){
   const t=controlT(lang),copy=await loadUpdateCopy(lang);
   for(const row of packet.entries){assert.equal(controlT('en')(row.key),row.english);if(typeof row[lang]==='string'){assert.equal(t(row.key),row[lang]);assert.deepEqual(tokens(row[lang]),tokens(row.english));}}

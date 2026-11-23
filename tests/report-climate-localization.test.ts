@@ -52,7 +52,11 @@ test('all diagram source clauses have drafts and every earlier paired isiZulu cl
 test('all eight English drawings stay exact while every target builds all five new native drawings without mutating inputs',()=>{
  const before=JSON.stringify(fixture);const inputs={canvas:fixture.canvas,mapLayers:fixture.refs,phasePlan:fixture.phasePlan};
  const englishFigures = siteReportFigures(fixture.facts,fixture.location,'en',inputs);
- assert.deepEqual(englishFigures.filter(f=>f.id!=='soil'),fixture.figures.en.filter(f=>f.id!=='soil'));
+  // The caption and standalone legend qualify season estimates. All chart geometry stays byte-exact.
+  const expected = fixture.figures.en.map(figure => figure.id === 'climate'
+    ? { ...figure, svg: figure.svg.replace('Dry season (May–Aug)</text>', 'Dry season (May–Aug) · Estimated season ranges</text>'), note: figure.note + ' Wet and dry season ranges are estimates. Check soil moisture and crop needs before watering.' }
+    : figure);
+  assert.deepEqual(englishFigures.filter(f => f.id !== 'soil'), expected.filter(f => f.id !== 'soil'));
  const soil=englishFigures.find(f=>f.id==='soil')!,oldSoil=fixture.figures.en.find(f=>f.id==='soil')!;
  assert.deepEqual({...soil,svg:undefined},{...oldSoil,svg:undefined});
  assert.equal(words(soil.svg),words(oldSoil.svg).replace('most vegetables: 6 to 7 ','') , 'only the unsupported pH target label is withdrawn; all source readings remain');

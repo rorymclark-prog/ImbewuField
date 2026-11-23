@@ -216,16 +216,43 @@ export function sourcedMonthlyRainfall(rain: { monthly?: unknown; rainfallSource
     && completeMonthlyRainfallMm(rain.monthly) ? rain.monthly : null;
 }
 
+// Identical readings cannot identify a wet or dry part of the year, including twelve zeros.
+export function hasRainfallVariation(monthly: readonly number[] | null): boolean {
+  return monthly?.some(mm => mm !== monthly[0]) ?? false;
+}
+
+/** The provider identifies the rainfall series. Its season fields have no separate
+ * observation period or field verification (including on grower-entered series). */
+export function rainfallSourceName(source: string | undefined): string {
+  switch (source) {
+    case 'open-meteo': return 'Open-Meteo';
+    case 'nasa-power': return 'NASA POWER';
+    case 'grower-entered': return 'Grower-entered';
+    default: return 'Source unknown';
+  }
+}
+
+export function rainfallAdviceEvidence(rainfall: LocationData['rainfall'] | undefined): string {
+  const annual = annualRainfallMm(rainfall);
+  const monthly = sourcedMonthlyRainfall(rainfall);
+  return [
+    `Annual rainfall: ${annual === null ? 'not known' : `${annual} mm (${rainfall?.rainfallSource})`}.`,
+    `Monthly rainfall (January–December): ${monthly ? monthly.join(', ') + ' mm (' + rainfallSourceName(rainfall?.rainfallSource) + ')' : 'not known'}.`,
+    'The rainfall record does not establish field conditions or irrigation dates. Use farm observations and crop water needs to assess timing.',
+  ].join('\n');
+}
+
 /** One evidence gate for report labels: annual rain alone cannot establish seasons,
  * and placeholder temperatures cannot support a climate classification. */
 export function reportClimateLabels(location: Pick<LocationData, 'rainfall' | 'climate'>) {
-  const rainKnown = sourcedMonthlyRainfall(location.rainfall) !== null;
+  const monthly = sourcedMonthlyRainfall(location.rainfall);
+  const seasonal = hasRainfallVariation(monthly);
   const temperaturesKnown = monthlyTemperatureStatus(location.climate) === 'complete';
   return {
-    pattern: rainKnown ? location.rainfall.pattern : null,
-    wetSeason: rainKnown ? location.rainfall.wetSeason : null,
-    drySeason: rainKnown ? location.rainfall.drySeason : null,
-    koppen: rainKnown && temperaturesKnown ? location.climate.koppen : null,
+    pattern: seasonal ? location.rainfall.pattern : null,
+    wetSeason: seasonal ? location.rainfall.wetSeason : null,
+    drySeason: seasonal ? location.rainfall.drySeason : null,
+    koppen: monthly && temperaturesKnown ? location.climate.koppen : null,
     meanTemp: temperaturesKnown && Number.isFinite(location.climate.meanTemp) ? location.climate.meanTemp : null,
   };
 }
@@ -239,8 +266,6 @@ export function modelledWindSpeed(climate: { windSpeed?: unknown; windSource?: u
 /** Shared report facts: a record low is not a winter mean or a frost-frequency forecast.
  * No threshold here diagnoses crop damage from wind speed, climate class or record minimum. */
 export function reportClimateEvidence(location: Partial<Pick<LocationData, 'rainfall' | 'climate'>>): string {
-  const rain = annualRainfallMm(location.rainfall);
-  const months = sourcedMonthlyRainfall(location.rainfall);
   const climate: Partial<LocationData['climate']> = location.climate ?? {};
   const complete = monthlyTemperatureStatus(climate) === 'complete';
   const low = recordMinimumC(climate);
@@ -249,8 +274,7 @@ export function reportClimateEvidence(location: Partial<Pick<LocationData, 'rain
   const solar = climate.solarSource === 'nasa-power' && typeof climate.solarRadiation === 'number' && Number.isFinite(climate.solarRadiation) && climate.solarRadiation >= 0 ? climate.solarRadiation : null;
   const direction = (value: string | undefined) => climate.windDirectionSource === 'nasa-power' && typeof value === 'string' && isCompassDirection16(value) ? value : 'not known';
   return [
-    `Annual rainfall: ${rain === null ? 'not known' : `${rain} mm (${location.rainfall?.rainfallSource})`}.`,
-    `Monthly rainfall (January–December): ${months ? months.join(', ') + ' mm' : 'not known'}.`,
+    rainfallAdviceEvidence(location.rainfall),
     `Monthly mean temperatures (January–December): ${complete ? climate.monthlyTemp!.join(', ') + ' °C (NASA POWER)' : 'not known; incomplete or unrecorded model coverage'}.`,
     `Lowest temperature on record: ${low === null ? 'not known' : `${low} °C (NASA POWER grid record low)`}. This is not a winter mean, frost frequency or a planting date.`,
     `Modelled maximum temperature value: ${high === null ? 'not known' : `${high} °C (NASA POWER)`}.`,

@@ -8,6 +8,49 @@ interface DictionaryPacket {
   beforeValues?: Record<string, Record<string, string | null>>;
 }
 
+// Study snapshots cover entire locale files. Reconstruct only the exact Water copy
+// that preceded the tank warning correction. Unrecognised edits still fail the hashes.
+const waterCopyChanges: Record<string, [key: string, current: string, prior: string][]> = {
+  en: [
+    [
+      "waterBalancePossibleShortfall",
+      "Possible tank shortfall",
+      "Possible dry-season shortfall",
+    ],
+    [
+      "waterBalanceShortfallDetail",
+      "Tank level dips below the safe minimum in {month}. Options: increase storage, add a second tank, or reduce irrigation.",
+      "Tank level dips below the safe minimum in {month}. Options: increase storage, add a second tank, or reduce irrigation during {season}.",
+    ],
+  ],
+  zu: [
+    [
+      "waterBalanceMinSafe",
+      "Ubuncane obuphephile: {amount}",
+      "Ubuncane obuphephile: {amount} kL",
+    ],
+    [
+      "waterBalancePossibleShortfall",
+      "Ukushoda kwamanzi okungenzeka ethangini",
+      "Ukushoda okungenzeka ngenkathi eyomile",
+    ],
+    [
+      "waterBalanceShortfallDetail",
+      "Izinga lethangi lehla libe ngaphansi kobuncane obuphephile ngo-{month}. Okungakhethwa: wandise umthamo wokugcina amanzi, wengeze ithangi lesibili, noma unciphise ukunisela.",
+      "Izinga lethangi lehla libe ngaphansi kobuncane obuphephile ngo-{month}. Okungakhethwa: wandise umthamo wokugcina amanzi, wengeze ithangi lesibili, noma unciphise ukunisela ngesikhathi se-{season}.",
+    ],
+  ],
+};
+
+export function beforeWaterCopy(source: string, language: string): string {
+  const changes = waterCopyChanges[language] ?? [];
+  if (!changes.every(([key, current]) => source.includes(`\n  ${key}: '${current}',\n`))) return source;
+  for (const [key, current, prior] of changes) {
+    source = source.replace(`\n  ${key}: '${current}',\n`, `\n  ${key}: '${prior}',\n`);
+  }
+  return source;
+}
+
 /** Historical object checks need the same bounded UI exception as source-byte checks. */
 export function beforeUiDictionary(actual: unknown, locale: string, packet: DictionaryPacket): unknown {
   if (!actual || typeof actual !== 'object' || Array.isArray(actual)) return actual;
@@ -52,6 +95,10 @@ function beforeExactUiDictionary(actual:unknown,locale:string,packet:ControlIcon
   const dict=actual as Record<string,unknown>;
   if(!entries.every(row=>Object.hasOwn(dict,row.key)&&dict[row.key]===row[locale]))return actual;
   const before={...dict};
+  const changes = waterCopyChanges[locale] ?? [];
+  if (changes.every(([key, current]) => before[key] === current)) {
+    for (const [key, , prior] of changes) before[key] = prior;
+  }
   for(const row of entries){const value=packet.beforeValues![locale][row.key];if(value===null)delete before[row.key];else before[row.key]=value;}
   return before;
 }
@@ -66,7 +113,7 @@ function beforeExactUiSource(source:string,locale:string,packet:ControlIconPacke
   if(!inline.every(row=>source.split(`  ${row.key}: ${JSON.stringify(row[locale])},\n`).length===2))return source;
   let before=added.length?source.replace(block,'\n'):source;
   for(const row of inline){assert.equal(lines[row.key].length,1,'each replaced control has exactly one recorded source line');before=before.replace(`  ${row.key}: ${JSON.stringify(row[locale])},\n`,lines[row.key][0].text);}
-  return before;
+  return beforeWaterCopy(before, locale);
 }
 export function beforeControlIconDictionary(actual:unknown,locale:string):unknown {
   return beforeExactUiDictionary(actual,locale,controlIconPacket());

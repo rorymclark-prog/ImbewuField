@@ -20,7 +20,7 @@ import ReportReadingGuide from './report/ReportReadingGuide';
 import ReportPurposeGuide from './report/ReportPurposeGuide';
 import ReportChapterGraphics from './report/ReportChapterGraphics';
 import { reportChapterGraphics, placedFigureIds, type ChapterGraphic } from '@/lib/report-chapter-visuals';
-import { siteReportVisuals, withReportFigures } from '@/lib/report-visuals';
+import { reportVisualText, siteReportVisuals, withReportFigures } from '@/lib/report-visuals';
 import { siteReportFigures, type ReportFigureInputs } from '@/lib/report-figures';
 import { collectReportFigureInputs } from '@/lib/report-figure-inputs';
 import { prepareVisualPdfAssets } from '@/lib/report-visual-pdf';
@@ -1410,7 +1410,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 <>
                   <div className="mt-3 text-xs font-sans" style={{ color: 'var(--report-muted)' }}>
                     {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · {tr('Köppen climate class', 'Uhlobo lwesimo sezulu i-Köppen')} {climateLabels.koppen === null ? 'Not known' : `${climateLabels.koppen} (${koppenDescLabel(climateLabels.koppen, d.climate.koppenDesc)})`} ·
-                    {' '}{climateLabels.pattern === null ? 'Not known' : rainfallPatternLabel(climateLabels.pattern)} {tr('rainfall', 'imvula')} · {climateLabels.wetSeason === null ? 'Not known' : seasonRangeLabel(climateLabels.wetSeason)} {tr('wet', 'manzi')} / {climateLabels.drySeason === null ? 'Not known' : seasonRangeLabel(climateLabels.drySeason)} {tr('dry', 'omile')} ·
+                    {' '}{climateLabels.pattern === null ? 'Not known' : rainfallPatternLabel(climateLabels.pattern)} {tr('rainfall', 'imvula')} · {climateLabels.pattern !== null && <>{reportVisualText('Estimated season ranges', language)} · </>}{climateLabels.wetSeason === null ? 'Not known' : seasonRangeLabel(climateLabels.wetSeason)} {tr('wet', 'manzi')} / {climateLabels.drySeason === null ? 'Not known' : seasonRangeLabel(climateLabels.drySeason)} {tr('dry', 'omile')} ·
                     {' '}Mean temperature: {climateLabels.meanTemp === null ? 'Not known' : `${climateLabels.meanTemp}°C`}
                   </div>
 

@@ -4,7 +4,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ReferenceLine,
 } from 'recharts';
 import { useLanguage } from '@/lib/i18n';
-import { annualRainfallMm, sourcedMonthlyRainfall } from '@/lib/climate-temperature';
+import { annualRainfallMm, hasRainfallVariation, rainfallSourceName, sourcedMonthlyRainfall } from '@/lib/climate-temperature';
 import type { MonthlyRainfall } from '@/lib/types';
 
 const MONTHS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
@@ -36,19 +36,6 @@ export default function RainfallChart({ rainfall }: Props) {
       : rainfall.pattern === 'summer' ? `${t('climatePatternSummer')} · Summer rainfall`
         : `${t('climatePatternYearRound')} · Year-round rain`
     : rainfall.pattern;
-  const seasonValue = (value: string) => {
-    if (!isZulu) return value;
-    const translated: Record<string, string> = {
-      'Oct–Mar': 'uMfumfu–uNdasa · Oct–Mar',
-      'May–Aug': 'uNhlaba–uNcwaba · May–Aug',
-      'May–Sep': 'uNhlaba–uMandulo · May–Sep',
-      'Nov–Mar': 'uLwezi–uNdasa · Nov–Mar',
-      'year-round': 'unyaka wonke · year-round',
-      none: 'akukho · none',
-    };
-    return translated[value] ?? value;
-  };
-
   // w21-07: the text classes here used muted/secondary/blue utility names Tailwind never defined,
   // so every label inherited the panel colour; they now read the theme tokens directly.
   return (
@@ -62,7 +49,7 @@ export default function RainfallChart({ rainfall }: Props) {
         </div>
         <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
           {annual !== null && <span className="text-[var(--blue)]">{isZulu ? `${annual} mm/ngonyaka · mm/yr` : `${annual}mm/yr`}</span>}
-          <span className="text-[var(--text-muted)]">{pattern}</span>
+          {hasRainfallVariation(monthly) && <span className="text-[var(--text-muted)]">{pattern}</span>}
         </div>
       </div>
 
@@ -106,10 +93,9 @@ export default function RainfallChart({ rainfall }: Props) {
         </BarChart>
       </ResponsiveContainer>
 
-      <div className={`${isZulu ? 'flex flex-col gap-1' : 'flex flex-wrap justify-between gap-x-3 gap-y-1'} mt-2 text-xs text-[var(--text-muted)]`}>
-        <span>{text('Wet season:', 'Isikhathi semvula · Wet season:')} <span className="text-[var(--text-secondary)]">{seasonValue(rainfall.wetSeason)}</span></span>
-        <span>{text('Dry season:', 'Isikhathi esomile · Dry season:')} <span className="text-[var(--text-secondary)]">{seasonValue(rainfall.drySeason)}</span></span>
-      </div>
+      <p className="mt-2 text-xs text-[var(--text-secondary)]">
+        {text('Rainfall source', 'Umthombo wemininingwane yemvula')} · {rainfallSourceName(rainfall.rainfallSource)}
+      </p>
     </div>
   );
 }
