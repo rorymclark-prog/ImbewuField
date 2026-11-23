@@ -328,14 +328,16 @@ export default function NetworkPage() {
                 borderColor: LINE,
               }}
             >
+              {/* The phone grid cell is ~165px: isiZulu labels ("Imali engenayo yabalimi") ran off
+                  the screen edge under nowrap. They wrap in the 2-up grid; the sm+ strip keeps one line. */}
               <span
-                className="font-sans"
+                className="font-sans whitespace-normal sm:whitespace-nowrap"
                 style={{
                   fontSize: 12,
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
                   color: INK_MUTED,
-                  whiteSpace: 'nowrap',
+                  overflowWrap: 'anywhere',
                 }}
               >
                 {s.label}
