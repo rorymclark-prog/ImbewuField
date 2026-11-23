@@ -171,6 +171,8 @@ export interface InvoiceDocument {
   rows: InvoiceDocumentRow[];
   totalHeading: string;
   totalLabel: string;
+  /** True when the currency is held for review, so totalLabel is a status line rather than an amount. */
+  totalHeld: boolean;
   /** "How to pay" block. Empty when the farmer has not entered banking details. */
   bankingLines: string[];
   notes: string | null;
@@ -292,6 +294,7 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
     // A paid copy still showed ‘Total due’, asking the buyer for money already received.
     totalHeading: input.status === 'paid' ? copy.total : copy.totalDue,
     totalLabel: money(total),
+    totalHeld: currencyBasis.status === 'held',
     bankingLines,
     // ux-16: the component that renders this (components/invoice/InvoiceDocument.tsx, not owned
     // by this track) prints `notes` verbatim with no heading of its own, which is how a note

@@ -152,13 +152,21 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
       {/* Total — the one number the buyer is looking for, so it gets its own tinted band
           rather than sitting as one more row in the list. */}
       <div
-        className="invoice-total-band flex items-center justify-between mt-3 px-3 py-2.5 rounded-lg"
+        className="invoice-total-band flex items-center justify-between gap-3 mt-3 px-3 py-2.5 rounded-lg"
         style={{ background: 'rgba(31,77,43,0.07)', borderTop: '2px solid #1F4D2B' }}
       >
-        <span className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{doc.totalHeading}</span>
-        <span className="invoice-total font-display font-bold text-2xl tabular-nums" style={{ color: '#1F4D2B', letterSpacing: '-0.01em' }}>
-          {doc.totalLabel}
-        </span>
+        <span className="font-display font-semibold text-sm whitespace-nowrap" style={{ color: '#20190F' }}>{doc.totalHeading}</span>
+        {doc.totalHeld ? (
+          // No amount can be shown until the currency is settled, so the band carries a quiet
+          // status line instead of a sentence set at amount size (phone scan, 23 Nov).
+          <span className="invoice-total invoice-total-held font-sans font-semibold text-sm text-right" style={{ color: '#6B5A3A' }}>
+            {doc.totalLabel}
+          </span>
+        ) : (
+          <span className="invoice-total font-display font-bold text-2xl tabular-nums" style={{ color: '#1F4D2B', letterSpacing: '-0.01em' }}>
+            {doc.totalLabel}
+          </span>
+        )}
       </div>
 
       {doc.paidStamp && (

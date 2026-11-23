@@ -204,7 +204,8 @@ export async function buildInvoicePdf(doc: InvoiceDocument, fileName: string): P
   pdf.setFontSize(11);
   setInk(INK);
   pdf.text(doc.totalHeading, M, y);
-  pdf.setFontSize(17);
+  // A held currency has no amount to show; its status line is set at heading size, not amount size.
+  pdf.setFontSize(doc.totalHeld ? 11 : 17);
   setInk(GREEN);
   pdf.text(doc.totalLabel, PAGE.width - M, y, { align: 'right' });
   y += 10;
