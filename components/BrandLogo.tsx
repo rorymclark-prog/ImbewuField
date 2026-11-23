@@ -13,7 +13,9 @@ export default function BrandLogo() {
       href="/"
       title="Home"
       aria-label="ImbewuField home"
-      className="flex items-center gap-2.5 flex-shrink-0"
+      // The 36px tile stays the visual; the inset pseudo-element widens the tap area to the
+      // app's 44px floor without moving the header (scan, 23 Nov: the link measured 36 wide).
+      className="relative flex items-center gap-2.5 flex-shrink-0 before:absolute before:-inset-1 before:content-['']"
       style={{ textDecoration: 'none' }}
     >
       <div

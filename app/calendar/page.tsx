@@ -1092,7 +1092,7 @@ export default function CalendarPage() {
           <h2 className="font-display text-lg font-semibold">Reference calendar not selected</h2>
           <p className="mt-2 text-sm">Choose an explicitly supported saved site or acknowledge the separate South African reference guide, then choose a sowing calendar. Monthly farming instructions remain unavailable until both choices are complete.</p>
           <p className="mt-2 text-sm">Saved crops, country details and measured maps remain unchanged.</p>
-          <a href="/facilitator/crops" className="mt-2 inline-block underline">Review site country and crop planning</a>
+          <a href="/facilitator/crops" className="mt-2 min-h-11 inline-flex items-center underline">Review site country and crop planning</a>
         </section>}
       </main>
 
