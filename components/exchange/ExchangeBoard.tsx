@@ -325,7 +325,7 @@ export default function ExchangeBoard() {
             const on = categories.includes(c);
             return (
               <Chip key={c} on={on} disabled={count === 0} onClick={() => setCategories((v) => toggle(v, c))}>
-                {zu ? ZU_CATEGORY_LABEL[c] : CATEGORY_LABEL[c]} <span style={{ opacity: 0.65 }}>{count}</span>
+                {zu ? ZU_CATEGORY_LABEL[c] : CATEGORY_LABEL[c]} <span style={{ fontWeight: 400 }}>{count}</span>
               </Chip>
             );
           })}
@@ -346,7 +346,7 @@ export default function ExchangeBoard() {
               ) : (
                 c.icon
               )}{' '}
-              {produceLabel(c.cropKey, lang)} <span style={{ opacity: 0.65 }}>{c.count}</span>
+              {produceLabel(c.cropKey, lang)} <span style={{ fontWeight: 400 }}>{c.count}</span>
             </Chip>
           ))}
         </ChipRow>

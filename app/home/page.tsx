@@ -785,7 +785,7 @@ function HomeLandingInner() {
           )}
         </section>}
 
-        <footer className="text-center font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', opacity: 0.7, paddingBottom: 8 }}>
+        <footer className="text-center font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', paddingBottom: 8 }}>
           {t('homeFooter')}
         </footer>
       </main>

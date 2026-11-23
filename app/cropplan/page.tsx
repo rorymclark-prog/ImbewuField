@@ -401,9 +401,10 @@ export default function CropPlanPage() {
               </h1>
             </div>
             {effectiveView === 'month' && (
+              // 44px: the month arrows were 34x34, under the app's touch floor (scan, 23 Nov).
               <div className="flex items-center gap-1 flex-shrink-0">
-                <button onClick={() => stepMonth(-1)} aria-label={ui('Previous month', 'Inyanga edlule')} className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}><ChevronLeft size={16} /></button>
-                <button onClick={() => stepMonth(1)} aria-label={ui('Next month', 'Inyanga elandelayo')} className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}><ChevronRight size={16} /></button>
+                <button onClick={() => stepMonth(-1)} aria-label={ui('Previous month', 'Inyanga edlule')} className="flex items-center justify-center rounded-full" style={{ width: 44, height: 44, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}><ChevronLeft size={16} /></button>
+                <button onClick={() => stepMonth(1)} aria-label={ui('Next month', 'Inyanga elandelayo')} className="flex items-center justify-center rounded-full" style={{ width: 44, height: 44, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}><ChevronRight size={16} /></button>
               </div>
             )}
           </div>

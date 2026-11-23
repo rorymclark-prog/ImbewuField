@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import { Eye, Sprout, Droplets, Layers, Snowflake, Mountain } from 'lucide-react';
 import ChallengeIcon from '@/components/ChallengeIcon';
 import LimaBar from '@/components/LimaBar';
+import { useRegisterBackControl } from '@/components/BackControl';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import CompletionScore from '@/components/report/CompletionScore';
 import { DEMO_COORDS, DEMO_LOCATION, DEMO_SITE_DATA, DEMO_WATER_DATA, DEMO_COMPLETION } from '@/lib/demo-site';
@@ -68,6 +69,16 @@ function ExampleInner() {
   const site = DEMO_SITE_DATA;
   const water = DEMO_WATER_DATA;
 
+  // The banner's exit IS this page's way back. The global floating Back pill (fixed at 10,10,
+  // z-40) rendered underneath this z-50 banner, so it could be neither seen nor tapped (scan, 23
+  // Nov: a hit test at its centre returned the banner). Registering here stands it down, and the
+  // exit returns the visitor to wherever they came from (/samples, /tour…), else Home.
+  useRegisterBackControl();
+  const leaveExample = () => {
+    if (typeof window !== 'undefined' && window.history.length > 1) router.back();
+    else router.push('/home');
+  };
+
   const frostLabel = data.climate.minTemp < 2 ? t('frostLikely') : data.climate.minTemp < 5 ? t('frostOccasional') : t('frostRare');
 
   return (
@@ -109,7 +120,7 @@ function ExampleInner() {
         </div>
         <button
           type="button"
-          onClick={() => router.push('/home')}
+          onClick={leaveExample}
           className="font-sans font-bold"
           style={{
             flexShrink: 0,

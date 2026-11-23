@@ -1097,7 +1097,8 @@ function SignInPrompt() {
       <button
         type="button"
         onClick={handlePreview}
-        className="text-xs font-display font-medium underline underline-offset-2"
+        // min-h-11: as bare 12px text this link-style button was ~19px tall (scan, 23 Nov).
+        className="min-h-11 inline-flex items-center px-2 text-xs font-display font-medium underline underline-offset-2"
         style={{ color: 'var(--color-muted-strong)' }}
       >
         {recordsText(lang, 'Preview with demonstration records', 'Buka amarekhodi esibonelo')}
