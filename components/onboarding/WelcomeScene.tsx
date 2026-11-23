@@ -8,20 +8,23 @@ const BED_XS = [140, 177, 214, 251, 288];
 export default function WelcomeScene() {
   return (
     <div className={styles.scene} aria-hidden="true">
-      <svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid slice" focusable="false">
+      {/* "meet" keeps the whole 320x140 drawing in view at any frame shape; "slice" cropped the
+          cloud's top on wide desktop frames. The sky and ground run far past the viewBox, so
+          the spare width or height is still filled. */}
+      <svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid meet" focusable="false">
         <defs>
           <clipPath id="welcome-tank-clip">
             <rect x="60" y="58" width="40" height="54" rx="4" />
           </clipPath>
         </defs>
-        <rect className={styles.sky} x="0" y="0" width="320" height="140" />
+        <rect className={styles.sky} x="-400" y="-200" width="1120" height="540" />
 
         <g className={styles.sunRise}>
           <circle className={styles.sunGlow} cx="250" cy="58" r="22" />
           <circle className={styles.sun} cx="250" cy="58" r="14" />
         </g>
 
-        <rect className={styles.ground} x="0" y="112" width="320" height="28" />
+        <rect className={styles.ground} x="-400" y="112" width="1120" height="228" />
 
         {/* tank */}
         <g clipPath="url(#welcome-tank-clip)">
