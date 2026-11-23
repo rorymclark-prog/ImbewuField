@@ -216,6 +216,14 @@ test('rainfall and the water balance reject unproven months and retain a support
   assert.match(rainfall(), /0mm\/yr/);
   assert.match(balance(), /<svg/);
   assert.match(text(render(location)), /≈ 0 mm\/yr/);
+  // A grower's zero and the climate classification can have different sources.
+  const annualOnly = structuredClone(location);
+  annualOnly.rainfall.monthly = [];
+  const displayed = text(render(annualOnly));
+  assert.equal(displayed.match(/≈ 0 mm\/yr/g)?.length, 1);
+  assert.match(displayed, /Monthly rainfall is unavailable for this point/);
+  assert.match(displayed, /Rainfall source.*Grower-entered/);
+  assert.doesNotMatch(displayed, /55 km/);
 });
 
 for (const lang of ['en', 'zu']) test(`${lang}: a simulated September shortfall does not prescribe irrigation dates from a legacy season label`, async () => {
@@ -264,8 +272,11 @@ test('the climate card paints its code, note and chips with theme tokens (CP-115
   assert.doesNotMatch(card, /color: '#[0-9A-Fa-f]{3,8}'/, 'no fixed text colour in the climate card');
   assert.doesNotMatch(card, /chip\('#/, 'no fixed chip fill');
   assert.match(card, /color: 'var\(--color-forest-800\)'/);
-  assert.equal((card.match(/chip\(CHIP_(WATER|NEUTRAL)\)/g) ?? []).length, 4);
-  assert.match(source, /const CHIP_WATER = \{ bg: 'color-mix\(in srgb, var\(--blue\) 14%, transparent\)', color: 'var\(--blue\)' \}/);
+  // Rain appears once in its own card. Every remaining classification chip still follows the theme.
+  const tones = [...card.matchAll(/style=\{chip\(([^)]+)\)\}/g)].map(match => match[1]);
+  assert.ok(tones.length > 0 && tones.every(tone => tone === 'CHIP_NEUTRAL'));
+  const rainCard = source.slice(source.indexOf('{/* 2 — Rainfall */}'), source.indexOf('{/* 3 —'));
+  assert.match(rainCard, /color: 'var\(--blue\)'/);
   assert.match(source, /const CHIP_NEUTRAL = \{ bg: 'var\(--bg-2\)', color: 'var\(--text-secondary\)' \}/);
   // Each token used is declared in both columns of both themes, so it moves in dark.
   const css = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8');

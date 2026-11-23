@@ -10,9 +10,8 @@
  * forest #1F4D2B as the sole interactive accent.
  *
  * HONESTY RULES BAKED IN HERE, deliberately, so a redesign can't lose them:
- *  - The Köppen block carries a "modelled from a coarse global grid" caveat —
- *    the classifier's input is a ~55 km grid and coastal/mountain points can
- *    read as a neighbouring climate (see lib/koppen-global.ts's docblock).
+ *  - The Köppen caveat applies to the displayed climate class. The rainfall
+ *    card names the rainfall record's own provider, including grower observations.
  *  - Soil is shown WITH its provenance caution from lib/plan-assurance.ts's
  *    SOIL_CAUTION, keyed by soilSource. An 'estimate' is never presented as a
  *    reading. A missing soilSource is shown as unknown, not hidden.
@@ -75,7 +74,6 @@ function Label({ icon, children }: { icon?: React.ReactNode; children: React.Rea
 // Chips paint with theme tokens. They used to carry fixed light fills ('#E7EEF4',
 // '#EDE7DA') and fixed ink, so in dark mode they stayed pale pills (finding CP-115).
 // The hairline is an inset shadow, not a border, so a chip's size is unchanged.
-const CHIP_WATER = { bg: 'color-mix(in srgb, var(--blue) 14%, transparent)', color: 'var(--blue)' } as const;
 const CHIP_NEUTRAL = { bg: 'var(--bg-2)', color: 'var(--text-secondary)' } as const;
 
 function chip(tone: { bg: string; color: string }): React.CSSProperties {
@@ -228,14 +226,9 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
       <Card accent="var(--color-forest-800)">
         <Label>{pairedLabel('Climate', 'Isimo sezulu', isZulu)}</Label>
         {koppenKnown && !temperaturesRecorded ? (
-          <>
-            <p data-atlas-temperature="incomplete" className="font-display leading-relaxed" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
-              Temperature records for this point are incomplete or could not be checked, so no climate type or sowing calendar is shown.
-            </p>
-            <div style={{ display: 'flex', gap: 7, marginTop: 12, flexWrap: 'wrap' }}>
-              {annualRain !== null && <span style={chip(CHIP_WATER)}>≈ {annualRain} mm/yr</span>}
-            </div>
-          </>
+          <p data-atlas-temperature="incomplete" className="font-display leading-relaxed" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
+            Temperature records for this point are incomplete or could not be checked, so no climate type or sowing calendar is shown.
+          </p>
         ) : koppenKnown ? (
           <>
             <div className="flex items-baseline gap-2 flex-wrap">
@@ -252,7 +245,6 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
               </p>
             )}
             <div style={{ display: 'flex', gap: 7, marginTop: 12, flexWrap: 'wrap' }}>
-              {annualRain !== null && <span style={chip(CHIP_WATER)}>≈ {annualRain} mm/yr</span>}
               {pattern && <span style={chip(CHIP_NEUTRAL)}>{pairedLabel(`Sowing calendar: ${SOWING_CALENDAR_LABEL[pattern]}`, `Ikhalenda lokutshala: ${SOWING_CALENDAR_LABEL_ZU[pattern]}`, isZulu)}</span>}
               <span data-atlas-record-low={recordLowC === null ? 'unknown' : 'known'} style={chip(CHIP_NEUTRAL)}>{heldTechnicalLabel(recordLowChip, isZulu)}</span>
             </div>
@@ -262,31 +254,31 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
             Climate data could not be fetched for this point. Try the point again.
           </p>
         )}
-        <p className="font-sans mt-2.5" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', color: 'var(--text-muted)', lineHeight: 1.45 }}>
-          Modelled from a coarse global climate grid (~55 km) — coastal and mountain points can read as a neighbouring climate.
-        </p>
+        {koppenKnown && temperaturesRecorded && <p className="font-sans mt-2.5" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', color: 'var(--text-muted)', lineHeight: 1.45 }}>
+          This climate class is a grid estimate. Coastal and mountain sites can differ from the surrounding grid.
+        </p>}
       </Card>
 
       {/* 2 — Rainfall */}
       <Card>
         <div className="flex items-baseline justify-between">
           <Label icon={<Droplets size={12} />}>{pairedLabel('Rainfall', 'Imvula', isZulu)}</Label>
-          {annualRain !== null && <span className="font-sans font-bold" style={{ fontSize: 12.5, color: 'var(--blue)' }}>≈ {annualRain} mm / yr</span>}
+          {annualRain !== null && <span className="font-sans font-bold" style={{ fontSize: 12.5, color: 'var(--blue)' }}>≈ {annualRain} mm/yr</span>}
         </div>
         {monthlyRain ? (
-          <>
-            <MonthBars
-              values={monthlyRain}
-              unit="mm"
-              colorFor={(v) => (v > rainAvg * 0.9 ? '#3F92C9' : '#A6C9DF')}
-              height={86}
-            />
-            <p className="font-sans mt-1 text-xs text-[var(--text-secondary)]">
-              {pairedLabel('Rainfall source', 'Umthombo wemininingwane yemvula', isZulu)} · {rainfallSourceName(rainfall.rainfallSource)}
-            </p>
-          </>
+          <MonthBars
+            values={monthlyRain}
+            unit="mm"
+            colorFor={(v) => (v > rainAvg * 0.9 ? '#3F92C9' : '#A6C9DF')}
+            height={86}
+          />
         ) : (
           <p lang="en" className="font-display" style={{ color: 'var(--text-secondary)' }}>Monthly rainfall is unavailable for this point.</p>
+        )}
+        {(monthlyRain || annualRain !== null) && (
+          <p className="font-sans mt-1 text-xs text-[var(--text-secondary)]">
+            {pairedLabel('Rainfall source', 'Umthombo wemininingwane yemvula', isZulu)} · {rainfallSourceName(rainfall.rainfallSource)}
+          </p>
         )}
       </Card>
 
