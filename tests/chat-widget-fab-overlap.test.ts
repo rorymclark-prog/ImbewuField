@@ -135,6 +135,12 @@ const FLOW_HELP_ROUTES: { route: string; page: string }[] = [
   { route: '/cropplan', page: '../app/cropplan/page.tsx' },
   { route: '/records', page: '../app/records/page.tsx' },
   { route: '/facilitator/crops', page: '../app/facilitator/crops/page.tsx' },
+  // Measured 23 November at 390px: the FAB over /example's sow-month labels and species chips,
+  // /exchange's listing titles, /tour's stop cards and /prices' source note.
+  { route: '/example', page: '../app/example/page.tsx' },
+  { route: '/exchange', page: '../app/exchange/page.tsx' },
+  { route: '/tour', page: '../app/tour/page.tsx' },
+  { route: '/prices', page: '../app/prices/page.tsx' },
 ];
 
 test('every route that drops the floating FAB mounts LimaBar in its place', () => {

@@ -14,6 +14,7 @@ import { numberLabel } from '@/lib/format-figures';
 import { useRouter } from 'next/navigation';
 import { Eye, Sprout, Droplets, Layers, Snowflake, Mountain } from 'lucide-react';
 import ChallengeIcon from '@/components/ChallengeIcon';
+import LimaBar from '@/components/LimaBar';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import CompletionScore from '@/components/report/CompletionScore';
 import { DEMO_COORDS, DEMO_LOCATION, DEMO_SITE_DATA, DEMO_WATER_DATA, DEMO_COMPLETION } from '@/lib/demo-site';
@@ -137,10 +138,10 @@ function ExampleInner() {
       <div
         className={`${workspace.workspace} ${workspace.formWidth}`}
         style={{
-          // dark-07: 40px left the 'Main challenges' heading sitting right behind the global
-          // floating Lima button on phone; var(--lima-fab-clearance) clears it on every page
-          // the launcher can land on, not just the fixed offset that happened to fit here.
-          padding: '84px 16px calc(max(96px, var(--lima-fab-clearance, 96px)))',
+          // dark-07 left 96px+ here to clear the floating Lima button. That button no longer
+          // renders on /example (the help strip below replaces it), so the last card only needs
+          // ordinary breathing room above the strip.
+          padding: '84px 16px 24px',
           display: 'flex',
           flexDirection: 'column',
           gap: 16,
@@ -311,6 +312,11 @@ function ExampleInner() {
           </Card>
         </div>
       </div>
+
+      {/* Lima in the document flow, not floating over the page: components/ChatWidget.tsx excludes
+          this route because the FAB was measured on the sow-month labels and the Key species chips
+          at 390px. The root scrolls itself, so the strip sticks to its bottom edge. */}
+      <div className="no-print sticky bottom-0 z-10"><LimaBar /></div>
     </div>
   );
 }

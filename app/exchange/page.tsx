@@ -9,6 +9,7 @@ import {
 import ExchangeBoard from '@/components/exchange/ExchangeBoard';
 import { getCropArt } from '@/lib/crop-art';
 import ExchangeHeader from '@/components/exchange/ExchangeHeader';
+import LimaBar from '@/components/LimaBar';
 import ExchangeLede from '@/components/exchange/ExchangeLede';
 import { EX } from '@/components/exchange/theme';
 
@@ -71,6 +72,10 @@ export default function ExchangePage() {
 
         <ExchangeBoard />
       </main>
+
+      {/* Lima in the document flow, not floating over the page: components/ChatWidget.tsx excludes this route because the FAB was measured covering its text at 390px. The root scrolls itself, so the strip sticks to its bottom edge and
+          settles into place below the last listing. */}
+      <div className="no-print sticky bottom-0 z-10"><LimaBar /></div>
     </div>
   );
 }

@@ -18,8 +18,10 @@ test("the Key species chips use theme tokens, not a fixed forest-green hex", () 
   assert.match(chipStyle, /var\(--color-forest-800\)/, 'the species chip text should follow --color-forest-800');
 });
 
-test("the last card clears the global floating Lima button instead of sitting flush against it", () => {
-  // w14 (desk-19): the fixed 96px floor became the shared clearance token every page uses, with
-  // 96px kept as its minimum — the floor may not drop below that again.
-  assert.match(PAGE, /padding: '84px 16px calc\(max\(96px, var\(--lima-fab-clearance, 96px\)\)\)'/, 'bottom padding dropped back below enough room for the floating Lima button');
+test("the last card sits above an in-flow Lima strip, not under a floating button", () => {
+  // w14 (desk-19) once padded this page 96px+ for the floating FAB. On 23 November the FAB was
+  // measured over the sow-month labels and species chips mid-scroll, so /example now drops it
+  // (components/ChatWidget.tsx) and pins LimaBar to the bottom of its own scroll container.
+  assert.match(PAGE, /padding: '84px 16px 24px'/, 'bottom padding should be ordinary breathing room now the FAB is gone');
+  assert.match(PAGE, /<div className="no-print sticky bottom-0 z-10"><LimaBar \/><\/div>/, 'help must stay reachable in the page flow');
 });
