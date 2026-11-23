@@ -66,6 +66,11 @@ const SHORT = '#B33A3A';   // sold beyond what the picking log accounts for
 const BENCH = '#E3D8C0';   // the plan's benchmark: present, recessive, never the hero
 // SOLD as TEXT: the raw fill measures ~1.9:1 on a dark card, so text follows the theme instead.
 const SOLD_TEXT = 'var(--color-forest-800)';
+// The bar and its legend dot follow the theme through --chart-sold: the fixed SOLD forest read
+// ~1.9:1 on a dark card. It cannot simply be --color-forest-800, which goes leaf in dark and
+// would sit as light as the kept gold stacked on top of it. SOLD stays for the toggles, whose
+// white label is fixed.
+const SOLD_FILL = 'var(--chart-sold)';
 // Plan-vs-actual bar layers, as theme tokens (same set HarvestReconciliation uses) so the bars and
 // their legend dots follow the theme in dark mode instead of staying a fixed light-card palette.
 const BAR_COLORS = { bench: 'var(--border)', picked: 'var(--color-forest-800)', short: 'var(--danger)', mark: 'var(--gold)', sold: 'var(--bg-1)' };
@@ -372,7 +377,7 @@ function MeasuredView({
             const keptH = Math.max(0, soldTop - producedTop - (m.keptKg && m.keptKg > 0 ? 2 : 0));
             return (
               <g key={m.key}>
-                {soldH > 0 && <rect x={x} y={soldTop} width={barW} height={soldH} fill={SOLD} rx="2" />}
+                {soldH > 0 && <rect x={x} y={soldTop} width={barW} height={soldH} fill={SOLD_FILL} rx="2" />}
                 {m.keptKg !== null && m.keptKg > 0 && keptH > 0 && (
                   <rect x={x} y={producedTop} width={barW} height={keptH} fill={KEPT} rx="2" />
                 )}
@@ -401,7 +406,10 @@ function MeasuredView({
           {months.map((m, i) => (
             <g key={`hit-${m.key}`}>
               {m.key === selected.key && (
-                <rect x={cx(i) - colW / 2} y={PAD.top - 6} width={colW} height={PLOT_H + 10} fill="rgba(32,25,15,0.05)" rx="2" />
+                <rect x={cx(i) - colW / 2} y={PAD.top - 6} width={colW} height={PLOT_H + 10} rx="2"
+                  // A wash of the theme's ink: the fixed dark-ink 5% vanished on a dark card, so the
+                  // selected month had no column in dark mode.
+                  style={{ fill: 'color-mix(in srgb, var(--text-primary) 6%, transparent)' }} />
               )}
               <rect x={cx(i) - colW / 2} y={0} width={colW} height={totalH} fill="transparent"
                 style={{ cursor: 'pointer' }} onClick={() => onPick(m.key)}>
@@ -416,7 +424,7 @@ function MeasuredView({
         <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{recordsMonthYear(lang, selected.month, selected.year)}</span>
         {selected.hasRecords ? (
           <>
-        <Chip dot={SOLD} label={tx('sold', 'kudayisiwe')} value={kgLabel(selected.soldKg)} />
+        <Chip dot={SOLD_FILL} label={tx('sold', 'kudayisiwe')} value={kgLabel(selected.soldKg)} />
             {selected.keptKg === null
               ? <span className="font-sans" style={{ fontSize: 12, color: SHORT }}>{tx('sold more than was logged picked', 'Kudayiswe okungaphezu kokurekhodiwe njengokuvuniwe')}</span>
               : <Chip dot={KEPT} label={tx('kept', 'okusele')} value={kgLabel(selected.keptKg)} />}
@@ -639,7 +647,7 @@ function Chip({ dot, label, value, title }: { dot: string; label: string; value:
     <span className="flex items-baseline gap-1.5" title={title}>
       <span aria-hidden="true" style={{
         width: 7, height: 7, borderRadius: 2, display: 'inline-block',
-        background: dot, border: dot === 'transparent' ? `1px solid ${HAIRLINE}` : undefined,
+        background: dot, border: dot === 'transparent' ? `1px solid ${FAINT}` : undefined, // the whole bar: an outline that shows in dark too
       }} />
       {value && <span className="font-display tabular-nums" style={{ fontSize: 12, color: INK }}>{value}</span>}
       <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>{label}</span>

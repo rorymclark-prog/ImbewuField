@@ -52,6 +52,11 @@ const RUN = '#235E86';     // the running total: a third hue, so it is never rea
 // (CLAUDE.md: "ochre text is #7A4408"), and the raw forest green measures ~1.9:1 on a dark
 // card. These follow the theme instead of the fixed fill colours above.
 const IN_TEXT = 'var(--color-forest-800)';
+// The bars and the legend dot follow the theme too: the fixed forest fill measured ~1.9:1
+// against a dark card, under the 3:1 a chart mark needs. --color-forest-800 is the same
+// forest in light (#1E4D33) and turns leaf in dark (#82C844, ~9:1 on #181208). IN itself
+// stays for the 6m/12m/24m toggle, whose white label is fixed.
+const IN_FILL = 'var(--color-forest-800)';
 const OUT_TEXT = 'var(--gold-dim)';
 
 const WINDOWS = [6, 12, 24];
@@ -320,7 +325,7 @@ function Panels({
                   nothing in (or out) draws no bar, so it has nothing to animate. */}
               {m.moneyInZar > 0 && (
                 <g className={`${styles.bar} ${styles.barIn}`}>
-                  <rect x={x} y={zeroY - inH} width={barW} height={inH} fill={IN} rx="2" />
+                  <rect x={x} y={zeroY - inH} width={barW} height={inH} fill={IN_FILL} rx="2" />
                   {inScale.isClipped(m.moneyInZar) && <BreakMark x={x} y={zeroY - inH} w={barW} down />}
                 </g>
               )}
@@ -365,7 +370,8 @@ function Panels({
           <g key={`hit-${m.key}`}>
             {m.key === selectedKey && (
               <rect x={cx(i) - colW / 2} y={PAD.top - 4} width={colW} height={BARS_H + GAP_H + RUN_H + 8}
-                fill="rgba(32,25,15,0.05)" rx="2" />
+                rx="2"
+                style={{ fill: 'color-mix(in srgb, var(--text-primary) 6%, transparent)' }} /* the fixed dark-ink 5% vanished on a dark card */ />
             )}
             <rect
               x={cx(i) - colW / 2} y={0} width={colW} height={totalH}
@@ -429,7 +435,7 @@ function Readout({ month, lang }: { month: DrawableMoneyMonth; lang: string }) {
       <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{recordsMonthYear(lang, month.month, month.year)}</span>
       {month.hasRecords ? (
         <>
-          <Chip dot={IN} label={text('in', 'ingenayo')} value={randLabel(month.moneyInZar)} />
+          <Chip dot={IN_FILL} label={text('in', 'ingenayo')} value={randLabel(month.moneyInZar)} />
           <Chip dot={OUT} label={text('out', 'ephumayo')} value={randLabel(month.moneyOutZar)} />
           <Chip dot={RUN} label={text('running total', 'isamba esiqhubekayo')} value={randLabel(month.runningZar)} />
         </>
