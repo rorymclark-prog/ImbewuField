@@ -530,7 +530,8 @@ test('buildProducerPrompt keeps the style anchor first and the geometry lock las
   );
 
   assert.ok(prompt.startsWith(STYLE_LINES.extension_blueprint));
-  assert.ok(prompt.includes('TASK: edit this satellite photo of a real South African smallholding'));
+  assert.ok(prompt.includes('TASK: edit this satellite photo of a real smallholding'));
+  assert.doesNotMatch(prompt,/South African smallholding/, 'a saved site can be outside South Africa');
   assert.ok(prompt.includes('HOUSE RULE: keep the house whole and fully visible'));
   assert.ok(prompt.includes('FINAL RULE: the source composite geometry is final.'));
   assert.ok(prompt.includes('flat orthographic top-down plan only'));
@@ -652,6 +653,14 @@ test('Reference Blueprint never briefs an absent Water route or empty subsystem'
   assert.match(routed, /solid violet line is a greywater line/);
   assert.match(routed, /bright-blue solid line with sparse emitter dots is a drip-irrigation line/);
   assert.match(routed, /If a feature is absent from the list, it must be absent/);
+});
+
+test('a banana planting only receives a compost hollow when the saved item is a banana circle', () => {
+  const promptFor = (elementsText: string) => buildSatelliteOverlayPrompt({
+    layerLabel: 'Whole', sheetKind: 'all', stylePreset: 'satellite_overlay', elementsText,
+  });
+  assert.doesNotMatch(promptFor('Banana Clump'), /SUNKEN pit/);
+  assert.match(promptFor('Banana Circle'), /SUNKEN pit/);
 });
 
 test('Satellite Overlay gives a Planting-sheet Vetiver Bank its exact marker vocabulary', () => {

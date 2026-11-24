@@ -41,7 +41,7 @@ test('a completed Sector job uses its frozen style even after the picker changes
   assert.match(source,/finishSectorRef\.current\(factualModelImage, frozenScene, historicalSource, styleKey\)/);
 });
 function helper(name: string, scope: Record<string, unknown>): any {
-  scope = { terrainFallVector, swaleBankSide, exactSheetElementRegister, EXACT_CONTEXT_ALPHA, ...scope };
+  scope = { authoritativeHouseFootprints, terrainFallVector, swaleBankSide, exactSheetElementRegister, EXACT_CONTEXT_ALPHA, ...scope };
   let code = '';
   function visit(n: ts.Node) {
     if (ts.isFunctionDeclaration(n) && n.name?.text === name) code = n.getText(tree).replace(/^export\s+/, '');
@@ -122,6 +122,19 @@ const frame = { imgW: 100, imgH: 100, mPerPx: 1, satDataUrl: 'photo' };
 const refs = { boundary: [[.1,.1],[.85,.1],[.85,.9],[.1,.9]], house: [], driveway: [] };
 const state = { items: [{ id: 'crown', defId: 'tree_other', x: .84, y: .7, wM: 70/3, hM: 70/3 }],
   lines: [], zones: [{ id: 'zone', zone: 1, points: [[.2,.25],[.75,.25],[.75,.4],[.2,.4]] }] };
+
+test('the shared illustration brief counts each actual roof once, including a separate studio building', () => {
+  const main = [[.15,.1],[.35,.1],[.35,.3],[.15,.3]];
+  const barn = [[.65,.65],[.85,.65],[.85,.85],[.65,.85]];
+  const brief = helper('buildDesignBrief',{drivewayGuideLines,glossyArtworkState,
+    centroidOf:helper('centroidOf',{}),compass8:helper('compass8',{}),joinWithin:helper('joinWithin',{}),
+    GROUND_FEATURES:{house:{label:'House'}},COMPASS_ORDER:[],BRIEF_MAX:10000,LINE_BRIEF_LABELS:{}});
+  const text = brief({items:[],lines:[],zones:[{feature:'house',points:main},{feature:'house',name:'Barn',points:barn}]},
+    {house:main,boundary:[],driveway:[]},'Ottawa',null);
+  assert.match(text,/2 distinct traced roof footprint/);
+  assert.match(text,/Ottawa/);
+  assert.doesNotMatch(text,/the ONLY building|South African smallholding/);
+});
 
 test('the AI Earthworks input uses the exact digging painter instead of green beds and blue routes at every scale', () => {
   const saved={items:[{id:'bed',defId:'veg_bed',x:.4,y:.5}],zones:[],lines:[]};
