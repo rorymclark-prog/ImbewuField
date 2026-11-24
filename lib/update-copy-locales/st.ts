@@ -1,6 +1,7 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Earthworks maps show a fuller downhill swale bank and a wider soil ring on banana circles.": "Limmapa tsa mesebetsi ya mobu di bontsha tutudu e kgolwanyane ka lehlakoreng le theohelang la foro le lesale le pharaletseng la mobu ho pota didikadikwe tsa dipanana.",
   "See soil rings on basins and the downhill swale bank where the slope is known.": "Limmapa tsa mesebetsi ya mobu di bontsha maralla a manyenyane a potileng didikadikwe tsa dipanana le dikotlolo tsa difate. Ha dintlha tsa sebaka di bontsha moepa, tutudu ya foro e hlaha lehlakoreng le theohelang.",
   // Unreviewed release caption, matched to its English source.
   "The Water map fits its legend and full water budget on a phone.": "Mmapa wa Metsi o bontsha tlhaloso ya matshwao le tekanyetso yohle ya metsi fonong.",

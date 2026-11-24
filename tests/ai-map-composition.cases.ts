@@ -194,7 +194,29 @@ test('the raised bank stays on the downhill shoulder even if the same swale is d
   assert.equal(terrainFallVector(undefined),null);
 });
 
+test('only the downhill bank has a lit crest, and the uphill shoulder fades into bare ground', () => {
+  const paint = helper('drawIllustratedSwale', {offsetPolyline});
+  const stops: Array<{ t:number, red:number, alpha:number }> = [];
+  const pen = {save(){},restore(){},beginPath(){},moveTo(){},lineTo(){},closePath(){},clip(){},fill(){},fillRect(){},
+    createLinearGradient(){return {addColorStop(t:number,color:string){
+      const [red,,,alpha] = color.slice(5,-1).split(',').map(Number);
+      stops.push({t,red,alpha});
+    }};}};
+  paint(pen, [[0,20],[60,20]], 10, [0,1]);
+  const crest = stops.filter(stop => stop.red > 190 && stop.alpha > .85);
+  assert.ok(crest.length >= 2 && crest.at(-1)!.t - crest[0].t >= .14, 'the lit crest occupies a band');
+  assert.ok(crest.every(stop => stop.t < .5), 'the raised material stays on the downhill half');
+  const uphill = stops.filter(stop => stop.t >= .6 && stop.alpha > 0);
+  assert.ok(uphill.length >= 2 && uphill.every((s,i) => s.red === uphill[0].red && (!i || s.alpha < uphill[i-1].alpha)),
+    'the uphill cut only releases its shadow, without a second lit lip');
+  assert.ok(stops.some(s => s.t > .8 && s.t < 1 && s.alpha === 0), 'original ground shows before the uphill edge');
+});
+
 test('a banana circle has a sunken core while a tree basin has a central mound, moat and outer bank', () => {
+  const crest = basinSurface('banana_circle', .65);
+  // A thin raised rim also has a peak. Sample the inner and outer flank to check its breadth.
+  for (const r of [.47, .83]) assert.ok(basinSurface('banana_circle', r) > crest * .5);
+  assert.ok(basinSurface('banana_circle', 0) < 0, 'the centre stays hollow');
   assert.ok(basinSurface('banana_circle', 0) < basinSurface('banana_circle', .74));
   assert.ok(basinSurface('banana_circle', .74) > basinSurface('banana_circle', .98));
   for (const radius of [0, .77]) assert.ok(basinSurface('tree_basin', radius) > basinSurface('tree_basin', .48));

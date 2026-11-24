@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 November 2026', sha: '31e8916bb', changes: [
+    'Earthworks maps show a fuller downhill swale bank and a wider soil ring on banana circles.',
+  ] },
   { when: '24 November 2026', sha: '0cad92a78', changes: [
     'See soil rings on basins and the downhill swale bank where the slope is known.',
   ] },

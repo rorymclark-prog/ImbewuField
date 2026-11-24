@@ -6539,12 +6539,15 @@ function drawIllustratedSwale(ctx: CanvasRenderingContext2D, points: Array<[numb
       ax - sign * nx * half, ay - sign * ny * half);
     relief.addColorStop(0, 'rgba(155,120,78,0)');
     if (side) {
-      relief.addColorStop(.13, 'rgba(96,69,48,.68)');
-      relief.addColorStop(.29, 'rgba(201,159,108,.95)');
-      relief.addColorStop(.40, 'rgba(183,138,89,.91)');
-      relief.addColorStop(.57, 'rgba(90,65,44,.92)');
-      relief.addColorStop(.72, 'rgba(112,85,58,.84)');
-      relief.addColorStop(.86, 'rgba(158,128,92,.59)');
+      // From the downhill toe across the crest to the cut. On the uphill half the same
+      // shadow washes out to untouched ground. A second band of light reads as another berm.
+      relief.addColorStop(.11, 'rgba(102,75,49,.64)');
+      relief.addColorStop(.24, 'rgba(201,159,108,.95)');
+      relief.addColorStop(.40, 'rgba(200,154,101,.97)');
+      relief.addColorStop(.49, 'rgba(166,119,73,.93)');
+      relief.addColorStop(.62, 'rgba(87,63,43,.90)');
+      relief.addColorStop(.76, 'rgba(87,63,43,.41)');
+      relief.addColorStop(.91, 'rgba(87,63,43,0)');
     } else {
       // A dry hollow is still visible when the terrain cannot put a crest on either side.
       relief.addColorStop(.25, 'rgba(166,134,95,.73)');
@@ -6563,6 +6566,7 @@ function drawIllustratedSwale(ctx: CanvasRenderingContext2D, points: Array<[numb
     const grains = Math.min(600, Math.floor(length * .8));
     for (let j = 0; j < grains; j++) {
       const t = random(), across = (random() * 1.7 - .9) * half;
+      if (side && across * side < -half * .24) continue;
       const size = Math.min(1.2, half * .14) * (.4 + random());
       ctx.fillStyle = random() < .5 ? 'rgba(230,202,157,.45)' : 'rgba(87,65,43,.34)';
       ctx.fillRect(ax + (bx - ax) * t + nx * across, ay + (by - ay) * t + ny * across, size, size * .76);

@@ -19,7 +19,8 @@ function basinRadius(x: number, y: number) {
 
 export function basinSurface(kind: BasinKind, radius: number) {
   const bell = (center: number, width: number) => Math.exp(-(((radius - center) / width) ** 2));
-  if (kind === 'banana_circle') return .32 * bell(.74, .15) - .20 * bell(0, .53);
+  // Widen the banana bank towards the compost core, inside the same saved outer edge.
+  if (kind === 'banana_circle') return .36 * bell(.65, .27) - .22 * bell(0, .34);
   return .28 * bell(0, .30) - .17 * bell(.48, .14) + .23 * bell(.77, .13);
 }
 

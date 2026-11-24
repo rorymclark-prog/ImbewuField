@@ -1,6 +1,7 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Earthworks maps show a fuller downhill swale bank and a wider soil ring on banana circles.": "Mimapa ya mishumo ya mavu i sumbedza tshiṱulu tshihulwane tsha mavu kha sia ḽi tsaho ḽa mugero na tshitendeledzi tsho ṱanḓavhuwaho tsha mavu kha zwitendeledzi zwa miomva.",
   "See soil rings on basins and the downhill swale bank where the slope is known.": "Mimapa ya mishumo ya mavu i sumbedza zwikwara zwa mavu zwa tshitendeledzi kha zwitendeledzi zwa miomva na madzivha a miri. Musi mafhungo a shango a tshi sumbedza mutheo wa muṱavha, tshikwara tsha mugero tshi vha kha sia ḽi tsaho.",
   // Unreviewed release caption, matched to its English source.
   "The Water map fits its legend and full water budget on a phone.": "Mapa wa Maḓi u sumbedza ṱhalutshedzo ya zwiga na mugaganyagwama woṱhe wa maḓi kha luṱingo.",
