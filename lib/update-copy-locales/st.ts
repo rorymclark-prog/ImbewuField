@@ -2,7 +2,7 @@ import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
   "AI maps use your site setting and keep separate roofs in the design brief.": "Limmapa tsa AI li sebelisa sebaka sa hao, ’me litaelo li hlalosa marulelo ka bonngoe.",
-  "Oblique maps use a tilted guide with the positions of your tanks and beehives.": "Limmapa tse shebiloeng ka lehlakore li sebelisa setšoantšo se sekameng se bontšang moo litanka le matlo a linotši tsa hao li leng teng.",
+  "Oblique maps use your traced building directions and the positions of tanks and beehives.": "Limmapa tse shebiloeng ka lehlakore li sebelisa tsela eo mehaho eo u e torohileng e shebileng ka eona le libaka tsa litanka le matlo a linotši.",
   "AI map guides show which vegetable beds sit under a saved shade tunnel.": "Litšoantšo tse tataisang limmapa tsa AI li bontša libethe tsa meroho tse ka tlas’a kotopo ea moriti eo u e bolokileng.",
 
   "Earthworks maps show a fuller downhill swale bank and a wider soil ring on banana circles.": "Limmapa tsa mesebetsi ya mobu di bontsha tutudu e kgolwanyane ka lehlakoreng le theohelang la foro le lesale le pharaletseng la mobu ho pota didikadikwe tsa dipanana.",

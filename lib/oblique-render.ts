@@ -1,5 +1,7 @@
 import { isTankDefId } from '@/lib/reference-feature-art';
-import type { CanvasFrame, PlacedItem } from '@/lib/design-canvas';
+import { ringAreaOf, type CanvasFrame, type DesignCanvasState, type PlacedItem } from '@/lib/design-canvas';
+import { authoritativeHouseFootprints, sameFootprint, type HouseFootprintRefLayers } from '@/lib/house-footprints';
+import { ridgeAngleOf } from '@/lib/water-story';
 import type { SectorSite } from '@/lib/sector';
 import type { SheetContourResult } from '@/lib/sheet-contours';
 import { STYLE_LINES, type StylePreset } from '@/lib/producer-prompt';
@@ -83,17 +85,54 @@ export function obliqueAnchorBrief(anchors: readonly ObliqueAnchor[]): string {
     + '. Keep every fixture at its coloured mark, including any behind canopy. Leave the guide symbols out of the artwork.';
 }
 
+type RoofGuide = ReturnType<typeof obliqueRoofGuides>[number];
+
+export function obliqueRoofGuides(state: Pick<DesignCanvasState, 'zones'>, refs: HouseFootprintRefLayers,
+  frame: Pick<CanvasFrame, 'imgW' | 'imgH' | 'mPerPx'>) {
+  if (!(frame.imgW > 0 && frame.imgH > 0)) return [];
+  return authoritativeHouseFootprints(state, refs).filter(ring => ring.every(([x, y]) => Number.isFinite(x) && Number.isFinite(y)) && ringAreaOf(ring) > 0)
+    .sort((a, b) => ringAreaOf(b) - ringAreaOf(a)).map((ring, index) => {
+      const name = state.zones.find(z => z.feature === 'house' && sameFootprint(z.points, ring))?.name?.trim() || `Building ${index + 1}`;
+      // The crop and the oblique view have different x/y scales. Find the long wall in
+      // real ground proportions before projecting it, or even a rectangular roof can turn 90°.
+      const pixels = ring.map(([u, v]): [number, number] => [u * frame.imgW, v * frame.imgH]);
+      const angle = ridgeAngleOf(pixels);
+      const cos = Math.cos(angle), sin = Math.sin(angle);
+      const span = (a: number, b: number) => {
+        const values = pixels.map(([x, y]) => a * x + b * y);
+        return Math.max(...values) - Math.min(...values);
+      };
+      const bearing = (Math.round(angle * 180 / Math.PI + 90) % 180 + 180) % 180;
+      const axis = ['north–south', 'northeast–southwest', 'east–west', 'northwest–southeast'][Math.round(bearing / 45) % 4];
+      const along = span(cos, sin), across = span(-sin, cos);
+      return { name, ring, angle, bearing, axis, elongated: along > across * 1.12,
+        alongM: along * frame.mPerPx, acrossM: across * frame.mPerPx };
+    });
+}
+
+export function obliqueRoofBrief(roofs: readonly RoofGuide[]): string {
+  if (!roofs.length) return '';
+  return roofs.slice(0, 10).map(({ name, axis, bearing, elongated, alongM, acrossM }, i) => {
+    const extent = Number.isFinite(alongM) && alongM > 0 && acrossM > 0
+      ? ` Its traced ground extents along and across this wall are ${alongM.toFixed(1)} m by ${acrossM.toFixed(1)} m.` : '';
+    const view = !elongated ? 'Keep the corners and the proportions of the compact footprint.'
+      : axis === 'north–south' ? 'From the southern camera the short end faces the viewer. The long walls run away from the viewer toward the back; do not present a long broadside facade.'
+      : axis === 'east–west' ? 'From the southern camera the long side runs across the view.' : 'Keep the diagonal orientation in the projected guide.';
+    return `R${i + 1} "${name.slice(0, 80)}": its longest traced wall runs ${axis}, bearing ${bearing}°/${bearing + 180}° from true north.${extent} ${view} Keep roof details consistent with the registered aerial.`;
+  }).join('\n');
+}
+
 export function buildObliquePrompt(input: {
-  style: StylePreset; elements: string; designBrief: string; terrain: ObliqueTerrainEvidence; hasPhoto: boolean;
+  style: StylePreset; elements: string; designBrief: string; terrain: ObliqueTerrainEvidence; hasPhoto: boolean; roofBrief?: string;
 }): string {
   return `${obliqueStyleDescription(input.style)}
 Create ONE finished oblique aerial illustration of this saved garden design. Camera south of the plot looking north, approximately ${OBLIQUE_PITCH_DEG} degrees above the ground: north at the back, east on the right. Show building sides and tree/tank volume. Keep the whole property and complete tree crowns/tanks in frame, with breathing room around every edge. This is an illustrative viewpoint, not a measured 3D reconstruction.
-The supplied reference board has four labelled panels. UPPER LEFT: saved top-down DESIGN, the authority for boundary shape, planted beds, feature counts, footprints and relative positions. LOWER LEFT: the same saved footprints projected into the requested camera angle. Use this as the ground-plane layout for the result: keep the same boundary corners, openings, separate buildings, bed groups and their order. Raise the objects from those footprints. The projection shows no heights or terrain relief. TOP RIGHT: ${input.hasPhoto ? 'registered site aerial/drone PHOTO, appearance and surrounding context only; the planned design takes priority over old bare ground. Photographic inset seams and blurred repeated strips are not physical fences or paths; do not reproduce them.' : 'no photo is available; use restrained illustrative materials.'} BOTTOM RIGHT: TERRAIN reference, with real contour elevation labels only when available. Panel titles are reference instructions, not text to reproduce.
+The supplied reference board has four labelled panels. UPPER LEFT: saved top-down DESIGN, the authority for boundary shape, planted beds, feature counts, footprints and relative positions. LOWER LEFT: the same saved footprints projected into the requested camera angle. Use this as the ground-plane layout for the result: keep the same boundary corners, openings, separate buildings, bed groups and their order. Raise the objects from those footprints. The projection shows no heights or terrain relief. ${input.roofBrief ? 'Its outlined buildings and the enlarged R1 roof detail lock their ground orientation. The highlighted sides of the detail follow the longest traced wall. Diagram wall height is illustrative. ' : ''}TOP RIGHT: ${input.hasPhoto ? 'registered site aerial/drone PHOTO, appearance and surrounding context only; the planned design takes priority over old bare ground. Photographic inset seams and blurred repeated strips are not physical fences or paths; do not reproduce them.' : 'no photo is available; use restrained illustrative materials.'} BOTTOM RIGHT: TERRAIN reference, with real contour elevation labels only when available. Panel titles are reference instructions, not text to reproduce.
 Reconstruct the design in oblique perspective; do not return a tilted flat map or a copy of this board. Keep all placed tanks, buildings, beds, orchard rows, routes and plants, including features touching the boundary. Tree crowns may overlap the boundary naturally. Retain hidden features in their saved positions rather than moving them to face the camera. Building and vegetation heights are illustrative unless explicitly measured in the supplied facts. Do not turn footprint dimensions or catalogue species heights into surveyed object heights.
 TERRAIN EVIDENCE: ${input.terrain.note}
 Draw only the artwork: no panel divisions, text, plant codes, legend, scale bar, compass, border or cream paper. The app adds a white presentation sheet and the saved-design inventory afterwards. Do not invent additional buildings, tanks, ponds, crops or roads. Surrounding context should agree with the photo where available.
 SAVED DESIGN FACTS:
-${input.designBrief}
+${input.designBrief}${input.roofBrief ? '\nBUILDING DIRECTIONS:\n' + input.roofBrief : ''}
 INVENTORY:
 ${input.elements}`;
 }
@@ -108,15 +147,51 @@ export function fitObliqueReference(width: number, height: number, box: { x: num
 export const OBLIQUE_BOARD = { width: 1920, height: 1280,
   design: { x: 24, y: 64, w: 1200, h: 710 },
   groundView: { x: 24, y: 846, w: 1200, h: 410 },
+  roof: { x: 808, y: 894, w: 378, h: 268 },
   photo: { x: 1256, y: 64, w: 640, h: 550 },
   terrain: { x: 1256, y: 700, w: 640, h: 490 },
 } as const;
+
+function paintObliqueRoofDetail(ctx: CanvasRenderingContext2D, roof: RoofGuide, frame: CanvasFrame,
+  photo?: CanvasImageSource & { width: number; height: number }) {
+  const pitch = Math.sin(OBLIQUE_PITCH_DEG * Math.PI / 180);
+  const xs = roof.ring.map(([u]) => u), ys = roof.ring.map(([, v]) => v);
+  const left = Math.min(...xs), top = Math.min(...ys);
+  const width = Math.max(...xs) - left, height = Math.max(...ys) - top;
+  const r = fitObliqueReference(width * frame.imgW, height * frame.imgH * pitch, OBLIQUE_BOARD.roof);
+  const points = roof.ring.map(([u, v]) => [r.x + (u - left) / width * r.w, r.y + (v - top) / height * r.h]);
+  const trace = (offset: number) => {
+    ctx.beginPath(); points.forEach(([x, y], i) => i ? ctx.lineTo(x, y + offset) : ctx.moveTo(x, y + offset)); ctx.closePath();
+  };
+  ctx.save();
+  // This small extrusion only distinguishes the viewer-facing end. Its height is schematic.
+  trace(16); ctx.fillStyle = '#B6C2C9'; ctx.fill();
+  trace(0); ctx.fillStyle = '#DFE7EA'; ctx.fill();
+  if (photo) {
+    ctx.save(); ctx.clip();
+    ctx.drawImage(photo, left * photo.width, top * photo.height, width * photo.width, height * photo.height, r.x, r.y, r.w, r.h);
+    ctx.restore();
+  }
+  for (let i = 0; i < points.length; i++) {
+    const next = (i + 1) % points.length;
+    const dx = (xs[next] - xs[i]) * frame.imgW, dy = (ys[next] - ys[i]) * frame.imgH;
+    const along = Math.abs(dx * Math.cos(roof.angle) + dy * Math.sin(roof.angle));
+    ctx.strokeStyle = along > .95 * Math.hypot(dx, dy) ? '#B34516' : '#274659';
+    ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(points[i][0], points[i][1]); ctx.lineTo(points[next][0], points[next][1]); ctx.stroke();
+  }
+  ctx.fillStyle = '#203C28'; ctx.font = 'bold 19px Arial';
+  ctx.fillText(`R1 · ${roof.name}`, 800, 875, 407);
+  ctx.fillText(`Long wall: ${roof.axis}`, 800, 1215);
+  ctx.font = '16px Arial'; ctx.fillText('From south · wall height schematic', 800, 1240);
+  ctx.restore();
+}
 
 export function paintObliqueReferenceBoard(ctx: CanvasRenderingContext2D, input: {
   design: CanvasImageSource & { width: number; height: number };
   photo?: CanvasImageSource & { width: number; height: number };
   contours: SheetContourResult; frame: CanvasFrame; terrain: ObliqueTerrainEvidence;
-  boundary: Array<[number, number]>; anchors?: readonly ObliqueAnchor[];
+  boundary: Array<[number, number]>; anchors?: readonly ObliqueAnchor[]; roofs?: readonly RoofGuide[];
 }): void {
   const b = OBLIQUE_BOARD;
   ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, b.width, b.height);
@@ -138,8 +213,23 @@ export function paintObliqueReferenceBoard(ctx: CanvasRenderingContext2D, input:
   // Both panels use the same pixels: an orthographic south view shortens north–south
   // distances by the sine of the camera pitch. Elevations belong to the terrain panel.
   const projected = fitObliqueReference(input.design.width,
-    input.design.height * Math.sin(OBLIQUE_PITCH_DEG * Math.PI / 180), b.groundView);
+    input.design.height * Math.sin(OBLIQUE_PITCH_DEG * Math.PI / 180),
+    input.roofs?.length ? { ...b.groundView, w: 735 } : b.groundView);
   ctx.drawImage(input.design, projected.x, projected.y, projected.w, projected.h);
+  if (input.roofs?.length) {
+    ctx.save(); ctx.strokeStyle = '#274659'; ctx.lineWidth = 2; ctx.fillStyle = '#183246'; ctx.font = 'bold 13px Arial';
+    for (const [i, roof] of input.roofs.entries()) {
+      ctx.beginPath();
+      roof.ring.forEach(([u, v], j) => {
+        const x = projected.x + u * projected.w, y = projected.y + v * projected.h;
+        if (!j) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.closePath(); ctx.stroke();
+      if (i < 10) ctx.fillText(`R${i + 1}`, projected.x + roof.ring[0][0] * projected.w, projected.y + roof.ring[0][1] * projected.h - 3);
+    }
+    ctx.restore();
+    paintObliqueRoofDetail(ctx, input.roofs[0], input.frame, input.photo);
+  }
   const anchors = input.anchors ?? [];
   ctx.save();
   for (const { kind, x, y } of anchors) {

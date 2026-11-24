@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
-import { buildObliquePrompt, obliqueAnchors, obliqueAnchorBrief, fitObliqueReference, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueStyleDescription,
+import { buildObliquePrompt, obliqueAnchors, obliqueAnchorBrief, obliqueRoofGuides, obliqueRoofBrief, fitObliqueReference, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueStyleDescription,
   obliqueTerrainEvidence, paintObliqueReferenceBoard, OBLIQUE_BOARD, OBLIQUE_REVIEW_NOTICE } from '@/lib/oblique-render';
 import { STYLE_LINES, type StylePreset } from '@/lib/producer-prompt';
 import type { SheetContourResult } from '@/lib/sheet-contours';
@@ -127,6 +127,44 @@ test('missing or a single contour height never masquerades as a measured terrain
     assert.equal(obliqueTerrainEvidence(unavailable, { elevation }).kind, 'unavailable');
   }
   assert.match(obliqueTerrainEvidence(unavailable, null).note, /do not infer measured flat ground/);
+});
+
+test('the south camera shows the classroom end-on and the separate east-west store broadside', () => {
+  type Ring = Array<[number, number]>;
+  // On this narrow frame the classroom is wider than tall in normalized coordinates.
+  // In ground metres it is twice as long north–south, so a normalized-axis test would fail.
+  const classroom: Ring = [[.1,.2],[.3,.2],[.3,.3],[.1,.3]];
+  const store: Ring = [[.5,.2],[.7,.2],[.7,.22],[.5,.22]];
+  const state = { zones: [
+    { id:'class', name:'Classroom', feature:'house' as const, zone:0 as const, points:classroom },
+    { id:'store', name:'Store', feature:'house' as const, zone:0 as const, points:store },
+    { id:'yard', name:'Yard', feature:'patio' as const, zone:0 as const, points:store },
+  ] };
+  const reference = { imgW:400, imgH:1600, mPerPx:.05 };
+  const roofs = obliqueRoofGuides(state, { house:[...classroom].reverse() }, reference);
+  assert.equal(roofs.length, 2);
+  assert.equal(roofs[0].name, 'Classroom');
+  assert.equal(roofs[0].bearing, 0);
+  assert.ok(Math.abs(roofs[0].alongM - 8) < 1e-8 && Math.abs(roofs[0].acrossM - 4) < 1e-8);
+  assert.equal(roofs[1].bearing, 90);
+  assert.match(obliqueRoofBrief(roofs), /Classroom.*short end faces the viewer/);
+  assert.match(obliqueRoofBrief(roofs), /Store.*long side runs across the view/);
+  assert.doesNotMatch(obliqueRoofBrief(roofs), /Yard/);
+  assert.equal(obliqueRoofBrief([]), '');
+  assert.deepEqual(obliqueRoofGuides({zones:[]}, {house:[]}, reference), []);
+  const compact = obliqueRoofGuides(state, {house:[]}, {...reference,imgH:800});
+  assert.match(obliqueRoofBrief(compact), /Classroom.*compact footprint/);
+  const photos: number[][] = [];
+  const photo = { width:800, height:3200 } as HTMLCanvasElement;
+  const ctx = new Proxy({}, {get: (_, key) => (...a: unknown[]) => {
+    if (key === 'drawImage' && a[0] === photo && a.length === 9) photos.push(a.slice(1) as number[]);
+  },set:()=>true}) as CanvasRenderingContext2D;
+  paintObliqueReferenceBoard(ctx, {design: photo, photo, roofs, boundary:[], contours:unavailable,
+    frame:{...frame,...reference,satDataUrl:null}, terrain:obliqueTerrainEvidence(unavailable,null)});
+  assert.equal(photos.length, 1);
+  const [x,y,w,h,,,projectedW,projectedH] = photos[0];
+  for (const [actual, expected] of [[x,80],[y,640],[w,160],[h,320]]) assert.ok(Math.abs(actual-expected)<1e-8);
+  assert.ok(Math.abs(projectedH/projectedW - 2*Math.sin(Math.PI/4)) < 1e-8);
 });
 
 test('tanks and hives remain anchored at their own end of the angled design', () => {

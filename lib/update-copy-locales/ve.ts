@@ -2,7 +2,7 @@ import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
   "AI maps use your site setting and keep separate roofs in the design brief.": "Mimepe ya AI i shumisa fhethu haṋu nahone ndaela dzi ṱalusa ṱhanga iṅwe na iṅwe nga yoṱhe.",
-  "Oblique maps use a tilted guide with the positions of your tanks and beehives.": "Mimepe ine ya vhonwa nga lurumbu i shumisa tshifanyiso tsho sendamaho tshine tsha sumbedza hune mathannga aṋu na miḓi ya ṋotshi zwa wanala hone.",
+  "Oblique maps use your traced building directions and the positions of tanks and beehives.": "Mimepe ine ya vhonwa nga lurumbu i shumisa masia e zwifhaṱo zwe na ola zwa sedza khao na fhethu hune mathannga na miḓi ya ṋotshi zwa wanala hone.",
   "AI map guides show which vegetable beds sit under a saved shade tunnel.": "Tsumbanḓila dza mimepe ya AI dzi sumbedza mibete ya miroho i re fhasi ha thanela ya murunzi ye na vhulunga.",
 
   "Earthworks maps show a fuller downhill swale bank and a wider soil ring on banana circles.": "Mimapa ya mishumo ya mavu i sumbedza tshiṱulu tshihulwane tsha mavu kha sia ḽi tsaho ḽa mugero na tshitendeledzi tsho ṱanḓavhuwaho tsha mavu kha zwitendeledzi zwa miomva.",

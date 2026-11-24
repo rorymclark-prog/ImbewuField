@@ -58,7 +58,7 @@ import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
 import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, fetchRenderJobScene, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
 import { createRenderSceneSnapshot, decodeRenderSceneSnapshot, type RenderSceneSnapshot } from '@/lib/render-scene';
-import { buildObliquePrompt, obliqueAnchors, obliqueAnchorBrief, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueStyleDescription, obliqueTerrainEvidence, paintObliqueReferenceBoard, OBLIQUE_BOARD, OBLIQUE_REVIEW_NOTICE, type AiMapView } from '@/lib/oblique-render';
+import { buildObliquePrompt, obliqueAnchors, obliqueAnchorBrief, obliqueRoofGuides, obliqueRoofBrief, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueStyleDescription, obliqueTerrainEvidence, paintObliqueReferenceBoard, OBLIQUE_BOARD, OBLIQUE_REVIEW_NOTICE, type AiMapView } from '@/lib/oblique-render';
 import type { RenderEngine } from '@/lib/render-job-contract';
 import { authoritativeHouseFootprints, sameFootprint } from '@/lib/house-footprints';
 import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
@@ -15149,6 +15149,7 @@ export default function DesignGlossy({
       const designImage = await loadImage(plan);
       let photo: HTMLImageElement | undefined;
       const anchors = obliqueAnchors(p.state.items);
+      const roofs = obliqueRoofGuides(p.state, p.refLayers, p.frame);
       const board = document.createElement('canvas');
       let compositeDataUrl: string;
       try {
@@ -15156,13 +15157,13 @@ export default function DesignGlossy({
         board.width = OBLIQUE_BOARD.width; board.height = OBLIQUE_BOARD.height;
         const ctx = board.getContext('2d');
         if (!ctx) throw new Error('Image preparation unavailable.');
-        paintObliqueReferenceBoard(ctx, { design: designImage, photo, frame: p.frame, boundary: p.refLayers.boundary, contours, terrain, anchors });
+        paintObliqueReferenceBoard(ctx, { design: designImage, photo, frame: p.frame, boundary: p.refLayers.boundary, contours, terrain, anchors, roofs });
         compositeDataUrl = board.toDataURL('image/png');
       } finally {
         releaseCanvas(board); releaseImageSource(designImage);
         if (photo) releaseImageSource(photo);
       }
-      const prompt = buildObliquePrompt({ style, terrain, hasPhoto: Boolean(p.frame.satDataUrl),
+      const prompt = buildObliquePrompt({ style, terrain, roofBrief: obliqueRoofBrief(roofs), hasPhoto: Boolean(p.frame.satDataUrl),
         elements: producerElementsText(p.state, p.refLayers, 'all', false),
         designBrief: [
           buildDesignBrief(p.state, p.refLayers, frozen.placeName, frozen.site),
