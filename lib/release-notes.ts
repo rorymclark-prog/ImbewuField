@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    when: '19 November 2026', sha: '5069baeaa',
+    changes: ['View and download Canadian station history with estimates and missing readings marked.'],
+  },
   { when: '20 November 2026', sha: '750a767ef', changes: [
     'The example farm shows which months have no fresh vegetable from its crop plan.',
     'Pick a crop and drag its sowing month to see which of those empty months it would fill.',
