@@ -26,6 +26,7 @@ import { canadaCabbageReference, canadaCabbageCandidates, canadaCabbageResultQua
 import { saskatchewanCabbageNurseryReference, saskatchewanCabbageNurseryCandidates, saskatchewanPrairieRegionMatches, saskatchewanNurseryResultQualifier, USASK_CABBAGE_QUALIFIER, USASK_CABBAGE_ORIGINAL_SHA256, type SaskatchewanNurseryBasis, type SaskatchewanNurseryUse } from '@/lib/international/providers/usask-saskatchewan-cabbage';
 import { locationDataCacheKey } from '@/lib/location-cache-key';
 import EcccObservationPanel from './EcccObservationPanel';
+import DwdKlObservationPanel from './DwdKlObservationPanel';
 
 export interface ProvisionalCropPreviewProps {
   ownerKey: string;
@@ -460,6 +461,8 @@ function Editor(props: ProvisionalCropPreviewProps) {
     <p className="text-sm">Country: {props.countryCode ?? 'Unknown'} · Agricultural region: {props.agriculturalRegionReference ?? 'Unknown'}</p>
     {props.countryCode === 'CA' && !props.checking && environment !== null
       && <EcccObservationPanel key={generation} actorIsCurrent={props.actorIsCurrent} />}
+    {props.countryCode === 'DE' && !props.checking && environment !== null
+      && <DwdKlObservationPanel key={generation} actorIsCurrent={props.actorIsCurrent} />}
     {!props.evidence?.candidates.length && !useRegionalMethod && !useCowpeaMethod && !useUsdaMethod && !useTomatoReference && !useWisconsinTomatoReference && !useFirstHarvestReference && !useUsdaWisconsinTomatoReference && !useOatsReference && !useKenyaTomatoReference && !useCanadaReference && !useSaskatchewanReference && <p className="text-sm">No reviewed source defaults are connected for this preview. Enter your own estimates to see supported partial results.</p>}
     {!!savedProfiles.length && <section aria-label="Saved provisional profiles" className="space-y-3 rounded-lg border border-[var(--border)] p-3">
       <h3 className="font-semibold">Saved provisional profiles</h3>

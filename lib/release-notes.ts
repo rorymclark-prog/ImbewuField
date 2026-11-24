@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  {
+    when: '25 November 2026', sha: '147e7edf',
+    changes: ['View and download Berlin-Tempelhof weather readings from the crop preview.'],
+  },
   { when: '25 November 2026', sha: '7400812c', changes: [
     'Satellite Overlay gives banana clumps their own canopy without adding a pit.',
     'Explore the path of the sun and the shade it casts in an interactive 3D view.',
