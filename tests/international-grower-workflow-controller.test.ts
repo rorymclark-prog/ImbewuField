@@ -52,7 +52,8 @@ const hooks = registerHooks({
   load(url, context, next) {
     if (url.endsWith('/components/crops/useGrowerWorkflow.ts')
       || url.endsWith('/components/crops/ProvisionalCropPreview.tsx')
-      || url.endsWith('/components/crops/EcccObservationPanel.tsx')) return { shortCircuit: true, format: 'module',
+      || url.endsWith('/components/crops/EcccObservationPanel.tsx')
+      || url.endsWith('/components/crops/DwdKlObservationPanel.tsx')) return { shortCircuit: true, format: 'module',
       source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
         target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
       } }).outputText };
