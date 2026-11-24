@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed release caption, matched to its English source.
+  "Zoom in on a full-screen map to read its labels and legend.": "Tshinetela mepe lowu taleke xikirini leswaku u hlaya malebulu ni nhlamuselo ya mimfungho.",
   // Exact unreviewed upstream map pairs; see the two Editorial draft packets dated 7 November 2026.
   "Sector contour labels stay whole near the boundary.": "Malebulu ya milayeni yo tlakuka eka Sector ma tshamaka ma helele ekusuhi ni ndzilakana.",
   "Choose Editorial Atlas for a lighter AI style and a circular Sector diagram.": "Hlawula Editorial Atlas ku kuma xitayili xa AI lexi vevukaka ni xifaniso xa xirhendzevutana xa Sector.",

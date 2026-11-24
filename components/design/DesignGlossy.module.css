@@ -836,3 +836,46 @@
     max-height: none;
   }
 }
+
+.sheetZoomButton {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid #c5cec3;
+  border-radius: 12px;
+  background: white;
+  color: #192b20;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Scroll the same exported image. A fitted A-series page reduces its legend to a few
+   pixels on a phone, while a fresh canvas at inspection size can exhaust mobile memory. */
+.sheetDetailPane {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: #19201b;
+  cursor: grab;
+}
+.sheetDetailPane:active { cursor: grabbing; }
+.sheetDetailPane img {
+  flex: none;
+  align-self: flex-start;
+  /* At the right-hand scroll limit, Editorial Atlas's full key occupies just under
+     one third of the sheet. Keep that entire column in view on a portrait phone. */
+  width: clamp(150%, 1800px, 325%);
+  max-width: none;
+  height: auto;
+  margin-block: auto;
+  user-select: none;
+}

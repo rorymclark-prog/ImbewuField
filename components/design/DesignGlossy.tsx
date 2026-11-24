@@ -10,7 +10,7 @@ import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { useEscapeClose } from '@/lib/use-escape-close';
 import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
-import { Download, RefreshCw, Gem, FlaskConical, Images, MapPin, Maximize2, X, Trash2, Share2, Check, Upload, AlertTriangle, Sparkles, Image as ImageIcon } from 'lucide-react';
+import { Download, RefreshCw, Gem, FlaskConical, Images, MapPin, Maximize2, ZoomIn, ZoomOut, X, Trash2, Share2, Check, Upload, AlertTriangle, Sparkles, Image as ImageIcon } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import {
   SHEET_EXPORT_PROFILES,
@@ -9733,6 +9733,7 @@ function drawOverviewContourCaption(ctx:CanvasRenderingContext2D,label:string,x:
   ctx.restore();return bounds;
 }
 
+const TERRAIN_SHEET_LABEL = 'Terrain & Sections';
 async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],placeName?:string):Promise<string|null>{
   // Fetch and intersect in the original saved coordinate system. Cropping is paint-time only.
   const raster=await fetchProfileTerrain(frame,refs.boundary,async url=>fetch(url,{headers:await paidApiHeaders(),signal:AbortSignal.timeout(15_000)}));
@@ -9783,7 +9784,14 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
     const inside=line.points.map(project);
     const clearance=([x,y]:[number,number])=>cuts.length?Math.min(...cuts.map(cut=>{const [ax,ay]=project(cut.profile.a),[bx,by]=project(cut.profile.b);return Math.abs((bx-ax)*(ay-y)-(ax-x)*(by-ay))/Math.hypot(bx-ax,by-ay);})):0;
     const at=inside.filter((_,i)=>i>=inside.length*.15&&i<=inside.length*.85).sort((a,b)=>clearance(b)-clearance(a))[0]??inside[Math.floor(inside.length/2)];
-    if(at)drawOverviewContourCaption(ctx,`${line.elevM} m`,at[0],at[1]-12,18);
+    if(!at)continue;
+    const label=`${line.elevM} m`;
+    ctx.font=`700 18px ${SHEET_BODY_FONT}`;
+    const width=ctx.measureText(label).width+18*.24;
+    const clipRings=[refs.boundary.map(project),[[mx,my],[mx+w,my],[mx+w,my+h],[mx,my+h]] as Array<[number,number]>];
+    const anchor=editorialContourCaptionAnchor([at],width,18*1.3,clipRings)
+      ?? editorialContourCaptionAnchor(inside,width,18*1.3,clipRings);
+    if(anchor)drawOverviewContourCaption(ctx,label,anchor.x,anchor.y,18);
   }
   ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.font=`700 21px ${SHEET_BODY_FONT}`;ctx.fillStyle='#183425';ctx.fillText('N ↑',mx+w-48,my+30);
   for(const building of buildings){const [x,y]=project(centroidOf(building.ring));drawReferenceMapText(ctx,building.label,x,y-22,20,700,'center');}
@@ -9834,7 +9842,8 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
   }
   for(const [index,cut] of cuts.entries()){
     const summary=terrainSectionSummary(cut.profile);if(!summary)continue;
-    const x=975+index*405,y=929;
+    // Keep a lone slope with its graph. Only a second profile needs the intervening space.
+    const x=975+index*405,y=cuts.length===1 ? 562 : 929;
     ctx.save();roundRectPath(ctx,x-10,y-30,380,137,12);ctx.fillStyle='#F5F8F4';ctx.fill();ctx.strokeStyle='#D4DFD4';ctx.lineWidth=1;ctx.stroke();
     ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillStyle=cut.color;ctx.font=`700 18px ${SHEET_BODY_FONT}`;
     ctx.fillText(`${cut.ends.join('–')} · ${index===0?'MAIN DOWNHILL':'CROSS-SITE'} SLOPE`,x,y);
@@ -9843,11 +9852,12 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
     ctx.fillText(`${Math.abs(summary.fallM).toFixed(1)} m ${summary.fallM<0?'rise':'fall'} over ${summary.lengthM.toFixed(1)} m`,x,y+66);
     ctx.fillText(`${summary.startElevationM.toFixed(1)} m → ${summary.endElevationM.toFixed(1)} m`,x,y+93);ctx.restore();
   }
+  const sourceY=cuts.length===1 ? 720 : 1074;
   ctx.font=`500 19px ${SHEET_BODY_FONT}`;ctx.fillStyle='#536357';
-  ctx.fillText(`Mapbox Terrain-RGB · ~${terrainGridSpacingM(frame.centerLat).toFixed(1)} m grid · regional estimates`,975,1074);
-  ctx.fillText(cuts.length?'Horizontal and vertical distance use the same scale (1×).':'No consistent section: no slope percentage or angle supplied.',975,1103);
-  ctx.fillText('Contour spacing adds detail without improving accuracy.',975,1132);
-  ctx.fillText('Survey/drone ground data needed for drainage or construction.',975,1161);
+  ctx.fillText(`Mapbox Terrain-RGB · ~${terrainGridSpacingM(frame.centerLat).toFixed(1)} m grid · regional estimates`,975,sourceY);
+  ctx.fillText(cuts.length?'Horizontal and vertical distance use the same scale (1×).':'No consistent section: no slope percentage or angle supplied.',975,sourceY+29);
+  ctx.fillText('Contour spacing adds detail without improving accuracy.',975,sourceY+58);
+  ctx.fillText('Survey/drone ground data needed for drainage or construction.',975,sourceY+87);
   ctx.font=`italic 19px ${SHEET_BODY_FONT}`;ctx.fillStyle='#69776B';ctx.fillText('Sections and contours use the same regional DEM. No new ground measurements or building heights inferred.',48,1230);
   return drainCanvasToDataUrl(canvas,'image/png');
 }
@@ -13087,6 +13097,8 @@ export default function DesignGlossy({
   const autoPreviewHandledKeyRef = useRef<string | null>(null);
   const [galleryLoadedSiteId, setGalleryLoadedSiteId] = useState<string | null>(null);
   const [galleryZoomOpen, setGalleryZoomOpen] = useState(false);
+  const [inspectDetail, setInspectDetail] = useState(false);
+  const dragOrigin = useRef<{ x: number; y: number; left: number; top: number } | null>(null);
   /**
    * TAKING SEVERAL SHEETS OFF THE PHONE AT ONCE. Rory: "let's be able to select and download
    * multiple files at once with a quality selector and also perhaps just have a share option?
@@ -13223,7 +13235,11 @@ export default function DesignGlossy({
   }, [galleryViewId]);
 
   useEffect(() => {
-    if (!galleryZoomOpen) return;
+    if (!galleryZoomOpen) {
+      setInspectDetail(false);
+      dragOrigin.current = null;
+      return;
+    }
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
@@ -13260,7 +13276,8 @@ export default function DesignGlossy({
             : '';
         return {
           id: r.id,
-          label: `${r.label}${suffix}`,
+          // The old title promised a C–D section even for farms with a single traced building.
+          label: `${r.label === 'Terrain & Sections · downhill A–B and buildings C–D' ? TERRAIN_SHEET_LABEL : r.label}${suffix}`,
           thumb: r.thumb,
           resultKind: r.resultKind ?? 'legacy',
           provider: r.provider ?? 'unknown',
@@ -13943,8 +13960,8 @@ export default function DesignGlossy({
     try{
       const sourceFrame=historicalActive&&availableHistoricalBaseline?await buildHistoricalBaselineFrame(frame,availableHistoricalBaseline):frame;
       const image=await buildSectorTerrainProfileSheet(state,sourceFrame,refLayers,placeName);
-      if(!image){setNotice('A downhill section needs usable terrain pixels and a consistent fall across the property. No heights have been invented.');return;}
-      const id=pushGallery('Terrain & Sections · downhill A–B and buildings C–D',image,{resultKind:'exact',provider:'exact',geometryLock:true});
+      if(!image){setNotice('Terrain elevations are unavailable for this property.');return;}
+      const id=pushGallery(TERRAIN_SHEET_LABEL,image,{resultKind:'exact',provider:'exact',geometryLock:true});
       setGalleryViewId(id);setGalleryOpen(true);
     }catch(err){setError(userFacingMessage(err,'Terrain profile unavailable. No surveyed elevations have been supplied.',t));}
     finally{setLoading(null);}
@@ -16380,6 +16397,8 @@ export default function DesignGlossy({
   const stageResultImage = railPreviewImage ?? visibleResultImage;
   const stageIsExact = galleryViewItem ? galleryViewItem.resultKind === 'exact' : isExactRender;
   const galleryViewChip = galleryViewItem ? galleryTileChip(galleryViewItem.resultKind) : null;
+  const fullScreenTitle = galleryViewItem?.label ?? ([placeName, selectedSheet && `${selectedSheet.no} — ${selectedSheet.label}`]
+    .filter(Boolean).join(' · ') || t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt'));
   const stageResultBadge = galleryViewItem
     ? `${galleryViewChip?.text ?? 'SAVED'}${galleryViewItem.freshness === 'current' ? '' : ' · OLDER'}`
     : stageIsExact ? 'Design Map' : 'AI-polished';
@@ -16605,7 +16624,7 @@ export default function DesignGlossy({
         <WorkflowHeading number={2} title="Underlay" />
         {selectedSheet && 'exact' in selectedSheet && selectedSheet.exact==='sector' && <div style={{marginBottom:10}}>
           <button type="button" disabled={loading!==null} onClick={renderTerrainProfile}>Terrain &amp; Sections</button>
-          <p style={{fontSize:11,lineHeight:1.4}}>Opens a separate sheet with A–B downhill, C–D through traced buildings and more contours when the data supports them. The Sector map keeps its 5 m overview.</p>
+          <p style={{fontSize:11,lineHeight:1.4}}>Opens a separate terrain sheet. It shows contours and a downhill profile where elevation data supports them. A second profile appears when a section crosses two traced buildings.</p>
           <details style={{fontSize:11,lineHeight:1.5}}><summary>Terrain source &amp; scale</summary>
             <p>The sheet uses Mapbox Terrain-RGB. Supplemental contours interpolate the same raster as the profiles; closer lines do not make the ground data more accurate. Interpolated plotting points do not improve the underlying resolution. Source dates, local accuracy and mixed height datums are unverified. The archive photograph is aligned to roof corners, not surveyed ground control. Roof footprint widths use your saved plan scale; building heights are not supplied.</p>
             <p>Google Earth Pro can show a profile of a drawn path. Its terrain is a comparison source, not a site survey. A controlled drone ground model or measured levels are needed for drainage or construction.</p>
@@ -17018,7 +17037,7 @@ export default function DesignGlossy({
                 className={styles.stagePreviewButton}
                 onClick={() => setGalleryZoomOpen(true)}
                 aria-label={formatDesignTranslation(t('designGlossyOpenFullScreen'), {
-                  label: galleryViewItem?.label ?? placeName ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt'),
+                  label: fullScreenTitle,
                 })}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -17973,7 +17992,7 @@ export default function DesignGlossy({
           role="dialog"
           aria-modal="true"
           aria-label={formatDesignTranslation(t('designGlossyFullScreenNamed'), {
-            label: galleryViewItem?.label ?? placeName ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt'),
+            label: fullScreenTitle,
           })}
           onClick={() => setGalleryZoomOpen(false)}
           style={{
@@ -18017,26 +18036,57 @@ export default function DesignGlossy({
           >
             <X size={22} />
           </button>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={stageResultImage}
-            alt={galleryViewItem?.label ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
-            onClick={() => setGalleryZoomOpen(false)}
-            style={{
-              // Parent-relative dimensions respect the app's text-size zoom. Viewport units
-              // were enlarged again by that zoom, cutting the right legend off on phones.
-              display: 'block',
-              width: '100%',
-              height: '100%',
-              flex: '1 1 0',
-              minWidth: 0,
-              minHeight: 0,
-              objectFit: 'contain',
-              borderRadius: 10,
-              boxShadow: '0 18px 70px rgba(0,0,0,0.55)',
-              cursor: 'zoom-out',
-            }}
-          />
+          <button type="button" className={styles.sheetZoomButton} onClick={event => {
+            event.stopPropagation();
+            setInspectDetail(current => !current);
+          }}>
+            {inspectDetail ? <ZoomOut size={18} /> : <ZoomIn size={18} />}
+            {t(inspectDetail ? 'zoomOutTitle' : 'zoomInTitle')}
+          </button>
+          {inspectDetail ? (
+            <div className={styles.sheetDetailPane} role="region" aria-label={fullScreenTitle} tabIndex={0}
+              onClick={event => event.stopPropagation()}
+              onPointerDown={event => {
+                if (event.pointerType !== 'mouse' || event.button !== 0) return;
+                const pane = event.currentTarget;
+                dragOrigin.current = { x: event.clientX, y: event.clientY, left: pane.scrollLeft, top: pane.scrollTop };
+                pane.setPointerCapture(event.pointerId);
+              }}
+              onPointerMove={event => {
+                const origin = dragOrigin.current;
+                if (!origin || !event.currentTarget.hasPointerCapture(event.pointerId)) return;
+                event.currentTarget.scrollTo(origin.left + origin.x - event.clientX, origin.top + origin.y - event.clientY);
+              }}
+              onLostPointerCapture={() => { dragOrigin.current = null; }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={stageResultImage} alt={fullScreenTitle} draggable={false} onLoad={event => {
+                const pane = event.currentTarget.parentElement;
+                if (pane) pane.scrollTo((pane.scrollWidth - pane.clientWidth) / 2, (pane.scrollHeight - pane.clientHeight) / 2);
+              }} />
+            </div>
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={stageResultImage}
+              alt={fullScreenTitle}
+              onClick={() => setGalleryZoomOpen(false)}
+              style={{
+                // Parent-relative dimensions respect the app's text-size zoom. Viewport units
+                // were enlarged again by that zoom, cutting the right legend off on phones.
+                display: 'block',
+                width: '100%',
+                height: '100%',
+                flex: '1 1 0',
+                minWidth: 0,
+                minHeight: 0,
+                objectFit: 'contain',
+                borderRadius: 10,
+                boxShadow: '0 18px 70px rgba(0,0,0,0.55)',
+                cursor: 'zoom-out',
+              }}
+            />
+          )}
           <span
             aria-hidden="true"
             style={{
@@ -18053,10 +18103,10 @@ export default function DesignGlossy({
               pointerEvents: 'none',
             }}
           >
-            {t('designGlossyClickMapToMinimise')}
+            {t(inspectDetail ? 'courseDeckPanHint' : 'designGlossyClickMapToMinimise')}
           </span>
           <span style={{ maxWidth: '100%', flexShrink: 0, overflowWrap: 'anywhere', color: '#FBF6EC', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>
-            {galleryViewItem?.label ?? placeName ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
+            {fullScreenTitle}
           </span>
         </div>
       ), document.body)}

@@ -1018,12 +1018,13 @@ test('Earthworks callouts identify saved beds and each swale even when plant-cod
 
 test('terrain plan keeps sourced contour heights when no consistent downhill section can be supported',async()=>{
   const probe=artProbe(),refs={boundary:[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],house:[],driveway:[]},state={siteId:'test-terrain',items:[],lines:[],zones:[]},frame={imgW:600,imgH:600,mPerPx:.5,centerLat:-33.9};
+  probe.ctx.measureText=()=>({width:40});
   const captions:string[]=[];
   const paint=helper('buildSectorTerrainProfileSheet',{fetchProfileTerrain:async()=>({source:'test fixture'}),paidApiHeaders:async()=>({}),historicalBaselineForSite:()=>null,authoritativeHouseFootprints:()=>[],rasterTerrainSections:()=>null,
-    boundaryPresentationContext:async()=>({state,frame,refLayers:refs}),rasterTerrainContours:()=>[{elevM:15,major:true,points:[[.2,.2],[.8,.7]]}],calculateBoundaryPresentationLayout:()=>null,presentationExtentRing:()=>refs.boundary,SCALE:1,
+    boundaryPresentationContext:async()=>({state,frame,refLayers:refs}),rasterTerrainContours:()=>[{elevM:15,major:true,points:[[.2,.2],[.8,.7]]},{elevM:20,major:true,points:[[.899,.2],[.899,.8]]}],calculateBoundaryPresentationLayout:()=>null,presentationExtentRing:()=>refs.boundary,SCALE:1,editorialContourCaptionAnchor,
     document:{createElement:()=>probe.canvas},SHEET_BODY_FONT:'Arial',TERRAIN_CONTOUR_INK,TERRAIN_SUPPLEMENTAL_INK,terrainGridSpacingM:()=>8.5,drawBlueprintBoundary:()=>{},drawBlueprintScaleBar:()=>{},drawOverviewContourCaption:(_ctx:any,label:string)=>captions.push(label),drainCanvasToDataUrl:()=>'terrain-with-contours'});
   assert.equal(await paint(state,frame,refs,'Test extent'),'terrain-with-contours');
-  assert.deepEqual(captions,['15 m']);
+  assert.deepEqual(captions,['15 m'],'retain the readable contour and omit the caption that crosses the map edge');
   assert.ok(probe.calls.some(c=>c[0]==='fillText'&&c[1]==='Slope section unavailable'));
   assert.ok(!probe.calls.some(c=>c[0]==='fillText'&&/\d+\.\d+%/.test(c[1])),'missing section must not acquire an invented percentage');
 });

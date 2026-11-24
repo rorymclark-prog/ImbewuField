@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed release caption, matched to its English source.
+  "Zoom in on a full-screen map to read its labels and legend.": "Sondeza imephu esesikrinini esigcwele ukuze ufunde amalebula ayo nokhiye wayo.",
   // Exact unreviewed upstream map pairs; see the two Editorial draft packets dated 7 November 2026.
   "Sector contour labels stay whole near the boundary.": "Amalebula emigqa yokuphakama kuSector ahlala ephelele eduze komngcele.",
   "Choose Editorial Atlas for a lighter AI style and a circular Sector diagram.": "Khetha i-Editorial Atlas ukuze uthole isitayela se-AI esilula nomdwebo oyindilinga weSector.",
