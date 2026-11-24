@@ -137,7 +137,8 @@ import {
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
 import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, PLAIN_PAPER_GROUND, savedSheetUnderlayNote, SHEET_UNDERLAY_LABEL, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import { drainCanvasToDataUrl, releaseCanvas, releaseImageSource } from '@/lib/release-canvas';
-import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
+import { drawEarthworksBasin, swaleBankSide, type FallVector } from '@/lib/earthworks-relief';
+import { terrainFallVector, overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
 import { ridgeAngleOf, roofRunoffArrows, gutterToTankArrows, tankOverflowArrows, type StoryArrow } from '@/lib/water-story';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import {
@@ -711,6 +712,7 @@ const LABEL_MODE_HINT: Readonly<Record<SheetLabelMode, string>> = {
 };
 
 export interface CompositeMarkOptions {
+  fall?: FallVector | null;
   showToolGlyphs?: boolean;
   showDrivewayEdge?: boolean;
   showDesignLines?: boolean;
@@ -1086,7 +1088,7 @@ export function drawMarks(
   // Retain the exact footprints and pits. The model copied the setting-out hatches as timber,
   // so show soil relief along the same swale route in its illustration guide.
   if (drawDesign && filter === 'earthworks') {
-    if (showDesignLines) drawFilteredLines(ctx, state, filter, px, py, pxPerM, 'illustrated');
+    if (showDesignLines) drawFilteredLines(ctx, state, filter, px, py, pxPerM, 'illustrated', options.fall);
     if (showDesignItems) drawEarthworksFeatures(ctx, state, filter, px, py, pxPerM);
     return;
   }
@@ -1258,6 +1260,7 @@ export async function buildComposite(
   filter: GlossyLayerFilter = 'all',
   drawDesign = true,
   options: CompositeMarkOptions = {},
+  site?: SectorSite | null,
 ): Promise<string> {
   const imgW = frame.imgW * SCALE;
   const imgH = frame.imgH * SCALE;
@@ -1285,7 +1288,8 @@ export async function buildComposite(
     paintPlainPaperGround(ctx, imgW, imgH);
   }
 
-  drawMarks(ctx, state, frame, refLayers, imgW, imgH, filter, drawDesign, options);
+  drawMarks(ctx, state, frame, refLayers, imgW, imgH, filter, drawDesign, filter === 'earthworks'
+    ? { ...options, fall: terrainFallVector(site?.elevation) } : options);
 
   // PNG (not JPEG): the render must key on the thin drawn geometry lines, and JPEG ringing
   // softens them. The route wraps this as image/png — keep the formats in lockstep.
@@ -1944,6 +1948,9 @@ export function buildDesignBrief(
   const after: string[] = [];
 
   before.push(`PLACE: ${placeName ?? 'this smallholding'} — a real South African smallholding.`);
+  if (state.lines.some(line => line.kind === 'swale') && site?.elevation && terrainFallVector(site.elevation)) {
+    before.push(`SWALES: indicative site fall is ${Math.round(site.elevation.aspectDeg)}° clockwise from true north on this north-up plan. Use the downhill shoulder shown in the guide for the spoil bank.`);
+  }
   if (omittedGuides) before.push('DRIVEWAY GUIDE OMITTED: the duplicate closed tracing guide is not a physical path or kerb. Keep the tar surface unbordered; no yellow dashes, raised edging or invented walking loop.');
 
   // ── Traced base geometry (the references every sheet must agree on first) ──
@@ -2399,7 +2406,7 @@ function waterItemsFor(state: DesignCanvasState): PlacedItem[] {
 }
 
 /** @param sheet which sheet is being painted — NOT always Water. See the membership note below. */
-function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, W: number, H: number, sheet: GlossyLayerFilter = 'water') {
+function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, W: number, H: number, sheet: GlossyLayerFilter = 'water', fall?: FallVector | null) {
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   const routeDots = (
@@ -2486,7 +2493,7 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
         line.points.map(([x, y]) => [x * W, y * H] as [number, number]),
         EARTHWORKS_ROUTE_STYLE.swale,
         frame.mPerPx > 0 ? W / (frame.imgW * frame.mPerPx) : undefined,
-        line.widthM,
+        line.widthM, 'setting-out', fall,
       );
       ctx.restore();
       continue;
@@ -5730,6 +5737,11 @@ function drawEarthworksFeatures(
     const cy = py(item.y);
     ctx.save();
     ctx.translate(cx, cy);
+    if (def.id === 'tree_basin' || def.id === 'banana_circle') {
+      drawEarthworksBasin(ctx, def.id, (item.wM ?? def.wM) * pxPerM, (item.hM ?? def.hM) * pxPerM);
+      ctx.restore();
+      continue;
+    }
     if (def.shape === 'rect' && item.rot) ctx.rotate((item.rot * Math.PI) / 180);
     const trace = () => {
       if (def.shape === 'circle') {
@@ -6468,7 +6480,7 @@ const SWALE_DEFAULT_WIDTH_M = 1.5;
 
 /** The exact plan uses a survey hatch. The illustration guide needs a cut that sinks into the
  *  site's own ground and a bank that catches the light. Both use the same centreline and width. */
-function drawIllustratedSwale(ctx: CanvasRenderingContext2D, points: Array<[number, number]>, half: number) {
+function drawIllustratedSwale(ctx: CanvasRenderingContext2D, points: Array<[number, number]>, half: number, fall?: FallVector | null) {
   const bankEdge = offsetPolyline(points, -half);
   const cutEdge = offsetPolyline(points, half);
   const lengths = points.slice(1).map(([x, y], i) => Math.hypot(x - points[i][0], y - points[i][1]));
@@ -6477,18 +6489,27 @@ function drawIllustratedSwale(ctx: CanvasRenderingContext2D, points: Array<[numb
   const feather = Math.min(half * 2, total / 3);
   const rim = (edges: Array<[number, number]>) => {
     const outline: Array<[number, number]> = [[...points[0]]];
+    // An elliptical toe gives way smoothly to the full bank. A single straight taper
+    // made a wide, short swale look like a sharpened stick when viewed close up.
+    const ends = [.06, .20, .47, 1].map(t => t * feather);
+    const stations = [...ends, ...ends.map(d => total - d).reverse()];
     let travelled = 0;
     for (let i = 1; i < points.length; i++) {
-      const end = travelled + lengths[i - 1];
-      for (const distance of [feather, total - feather]) {
-        if (distance <= travelled || distance >= end) continue;
-        const t = (distance - travelled) / lengths[i - 1];
-        outline.push([edges[i - 1][0] + (edges[i][0] - edges[i - 1][0]) * t,
-          edges[i - 1][1] + (edges[i][1] - edges[i - 1][1]) * t]);
-      }
-      const scale = Math.min(1, end / feather, Math.max(0, total - end) / feather);
-      outline.push([points[i][0] + (edges[i][0] - points[i][0]) * scale,
-        points[i][1] + (edges[i][1] - points[i][1]) * scale]);
+      const length = lengths[i - 1], end = travelled + length;
+      if (!length) continue;
+      const vertex = (distance: number) => {
+        const t = (distance - travelled) / length;
+        const taper = Math.min(1, distance / feather, Math.max(0, total - distance) / feather);
+        const scale = Math.sqrt(taper * (2 - taper));
+        const x = points[i - 1][0] + (points[i][0] - points[i - 1][0]) * t;
+        const y = points[i - 1][1] + (points[i][1] - points[i - 1][1]) * t;
+        const ex = edges[i - 1][0] + (edges[i][0] - edges[i - 1][0]) * t;
+        const ey = edges[i - 1][1] + (edges[i][1] - edges[i - 1][1]) * t;
+        outline.push([x + (ex - x) * scale, y + (ey - y) * scale]);
+      };
+      for (const distance of stations) if (distance > travelled && distance < end) vertex(distance);
+      if (end === total) outline.push([...points[points.length - 1]]);
+      else vertex(end);
       travelled = end;
     }
     return outline;
@@ -6512,14 +6533,25 @@ function drawIllustratedSwale(ctx: CanvasRenderingContext2D, points: Array<[numb
     const length = lengths[i - 1];
     if (length < 1e-6) continue;
     const nx = -(by - ay) / length, ny = (bx - ax) / length;
-    const relief = ctx.createLinearGradient(ax - nx * half, ay - ny * half, ax + nx * half, ay + ny * half);
+    const side = swaleBankSide(ax, ay, bx, by, fall);
+    const sign = side || 1;
+    const relief = ctx.createLinearGradient(ax + sign * nx * half, ay + sign * ny * half,
+      ax - sign * nx * half, ay - sign * ny * half);
     relief.addColorStop(0, 'rgba(155,120,78,0)');
-    relief.addColorStop(.17, 'rgba(154,117,80,.53)');
-    relief.addColorStop(.32, 'rgba(193,151,101,.81)');
-    relief.addColorStop(.54, 'rgba(134,102,71,.78)');
-    relief.addColorStop(.67, 'rgba(100,76,56,.78)');
-    relief.addColorStop(.82, 'rgba(126,99,73,.58)');
-    relief.addColorStop(1, 'rgba(164,135,98,0)');
+    if (side) {
+      relief.addColorStop(.13, 'rgba(96,69,48,.68)');
+      relief.addColorStop(.29, 'rgba(201,159,108,.95)');
+      relief.addColorStop(.40, 'rgba(183,138,89,.91)');
+      relief.addColorStop(.57, 'rgba(90,65,44,.92)');
+      relief.addColorStop(.72, 'rgba(112,85,58,.84)');
+      relief.addColorStop(.86, 'rgba(158,128,92,.59)');
+    } else {
+      // A dry hollow is still visible when the terrain cannot put a crest on either side.
+      relief.addColorStop(.25, 'rgba(166,134,95,.73)');
+      relief.addColorStop(.50, 'rgba(96,72,51,.9)');
+      relief.addColorStop(.75, 'rgba(166,134,95,.73)');
+    }
+    relief.addColorStop(1, 'rgba(155,120,78,0)');
     ctx.fillStyle = relief;
     ctx.beginPath();
     ctx.moveTo(...bankEdge[i - 1]);
@@ -6531,7 +6563,7 @@ function drawIllustratedSwale(ctx: CanvasRenderingContext2D, points: Array<[numb
     const grains = Math.min(600, Math.floor(length * .8));
     for (let j = 0; j < grains; j++) {
       const t = random(), across = (random() * 1.7 - .9) * half;
-      const size = Math.min(1.7, half * .16) * (.4 + random());
+      const size = Math.min(1.2, half * .14) * (.4 + random());
       ctx.fillStyle = random() < .5 ? 'rgba(230,202,157,.45)' : 'rgba(87,65,43,.34)';
       ctx.fillRect(ax + (bx - ax) * t + nx * across, ay + (by - ay) * t + ny * across, size, size * .76);
     }
@@ -6550,6 +6582,7 @@ function drawSwaleCrossSection(
   pxPerM?: number,
   widthM?: number,
   appearance: 'setting-out' | 'illustrated' = 'setting-out',
+  fall?: FallVector | null,
 ): void {
   if (screenPoints.length < 2) return;
   const smooth = polishedRenderPoints(screenPoints as RenderPoint[]) as Array<[number, number]>;
@@ -6568,15 +6601,15 @@ function drawSwaleCrossSection(
   // visibility fallback only; every exact sheet supplies pxPerM and therefore preserves width.
   const half = statedHalf ?? Math.max(style.width * 0.9, unstatedHalf);
   if (appearance === 'illustrated') {
-    drawIllustratedSwale(ctx, smooth, half);
+    drawIllustratedSwale(ctx, smooth, half, fall);
     return;
   }
   // Each half of the band is one LANE. Its stroke is `half` wide, so its centreline sits at
   // half/2 — a stroke centred on the full offset would hang outside the band and leave the
   // middle showing bare casing, which is what made the first attempt read as three flat stripes.
   const lane = half;
-  const ditch = offsetPolyline(smooth, half / 2);
-  const berm = offsetPolyline(smooth, -half / 2);
+  const positiveEdge = offsetPolyline(smooth, half / 2);
+  const negativeEdge = offsetPolyline(smooth, -half / 2);
   const path = (pts: Array<[number, number]>) => {
     ctx.beginPath();
     pts.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
@@ -6593,17 +6626,17 @@ function drawSwaleCrossSection(
   ctx.lineWidth = half * 2 + Math.max(2, lane * 0.28);
   ctx.stroke();
 
-  // The DITCH: the excavated channel. Darker than the spoil, because it is a hole.
-  path(ditch);
-  ctx.strokeStyle = '#4A2F1B';
-  ctx.lineWidth = lane;
-  ctx.stroke();
-
-  // The BERM: the spoil bank, in the warmer loose-soil tone.
-  path(berm);
-  ctx.strokeStyle = style.color;
-  ctx.lineWidth = lane;
-  ctx.stroke();
+  // Set the bank side for each bend. Reversing the saved line leaves the physical bank in place.
+  for (let i = 1; i < smooth.length; i++) {
+    const [ax, ay] = smooth[i - 1], [bx, by] = smooth[i];
+    const side = swaleBankSide(ax, ay, bx, by, fall);
+    ctx.lineWidth = lane;
+    for (const [edge, edgeSide] of [[positiveEdge, 1], [negativeEdge, -1]] as const) {
+      path([edge[i - 1], edge[i]]);
+      ctx.strokeStyle = !side || side === edgeSide ? style.color : '#4A2F1B';
+      ctx.stroke();
+    }
+  }
 
   // Hachure ticks ACROSS the berm — the standard plan symbol for an embankment, and the thing
   // that stops a two-tone band still reading as one flat plank. They run down the face of the
@@ -6622,7 +6655,7 @@ function drawSwaleCrossSection(
     const [bx, by] = smooth[i];
     const segLen = Math.hypot(bx - ax, by - ay);
     if (segLen < 1e-6) continue;
-    // Unit normal pointing at the berm — the same side offsetPolyline puts a negative offset on.
+    const side = swaleBankSide(ax, ay, bx, by, fall);
     const nx = (by - ay) / segLen;
     const ny = -(bx - ax) / segLen;
     for (let d = carry; d < segLen; d += tickGap) {
@@ -6630,8 +6663,9 @@ function drawSwaleCrossSection(
       const x = ax + (bx - ax) * t;
       const y = ay + (by - ay) * t;
       ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.lineTo(x + nx * half, y + ny * half);
+      const start = side ? 0 : -half / 2, end = side ? -side * half : half / 2;
+      ctx.moveTo(x + nx * start, y + ny * start);
+      ctx.lineTo(x + nx * end, y + ny * end);
       ctx.stroke();
     }
     carry = (carry - segLen) % tickGap;
@@ -6657,6 +6691,7 @@ function drawFilteredLines(
    *  be dug, rather than at a fixed pixel width that shrinks to a hairline on a big sheet. */
   pxPerM?: number,
   swaleAppearance: 'setting-out' | 'illustrated' = 'setting-out',
+  fall?: FallVector | null,
 ): void {
   ctx.save();
   ctx.lineCap = 'round';
@@ -6691,6 +6726,7 @@ function drawFilteredLines(
         pxPerM,
         l.widthM,
         swaleAppearance,
+        fall,
       );
       continue;
     }
@@ -7186,6 +7222,7 @@ async function buildExactLayerOverlay(
   featurePresentation: ExactFeaturePresentation = 'solid',
   /** Sheet 01 only — see drawBlueprintGround's own note. */
   siteRecord = false,
+  fall?: FallVector | null,
 ): Promise<string | undefined> {
   await preloadReferenceFeatureArtwork(state, filter, frame);
   const canvas = document.createElement('canvas');
@@ -7250,7 +7287,7 @@ async function buildExactLayerOverlay(
       );
       drawContextItems(featureCtx, state, filter, px, py, pxPerM, frame);
     });
-    drawWaterRoutes(ctx, state, frame, W, H, filter);
+    drawWaterRoutes(ctx, state, frame, W, H, filter, fall);
     drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
       drawWaterFeatures(
         featureCtx,
@@ -7271,7 +7308,7 @@ async function buildExactLayerOverlay(
     // Routes sit over the ground but below every placed feature. Water and non-Water items then
     // share one biggest-first stack, so a small canopy/fitting is never hidden merely because its
     // category happened to be painted in an earlier subsystem pass.
-    drawWaterRoutes(ctx, state, frame, W, H, filter);
+    drawWaterRoutes(ctx, state, frame, W, H, filter, fall);
     drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
       drawFilteredItems(featureCtx, state, filter, px, py, pxPerM);
     });
@@ -7293,7 +7330,7 @@ async function buildExactLayerOverlay(
     // rightly shows. Rory: "in the earth works section raised beds must just be brown ... all
     // earth coloured possibly with mulch." Same saved footprints, same centres and rotations;
     // only the surface treatment differs, which is exactly what a per-sheet register means.
-    drawFilteredLines(ctx, state, filter, px, py, pxPerM);
+    drawFilteredLines(ctx, state, filter, px, py, pxPerM, 'setting-out', fall);
     drawEarthworksFeatures(ctx, state, filter, px, py, pxPerM);
   } else {
     drawFilteredLines(ctx, state, filter, px, py, pxPerM);
@@ -7872,6 +7909,7 @@ function buildWaterPlanOverlay(
   W: number,
   H: number,
   flowArrows: FlowArrow[],
+  fall?: FallVector | null,
 ): string | undefined {
   if (!flowArrows.length && !state.lines.some(line => waterRouteStyleFor(line.kind) && line.points.length >= 2)) return;
   const canvas = document.createElement('canvas');
@@ -7880,7 +7918,7 @@ function buildWaterPlanOverlay(
   const ctx = canvas.getContext('2d');
   if (!ctx) { releaseCanvas(canvas); throw new Error('Water plan overlay unavailable'); }
   drawOverlandFlowArrows(ctx, flowArrows, W, H);
-  drawWaterRoutes(ctx, state, frame, W, H);
+  drawWaterRoutes(ctx, state, frame, W, H, 'water', fall);
   return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
@@ -7897,8 +7935,7 @@ async function buildReferenceBlueprintMap(
   refLayers: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter,
   placeName?: string,
-  /** Only the Water sheet uses this today, for its harvest block. Optional everywhere else, and
-   *  missing rainfall is stated explicitly in the shared budget. */
+  /** The saved site supplies the water budget and indicative downhill direction. */
   site?: DesignGlossyProps['site'],
   /** Codes on every plant, or named callouts on one plant per kind — see SheetLabelMode. Optional
    *  so DesignPrint's per-layer render table keeps the default without a signature change. */
@@ -8043,7 +8080,7 @@ async function buildReferenceBlueprintMap(
       : [];
   }
 
-  const featureOverlay = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'features');
+  const featureOverlay = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'features', 'standard', 'solid', false, terrainFallVector(site?.elevation));
   if (featureOverlay) {
     const featureImage = await loadImage(featureOverlay);
     try {
@@ -8172,8 +8209,9 @@ export function buildBlueprintEarthworksMap(
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
   placeName?: string,
+  site?: DesignGlossyProps['site'],
 ): Promise<string> {
-  return buildReferenceBlueprintMap(state, frame, refLayers, 'earthworks', placeName);
+  return buildReferenceBlueprintMap(state, frame, refLayers, 'earthworks', placeName, site);
 }
 
 export function buildBlueprintPlantingMap(
@@ -10777,7 +10815,7 @@ interface StyleLegendRow {
   /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
    *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
    *  areas with a soil treatment that no generic footprint painter reproduces. */
-  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour' | 'zone-boundary';
+  visual?: 'historical-extent' | 'earthworks-swale' | 'earthworks-basin' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above' | 'terrain-contour' | 'zone-boundary';
   historicalFeature?: HistoricalFeatureId;
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
@@ -10949,7 +10987,9 @@ export function sheetLegendRows(
       // section raised beds must just be brown". Deriving these swatches from the generic footprint
       // painter keyed the same bed with its green planting icon, so the sheet's key described a
       // different drawing from the one beside it.
-      ...(filter === 'earthworks' ? { visual: 'earthworks-soil' as const } : {}),
+      visual: filter === 'earthworks'
+        ? group.defId === 'banana_circle' || group.defId === 'tree_basin' ? 'earthworks-basin' : 'earthworks-soil'
+        : undefined,
     });
   }
   for (const group of exactSheetLineLegendGroups(state, filter)) {
@@ -11159,6 +11199,15 @@ function drawStyleLegendSymbol(
       ctx.lineTo(x + w - head, y + head * 0.7);
       ctx.stroke();
     }
+    ctx.restore();
+    return;
+  }
+
+  if (row.visual === 'earthworks-basin' && (row.defId === 'banana_circle' || row.defId === 'tree_basin')) {
+    const diameter = Math.min(w, h) * .85;
+    ctx.save();
+    ctx.translate(x + w / 2, y);
+    drawEarthworksBasin(ctx, row.defId, diameter, diameter);
     ctx.restore();
     return;
   }
@@ -13676,7 +13725,7 @@ export default function DesignGlossy({
       setResumeGaveUp(null); // a new render is starting; the give-up banner is out of date
       clearResumeGaveUp(state.siteId);
       try {
-        const composite = await buildComposite(state, frame, refLayers, compositeFilter, drawDesign);
+        const composite = await buildComposite(state, frame, refLayers, compositeFilter, drawDesign, undefined, site);
         let image: string;
         if (useProvider === 'falgpt') {
           const mask = await buildProtectMask(state, frame, refLayers, filter);
@@ -13800,6 +13849,7 @@ export default function DesignGlossy({
         filter,
         true,
         geometryLock ? lockedCompositeMarks(filter) : undefined,
+        site,
       );
       // b. Short comma list of placed elements + counts (this layer only).
       const elementsText = producerElementsText(state, refLayers, filter, !geometryLock);
@@ -14216,6 +14266,7 @@ export default function DesignGlossy({
           f,
           true,
           geometryLock ? lockedCompositeMarks(f) : undefined,
+          site,
         );
         const elementsText = producerElementsText(state, refLayers, f, !geometryLock);
         const designBrief = buildDesignBrief(state, refLayers, placeName, site);
@@ -14625,7 +14676,7 @@ export default function DesignGlossy({
         // of the bands and no exact badges. Burn the real regions after every model pass.
         ? buildZoneOverlay(renderState, renderRefLayers, W, H)
         : locked && f === 'water'
-          ? buildWaterPlanOverlay(renderState, renderFrame, W, H, flowArrows)
+          ? buildWaterPlanOverlay(renderState, renderFrame, W, H, flowArrows, terrainFallVector(site?.elevation))
         : locked
           ? buildRecordedShadeCoverOverlay(renderState,renderFrame,f,W,H)
           : f === 'water' ? buildWaterOverlay(renderState, renderFrame, renderRefLayers, W, H, true, false)
@@ -14781,6 +14832,7 @@ export default function DesignGlossy({
             : lockActive
               ? polishModelInputMarks(f)
               : undefined,
+          site,
         );
         const { elements: elementsText, fabric, served } = isModelChromeStyle(styleKey)
           ? overlayElementsText(renderState, renderRefLayers, f)
@@ -14946,6 +14998,7 @@ export default function DesignGlossy({
           : lockedStyle
             ? polishModelInputMarks(filter)
             : undefined,
+        site,
       );
       const { elements: elementsText, fabric, served } = isModelChromeStyle(styleKey)
         ? overlayElementsText(renderState, renderRefLayers, filter)

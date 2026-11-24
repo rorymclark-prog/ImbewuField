@@ -1,3 +1,5 @@
+import { basinSurface, swaleBankSide } from '@/lib/earthworks-relief';
+import { terrainFallVector } from '@/lib/overland-flow';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
@@ -39,7 +41,7 @@ test('a completed Sector job uses its frozen style even after the picker changes
   assert.match(source,/finishSectorRef\.current\(factualModelImage, frozenScene, historicalSource, styleKey\)/);
 });
 function helper(name: string, scope: Record<string, unknown>): any {
-  scope = { exactSheetElementRegister, EXACT_CONTEXT_ALPHA, ...scope };
+  scope = { terrainFallVector, swaleBankSide, exactSheetElementRegister, EXACT_CONTEXT_ALPHA, ...scope };
   let code = '';
   function visit(n: ts.Node) {
     if (ts.isFunctionDeclaration(n) && n.name?.text === name) code = n.getText(tree).replace(/^export\s+/, '');
@@ -168,6 +170,53 @@ test('the AI swale guide clips the soil relief to the saved width and endpoints 
     assert.ok(strokes>4,'the exact setting-out plan still carries its survey convention');
     assert.equal(JSON.stringify(points),frozen);
   }
+});
+
+test('the raised bank stays on the downhill shoulder even if the same swale is drawn backwards', () => {
+  const paint = helper('drawIllustratedSwale', {offsetPolyline});
+  const section = (points: number[][], bearing: number, confidence: 'site-local-indicative' | 'unconfirmed' = 'site-local-indicative') => {
+    let bankY: number | undefined;
+    const pen = {save(){},restore(){},beginPath(){},moveTo(){},lineTo(){},closePath(){},clip(){},fill(){},fillRect(){},
+      createLinearGradient(_x:number, y:number, _endX:number, endY:number) {
+        return {addColorStop(t:number, color:string) { if(color === 'rgba(201,159,108,.95)') bankY = y + (endY-y)*t; }};
+      }};
+    paint(pen, points, 10, terrainFallVector({aspectDeg:bearing,slopeDeg:4,directionConfidence:confidence}));
+    return bankY;
+  };
+  const east = [[0,20],[60,20]];
+  for (const route of [east,[...east].reverse()]) {
+    assert.ok(section(route,180)! > 20, 'south-facing slope has a bank south of the cut');
+    assert.ok(section(route,0)! < 20, 'north-facing slope has a bank north of the cut');
+    assert.equal(section(route,180,'unconfirmed'),undefined);
+    assert.equal(section(route,90),undefined,'a line along the fall has no downhill shoulder');
+  }
+  assert.equal(terrainFallVector({aspectDeg:180,slopeDeg:0}),null);
+  assert.equal(terrainFallVector(undefined),null);
+});
+
+test('a banana circle has a sunken core while a tree basin has a central mound, moat and outer bank', () => {
+  assert.ok(basinSurface('banana_circle', 0) < basinSurface('banana_circle', .74));
+  assert.ok(basinSurface('banana_circle', .74) > basinSurface('banana_circle', .98));
+  for (const radius of [0, .77]) assert.ok(basinSurface('tree_basin', radius) > basinSurface('tree_basin', .48));
+  assert.ok(basinSurface('tree_basin', .77) > basinSurface('tree_basin', .98));
+});
+
+test('only placed basins receive a ring at the saved footprint; a separate tree still gets an empty pit', () => {
+  const rings: unknown[] = [], pits: unknown[] = [];
+  let centre = [0, 0];
+  const ctx = {canvas:{width:100,height:100}, save(){},restore(){},translate(x:number,y:number){centre=[x,y];},
+    beginPath(){},arc(x:number,y:number){pits.push([x,y]);},stroke(){},fill(){},setLineDash(){}};
+  const paint = helper('drawEarthworksFeatures', {ELEMENTS_BY_ID,itemInFilter,CROP_SOIL_COLOR:'#654',
+    drawEarthworksBasin:(_pen:unknown, kind:string, w:number, h:number)=>rings.push([kind,centre,w,h])});
+  const items = [{id:'banana',defId:'banana_circle',x:.2,y:.3,wM:4,hM:3},
+    {id:'basin',defId:'tree_basin',x:.65,y:.4,wM:1.5,hM:1},
+    {id:'inside',defId:'tree_mango',x:.65,y:.4},
+    {id:'pit',defId:'tree_mango',x:.9,y:.8}];
+  const saved = JSON.stringify(items);
+  paint(ctx,{items},'earthworks',(x:number)=>x*100,(y:number)=>y*100,2);
+  assert.deepEqual(rings,[['banana_circle',[20,30],8,6],['tree_basin',[65,40],3,2]]);
+  assert.deepEqual(pits,[[90,80],[90,80]],'casing and fill for only the unpaired tree');
+  assert.equal(JSON.stringify(items),saved);
 });
 
 test('Water, Zones and Structures show their saved planting context instead of asking the model to guess it', () => {
@@ -420,7 +469,7 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
     await finish('model','water',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,
       scene,()=>false,'new illustrated-property contract',reference);
     const waterComposite=calls.find(c=>c[0]==='composite')![1] as any;
-    assert.deepEqual(calls.find(c=>c[0]==='water-overlay')?.at(-1),['saved-terrain-flow'],
+    assert.deepEqual(calls.find(c=>c[0]==='water-overlay')?.[5],['saved-terrain-flow'],
       'the illustration draws the saved routes and the same terrain-flow field as the exact plan');
     assert.deepEqual((calls.find(c=>c[0]==='chrome')?.at(-1) as any).extraLegendRows,[{text:'Terrain flow'}],
       'the key explains the flow arrows drawn over the painting');

@@ -388,7 +388,8 @@ test('the locked paid render keeps model element artwork while exact Zones remai
   // Its executable test checks only cloth, exact saved dimensions and visible beds underneath.
   const at = src.indexOf("const overlayImage = f === 'zones'");
   assert.ok(at > 0, 'the locked overlay decision moved — re-pin it, do not delete this guard');
-  const decision = src.slice(at, at + 620);
+  // The decision ends at its terminating statement, independently of extra terrain arguments.
+  const decision = src.slice(at, src.indexOf(': undefined;', at) + ': undefined;'.length);
   assert.match(decision, /const overlayImage = f === 'zones'[\s\S]*?\? buildZoneOverlay\([\s\S]*?: locked\s*\n?\s*\? buildRecordedShadeCoverOverlay\(renderState,renderFrame,f,W,H\)/,
     'locked artwork may receive only the narrow recorded-cover material, never the whole exact feature layer');
   const cover = src.slice(src.indexOf('function buildRecordedShadeCoverOverlay('), src.indexOf('function drawFilteredItems('));
