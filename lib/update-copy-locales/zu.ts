@@ -4,6 +4,7 @@ const copy:UpdateCopy={
   "AI maps use your site setting and keep separate roofs in the design brief.": "Amamephu e-AI asebenzisa indawo yakho futhi achaze uphahla ngalunye ngokwehlukana.",
   "Oblique maps use your traced building directions and the positions of tanks and beehives.": "Amamephu aboniswa nge-engeli asebenzisa indlela izakhiwo ozidwebile ezibheke ngayo nezindawo zamathangi nezidleke zezinyosi.",
   "AI map guides show which vegetable beds sit under a saved shade tunnel.": "Imihlahlandlela yamamephu e-AI ibonisa ukuthi yimiphi imibhede yemifino engaphansi komhubhe womthunzi owulondolozile.",
+  "The oblique guide includes roads beside your plot when they appear in the site photo.": "Umhlahlandlela wemephu etshekile uhlanganisa imigwaqo eseduze nesiza sakho uma ivela esithombeni sendawo.",
 
   "Earthworks maps show a fuller downhill swale bank and a wider soil ring on banana circles.": "Amamephu omsebenzi womhlabathi abonisa indunduma ebanzi ohlangothini olwehlayo lomsele nendandatho yomhlabathi ebanzi emibuthanweni kabhanana.",
   "See soil rings on basins and the downhill swale bank where the slope is known.": "Amamephu emisebenzi yomhlabathi abonisa izindunduma eziyindilinga emibuthanweni kabhanana nasezitsheni zezihlahla, nezindunduma zemisele ohlangothini olwehlayo lapho idatha yomhlaba ibonisa umthambeka.",

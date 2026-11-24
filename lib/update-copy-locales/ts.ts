@@ -4,6 +4,7 @@ const copy:UpdateCopy={
   "AI maps use your site setting and keep separate roofs in the design brief.": "Mimepe ya AI yi tirhisa ndhawu ya wena naswona swiletelo swi hlamusela lwangu rin’wana ni rin’wana hi roxe.",
   "Oblique maps use your traced building directions and the positions of tanks and beehives.": "Mimepe leyi langutiwaka hi le tlhelo yi tirhisa tlhelo leri miako leyi u yi diroweke yi langutaka eka rona ni tindhawu ta mathangi ni mabaku ya tinyoxi.",
   "AI map guides show which vegetable beds sit under a saved shade tunnel.": "Swiletelo swa mimepe ya AI swi komba mibedo ya matsavu leyi nga ehansi ka thanele ya ndzhuti leyi u yi hlayiseke.",
+  "The oblique guide includes roads beside your plot when they appear in the site photo.": "Xiletelo xa mepe lowu langutiwaka hi le tlhelo xi katsa magondzo lama nga etlhelo ka ndhawu ya wena loko ma vonaka exifanisweni xa ndhawu.",
 
   "Earthworks maps show a fuller downhill swale bank and a wider soil ring on banana circles.": "Mimepe ya mitirho ya misava yi komba nhlulu leyikulu ya misava etlhelo leri rhelelaka ra mugerho ni ringi yo anama ya misava eka swirhendzevutana swa mubhanana.",
   "See soil rings on basins and the downhill swale bank where the slope is known.": "Mimepe ya mitirho ya misava yi komba maringi ya misava lama tlakukeke ku rhendzela mabhanana ni swihlovo swa mirhi. Loko vuxokoxoko bya ndhawu byi komba ku rhelela, ntshungu wa misava wa mugerho wu va etlhelo leri rhelelaka.",

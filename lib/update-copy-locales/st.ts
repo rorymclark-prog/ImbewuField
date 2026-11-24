@@ -4,6 +4,7 @@ const copy:UpdateCopy={
   "AI maps use your site setting and keep separate roofs in the design brief.": "Limmapa tsa AI li sebelisa sebaka sa hao, ’me litaelo li hlalosa marulelo ka bonngoe.",
   "Oblique maps use your traced building directions and the positions of tanks and beehives.": "Limmapa tse shebiloeng ka lehlakore li sebelisa tsela eo mehaho eo u e torohileng e shebileng ka eona le libaka tsa litanka le matlo a linotši.",
   "AI map guides show which vegetable beds sit under a saved shade tunnel.": "Litšoantšo tse tataisang limmapa tsa AI li bontša libethe tsa meroho tse ka tlas’a kotopo ea moriti eo u e bolokileng.",
+  "The oblique guide includes roads beside your plot when they appear in the site photo.": "Setšoantšo se tataisang ’mapa o shebiloeng ka lehlakore se kenyelletsa litsela tse pela setša sa hao ha li bonahala fotong ea sebaka.",
 
   "Earthworks maps show a fuller downhill swale bank and a wider soil ring on banana circles.": "Limmapa tsa mesebetsi ya mobu di bontsha tutudu e kgolwanyane ka lehlakoreng le theohelang la foro le lesale le pharaletseng la mobu ho pota didikadikwe tsa dipanana.",
   "See soil rings on basins and the downhill swale bank where the slope is known.": "Limmapa tsa mesebetsi ya mobu di bontsha maralla a manyenyane a potileng didikadikwe tsa dipanana le dikotlolo tsa difate. Ha dintlha tsa sebaka di bontsha moepa, tutudu ya foro e hlaha lehlakoreng le theohelang.",

@@ -15157,7 +15157,8 @@ export default function DesignGlossy({
         board.width = OBLIQUE_BOARD.width; board.height = OBLIQUE_BOARD.height;
         const ctx = board.getContext('2d');
         if (!ctx) throw new Error('Image preparation unavailable.');
-        paintObliqueReferenceBoard(ctx, { design: designImage, photo, frame: p.frame, boundary: p.refLayers.boundary, contours, terrain, anchors, roofs });
+        paintObliqueReferenceBoard(ctx, { design: designImage, photo, frame: p.frame, boundary: p.refLayers.boundary,
+          driveway: p.refLayers.driveway, drivewayClosed: p.refLayers.drivewayClosed, contours, terrain, anchors, roofs });
         compositeDataUrl = board.toDataURL('image/png');
       } finally {
         releaseCanvas(board); releaseImageSource(designImage);

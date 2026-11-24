@@ -129,6 +129,25 @@ test('missing or a single contour height never masquerades as a measured terrain
   assert.match(obliqueTerrainEvidence(unavailable, null).note, /do not infer measured flat ground/);
 });
 
+test('vehicle access follows the site evidence, including a driveway traced on the west', () => {
+  const base = { style: 'precision_atlas' as const, elements:'', designBrief:'', terrain:obliqueTerrainEvidence(unavailable,null) };
+  assert.match(buildObliquePrompt({...base,hasPhoto:true}), /through-road past the property/);
+  assert.doesNotMatch(buildObliquePrompt({...base,hasPhoto:false}), /driveway branching/);
+  const lines: number[][] = [], captions: string[] = [];
+  const ctx = new Proxy({}, {get: (_, key) => (...args: unknown[]) => {
+    if (key === 'lineTo') lines.push(args as number[]);
+    if (key === 'fillText') captions.push(String(args[0]));
+  },set:()=>true}) as CanvasRenderingContext2D;
+  const photo = { width: 400, height: 400 } as HTMLCanvasElement;
+  const input = {design:photo,photo, boundary:[],frame:{...frame,satDataUrl:null},contours:unavailable,terrain:base.terrain};
+  paintObliqueReferenceBoard(ctx,input);
+  assert.ok(!captions.some(x=>x.includes('driveway trace')));
+  paintObliqueReferenceBoard(ctx,{...input,driveway:[[.02,.4],[.22,.47]]});
+  const r=fitObliqueReference(400,400,OBLIQUE_BOARD.photo);
+  assert.ok(lines.some(([x,y])=>x===r.x+.22*r.w && y===r.y+.47*r.h));
+  assert.ok(captions.some(x=>x.includes('driveway trace')));
+});
+
 test('the south camera shows the classroom end-on and the separate east-west store broadside', () => {
   type Ring = Array<[number, number]>;
   // On this narrow frame the classroom is wider than tall in normalized coordinates.
@@ -208,9 +227,10 @@ test('reference images remain complete and undistorted on the board, including v
 
 test('the terrain panel uses actual projected contour points and labels without changing farm geometry', () => {
   const texts: string[] = []; const points: number[][] = []; const images: unknown[][] = [];
+  const clips: string[] = [];
   const ctx = { fillRect() {}, strokeRect() {}, fillText(s: string) { texts.push(s); }, drawImage(...args: unknown[]) { images.push(args); },
     beginPath() {}, moveTo(x: number, y: number) { points.push([x, y]); }, lineTo(x: number, y: number) { points.push([x, y]); },
-    closePath() {}, stroke() {}, save() {}, restore() {}, rect() {}, clip() {},
+    closePath() {}, stroke() {}, save() {}, restore() {}, rect() {}, clip(rule = 'nonzero') {clips.push(rule);},
   } as unknown as CanvasRenderingContext2D;
   const boundary: Array<[number, number]> = [[0, 0], [1, 0], [1, 1], [0, 1]];
   const input = { design: { width: 960, height: 640 } as HTMLCanvasElement,
@@ -218,10 +238,13 @@ test('the terrain panel uses actual projected contour points and labels without 
     terrain: obliqueTerrainEvidence(contourLines, site), boundary };
   const before = JSON.stringify(input);
   paintObliqueReferenceBoard(ctx, input);
-  assert.equal(images.length, 3, 'the two layout views and the separate photograph all reach the model');
+  assert.equal(images.length, 4, 'the cropped exterior photo reaches the tilted guide as well as the full site photo panel');
+  assert.ok(clips.includes('evenodd'), 'the exterior context must not overwrite the design inside the boundary');
   assert.equal(images[0][0], input.design);
   assert.equal(images[1][0], input.design, 'the oblique ground guide uses the exact same design pixels');
   assert.equal(images[2][0], input.photo);
+  assert.deepEqual(images[2].slice(1), images[1].slice(1), 'the outside road uses the same camera projection as the plot');
+  assert.equal(images[3][0], input.photo);
   const [,x,y,w,h] = images[1] as [unknown, number, number, number, number];
   assert.ok(x >= OBLIQUE_BOARD.groundView.x && y >= OBLIQUE_BOARD.groundView.y);
   assert.ok(x + w <= OBLIQUE_BOARD.groundView.x + OBLIQUE_BOARD.groundView.w + 1e-8);
@@ -229,7 +252,7 @@ test('the terrain panel uses actual projected contour points and labels without 
   assert.ok(Math.abs(h / w - (640 / 960) * Math.sin(Math.PI / 4)) < 1e-9);
   assert.ok(texts.includes('100 m') && texts.includes('101 m'));
   const r = fitObliqueReference(frame.imgW, frame.imgH, OBLIQUE_BOARD.terrain);
-  assert.deepEqual(points[4], [r.x + 0.2 * r.w, r.y + 0.3 * r.h]);
+  assert.ok(points.some(([px, py]) => px === r.x + 0.2 * r.w && py === r.y + 0.3 * r.h));
   assert.equal(JSON.stringify(input), before);
   texts.length = 0;
   paintObliqueReferenceBoard(ctx, { ...input, terrain: obliqueTerrainEvidence(unavailable, null) });

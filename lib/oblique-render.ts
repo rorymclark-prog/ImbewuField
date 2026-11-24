@@ -127,7 +127,7 @@ export function buildObliquePrompt(input: {
 }): string {
   return `${obliqueStyleDescription(input.style)}
 Create ONE finished oblique aerial illustration of this saved garden design. Camera south of the plot looking north, approximately ${OBLIQUE_PITCH_DEG} degrees above the ground: north at the back, east on the right. Show building sides and tree/tank volume. Keep the whole property and complete tree crowns/tanks in frame, with breathing room around every edge. This is an illustrative viewpoint, not a measured 3D reconstruction.
-The supplied reference board has four labelled panels. UPPER LEFT: saved top-down DESIGN, the authority for boundary shape, planted beds, feature counts, footprints and relative positions. LOWER LEFT: the same saved footprints projected into the requested camera angle. Use this as the ground-plane layout for the result: keep the same boundary corners, openings, separate buildings, bed groups and their order. Raise the objects from those footprints. The projection shows no heights or terrain relief. ${input.roofBrief ? 'Its outlined buildings and the enlarged R1 roof detail lock their ground orientation. The highlighted sides of the detail follow the longest traced wall. Diagram wall height is illustrative. ' : ''}TOP RIGHT: ${input.hasPhoto ? 'registered site aerial/drone PHOTO, appearance and surrounding context only; the planned design takes priority over old bare ground. Photographic inset seams and blurred repeated strips are not physical fences or paths; do not reproduce them.' : 'no photo is available; use restrained illustrative materials.'} BOTTOM RIGHT: TERRAIN reference, with real contour elevation labels only when available. Panel titles are reference instructions, not text to reproduce.
+The supplied reference board has four labelled panels. UPPER LEFT: saved top-down DESIGN, the authority for boundary shape, planted beds, feature counts, footprints and relative positions. LOWER LEFT: the same saved footprints projected into the requested camera angle. Use this as the ground-plane layout for the result: keep the same boundary corners, openings, separate buildings, bed groups and their order. Raise the objects from those footprints. The projection shows no heights or terrain relief. ${input.hasPhoto ? 'Outside the traced boundary it carries the registered ground photo. Preserve visible vehicle access on its actual side: follow the through-road past the property and any photographed driveway branching through the boundary to the yard. Keep the entrance open where the road meets the yard. Follow the photographed surface. A road can be real even when it has no saved design symbol. Add no route where neither a trace nor the aerial shows one.' : 'Use saved access traces only; the empty exterior carries no road evidence.'} ${input.roofBrief ? 'Its outlined buildings and the enlarged R1 roof detail lock their ground orientation. The highlighted sides of the detail follow the longest traced wall. Diagram wall height is illustrative. ' : ''}TOP RIGHT: ${input.hasPhoto ? 'registered site aerial/drone PHOTO, appearance and surrounding context only; the planned design takes priority over old bare ground. Photographic inset seams and blurred repeated strips are not physical fences or paths; do not reproduce them.' : 'no photo is available; use restrained illustrative materials.'} BOTTOM RIGHT: TERRAIN reference, with real contour elevation labels only when available. Panel titles are reference instructions, not text to reproduce.
 Reconstruct the design in oblique perspective; do not return a tilted flat map or a copy of this board. Keep all placed tanks, buildings, beds, orchard rows, routes and plants, including features touching the boundary. Tree crowns may overlap the boundary naturally. Retain hidden features in their saved positions rather than moving them to face the camera. Building and vegetation heights are illustrative unless explicitly measured in the supplied facts. Do not turn footprint dimensions or catalogue species heights into surveyed object heights.
 TERRAIN EVIDENCE: ${input.terrain.note}
 Draw only the artwork: no panel divisions, text, plant codes, legend, scale bar, compass, border or cream paper. The app adds a white presentation sheet and the saved-design inventory afterwards. Do not invent additional buildings, tanks, ponds, crops or roads. Surrounding context should agree with the photo where available.
@@ -187,11 +187,19 @@ function paintObliqueRoofDetail(ctx: CanvasRenderingContext2D, roof: RoofGuide, 
   ctx.restore();
 }
 
+function appendObliquePath(ctx: CanvasRenderingContext2D, points: readonly [number, number][],
+  box: { x: number; y: number; w: number; h: number }) {
+  points.forEach(([u, v], i) => {
+    const x = box.x + u * box.w, y = box.y + v * box.h;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+}
+
 export function paintObliqueReferenceBoard(ctx: CanvasRenderingContext2D, input: {
   design: CanvasImageSource & { width: number; height: number };
   photo?: CanvasImageSource & { width: number; height: number };
   contours: SheetContourResult; frame: CanvasFrame; terrain: ObliqueTerrainEvidence;
-  boundary: Array<[number, number]>; anchors?: readonly ObliqueAnchor[]; roofs?: readonly RoofGuide[];
+  boundary: Array<[number, number]>; driveway?: readonly [number, number][]; drivewayClosed?: boolean; anchors?: readonly ObliqueAnchor[]; roofs?: readonly RoofGuide[];
 }): void {
   const b = OBLIQUE_BOARD;
   ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, b.width, b.height);
@@ -216,6 +224,14 @@ export function paintObliqueReferenceBoard(ctx: CanvasRenderingContext2D, input:
     input.design.height * Math.sin(OBLIQUE_PITCH_DEG * Math.PI / 180),
     input.roofs?.length ? { ...b.groundView, w: 735 } : b.groundView);
   ctx.drawImage(input.design, projected.x, projected.y, projected.w, projected.h);
+  if (input.photo && input.boundary.length >= 3) {
+    // A blank exterior erased the photographed dirt road beside Ubhejane. Keep these
+    // pixels registered to the same crop while preserving every proposed feature inside.
+    ctx.save(); ctx.beginPath(); ctx.rect(projected.x, projected.y, projected.w, projected.h);
+    appendObliquePath(ctx, input.boundary, projected); ctx.closePath(); ctx.clip('evenodd');
+    ctx.drawImage(input.photo, projected.x, projected.y, projected.w, projected.h);
+    ctx.restore();
+  }
   if (input.roofs?.length) {
     ctx.save(); ctx.strokeStyle = '#274659'; ctx.lineWidth = 2; ctx.fillStyle = '#183246'; ctx.font = 'bold 13px Arial';
     for (const [i, roof] of input.roofs.entries()) {
@@ -249,11 +265,25 @@ export function paintObliqueReferenceBoard(ctx: CanvasRenderingContext2D, input:
     ctx.fillStyle = ANCHOR_INK.hive; ctx.fillText('■  Beehive', 980, 823);
   }
   ctx.restore();
-  if (input.photo) draw(input.photo, b.photo);
+  if (input.photo) {
+    const photoBox = draw(input.photo, b.photo);
+    ctx.save();
+    if (input.boundary.length >= 3) {
+      ctx.beginPath(); appendObliquePath(ctx, input.boundary, photoBox); ctx.closePath();
+      ctx.strokeStyle = '#465B35'; ctx.lineWidth = 1.4; ctx.stroke();
+    }
+    if (input.driveway && input.driveway.length >= 2) {
+      ctx.beginPath(); appendObliquePath(ctx, input.driveway, photoBox);
+      if (input.drivewayClosed) ctx.closePath();
+      ctx.strokeStyle = '#B55C17'; ctx.lineWidth = 2.5; ctx.stroke();
+      ctx.font = '18px Arial'; ctx.fillStyle = '#734016'; ctx.fillText('Ochre line: saved driveway trace', b.photo.x, 639);
+    }
+    ctx.restore();
+  }
   const r = fitObliqueReference(input.frame.imgW, input.frame.imgH, b.terrain);
   const path = (points: Array<[number, number]>) => {
     ctx.beginPath();
-    points.forEach(([u, v], index) => index ? ctx.lineTo(r.x + u * r.w, r.y + v * r.h) : ctx.moveTo(r.x + u * r.w, r.y + v * r.h));
+    appendObliquePath(ctx, points, r);
   };
   ctx.save(); ctx.beginPath(); ctx.rect(b.terrain.x, b.terrain.y, b.terrain.w, b.terrain.h); ctx.clip();
   ctx.strokeStyle = '#294F32'; ctx.lineWidth = 2;
