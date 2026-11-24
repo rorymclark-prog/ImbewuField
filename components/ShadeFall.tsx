@@ -31,6 +31,7 @@ import {
   type ShadeDay,
   type ShadeDayKey,
 } from '@/lib/shade-day';
+import { drawShade3DStage, hitSunArc3D, type OrbitCamera } from '@/lib/shade-3d-canvas';
 import s from './ShadeFall.module.css';
 
 // ── Every word the figure prints (i18n is deferred; keep them here so they are easy to translate). ──
@@ -42,13 +43,12 @@ const T = {
   dayLabel: 'Day',
   objectLabel: 'Object',
   days: { december: '21 December', equinox: 'Equinox', june: '21 June' } as Record<ShadeDayKey, string>,
-  daysShort: { december: 'Dec', equinox: 'Eq.', june: 'Jun' } as Record<ShadeDayKey, string>,
+  daysShort: { december: 'Dec', equinox: 'Equinox', june: 'Jun' } as Record<ShadeDayKey, string>,
   dayLong: {
     december: '21 December, midsummer',
     equinox: 'The equinox (late March or September)',
     june: '21 June, midwinter',
   } as Record<ShadeDayKey, string>,
-  tableHead: { december: 'Dec', equinox: 'Equinox', june: 'Jun' } as Record<ShadeDayKey, string>,
   objectChip: (h: number) => `${h} m ${h <= 2 ? 'hedge' : h <= 3 ? 'wall' : 'tree row'}`,
   objectName: (h: number) => `${h} m ${h <= 2 ? 'hedge' : h <= 3 ? 'wall' : 'row of trees'}`,
   play: 'Play',
@@ -63,7 +63,7 @@ const T = {
   northWord: 'N',
   planTitleBeds: 'm south of the object',
   barsTitle: 'Hours of direct sun, by bed',
-  skyTitle: 'How high the sun climbs, by solar hour',
+  skyTitle: 'How high the sun climbs',
   keysHint: 'Use the left and right arrow keys to step through the day, and Home and End to jump to sunrise and sunset.',
   legend: {
     shadow: 'shadow now',
@@ -73,6 +73,7 @@ const T = {
     noSun: 'bed in shade',
   },
   noPlay: 'The sun is below the horizon.',
+  atRise: 'The sun is on the horizon, so shadows are at their longest.',
   notes: (o: { slopeDeg: number; lengthM: number; declDeg: number; latDeg: number }) =>
     `The model: flat ground (this site’s slope is ${numberLabel(o.slopeDeg, 1)}°, treated as flat), a geometric horizon with no ridges, buildings or other trees, ` +
     `and a single opaque screen ${o.lengthM} m long running east to west, with no thickness. There is no atmospheric refraction and no diffuse light, so ` +
@@ -89,7 +90,7 @@ const HEIGHTS = SCREEN_HEIGHTS_M;
 const DEFAULT_HEIGHT_INDEX = 1;
 const EIGHT_POINT = ['north', 'north-east', 'east', 'south-east', 'south', 'south-west', 'west', 'north-west'];
 const compassWord = (az: number) => EIGHT_POINT[Math.round((((az % 360) + 360) % 360) / 45) % 8];
-const hours = (v: number) => `${v.toFixed(1)} h`;
+const hours = (v: number) => `${numberLabel(v, 1)} h`;
 const metres = (v: number) => `${numberLabel(v, v < 1 ? 2 : v < 10 ? 2 : 1)} m`;
 
 interface Props {
@@ -129,7 +130,7 @@ const tint = (P: Palette): Days<string> => ({ december: P.warn, equinox: P.viole
 interface Rect { x: number; y: number; w: number; h: number }
 interface Layout { wide: boolean; plan: Rect; sky: Rect; bars: Rect; h: number }
 
-const ROW_H = 36;
+const ROW_H = 34;
 function layoutFor(w: number): Layout {
   const barsH = 24 + BED_DISTANCES_M.length * ROW_H + 22;
   if (w >= 720) {
@@ -152,6 +153,7 @@ const BED_W = 4; const BED_D = 1;
 
 export default function ShadeFall({ latDeg, slopeDeg }: Props) {
   const [heightIdx, setHeightIdx] = useState(DEFAULT_HEIGHT_INDEX);
+  const [viewMode, setViewMode] = useState<'plan' | '3d' | 'film'>('3d');
   const heightM = HEIGHTS[heightIdx];
   const results = useMemo(() => {
     try {
@@ -185,6 +187,9 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
     w: 0, h: 0, dpr: 1,
     palette: null as Palette | null,
     draw: null as null | (() => void),
+    viewMode: '3d' as 'plan' | '3d' | 'film',
+    orbit: { yawDeg: 38, pitchDeg: 33 } as OrbitCamera,
+    drag: null as null | { kind: 'orbit' | 'sun'; x: number; y: number; yaw: number; pitch: number },
   });
 
   // ── Control actions: they change `live`, mirror what React shows, and redraw. ──
@@ -232,11 +237,11 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
   const togglePlay = useCallback(() => {
     const L = live.current;
     if (!L.res) return;
-    if (L.playing) { L.playing = false; setPlaying(false); setCapKey((k) => k + 1); return; }
+    if (L.playing) { L.playing = false; setPlaying(false); push(); setCapKey((k) => k + 1); return; }
     const r = L.res[L.sel];
     if (L.t[L.sel] >= r.setHour - 1e-6) { startDay(L.sel, 'one'); return; }
     L.playing = true; L.mode = L.mode ?? 'one'; setPlaying(true); setMode(L.mode);
-  }, [startDay]);
+  }, [startDay, push]);
 
   const seek = useCallback((hour: number) => {
     const L = live.current;
@@ -315,8 +320,16 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
         ctx.restore();
       };
 
-      // ───────────── Plan view ─────────────
-      {
+      // ───────────── Interactive 3D OR 2D Plan view ─────────────
+      if (L.viewMode === '3d') {
+        const R = lay.plan;
+        ctx.save();
+        ctx.beginPath(); ctx.roundRect(R.x, R.y, R.w, R.h, 8); ctx.clip();
+        ctx.translate(R.x, R.y);
+        drawShade3DStage(ctx, R.w, R.h, latDeg, hM, day, r, L.t[day], L.orbit);
+        ctx.restore();
+        ctx.save(); ctx.strokeStyle = P.edge; ctx.lineWidth = 1; ctx.beginPath(); ctx.roundRect(R.x + 0.5, R.y + 0.5, R.w - 1, R.h - 1, 8); ctx.stroke(); ctx.restore();
+      } else {
         const R = lay.plan;
         const sc = Math.min(R.w / (X1 - X0), R.h / (Y1 - Y0));
         const px = (x: number) => R.x + (x - X0) * sc;
@@ -385,7 +398,7 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
         for (const k of SHADE_DAY_KEYS) {
           if (L.t[k] < 12 - 1e-9) continue;
           const len = res[k].noon.shadowLengthM;
-          label(`${T.daysShort[k]} ${metres(len)}`, px(X1 - 0.3), py(-len) + 4, { align: 'right', color: col[k], bold: true });
+          label(`${T.daysShort[k]} ${metres(len)}`, px(SCREEN_LENGTH_M / 2 + 0.4), py(-len) + 4, { color: col[k], bold: true });
         }
 
         // the object's name, north of it
@@ -433,7 +446,7 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
       // ───────────── Sky: how high the sun is, hour by hour ─────────────
       {
         const R = lay.sky;
-        const ml = 30; const mr = 8; const mt = 30; const mb = 22;
+        const ml = 30; const mr = 8; const mt = 24; const mb = 22;
         const x0 = R.x + ml; const x1 = R.x + R.w - mr; const y0 = R.y + R.h - mb; const y1 = R.y + mt;
         const T0 = 4.5; const T1 = 19.5; const A1 = 90;
         const tx = (h: number) => x0 + ((h - T0) / (T1 - T0)) * (x1 - x0);
@@ -482,6 +495,7 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
         ctx.globalAlpha = 1; ctx.fillStyle = P.gold; ctx.beginPath(); ctx.arc(sx, sy, 6, 0, Math.PI * 2); ctx.fill();
         ctx.strokeStyle = P.card; ctx.lineWidth = 1.6; ctx.stroke();
         ctx.restore();
+        label(`${T.solarTime} (h)`, x1, R.y + 12, { align: 'right', halo: false });
       }
 
       // ───────────── Bars: hours of direct sun, bed by bed ─────────────
@@ -511,12 +525,13 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
             ctx.globalAlpha = 0.95;
             if (got > 0.005) { ctx.beginPath(); ctx.roundRect(x0, by, Math.max(2, hx(got) - x0), 7, 2); ctx.fill(); }
             ctx.restore();
-            if (k === day) label(hours(got), hx(rr.daylightHours) + 5, by + 7, { color: col[k], bold: true, halo: false });
+            if (k === day) label(hours(got), hx(rr.daylightHours) + 5, by + 8, { color: col[k], bold: true, halo: false });
           });
         });
         // axis
         const ay = top + BED_DISTANCES_M.length * ROW_H + 8;
         for (let h = 0; h <= maxH; h += 4) label(String(h), hx(h), ay, { align: 'center', halo: false });
+        label('hours of sun', x1 + 4, ay, { align: 'left', halo: false });
       }
     };
 
@@ -637,18 +652,17 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
     };
   }, [results, heightM]);
 
-  const caption = useMemo(() => {
-    const L = live.current;
+  const captionFor = useCallback((day: ShadeDayKey, t: number): string => {
     if (!results) return '';
-    const r = results[L.sel];
-    const t = L.t[L.sel];
+    const r = results[day];
     const obj = T.objectName(heightM);
+    if (t <= r.riseHour + 1e-6) return `${T.dayLong[day]}, sunrise at ${solarClock(r.riseHour)} solar time. ${T.atRise}`;
     if (t >= r.setHour - 1e-6) {
       const bits = r.beds.map((b) => `${b.distanceM} m ${hours(b.sunHours)}`).join(', ');
-      return `${T.dayLong[L.sel]}, sunset at ${solarClock(r.setHour)} solar time. Hours of direct sun behind the ${obj}, by bed: ${bits}, out of ${hours(r.daylightHours)} of daylight.`;
+      return `${T.dayLong[day]}, sunset at ${solarClock(r.setHour)} solar time. Hours of direct sun behind the ${obj}, by bed: ${bits}, out of ${hours(r.daylightHours)} of daylight.`;
     }
     const a = shadeAt(r, t);
-    if (!a.up) return `${T.dayLong[L.sel]}, ${solarClock(t)} solar time. ${T.noPlay}`;
+    if (!a.up) return `${T.dayLong[day]}, ${solarClock(t)} solar time. ${T.noPlay}`;
     const noon = Math.abs(t - 12) < 1.5 / 60;
     const lit = BED_DISTANCES_M.filter((_, i) => a.lit[i]).map((d) => `${d} m`);
     const dark = BED_DISTANCES_M.filter((_, i) => !a.lit[i]).map((d) => `${d} m`);
@@ -657,18 +671,25 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
     const len = a.shadowLengthM ?? 0;
     const lenText = len > 40 ? 'longer than the plot' : metres(len);
     const dir = compassWord(a.sun.azimuthDeg + 180);
-    return `${T.dayLong[L.sel]}, ${solarClock(t)} solar time. The sun is ${numberLabel(a.sun.altitudeDeg, 0)}° high, bearing ${numberLabel(a.sun.azimuthDeg, 0)}° (${compassWord(a.sun.azimuthDeg)}). The ${obj}’s shadow is ${lenText} long and points ${dir}.${noon ? ' In the southern hemisphere the midday sun stands in the north, so midday shadows point south.' : ''} ${beds}`;
+    return `${T.dayLong[day]}, ${solarClock(t)} solar time. The sun is ${numberLabel(a.sun.altitudeDeg, 0)}° high, bearing ${numberLabel(a.sun.azimuthDeg, 0)}° (${compassWord(a.sun.azimuthDeg)}). The ${obj}’s shadow is ${lenText} long and points ${dir}.${noon ? ' In the southern hemisphere the midday sun stands in the north, so midday shadows point south.' : ''} ${beds}`;
+  }, [results, heightM]);
+
+  const spokenCaption = useMemo(() => {
+    const L = live.current;
+    return captionFor(L.sel, L.t[L.sel]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [capKey, results, heightM]);
+  }, [capKey, captionFor]);
+  const shownCaption = useMemo(() => captionFor(sel, clock), [captionFor, sel, clock]);
 
   const readout = useMemo(() => {
     if (!results) return null;
     const r = results[sel];
     const a = shadeAt(r, clock);
     const atSet = clock >= r.setHour - 1e-6;
+    const atRise = clock <= r.riseHour + 1e-6;
     return {
       clock: solarClock(clock),
-      sun: atSet ? 'Sunset: the sun is on the horizon.' : a.up ? `Sun ${numberLabel(a.sun.altitudeDeg, 0)}° high · bearing ${numberLabel(a.sun.azimuthDeg, 0)}° ${aspectLabel(a.sun.azimuthDeg)}` : T.noPlay,
+      sun: atSet ? 'Sunset: the sun is on the horizon.' : atRise ? 'Sunrise: the sun is on the horizon.' : a.up ? `Sun ${numberLabel(a.sun.altitudeDeg, 0)}° high · bearing ${numberLabel(a.sun.azimuthDeg, 0)}° ${aspectLabel(a.sun.azimuthDeg)}` : T.noPlay,
       shadow: a.up && a.shadowLengthM !== null ? `Shadow ${a.shadowLengthM > 40 ? 'longer than the plot' : metres(a.shadowLengthM)}, pointing ${compassWord(a.sun.azimuthDeg + 180)}` : '',
     };
   }, [results, sel, clock]);
@@ -685,9 +706,72 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
           <h2 id="shade-fall-title" className={s.title}>{T.title}</h2>
           <p className={s.sub}>{T.sub(`${numberLabel(Math.abs(latDeg), 1)}°`)}</p>
         </div>
+        <div className={s.viewSwitch} role="group" aria-label="Shade view mode">
+          <button
+            type="button"
+            className={s.chip}
+            aria-pressed={viewMode === '3d'}
+            onClick={() => {
+              live.current.viewMode = '3d';
+              setViewMode('3d');
+              requestAnimationFrame(() => live.current.draw?.());
+            }}
+          >
+            Interactive 3D
+          </button>
+          <button
+            type="button"
+            className={s.chip}
+            aria-pressed={viewMode === 'plan'}
+            onClick={() => {
+              live.current.viewMode = 'plan';
+              setViewMode('plan');
+              requestAnimationFrame(() => live.current.draw?.());
+            }}
+          >
+            Plan view
+          </button>
+          <button
+            type="button"
+            className={s.chip}
+            aria-pressed={viewMode === 'film'}
+            onClick={() => {
+              if (live.current.playing) {
+                live.current.playing = false;
+                live.current.mode = null;
+                setPlaying(false);
+                setMode(null);
+              }
+              live.current.viewMode = 'film';
+              setViewMode('film');
+            }}
+          >
+            Blender 3D film
+          </button>
+        </div>
       </div>
 
-      <div className={s.controls}>
+      {viewMode === 'film' && (
+        <div className={s.stage3d}>
+          <video
+            className={s.video3d}
+            poster="/films/shade-sweep-3d-poster.webp"
+            controls
+            playsInline
+            muted
+            preload="metadata"
+            aria-label="3D Blender solar shadow sweep for a 3 m wall at 28.6 degrees south"
+          >
+            <source src="/films/shade-sweep-3d.mp4" type="video/mp4" />
+          </video>
+          <p className={s.caption3d}>
+            Blender 3D solar study in true 1:1 metre scale (3 m masonry wall, beds 1 m, 2 m, 3 m, 5 m and 8 m south at 28.6° S):
+            21 December midsummer sweeps first (noon shadow 0.27 m), then 21 June midwinter (3.85 m, shading beds 1 m to 3 m).
+          </p>
+        </div>
+      )}
+
+      <div className={s.controls} hidden={viewMode === 'film'}>
         <div className={s.group}>
           <span className={s.groupLabel} id="shade-fall-day">{T.dayLabel}</span>
           <div className={s.chips} role="group" aria-labelledby="shade-fall-day">
@@ -717,24 +801,95 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
         )}
       </div>
 
-      <div className={s.now} aria-hidden>
+      <div className={s.now} aria-hidden hidden={viewMode === 'film'}>
         <span className={s.clock}>{readout.clock} <span className={s.readout}>{T.solarTime}</span></span>
         <span className={s.readout}>{readout.sun}</span>
         {readout.shadow && <span className={s.readout}>{readout.shadow}</span>}
       </div>
 
-      <div ref={wrapRef} className={s.stage}>
+      <div ref={wrapRef} className={s.stage} hidden={viewMode === 'film'}>
         <canvas
           ref={canvasRef}
           className={s.canvas}
           role="img"
           tabIndex={0}
           aria-label={ariaLabel}
+          style={viewMode === '3d' ? { cursor: 'grab', touchAction: 'pan-y' } : undefined}
           onKeyDown={onCanvasKey}
+          onPointerDown={(e) => {
+            if (live.current.viewMode !== '3d' || !live.current.res) return;
+            const rect = e.currentTarget.getBoundingClientRect();
+            const lx = e.clientX - rect.left;
+            const ly = e.clientY - rect.top;
+            const layNow = layoutFor(live.current.w || Math.max(280, Math.round(rect.width)));
+            if (lx <= layNow.plan.w && ly <= layNow.plan.h) {
+              const rCur = live.current.res[live.current.sel];
+              const hit = hitSunArc3D(
+                lx - layNow.plan.x,
+                ly - layNow.plan.y,
+                layNow.plan.w,
+                layNow.plan.h,
+                latDeg,
+                rCur,
+                live.current.t[live.current.sel],
+                live.current.orbit
+              );
+              if (hit.nearSun || hit.minDistPx <= 16) {
+                live.current.drag = {
+                  kind: 'sun',
+                  x: e.clientX,
+                  y: e.clientY,
+                  yaw: live.current.orbit.yawDeg,
+                  pitch: live.current.orbit.pitchDeg,
+                };
+                seek(hit.nearestHour);
+                e.currentTarget.setPointerCapture(e.pointerId);
+                return;
+              }
+            }
+            live.current.drag = {
+              kind: 'orbit',
+              x: e.clientX,
+              y: e.clientY,
+              yaw: live.current.orbit.yawDeg,
+              pitch: live.current.orbit.pitchDeg,
+            };
+            e.currentTarget.setPointerCapture(e.pointerId);
+          }}
+          onPointerMove={(e) => {
+            const d = live.current.drag;
+            if (!d || live.current.viewMode !== '3d') return;
+            if (d.kind === 'sun' && live.current.res) {
+              const rect = e.currentTarget.getBoundingClientRect();
+              const lx = e.clientX - rect.left;
+              const ly = e.clientY - rect.top;
+              const layNow = layoutFor(live.current.w || Math.max(280, Math.round(rect.width)));
+              const rCur = live.current.res[live.current.sel];
+              const hit = hitSunArc3D(
+                lx - layNow.plan.x,
+                ly - layNow.plan.y,
+                layNow.plan.w,
+                layNow.plan.h,
+                latDeg,
+                rCur,
+                live.current.t[live.current.sel],
+                live.current.orbit
+              );
+              seek(hit.nearestHour);
+              return;
+            }
+            live.current.orbit = {
+              yawDeg: d.yaw + (e.clientX - d.x) * 0.45,
+              pitchDeg: Math.max(16, Math.min(62, d.pitch + (e.clientY - d.y) * 0.28)),
+            };
+            live.current.draw?.();
+          }}
+          onPointerUp={() => { live.current.drag = null; }}
+          onPointerCancel={() => { live.current.drag = null; }}
         />
       </div>
 
-      <div className={s.scrub}>
+      <div className={s.scrub} hidden={viewMode === 'film'}>
         <label htmlFor="shade-fall-time" className={s.groupLabel}>{T.timeLabel}</label>
         <input
           id="shade-fall-time"
@@ -749,7 +904,7 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
         />
       </div>
 
-      <div className={s.legend} aria-hidden>
+      <div className={s.legend} aria-hidden hidden={viewMode === 'film'}>
         {SHADE_DAY_KEYS.map((d) => (
           <span key={d} className={s.key}><span className={d === 'december' ? s.swDec : d === 'equinox' ? s.swEq : s.swJun} />{T.days[d]}</span>
         ))}
@@ -758,7 +913,8 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
         <span className={s.key}><span className={s.swSun} />{T.legend.sun}</span>
       </div>
 
-      <p className={s.caption} aria-live="polite">{caption}</p>
+      <p className={s.caption} aria-hidden="true" hidden={viewMode === 'film'}>{shownCaption}</p>
+      <p className={s.srOnly} aria-live="polite">{spokenCaption}</p>
       <p className={s.summary}>{sentences.noon} {sentences.beds}</p>
 
       <div className={s.tableWrap}>
@@ -766,8 +922,8 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
           <caption>Hours of direct sun a day, {T.objectName(heightM)}</caption>
           <thead>
             <tr>
-              <th scope="col">Bed</th>
-              {SHADE_DAY_KEYS.map((d) => <th scope="col" key={d}>{T.tableHead[d]}</th>)}
+              <th scope="col">Bed, south of it</th>
+              {SHADE_DAY_KEYS.map((d) => <th scope="col" key={d}>{T.days[d]}</th>)}
             </tr>
           </thead>
           <tbody>
@@ -777,7 +933,7 @@ export default function ShadeFall({ latDeg, slopeDeg }: Props) {
             </tr>
             {BED_DISTANCES_M.map((dist, i) => (
               <tr key={dist}>
-                <th scope="row">{dist} m south</th>
+                <th scope="row">{dist} m</th>
                 {SHADE_DAY_KEYS.map((d) => {
                   const v = results[d].beds[i].sunHours;
                   return <td key={d} className={v < 0.05 ? s.cellNone : undefined}>{hours(v)}</td>;

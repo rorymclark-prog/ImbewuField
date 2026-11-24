@@ -21,9 +21,11 @@ import { siteClimateFromLocationData } from '@/lib/site-climate';
 import Illustration from '@/components/Illustration';
 import WaterYear from '@/components/WaterYear';
 import RainOnTerrainFilm from '@/components/RainOnTerrainFilm';
+import KeylineSwaleFilm from '@/components/KeylineSwaleFilm';
 import CropGateYear from '@/components/CropGateYear';
 import ShadeFall from '@/components/ShadeFall';
 import SowNow from '@/components/SowNow';
+import TankCalculator from '@/components/design/TankCalculator';
 import workspace from '@/components/layout/Workspace.module.css';
 
 // The example farm's climate exactly as the planner reads it (site-climate.ts), for the gate figure.
@@ -263,12 +265,20 @@ function ExampleInner() {
         {/* The same year as a film: the storm on the site's real ground, then the tank month by month. */}
         <RainOnTerrainFilm />
 
+        {/* Keyline swale 3D cutaway: bare compacted slope vs contoured soakage lens. */}
+        <KeylineSwaleFilm />
+
         {/* The water year: the harvesting card's roof and this site's monthly rain, played through. */}
         <WaterYear
           monthlyMm={data.rainfall.monthly}
           roofM2={water.areaM2}
           rainSource="NASA POWER monthly averages for this point"
         />
+
+        {/* Interactive rain-tank sizing calculator with animated tank cutaway gauge */}
+        <Card>
+          <TankCalculator monthlyRainfallMm={data.rainfall.monthly} dailyUseL={280} />
+        </Card>
 
         {/* Why not this month? The planner's climate gate on the same year, one crop at a time. */}
         {DEMO_CLIMATE && (

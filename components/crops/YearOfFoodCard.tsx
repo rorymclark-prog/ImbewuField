@@ -29,7 +29,7 @@ function otherCover(m: YearOfFoodMonth): string | null {
   return `${list} also expected`;
 }
 
-function MonthCell({ m }: { m: YearOfFoodMonth }) {
+function MonthCell({ m, highlighted }: { m: YearOfFoodMonth; highlighted: boolean }) {
   const empty = m.status !== 'fresh';
   const label = [
     m.freshVeg.length ? `${m.freshVeg.length} crop kind${m.freshVeg.length === 1 ? '' : 's'} ready to pick` : null,
@@ -39,11 +39,13 @@ function MonthCell({ m }: { m: YearOfFoodMonth }) {
   ].filter(Boolean).join(', ');
   return (
     <li
-      className="rounded-lg flex flex-col items-center gap-1 py-2 px-1"
+      className="rounded-lg flex flex-col items-center gap-1 py-2 px-1 transition-colors duration-200"
       style={{
         minWidth: 0,
-        background: empty ? 'transparent' : 'var(--bg-2)',
-        border: empty ? '1.5px dashed var(--gold)' : '1px solid var(--border)',
+        background: highlighted ? 'rgba(31, 77, 43, 0.16)' : (empty ? 'transparent' : 'var(--bg-2)'),
+        border: highlighted
+          ? '1.5px solid var(--emerald)'
+          : (empty ? '1.5px dashed var(--gold)' : '1px solid var(--border)'),
       }}
       aria-label={`${monthName(m.month)}: ${label || 'nothing'}${m.status === 'stored-only' ? ', nothing fresh' : ''}`}
       data-year-of-food-month={m.month}
@@ -66,9 +68,23 @@ function MonthCell({ m }: { m: YearOfFoodMonth }) {
   );
 }
 
-function SuggestionRow({ s, onPlan }: { s: GapFillSuggestion; onPlan: (s: GapFillSuggestion) => void }) {
+function SuggestionRow({
+  s,
+  onPlan,
+  onPreviewMonths,
+}: {
+  s: GapFillSuggestion;
+  onPlan: (s: GapFillSuggestion) => void;
+  onPreviewMonths: (months: number[] | null) => void;
+}) {
   return (
-    <li className="flex flex-wrap items-center gap-x-3 gap-y-1 py-1.5" style={{ borderTop: '1px solid var(--border)' }} data-gap-fill-suggestion={s.crop.key}>
+    <li
+      className="flex flex-wrap items-center gap-x-3 gap-y-1 py-1.5"
+      style={{ borderTop: '1px solid var(--border)' }}
+      data-gap-fill-suggestion={s.crop.key}
+      onMouseEnter={() => onPreviewMonths(s.freshMonths)}
+      onMouseLeave={() => onPreviewMonths(null)}
+    >
       <div className="font-sans flex-1" style={{ minWidth: 180, fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.4 }}>
         <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{s.crop.name}</span>
         {' '}· sow {monthName(s.sowMonth)} in {s.bed.label} ({shareLabel(s.areaFraction)}) · picking {formatMonthSpan(s.freshMonths)}
@@ -76,6 +92,8 @@ function SuggestionRow({ s, onPlan }: { s: GapFillSuggestion; onPlan: (s: GapFil
       <button
         type="button"
         onClick={() => onPlan(s)}
+        onFocus={() => onPreviewMonths(s.freshMonths)}
+        onBlur={() => onPreviewMonths(null)}
         className="font-sans font-semibold rounded-lg"
         style={{ fontSize: 12, padding: '5px 12px', cursor: 'pointer', background: '#1F4D2B', color: '#F7F2E9', border: 'none' }}
         aria-label={`Plan ${s.crop.name}, sown in ${monthName(s.sowMonth)} in ${s.bed.label}`}
@@ -102,6 +120,7 @@ export default function YearOfFoodCard({ year, gapFills, yearMode, hasBeds, clim
   onPlan: (s: GapFillSuggestion) => void;
 }) {
   const [showAll, setShowAll] = useState(false);
+  const [previewMonths, setPreviewMonths] = useState<number[] | null>(null);
   const byMonth = new Map(year.months.map((m) => [m.month, m]));
   const hungry = year.hungryMonths;
   const summary = hungry.length === 0
@@ -123,7 +142,13 @@ export default function YearOfFoodCard({ year, gapFills, yearMode, hasBeds, clim
       </p>
 
       <ol className="grid gap-1.5 grid-cols-4 sm:grid-cols-6 lg:grid-cols-12 mb-2" style={{ listStyle: 'none', padding: 0 }}>
-        {year.months.map((m) => <MonthCell key={m.slot} m={m} />)}
+        {year.months.map((m) => (
+          <MonthCell
+            key={m.slot}
+            m={m}
+            highlighted={previewMonths !== null && previewMonths.includes(m.month)}
+          />
+        ))}
       </ol>
       <div className="font-sans flex flex-wrap gap-x-3 gap-y-1 mb-4" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
         <span className="inline-flex items-center gap-1"><Sprout size={11} aria-hidden style={{ color: 'var(--emerald)' }} /> fresh vegetables &amp; staples</span>
@@ -160,7 +185,14 @@ export default function YearOfFoodCard({ year, gapFills, yearMode, hasBeds, clim
                   </div>
                   {g.suggestions.length > 0 ? (
                     <ul style={{ listStyle: 'none', padding: 0, margin: '4px 0 0' }}>
-                      {g.suggestions.map((s) => <SuggestionRow key={`${s.crop.key}-${s.sowMonth}`} s={s} onPlan={onPlan} />)}
+                      {g.suggestions.map((s) => (
+                        <SuggestionRow
+                          key={`${s.crop.key}-${s.sowMonth}`}
+                          s={s}
+                          onPlan={onPlan}
+                          onPreviewMonths={setPreviewMonths}
+                        />
+                      ))}
                     </ul>
                   ) : hasBeds ? (
                     <p className="font-sans mt-1" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }}>

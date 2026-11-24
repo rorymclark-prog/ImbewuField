@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Onboarding from '@/components/Onboarding';
 import PopiaConsent from '@/components/PopiaConsent';
 import { useAuth } from '@/lib/auth';
@@ -13,6 +14,7 @@ import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
  * needs neither consent nor an account-owned onboarding row.
  */
 export default function AccountOnboardingGates() {
+  const pathname = usePathname();
   const { user, loading } = useAuth();
   const [sample, setSample] = useState(() => isSampleMode());
 
@@ -23,6 +25,7 @@ export default function AccountOnboardingGates() {
   }, []);
 
   if (sample) return null;
+  if (pathname === '/example') return null;
   if (isBackendConfigured() && (loading || !user)) return null;
 
   return (

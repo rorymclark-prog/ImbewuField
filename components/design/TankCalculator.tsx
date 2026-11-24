@@ -60,6 +60,89 @@ const GOLD_DIM = '#7A4408';
 const BLUE = '#3E8FBF'; // STEP_ACCENT.water
 
 const DEFAULT_ROOF_M2 = 80;
+
+function TankCutawayGauge({
+  annualHarvestL,
+  annualUseL,
+  recommendedStorageL,
+  wetSeasonHarvestL,
+  waterNegative,
+}: {
+  annualHarvestL: number;
+  annualUseL: number;
+  recommendedStorageL: number;
+  wetSeasonHarvestL: number;
+  waterNegative: boolean;
+}) {
+  const ratio = annualUseL > 0 ? Math.min(1, annualHarvestL / annualUseL) : 1;
+  const storageCover = wetSeasonHarvestL > 0 ? Math.min(1, recommendedStorageL / wetSeasonHarvestL) : 0;
+  const tankCapacity = Math.max(2500, Math.ceil(recommendedStorageL / 2500) * 2500);
+  const fillPct = tankCapacity > 0 ? Math.max(0.14, Math.min(0.94, recommendedStorageL / tankCapacity)) : 0.5;
+  const innerH = 44;
+  const fillH = Math.round(innerH * fillPct);
+  const fillY = 12 + (innerH - fillH);
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+      <svg
+        width="54"
+        height="64"
+        viewBox="0 0 54 64"
+        fill="none"
+        aria-hidden="true"
+        style={{ flexShrink: 0 }}
+      >
+        {/* Tank body shell */}
+        <rect x="7" y="10" width="40" height="48" rx="6" fill="rgba(31,77,43,0.08)" stroke={GREEN} strokeWidth="1.6" />
+        {/* Roof downpipe spigot */}
+        <path d="M2 5H15V10" stroke={BLUE} strokeWidth="2" strokeLinecap="round" />
+        <clipPath id="jojo-tank-clip">
+          <rect x="9" y="12" width="36" height="44" rx="4" />
+        </clipPath>
+        <g clipPath="url(#jojo-tank-clip)">
+          <rect
+            x="9"
+            y={fillY}
+            width="36"
+            height={fillH}
+            fill={waterNegative ? OCHRE : BLUE}
+            fillOpacity="0.48"
+            style={{ transition: 'y 360ms ease-out, height 360ms ease-out' }}
+          />
+          <path
+            d={`M9 ${fillY} Q18 ${fillY - 2.5} 27 ${fillY} T45 ${fillY} L45 ${fillY + 6} L9 ${fillY + 6} Z`}
+            fill={waterNegative ? OCHRE : BLUE}
+            fillOpacity="0.82"
+          />
+        </g>
+        {/* JoJo horizontal structural ribs */}
+        <path d="M8 23H46M8 35H46M8 47H46" stroke={GREEN} strokeOpacity="0.32" strokeWidth="1" />
+        {/* Outlet tap */}
+        <path d="M47 50H52V53" stroke={DARK} strokeWidth="1.6" strokeLinecap="round" />
+      </svg>
+      <div style={{ flex: 1, minWidth: 0, display: 'grid', gap: 4 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, fontWeight: 700, color: DARK }}>
+          <span>Annual roof harvest vs use</span>
+          <span>{Math.round(ratio * 100)}% met</span>
+        </div>
+        <div style={{ height: 7, borderRadius: 99, background: 'rgba(11,18,11,0.1)', overflow: 'hidden' }}>
+          <div
+            style={{
+              height: '100%',
+              width: `${Math.round(ratio * 100)}%`,
+              background: waterNegative ? OCHRE : GREEN,
+              borderRadius: 99,
+              transition: 'width 360ms ease-out',
+            }}
+          />
+        </div>
+        <div style={{ fontSize: 10.5, color: 'rgba(11,18,11,0.62)' }}>
+          {Math.round(storageCover * 100)}% of wet-season bank stored for dry run
+        </div>
+      </div>
+    </div>
+  );
+}
 /** Read the same cached LocationData the /design page writes, using the ?lat/?lon URL params. */
 function resolveCachedRainfall(): number[] | null {
   if (typeof window === 'undefined') return null;
@@ -195,6 +278,13 @@ export default function TankCalculator({
                       background: 'rgba(62,143,191,0.08)', border: '1px solid rgba(62,143,191,0.25)',
                     }}
                   >
+                    <TankCutawayGauge
+                      annualHarvestL={result.annualHarvestL}
+                      annualUseL={result.annualUseL}
+                      recommendedStorageL={result.recommendedStorageL}
+                      wetSeasonHarvestL={result.wetSeasonHarvestL}
+                      waterNegative={result.waterNegative}
+                    />
                     <div style={{ fontSize: 12.5, lineHeight: 1.5, color: DARK }}>{result.summary}</div>
                     {!result.waterNegative && result.dryMonths > 0 && (
                       <div
