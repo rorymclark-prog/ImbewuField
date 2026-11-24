@@ -338,6 +338,48 @@ test('the full-screen sheet itself minimises, with a visible non-blocking cue', 
     'the full-screen viewer should explain the direct map action without blocking the image');
 });
 
+test('enlarging a finished map keeps its original image and lets a reader pan without dismissing it', () => {
+  const start = glossy.indexOf('{galleryZoomOpen && stageResultImage') + 1;
+  const endMarker = '), document.body)';
+  const end = glossy.indexOf(endMarker, start) + endMarker.length;
+  const js = ts.transpileModule(`return (${glossy.slice(start, end)});`, {
+    fileName: 'viewer.tsx', compilerOptions: { jsx: ts.JsxEmit.React, target: ts.ScriptTarget.ES2022 },
+  }).outputText;
+  const render = new Function('scope', `with (scope) { ${js} }`);
+  const source = 'saved-map.png';
+  const dragOrigin = { current: null };
+  function Viewer() {
+    const [inspectDetail, setInspectDetail] = React.useState(false);
+    return render({ React, inspectDetail, setInspectDetail, dragOrigin, document: { body: {} },
+      galleryZoomOpen: true, stageResultImage: source, galleryZoomRef: null, fullScreenTitle: 'Sector',
+      createPortal: (node: React.ReactNode) => node, formatDesignTranslation: () => 'Sector',
+      t: (key: string) => key, DARK: '#111', styles: {}, X: 'span', ZoomIn: 'span', ZoomOut: 'span',
+      setGalleryZoomOpen: () => assert.fail('inspection must keep the map open'),
+    });
+  }
+  const view = create(React.createElement(Viewer));
+  try {
+    const toggle = () => view.root.findAllByType('button')[1].props.onClick({ stopPropagation() {} });
+    act(toggle);
+    const pane = view.root.findByProps({ role: 'region' });
+    assert.equal(pane.findByType('img').props.src, source);
+    let stopped = false;
+    pane.props.onClick({ stopPropagation() { stopped = true; } });
+    assert.ok(stopped, 'a touch on a detail must not reach the close-on-click backdrop');
+    const target = { scrollLeft: 150, scrollTop: 75, setPointerCapture() {}, hasPointerCapture: () => true,
+      scrollTo(x: number, y: number) { this.scrollLeft = x; this.scrollTop = y; } };
+    const event = { pointerType: 'mouse', button: 0, pointerId: 1, clientX: 40, clientY: 25, currentTarget: target };
+    pane.props.onPointerDown(event);
+    pane.props.onPointerMove({ ...event, clientX: 65, clientY: 10 });
+    assert.deepEqual([target.scrollLeft, target.scrollTop], [125, 90]);
+    pane.props.onLostPointerCapture();
+    assert.equal(dragOrigin.current, null);
+    act(toggle);
+    assert.equal(view.root.findAllByProps({ role: 'region' }).length, 0);
+    assert.equal(view.root.findByType('img').props.src, source);
+  } finally { act(() => view.unmount()); }
+});
+
 test('finish choices appear before advanced options and their longer explanation', () => {
   const actionsStart = glossy.indexOf('className={compact ? undefined : styles.actionsRail}');
   const savedRailStart = glossy.indexOf('<aside className={styles.savedRail}', actionsStart);

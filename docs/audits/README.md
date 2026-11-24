@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+- [24 November 2026 — Glossy maps in Chrome](2026-11-24/glossy-map-browser-review.md) records ten sample sheets at three screen sizes and corrects full-screen inspection and Terrain labels.
+
 - [2026-11-19 — Wisconsin tomato first-harvest reference](2026-11-19/wisconsin-tomato-first-harvest-codex.md): source interpretation, explicit grower choice, saved-profile compatibility and inspected report layout.
 
 - [2026-11-18 — Wisconsin reference disclosure](2026-11-18/wisconsin-reference-disclosure-codex.md): actual Claude F-1 readability correction, unchanged source capsules and canonical records, scoped output checks and separate successor gates.

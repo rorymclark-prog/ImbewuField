@@ -10,7 +10,7 @@ import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { useEscapeClose } from '@/lib/use-escape-close';
 import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
-import { Download, RefreshCw, Gem, FlaskConical, Images, MapPin, Maximize2, X, Trash2, Share2, Check, Upload, AlertTriangle, Sparkles, Image as ImageIcon } from 'lucide-react';
+import { Download, RefreshCw, Gem, FlaskConical, Images, MapPin, Maximize2, ZoomIn, ZoomOut, X, Trash2, Share2, Check, Upload, AlertTriangle, Sparkles, Image as ImageIcon } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import {
   SHEET_EXPORT_PROFILES,
@@ -1082,9 +1082,10 @@ export function drawMarks(
 
   // Earthworks is the digging stage. The generic green bed markers and blue dashed swales
   // instructed the image model to grow vegetables and draw irrigation on the setting-out sheet.
-  // Share the exact sheet's soil footprints, derived pits and cut/berm route vocabulary instead.
+  // Retain the exact footprints and pits. The model copied the setting-out hatches as timber,
+  // so show soil relief along the same swale route in its illustration guide.
   if (drawDesign && filter === 'earthworks') {
-    if (showDesignLines) drawFilteredLines(ctx, state, filter, px, py, pxPerM);
+    if (showDesignLines) drawFilteredLines(ctx, state, filter, px, py, pxPerM, 'illustrated');
     if (showDesignItems) drawEarthworksFeatures(ctx, state, filter, px, py, pxPerM);
     return;
   }
@@ -6464,6 +6465,79 @@ function drawTrueFootprint(
  */
 const SWALE_DEFAULT_WIDTH_M = 1.5;
 
+/** The exact plan uses a survey hatch. The illustration guide needs a cut that sinks into the
+ *  site's own ground and a bank that catches the light. Both use the same centreline and width. */
+function drawIllustratedSwale(ctx: CanvasRenderingContext2D, points: Array<[number, number]>, half: number) {
+  const bankEdge = offsetPolyline(points, -half);
+  const cutEdge = offsetPolyline(points, half);
+  const lengths = points.slice(1).map(([x, y], i) => Math.hypot(x - points[i][0], y - points[i][1]));
+  const total = lengths.reduce((sum, length) => sum + length, 0);
+  if (total === 0) return;
+  const feather = Math.min(half * 2, total / 3);
+  const rim = (edges: Array<[number, number]>) => {
+    const outline: Array<[number, number]> = [[...points[0]]];
+    let travelled = 0;
+    for (let i = 1; i < points.length; i++) {
+      const end = travelled + lengths[i - 1];
+      for (const distance of [feather, total - feather]) {
+        if (distance <= travelled || distance >= end) continue;
+        const t = (distance - travelled) / lengths[i - 1];
+        outline.push([edges[i - 1][0] + (edges[i][0] - edges[i - 1][0]) * t,
+          edges[i - 1][1] + (edges[i][1] - edges[i - 1][1]) * t]);
+      }
+      const scale = Math.min(1, end / feather, Math.max(0, total - end) / feather);
+      outline.push([points[i][0] + (edges[i][0] - points[i][0]) * scale,
+        points[i][1] + (edges[i][1] - points[i][1]) * scale]);
+      travelled = end;
+    }
+    return outline;
+  };
+  ctx.save();
+  ctx.beginPath();
+  rim(bankEdge).forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
+  for (const p of rim(cutEdge).reverse()) ctx.lineTo(...p);
+  ctx.closePath();
+  ctx.clip();
+
+  // One uninterrupted wash per saved segment. Short overlapping brush strokes produced
+  // regular dark seams that the image model could mistake for the very survey pegs we removed.
+  let grainSeed = 731;
+  const random = () => {
+    grainSeed = (Math.imul(grainSeed, 1664525) + 1013904223) >>> 0;
+    return grainSeed / 4294967296;
+  };
+  for (let i = 1; i < points.length; i++) {
+    const [ax, ay] = points[i - 1], [bx, by] = points[i];
+    const length = lengths[i - 1];
+    if (length < 1e-6) continue;
+    const nx = -(by - ay) / length, ny = (bx - ax) / length;
+    const relief = ctx.createLinearGradient(ax - nx * half, ay - ny * half, ax + nx * half, ay + ny * half);
+    relief.addColorStop(0, 'rgba(155,120,78,0)');
+    relief.addColorStop(.17, 'rgba(154,117,80,.53)');
+    relief.addColorStop(.32, 'rgba(193,151,101,.81)');
+    relief.addColorStop(.54, 'rgba(134,102,71,.78)');
+    relief.addColorStop(.67, 'rgba(100,76,56,.78)');
+    relief.addColorStop(.82, 'rgba(126,99,73,.58)');
+    relief.addColorStop(1, 'rgba(164,135,98,0)');
+    ctx.fillStyle = relief;
+    ctx.beginPath();
+    ctx.moveTo(...bankEdge[i - 1]);
+    ctx.lineTo(...bankEdge[i]);
+    ctx.lineTo(...cutEdge[i]);
+    ctx.lineTo(...cutEdge[i - 1]);
+    ctx.closePath();
+    ctx.fill();
+    const grains = Math.min(600, Math.floor(length * .8));
+    for (let j = 0; j < grains; j++) {
+      const t = random(), across = (random() * 1.7 - .9) * half;
+      const size = Math.min(1.7, half * .16) * (.4 + random());
+      ctx.fillStyle = random() < .5 ? 'rgba(230,202,157,.45)' : 'rgba(87,65,43,.34)';
+      ctx.fillRect(ax + (bx - ax) * t + nx * across, ay + (by - ay) * t + ny * across, size, size * .76);
+    }
+  }
+  ctx.restore();
+}
+
 /** Paints a swale as the earthwork it is: a cut ditch, a spoil berm beside it, and the pegged
  *  contour centreline between them — so the sheet can be used to set the work out on the ground
  *  rather than only showing the route water takes. Geometry is offset for drawing only; the saved
@@ -6474,6 +6548,7 @@ function drawSwaleCrossSection(
   style: EarthworksRouteStyle,
   pxPerM?: number,
   widthM?: number,
+  appearance: 'setting-out' | 'illustrated' = 'setting-out',
 ): void {
   if (screenPoints.length < 2) return;
   const smooth = polishedRenderPoints(screenPoints as RenderPoint[]) as Array<[number, number]>;
@@ -6491,6 +6566,10 @@ function drawSwaleCrossSection(
   // A caller without a map scale cannot convert saved metres to pixels. Its single line is a
   // visibility fallback only; every exact sheet supplies pxPerM and therefore preserves width.
   const half = statedHalf ?? Math.max(style.width * 0.9, unstatedHalf);
+  if (appearance === 'illustrated') {
+    drawIllustratedSwale(ctx, smooth, half);
+    return;
+  }
   // Each half of the band is one LANE. Its stroke is `half` wide, so its centreline sits at
   // half/2 — a stroke centred on the full offset would hang outside the band and leave the
   // middle showing bare casing, which is what made the first attempt read as three flat stripes.
@@ -6576,6 +6655,7 @@ function drawFilteredLines(
   /** Pixels per ground metre. Supplied so an EARTHWORK can be drawn at the size it will actually
    *  be dug, rather than at a fixed pixel width that shrinks to a hairline on a big sheet. */
   pxPerM?: number,
+  swaleAppearance: 'setting-out' | 'illustrated' = 'setting-out',
 ): void {
   ctx.save();
   ctx.lineCap = 'round';
@@ -6609,6 +6689,7 @@ function drawFilteredLines(
         earthworksStyle,
         pxPerM,
         l.widthM,
+        swaleAppearance,
       );
       continue;
     }
@@ -9733,6 +9814,7 @@ function drawOverviewContourCaption(ctx:CanvasRenderingContext2D,label:string,x:
   ctx.restore();return bounds;
 }
 
+const TERRAIN_SHEET_LABEL = 'Terrain & Sections';
 async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],placeName?:string):Promise<string|null>{
   // Fetch and intersect in the original saved coordinate system. Cropping is paint-time only.
   const raster=await fetchProfileTerrain(frame,refs.boundary,async url=>fetch(url,{headers:await paidApiHeaders(),signal:AbortSignal.timeout(15_000)}));
@@ -9783,7 +9865,14 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
     const inside=line.points.map(project);
     const clearance=([x,y]:[number,number])=>cuts.length?Math.min(...cuts.map(cut=>{const [ax,ay]=project(cut.profile.a),[bx,by]=project(cut.profile.b);return Math.abs((bx-ax)*(ay-y)-(ax-x)*(by-ay))/Math.hypot(bx-ax,by-ay);})):0;
     const at=inside.filter((_,i)=>i>=inside.length*.15&&i<=inside.length*.85).sort((a,b)=>clearance(b)-clearance(a))[0]??inside[Math.floor(inside.length/2)];
-    if(at)drawOverviewContourCaption(ctx,`${line.elevM} m`,at[0],at[1]-12,18);
+    if(!at)continue;
+    const label=`${line.elevM} m`;
+    ctx.font=`700 18px ${SHEET_BODY_FONT}`;
+    const width=ctx.measureText(label).width+18*.24;
+    const clipRings=[refs.boundary.map(project),[[mx,my],[mx+w,my],[mx+w,my+h],[mx,my+h]] as Array<[number,number]>];
+    const anchor=editorialContourCaptionAnchor([at],width,18*1.3,clipRings)
+      ?? editorialContourCaptionAnchor(inside,width,18*1.3,clipRings);
+    if(anchor)drawOverviewContourCaption(ctx,label,anchor.x,anchor.y,18);
   }
   ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.font=`700 21px ${SHEET_BODY_FONT}`;ctx.fillStyle='#183425';ctx.fillText('N ↑',mx+w-48,my+30);
   for(const building of buildings){const [x,y]=project(centroidOf(building.ring));drawReferenceMapText(ctx,building.label,x,y-22,20,700,'center');}
@@ -9834,7 +9923,8 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
   }
   for(const [index,cut] of cuts.entries()){
     const summary=terrainSectionSummary(cut.profile);if(!summary)continue;
-    const x=975+index*405,y=929;
+    // Keep a lone slope with its graph. Only a second profile needs the intervening space.
+    const x=975+index*405,y=cuts.length===1 ? 562 : 929;
     ctx.save();roundRectPath(ctx,x-10,y-30,380,137,12);ctx.fillStyle='#F5F8F4';ctx.fill();ctx.strokeStyle='#D4DFD4';ctx.lineWidth=1;ctx.stroke();
     ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillStyle=cut.color;ctx.font=`700 18px ${SHEET_BODY_FONT}`;
     ctx.fillText(`${cut.ends.join('–')} · ${index===0?'MAIN DOWNHILL':'CROSS-SITE'} SLOPE`,x,y);
@@ -9843,11 +9933,12 @@ async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:Canv
     ctx.fillText(`${Math.abs(summary.fallM).toFixed(1)} m ${summary.fallM<0?'rise':'fall'} over ${summary.lengthM.toFixed(1)} m`,x,y+66);
     ctx.fillText(`${summary.startElevationM.toFixed(1)} m → ${summary.endElevationM.toFixed(1)} m`,x,y+93);ctx.restore();
   }
+  const sourceY=cuts.length===1 ? 720 : 1074;
   ctx.font=`500 19px ${SHEET_BODY_FONT}`;ctx.fillStyle='#536357';
-  ctx.fillText(`Mapbox Terrain-RGB · ~${terrainGridSpacingM(frame.centerLat).toFixed(1)} m grid · regional estimates`,975,1074);
-  ctx.fillText(cuts.length?'Horizontal and vertical distance use the same scale (1×).':'No consistent section: no slope percentage or angle supplied.',975,1103);
-  ctx.fillText('Contour spacing adds detail without improving accuracy.',975,1132);
-  ctx.fillText('Survey/drone ground data needed for drainage or construction.',975,1161);
+  ctx.fillText(`Mapbox Terrain-RGB · ~${terrainGridSpacingM(frame.centerLat).toFixed(1)} m grid · regional estimates`,975,sourceY);
+  ctx.fillText(cuts.length?'Horizontal and vertical distance use the same scale (1×).':'No consistent section: no slope percentage or angle supplied.',975,sourceY+29);
+  ctx.fillText('Contour spacing adds detail without improving accuracy.',975,sourceY+58);
+  ctx.fillText('Survey/drone ground data needed for drainage or construction.',975,sourceY+87);
   ctx.font=`italic 19px ${SHEET_BODY_FONT}`;ctx.fillStyle='#69776B';ctx.fillText('Sections and contours use the same regional DEM. No new ground measurements or building heights inferred.',48,1230);
   return drainCanvasToDataUrl(canvas,'image/png');
 }
@@ -13087,6 +13178,8 @@ export default function DesignGlossy({
   const autoPreviewHandledKeyRef = useRef<string | null>(null);
   const [galleryLoadedSiteId, setGalleryLoadedSiteId] = useState<string | null>(null);
   const [galleryZoomOpen, setGalleryZoomOpen] = useState(false);
+  const [inspectDetail, setInspectDetail] = useState(false);
+  const dragOrigin = useRef<{ x: number; y: number; left: number; top: number } | null>(null);
   /**
    * TAKING SEVERAL SHEETS OFF THE PHONE AT ONCE. Rory: "let's be able to select and download
    * multiple files at once with a quality selector and also perhaps just have a share option?
@@ -13223,7 +13316,11 @@ export default function DesignGlossy({
   }, [galleryViewId]);
 
   useEffect(() => {
-    if (!galleryZoomOpen) return;
+    if (!galleryZoomOpen) {
+      setInspectDetail(false);
+      dragOrigin.current = null;
+      return;
+    }
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
@@ -13260,7 +13357,8 @@ export default function DesignGlossy({
             : '';
         return {
           id: r.id,
-          label: `${r.label}${suffix}`,
+          // The old title promised a C–D section even for farms with a single traced building.
+          label: `${r.label === 'Terrain & Sections · downhill A–B and buildings C–D' ? TERRAIN_SHEET_LABEL : r.label}${suffix}`,
           thumb: r.thumb,
           resultKind: r.resultKind ?? 'legacy',
           provider: r.provider ?? 'unknown',
@@ -13943,8 +14041,8 @@ export default function DesignGlossy({
     try{
       const sourceFrame=historicalActive&&availableHistoricalBaseline?await buildHistoricalBaselineFrame(frame,availableHistoricalBaseline):frame;
       const image=await buildSectorTerrainProfileSheet(state,sourceFrame,refLayers,placeName);
-      if(!image){setNotice('A downhill section needs usable terrain pixels and a consistent fall across the property. No heights have been invented.');return;}
-      const id=pushGallery('Terrain & Sections · downhill A–B and buildings C–D',image,{resultKind:'exact',provider:'exact',geometryLock:true});
+      if(!image){setNotice('Terrain elevations are unavailable for this property.');return;}
+      const id=pushGallery(TERRAIN_SHEET_LABEL,image,{resultKind:'exact',provider:'exact',geometryLock:true});
       setGalleryViewId(id);setGalleryOpen(true);
     }catch(err){setError(userFacingMessage(err,'Terrain profile unavailable. No surveyed elevations have been supplied.',t));}
     finally{setLoading(null);}
@@ -16380,6 +16478,8 @@ export default function DesignGlossy({
   const stageResultImage = railPreviewImage ?? visibleResultImage;
   const stageIsExact = galleryViewItem ? galleryViewItem.resultKind === 'exact' : isExactRender;
   const galleryViewChip = galleryViewItem ? galleryTileChip(galleryViewItem.resultKind) : null;
+  const fullScreenTitle = galleryViewItem?.label ?? ([placeName, selectedSheet && `${selectedSheet.no} — ${selectedSheet.label}`]
+    .filter(Boolean).join(' · ') || t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt'));
   const stageResultBadge = galleryViewItem
     ? `${galleryViewChip?.text ?? 'SAVED'}${galleryViewItem.freshness === 'current' ? '' : ' · OLDER'}`
     : stageIsExact ? 'Design Map' : 'AI-polished';
@@ -16605,7 +16705,7 @@ export default function DesignGlossy({
         <WorkflowHeading number={2} title="Underlay" />
         {selectedSheet && 'exact' in selectedSheet && selectedSheet.exact==='sector' && <div style={{marginBottom:10}}>
           <button type="button" disabled={loading!==null} onClick={renderTerrainProfile}>Terrain &amp; Sections</button>
-          <p style={{fontSize:11,lineHeight:1.4}}>Opens a separate sheet with A–B downhill, C–D through traced buildings and more contours when the data supports them. The Sector map keeps its 5 m overview.</p>
+          <p style={{fontSize:11,lineHeight:1.4}}>Opens a separate terrain sheet. It shows contours and a downhill profile where elevation data supports them. A second profile appears when a section crosses two traced buildings.</p>
           <details style={{fontSize:11,lineHeight:1.5}}><summary>Terrain source &amp; scale</summary>
             <p>The sheet uses Mapbox Terrain-RGB. Supplemental contours interpolate the same raster as the profiles; closer lines do not make the ground data more accurate. Interpolated plotting points do not improve the underlying resolution. Source dates, local accuracy and mixed height datums are unverified. The archive photograph is aligned to roof corners, not surveyed ground control. Roof footprint widths use your saved plan scale; building heights are not supplied.</p>
             <p>Google Earth Pro can show a profile of a drawn path. Its terrain is a comparison source, not a site survey. A controlled drone ground model or measured levels are needed for drainage or construction.</p>
@@ -17018,7 +17118,7 @@ export default function DesignGlossy({
                 className={styles.stagePreviewButton}
                 onClick={() => setGalleryZoomOpen(true)}
                 aria-label={formatDesignTranslation(t('designGlossyOpenFullScreen'), {
-                  label: galleryViewItem?.label ?? placeName ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt'),
+                  label: fullScreenTitle,
                 })}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -17973,7 +18073,7 @@ export default function DesignGlossy({
           role="dialog"
           aria-modal="true"
           aria-label={formatDesignTranslation(t('designGlossyFullScreenNamed'), {
-            label: galleryViewItem?.label ?? placeName ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt'),
+            label: fullScreenTitle,
           })}
           onClick={() => setGalleryZoomOpen(false)}
           style={{
@@ -18017,26 +18117,57 @@ export default function DesignGlossy({
           >
             <X size={22} />
           </button>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={stageResultImage}
-            alt={galleryViewItem?.label ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
-            onClick={() => setGalleryZoomOpen(false)}
-            style={{
-              // Parent-relative dimensions respect the app's text-size zoom. Viewport units
-              // were enlarged again by that zoom, cutting the right legend off on phones.
-              display: 'block',
-              width: '100%',
-              height: '100%',
-              flex: '1 1 0',
-              minWidth: 0,
-              minHeight: 0,
-              objectFit: 'contain',
-              borderRadius: 10,
-              boxShadow: '0 18px 70px rgba(0,0,0,0.55)',
-              cursor: 'zoom-out',
-            }}
-          />
+          <button type="button" className={styles.sheetZoomButton} onClick={event => {
+            event.stopPropagation();
+            setInspectDetail(current => !current);
+          }}>
+            {inspectDetail ? <ZoomOut size={18} /> : <ZoomIn size={18} />}
+            {t(inspectDetail ? 'zoomOutTitle' : 'zoomInTitle')}
+          </button>
+          {inspectDetail ? (
+            <div className={styles.sheetDetailPane} role="region" aria-label={fullScreenTitle} tabIndex={0}
+              onClick={event => event.stopPropagation()}
+              onPointerDown={event => {
+                if (event.pointerType !== 'mouse' || event.button !== 0) return;
+                const pane = event.currentTarget;
+                dragOrigin.current = { x: event.clientX, y: event.clientY, left: pane.scrollLeft, top: pane.scrollTop };
+                pane.setPointerCapture(event.pointerId);
+              }}
+              onPointerMove={event => {
+                const origin = dragOrigin.current;
+                if (!origin || !event.currentTarget.hasPointerCapture(event.pointerId)) return;
+                event.currentTarget.scrollTo(origin.left + origin.x - event.clientX, origin.top + origin.y - event.clientY);
+              }}
+              onLostPointerCapture={() => { dragOrigin.current = null; }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={stageResultImage} alt={fullScreenTitle} draggable={false} onLoad={event => {
+                const pane = event.currentTarget.parentElement;
+                if (pane) pane.scrollTo((pane.scrollWidth - pane.clientWidth) / 2, (pane.scrollHeight - pane.clientHeight) / 2);
+              }} />
+            </div>
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={stageResultImage}
+              alt={fullScreenTitle}
+              onClick={() => setGalleryZoomOpen(false)}
+              style={{
+                // Parent-relative dimensions respect the app's text-size zoom. Viewport units
+                // were enlarged again by that zoom, cutting the right legend off on phones.
+                display: 'block',
+                width: '100%',
+                height: '100%',
+                flex: '1 1 0',
+                minWidth: 0,
+                minHeight: 0,
+                objectFit: 'contain',
+                borderRadius: 10,
+                boxShadow: '0 18px 70px rgba(0,0,0,0.55)',
+                cursor: 'zoom-out',
+              }}
+            />
+          )}
           <span
             aria-hidden="true"
             style={{
@@ -18053,10 +18184,10 @@ export default function DesignGlossy({
               pointerEvents: 'none',
             }}
           >
-            {t('designGlossyClickMapToMinimise')}
+            {t(inspectDetail ? 'courseDeckPanHint' : 'designGlossyClickMapToMinimise')}
           </span>
           <span style={{ maxWidth: '100%', flexShrink: 0, overflowWrap: 'anywhere', color: '#FBF6EC', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>
-            {galleryViewItem?.label ?? placeName ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
+            {fullScreenTitle}
           </span>
         </div>
       ), document.body)}

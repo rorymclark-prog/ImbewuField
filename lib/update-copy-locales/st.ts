@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed release caption, matched to its English source.
+  "AI Earthworks maps show swales as a dry channel beside a low bank of soil.": "Limmapa tsa AI tsa Earthworks di bontsha foro e ommeng pela tutudu e tlase ya mobu.",
+  "Zoom in on a full-screen map to read its labels and legend.": "Atametsa mmapa o skrineng se felletseng ho bala dileibole le tlhaloso ya matshwao.",
   // Exact unreviewed upstream map pairs; see the two Editorial draft packets dated 7 November 2026.
   "Sector contour labels stay whole near the boundary.": "Mabitso a mela ya bophahamo ho Sector a dula a felletse pela moedi.",
   "Choose Editorial Atlas for a lighter AI style and a circular Sector diagram.": "Kgetha Editorial Atlas bakeng sa setaele sa AI se bobebe le setshwantsho se chitja sa Sector.",
