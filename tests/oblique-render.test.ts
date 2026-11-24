@@ -153,7 +153,15 @@ test('the terrain panel uses actual projected contour points and labels without 
     terrain: obliqueTerrainEvidence(contourLines, site), boundary };
   const before = JSON.stringify(input);
   paintObliqueReferenceBoard(ctx, input);
-  assert.equal(images.length, 2);
+  assert.equal(images.length, 3, 'the two layout views and the separate photograph all reach the model');
+  assert.equal(images[0][0], input.design);
+  assert.equal(images[1][0], input.design, 'the oblique ground guide uses the exact same design pixels');
+  assert.equal(images[2][0], input.photo);
+  const [,x,y,w,h] = images[1] as [unknown, number, number, number, number];
+  assert.ok(x >= OBLIQUE_BOARD.groundView.x && y >= OBLIQUE_BOARD.groundView.y);
+  assert.ok(x + w <= OBLIQUE_BOARD.groundView.x + OBLIQUE_BOARD.groundView.w + 1e-8);
+  assert.ok(y + h <= OBLIQUE_BOARD.groundView.y + OBLIQUE_BOARD.groundView.h + 1e-8);
+  assert.ok(Math.abs(h / w - (640 / 960) * Math.sin(Math.PI / 4)) < 1e-9);
   assert.ok(texts.includes('100 m') && texts.includes('101 m'));
   const r = fitObliqueReference(frame.imgW, frame.imgH, OBLIQUE_BOARD.terrain);
   assert.deepEqual(points[4], [r.x + 0.2 * r.w, r.y + 0.3 * r.h]);

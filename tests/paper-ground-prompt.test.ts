@@ -214,6 +214,7 @@ test('saved bed coordinates describe the same geometry at every print resolution
   const items=[{id:'bed-1',defId:'veg_bed',x:.2,y:.4,wM:12,hM:2,rot:17}, {id:'bed-2',defId:'veg_bed',x:.3,y:.5,wM:12,hM:2,rot:17}];
   const frozen=JSON.stringify(items),frame={imgW:1000,imgH:500,mPerPx:.1};
   const register=bedFootprintRegister(items,frame,'planting');
+  assert.match(bedFootprintRegister(items,frame,'all','upper-left design panel'), /percentages of the upper-left design panel/);
   assert.match(register,/2 separate saved rectangles/);
   assert.match(register,/centre\(20.00,40.00\), size\(12.00,4.00\), rotation 17deg/);
   assert.match(register,/centre\(30.00,50.00\)/);

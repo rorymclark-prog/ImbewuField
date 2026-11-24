@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "AI maps use your site setting and keep separate roofs in the design brief.": "Limmapa tsa AI li sebelisa sebaka sa hao, ’me litaelo li hlalosa marulelo ka bonngoe.",
+  "Oblique maps use a tilted guide from your saved design.": "Limmapa tse shebiloeng ka lehlakore li sebelisa setšoantšo se sekameng sa moralo oo u o bolokileng.",
+
   "Earthworks maps show a fuller downhill swale bank and a wider soil ring on banana circles.": "Limmapa tsa mesebetsi ya mobu di bontsha tutudu e kgolwanyane ka lehlakoreng le theohelang la foro le lesale le pharaletseng la mobu ho pota didikadikwe tsa dipanana.",
   "See soil rings on basins and the downhill swale bank where the slope is known.": "Limmapa tsa mesebetsi ya mobu di bontsha maralla a manyenyane a potileng didikadikwe tsa dipanana le dikotlolo tsa difate. Ha dintlha tsa sebaka di bontsha moepa, tutudu ya foro e hlaha lehlakoreng le theohelang.",
   // Unreviewed release caption, matched to its English source.

@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 November 2026', sha: '2da33a33a', changes: [
+    'AI maps use your site setting and keep separate roofs in the design brief.',
+    'Oblique maps use a tilted guide from your saved design.',
+  ] },
   { when: '24 November 2026', sha: '31e8916bb', changes: [
     'Earthworks maps show a fuller downhill swale bank and a wider soil ring on banana circles.',
   ] },

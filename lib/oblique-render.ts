@@ -4,6 +4,7 @@ import type { SheetContourResult } from '@/lib/sheet-contours';
 import { STYLE_LINES, type StylePreset } from '@/lib/producer-prompt';
 
 export type AiMapView = 'top-down' | 'oblique';
+const OBLIQUE_PITCH_DEG = 45;
 const PREFIX = 'oblique:v1:';
 
 // The view belongs to the durable job, never the picker at the time a background job finishes.
@@ -58,8 +59,8 @@ export function buildObliquePrompt(input: {
   style: StylePreset; elements: string; designBrief: string; terrain: ObliqueTerrainEvidence; hasPhoto: boolean;
 }): string {
   return `${obliqueStyleDescription(input.style)}
-Create ONE finished oblique aerial illustration of this saved garden design. Camera south of the plot looking north, approximately 45 degrees above the ground: north at the back, east on the right. Show building sides and tree/tank volume. Keep the whole property and complete tree crowns/tanks in frame, with breathing room around every edge. This is an illustrative viewpoint, not a measured 3D reconstruction.
-The supplied reference board has three labelled panels. LEFT: saved top-down DESIGN, the authority for boundary shape, planted beds, feature counts, footprints and relative positions. TOP RIGHT: ${input.hasPhoto ? 'registered site aerial/drone PHOTO, appearance and surrounding context only; the planned design takes priority over old bare ground. Photographic inset seams and blurred repeated strips are not physical fences or paths; do not reproduce them.' : 'no photo is available; use restrained illustrative materials.'} BOTTOM RIGHT: TERRAIN reference, with real contour elevation labels only when available. Panel titles are reference instructions, not text to reproduce.
+Create ONE finished oblique aerial illustration of this saved garden design. Camera south of the plot looking north, approximately ${OBLIQUE_PITCH_DEG} degrees above the ground: north at the back, east on the right. Show building sides and tree/tank volume. Keep the whole property and complete tree crowns/tanks in frame, with breathing room around every edge. This is an illustrative viewpoint, not a measured 3D reconstruction.
+The supplied reference board has four labelled panels. UPPER LEFT: saved top-down DESIGN, the authority for boundary shape, planted beds, feature counts, footprints and relative positions. LOWER LEFT: the same saved footprints projected into the requested camera angle. Use this as the ground-plane layout for the result: keep the same boundary corners, openings, separate buildings, bed groups and their order. Raise the objects from those footprints. The projection shows no heights or terrain relief. TOP RIGHT: ${input.hasPhoto ? 'registered site aerial/drone PHOTO, appearance and surrounding context only; the planned design takes priority over old bare ground. Photographic inset seams and blurred repeated strips are not physical fences or paths; do not reproduce them.' : 'no photo is available; use restrained illustrative materials.'} BOTTOM RIGHT: TERRAIN reference, with real contour elevation labels only when available. Panel titles are reference instructions, not text to reproduce.
 Reconstruct the design in oblique perspective; do not return a tilted flat map or a copy of this board. Keep all placed tanks, buildings, beds, orchard rows, routes and plants, including features touching the boundary. Tree crowns may overlap the boundary naturally. Retain hidden features in their saved positions rather than moving them to face the camera. Building and vegetation heights are illustrative unless explicitly measured in the supplied facts. Do not turn footprint dimensions or catalogue species heights into surveyed object heights.
 TERRAIN EVIDENCE: ${input.terrain.note}
 Draw only the artwork: no panel divisions, text, plant codes, legend, scale bar, compass, border or cream paper. The app adds a white presentation sheet and the saved-design inventory afterwards. Do not invent additional buildings, tanks, ponds, crops or roads. Surrounding context should agree with the photo where available.
@@ -77,7 +78,8 @@ export function fitObliqueReference(width: number, height: number, box: { x: num
 }
 
 export const OBLIQUE_BOARD = { width: 1920, height: 1280,
-  design: { x: 24, y: 64, w: 1200, h: 1192 },
+  design: { x: 24, y: 64, w: 1200, h: 710 },
+  groundView: { x: 24, y: 846, w: 1200, h: 410 },
   photo: { x: 1256, y: 64, w: 640, h: 550 },
   terrain: { x: 1256, y: 700, w: 640, h: 490 },
 } as const;
@@ -92,6 +94,7 @@ export function paintObliqueReferenceBoard(ctx: CanvasRenderingContext2D, input:
   ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, b.width, b.height);
   ctx.fillStyle = '#203C28'; ctx.font = 'bold 25px Arial';
   ctx.fillText('DESIGN — north up', 24, 38);
+  ctx.fillText('GROUND FOOTPRINTS — looking north from the south', 24, 823);
   ctx.fillText(input.photo ? 'SITE PHOTO — north up' : 'NO SITE PHOTO', 1256, 38);
   ctx.fillText('TERRAIN — north up', 1256, 670);
   const draw = (image: typeof input.design, box: typeof b.design | typeof b.photo) => {
@@ -99,6 +102,11 @@ export function paintObliqueReferenceBoard(ctx: CanvasRenderingContext2D, input:
     ctx.drawImage(image, r.x, r.y, r.w, r.h);
   };
   draw(input.design, b.design);
+  // Both panels use the same pixels: an orthographic south view shortens north–south
+  // distances by the sine of the camera pitch. Elevations belong to the terrain panel.
+  const projected = fitObliqueReference(input.design.width,
+    input.design.height * Math.sin(OBLIQUE_PITCH_DEG * Math.PI / 180), b.groundView);
+  ctx.drawImage(input.design, projected.x, projected.y, projected.w, projected.h);
   if (input.photo) draw(input.photo, b.photo);
   const r = fitObliqueReference(input.frame.imgW, input.frame.imgH, b.terrain);
   const path = (points: Array<[number, number]>) => {

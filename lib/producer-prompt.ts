@@ -99,7 +99,7 @@ const FEATURE_LEGEND =
   `a green rectangle marker → a PLANTED vegetable bed in full growth, never bare or freshly tilled ground: dense rows of leafy vegetables filling the rectangle, individual plants visible from above as distinct rosettes and clumps, with only narrow strips of soil between the rows; beds side by side stay separate rectangles and never merge into one green band, hedge or shrub row; an olive-gold area marker → ${STAPLE_GARDEN_APPEARANCE}; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building; ` +
   `a grey/tan tinted polygon area → a real driveway surface (gravel or paving) exactly that shape and size, empty of vehicles; a warm-tan tinted polygon area → a paved outdoor patio exactly that shape and size; a blue tinted polygon area → a real dam or pond of open water exactly that shape and size; ` +
   // Line features — drawn into every composite but previously never explained (audit find):
-  `a dusty-violet line → a real farm fence following exactly that path (posts + wire); a gold dashed line → a walking path of exactly that route; a light-blue dashed line → a swale (on-contour water-harvesting ditch with a planted berm) along exactly that line; a dark-blue solid line → a buried water pipe route (show as a subtle trench-line); a bright-blue solid line → a drip-irrigation line with sparse emitters along the beds it crosses; a solid violet line → a subsurface filtered-greywater route, buried and never an open channel; a deep-green line → a windbreak hedge of dense shrubs/trees along exactly that line. `;
+  `a dusty-violet line → a real farm fence following exactly that path (posts + wire); a gold dashed line → a walking path of exactly that route; a light-blue dashed line → a swale (dry on-contour channel; if site fall is known, keep its uphill edge flush and put the spoil bank downslope) along exactly that line; a dark-blue solid line → a buried water pipe route (show as a subtle trench-line); a bright-blue solid line → a drip-irrigation line with sparse emitters along the beds it crosses; a solid violet line → a subsurface filtered-greywater route, buried and never an open channel; a deep-green line → a windbreak hedge of dense shrubs/trees along exactly that line. `;
 
 function geometryLockTail(): string {
   return (
@@ -300,8 +300,8 @@ export function buildProducerPrompt(
   const isLayerMap = !!layerLabel && layerLabel !== 'Full design';
   const titleLabel = layerLabel ? ` (${layerLabel})` : '';
   const task = mapKind === 'base'
-    ? `TASK: edit this satellite photo of a real South African smallholding into a faithful illustrated base map${titleLabel}. Draw the site exactly as it exists today, using the photo as the geometry source.`
-    : `TASK: edit this satellite photo of a real South African smallholding${titleLabel} into a faithful illustrated site map.`;
+    ? `TASK: edit this satellite photo of a real smallholding into a faithful illustrated base map${titleLabel}. Draw the site exactly as it exists today, using the photo as the geometry source.`
+    : `TASK: edit this satellite photo of a real smallholding${titleLabel} into a faithful illustrated site map.`;
   const layerFocus = isLayerMap
     ? `LAYER FOCUS: this is the ${layerLabel!.toUpperCase()} sheet. Make that layer the clearest thing on the page. The rest of the site stays a calm supporting background in the same style.`
     : `LAYER FOCUS: paint the whole property as one complete illustrated map, with the real site layout preserved from the source image.`;
@@ -410,8 +410,8 @@ export function buildProducerPromptLegacy(
     `STRICT BUILDING RULE — READ THIS TWICE: paint ONLY the main house's roof, plus any building explicitly marked in the list below. Do NOT paint a second building, shed, carport, garage or any other outbuilding ANYWHERE on the plot, even if a shape near the driveway, a gate, a shadow or a tree canopy looks roof-like to you — those are ALWAYS ground, vegetation or hardstanding, never a structure, unless that exact structure is named in the marked-features list. When in doubt, it is not a building. `;
 
   const task = mapKind === 'base'
-    ? `\nTASK: repaint this satellite photo of a REAL South African smallholding as a beautiful illustrated BASE MAP of the land exactly as it is today${layerLabel ? ' (the ' + layerLabel + ')' : ''}. Paint what the photo actually shows — the main house, existing trees and vegetation, lawn, bare ground, paths and driveway — plus exactly the marked existing features, and no other buildings (see the strict building rule below). `
-    : `\nTASK: turn this satellite photo of a REAL South African smallholding${layerLabel ? ' (the ' + layerLabel + ')' : ''} into a beautiful illustrated site map. `;
+    ? `\nTASK: repaint this satellite photo of a REAL smallholding as a beautiful illustrated BASE MAP of the land exactly as it is today${layerLabel ? ' (the ' + layerLabel + ')' : ''}. Paint what the photo actually shows — the main house, existing trees and vegetation, lawn, bare ground, paths and driveway — plus exactly the marked existing features, and no other buildings (see the strict building rule below). `
+    : `\nTASK: turn this satellite photo of a REAL smallholding${layerLabel ? ' (the ' + layerLabel + ')' : ''} into a beautiful illustrated site map. `;
 
   const isLayerMap = !!layerLabel && layerLabel !== 'Full design';
   const layerFocus = isLayerMap
@@ -550,6 +550,10 @@ export const STYLE_LINES: Record<StylePreset, string> = {
 // Both marker vocabularies must describe one physical cover, rather than one inventing a roof.
 const SHADE_TUNNEL_ART_DIRECTION = 'a shade tunnel marker is a frame covered in porous dark shade mesh, with its crop beds faintly visible beneath. Show the mesh canopy across its exact footprint and thin frame ribs; never an uncovered vegetable bed or a solid metal building roof';
 
+// On a planted sheet the vegetation may change, but it must still sit on the same earthwork.
+const PLANTED_BANANA_CIRCLE = 'a banana circle is a SUNKEN pit with a smaller mulch-filled core and a broad rounded raised earth bund around it. Keep the outer edge on its marker footprint and the banana leaves on the rim, leaving the core visible';
+const SWALE_LANDFORM = 'a swale is a dry on-contour hollow. Where the site fall is known, the uphill edge stays flush with the original ground and one fuller spoil bank lies downslope. Where the fall is unconfirmed, keep the channel neutral';
+
 const M = {
   // WAS: 'green rectangles are vegetable beds full of cabbages and leafy greens'. Rory, on a
   // finished hybrid: "the veg beds still look like a hedge and don't have vegetables". Two causes,
@@ -580,7 +584,7 @@ const M = {
   driveway: 'the near-black tarred strip is the existing driveway — a plain tar access track of exactly its traced shape, empty of vehicles, kept flat and dark; never lawn, never a raised slab, never the same colour as a roof',
   fence: 'a dusty-violet line is a farm fence of posts and wire along exactly that path',
   path: 'a gold dashed line is a walking path along exactly that route',
-  swale: 'a light-blue dashed line is a swale — a planted water-harvesting ditch on contour',
+  swale: `a light-blue dashed swale line follows the saved route; ${SWALE_LANDFORM}`,
   pipe: 'a dark-blue line is a buried water-pipe route, shown as a subtle trench line',
   drip: 'a bright-blue solid line with sparse emitter dots is a drip-irrigation line',
   windbreak: 'a deep-green line is a windbreak hedge of dense shrubs and trees',
@@ -595,7 +599,7 @@ const M = {
   // farmer drew came out as nothing at all. Text mirrors OVERLAY_ICONS' already-fixed language —
   // this is propagating an existing fix to the path that was missing it, not new invention.
   tree_basin: 'a small brown circular marker about 2 m across is a tree basin — draw ONLY the earthwork: a low raised mound of bare soil at the centre, ringed by a doughnut-shaped mulched moat, clear dry ground between mound and mulch. It carries NO plant of its own — never a tree or shrub standing in it',
-  banana_circle: 'a larger brown circular marker about 3.5 m across is a banana circle — a sunken mulch-filled pit about 2 m across, ringed by a raised earth bund, four or five broad paddle-shaped banana leaves fanning out over the rim. Opposite silhouette to a tree basin: this is a SUNKEN pit, a tree basin is a RAISED mound',
+  banana_circle: PLANTED_BANANA_CIRCLE,
   mulch_bank: 'a hatched rectangular Vetiver Bank marker is a compact block of upright blue-green vetiver tussocks filling exactly that rectangle and no larger, never a band running along the boundary or another line',
   greywater_basin: 'a small brown circular marker about 1.5 m across is a greywater or infiltration basin — a gravel-filled sump with a visible inlet pipe entering one side and low reeds around the rim only, no plant of its own',
   greywater_line: 'a solid violet line is a greywater line — redraw it along exactly its traced route, feeding only the basin(s) it actually reaches; add no branch, fitting or basin that is not already marked. Discharges below mulch, never onto edible leaves',
@@ -727,6 +731,7 @@ export function bedFootprintRegister(
   items: readonly PlacedItem[],
   frame: Pick<CanvasFrame, 'imgW' | 'imgH' | 'mPerPx'>,
   filter: GlossyLayerFilter,
+  reference: 'supplied image' | 'upper-left design panel' = 'supplied image',
 ): string {
   const beds = items.filter((item) => {
     const def = ELEMENTS_BY_ID[item.defId];
@@ -747,7 +752,7 @@ export function bedFootprintRegister(
     length += row.length + 2;
   }
   const remainder = listed.length < geometry.length ? `; remaining ${geometry.length - listed.length} beds follow their image footprints` : '';
-  return `BED FOOTPRINTS — ${beds.length} separate saved rectangles. Coordinates are percentages of the supplied image, x right, y down; size is unrotated width,height; rotation is clockwise. Preserve every outer corner and gap; crop rows are texture INSIDE one bed, never extra beds. ${listed.join('; ')}${remainder}. Do not merge or subdivide beds or add a tunnel, roof, hedge or border beside them.`;
+  return `BED FOOTPRINTS — ${beds.length} separate saved rectangles. Coordinates are percentages of the ${reference}, x right, y down; size is unrotated width,height; rotation is clockwise. Preserve every outer corner and gap; crop rows are texture INSIDE one bed, never extra beds. ${listed.join('; ')}${remainder}. Do not merge or subdivide beds or add a tunnel, roof, hedge or border beside them.`;
 }
 
 function showcaseMarkerGlossary(sheetKind: ShowcaseSheetKind, elementsText: string): string {
@@ -802,7 +807,7 @@ export function buildShowcasePrompt(
     .join(' ');
   return [
     STYLE_LINES[stylePreset],
-    `TASK: edit this satellite photo of a real South African smallholding into a beautiful hand-illustrated site plan sheet titled "${title}".`,
+    `TASK: edit this satellite photo of a real smallholding into a beautiful hand-illustrated site plan sheet titled "${title}".`,
     `KEEP EXACT: stay faithful to the photo and preserve the original framing, boundary, driveway, roof outlines, scale and north-up orientation. Draw the illustration inside the site exactly where the source image places it.`,
     `VIEW: flat orthographic top-down plan only. No oblique shot, no perspective tilt, no 3D camera, no horizon, no isometric view.`,
     `LAYOUT: use a landscape plan sheet with the map filling the left side and a clean right-hand title/legend panel on the right, like the direct-ChatGPT plan sheets.`,
@@ -846,7 +851,7 @@ const OVERLAY_ICONS: Record<string, string> = {
   half_moon: 'a circular earthwork marker → a half-moon water-harvesting basin: a shallow crescent-shaped depression open on its downhill side, backed by a low curved earth bund on the uphill side',
   berm: 'a narrow long rectangular marker → an on-contour earth berm: a low grassed ridge of compacted soil running exactly along that line, no taller than knee height',
   terrace: 'a narrow long rectangular marker → a terrace retaining bank: a hatched, textured retained riser face holding back the level change, visibly distinct from the flat ground on either side of it',
-  banana:    'a banana-circle marker → a sunken pit about 2 m across filled with dark mulch and ringed by a raised earth bund, with four or five broad paddle-shaped banana leaves fanning out over the rim',
+  banana: PLANTED_BANANA_CIRCLE,
   // "along exactly that line" was the ghost-hedge bug. Vetiver Bank (mulch_bank) is shape 'rect',
   // 2x2 m by default — it has NO line. So this clause ordered a continuous band along a line that
   // does not exist in the image, while rule 5 simultaneously demanded the icon stay the size of its
@@ -911,7 +916,7 @@ const OVERLAY_ICONS: Record<string, string> = {
   patio:     'a warm-tan area marker → a paved patio of exactly that shape, laid in a regular slab pattern',
   fence:     'a dusty-violet line → a fence line: a thin dark line with small regular posts',
   path:      'a gold dashed line → a walking path: a warm buff strip with soft edges',
-  swale:     'a light-blue dashed line → a swale: a slim on-contour channel with a green planted berm on its downhill side',
+  swale: `a light-blue dashed swale line follows the saved route; ${SWALE_LANDFORM}`,
   pipe:      'a dark-blue line → a buried pipe: a thin solid navy line',
   drip:      'a bright-blue solid line with sparse dots → a drip-irrigation run: a crisp #238ACB tube with small pale-blue emitters along it',
   windbreak: 'a deep-green line → a windbreak: a dense row of small green canopy discs',
@@ -935,7 +940,7 @@ const ICON_MATCH: Record<string, RegExp> = {
   tank: /tank|jojo/i, tap: /tap|standpipe|faucet/i, dam: /\bdam\b|\bpond\b/i, // anchored: unanchored, this fired on "Maca-dam-ia Tree"
   // Narrowed to actual basins (audit finding 2026-07-25) — see the OVERLAY_ICONS.basin comment.
   basin: /greywater basin|infiltration basin/i, greywater_fitting: /greywater outlet|greywater diverter/i,
-  tree_basin: /tree basin/i, banana: /banana/i, mulch: /mulch bank|vetiver bank/i,
+  tree_basin: /tree basin/i, banana: SHOWCASE_MARKER_MATCH.banana_circle, mulch: /mulch bank|vetiver bank/i,
   borehole: /borehole|well/i, water_trough: /water trough/i, first_flush: /first-flush|first flush/i,
   pump_filter: /pump\s*&?\s*filter/i, half_moon: /half-moon|half moon/i, berm: /\bberm\b/i, terrace: /terrace|retaining bank/i,
   // Narrowed from /bed|garden|veg/i: the bare "garden" alternative also fired on "Staple garden",
@@ -1226,7 +1231,7 @@ export function buildSatelliteOverlayPrompt(args: {
     ? `6. ICON LANGUAGE — small, crisp, semi-3D, clean saturated graphics with simple shading: ${iconSpec}.`
     : '6. ICON LANGUAGE — small, crisp, semi-3D, clean saturated graphics with simple shading, consistent across the sheet.';
 
-  const body = `TASK: this is sheet "${title}"${placeName ? ` for ${placeName}` : ''}. You are editing a real satellite photograph of a South African smallholding on which the farmer's design is already marked as flat coloured placeholder shapes. Deliver one landscape plan sheet whose map is that same photograph with a crisp graphic overlay drawn on top of it.
+  const body = `TASK: this is sheet "${title}"${placeName ? ` for ${placeName}` : ''}. You are editing a real satellite photograph of a smallholding on which the farmer's design is already marked as flat coloured placeholder shapes. Deliver one landscape plan sheet whose map is that same photograph with a crisp graphic overlay drawn on top of it.
 
 1. THE RULE ABOVE ALL OTHERS — THE BOUNDARY DIVIDES THE SHEET IN TWO. The property boundary is the edge between a finished drawing and its context, and that contrast is the whole look.
 
@@ -1338,7 +1343,7 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
   // asking for something the model correctly refuses.
   if (isPhotoPreservingStyle(stylePreset)) {
     const enhanceBody = [
-      `TASK: enhance this real aerial photograph of a South African smallholding${placeName ? ` (${placeName})` : ''} — a photographic correction pass, not an illustration. This is the background of a sector-analysis sheet; the sun, wind, fire, water and frost analysis is drawn by the app afterwards from measured site data, on top of this photograph.`,
+      `TASK: enhance this real aerial photograph of a smallholding${placeName ? ` (${placeName})` : ''} — a photographic correction pass, not an illustration. This is the background of a sector-analysis sheet; the sun, wind, fire, water and frost analysis is drawn by the app afterwards from measured site data, on top of this photograph.`,
       `PHOTOGRAPHIC ENHANCEMENT ONLY: correct exposure, white balance, contrast, dehaze and sharpness so the photograph reads clearly at print size — richer greens, clearer soil colour, crisper detail in shadowed areas — the way a real estate or survey photographer would grade a drone photo. Every object, edge and shadow stays exactly where and what it photographically is: the same roofs, the same trees, the same tracks, the same ground. This is colour and clarity correction, never repainting, never illustration, never a stylised or painterly look.`,
       restyleOnly,
       noInvent,
@@ -1349,7 +1354,7 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
     return `${STYLE_LINES[stylePreset]}\n\n${enhanceBody}`;
   }
   const body = [
-    `TASK: turn this whole aerial photograph of a real South African smallholding${placeName ? ` (${placeName})` : ''} into one finished illustrated map, edge to edge, in the style below. This is the background of a sector-analysis sheet; the sun, wind, fire, water and frost analysis is drawn by the app afterwards from measured site data, on top of this artwork.`,
+    `TASK: turn this whole aerial photograph of a real smallholding${placeName ? ` (${placeName})` : ''} into one finished illustrated map, edge to edge, in the style below. This is the background of a sector-analysis sheet; the sun, wind, fire, water and frost analysis is drawn by the app afterwards from measured site data, on top of this artwork.`,
     edgeToEdge,
     stylePreset === 'editorial_atlas'
       ? `EDITORIAL SECTOR APPEARANCE: a light, finely drawn site illustration with restrained natural materials and open legible surfaces. Keep the full rectangular source crop: do not draw a circle or crop any boundary tip. The app fits the complete proposed boundary inside a circular compass diagram on white paper, with ochre summer suns, indigo winter suns, teal and rust wind bands, clear callout cards and an editorial key. Paint none of those graphics or lettering. Preserve THIS site's land cover and feature positions; never copy the reference site's directions, season dates, terrain numbers or advice. No vignette or dark surround.`
@@ -1398,7 +1403,7 @@ export function buildPhasingRestylePrompt(stylePreset: StylePreset, placeName?: 
   const photographic = ground === 'photo';
   const body = [
     `${PHASING_ARTWORK_PROMPT_MARKER}.`,
-    `TASK: ${photographic ? 'enhance the clarity of' : 'illustrate'} this MAP COLUMN of a real South African smallholding${placeName ? ` (${placeName})` : ''} in the selected style. It is the map artwork for an implementation and phasing sheet. The schedule panel is not in this image; the app adds it afterwards.`,
+    `TASK: ${photographic ? 'enhance the clarity of' : 'illustrate'} this MAP COLUMN of a real smallholding${placeName ? ` (${placeName})` : ''} in the selected style. It is the map artwork for an implementation and phasing sheet. The schedule panel is not in this image; the app adds it afterwards.`,
     ground === 'paper'
       ? `WHITE PAPER FINISH: paint only the supplied feature footprints as detailed plan illustrations. All space between and beyond features stays pure white drawing paper; add no ground, wash, terrain or neighbouring landscape.`
       : photographic
@@ -1476,7 +1481,7 @@ export function buildShowcasePromptLegacy(
   const title = `${(layerLabel ?? 'Site plan').toUpperCase()}${placeName ? ' — ' + placeName : ''}`;
   return `${STYLE_LINES[stylePreset]}
 
-TASK: transform this satellite photo of a REAL South African smallholding into a finished, frame-worthy ILLUSTRATED SITE PLAN sheet titled "${title}" — the kind of beautiful hand-crafted map that opens a professional permaculture design report.
+TASK: transform this satellite photo of a REAL smallholding into a finished, frame-worthy ILLUSTRATED SITE PLAN sheet titled "${title}" — the kind of beautiful hand-crafted map that opens a professional permaculture design report.
 
 INSIDE THE BOUNDARY ONLY: repaint everything INSIDE the property boundary as illustration in the style above — ground, buildings, trees, beds, all of it. Everything OUTSIDE the boundary line stays the ORIGINAL PHOTOGRAPH, untouched — do not repaint, restyle, recolour or redraw ANY pixel beyond the boundary. The finished sheet reads as a painted plan set into the real aerial photo. (The legend panel and title block are the only things allowed to sit over the photographic margin, as clean paper panels.)
 

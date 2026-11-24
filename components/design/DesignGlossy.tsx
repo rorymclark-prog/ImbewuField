@@ -1014,7 +1014,11 @@ export function drawMarks(
       });
       ctx.closePath();
       // Pale grey courtyard guides were read as another roof on plain-paper Water jobs.
-      ctx.fillStyle = z.feature === 'patio' && !frame.satDataUrl ? '#D8BE92' : `${meta.color}33`;
+      const paperDesign = drawDesign && !showToolGlyphs && !frame.satDataUrl;
+      // A faint ground wash hid the four separate crop plots on the oblique guide. Keep their
+      // saved corners and intervening paths visible beneath the later canopy marks.
+      const fieldGuide = paperDesign && z.feature === 'staple_garden' && (filter === 'all' || filter === 'planting');
+      ctx.fillStyle = z.feature === 'patio' && !frame.satDataUrl ? '#D8BE92' : meta.color + (fieldGuide ? '99' : '33');
       ctx.fill();
     }
     // Sheet 01 ("Existing site & base") had zero ground name labels — groundLabelsForSheet was
@@ -1947,7 +1951,7 @@ export function buildDesignBrief(
   const before: string[] = [];
   const after: string[] = [];
 
-  before.push(`PLACE: ${placeName ?? 'this smallholding'} — a real South African smallholding.`);
+  before.push(`PLACE: ${placeName ?? 'the saved site'}. Use the supplied local aerial and site evidence for the landscape.`);
   if (state.lines.some(line => line.kind === 'swale') && site?.elevation && terrainFallVector(site.elevation)) {
     before.push(`SWALES: indicative site fall is ${Math.round(site.elevation.aspectDeg)}° clockwise from true north on this north-up plan. Use the downhill shoulder shown in the guide for the spoil bank.`);
   }
@@ -1957,11 +1961,10 @@ export function buildDesignBrief(
   if (refLayers.boundary.length >= 3) {
     before.push('BOUNDARY: the property boundary is traced; the whole design sits inside it.');
   }
-  if (refLayers.house.length >= 3) {
-    const [hx, hy] = centroidOf(refLayers.house);
-    before.push(
-      `HOUSE: one main house, ${compass8(hx, hy)} on the plot — the ONLY building on this site unless another is named under ELEMENTS below.`,
-    );
+  const buildings = authoritativeHouseFootprints(state, refLayers);
+  if (buildings.length) {
+    const positions = buildings.map(ring => compass8(...centroidOf(ring)));
+    before.push(`BUILDINGS: ${buildings.length} distinct traced roof footprint${buildings.length === 1 ? '' : 's'} on the plan (${joinWithin(positions, 90, 'locations')}). Keep each roof separate, with its own outline and orientation. Keep open gaps and paved yards between buildings visible.`);
   }
   if (refLayers.driveway.length >= 2) {
     const a = refLayers.driveway[0];
@@ -15129,7 +15132,7 @@ export default function DesignGlossy({
     setLoading('falgpt');
     try {
       const style = producerStyle ?? DEFAULT_PRODUCER_STYLE;
-      const sourceUnderlay: SheetUnderlay = hasFarmerPhoto(frameProp) ? 'photo' : frameProp.satDataUrl ? 'satellite' : 'plain';
+      const sourceUnderlay = recommendedSheetSettings('all', frameProp, style).underlay;
       const sourceFrame = frameForUnderlay(frameProp, sourceUnderlay);
       const sceneSnapshot = await createRenderSceneSnapshot({
         state, frame: sourceFrame, refLayers, site, placeName, labelMode, underlay: sourceUnderlay,
@@ -15159,8 +15162,12 @@ export default function DesignGlossy({
         if (photo) releaseImageSource(photo);
       }
       const prompt = buildObliquePrompt({ style, terrain, hasPhoto: Boolean(p.frame.satDataUrl),
-        elements: producerElementsText(frozen.state, frozen.refLayers, 'all', false),
-        designBrief: buildDesignBrief(frozen.state, frozen.refLayers, frozen.placeName, frozen.site),
+        elements: producerElementsText(p.state, p.refLayers, 'all', false),
+        designBrief: [
+          buildDesignBrief(p.state, p.refLayers, frozen.placeName, frozen.site),
+          structureRegisterText(p.state, p.refLayers),
+          bedFootprintRegister(p.state.items, p.frame, 'all', 'upper-left design panel'),
+        ].filter(Boolean).join('\n'),
       });
       const jobId = await enqueueRenderJobCapped({
         siteId: frozen.state.siteId, style: obliqueJobStyle(style), engine: queueEngine, quality,

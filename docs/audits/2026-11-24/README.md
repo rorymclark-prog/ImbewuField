@@ -4,3 +4,4 @@
 - [Water budget on phones](water-phone-budget.md) records the fully populated production example that could not export and its measured layout correction.
 
 - [Earthworks banks from overhead](earthworks-banks.md) covers the downhill swale bank, raised basin rims and their AI guide.
+- [All map layers and oblique](full-map-review.md) compares nine archived AI sheets, the 33 production viewport checks and the revised oblique input.
