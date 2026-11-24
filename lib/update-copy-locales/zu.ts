@@ -2,7 +2,7 @@ import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
   "AI maps use your site setting and keep separate roofs in the design brief.": "Amamephu e-AI asebenzisa indawo yakho futhi achaze uphahla ngalunye ngokwehlukana.",
-  "Oblique maps use a tilted guide from your saved design.": "Amamephu aboniswa nge-engeli asebenzisa umdwebo wakho olondoloziwe njengomhlahlandlela otshekile.",
+  "Oblique maps use a tilted guide with the positions of your tanks and beehives.": "Amamephu aboniswa nge-engeli asebenzisa umdwebo otshekile obonisa izindawo zamathangi nezidleke zezinyosi zakho.",
 
   "Earthworks maps show a fuller downhill swale bank and a wider soil ring on banana circles.": "Amamephu omsebenzi womhlabathi abonisa indunduma ebanzi ohlangothini olwehlayo lomsele nendandatho yomhlabathi ebanzi emibuthanweni kabhanana.",
   "See soil rings on basins and the downhill swale bank where the slope is known.": "Amamephu emisebenzi yomhlabathi abonisa izindunduma eziyindilinga emibuthanweni kabhanana nasezitsheni zezihlahla, nezindunduma zemisele ohlangothini olwehlayo lapho idatha yomhlaba ibonisa umthambeka.",
