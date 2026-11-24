@@ -58,7 +58,7 @@ import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
 import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, fetchRenderJobScene, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
 import { createRenderSceneSnapshot, decodeRenderSceneSnapshot, type RenderSceneSnapshot } from '@/lib/render-scene';
-import { buildObliquePrompt, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueStyleDescription, obliqueTerrainEvidence, paintObliqueReferenceBoard, OBLIQUE_BOARD, OBLIQUE_REVIEW_NOTICE, type AiMapView } from '@/lib/oblique-render';
+import { buildObliquePrompt, obliqueAnchors, obliqueAnchorBrief, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueStyleDescription, obliqueTerrainEvidence, paintObliqueReferenceBoard, OBLIQUE_BOARD, OBLIQUE_REVIEW_NOTICE, type AiMapView } from '@/lib/oblique-render';
 import type { RenderEngine } from '@/lib/render-job-contract';
 import { authoritativeHouseFootprints, sameFootprint } from '@/lib/house-footprints';
 import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
@@ -15148,6 +15148,7 @@ export default function DesignGlossy({
       const plan = await buildComposite(p.state, { ...p.frame, satDataUrl: null }, p.refLayers, 'all', true, polishModelInputMarks('all'));
       const designImage = await loadImage(plan);
       let photo: HTMLImageElement | undefined;
+      const anchors = obliqueAnchors(p.state.items);
       const board = document.createElement('canvas');
       let compositeDataUrl: string;
       try {
@@ -15155,7 +15156,7 @@ export default function DesignGlossy({
         board.width = OBLIQUE_BOARD.width; board.height = OBLIQUE_BOARD.height;
         const ctx = board.getContext('2d');
         if (!ctx) throw new Error('Image preparation unavailable.');
-        paintObliqueReferenceBoard(ctx, { design: designImage, photo, frame: p.frame, boundary: p.refLayers.boundary, contours, terrain });
+        paintObliqueReferenceBoard(ctx, { design: designImage, photo, frame: p.frame, boundary: p.refLayers.boundary, contours, terrain, anchors });
         compositeDataUrl = board.toDataURL('image/png');
       } finally {
         releaseCanvas(board); releaseImageSource(designImage);
@@ -15166,7 +15167,8 @@ export default function DesignGlossy({
         designBrief: [
           buildDesignBrief(p.state, p.refLayers, frozen.placeName, frozen.site),
           structureRegisterText(p.state, p.refLayers),
-          bedFootprintRegister(p.state.items, p.frame, 'all', 'upper-left design panel'),
+          bedFootprintRegister(p.state.items, p.frame, 'all', 'framed upper-left design image'),
+          obliqueAnchorBrief(anchors),
         ].filter(Boolean).join('\n'),
       });
       const jobId = await enqueueRenderJobCapped({

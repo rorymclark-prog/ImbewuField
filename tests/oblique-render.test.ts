@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
-import { buildObliquePrompt, fitObliqueReference, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueStyleDescription,
+import { buildObliquePrompt, obliqueAnchors, obliqueAnchorBrief, fitObliqueReference, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueStyleDescription,
   obliqueTerrainEvidence, paintObliqueReferenceBoard, OBLIQUE_BOARD, OBLIQUE_REVIEW_NOTICE } from '@/lib/oblique-render';
 import { STYLE_LINES, type StylePreset } from '@/lib/producer-prompt';
 import type { SheetContourResult } from '@/lib/sheet-contours';
@@ -129,6 +129,33 @@ test('missing or a single contour height never masquerades as a measured terrain
   assert.match(obliqueTerrainEvidence(unavailable, null).note, /do not infer measured flat ground/);
 });
 
+test('tanks and hives remain anchored at their own end of the angled design', () => {
+  const items = [
+    { defId: 'jojo_5000', x: 0.25, y: 0.18 }, { defId: 'beehive', x: 0.19, y: 0.84 },
+    { defId: 'beehive', x: 0.23, y: 0.84 }, { defId: 'veg_bed', x: 0.25, y: 0.64 },
+    { defId: 'beehive', x: 1.2, y: 0.84 },
+  ];
+  const anchors = obliqueAnchors(items);
+  assert.equal(anchors.length, 3);
+  assert.equal(obliqueAnchorBrief([]), '');
+  assert.match(obliqueAnchorBrief(anchors), /1 × tank \(far \/ north, left \/ west\)/);
+  assert.match(obliqueAnchorBrief(anchors), /2 × hive \(near \/ south, left \/ west\)/);
+  const marks: number[][] = [];
+  const ctx = new Proxy({}, { get: (_, key) => (...a: number[]) => {
+    if (key === 'arc' || (key === 'rect' && a[2] === 10)) marks.push(a);
+  }, set: () => true }) as CanvasRenderingContext2D;
+  const design = { width: 400, height: 600 } as HTMLCanvasElement;
+  paintObliqueReferenceBoard(ctx, { design, anchors, contours: unavailable, frame: { ...frame, satDataUrl: null }, boundary: [],
+    terrain: obliqueTerrainEvidence(unavailable, null) });
+  const r = fitObliqueReference(400, 600 * Math.sin(Math.PI / 4), OBLIQUE_BOARD.groundView);
+  assert.equal(marks.length, anchors.length);
+  anchors.forEach(({ kind, x, y }, i) => {
+    const inset = kind === 'hive' ? 5 : 0;
+    assert.equal(marks[i][0] + inset, r.x + x * r.w);
+    assert.equal(marks[i][1] + inset, r.y + y * r.h);
+  });
+});
+
 test('reference images remain complete and undistorted on the board, including very tall farms', () => {
   for (const [width, height] of [[960, 640], [640, 2000], [3000, 200]]) {
     for (const box of [OBLIQUE_BOARD.design, OBLIQUE_BOARD.photo]) {
@@ -143,7 +170,7 @@ test('reference images remain complete and undistorted on the board, including v
 
 test('the terrain panel uses actual projected contour points and labels without changing farm geometry', () => {
   const texts: string[] = []; const points: number[][] = []; const images: unknown[][] = [];
-  const ctx = { fillRect() {}, fillText(s: string) { texts.push(s); }, drawImage(...args: unknown[]) { images.push(args); },
+  const ctx = { fillRect() {}, strokeRect() {}, fillText(s: string) { texts.push(s); }, drawImage(...args: unknown[]) { images.push(args); },
     beginPath() {}, moveTo(x: number, y: number) { points.push([x, y]); }, lineTo(x: number, y: number) { points.push([x, y]); },
     closePath() {}, stroke() {}, save() {}, restore() {}, rect() {}, clip() {},
   } as unknown as CanvasRenderingContext2D;

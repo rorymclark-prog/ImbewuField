@@ -1,4 +1,5 @@
-import type { CanvasFrame } from '@/lib/design-canvas';
+import { isTankDefId } from '@/lib/reference-feature-art';
+import type { CanvasFrame, PlacedItem } from '@/lib/design-canvas';
 import type { SectorSite } from '@/lib/sector';
 import type { SheetContourResult } from '@/lib/sheet-contours';
 import { STYLE_LINES, type StylePreset } from '@/lib/producer-prompt';
@@ -55,6 +56,33 @@ export function obliqueStyleDescription(style: StylePreset): string { return OBL
 
 export const OBLIQUE_REVIEW_NOTICE = 'Oblique AI illustration — positions, heights and terrain need review against the measured top-down plan. Not to scale. Legend lists the saved design; hidden features may not be visible.';
 
+type ObliqueAnchor = { kind: 'tank' | 'hive'; x: number; y: number };
+const ANCHOR_INK = { tank: '#006B96', hive: '#B2480C' } as const;
+
+// These small fixtures were moved to opposite ends of the farm even when their counts were
+// correct. The board and its caption must describe the very same saved positions.
+export function obliqueAnchors(items: readonly Pick<PlacedItem, 'defId' | 'x' | 'y'>[]): ObliqueAnchor[] {
+  return items.flatMap(({ defId, x, y }): ObliqueAnchor[] => {
+    if (!(x >= 0 && x <= 1 && y >= 0 && y <= 1)) return [];
+    if (isTankDefId(defId)) return [{ kind: 'tank', x, y }];
+    return defId === 'beehive' ? [{ kind: 'hive', x, y }] : [];
+  });
+}
+
+export function obliqueAnchorBrief(anchors: readonly ObliqueAnchor[]): string {
+  if (!anchors.length) return '';
+  const groups = new Map<string, number>();
+  for (const { kind, x, y } of anchors) {
+    const depth = y < 1 / 3 ? 'far / north' : y > 2 / 3 ? 'near / south' : 'middle depth';
+    const side = x < 1 / 3 ? 'left / west' : x > 2 / 3 ? 'right / east' : 'centre';
+    const key = `${kind} (${depth}, ${side})`;
+    groups.set(key, (groups.get(key) ?? 0) + 1);
+  }
+  return 'GROUND FIXTURES in the lower-left guide, viewed from the south. '
+    + Array.from(groups, ([key, count]) => `${count} × ${key}`).join('; ')
+    + '. Keep every fixture at its coloured mark, including any behind canopy. Leave the guide symbols out of the artwork.';
+}
+
 export function buildObliquePrompt(input: {
   style: StylePreset; elements: string; designBrief: string; terrain: ObliqueTerrainEvidence; hasPhoto: boolean;
 }): string {
@@ -88,7 +116,7 @@ export function paintObliqueReferenceBoard(ctx: CanvasRenderingContext2D, input:
   design: CanvasImageSource & { width: number; height: number };
   photo?: CanvasImageSource & { width: number; height: number };
   contours: SheetContourResult; frame: CanvasFrame; terrain: ObliqueTerrainEvidence;
-  boundary: Array<[number, number]>;
+  boundary: Array<[number, number]>; anchors?: readonly ObliqueAnchor[];
 }): void {
   const b = OBLIQUE_BOARD;
   ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, b.width, b.height);
@@ -100,13 +128,37 @@ export function paintObliqueReferenceBoard(ctx: CanvasRenderingContext2D, input:
   const draw = (image: typeof input.design, box: typeof b.design | typeof b.photo) => {
     const r = fitObliqueReference(image.width, image.height, box);
     ctx.drawImage(image, r.x, r.y, r.w, r.h);
+    return r;
   };
-  draw(input.design, b.design);
+  const designFrame = draw(input.design, b.design);
+  // The numeric bed register spans the source image, including any quiet margin inside it.
+  // A faint image frame distinguishes that extent from the much wider white board panel.
+  ctx.strokeStyle = '#C1C9C2'; ctx.lineWidth = 1;
+  ctx.strokeRect(designFrame.x, designFrame.y, designFrame.w, designFrame.h);
   // Both panels use the same pixels: an orthographic south view shortens north–south
   // distances by the sine of the camera pitch. Elevations belong to the terrain panel.
   const projected = fitObliqueReference(input.design.width,
     input.design.height * Math.sin(OBLIQUE_PITCH_DEG * Math.PI / 180), b.groundView);
   ctx.drawImage(input.design, projected.x, projected.y, projected.w, projected.h);
+  const anchors = input.anchors ?? [];
+  ctx.save();
+  for (const { kind, x, y } of anchors) {
+    const ax = projected.x + x * projected.w;
+    const ay = projected.y + y * projected.h;
+    ctx.fillStyle = ANCHOR_INK[kind]; ctx.strokeStyle = '#FFFFFF'; ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    if (kind === 'tank') ctx.arc(ax, ay, 6, 0, Math.PI * 2);
+    else ctx.rect(ax - 5, ay - 5, 10, 10);
+    ctx.fill(); ctx.stroke();
+  }
+  ctx.font = 'bold 20px Arial';
+  if (anchors.some(a => a.kind === 'tank')) {
+    ctx.fillStyle = ANCHOR_INK.tank; ctx.fillText('●  Tank', 845, 823);
+  }
+  if (anchors.some(a => a.kind === 'hive')) {
+    ctx.fillStyle = ANCHOR_INK.hive; ctx.fillText('■  Beehive', 980, 823);
+  }
+  ctx.restore();
   if (input.photo) draw(input.photo, b.photo);
   const r = fitObliqueReference(input.frame.imgW, input.frame.imgH, b.terrain);
   const path = (points: Array<[number, number]>) => {

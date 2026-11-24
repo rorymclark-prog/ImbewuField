@@ -731,7 +731,7 @@ export function bedFootprintRegister(
   items: readonly PlacedItem[],
   frame: Pick<CanvasFrame, 'imgW' | 'imgH' | 'mPerPx'>,
   filter: GlossyLayerFilter,
-  reference: 'supplied image' | 'upper-left design panel' = 'supplied image',
+  reference: 'supplied image' | 'framed upper-left design image' = 'supplied image',
 ): string {
   const beds = items.filter((item) => {
     const def = ELEMENTS_BY_ID[item.defId];
