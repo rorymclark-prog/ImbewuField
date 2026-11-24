@@ -12,6 +12,7 @@ import {
   FULL_HEIGHT_LEGEND_MIN_ROWS,
   legendHeightFillRatio,
   legendFooterFontSize,
+  waterBudgetFooterFontSize,
   legendWrapWords,
   layoutLegendColumn,
   legendMaxFontSize,
@@ -401,4 +402,16 @@ test('a regional-evidence marker stays with its direction instead of becoming an
   assert.ok(words.some(word => word.includes('SW') && word.includes('ᴬ')));
   assert.ok(!words.includes('ᴬ'), 'wrapping must not put the evidence marker on its own');
   assert.deepEqual(legendWrapWords('Site boundary'), ['Site', 'boundary']);
+});
+
+test('a full Water budget leaves room for the phone’s six key rows without shrinking a short budget', () => {
+  // At 27px Chrome wrapped the demo's rainwater facts and notes to a 785px box, leaving
+  // only 154px for six rows that need 399px even at their minimum. At 19px the complete
+  // budget occupied 449px. Keep this tied to what fits, not to one preferred point size.
+  const sharedHeight = 939;
+  const measuredHeight = (size: number) => size >= 27 ? 785 : size >= 20 ? 518 : 449;
+  const size = waterBudgetFooterFontSize(27, sharedHeight, measuredHeight);
+  assert.ok(size >= 12 && sharedHeight - measuredHeight(size) >= 399);
+  assert.equal(waterBudgetFooterFontSize(27, sharedHeight, () => 160), 27);
+  assert.equal(waterBudgetFooterFontSize(27, 0, measuredHeight), 12);
 });

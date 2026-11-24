@@ -325,6 +325,14 @@ export function legendFooterFontSize(typeWidth: number): number {
   return Math.max(12, Math.round(typeWidth * 0.036));
 }
 
+/** Keep space for the Water key when rainfall data makes its printed budget run long.
+ *  measureHeight includes wrapped facts, notes and box padding in the actual typeface. */
+export function waterBudgetFooterFontSize(
+  preferredSize: number, sharedHeight: number, measureHeight: (size: number) => number,
+): number {
+  return fitLegendFontSize(measureHeight, sharedHeight * 0.52, preferredSize, 12);
+}
+
 /** The regional-evidence marker belongs to its bearing, not on a line by itself. */
 export function legendWrapWords(value: string): string[] {
   return value.match(/\S+(?:\s+ᴬ)?/g) ?? [];
