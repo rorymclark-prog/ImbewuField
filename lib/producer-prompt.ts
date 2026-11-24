@@ -751,8 +751,30 @@ export function bedFootprintRegister(
     listed.push(row);
     length += row.length + 2;
   }
+  // In the returned oblique the nine beds and their tunnel both existed, but the model
+  // put them side by side. Give it the recorded overlap in physical (rotated) space.
+  const shade = ELEMENTS_BY_ID.shade_house;
+  const covers: string[] = [];
+  let coverTextLength = 0;
+  if (exactSheetElementRegister(shade, filter) !== 'absent') {
+    for (const item of items.filter(it => it.defId === shade.id)) {
+      const angle = (item.rot ?? 0) * Math.PI / 180;
+      const cos = Math.cos(angle), sin = Math.sin(angle);
+      const covered = beds.flatMap((bed, index) => {
+        const dx = (bed.x - item.x) * frame.imgW * frame.mPerPx;
+        const dy = (bed.y - item.y) * frame.imgH * frame.mPerPx;
+        return Math.abs(dx * cos + dy * sin) <= (item.wM ?? shade.wM) / 2 &&
+          Math.abs(-dx * sin + dy * cos) <= (item.hM ?? shade.hM) / 2 ? [index + 1] : [];
+      });
+      if (!covered.length) continue;
+      const description = `The saved shade tunnel centred at (${pct(item.x)},${pct(item.y)}) covers the centres of ${covered.length} of the listed beds (bed numbers ${covered.slice(0, 32).join(', ')}${covered.length > 32 ? ', …' : ''}). Paint porous shade cloth directly over those same beds, with rows visible through the mesh.`;
+      if (coverTextLength + description.length > 1000) break;
+      covers.push(description);
+      coverTextLength += description.length;
+    }
+  }
   const remainder = listed.length < geometry.length ? `; remaining ${geometry.length - listed.length} beds follow their image footprints` : '';
-  return `BED FOOTPRINTS — ${beds.length} separate saved rectangles. Coordinates are percentages of the ${reference}, x right, y down; size is unrotated width,height; rotation is clockwise. Preserve every outer corner and gap; crop rows are texture INSIDE one bed, never extra beds. ${listed.join('; ')}${remainder}. Do not merge or subdivide beds or add a tunnel, roof, hedge or border beside them.`;
+  return `BED FOOTPRINTS — ${beds.length} separate saved rectangles. Coordinates are percentages of the ${reference}, x right, y down; size is unrotated width,height; rotation is clockwise. Preserve every outer corner and gap; crop rows are texture INSIDE one bed, never extra beds. ${listed.join('; ')}${remainder}. Do not merge or subdivide beds or add a tunnel, roof, hedge or border beside them.` + (covers.length ? ` ${covers.join(' ')}` : '');
 }
 
 function showcaseMarkerGlossary(sheetKind: ShowcaseSheetKind, elementsText: string): string {

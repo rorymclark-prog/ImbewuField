@@ -210,6 +210,16 @@ test('Earthworks swales read as worked soil from the first AI pass through polis
   }
 });
 
+test('an angled shade tunnel stays over its own beds on a non-square frame', () => {
+  const frame = { imgW: 1000, imgH: 500, mPerPx: .1 };
+  const beds = [{ id: 'a', defId: 'veg_bed', x: .45, y: .5 }, { id: 'b', defId: 'veg_bed', x: .5, y: .6 }];
+  const cover = { id: 'cover', defId: 'shade_house', x: .5, y: .5, wM: 12, hM: 3, rot: 0 };
+  const brief = (rot: number) => bedFootprintRegister([...beds, { ...cover, rot }], frame, 'all');
+  assert.match(brief(0), /bed numbers 1\)/);
+  assert.match(brief(90), /bed numbers 2\)/);
+  assert.doesNotMatch(bedFootprintRegister(beds, frame, 'all'), /saved shade tunnel centred/);
+});
+
 test('saved bed coordinates describe the same geometry at every print resolution without changing it', () => {
   const items=[{id:'bed-1',defId:'veg_bed',x:.2,y:.4,wM:12,hM:2,rot:17}, {id:'bed-2',defId:'veg_bed',x:.3,y:.5,wM:12,hM:2,rot:17}];
   const frozen=JSON.stringify(items),frame={imgW:1000,imgH:500,mPerPx:.1};
