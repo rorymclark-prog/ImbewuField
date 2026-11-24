@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 November 2026', sha: '7400812c', changes: [
+    'Satellite Overlay gives banana clumps their own canopy without adding a pit.',
+    'Explore the path of the sun and the shade it casts in an interactive 3D view.',
+    'See a swale in cross-section and watch the tank gauge in the farm example.',
+  ] },
   { when: '24 November 2026', sha: '7dd03b1e1', changes: [
     'AI maps use your site setting and keep separate roofs in the design brief.',
     'Oblique maps use your traced building directions and the positions of tanks and beehives.',

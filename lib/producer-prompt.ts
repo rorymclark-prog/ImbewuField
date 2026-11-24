@@ -874,6 +874,7 @@ const OVERLAY_ICONS: Record<string, string> = {
   berm: 'a narrow long rectangular marker → an on-contour earth berm: a low grassed ridge of compacted soil running exactly along that line, no taller than knee height',
   terrace: 'a narrow long rectangular marker → a terrace retaining bank: a hatched, textured retained riser face holding back the level change, visibly distinct from the flat ground on either side of it',
   banana: PLANTED_BANANA_CIRCLE,
+  banana_clump: 'a banana clump marker → a compact cluster of broad banana leaves, centred on and contained within its saved marker footprint',
   // "along exactly that line" was the ghost-hedge bug. Vetiver Bank (mulch_bank) is shape 'rect',
   // 2x2 m by default — it has NO line. So this clause ordered a continuous band along a line that
   // does not exist in the image, while rule 5 simultaneously demanded the icon stay the size of its
@@ -945,14 +946,14 @@ const OVERLAY_ICONS: Record<string, string> = {
 };
 
 const ICON_KEYS_BY_SHEET: Record<ShowcaseSheetKind, string[]> = {
-  all:        ['bed', 'staple_garden', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'chicken_tractor', 'shade_tunnel', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'pollinator', 'patio', 'fence', 'path'],
+  all:        ['bed', 'staple_garden', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'banana_clump', 'mulch', 'vetiver_row', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'chicken_tractor', 'shade_tunnel', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'pollinator', 'patio', 'fence', 'path'],
   zones:      ['building', 'path', 'fence'],
   // half_moon/berm/terrace/swale are 'earthworks' category, which sheetForElement now routes to
   // its own 'earthworks' sheet — same authority DesignGlossy.tsx uses, so this list cannot drift
   // from which sheet an element actually prints on. The two basins stay on Water by SHEET_OVERRIDE.
   water:      ['tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'pipe', 'drip'],
   earthworks: ['swale', 'half_moon', 'berm', 'terrace'],
-  planting:   ['bed', 'staple_garden', 'tree', 'windbreak', 'mulch', 'vetiver_row', 'banana', 'tree_basin', 'pollinator'],
+  planting:   ['bed', 'staple_garden', 'tree', 'windbreak', 'mulch', 'vetiver_row', 'banana', 'banana_clump', 'tree_basin', 'pollinator'],
   structures: ['building', 'hive', 'coop', 'chicken_tractor', 'shade_tunnel', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'patio', 'fence', 'path'],
 };
 
@@ -962,7 +963,7 @@ const ICON_MATCH: Record<string, RegExp> = {
   tank: /tank|jojo/i, tap: /tap|standpipe|faucet/i, dam: /\bdam\b|\bpond\b/i, // anchored: unanchored, this fired on "Maca-dam-ia Tree"
   // Narrowed to actual basins (audit finding 2026-07-25) — see the OVERLAY_ICONS.basin comment.
   basin: /greywater basin|infiltration basin/i, greywater_fitting: /greywater outlet|greywater diverter/i,
-  tree_basin: /tree basin/i, banana: SHOWCASE_MARKER_MATCH.banana_circle, mulch: /mulch bank|vetiver bank/i,
+  tree_basin: /tree basin/i, banana: SHOWCASE_MARKER_MATCH.banana_circle, banana_clump: /\bbanana clump\b/i, mulch: /mulch bank|vetiver bank/i,
   borehole: /borehole|well/i, water_trough: /water trough/i, first_flush: /first-flush|first flush/i,
   pump_filter: /pump\s*&?\s*filter/i, half_moon: /half-moon|half moon/i, berm: /\bberm\b/i, terrace: /terrace|retaining bank/i,
   // Narrowed from /bed|garden|veg/i: the bare "garden" alternative also fired on "Staple garden",
