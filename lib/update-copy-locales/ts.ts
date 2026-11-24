@@ -2,6 +2,7 @@ import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
   // Unreviewed release caption, matched to its English source.
+  "The Water map fits its legend and full water budget on a phone.": "Mepe wa Mati wu komba nhlamuselo ya mimfungho ni mpimanyeto wa mati hinkwawu eka foni.",
   "AI Earthworks maps show swales as a dry channel beside a low bank of soil.": "Mimepe ya AI ya Earthworks yi komba mugerho lowu omeke etlhelo ka xitsunga xa misava lexi nga tlakukangiki.",
   "Zoom in on a full-screen map to read its labels and legend.": "Tshinetela mepe lowu taleke xikirini leswaku u hlaya malebulu ni nhlamuselo ya mimfungho.",
   // Exact unreviewed upstream map pairs; see the two Editorial draft packets dated 7 November 2026.

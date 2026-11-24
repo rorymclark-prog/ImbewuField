@@ -2,6 +2,7 @@ import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
   // Unreviewed release caption, matched to its English source.
+  "The Water map fits its legend and full water budget on a phone.": "Imephu Yamanzi ibonisa ukhiye nezibalo zamanzi eziphelele ocingweni.",
   "AI Earthworks maps show swales as a dry channel beside a low bank of soil.": "Amamephu e-AI e-Earthworks abonisa umsele owomile eduze kothango oluphansi lomhlabathi.",
   "Zoom in on a full-screen map to read its labels and legend.": "Sondeza imephu esesikrinini esigcwele ukuze ufunde amalebula ayo nokhiye wayo.",
   // Exact unreviewed upstream map pairs; see the two Editorial draft packets dated 7 November 2026.

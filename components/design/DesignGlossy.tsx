@@ -129,6 +129,7 @@ import {
   layoutLegendColumn,
   legendHeightFillRatio,
   legendFooterFontSize,
+  waterBudgetFooterFontSize,
   legendWrapWords,
   legendMaxFontSize,
   legendRowFontSize,
@@ -11579,16 +11580,11 @@ async function composeStyleSheet(
   }));
   const legendTop = y + Math.round(legendW * 0.03);
   const footerFs = legendFooterFontSize(typeW);
-  const footerLineH = Math.max(11, Math.round(footerFs * 1.28));
   const footerBoxPad = options.footerBox ? Math.max(6, Math.round(legendW * 0.024)) : 0;
   const footerTextX = lx + footerBoxPad;
   const footerTextW = maxX - lx - footerBoxPad * 2;
-  const footerFactFont = `800 ${Math.round(footerFs * 1.25)}px ${SHEET_BODY_FONT}`;
-  const footerFactLineH = Math.round(footerLineH * 1.25);
-  const wrapFooterText = (value: string, font?: string): string[] => {
-    ctx.font = font ?? (options.footerHeading
-      ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
-      : `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`);
+  const wrapFooterText = (value: string, font: string): string[] => {
+    ctx.font = font;
     // A NEWLINE IS A HARD BREAK, NOT A SPACE.
     //
     // This wrapped on /\s+/, which treats "\n" as whitespace like any other. The Water sheet's
@@ -11617,12 +11613,9 @@ async function composeStyleSheet(
     }
     return lines;
   };
-  const footerFactLines = (options.footerFacts ?? []).flatMap(fact => wrapFooterText(fact, footerFactFont));
   const footerText = options.aiArtwork
     ? [waterUnderReview ? 'Use the exact Water map to verify pipe locations and features.' : options.obliqueArtwork ? OBLIQUE_REVIEW_NOTICE : AI_MAP_REVIEW_NOTICE, options.footerText, options.imageAttribution ?? (frame.satDataUrl ? basemapAttribution() : ''), footerStyleLabel].filter(Boolean).join('\n')
     : options.footerText ? [options.footerText, footerStyleLabel].filter(Boolean).join('\n') : undefined;
-  const customFooterLines = footerText ? wrapFooterText(footerText) : [];
-  const footerHeadingH = options.footerHeading ? Math.round(legendW * 0.06) : 0;
   // Esri's imagery must be credited wherever it is shown — a licence term, not a courtesy — so the
   // exact-plan footer grows a fourth line for it. basemapAttribution() is '' on Mapbox, so this
   // reserves no extra space and changes nothing until NEXT_PUBLIC_ARCGIS_API_KEY is actually set.
@@ -11634,21 +11627,36 @@ async function composeStyleSheet(
   // satDataUrl is the same condition drawBlueprintBase uses to lay paper instead of a photo, so the
   // credit and the picture can never disagree.
   const attributionLine = options.imageAttribution ?? (frame.satDataUrl ? basemapAttribution() : '');
-  const defaultFooterLines = wrapFooterText([
+  const defaultFooterText = [
     exactGeometry
       ? 'Exact plan — geometry and counts\ncome from your saved design.\nNo unsaved features added.'
       : AI_MAP_REVIEW_NOTICE,
     attributionLine,
     footerStyleLabel,
-  ].filter(Boolean).join('\n'));
-  const footerBlockH = customFooterLines.length || footerFactLines.length
-    ? customFooterLines.length * footerLineH
-      + footerFactLines.length * footerFactLineH
-      + footerHeadingH
-      + Math.round(legendW * 0.035)
-      + footerBoxPad * 2
-    : defaultFooterLines.length * footerLineH;
+  ].filter(Boolean).join('\n');
+  const footerHeadingH = options.footerHeading ? Math.round(legendW * 0.06) : 0;
   const panelBottom = H - panelInset;
+  const measureFooter = (size: number) => {
+    const footerLineH = Math.max(11, Math.round(size * 1.28));
+    const footerFactFont = `800 ${Math.round(size * 1.25)}px ${SHEET_BODY_FONT}`;
+    const footerFactLineH = Math.round(footerLineH * 1.25);
+    const textFont = `${options.footerHeading ? '' : 'italic '}600 ${size}px ${SHEET_BODY_FONT}`;
+    const footerFactLines = (options.footerFacts ?? []).flatMap(fact => wrapFooterText(fact, footerFactFont));
+    const customFooterLines = footerText ? wrapFooterText(footerText, textFont) : [];
+    const defaultFooterLines = wrapFooterText(defaultFooterText, textFont);
+    const footerBlockH = customFooterLines.length || footerFactLines.length
+      ? customFooterLines.length * footerLineH + footerFactLines.length * footerFactLineH
+        + footerHeadingH + Math.round(legendW * 0.035) + footerBoxPad * 2
+      : defaultFooterLines.length * footerLineH;
+    return {textFont, footerLineH, footerFactFont, footerFactLineH, footerFactLines, customFooterLines, defaultFooterLines, footerBlockH};
+  };
+  // On the phone sample, a populated water budget took 785 of the 939 pixels shared with
+  // the key. Fit the actual wrapped budget while reserving room for the inventory. Short
+  // budgets and the provenance notes on other sheets retain their normal print size.
+  const noteSize = filter === 'water' && options.footerBox && rows.length
+    ? waterBudgetFooterFontSize(footerFs, panelBottom - pad - legendTop, size => measureFooter(size).footerBlockH)
+    : footerFs;
+  const {textFont, footerLineH, footerFactFont, footerFactLineH, footerFactLines, customFooterLines, defaultFooterLines, footerBlockH} = measureFooter(noteSize);
   const footerTop = panelBottom - pad - footerBlockH;
   const availableRowsH = Math.max(1, footerTop - legendTop);
   const contentW = maxX - lx;
@@ -11657,7 +11665,6 @@ async function composeStyleSheet(
   // of font size wrapped every pipe label and made the budget harder to compare with the map.
   const compactWater = filter === 'water' && rows.length <= 12;
   const normalFs = legendRowFontSize(typeW, availableRowsH, rows.length);
-  const maxColumns=Math.min(compactSector || compactWater ? 1 : 3, rows.length);
   const baseSw = Math.round(legendW * 0.064);
   const columnGap = Math.max(10, Math.round(legendW * 0.025));
   const singleColumnTextGap = Math.round(legendW * 0.03);
@@ -11871,6 +11878,12 @@ async function composeStyleSheet(
     Math.max(normalFs, growthCeiling),
     9,
   );
+  // Keep the Water systems together when the measured single column fits. On a short
+  // export a long budget can still require a second or third column at the reading floor.
+  const oneWaterColumnFits = compactWater && planColumns(1, 9).every(
+    column => !column.columnLayout.overflow && !columnPlanOverflowsWidth(column),
+  );
+  const maxColumns = Math.min(compactSector || oneWaterColumnFits ? 1 : 3, rows.length);
   let desiredFs = normalFs;
   let desiredColumns = 1;
   if (rows.length) {
@@ -12021,9 +12034,7 @@ async function composeStyleSheet(
       }
     }
     ctx.fillStyle = '#6C6457';
-    ctx.font = options.footerHeading
-      ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
-      : `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
+    ctx.font = options.footerHeading ? textFont : `italic 500 ${noteSize}px ${SHEET_BODY_FONT}`;
     for (const line of customFooterLines) {
       ctx.fillText(line, footerTextX, footerY);
       footerY += footerLineH;
@@ -12031,8 +12042,8 @@ async function composeStyleSheet(
   } else {
     // Measure the complete footer, including imagery credit, inside the shared content box.
     // The old third baseline was below the panel inset once the legend became wider.
-    ctx.font = `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`;
-    let footerY = footerTop + footerFs;
+    ctx.font = textFont;
+    let footerY = footerTop + noteSize;
     for (const line of defaultFooterLines) {
       ctx.fillText(line, lx, footerY);
       footerY += footerLineH;
