@@ -1,6 +1,7 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "See soil rings on basins and the downhill swale bank where the slope is known.": "Mimapa ya mishumo ya mavu i sumbedza zwikwara zwa mavu zwa tshitendeledzi kha zwitendeledzi zwa miomva na madzivha a miri. Musi mafhungo a shango a tshi sumbedza mutheo wa muṱavha, tshikwara tsha mugero tshi vha kha sia ḽi tsaho.",
   // Unreviewed release caption, matched to its English source.
   "The Water map fits its legend and full water budget on a phone.": "Mapa wa Maḓi u sumbedza ṱhalutshedzo ya zwiga na mugaganyagwama woṱhe wa maḓi kha luṱingo.",
   "AI Earthworks maps show swales as a dry channel beside a low bank of soil.": "Mimepe ya AI ya Earthworks i sumbedza mugero wo omaho tsini na tshikwara tshiṱuku tsha mavu.",

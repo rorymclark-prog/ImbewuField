@@ -194,7 +194,8 @@ test('roof runoff is painted AFTER the feature overlay, on top of the roof', () 
   //
   // The ground legs (gutter, overflow) stay BEFORE the composite on purpose, so an arrow slides
   // under the tank it feeds rather than across its face.
-  const composite = GLOSSY.indexOf("buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'features')");
+  // The optional terrain input can follow the phase without changing the paint order.
+  const composite = GLOSSY.indexOf("buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'features'");
   const roofDraw = GLOSSY.indexOf('drawOverlandFlowArrows(ctx, roofArrows');
   assert.ok(composite > 0, 'the feature-overlay composite moved — re-check the arrow ordering');
   assert.ok(roofDraw > 0, 'roof arrows are no longer drawn as their own pass');

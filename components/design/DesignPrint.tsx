@@ -98,7 +98,7 @@ const PRINT_LAYERS: PrintLayer[] = [
   // swale, contour berm, terrace and half-moon now print here instead (SHEET_OVERRIDE keeps the
   // two basin types on Water). Same pattern as the other filter-based layer sheets: the exact
   // Blueprint builder for the 'earthworks' GlossyLayerFilter, self-chromed like its siblings.
-  { key: 'earthworks', no: '05', label: 'Earthworks & Contour Setting-Out', labelKey: 'designPrintSheetEarthworks', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintEarthworksMap(s, f, r, pn) },
+  { key: 'earthworks', no: '05', label: 'Earthworks & Contour Setting-Out', labelKey: 'designPrintSheetEarthworks', selfChromed: true, render: (s, f, r, site, pn) => buildBlueprintEarthworksMap(s, f, r, pn, site) },
   { key: 'planting', no: '06', label: 'Planting & Agroforestry', labelKey: 'designPrintSheetPlanting', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintPlantingMap(s, f, r, pn) },
   { key: 'structures', no: '07', label: 'Livestock & Infrastructure', labelKey: 'designPrintSheetStructures', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintStructuresMap(s, f, r, pn) },
   { key: 'all', no: '08', label: 'Integrated Masterplan', labelKey: 'designPrintSheetAll', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintWholeMap(s, f, r, pn) },

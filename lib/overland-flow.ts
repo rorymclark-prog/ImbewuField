@@ -146,6 +146,15 @@ export interface OverlandFlowInput {
  */
 export const MIN_DRAWABLE_SLOPE_DEG = 0.25;
 
+/** Shared by surface-flow arrows and the bank of a swale on a north-up plan. */
+export function terrainFallVector(elevation?: Pick<OverlandFlowInput, 'aspectDeg' | 'slopeDeg' | 'directionConfidence'> | null): [number, number] | null {
+  if (!elevation || elevation.directionConfidence === 'unconfirmed') return null;
+  const { aspectDeg, slopeDeg } = elevation;
+  if (!Number.isFinite(aspectDeg) || !Number.isFinite(slopeDeg) || slopeDeg < MIN_DRAWABLE_SLOPE_DEG) return null;
+  const rad = aspectDeg * Math.PI / 180;
+  return [Math.sin(rad), -Math.cos(rad)];
+}
+
 /** Even-odd point-in-polygon. Shared shape with the renderer's own test helper. */
 export function pointInRing(point: [number, number], ring: Array<[number, number]>): boolean {
   if (ring.length < 3) return false;
@@ -171,22 +180,15 @@ export function pointInRing(point: [number, number], ring: Array<[number, number
  * arrows is the correct output for a flat site, and is far better than arrows pointing at noise.
  */
 export function overlandFlowArrows(input: OverlandFlowInput): FlowArrow[] {
-  const { boundary, aspectDeg, slopeDeg, directionConfidence } = input;
-  if (directionConfidence === 'unconfirmed') return [];
-  if (!Number.isFinite(aspectDeg) || !Number.isFinite(slopeDeg)) return [];
-  if (!(slopeDeg >= MIN_DRAWABLE_SLOPE_DEG)) return [];
-  if (boundary.length < 3) return [];
+  const { boundary } = input;
+  const fall = terrainFallVector(input);
+  if (!fall || boundary.length < 3) return [];
+  const [dx, dy] = fall;
 
   const spacing = Number.isFinite(input.spacing ?? NaN) && (input.spacing ?? 0) > 0
     ? (input.spacing as number)
     : 0.16;
 
-  // Screen space, not compass space. A bearing is degrees clockwise from north; canvas y grows
-  // DOWNWARD, so north is -y. Getting this wrong points every arrow uphill, which is worse than
-  // drawing nothing because it looks authoritative.
-  const rad = (aspectDeg * Math.PI) / 180;
-  const dx = Math.sin(rad);
-  const dy = -Math.cos(rad);
   const half = spacing * 0.3;
 
   const xs = boundary.map((p) => p[0]);

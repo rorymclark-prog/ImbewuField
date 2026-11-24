@@ -201,6 +201,9 @@ test('Earthworks swales read as worked soil from the first AI pass through polis
   for (const prompt of prompts) {
     assert.match(prompt,/scooped hollow in the local soil/);
     assert.match(prompt,/saved endpoints/);
+    assert.match(prompt,/mound on the downhill side/);
+    assert.match(prompt,/doughnut-shaped mound.*sunken compost core/);
+    assert.match(prompt,/central planting mound.*mulch-filled annular hollow/);
     assert.doesNotMatch(prompt,/grassed along its top|a green planted berm/);
   }
 });
