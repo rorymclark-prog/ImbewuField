@@ -19,6 +19,7 @@ import { statusOf } from '../lib/design-canvas.ts';
 import { authoritativeHouseFootprints, sameFootprint } from '../lib/house-footprints.ts';
 import polygonClipping from 'polygon-clipping';
 import { boundarySegmentsWithBreaks } from '../lib/boundary-geometry.ts';
+import { offsetPolyline } from '../lib/water-cartography.ts';
 import { polishedRenderPoints } from '../lib/render-geometry.ts';
 import { editorialContourCaptionAnchor, EDITORIAL_SECTOR_PAGE } from '../lib/sector-editorial.ts';
 
@@ -128,7 +129,8 @@ test('the AI Earthworks input uses the exact digging painter instead of green be
     const calls:Array<{kind:string,x:number,y:number,ppm:number}>=[];
     const draw=helper('drawMarks',{glossyArtworkState,RENDERED_DRIVEWAY_EDGE:false,SCALE:scale,authoritativeHouseFootprints,
       ELEMENTS_BY_ID,itemInFilter,lineInFilter,isShadeClothStructure:()=>false,
-      zoneBadgePositions:()=>new Map(),drawFilteredLines:(_ctx:any,source:any,filter:string,px:any,py:any,ppm:number)=>{
+      zoneBadgePositions:()=>new Map(),drawFilteredLines:(_ctx:any,source:any,filter:string,px:any,py:any,ppm:number,appearance:string)=>{
+        assert.equal(appearance,'illustrated','the paid guide must not invite the model to reproduce setting-out hatch marks as timber');
         assert.equal(source,saved);assert.equal(filter,'earthworks');calls.push({kind:'swales',x:px(.4),y:py(.5),ppm});
       },drawEarthworksFeatures:(_ctx:any,source:any,filter:string,px:any,py:any,ppm:number)=>{
         assert.equal(source,saved);assert.equal(filter,'earthworks');calls.push({kind:'soil-and-pits',x:px(.4),y:py(.5),ppm});
@@ -137,6 +139,35 @@ test('the AI Earthworks input uses the exact digging painter instead of green be
     assert.deepEqual(calls,[{kind:'swales',x:40*scale,y:50*scale,ppm:scale},{kind:'soil-and-pits',x:40*scale,y:50*scale,ppm:scale}]);
   }
   assert.equal(JSON.stringify(saved),frozen);
+});
+
+test('the AI swale guide clips the soil relief to the saved width and endpoints and draws no survey strokes', () => {
+  const paint = helper('drawSwaleCrossSection', {
+    polishedRenderPoints, offsetPolyline, SWALE_DEFAULT_WIDTH_M:1.5,
+    drawIllustratedSwale:helper('drawIllustratedSwale',{offsetPolyline}),
+  });
+  for (const width of [.3, 3]) {
+    const points = [[20,25],[80,25],[97,42]], frozen = JSON.stringify(points);
+    let path:number[][]=[], clip:number[][]=[], strokes=0, fills=0, levels=0;
+    const ctx = { save(){},restore(){},beginPath(){path=[];},closePath(){},
+      moveTo(x:number,y:number){path.push([x,y]);},lineTo(x:number,y:number){path.push([x,y]);},
+      clip(){clip=path;},stroke(){strokes++;},fill(){fills++;},fillRect(){},
+      createLinearGradient(){ return {addColorStop(){levels++;}}; },
+    };
+    paint(ctx,points,{width:4,color:'#A70',casing:'#432'},2,width,'illustrated');
+    const route=points as [number,number][];
+    assert.deepEqual(clip[0],route[0],'the start feathers into the saved endpoint');
+    assert.deepEqual(clip[clip.length / 2 - 1],route.at(-1),'the other end stays put');
+    for(const edge of [offsetPolyline(route,-width)[1],offsetPolyline(route,width)[1]]) {
+      assert.ok(clip.some(([x,y])=>Math.hypot(x-edge[0],y-edge[1])<1e-8),'both sides meet the stated width at the bend');
+    }
+    assert.equal(strokes,0,'the worked-soil reference must not contain casing, a pegged line or repeated crossbars');
+    assert.equal(fills,2,'one uninterrupted wash per segment avoids regularly repeated seams');
+    assert.ok(levels>fills*2,'the cut and raised crest need distinct transitions');
+    paint(ctx,points,{width:4,color:'#A70',casing:'#432'},2,width);
+    assert.ok(strokes>4,'the exact setting-out plan still carries its survey convention');
+    assert.equal(JSON.stringify(points),frozen);
+  }
 });
 
 test('Water, Zones and Structures show their saved planting context instead of asking the model to guess it', () => {

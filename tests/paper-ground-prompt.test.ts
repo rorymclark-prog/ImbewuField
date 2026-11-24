@@ -7,6 +7,8 @@ import {
   buildFinishedSheetPolishPrompt,
   buildPhasingRestylePrompt,
   buildLockedIllustrationPrompt,
+  buildProducerPrompt,
+  buildSatelliteOverlayPrompt,
   groundContractFor,
   isPhotoPreservingStyle,
 } from '@/lib/producer-prompt';
@@ -186,6 +188,21 @@ test('Earthworks stays at the digging stage in both paid passes and every visual
     assert.doesNotMatch(polish,/PLANTED CONTENT:|fill each bed with neat top-down rows of leafy green crops/);
   }
   assert.match(buildFinishedSheetPolishPrompt('Planting','master_atlas'),/PLANTED CONTENT:/,'the growing-stage sheet must keep its planted-bed direction');
+});
+
+test('Earthworks swales read as worked soil from the first AI pass through polish, including Satellite Overlay', () => {
+  const label='Earthworks', elements='Swale ×2, Vegetable Bed ×9';
+  const prompts=[
+    buildLockedIllustrationPrompt(label,'precision_atlas',elements,'','paper'),
+    buildFinishedSheetPolishPrompt(label,'editorial_atlas'),
+    buildProducerPrompt(label,'precision_atlas',elements),
+    buildSatelliteOverlayPrompt({layerLabel:label,stylePreset:'satellite_overlay',sheetKind:'earthworks',elementsText:elements}),
+  ];
+  for (const prompt of prompts) {
+    assert.match(prompt,/scooped hollow in the local soil/);
+    assert.match(prompt,/saved endpoints/);
+    assert.doesNotMatch(prompt,/grassed along its top|a green planted berm/);
+  }
 });
 
 test('saved bed coordinates describe the same geometry at every print resolution without changing it', () => {

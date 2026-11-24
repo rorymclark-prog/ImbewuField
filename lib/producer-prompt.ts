@@ -323,8 +323,9 @@ export function buildProducerPrompt(
     .map(i => `The tree marked '${i.label}' is a ${i.speciesCrownForm} canopy tree.`)
     .filter((v, i, a) => a.indexOf(v) === i)
     .join(' ');
+  const featureGuide = showcaseSheetKindForLabel(layerLabel ?? '') === 'earthworks' ? earthworksDrawingContract() + ' ' : FEATURE_LEGEND;
   const drawBlock =
-    `DRAW: ${FEATURE_LEGEND}${elementsText ? `The marked features for this sheet are: ${elementsText}. ` : ''}${speciesInstructions ? `${speciesInstructions} ` : ''}` +
+    `DRAW: ${featureGuide}${elementsText ? `The marked features for this sheet are: ${elementsText}. ` : ''}${speciesInstructions ? `${speciesInstructions} ` : ''}` +
     `Paint each marked feature as a clear, recognisable illustration, and only the features that are already marked.`;
   const markerCleanup =
     `MARKER CLEANUP: coloured footprints are temporary placement guides, not finished artwork. ` +
@@ -705,7 +706,7 @@ export function showcaseSheetKindForLabel(layerLabel: string): ShowcaseSheetKind
 // The same saved bed has two stages: ground to prepare on Earthworks, growing crops on Planting.
 // Sharing the planted glossary made the paid setting-out sheet grow a garden over its dig marks.
 function earthworksDrawingContract(): string {
-  return 'EARTHWORKS SETTING-OUT — BEFORE PLANTING: this sheet shows ground preparation, not the finished garden. Each brown rectangular bed is one bare prepared bed with restrained soil and mulch texture; keep every bed separate at its exact corners, width, length, rotation and spacing. Do not subdivide, merge, lengthen, move or add beds. Each small brown circle locates one empty tree pit to dig, not a tree canopy, planted basin or pot. These circles identify positions; never infer an excavation diameter, depth or bank height from a symbolic marker. Bare prepared beds have soil edges: add no masonry, timber framing or pale kerbs unless explicitly recorded in the feature register. A marked banana circle is an excavated basin with a soil rim, without banana plants. Swales are dry on-contour excavated channels and raised spoil berms, in earth colours along the exact saved route and width; never blue water pipes, streams, planted hedges, tree rows or invented stone retaining walls. Preserve existing vegetation visible in the photograph as quiet site context, but add no proposed crops, trees, palms, hedges or flowering plants. The whole-site planting brief is future context only. The number of marked pits, beds and swales is authoritative.';
+  return 'EARTHWORKS SETTING-OUT — BEFORE PLANTING: this sheet shows ground preparation, not the finished garden. Each brown rectangular bed is one bare prepared bed with restrained soil and mulch texture; keep every bed separate at its exact corners, width, length, rotation and spacing. Do not subdivide, merge, lengthen, move or add beds. Each small brown circle locates one empty tree pit to dig, not a tree canopy, planted basin or pot. These circles identify positions; never infer an excavation diameter, depth or bank height from a symbolic marker. Bare prepared beds have soil edges: add no masonry, timber framing or pale kerbs unless explicitly recorded in the feature register. A marked banana circle is an excavated basin with a soil rim, without banana plants. Where a swale is marked, follow its bends and both endpoints. Swales are dry on-contour excavated channels and raised spoil berms, in earth colours along the exact saved route and width; never blue water pipes, streams, planted hedges, tree rows or invented stone retaining walls. Model a shallow scooped hollow in the local soil beside a continuous low crest of loose spoil. Use soft self-shadow in the hollow, irregular crumbs on the lit crest and shoulders blending into the ground at the saved endpoints. Keep the cut and bank inside their footprint. Survey hatching and centre marks are setting-out symbols: omit crossbars, pegs, hard kerbs and outlines from the artwork. Preserve existing vegetation visible in the photograph as quiet site context, but add no proposed crops, trees, palms, hedges or flowering plants. The whole-site planting brief is future context only. The number of marked pits, beds and swales is authoritative.';
 }
 
 function sheetDrawingScope(sheet: ShowcaseSheetKind): string {
@@ -1005,7 +1006,9 @@ export function buildSatelliteOverlayPrompt(args: {
   const present = keys.filter((k) => ICON_MATCH[k]?.test(matchText));
   // No fallback to the full list: describing an icon this sheet has no marker for is how a prompt
   // talks a model into drawing one.
-  const iconSpec = present.map((k) => OVERLAY_ICONS[k]).join('; ');
+  const iconSpec = sheetKind === 'earthworks'
+    ? earthworksDrawingContract()
+    : present.map((k) => OVERLAY_ICONS[k]).join('; ');
 
   // Strip the editor glyphs before they reach the prompt. They still do their identifying work in
   // the input IMAGE, where they are drawn onto each marker — but this sheet's labels are lettered
@@ -1450,12 +1453,12 @@ export function buildFinishedSheetPolishPrompt(
           `STRUCTURE REGISTER: ${structureRegister.trim()} Roof ONLY the buildings this register calls roofed — one roof per building, on its exact footprint, and never merge neighbouring structures under one shared roof. Everything the register calls flat, ground-level or a track stays fully open to the sky: bare concrete reads as bare concrete and a tar or gravel track reads as tar or gravel, drawn in this sheet's art style but never as a building. A small existing building already visible inside the supplied photo keeps its own roof exactly where it is.`,
         ]
       : []),
-    `EARTHWORKS ARE DUG GROUND, NOT ROUTES: a brown band running across the slope — a darker excavated lane on one side, a warmer soil ridge on the other, short cross-ticks along the ridge — is a SWALE, an on-contour water-harvesting earthwork. Redraw it as moved earth on exactly the same route and width: a level channel of bare turned soil on the darker side, and along the lighter side a continuous raised spoil berm with a lit crest and a cast shadow down its outer face, grassed along its top, its ends feathering out into the ground. It is dug into the land, so it sits UNDER the light that falls on everything else — a smooth glossy brown tube lying ON the grass means the earthwork has been misread as a pipe.`,
+    !diggingStage && `EARTHWORKS ARE DUG GROUND, NOT ROUTES: a brown band running across the slope — a darker excavated lane on one side, a warmer soil ridge on the other, short cross-ticks along the ridge — is a SWALE, an on-contour water-harvesting earthwork. Redraw it as moved earth on exactly the same route and width: a level channel of bare turned soil on the darker side, and along the lighter side a continuous raised spoil berm with a lit crest and a cast shadow down its outer face, grassed along its top, its ends feathering out into the ground. It is dug into the land, so it sits UNDER the light that falls on everything else — a smooth glossy brown tube lying ON the grass means the earthwork has been misread as a pipe.`,
     diggingStage ? earthworksDrawingContract()
       : `PLANTED CONTENT: a marked vegetable bed is a growing bed, not bare soil — fill each bed with neat top-down rows of leafy green crops at the bed's own scale, visibly planted. Marked hedges, banks and windbreak rows read as dense living plants, not flat strips. This planted detail belongs only inside features the map already marks; unmarked open ground still stays open.`,
     `FEATURES: fully opaque, solid, confidently coloured — never translucent. No grey halo, white halo, selection ring, badge, pin or handle around anything; that is editor residue from the draft and removing it is part of the job. Neighbouring tanks keep their centres but must read as separate vessels with distinct rims and visible ground between them.`,
     `FINAL CHECK: place this image beside the one you were given. If a farmer could not tell within two seconds which is the finished one, the pass has failed. It must be the same map — same geometry, same counts, same routes, no text — and unmistakably better drawn.`,
-  ].join('\n\n');
+  ].filter(Boolean).join('\n\n');
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }
 

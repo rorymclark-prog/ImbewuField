@@ -1082,9 +1082,10 @@ export function drawMarks(
 
   // Earthworks is the digging stage. The generic green bed markers and blue dashed swales
   // instructed the image model to grow vegetables and draw irrigation on the setting-out sheet.
-  // Share the exact sheet's soil footprints, derived pits and cut/berm route vocabulary instead.
+  // Retain the exact footprints and pits. The model copied the setting-out hatches as timber,
+  // so show soil relief along the same swale route in its illustration guide.
   if (drawDesign && filter === 'earthworks') {
-    if (showDesignLines) drawFilteredLines(ctx, state, filter, px, py, pxPerM);
+    if (showDesignLines) drawFilteredLines(ctx, state, filter, px, py, pxPerM, 'illustrated');
     if (showDesignItems) drawEarthworksFeatures(ctx, state, filter, px, py, pxPerM);
     return;
   }
@@ -6464,6 +6465,79 @@ function drawTrueFootprint(
  */
 const SWALE_DEFAULT_WIDTH_M = 1.5;
 
+/** The exact plan uses a survey hatch. The illustration guide needs a cut that sinks into the
+ *  site's own ground and a bank that catches the light. Both use the same centreline and width. */
+function drawIllustratedSwale(ctx: CanvasRenderingContext2D, points: Array<[number, number]>, half: number) {
+  const bankEdge = offsetPolyline(points, -half);
+  const cutEdge = offsetPolyline(points, half);
+  const lengths = points.slice(1).map(([x, y], i) => Math.hypot(x - points[i][0], y - points[i][1]));
+  const total = lengths.reduce((sum, length) => sum + length, 0);
+  if (total === 0) return;
+  const feather = Math.min(half * 2, total / 3);
+  const rim = (edges: Array<[number, number]>) => {
+    const outline: Array<[number, number]> = [[...points[0]]];
+    let travelled = 0;
+    for (let i = 1; i < points.length; i++) {
+      const end = travelled + lengths[i - 1];
+      for (const distance of [feather, total - feather]) {
+        if (distance <= travelled || distance >= end) continue;
+        const t = (distance - travelled) / lengths[i - 1];
+        outline.push([edges[i - 1][0] + (edges[i][0] - edges[i - 1][0]) * t,
+          edges[i - 1][1] + (edges[i][1] - edges[i - 1][1]) * t]);
+      }
+      const scale = Math.min(1, end / feather, Math.max(0, total - end) / feather);
+      outline.push([points[i][0] + (edges[i][0] - points[i][0]) * scale,
+        points[i][1] + (edges[i][1] - points[i][1]) * scale]);
+      travelled = end;
+    }
+    return outline;
+  };
+  ctx.save();
+  ctx.beginPath();
+  rim(bankEdge).forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
+  for (const p of rim(cutEdge).reverse()) ctx.lineTo(...p);
+  ctx.closePath();
+  ctx.clip();
+
+  // One uninterrupted wash per saved segment. Short overlapping brush strokes produced
+  // regular dark seams that the image model could mistake for the very survey pegs we removed.
+  let grainSeed = 731;
+  const random = () => {
+    grainSeed = (Math.imul(grainSeed, 1664525) + 1013904223) >>> 0;
+    return grainSeed / 4294967296;
+  };
+  for (let i = 1; i < points.length; i++) {
+    const [ax, ay] = points[i - 1], [bx, by] = points[i];
+    const length = lengths[i - 1];
+    if (length < 1e-6) continue;
+    const nx = -(by - ay) / length, ny = (bx - ax) / length;
+    const relief = ctx.createLinearGradient(ax - nx * half, ay - ny * half, ax + nx * half, ay + ny * half);
+    relief.addColorStop(0, 'rgba(155,120,78,0)');
+    relief.addColorStop(.17, 'rgba(154,117,80,.53)');
+    relief.addColorStop(.32, 'rgba(193,151,101,.81)');
+    relief.addColorStop(.54, 'rgba(134,102,71,.78)');
+    relief.addColorStop(.67, 'rgba(100,76,56,.78)');
+    relief.addColorStop(.82, 'rgba(126,99,73,.58)');
+    relief.addColorStop(1, 'rgba(164,135,98,0)');
+    ctx.fillStyle = relief;
+    ctx.beginPath();
+    ctx.moveTo(...bankEdge[i - 1]);
+    ctx.lineTo(...bankEdge[i]);
+    ctx.lineTo(...cutEdge[i]);
+    ctx.lineTo(...cutEdge[i - 1]);
+    ctx.closePath();
+    ctx.fill();
+    const grains = Math.min(600, Math.floor(length * .8));
+    for (let j = 0; j < grains; j++) {
+      const t = random(), across = (random() * 1.7 - .9) * half;
+      const size = Math.min(1.7, half * .16) * (.4 + random());
+      ctx.fillStyle = random() < .5 ? 'rgba(230,202,157,.45)' : 'rgba(87,65,43,.34)';
+      ctx.fillRect(ax + (bx - ax) * t + nx * across, ay + (by - ay) * t + ny * across, size, size * .76);
+    }
+  }
+  ctx.restore();
+}
+
 /** Paints a swale as the earthwork it is: a cut ditch, a spoil berm beside it, and the pegged
  *  contour centreline between them — so the sheet can be used to set the work out on the ground
  *  rather than only showing the route water takes. Geometry is offset for drawing only; the saved
@@ -6474,6 +6548,7 @@ function drawSwaleCrossSection(
   style: EarthworksRouteStyle,
   pxPerM?: number,
   widthM?: number,
+  appearance: 'setting-out' | 'illustrated' = 'setting-out',
 ): void {
   if (screenPoints.length < 2) return;
   const smooth = polishedRenderPoints(screenPoints as RenderPoint[]) as Array<[number, number]>;
@@ -6491,6 +6566,10 @@ function drawSwaleCrossSection(
   // A caller without a map scale cannot convert saved metres to pixels. Its single line is a
   // visibility fallback only; every exact sheet supplies pxPerM and therefore preserves width.
   const half = statedHalf ?? Math.max(style.width * 0.9, unstatedHalf);
+  if (appearance === 'illustrated') {
+    drawIllustratedSwale(ctx, smooth, half);
+    return;
+  }
   // Each half of the band is one LANE. Its stroke is `half` wide, so its centreline sits at
   // half/2 — a stroke centred on the full offset would hang outside the band and leave the
   // middle showing bare casing, which is what made the first attempt read as three flat stripes.
@@ -6576,6 +6655,7 @@ function drawFilteredLines(
   /** Pixels per ground metre. Supplied so an EARTHWORK can be drawn at the size it will actually
    *  be dug, rather than at a fixed pixel width that shrinks to a hairline on a big sheet. */
   pxPerM?: number,
+  swaleAppearance: 'setting-out' | 'illustrated' = 'setting-out',
 ): void {
   ctx.save();
   ctx.lineCap = 'round';
@@ -6609,6 +6689,7 @@ function drawFilteredLines(
         earthworksStyle,
         pxPerM,
         l.widthM,
+        swaleAppearance,
       );
       continue;
     }

@@ -42,8 +42,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
-    when: '24 November 2026', sha: '2c06e0542',
-    changes: ['Zoom in on a full-screen map to read its labels and legend.'],
+    when: '24 November 2026', sha: '772ac3418',
+    changes: ['Zoom in on a full-screen map to read its labels and legend.',
+      'AI Earthworks maps show swales as a dry channel beside a low bank of soil.'],
   },
   {
     when: '19 November 2026', sha: '5069baeaa',
