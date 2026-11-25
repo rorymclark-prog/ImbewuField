@@ -41,9 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 November 2026', sha: '64b3ffc4', changes: [
+  { when: '25 November 2026', sha: '46b57cea', changes: [
     'Follow each portion of the harvest into the farm record with a new play button.',
     'Check the A-frame, then peg a contour in the same language in Earthworks and Water.',
+  ] },
+  { when: '25 November 2026', sha: 'ad2e67b0f', changes: [
+    'Download a crop progress report with planned dates and your journal notes.',
+    'View and download weather from six German stations in the crop preview.',
   ] },
   { when: '25 November 2026', sha: '12ff32d9', changes: [
     'On labelled Earthworks maps, each swale callout points halfway along its saved route.',

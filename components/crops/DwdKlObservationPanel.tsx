@@ -8,7 +8,7 @@ import {
 } from '@/lib/international/dwd-kl-observation-report';
 import {
   dwdKlRequestableDays, dwdKlSelectionProblem, DWD_KL_ATTRIBUTION, DWD_KL_LICENCE, DWD_KL_SPECIFICATION,
-  DWD_KL_STATION, type DwdKlSelection,
+  DWD_KL_STATIONS, type DwdKlSelection,
 } from '@/lib/international/providers/dwd-kl-observations';
 import type { DwdKlLoad } from '@/lib/international/providers/dwd-kl-http';
 
@@ -72,7 +72,7 @@ export default function DwdKlObservationPanel({ actorIsCurrent }: { actorIsCurre
       if (response.ok) {
         const candidate: DwdKlLoad = await response.json();
         if (candidate?.status === 'held' || (candidate?.status === 'available' &&
-          candidate.selection.stationId === selection.stationId && candidate.selection.firstDay === selection.firstDay &&
+          candidate.station.id === selection.stationId && candidate.selection.stationId === selection.stationId && candidate.selection.firstDay === selection.firstDay &&
           candidate.selection.lastDay === selection.lastDay)) result = candidate;
       }
     } catch { /* A held result keeps the station values unavailable. */ }
@@ -94,10 +94,12 @@ export default function DwdKlObservationPanel({ actorIsCurrent }: { actorIsCurre
   return <details aria-label={DWD_KL_TITLE} className="space-y-3 rounded-lg border border-[var(--border)] p-3 text-sm">
     <summary className="min-h-11 cursor-pointer py-2 font-semibold">{DWD_KL_TITLE}</summary>
     <p>{DWD_KL_LIMITS}</p>
-    <p>Choose Berlin-Tempelhof and up to 366 days from DWD’s recent archive. {DWD_KL_PRELIMINARY}</p>
+    <p>Choose a station and up to 366 days from DWD’s recent archive. {DWD_KL_PRELIMINARY}</p>
     <div className="grid gap-2 sm:grid-cols-3">
       <label>Climate station<select className={inputClass} value={selection.stationId} onChange={event => change('stationId', event.target.value)}>
-        <option value="">Choose station</option><option value={DWD_KL_STATION.id}>{DWD_KL_STATION.name} · {DWD_KL_STATION.id}</option>
+        <option value="">Choose station</option>
+        {DWD_KL_STATIONS.map(station =>
+          <option key={station.id} value={station.id}>{station.name} · {station.id}</option>)}
       </select></label>
       <label>First DWD day<input className={inputClass} type="date" min={dates.firstDay} max={dates.lastDay}
         value={selection.firstDay} onChange={event => change('firstDay', event.target.value)} /></label>

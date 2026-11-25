@@ -1,8 +1,8 @@
 import { Uint8ArrayReader, ZipReader, type FileEntry } from '@zip.js/zip.js/index-native.js';
 import {
-  DWD_KL_ARCHIVE_NAME, DWD_KL_ARCHIVE_URL, DWD_KL_MAX_MEMBER_BYTES, DWD_KL_METADATA_FILES, DWD_KL_PRODUCT,
-  dwdKlSelectionProblem, parseDwdKlRecentObservations,
-  type DwdKlMetadata, type DwdKlObservations, type DwdKlRecentProduct, type DwdKlSelection,
+  DWD_KL_MAX_MEMBER_BYTES, DWD_KL_METADATA_PREFIXES, dwdKlArchiveName, dwdKlArchiveUrl,
+  dwdKlProductMatch, dwdKlSelectionProblem, findDwdKlStation, parseDwdKlRecentObservations,
+  type DwdKlMetadata, type DwdKlObservations, type DwdKlRecentProduct, type DwdKlSelection, type DwdKlStation,
 } from './dwd-kl-observations.ts';
 
 export type DwdKlLoad = DwdKlObservations | {
@@ -50,7 +50,7 @@ async function readMember(entry: FileEntry, signal: AbortSignal): Promise<string
 }
 
 export async function extractDwdKlRecentProduct(
-  bytes: Uint8Array, retrievedAt: string, signal: AbortSignal,
+  bytes: Uint8Array, retrievedAt: string, signal: AbortSignal, stationId: DwdKlStation['id'],
 ): Promise<DwdKlRecentProduct | null> {
   if (bytes.byteLength < 4 || bytes.byteLength > MAX_ZIP_BYTES || bytes[0] !== 0x50 ||
     bytes[1] !== 0x4b || bytes[2] !== 3 || bytes[3] !== 4 || signal.aborted) return null;
@@ -69,20 +69,20 @@ export async function extractDwdKlRecentProduct(
         entry.uncompressedSize > DWD_KL_MAX_MEMBER_BYTES || ![0, 8].includes(entry.compressionMethod)) return null;
       entries.set(entry.filename, entry);
       if (entry.filename.startsWith('produkt_')) {
-        if (product || !DWD_KL_PRODUCT.test(entry.filename)) return null;
+        if (product || !dwdKlProductMatch(entry.filename, stationId)) return null;
         product = entry;
       }
     }
     if (!product) return null;
     const metadata: Partial<Record<keyof DwdKlMetadata, string>> = {};
-    for (const key of Object.keys(DWD_KL_METADATA_FILES) as (keyof DwdKlMetadata)[]) {
-      const entry = entries.get(DWD_KL_METADATA_FILES[key]);
+    for (const key of Object.keys(DWD_KL_METADATA_PREFIXES) as (keyof DwdKlMetadata)[]) {
+      const entry = entries.get(`${DWD_KL_METADATA_PREFIXES[key]}_${stationId}.txt`);
       if (!entry) return null;
       metadata[key] = await readMember(entry, signal);
     }
     const observations = await readMember(product, signal);
     signal.throwIfAborted();
-    return { archiveName: DWD_KL_ARCHIVE_NAME, memberName: product.filename, observations,
+    return { archiveName: dwdKlArchiveName(stationId), memberName: product.filename, observations,
       metadata: metadata as DwdKlMetadata, retrievedAt };
   } catch {
     return null;
@@ -96,21 +96,23 @@ export async function loadDwdKlRecentObservations(
 ): Promise<DwdKlLoad> {
   const problem = dwdKlSelectionProblem(selection, now);
   if (problem) return { status: 'held', reason: problem };
+  const station = findDwdKlStation(selection.stationId)!;
+  const url = dwdKlArchiveUrl(station.id);
   const signal = AbortSignal.any([caller, AbortSignal.timeout(DEADLINE_MS)]);
   try {
     signal.throwIfAborted();
-    const response = await fetch(DWD_KL_ARCHIVE_URL, {
+    const response = await fetch(url, {
       signal, redirect: 'error', credentials: 'omit', referrerPolicy: 'no-referrer', cache: 'no-store',
       headers: { Accept: 'application/zip' },
     });
     const mime = response.headers.get('content-type')?.split(';')[0].trim().toLowerCase();
-    if (response.status === 429 || !response.ok || response.redirected || response.url !== DWD_KL_ARCHIVE_URL ||
+    if (response.status === 429 || !response.ok || response.redirected || response.url !== url ||
       !response.body || mime !== 'application/zip' || Number(response.headers.get('content-length')) > MAX_ZIP_BYTES) {
       void response.body?.cancel().catch(() => {});
       return { status: 'held', reason: response.status === 429 ? 'rate-limited' : !response.ok ? 'unavailable' : 'invalid-archive' };
     }
     const bytes = await readBoundedZip(response.body, signal);
-    const product = bytes && await extractDwdKlRecentProduct(bytes, now.toISOString(), signal);
+    const product = bytes && await extractDwdKlRecentProduct(bytes, now.toISOString(), signal, station.id);
     if (signal.aborted) return { status: 'held', reason: 'unavailable' };
     return product ? parseDwdKlRecentObservations(product, selection) : { status: 'held', reason: 'invalid-archive' };
   } catch {
