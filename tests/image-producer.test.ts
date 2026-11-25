@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import './hybrid-composite-registration.cases.ts';
 import './ai-map-composition.cases.ts';
 import { registerOpenAiMapOutput, registeredOpenAiMapSize, assertMatchingImageAspects, blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
-import { buildFinishedSheetPolishPrompt, buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES, SHEET_NO } from '../lib/producer-prompt.ts';
+import { WATER_POLISH_ROUTE_GUIDE, buildFinishedSheetPolishPrompt, buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES, SHEET_NO } from '../lib/producer-prompt.ts';
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
@@ -567,8 +567,11 @@ test('locked illustration prompt paints the whole sheet without inventing featur
   assert.match(p, /same centre, count, rotation and footprint/);
   assert.match(p, /ONE COHERENT DRAWING/);
   assert.match(p, /Do not use stickers, clip-art, cut-out collages, cartoon icons/);
-  assert.match(p, /Keep buried water pipe blue, filtered-greywater routes purple/);
-  assert.match(p, /app reinforces the measured routes, leaders, labels and legend afterwards/i);
+  assert.match(p, /Blue marks buried pipes and drip lines; purple marks filtered greywater/);
+  // The AI paints the ground under the network. Asking it to ink a second network left shifted pipes.
+  assert.match(p, /app draws these routes and emitters over the finished artwork/i);
+  assert.match(p, /app also adds the leaders, labels and legend/i);
+  assert.doesNotMatch(p, /a solid violet line is a greywater line — redraw it/);
   assert.match(p, /no bright border, kerb, raised edge, hatch, shadow or roof-like treatment/);
   assert.doesNotMatch(p, /texture the land continuously/);
   assert.doesNotMatch(buildLockedIllustrationPrompt('Planting', 'precision_atlas'), /WATER FEATURE ROLE/);
@@ -1071,6 +1074,8 @@ test('Sector polish improves the actual first-pass artwork without baking a seco
 // green — a snapshot test on a prompt records what someone typed, not whether it works.
 test('the paid second pass is told it received a DRAFT, and that copying it is a failure', () => {
   const p = buildFinishedSheetPolishPrompt('Water', 'chatgpt_atlas', 'Some Farm');
+  assert.ok(p.includes(`\n\n${WATER_POLISH_ROUTE_GUIDE} `));
+  assert.ok(!buildFinishedSheetPolishPrompt('Planting', 'chatgpt_atlas').includes(WATER_POLISH_ROUTE_GUIDE));
 
   // 1. It must describe its real input. Calling a first-pass AI render "complete" or
   //    "already-correct" invites the model to leave it alone.

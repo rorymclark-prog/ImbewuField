@@ -53,7 +53,7 @@ import {
 } from '@/lib/boundary-geometry';
 import { structureRegisterText } from '@/lib/structure-register';
 import { historicalBaselineForSite, historicalBaselineFromPrompt, historicalBaselinePrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, UBHEJANE_BEFORE_WORKS, type HistoricalBaseline } from '@/lib/historical-map-baseline';
-import { bedFootprintRegister, buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, PHASING_ARTWORK_PROMPT_MARKER, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
+import { bedFootprintRegister, buildFinishedSheetPolishPrompt, WATER_POLISH_ROUTE_GUIDE, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, PHASING_ARTWORK_PROMPT_MARKER, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
 import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, fetchRenderJobScene, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
@@ -2501,59 +2501,29 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
       ctx.restore();
       continue;
     }
-    if (line.kind === 'drip') {
-      // Benchmark grammar: clean blue tubing with sparse emitters. Too many dots read as noise
-      // once the finished sheet is reduced to phone/gallery size.
-      trace();
-      ctx.setLineDash([]);
-      ctx.strokeStyle = '#174E70';
-      ctx.lineWidth = Math.max(style.width + 1.5, W * 0.0025);
-      ctx.stroke();
-      trace();
-      ctx.strokeStyle = style.color;
-      ctx.lineWidth = Math.max(style.width, W * 0.00175);
-      ctx.stroke();
-      if (!line.visualBridge) {
-        routeDots(
-          line.points,
-          Math.max(34, W * 0.017),
-          Math.max(2.0, W * 0.00105),
-          '#BCE8FF',
-          '#15577D',
-        );
-      }
-      continue;
-    }
-    if (line.kind === 'greywater') {
-      // A filtered-greywater run stays visually distinct from clean-water pipework.
-      trace();
-      ctx.setLineDash([]);
-      ctx.strokeStyle = 'rgba(55,30,68,0.94)';
-      ctx.lineWidth = Math.max(style.width + 1.9, W * 0.0032);
-      ctx.stroke();
-      trace();
-      ctx.setLineDash([]);
-      ctx.strokeStyle = style.color;
-      ctx.lineWidth = Math.max(style.width, W * 0.0023);
-      ctx.stroke();
-      if (!line.visualBridge) routeDots(line.points, Math.max(46, W * 0.022), Math.max(2.2, W * 0.00115), '#D9B6E6', '#5E3570');
-      ctx.setLineDash([]);
-      continue;
-    }
+    const drip = line.kind === 'drip';
+    const grey = line.kind === 'greywater';
+    const core = Math.max(style.width, W * (drip ? 0.00175 : grey ? 0.0023 : 0.0025));
+    const casing = drip ? Math.max(style.width + 1.5, W * 0.0025)
+      : grey ? Math.max(style.width + 1.9, W * 0.0032) : Math.max(style.width + 4.8, W * 0.005);
     trace();
     ctx.setLineDash([]);
-    // Every swale now takes the cross-section branch above and never reaches here, so the casing
-    // is plumbing-dark unconditionally. The swale arm of the old ternary was dead code that tsc
-    // caught the moment the branch stopped being conditional on the sheet.
-    ctx.strokeStyle = 'rgba(14,42,54,0.72)';
-    ctx.lineWidth = Math.max(style.width + 4.8, W * 0.005);
+    // Dark route casings disappeared over trees and roof shadows. A slim light outer
+    // stroke keeps the colour and emitter symbols readable on the dedicated Water map.
+    if (sheet === 'water') {
+      ctx.strokeStyle = '#F8FAF4';
+      ctx.lineWidth = casing + Math.max(2.4, W * 0.0016);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = drip ? '#174E70' : grey ? 'rgba(55,30,68,0.94)' : 'rgba(14,42,54,0.72)';
+    ctx.lineWidth = casing;
     ctx.stroke();
-    trace();
-    ctx.setLineDash(style.dash);
     ctx.strokeStyle = style.color;
-    ctx.lineWidth = Math.max(style.width, line.kind === 'pipe' ? W * 0.0025 : W * 0.0023);
+    ctx.lineWidth = core;
     ctx.stroke();
-    ctx.setLineDash([]);
+    if (line.visualBridge) continue;
+    if (drip) routeDots(line.points, Math.max(34, W * 0.017), Math.max(2, W * 0.00105), '#BCE8FF', '#15577D');
+    if (grey) routeDots(line.points, Math.max(46, W * 0.022), Math.max(2.2, W * 0.00115), '#D9B6E6', '#5E3570');
   }
 }
 
@@ -12216,6 +12186,7 @@ async function composeSheetChromeOverMapArt(opts: {
   /** Pixel size of the image the job actually uploaded, when it is known — used ONLY to recognise
    *  a legacy in-flight job whose input was a composed page, never to decide whether to run. */
   modelInputSize?: { width: number; height: number };
+  appDrawsWaterRoutes: boolean;
   state: DesignCanvasState;
   frame: CanvasFrame;
   refLayers: DesignGlossyProps['refLayers'];
@@ -12244,6 +12215,15 @@ async function composeSheetChromeOverMapArt(opts: {
     : false;
   const srcW = legacyPageInput ? Math.min(art.width, art.height * (W / H)) : art.width;
   ctx.drawImage(art, 0, 0, srcW, art.height, 0, 0, W, H);
+  // Strip legacy page furniture first so saved routes land in the same map frame as
+  // their labels. Keep the model-only pixels for the paid-difference comparison.
+  const plumbingLines = filter === 'water' && opts.appDrawsWaterRoutes
+    ? state.lines.filter(line => line.kind === 'pipe' || line.kind === 'drip' || line.kind === 'greywater') : [];
+  let waterArtBeforeInk: string | undefined;
+  if (plumbingLines.some(line => line.points.length >= 2)) {
+    waterArtBeforeInk = canvas.toDataURL('image/png');
+    drawWaterRoutes(ctx, { ...state, lines: plumbingLines }, frame, W, H, 'water');
+  }
   // Both paid stages share the same saved boundary pass and canopy occlusion policy.
   const unboundedArt = drainCanvasToDataUrl(canvas, 'image/png');
   const mapArt = await burnPaintedBoundary(unboundedArt, state, frame, refLayers, filter, W, H);
@@ -12267,7 +12247,7 @@ async function composeSheetChromeOverMapArt(opts: {
       ...(filter === 'water' ? waterReferenceFooter(state, frame, refLayers, opts.site) : {}),
     },
   );
-  return { sheet, mapArt };
+  return { sheet, mapArt: waterArtBeforeInk ?? mapArt };
 }
 
 // ── Persistence — cache the last render per site so a page refresh doesn't lose it.
@@ -14535,6 +14515,7 @@ export default function DesignGlossy({
           styleLabel: styleDef.label,
           labelMode,
           site,
+          appDrawsWaterRoutes: sourcePrompt?.includes(`\n\n${WATER_POLISH_ROUTE_GUIDE} `) === true,
         };
         // Only ever used to recognise a legacy page-shaped input; a missing source never stops the
         // chrome pass, it just means the current map-only contract is assumed.
@@ -14561,6 +14542,7 @@ export default function DesignGlossy({
           if (!sourceImage) throw err;
           const fallback = await composeSheetChromeOverMapArt({
             ...chromeInput,
+            appDrawsWaterRoutes: false, // The hybrid input already carries the saved route ink.
             modelArt: sourceImage,
             modelInputSize,
           });
@@ -15158,7 +15140,9 @@ export default function DesignGlossy({
         const ctx = board.getContext('2d');
         if (!ctx) throw new Error('Image preparation unavailable.');
         paintObliqueReferenceBoard(ctx, { design: designImage, photo, frame: p.frame, boundary: p.refLayers.boundary,
-          driveway: p.refLayers.driveway, drivewayClosed: p.refLayers.drivewayClosed, contours, terrain, anchors, roofs });
+          driveway: p.refLayers.driveway, drivewayClosed: p.refLayers.drivewayClosed,
+          paving: p.state.zones.filter(zone => zone.feature === 'patio').map(zone => zone.points),
+          contours, terrain, anchors, roofs });
         compositeDataUrl = board.toDataURL('image/png');
       } finally {
         releaseCanvas(board); releaseImageSource(designImage);

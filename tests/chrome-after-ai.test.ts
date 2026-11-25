@@ -150,7 +150,7 @@ test('the chrome pass is decided by the committed stage, not by what happens to 
 test('the chrome pass draws every app-owned element over the model art', () => {
   const pass = functionBody(
     'async function composeSheetChromeOverMapArt(',
-    '\n  return { sheet, mapArt };',
+    '\n}\n',
   );
 
   // Boundary stroke — drawn here, in the same pass as everything else, rather than byte-restored
@@ -228,7 +228,7 @@ test('a full masterplan has one grouped inventory, not leader labels repeated in
 
   const pass = functionBody(
     'async function composeSheetChromeOverMapArt(',
-    '\n  return { sheet, mapArt };',
+    '\n}\n',
   );
   assert.match(pass, /includeLabelGutters: filter !== 'all'/,
     'the paid chrome pass must apply the compact masterplan layout too');

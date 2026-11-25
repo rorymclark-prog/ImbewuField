@@ -1152,3 +1152,26 @@ test('Sector uses available raster contours when the separate broad SRTM slope i
   const exact=await paint(state,frame,refs,null);assert.equal(exact.status,'ok');assert.deepEqual(exact.lines.map((l:any)=>l.elevM),[15]);
   const illustrated=await paint(state,frame,refs,null,true);assert.deepEqual(illustrated.lines.map((l:any)=>l.elevM),[15,12.5]);
 });
+
+test('final Water polish places saved pipes over the normalized artwork and scores the model before route ink', async () => {
+  const operations: string[] = [];
+  const ctx = { drawImage() { operations.push('model'); } };
+  const canvas = { getContext: () => ctx, toDataURL: () => operations.join(' ') };
+  const compose = helper('composeSheetChromeOverMapArt', {
+    document: { createElement: () => canvas }, useHighQualityScaling() {},
+    loadImage: async () => ({ width: 400, height: 300 }), modelInputCarriesChrome: () => false,
+    drawWaterRoutes: (_ctx: unknown, state: {lines: {kind: string}[]}) => {
+      operations.push(...state.lines.map(l => l.kind));
+    },
+    drainCanvasToDataUrl: () => operations.join(' '), burnPaintedBoundary: (art: string) => art,
+    burnExactLabelLayer: (art: string) => ({ map: art }), composeStyleSheet: (art: string) => art,
+    waterReferenceFooter: () => ({}), REFERENCE_SHEET_LABEL: { water: 'Water', planting: 'Planting' },
+  });
+  const lines = ['drip','pipe','swale','greywater','path'].map(kind => ({ kind, points: [[0,0],[1,1]] }));
+  const options = { state: { lines }, frame: {}, refLayers: {}, filter: 'water', appDrawsWaterRoutes: true, W: 400, H: 300 };
+  assert.deepEqual(await compose(options), { sheet: 'model drip pipe greywater', mapArt: 'model' });
+  operations.length = 0;
+  assert.deepEqual(await compose({ ...options, filter: 'planting' }), { sheet: 'model', mapArt: 'model' });
+  operations.length = 0;
+  assert.deepEqual(await compose({ ...options, appDrawsWaterRoutes: false }), { sheet: 'model', mapArt: 'model' });
+});
