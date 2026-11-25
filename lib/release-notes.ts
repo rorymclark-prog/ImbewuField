@@ -42,9 +42,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
-    when: '25 November 2026', sha: '3d16f605',
+    when: '25 November 2026', sha: 'da911cad',
     changes: ['View and download Berlin-Tempelhof weather readings from the crop preview.'],
   },
+  { when: '25 November 2026', sha: '3d16f60', changes: [
+    'Trace pipes across planting on the polished Water map.',
+    'Oblique views use your saved gates and paving to place the entrance and yard.',
+  ] },
   { when: '25 November 2026', sha: 'a52824cc4', changes: [
     'Match narrow vegetable beds to the bed list using the numbers on your Record Plan.',
   ] },

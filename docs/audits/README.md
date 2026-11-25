@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+- [25 November 2026 — Water routes and oblique access](2026-11-25/water-and-oblique.md) follows the twelve-map review.
+
 - [25 November 2026 — All design maps and Record Plan bed numbers](2026-11-25/all-design-maps.md) records the twelve-view comparison and the nine-bed label correction.
 
 - [24 November 2026 — Glossy maps in Chrome](2026-11-24/glossy-map-browser-review.md) records ten sample sheets at three screen sizes and corrects full-screen inspection and Terrain labels.

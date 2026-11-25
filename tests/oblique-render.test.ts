@@ -319,3 +319,27 @@ test('the oblique UI uses one guarded paid queue call and the saved raw-input ga
   assert.doesNotMatch(perspective, /restoreProtectedPixels|producerLabels|buildProtectMask/);
   assert.match(source, /if \(!options.obliqueArtwork\) \{\s+const pxPerM[\s\S]*?drawBlueprintScaleBar[\s\S]*?drawSheetNorthArrow/);
 });
+
+test('the ground guide preserves paving recesses beside the gate even with no driveway trace or photo', () => {
+  const paving: [number, number][] = [[.2,.3],[.6,.3],[.6,.45],[.45,.45],[.45,.55],[.2,.55]];
+  const anchors = obliqueAnchors([{defId: 'gate', x: .6, y: .45}]);
+  assert.deepEqual(anchors, [{kind: 'gate', x: .6, y: .45}]);
+  assert.match(obliqueAnchorBrief(anchors), /no vehicle-route width/);
+  const paths: {color: string, points: number[][]}[] = [];
+  let points: number[][] = [];
+  const captions: string[] = [];
+  const ctx = {
+    strokeStyle: '', save() {}, restore() {}, fillRect() {}, strokeRect() {}, drawImage() {},
+    fillText(s: string) { captions.push(s); }, beginPath() { points = []; },
+    moveTo(x: number,y: number) { points.push([x,y]); }, lineTo(x: number,y: number) { points.push([x,y]); },
+    closePath() {}, stroke() { paths.push({color: this.strokeStyle, points}); }, fill() {}, rect() {}, clip() {},
+  };
+  paintObliqueReferenceBoard(ctx as unknown as CanvasRenderingContext2D, {
+    design: {width: 400,height: 400} as HTMLCanvasElement, boundary: [], frame: {...frame, satDataUrl:null},
+    paving: [paving], anchors, contours: unavailable, terrain: obliqueTerrainEvidence(unavailable,null),
+  });
+  const r = fitObliqueReference(400,400*Math.sin(Math.PI/4),OBLIQUE_BOARD.groundView);
+  assert.deepEqual(paths.find(p=>p.color === '#70419A')?.points, paving.map(([u,v])=>[r.x+u*r.w,r.y+v*r.h]));
+  assert.ok(captions.includes('◆  Gate'));
+  assert.ok(!captions.some(s => s.includes('driveway trace')));
+});
