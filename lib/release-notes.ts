@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 November 2026', sha: 'f68de314', changes: [
+    'Saved AI maps now tell you which print quality to choose to reuse their artwork.',
+  ] },
   { when: '25 November 2026', sha: '25086e69', changes: [
     'AI Earthworks maps label swales, beds and basins beside their saved positions.',
   ] },

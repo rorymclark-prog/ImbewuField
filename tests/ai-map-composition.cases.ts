@@ -602,6 +602,23 @@ test('reassembling a saved paid map reconnects only its existing job and clears 
     'a free reassembly can subscribe to the old job but must never buy another generation');
 });
 
+test('saved artwork names the print setting that can recover it on the current device', () => {
+  const scene = { renderRecipe: 'recipe', planVersion: 'v1', outputScale: 3 };
+  const message = (scale: number, phone = false, light = false) => helper('savedArtworkSettingsMessage', {
+    SCALE: scale, SHEET_RENDER_RECIPE: 'recipe', PLAN_VERSION: 'v1', deviceSheetScale: () => phone ? 2 : 3, peekSafeMode: () => ({ active: light }),
+  });
+  assert.equal(message(3)(scene), null);
+  assert.match(message(2)(scene), /Choose High under Underlay/);
+  assert.match(message(3)({ ...scene, outputScale: 2 }), /Choose Standard under Underlay/);
+  assert.match(message(2, true)(scene), /on a computer/);
+  assert.match(message(2, false, true)(scene), /Try the photo again/);
+  assert.match(message(2)({ ...scene, renderRecipe: 'older' }), /different map version/);
+  assert.match(message(3)({ ...scene, planVersion: 'v0' }), /different map version/);
+  assert.match(message(2)({ ...scene, outputScale: 4 }), /earlier print size/);
+  assert.match(source, /if \(settingsMessage\) break;[\s\S]*?setError\(settingsMessage \?\? formatDesignTranslation/,
+    'a saved settings mismatch must reach the screen without suggesting an unchanged refresh');
+});
+
 // These checks execute the actual painters. They fail when post-processing hides a paid
 // illustration, even if the provider returned a visibly different picture.
 function artProbe() {
