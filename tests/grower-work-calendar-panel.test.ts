@@ -128,7 +128,8 @@ function delivery(onPhase: (phase: DeliveryPhase) => void = () => {}) {
   Object.defineProperty(globalThis, 'document', { configurable: true, value: {
     createElement(tag: string) {
       assert.equal(tag, 'a'); createdAnchors++; onPhase('anchor');
-      return { href: '', download: '', click() { downloads.push({ href: this.href, filename: this.download }); } };
+      return { href: '', download: '', click() { downloads.push({ href: this.href, filename: this.download }); },
+        remove() { if (appended.delete(this)) removed++; } };
     },
     body: {
       appendChild(anchor: object) { appended.add(anchor); onPhase('append'); },
@@ -515,4 +516,25 @@ test('pending provisional calendar cannot deliver its captured evidence after a 
     assert.equal(transport.blobs.length, 0); assert.equal(transport.downloads.length, 0);
     await invoke(old); assert.equal(transport.downloads.length, 0);
   } finally { transport.restore(); ui.dispose(); }
+});
+
+
+test('the crop operations panel downloads one chosen progress report in sample mode', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  assert.equal(enterSampleMode(), true);
+  const ui = mount(), output = delivery();
+  try {
+    assert.equal(ui.buttons('Download report').length, 2);
+    const transplantReport = ui.buttons('Download report').find(button => button.props['aria-label'].includes('Measured transplant fixture'));
+    assert.ok(transplantReport);
+    await invoke(transplantReport.props.onClick);
+    assert.deepEqual(output.downloads.map(file => file.filename), ['DEMO-crop-progress-report.html']);
+    const report = await output.blobs[0].text();
+    assert.match(report, /DEMO · [\s\S]*Measured transplant fixture/);
+    assert.match(report, /<th scope="row">Nursery start<\/th>/);
+    assert.doesNotMatch(report, /Measured direct fixture|private-calendar-/);
+    assert.match(ui.text(), /Progress report downloaded/);
+    t.mock.timers.tick(10000);
+    assert.equal(output.revoked.length, 1);
+  } finally { ui.dispose(); output.restore(); }
 });
