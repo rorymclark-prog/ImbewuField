@@ -319,14 +319,17 @@ test('featuresForPlace returns an empty list when the open place owns nothing, s
 
 
 import { savedRainfallFields } from '../lib/saved-places.ts';
-test('a saved site round trip retains unknown rain without a sentinel and preserves prior grower values on refresh', () => {
+test('a saved site round trip retains unknown rain without a sentinel and preserves prior grower values on refresh', (t) => {
   fakeLocalStorage.clear();
   const { rainfall: _discard, ...base } = place('rain-provenance', -29, 31);
   const outage = { annual: 600, rainfallSource: undefined };
+  // Save timestamps can contain the same digits as the provider's outage sentinel.
+  const updatedAt = 1795601960600;
+  t.mock.method(Date, 'now', () => updatedAt);
   savePlace({ ...base, ...savedRainfallFields(outage) });
   assert.equal(loadPlaces()[0].rainfall, undefined);
   assert.ok(isValidSavedPlace(loadPlaces()[0]));
-  assert.equal(JSON.stringify(loadPlaces()).includes('600'), false);
+  assert.deepEqual(JSON.parse(fakeLocalStorage.getItem(PLACES_KEY) ?? '[]'), [{ ...base, updatedAt }]);
   savePlace({ ...base, ...savedRainfallFields({ annual: 0, rainfallSource: 'nasa-power' }) });
   assert.equal(loadPlaces()[0].rainfall, 0);
   assert.equal(loadPlaces()[0].rainfallSource, 'nasa-power');

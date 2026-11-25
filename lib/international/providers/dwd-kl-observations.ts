@@ -1,9 +1,26 @@
 import { addGrowerUtcDays, isGrowerRecordedAt, isGrowerUtcDate } from '../grower-planning.ts';
 
-export const DWD_KL_STATION = { id: '00433', name: 'Berlin-Tempelhof' } as const;
-export const DWD_KL_ARCHIVE_NAME = 'tageswerte_KL_00433_akt.zip';
+// These stations are listed as Frei and have replayed original recent metadata.
+export const DWD_KL_STATIONS = [
+  { id: '00433', name: 'Berlin-Tempelhof' },
+  { id: '01048', name: 'Dresden-Klotzsche' },
+  { id: '01975', name: 'Hamburg-Fuhlsbüttel' },
+  { id: '02667', name: 'Köln/Bonn' },
+  { id: '03379', name: 'München-Stadt' },
+  { id: '03987', name: 'Potsdam' },
+] as const;
+export type DwdKlStation = typeof DWD_KL_STATIONS[number];
 const DATASET = 'https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl';
-export const DWD_KL_ARCHIVE_URL = `${DATASET}/recent/${DWD_KL_ARCHIVE_NAME}`;
+
+export function findDwdKlStation(id: string) {
+  return DWD_KL_STATIONS.find(station => station.id === id);
+}
+export function dwdKlArchiveName(id: DwdKlStation['id']) {
+  return `tageswerte_KL_${id}_akt.zip`;
+}
+export function dwdKlArchiveUrl(id: DwdKlStation['id']) {
+  return `${DATASET}/recent/${dwdKlArchiveName(id)}`;
+}
 export const DWD_KL_SPECIFICATION = `${DATASET}/DESCRIPTION_obsgermany-climate-daily-kl_en.pdf`;
 export const DWD_KL_LICENCE = 'https://creativecommons.org/licenses/by/4.0/';
 export const DWD_KL_ATTRIBUTION = 'Deutscher Wetterdienst (DWD CDC), Daily station observations for Germany, KL v24.3';
@@ -16,14 +33,19 @@ const MAX_ARCHIVE_DAYS = 600;
 export const DWD_KL_MAX_MEMBER_BYTES = 512 * 1024;
 const DAY_MS = 86_400_000;
 const QUALITY_LEVELS = new Set([1, 2, 3, 5, 7, 8, 9, 10]);
-export const DWD_KL_PRODUCT = /^produkt_klima_tag_(\d{8})_(\d{8})_00433\.txt$/;
-export const DWD_KL_METADATA_FILES = {
-  geography: 'Metadaten_Geographie_00433.txt',
-  parameters: 'Metadaten_Parameter_klima_tag_00433.txt',
-  minimum: 'Metadaten_Geraete_Lufttemperatur_Minimum_00433.txt',
-  mean: 'Metadaten_Geraete_Lufttemperatur_00433.txt',
-  maximum: 'Metadaten_Geraete_Lufttemperatur_Maximum_00433.txt',
-  nearGroundMinimum: 'Metadaten_Geraete_Lufttemp_Am_Erdb_Minimum_00433.txt',
+const PRODUCT = /^produkt_klima_tag_(\d{8})_(\d{8})_(\d{5})\.txt$/;
+export function dwdKlProductMatch(name: string, id: DwdKlStation['id']) {
+  const match = PRODUCT.exec(name);
+  return match?.[3] === id ? match : null;
+}
+
+export const DWD_KL_METADATA_PREFIXES = {
+  geography: 'Metadaten_Geographie',
+  parameters: 'Metadaten_Parameter_klima_tag',
+  minimum: 'Metadaten_Geraete_Lufttemperatur_Minimum',
+  mean: 'Metadaten_Geraete_Lufttemperatur',
+  maximum: 'Metadaten_Geraete_Lufttemperatur_Maximum',
+  nearGroundMinimum: 'Metadaten_Geraete_Lufttemp_Am_Erdb_Minimum',
 } as const;
 
 export interface DwdKlSelection {
@@ -32,7 +54,7 @@ export interface DwdKlSelection {
   readonly lastDay: string;
 }
 
-export type DwdKlMetadata = Readonly<Record<keyof typeof DWD_KL_METADATA_FILES, string>>;
+export type DwdKlMetadata = Readonly<Record<keyof typeof DWD_KL_METADATA_PREFIXES, string>>;
 
 export interface DwdKlRecentProduct {
   readonly archiveName: string;
@@ -61,10 +83,10 @@ type HoldReason = 'invalid-selection' | 'station-not-admitted' | 'source-mismatc
 export type DwdKlObservations = { readonly status: 'held'; readonly reason: HoldReason } | {
   readonly status: 'available';
   readonly selection: DwdKlSelection;
-  readonly station: typeof DWD_KL_STATION;
+  readonly station: DwdKlStation;
   readonly source: {
     readonly series: 'recent-preliminary';
-    readonly url: typeof DWD_KL_ARCHIVE_URL;
+    readonly url: string;
     readonly memberName: string;
     readonly retrievedAt: string;
     readonly firstArchiveDay: string;
@@ -87,9 +109,7 @@ export function dwdKlSelectionProblem(selection: DwdKlSelection, now: Date): Hol
   const { stationId, firstDay, lastDay } = selection;
   if (typeof stationId !== 'string' || stationId.length !== 5 || !/^\d{5}$/.test(stationId)
     || !isGrowerUtcDate(firstDay) || !isGrowerUtcDate(lastDay)) return 'invalid-selection';
-  // The reviewed catalogue marks Berlin-Tempelhof Frei. An ID matching the syntax
-  // does not establish a different station's access, sensor heights, or day basis.
-  if (stationId !== DWD_KL_STATION.id) return 'station-not-admitted';
+  if (!findDwdKlStation(stationId)) return 'station-not-admitted';
   const allowed = dwdKlRequestableDays(now);
   if (firstDay < allowed.firstDay || lastDay > allowed.lastDay || firstDay > lastDay
     || (Date.parse(lastDay) - Date.parse(firstDay)) / DAY_MS >= MAX_WINDOW_DAYS) return 'invalid-selection';
@@ -102,8 +122,8 @@ function providerDay(value: string): string | null {
   return isGrowerUtcDate(iso) ? iso : null;
 }
 
-function providerStationMatches(raw: string): boolean {
-  return /^\d{1,5}$/.test(raw) && raw.padStart(5, '0') === DWD_KL_STATION.id;
+function providerStationMatches(raw: string, station: DwdKlStation): boolean {
+  return /^\d{1,5}$/.test(raw) && raw.padStart(5, '0') === station.id;
 }
 
 const DATA_HEADER = 'STATIONS_ID;MESS_DATUM;QN_3;FX;FM;QN_4;RSK;RSKF;SDK;SHK_TAG;NM;VPM;PM;TMK;UPM;TXK;TNK;TGK;eor';
@@ -130,13 +150,13 @@ function covers(row: string[], day: string, first: number, last: number, allowOp
   return start !== null && start <= day && (end !== null ? day <= end : allowOpenEnd && row[last] === '');
 }
 
-function readMetadata(metadata: DwdKlMetadata): ((day: string) => boolean) | null {
+function readMetadata(metadata: DwdKlMetadata, station: DwdKlStation): ((day: string) => boolean) | null {
   const locations = table(metadata.geography, GEOGRAPHY_HEADER, true);
   const parameters = table(metadata.parameters, PARAMETER_HEADER, true);
   const sensors = (['minimum', 'mean', 'maximum', 'nearGroundMinimum'] as const)
     .map(field => ({ rows: table(metadata[field], SENSOR_HEADER, true), height: field === 'nearGroundMinimum' ? 0.05 : 2 }));
   if (!locations || !parameters || sensors.some(sensor => !sensor.rows)
-    || ![locations, parameters, ...sensors.map(sensor => sensor.rows!)].every(rows => rows.every(row => providerStationMatches(row[0])))) return null;
+    || ![locations, parameters, ...sensors.map(sensor => sensor.rows!)].every(rows => rows.every(row => providerStationMatches(row[0], station)))) return null;
 
   // RSK is a different observation interval from the temperature extrema. Displaying
   // it as a midnight-to-midnight total would misstate the actual archive metadata.
@@ -149,13 +169,13 @@ function readMetadata(metadata: DwdKlMetadata): ((day: string) => boolean) | nul
   ] as const;
   return day => {
     const location = locations.filter(row => covers(row, day, 4, 5, true));
-    return location.length === 1 && location[0][6] === DWD_KL_STATION.name &&
+    return location.length === 1 && location[0][6] === station.name &&
       sensors.every(({ rows, height }) => {
         const active = rows!.filter(row => covers(row, day, 6, 7));
-        return active.length === 1 && active[0][1] === DWD_KL_STATION.name && Number(active[0][5]) === height;
+        return active.length === 1 && active[0][1] === station.name && Number(active[0][5]) === height;
       }) && specs.every(([code, unit, method]) => {
         const active = parameters.filter(row => row[4] === code && covers(row, day, 1, 2));
-        return active.length === 1 && active[0][3] === DWD_KL_STATION.name && active[0][6] === unit &&
+        return active.length === 1 && active[0][3] === station.name && active[0][6] === unit &&
           method.test(active[0][8]) && (code !== 'TMK' || active[0][7].includes('nach 1.4.2001'));
       });
   };
@@ -174,11 +194,12 @@ function quality(raw: string): number | null | undefined {
 }
 
 export function parseDwdKlRecentObservations(product: DwdKlRecentProduct, selection: DwdKlSelection): DwdKlObservations {
-  if (product.archiveName !== DWD_KL_ARCHIVE_NAME || !isGrowerRecordedAt(product.retrievedAt))
-    return { status: 'held', reason: 'source-mismatch' };
+  if (!isGrowerRecordedAt(product.retrievedAt)) return { status: 'held', reason: 'source-mismatch' };
   const problem = dwdKlSelectionProblem(selection, new Date(product.retrievedAt));
   if (problem) return { status: 'held', reason: problem };
-  const memberMatch = DWD_KL_PRODUCT.exec(product.memberName);
+  const station = findDwdKlStation(selection.stationId)!;
+  if (product.archiveName !== dwdKlArchiveName(station.id)) return { status: 'held', reason: 'source-mismatch' };
+  const memberMatch = dwdKlProductMatch(product.memberName, station.id);
   const firstArchiveDay = memberMatch && providerDay(memberMatch[1]);
   const lastArchiveDay = memberMatch && providerDay(memberMatch[2]);
   const rows = table(product.observations, DATA_HEADER);
@@ -186,12 +207,12 @@ export function parseDwdKlRecentObservations(product: DwdKlRecentProduct, select
     || (Date.parse(lastArchiveDay) - Date.parse(firstArchiveDay)) / DAY_MS >= MAX_ARCHIVE_DAYS
     || firstArchiveDay < '2001-04-01' || lastArchiveDay >= product.retrievedAt.slice(0, 10))
     return { status: 'held', reason: 'wrong-product' };
-  const metadataCovers = readMetadata(product.metadata);
+  const metadataCovers = readMetadata(product.metadata, station);
   if (!metadataCovers) return { status: 'held', reason: 'metadata-mismatch' };
 
   const byDay = new Map<string, DwdKlReturnedDay>();
   for (const row of rows) {
-    if (!providerStationMatches(row[0])) return { status: 'held', reason: 'wrong-station' };
+    if (!providerStationMatches(row[0], station)) return { status: 'held', reason: 'wrong-station' };
     const day = providerDay(row[1]);
     const [airMinimum, airMean, airMaximum, nearGroundMinimum, precipitationMm] =
       [row[16], row[13], row[15], row[17], row[6]].map(reading);
@@ -217,8 +238,8 @@ export function parseDwdKlRecentObservations(product: DwdKlRecentProduct, select
     days.push(observation ?? { kind: 'no-record', day });
   }
   return {
-    status: 'available', station: DWD_KL_STATION, selection, requestedDays: days.length, returnedDays, days,
-    source: { series: 'recent-preliminary', url: DWD_KL_ARCHIVE_URL, memberName: product.memberName,
+    status: 'available', station, selection, requestedDays: days.length, returnedDays, days,
+    source: { series: 'recent-preliminary', url: dwdKlArchiveUrl(station.id), memberName: product.memberName,
       retrievedAt: product.retrievedAt, firstArchiveDay, lastArchiveDay },
   };
 }
