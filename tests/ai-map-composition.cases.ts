@@ -1,3 +1,4 @@
+import { tracedLineLabelMidpoint } from '../lib/leader-labels.ts';
 import { basinSurface, swaleBankSide } from '@/lib/earthworks-relief';
 import { terrainFallVector } from '@/lib/overland-flow';
 import assert from 'node:assert/strict';
@@ -1118,17 +1119,28 @@ test('terrain queries and section captions use each location instead of the Ubhe
 });
 
 test('Earthworks callouts identify saved beds and each swale even when plant-code mode suppresses plant names',()=>{
-  const labels=helper('earthworksReferenceLabels',{ELEMENTS_BY_ID,exactSheetElementLegendGroups,exactSheetLineRegister,statusOf,plotBox});
+  const labels=helper('earthworksReferenceLabels',{tracedLineLabelMidpoint,ELEMENTS_BY_ID,exactSheetElementLegendGroups,exactSheetLineRegister,statusOf,plotBox});
   const state:any={items:[{id:'bed-a',defId:'veg_bed',x:.2,y:.3},{id:'bed-b',defId:'veg_bed',x:.2,y:.5},{id:'banana',defId:'banana_circle',x:.4,y:.6},{id:'tree',defId:'tree_mango',x:.8,y:.7}],zones:[],lines:[{id:'swale-a',kind:'swale',points:[[.2,.2],[.8,.3]]},{id:'swale-b',kind:'swale',points:[[.2,.7],[.8,.8]]},{id:'pipe',kind:'pipe',points:[[.1,.1],[.9,.9]]}]};
   const refs={boundary:[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],house:[],driveway:[]},before=JSON.stringify({state,refs});
   const out=labels(state,refs,1000,1000);
   assert.ok(out.some((l:any)=>/VEGETABLE BED.*×2/.test(l.text)));
   assert.ok(out.some((l:any)=>/BANANA CIRCLE/.test(l.text)));
-  for(const [id,x,y] of [['swale-a',800,300],['swale-b',800,800]]){
+  for(const [id,x,y] of [['swale-a',500,250],['swale-b',500,750]]){
     const label=out.find((l:any)=>l.id===id);assert.ok(label);assert.equal(label.cx,x);assert.equal(label.cy,y);
   }
   assert.ok(!out.some((l:any)=>l.id==='pipe'||l.id==='tree'),'context systems never acquire excavation callouts');
   assert.equal(JSON.stringify({state,refs}),before);
+});
+
+test('the swale callout stays halfway along the drawn bank when its trace is reversed or gains vertices',()=>{
+  const corner:Point[]=[[0,0],[.5,0],[.5,1]];
+  const subdivided:Point[]=[[0,0],[.125,0],[.25,0],[.25,0],[.5,0],[.5,1]];
+  for(const trace of [corner,subdivided,[...subdivided].reverse()]){
+    // A 400 px east leg and 200 px south leg put the midpoint 300 px east of the start.
+    assert.deepEqual(tracedLineLabelMidpoint(trace,800,200),[.375,0]);
+  }
+  assert.equal(tracedLineLabelMidpoint([[.2,.3],[.2,.3]],800,200),null);
+  assert.equal(tracedLineLabelMidpoint([[0,0],[NaN,0],[1,1]],800,200),null);
 });
 
 test('terrain plan keeps sourced contour heights when no consistent downhill section can be supported',async()=>{
