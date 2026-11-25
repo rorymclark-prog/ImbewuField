@@ -5,6 +5,7 @@ import { join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
 import { pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
+import { fieldFilmMedia } from './field-films-media-history.ts';
 import { ensureBlindReviewedCorrectionsCurrent, blindReviewedSourceBefore, blindReviewedNativeBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import { COURSE_TRANSLATION_DRAFTS } from '../lib/course-translation-drafts.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
@@ -67,6 +68,22 @@ test('a same-size unlisted saved still edit after initialization fails the prese
   guard.ensureBlindReviewedCorrectionsCurrent();
 });
 
+test('a changed field-film caption cannot be hidden by the October inventory view', async () => {
+  const guard = await isolatedGuard();
+  guard.ensureBlindReviewedCorrectionsCurrent();
+  const path = join(fixture!, 'public/course-animations/field-films/v1/walk-st.vtt');
+  const original = readFileSync(path);
+  const changed = Buffer.from(original);
+  changed[changed.length - 2] ^= 1;
+  try {
+    writeFileSync(path, changed);
+    assert.throws(() => guard.ensureBlindReviewedCorrectionsCurrent(), /published field film or caption digest/);
+  } finally {
+    writeFileSync(path, original);
+  }
+  guard.ensureBlindReviewedCorrectionsCurrent();
+});
+
 test('a disk change during a nested historical read is rejected at its boundary and after failure', async () => {
   const guard = await isolatedGuard();
   const file='lib/course-translation-drafts-ts-small-livestock.ts';
@@ -96,7 +113,7 @@ async function isolatedGuard() {
   const webp=JSON.parse(readFileSync(webpFolder+'webp-layer-proof.json','utf8'));
   const retiredJpegs=new Set<string>(webp.retired.map((r: any)=>r.path));
   const files=new Set<string>([...inventory.map((r: any)=>r.path),...Object.keys(proof.files),...Object.keys(proof.protected),'tests/blind-reviewed-study-corrections-history-checks.ts',
-    'tests/slides-webp-history-checks.ts',...webp.retired.map((r: any)=>r.successor.path),...webp.added.map((r: any)=>r.path),...Object.keys(webp.files),
+    'tests/slides-webp-history-checks.ts','tests/field-films-media-history.ts',...webp.retired.map((r: any)=>r.successor.path),...webp.added.map((r: any)=>r.path),...Object.keys(webp.files),
     // The wave 13 theme layer sits on the WebP layer and is imported by it, so the fixture carries it and its predecessor fixture too.
     'tests/wave-13-theme-history-checks.ts','tests/fixtures/student-page-before-wave-13.tsx.txt',
     // The wave 14 study layer sits on the wave 13 theme layer the same way.
@@ -108,6 +125,7 @@ async function isolatedGuard() {
     'tests/learning-context-history-checks.ts','components/studies/LearningRegionNotice.tsx',
     // w25-03: the service-worker layer is projected first by slides-webp-history-checks.ts.
     'tests/wave-25-offline-history-checks.ts','tests/fixtures/sw-route-before-w25-offline.ts.txt']);
+  for (const file of fieldFilmMedia.keys()) files.add(file);
   for (const file of files) { if (retiredJpegs.has(file)) continue;const destination=join(fixture,file);mkdirSync(dirname(destination),{recursive:true});copyFileSync(file,destination,constants.COPYFILE_FICLONE); }
   cpSync(folder,join(fixture,folder),{recursive:true});
   cpSync(webpFolder,join(fixture,webpFolder),{recursive:true});

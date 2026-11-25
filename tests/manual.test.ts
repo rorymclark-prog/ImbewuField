@@ -3,8 +3,10 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
+import { filmEdition, matchingFilmTime } from '@/lib/field-films';
+import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 import {
-  MANUAL_CHAPTERS, MANUAL_LANGS, MANUAL_LANG_NAMES, blockShape, chapterTitle, isManualChapter, isManualLang, manualUi,
+  MANUAL_CHAPTERS, MANUAL_LANGS, MANUAL_LANG_NAMES, blockShape, chapterTitle, earthworksFilmPlacements, inlineText, isManualChapter, isManualLang, manualUi,
   parseInline, parseManual, type ManualFigure,
 } from '@/lib/manual';
 
@@ -133,6 +135,36 @@ test('all four home languages Rory asked for are public: isiZulu, Sesotho, Tshiv
   assert.match(chapterRoute, /MANUAL_LANGS\.flatMap\(/);
 });
 
+
+test('the films stay beside the digging, double-reach and individual A-frame instructions in each edition', () => {
+  const headings = {
+    en: ['Digging the swale', 'Double-reach raised beds', 'Try it'],
+    zu: ['Ukumba i-swale', 'Imibhede ephakanyisiwe ye-double-reach', 'Zama lokhu'],
+    st: ['Ho tjheka swale', 'Dibethe tse phahamisitsweng tsa double-reach', 'Leka sena'],
+    ve: ['U gwa swale', 'Double-reach bed dzo gonyiswaho', 'Lingani'],
+    ts: ['Ku cela swale', 'Ti-double-reach bed leti tlakukeke', 'Ringeta'],
+  };
+  for (const lang of MANUAL_LANGS) {
+    const body = parseManual(read(lang, '07-earthworks-and-water')).filter((b) => b.type !== 'h1');
+    const slots = earthworksFilmPlacements(body);
+    assert.equal(new Set(slots.map((slot) => slot.anchor)).size, 4, lang);
+    const locations = slots.map(({ blockIndex, film, afterStep }) => {
+      const heading = body.slice(0, blockIndex).reverse().find((b) => b.type === 'h2' || b.type === 'h3');
+      assert.ok(heading && 'content' in heading);
+      const block = body[blockIndex];
+      if (afterStep) assert.ok(block.type === 'ol' && block.items[afterStep - 1]?.length);
+      return [film, inlineText(heading.content), block.type, afterStep];
+    });
+    const [swale, beds, exercise] = headings[lang];
+    assert.deepEqual(locations, [
+      ['earth', swale, 'ol', undefined],
+      ['earth', beds, 'p', undefined],
+      ['level', exercise, 'ol', 4],
+      ['walk', exercise, 'ol', 7],
+    ], lang);
+  }
+});
+
 test('the menu links to the manual', () => {
   const drawer = readFileSync(path.join(ROOT, 'components', 'NavDrawer.tsx'), 'utf8');
   assert.match(drawer, /href: '\/manual'/);
@@ -226,4 +258,28 @@ test('every file in public/manual/figures/ is listed in figures.json', () => {
     if (name.startsWith('.')) continue;
     assert.ok(listed.has(name), `public/manual/figures/${name} is not in content/manual/figures.json`);
   }
+});
+
+test('each A-frame continuation has the chosen recording or its own timed captions and an accurate data cost', () => {
+  for (const lang of MANUAL_LANGS) {
+    for (const film of ['level', 'walk'] as const) {
+      const edition = filmEdition(film, lang);
+      assert.equal(edition.lang, lang);
+      assert.equal(edition.captionOnly, !['en', 'zu'].includes(lang));
+      assert.equal(edition.bytes, COURSE_ASSET_SIZES[edition.src]);
+      assert.match(readFileSync(path.join(ROOT, 'public', edition.track), 'utf8'), /^WEBVTT/);
+    }
+  }
+  for (const film of ['harvest', 'earth'] as const) {
+    const english = filmEdition(film, 'zu');
+    assert.equal(english.lang, 'en');
+    assert.equal(english.bytes, COURSE_ASSET_SIZES[english.src]);
+  }
+});
+
+test('switching at the halfway mark stays on the halfway mark even when the new narration runs longer', () => {
+  const en = filmEdition('level', 'en'), zu = filmEdition('level', 'zu');
+  // The halfway shot starts at source frame 396. Its English cut starts at 435.
+  assert.equal(matchingFilmTime(en, zu, 440 / 24), 401 / 24);
+  assert.equal(matchingFilmTime(zu, en, 401 / 24), 440 / 24);
 });

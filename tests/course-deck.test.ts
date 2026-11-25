@@ -42,7 +42,23 @@ function learnerProofField(lesson: any, field: string): { source: string; target
 
 const PUBLIC = new URL('../public/', import.meta.url);
 const DECK_PLAYER_CSS_URL = new URL('../components/course/DeckPlayer.module.css', import.meta.url).href;
-const DECK_PLAYER_CSS_STUB = "export default { controlStrip: 'controlStrip', playControl: 'playControl', backControl: 'backControl', nextControl: 'nextControl', progress: 'progress', slideStage: 'slideStage' };";
+async function loadDeckPlayer() {
+  const folder = new URL('../components/course/', import.meta.url).href;
+  const hooks = registerHooks({ load(url, context, nextLoad) {
+    if (url.startsWith(folder) && url.endsWith('.tsx')) {
+      const source = ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
+        fileName: url, compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+      }).outputText;
+      return { format: 'module', shortCircuit: true, source };
+    }
+    if (url.startsWith(folder) && url.endsWith('.module.css')) {
+      return { format: 'module', shortCircuit: true, source: 'export default new Proxy({}, {get: (_, key) => key});' };
+    }
+    return nextLoad(url, context);
+  } });
+  try { return (await import('../components/course/DeckPlayer.tsx')).default; }
+  finally { hooks.deregister(); }
+}
 const onDisk = (url: string) => existsSync(new URL(url.replace(/^\//, ''), PUBLIC));
 
 test('phone full-screen slide image stays below the lesson and exit controls', () => {
@@ -738,21 +754,56 @@ test('isiZulu guild slides, audio and labelled video are delivered in the select
   assert.doesNotMatch(animationUrls('plant-guilds', 23, 'en')!.video, /Labelled-zu/);
 });
 
+test('the harvest is a separate choice on the farm-record slide, and opening it stops the lesson', async () => {
+  const DeckPlayer = await loadDeckPlayer();
+  const { default: FieldFilmButton } = await import('../components/course/FieldFilmButton.tsx');
+  const audio = { paused: true, currentTime: 0, pause() { this.paused = true; }, play() { this.paused = false; return Promise.resolve(); } };
+  let view!: ReactTestRenderer;
+  act(() => { view = create(createElement(DeckPlayer, { moduleId: 'market-community', lessonId: 'market-community-l1', lang: 'en' }), {
+    createNodeMock: element => element.type === 'audio' ? audio : null,
+  }); });
+  try {
+    const film = view.root.findByType(FieldFilmButton);
+    assert.equal(film.props.film, 'harvest');
+    assert.equal(view.root.findAllByType('video').length, 0, 'the teaching still loads before any film is chosen');
+    const lessonPlay = () => view.root.findByProps({ className: 'playControl' });
+    act(() => lessonPlay().props.onClick());
+    assert.equal(audio.paused, false);
+    act(() => film.findByType('button').props.onClick());
+    const viewer = film.findByProps({ 'data-film-player': 'harvest' });
+    assert.equal(viewer.findAllByType('video').length, 1);
+    assert.equal(audio.paused, true);
+    assert.equal(lessonPlay().props['aria-label'], 'Play the lesson', 'the slide timer cannot advance behind the film');
+    act(() => viewer.props.onClose({ stopPropagation() {} }));
+    assert.equal(view.root.findAllByType('video').length, 0, 'closing releases the movie and returns to the original still');
+    assert.equal(audio.paused, true);
+    act(() => view.root.findByProps({ className: 'nextControl' }).props.onClick());
+    assert.equal(view.root.findAllByType(FieldFilmButton).length, 0, 'the neighbouring slide has its own material');
+  } finally { act(() => view.unmount()); }
+});
+
+test('the landscape slide opens A-frame calibration in the language of its picture', async () => {
+  const DeckPlayer = await loadDeckPlayer();
+  const { default: FieldFilmButton } = await import('../components/course/FieldFilmButton.tsx');
+  for (const lang of ['en', 'zu', 'st', 've', 'ts']) {
+    let view!: ReactTestRenderer;
+    act(() => { view = create(createElement(DeckPlayer, { moduleId: 'reading-landscape', lessonId: 'reading-landscape-l1', lang })); });
+    try {
+      assert.equal(view.root.findAllByType(FieldFilmButton).length, 0);
+      for (let step = 0; step < 2; step++) act(() => view.root.findByProps({ className: 'nextControl' }).props.onClick());
+      const film = view.root.findByType(FieldFilmButton);
+      assert.equal(film.props.film, 'level');
+      assert.equal(film.props.lang, lang);
+      act(() => view.root.findByProps({ className: 'nextControl' }).props.onClick());
+      assert.equal(view.root.findAllByType(FieldFilmButton).length, 0);
+    } finally { act(() => view.unmount()); }
+  }
+});
+
 // Exercise the actual player with media-device stubs. The browser check separately verifies
 // decoding and motion; these event-order checks catch a short voice cutting off a longer clip.
 test('Water playback respects language gaps, download choice and the whole cleared animation', async t => {
-  const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
-  const hooks = registerHooks({ load(url, context, nextLoad) {
-    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
-      fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
-    }).outputText };
-    // Node's focused component harness has no CSS-module loader. Styles do not affect these
-    // media event-order assertions, so provide only the imported module's class-name shape here.
-    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
-    return nextLoad(url, context);
-  } });
-  const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
-  hooks.deregister();
+  const DeckPlayer = await loadDeckPlayer();
   const previousWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
   Object.defineProperty(globalThis, 'window', { configurable: true, value: { addEventListener() {}, removeEventListener() {} } });
   t.after(() => {
@@ -850,16 +901,7 @@ test('Sesotho silent draft starts without speech and optional English keeps its 
   assert.equal(animationUrls('intro-permaculture', 4, 'st'), null,
     'the English animation poster must not cover the paired Sesotho ethics frame');
 
-  const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
-  const hooks = registerHooks({ load(url, context, nextLoad) {
-    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
-      fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
-    }).outputText };
-    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
-    return nextLoad(url, context);
-  } });
-  const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
-  hooks.deregister();
+  const DeckPlayer = await loadDeckPlayer();
 
   let view!: ReactTestRenderer;
   act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: 'st' })); });
@@ -1187,16 +1229,7 @@ test('Sesotho Reading spelling corrections change only the independently checked
 });
 
 test('deck arrows change slides only while the deck itself has plain-key focus', async () => {
-  const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
-  const hooks = registerHooks({ load(url, context, nextLoad) {
-    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
-      fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
-    }).outputText };
-    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
-    return nextLoad(url, context);
-  } });
-  const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
-  hooks.deregister();
+  const DeckPlayer = await loadDeckPlayer();
   let view!: ReactTestRenderer;
   act(() => { view = create(createElement(DeckPlayer, { moduleId: 'water-harvesting', lang: 'en' })); });
   try {
@@ -1237,16 +1270,7 @@ test('a timed tour follows the voice after late loading, pause and seeking, then
     seconds: 33.291667, narrationTimed: true,
   };
   t.after(() => { tourSlide.animation = previousAnimation; });
-  const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
-  const hooks = registerHooks({ load(url, context, nextLoad) {
-    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
-      fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
-    }).outputText };
-    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
-    return nextLoad(url, context);
-  } });
-  const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
-  hooks.deregister();
+  const DeckPlayer = await loadDeckPlayer();
   const previousWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
   Object.defineProperty(globalThis, 'window', { configurable: true, value: { addEventListener() {}, removeEventListener() {} } });
   t.after(() => {
@@ -1318,16 +1342,7 @@ test('isiZulu deck source remains visible with English voice and withheld record
   const slide11Draft = resolveRegisteredSilentDeckDraft('seeds-sovereignty', 11);
   const slide01Pair = ISIZULU_DECK_SOURCE_BINDINGS.find(row => row.moduleId === 'seeds-sovereignty' && row.slide === 1);
   assert.ok(slide01Pair, 'slide 1 has an exact registered source pair');
-  const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
-  const hooks = registerHooks({ load(url, context, nextLoad) {
-    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
-      fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
-    }).outputText };
-    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
-    return nextLoad(url, context);
-  } });
-  const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
-  hooks.deregister();
+  const DeckPlayer = await loadDeckPlayer();
   const audioDevice = { currentTime: 0, pause() {}, play: () => Promise.resolve() };
   let view!: ReactTestRenderer;
   act(() => { view = create(createElement(DeckPlayer, { moduleId: 'seeds-sovereignty', lang: 'zu' }), {

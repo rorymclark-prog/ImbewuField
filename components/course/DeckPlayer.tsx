@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties }
 import { Maximize2, Minimize2 } from 'lucide-react';
 
 import styles from './DeckPlayer.module.css';
+import FieldFilmButton from '@/components/course/FieldFilmButton';
 import {
   animationUrls,
   deckFor,
@@ -215,13 +216,17 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const narrationEnded = useRef(false);
 
-  useEffect(() => {
-    // Switching the app language mid-lesson must not keep advancing pages under the old voice.
+  const pauseDeck = useCallback(() => {
     audioRef.current?.pause();
     videoRef.current?.pause();
     setRunning(false);
     setTimedVoiceActive(false);
-  }, [appLang]);
+  }, []);
+
+  useEffect(() => {
+    // Switching the app language mid-lesson must not keep advancing pages under the old voice.
+    pauseDeck();
+  }, [appLang, pauseDeck]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -232,24 +237,19 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   }, []);
 
 
-  // The separate audio-only playlist can be opened beside this deck. If the
-  // learner starts another spoken clip, stop this tour instead of talking over it.
+  // Other decks, the audio-only playlist and optional field films share the same lesson page.
+  // Keep this deck's own silent animation paired with its voice when either starts.
   useEffect(() => {
     if (typeof document === 'undefined') return;
-    const pauseForOtherAudio = (event: Event) => {
-      const audio = audioRef.current;
-      if (audio && event.target instanceof HTMLAudioElement && event.target !== audio &&
-        (!audio.paused || (videoRef.current && !videoRef.current.paused))) {
-        if (!audio.paused) audio.pause();
-        videoRef.current?.pause();
-        setRunning(false);
-        setTimedVoiceActive(false);
+    const pauseForOtherMedia = (event: Event) => {
+      const media = event.target;
+      if (media instanceof HTMLMediaElement && media !== audioRef.current && media !== videoRef.current) {
+        pauseDeck();
       }
     };
-    document.addEventListener('play', pauseForOtherAudio, true);
-    return () => document.removeEventListener('play', pauseForOtherAudio, true);
-  }, []);
-
+    document.addEventListener('play', pauseForOtherMedia, true);
+    return () => document.removeEventListener('play', pauseForOtherMedia, true);
+  }, [pauseDeck]);
 
   const current = slides[index];
   const total = slides.length;
@@ -465,6 +465,9 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   }, [running, audioForCurrent, narrationRevisionHold, onNarrationEnded]);
 
   const onDeckKeyDown = useCallback((e: React.KeyboardEvent<HTMLDialogElement>) => {
+    // Escape in a field film dismisses that film and returns to this slide in the same view.
+    if (typeof Element !== 'undefined' && e.target instanceof Element &&
+        e.target.closest('dialog') !== e.currentTarget) return;
     if (expanded && e.key === 'Escape') { e.preventDefault(); exitExpanded(); return; }
     if (expanded && e.currentTarget === e.target && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault();
@@ -540,6 +543,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const fittedWidth = expanded && viewportSize.width && viewportSize.height
     ? Math.min(viewportSize.width, viewportSize.height * slideRatio) : 0;
   const fullSizeImageUrl = anim?.poster ?? img?.url;
+  const fieldFilm = moduleId === 'market-community' && current.slide === 4 ? 'harvest'
+    : moduleId === 'reading-landscape' && current.slide === 6 ? 'level'
+    : null;
+  const canEnlargeImage = fullSizeImageUrl && (!expanded || !showReflowedSlide);
 
 
   return (
@@ -554,7 +561,11 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       aria-label={t('courseDeckRegion')}
 
       onKeyDown={onDeckKeyDown}
-      onCancel={(event) => { event.preventDefault(); exitExpanded(); }}
+      onCancel={(event) => {
+        if (event.target !== event.currentTarget) return;
+        event.preventDefault();
+        exitExpanded();
+      }}
       className={`${styles.player} ${expanded ? styles.expanded : ''} ${showReflowedSlide ? styles.textSlide : ''} ${expanded && !chromeVisible ? styles.chromeHidden : ''}`}
       style={{ '--deck-header-height': `${headerHeight}px` } as CSSProperties}
     >
@@ -724,26 +735,27 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </div>
       </div>
 
-      {fullSizeImageUrl && (!expanded || !showReflowedSlide) && (
-        <button
-          ref={imageButtonRef}
-          type="button"
-          aria-label={t('courseDeckOpenImageAria').replace('{title}', heading)}
-          className={styles.zoomLink}
-          onClick={() => {
-            // A raw image opens without browser controls in the installed phone app. Keep the
-            // learner in this lesson and make the way back visible while the picture is enlarged.
-            audioRef.current?.pause();
-            videoRef.current?.pause();
-            setRunning(false);
-            setTimedVoiceActive(false);
-            setImageZoom(1);
-            imageViewerRef.current?.showModal();
-            requestAnimationFrame(() => imageCloseRef.current?.focus());
-          }}
-        >
-          {t('courseDeckOpenImage')}
-        </button>
+      {(fieldFilm || canEnlargeImage) && (
+        <div className={styles.pictureActions}>
+          {fieldFilm && <FieldFilmButton key={fieldFilm} film={fieldFilm} lang={slideChoice} onOpen={pauseDeck} />}
+          {canEnlargeImage && (
+            <button
+              ref={imageButtonRef}
+              type="button"
+              aria-label={t('courseDeckOpenImageAria').replace('{title}', heading)}
+              className={styles.zoomLink}
+              onClick={() => {
+                // A raw image opens without browser controls in the installed phone app.
+                pauseDeck();
+                setImageZoom(1);
+                imageViewerRef.current?.showModal();
+                requestAnimationFrame(() => imageCloseRef.current?.focus());
+              }}
+            >
+              {t('courseDeckOpenImage')}
+            </button>
+          )}
+        </div>
       )}
 
       {audio && (

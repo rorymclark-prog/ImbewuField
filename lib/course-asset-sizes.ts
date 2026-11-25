@@ -3,9 +3,29 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1941 files, 653.0 MB total.
+// 1961 files, 687.6 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
+  '/course-animations/field-films/v1/earth-en.mp4': 1844924,
+  '/course-animations/field-films/v1/earth-en.vtt': 587,
+  '/course-animations/field-films/v1/harvest-en.mp4': 2408019,
+  '/course-animations/field-films/v1/harvest-en.vtt': 651,
+  '/course-animations/field-films/v1/level-captions.mp4': 4336192,
+  '/course-animations/field-films/v1/level-en.mp4': 4826644,
+  '/course-animations/field-films/v1/level-en.vtt': 581,
+  '/course-animations/field-films/v1/level-st.vtt': 504,
+  '/course-animations/field-films/v1/level-ts.vtt': 537,
+  '/course-animations/field-films/v1/level-ve.vtt': 534,
+  '/course-animations/field-films/v1/level-zu.mp4': 4659422,
+  '/course-animations/field-films/v1/level-zu.vtt': 493,
+  '/course-animations/field-films/v1/walk-captions.mp4': 5892768,
+  '/course-animations/field-films/v1/walk-en.mp4': 6104299,
+  '/course-animations/field-films/v1/walk-en.vtt': 605,
+  '/course-animations/field-films/v1/walk-st.vtt': 667,
+  '/course-animations/field-films/v1/walk-ts.vtt': 786,
+  '/course-animations/field-films/v1/walk-ve.vtt': 768,
+  '/course-animations/field-films/v1/walk-zu.mp4': 6250107,
+  '/course-animations/field-films/v1/walk-zu.vtt': 664,
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
   '/course-animations/food-forest/flow-sheet-mulching.mp4': 7483690,
   '/course-animations/food-forest/posters/flow-sheet-mulching-closeup.jpg': 241289,

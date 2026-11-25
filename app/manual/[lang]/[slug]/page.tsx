@@ -4,9 +4,10 @@ import { notFound } from 'next/navigation';
 import { ChevronLeft, ChevronRight, List } from 'lucide-react';
 import ManualHeader from '@/components/manual/ManualHeader';
 import ManualBlocks from '@/components/manual/ManualBlocks';
+import FieldFilmButton from '@/components/course/FieldFilmButton';
 import LanguageSwitch from '@/components/manual/LanguageSwitch';
 import {
-  MANUAL_CHAPTERS, MANUAL_LANGS, chapterTitle, figuresBySection, isManualChapter, isManualLang, manualUi, parseManual, readingMinutes,
+  MANUAL_CHAPTERS, MANUAL_LANGS, chapterTitle, earthworksFilmPlacements, figuresBySection, isManualChapter, isManualLang, manualUi, parseManual, readingMinutes,
 } from '@/lib/manual';
 import { manualFigures, readChapter } from '@/lib/manual-content';
 
@@ -51,6 +52,15 @@ export default function ManualChapterPage({ params }: { params: { lang: string; 
   const prev = index > 0 ? MANUAL_CHAPTERS[index - 1] : null;
   const next = index < MANUAL_CHAPTERS.length - 1 ? MANUAL_CHAPTERS[index + 1] : null;
   const contentLang = translated ? lang : 'en';
+  const filmSlots = slug === '07-earthworks-and-water' ? earthworksFilmPlacements(body) : [];
+  function filmAt(blockIndex: number, afterStep?: number) {
+    const slot = filmSlots.find((s) => s.blockIndex === blockIndex && s.afterStep === afterStep);
+    return slot && (
+      <div id={slot.anchor} className="print:hidden" style={{ margin: '12px 0 16px', scrollMarginTop: 80 }}>
+        <FieldFilmButton film={slot.film} lang={lang} />
+      </div>
+    );
+  }
 
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--bg-0)' }}>
@@ -70,7 +80,7 @@ export default function ManualChapterPage({ params }: { params: { lang: string; 
               <Link href={`/manual/en/${slug}`} lang="en" style={{ textDecoration: 'underline', fontWeight: 600 }}>{manualUi('en').readInEnglish}</Link>
             </p>
           )}
-          <ManualBlocks blocks={body} figures={figuresBySection(manualFigures(), slug)} lang={contentLang} />
+          <ManualBlocks blocks={body} figures={figuresBySection(manualFigures(), slug)} lang={contentLang} insertAt={filmSlots.length ? filmAt : undefined} />
         </article>
         <nav aria-label={ui.chapters} style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'space-between', marginTop: 40 }}>
           {prev ? <Link href={`/manual/${lang}/${prev}`} style={navLink}><ChevronLeft size={18} aria-hidden />{ui.previous}</Link> : <span />}
