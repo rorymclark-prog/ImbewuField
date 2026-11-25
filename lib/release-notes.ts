@@ -41,9 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 November 2026', sha: 'ad2e67b0', changes: [
-    'Play “Where did the harvest go?” beside the farm-record slide and follow each portion into the record.',
-    'In Earthworks and Water, go from checking the A-frame to pegging a contour in the same language, or watch the raised-bed and swale film.',
+  { when: '25 November 2026', sha: '64b3ffc4', changes: [
+    'Follow each portion of the harvest into the farm record with a new play button.',
+    'Check the A-frame, then peg a contour in the same language in Earthworks and Water.',
   ] },
   { when: '25 November 2026', sha: '12ff32d9', changes: [
     'On labelled Earthworks maps, each swale callout points halfway along its saved route.',
