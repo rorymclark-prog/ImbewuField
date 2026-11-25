@@ -347,6 +347,25 @@ export function sitePlanFigure(canvas: DesignCanvasState | null | undefined, lan
       taken.push(box);
       continue;
     }
+    // On a narrow bed the number can straddle its edges. Keep its centre on the long axis
+    // and stagger neighbouring labels along their own rows before trying an outside label.
+    const long = Math.max(wPx, hPx);
+    if (item.paint === 'bed' && !item.round && long >= 2 * short) {
+      const size = 10, width = textWidth(text, size);
+      const angle = (item.rot + (hPx > wPx ? 90 : 0)) * Math.PI / 180;
+      const along = Math.max(0, (long - Math.hypot(width, size)) / 2);
+      let placed = false;
+      for (const fraction of [0, -0.6, 0.6, -1, 1]) {
+        const x = cx + Math.cos(angle) * along * fraction, y = cy + Math.sin(angle) * along * fraction;
+        const box = { x: x - width / 2, y: y - size * 0.6, w: width, h: size * 1.2 };
+        if (!inside(box) || taken.some(other => overlaps(padded(other, 2), box))) continue;
+        labels.push({ text, x, y: y + size * 0.36, size, fill: INK, weight: 700, halo: true, box });
+        taken.push(box);
+        placed = true;
+        break;
+      }
+      if (placed) continue;
+    }
     const size = 12.5, tw = textWidth(text, size), gap = 4;
     const mid = Math.max(panel.x + tw / 2 + 2, Math.min(panel.x + panel.w - tw / 2 - 2, cx)); // a name above or below slides sideways to stay on the drawing
     const candidates: Array<{ x: number; y: number; box: Box }> = [
