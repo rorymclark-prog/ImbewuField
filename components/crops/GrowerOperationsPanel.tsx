@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import type { CropPlanState } from '@/lib/crop-plan';
 import type { GrowerCycleContext } from '@/lib/international/grower-cycle';
 import { buildGrowerBoardTasks, buildGrowerTasksIcs, loadCompletedTaskIds, setCompletedTaskState, type BoardTask } from '@/lib/task-board';
@@ -342,7 +343,7 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
     {observationSaving && <p role="status">Checking and saving your observation…</p>}
     {observationMessage?.epoch === observationEpoch.current && <div role={observationMessage.status === 'held' ? 'alert' : 'status'} className="min-w-0 space-y-2 break-words">
       <p>{observationMessage.text}</p>
-      {(observationMessage.status === 'saved' || observationMessage.status === 'unconfirmed') && <a className="inline-flex min-h-11 items-center underline" href="/journal">Open field journal</a>}
+      {(observationMessage.status === 'saved' || observationMessage.status === 'unconfirmed') && <Link className="inline-flex min-h-11 items-center underline" href="/journal" prefetch={false}>Open field journal</Link>}
     </div>}
     {observationBlocked && <p role="alert">A note may already be saved. Check the field journal before recording it again. Another save is unavailable in this view.</p>}
   </section>;
