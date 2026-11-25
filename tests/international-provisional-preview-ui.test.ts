@@ -6,6 +6,7 @@ import React from 'react';
 import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'react-test-renderer';
 import ts from 'typescript';
 import { CROPS } from '../lib/crop-catalog.ts';
+import { DWD_KL_ARCHIVE_URL, dwdKlRequestableDays } from '../lib/international/providers/dwd-kl-observations.ts';
 import type { CountrySource } from '../lib/international/countries/types.ts';
 import type { GrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import type { ProvisionalFieldCandidate } from '../lib/international/provisional-crop-planning.ts';
@@ -18,7 +19,8 @@ Object.assign(globalThis, { __provisionalTemperatureAuth: temperatureAuth });
 const hooks = registerHooks({ load(url, context, next) {
   if (url.endsWith('/lib/api-client-auth.ts')) return { shortCircuit: true, format: 'module',
     source: 'export async function paidApiHeaders(){return globalThis.__provisionalTemperatureAuth.read();}' };
-  if (url.endsWith('/components/crops/ProvisionalCropPreview.tsx') || url.endsWith('/components/crops/EcccObservationPanel.tsx')) return { shortCircuit: true, format: 'module',
+  if (url.endsWith('/components/crops/ProvisionalCropPreview.tsx') || url.endsWith('/components/crops/EcccObservationPanel.tsx')
+    || url.endsWith('/components/crops/DwdKlObservationPanel.tsx')) return { shortCircuit: true, format: 'module',
     source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
       target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
     } }).outputText };
@@ -628,6 +630,98 @@ test('a pending station read cannot publish after a Canadian workspace round tri
     await act(async () => { complete(); await reading; });
     assert.equal(ui.field('Climate station ID').props.value, '');
     assert.doesNotMatch(ui.text(), /7 of 7 days returned|Download station history/);
+  } finally { globalThis.fetch = originalFetch; ui.dispose(); }
+});
+
+function berlinStationResponse(url: URL) {
+  const day = url.searchParams.get('firstDay');
+  return Response.json({
+    status: 'available', station: { id: '00433', name: 'Berlin-Tempelhof' },
+    selection: { stationId: '00433', firstDay: day, lastDay: url.searchParams.get('lastDay') },
+    source: { url: DWD_KL_ARCHIVE_URL, memberName: 'fixture.txt', retrievedAt: '2026-11-24T19:00:00.000Z' },
+    requestedDays: 1, returnedDays: 1,
+    days: [{ kind: 'returned', day, airMinimum: 0, airMean: 2, airMaximum: 4,
+      nearGroundMinimum: -0.5, precipitationMm: 0, qn4: 1, qn3: 9 }],
+  });
+}
+
+function chooseBerlinStation(ui: ReturnType<typeof mount>) {
+  const { lastDay } = dwdKlRequestableDays(new Date());
+  ui.change('Climate station', '00433');
+  ui.change('First DWD day', lastDay);
+  ui.change('Last DWD day', lastDay);
+  return lastDay;
+}
+
+test('the German panel reads explicitly, exports the actual download payload and leaves profiles alone', async () => {
+  const originalFetch = globalThis.fetch;
+  const requests: URL[] = [];
+  globalThis.fetch = async input => {
+    const url = new URL(String(input), 'https://sample.invalid');
+    requests.push(url);
+    return berlinStationResponse(url);
+  };
+  let saves = 0;
+  const ui = mount({ countryCode: 'DE', evidence: undefined, sitePoint: { latitude: 0, longitude: 0 },
+    onSaveProfile: () => { saves++; return { status: 'confirmed', profileId: 'unexpected' }; } });
+  const files = downloads();
+  try {
+    const day = chooseBerlinStation(ui);
+    assert.equal(requests.length, 0);
+    await ui.click('Read DWD station history');
+    assert.equal(requests.length, 1);
+    assert.equal(requests[0].pathname, '/api/international/dwd-kl');
+    assert.deepEqual([...requests[0].searchParams.entries()], [['stationId', '00433'], ['firstDay', day], ['lastDay', day]]);
+    assert.match(ui.text(), /Berlin-Tempelhof · DWD station 00433/);
+    assert.match(ui.text(), /0\.0 °C/);
+    assert.match(ui.text(), /1 · Formal checks only/);
+    const download = ui.action('Download DWD station history');
+    await ui.click('Download DWD station history');
+    assert.deepEqual(files.names, [`dwd-00433-${day}.html`]);
+    const html = await files.blobs[0].text();
+    assert.match(html, /Content-Security-Policy.*default-src 'none'/);
+    assert.match(html, /00:00–24:00 UTC.*06:00 UTC to 06:00 the next day/);
+    assert.match(html, /rel="noreferrer">CC BY 4\.0/);
+    assert.match(html, /Near-ground min \(5 cm\)[\s\S]*1 · Formal checks only/);
+    ui.change('Last DWD day', '');
+    ui.change('Last DWD day', day);
+    await act(async () => { await download(); });
+    assert.equal(files.names.length, 1);
+    assert.doesNotMatch(ui.text(), /Download DWD station history/);
+    assert.deepEqual(ui.writes, []);
+    assert.equal(saves, 0);
+  } finally { globalThis.fetch = originalFetch; files.dispose(); ui.dispose(); }
+});
+
+test('pending German station results retire when dates, the workspace or the acting account change', async () => {
+  const originalFetch = globalThis.fetch;
+  let complete!: () => void;
+  let signal: AbortSignal | null | undefined;
+  globalThis.fetch = (input, init) => {
+    signal = init?.signal;
+    return new Promise(resolve => { complete = () => resolve(berlinStationResponse(new URL(String(input), 'https://sample.invalid'))); });
+  };
+  let current = true;
+  const ui = mount({ countryCode: 'DE', evidence: undefined, actorIsCurrent: () => current });
+  try {
+    const retirements = [
+      () => ui.change('Last DWD day', ''),
+      () => { ui.update({ countryCode: 'CA', contextRevision: 2 }); assert.doesNotMatch(ui.text(), /German historical station weather/);
+        ui.update({ countryCode: 'DE', contextRevision: 3 }); },
+      () => ui.update({ scope: { ...scope, siteId: 'site:1.00000,1.00000' } }),
+      () => ui.update({ ownerKey: 'other-owner' }),
+      () => { current = false; ui.update({}); },
+    ];
+    for (const retire of retirements) {
+      chooseBerlinStation(ui);
+      let reading!: Promise<void>;
+      act(() => { reading = ui.action('Read DWD station history')(); });
+      retire();
+      assert.equal(signal?.aborted, true);
+      await act(async () => { complete(); await reading; });
+      assert.doesNotMatch(ui.text(), /1 of 1 day returned|Download DWD station history/);
+    }
+    assert.deepEqual(ui.writes, []);
   } finally { globalThis.fetch = originalFetch; ui.dispose(); }
 });
 

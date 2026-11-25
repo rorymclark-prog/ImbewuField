@@ -287,6 +287,8 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
+Station history continuation — [Berlin-Tempelhof station evidence — 24 November 2026](2026-11-24/dwd-kl-station-evidence-codex.md). A bounded DWD archive and read-only planner panel keep sensor heights, missing values, intervals and preliminary quality visible.
+
 Latest source and planner continuation: [Wisconsin tomato first harvest — 19 November 2026](2026-11-19/wisconsin-tomato-first-harvest-codex.md). An explicit historical reference supplies one conditional date and leaves the other crop estimates unknown. Candidate release checks remain separate.
 
 Latest global/report verification continuation — [Full-suite contracts and final save-base continuity — 13 November 2026](2026-11-13/global-report-ci-contracts-codex.md). Eleven reproduced failures retain their reasons; exact-head CI, independent review and adoption remain open.
