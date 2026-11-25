@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 November 2026', sha: '79470b57', changes: [
+    'Follow each portion of the harvest into the farm record with a new play button.',
+    'Check the A-frame, then peg a contour in the same language in Earthworks and Water.',
+  ] },
   { when: '26 November 2026', sha: 'f68de314', changes: [
     'Saved AI maps now tell you which print quality to choose to reuse their artwork.',
   ] },

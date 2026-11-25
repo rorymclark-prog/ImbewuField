@@ -83,7 +83,10 @@ export function ManualFigureGroup({ figures, lang }: { figures: ManualFigure[]; 
  * it sits beside the text it illustrates rather than between a heading and its opening sentence
  * (or between a lead-in sentence ending in a colon and its list).
  */
-export default function ManualBlocks({ blocks, figures, lang = 'en' }: { blocks: Block[]; figures?: Map<number, ManualFigure[]>; lang?: ManualLang }) {
+type InsertAt = (blockIndex: number, afterStep?: number) => ReactNode;
+export default function ManualBlocks({ blocks, figures, lang = 'en', insertAt }: {
+  blocks: Block[]; figures?: Map<number, ManualFigure[]>; lang?: ManualLang; insertAt?: InsertAt;
+}) {
   let section = -1;
   const placed = new Set<number>();
   const after = (i: number): ReactNode => {
@@ -103,15 +106,16 @@ export default function ManualBlocks({ blocks, figures, lang = 'en' }: { blocks:
   return (
     <>
       {blocks.map((block, i) => {
-        const rendered = renderBlock(block, i);
+        const rendered = renderBlock(block, i, insertAt);
         const extra = after(i);
-        return extra ? <Fragment key={i}>{rendered}{extra}</Fragment> : rendered;
+        const insert = insertAt?.(i);
+        return extra || insert ? <Fragment key={i}>{rendered}{insert}{extra}</Fragment> : rendered;
       })}
     </>
   );
 }
 
-function renderBlock(block: Block, i: number): ReactNode {
+function renderBlock(block: Block, i: number, insertAt?: InsertAt): ReactNode {
   switch (block.type) {
     // The page itself owns the <h1> (the chapter title), so a stray "# " inside the body
     // renders as a section heading rather than a second h1.
@@ -136,7 +140,10 @@ function renderBlock(block: Block, i: number): ReactNode {
       return (
         <List key={i} style={{ ...body, paddingLeft: 24, listStyle: block.type === 'ol' ? 'decimal' : 'disc' }}>
           {block.items.map((item, j) => (
-            <li key={j} style={{ margin: '0 0 8px', paddingLeft: 4 }}><InlineText parts={item} /></li>
+            <li key={j} style={{ margin: '0 0 8px', paddingLeft: 4 }}>
+              <InlineText parts={item} />
+              {block.type === 'ol' && insertAt?.(i, j + 1)}
+            </li>
           ))}
         </List>
       );

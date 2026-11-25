@@ -5,6 +5,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ensureWave13ThemeCurrent, wave13ThemeSourceBefore } from './wave-13-theme-history-checks.ts';
+import { fieldFilmMedia, fieldFilmSizesBefore } from './field-films-media-history.ts';
 import { wave25SourceBefore } from './wave-25-offline-history-checks.ts';
 
 // perf-03/perf-05 (14 Oct 2026): English and isiZulu lesson slides moved from JPEG
@@ -28,6 +29,7 @@ type Retired = Media & { successor: Media };
 const retired = new Map<string, Retired>(proof.retired.map((row: Retired) => [row.path, row]));
 const successors = new Map<string, Retired>(proof.retired.map((row: Retired) => [row.successor.path, row]));
 const added = new Map<string, Media>(proof.added.map((row: Media) => [row.path, row]));
+const additionsSinceOctober = new Set([...added.keys(), ...fieldFilmMedia.keys()]);
 assert.equal(retired.size, 500, 'every converted English/isiZulu slide is listed once');
 assert.equal(successors.size, 500);
 for (const row of retired.values()) {
@@ -59,7 +61,7 @@ for (const row of added.values()) manifestExpectation.set(row.path.slice('public
 let lastSuccessfulSignature = '';
 export function ensureSlidesWebpCurrent(): void {
   // Retired JPEG paths are part of the signature, so one reappearing forces a full re-check.
-  const signature = [...retired.keys(), ...successors.keys(), ...added.keys(), ...Object.keys(proof.files), folder + 'webp-layer-proof.json'].map(file => {
+  const signature = [...retired.keys(), ...successors.keys(), ...additionsSinceOctober, ...Object.keys(proof.files), folder + 'webp-layer-proof.json'].map(file => {
     const s = statSync(resolve(root, file), { bigint: true, throwIfNoEntry: false });
     return s ? [file, s.dev, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':') : file + ':absent';
   }).join('|');
@@ -80,13 +82,19 @@ export function ensureSlidesWebpCurrent(): void {
     assert.equal(live.length, row.bytes, row.path + ': exact added WebP size');
     assert.equal(sha(live), row.sha256, row.path + ': exact added WebP digest');
   }
+  for (const [file, row] of fieldFilmMedia) {
+    const live = read(file);
+    assert.equal(live.length, row.bytes, file + ': published field film or caption size');
+    assert.equal(sha(live), row.sha256, file + ': published field film or caption digest');
+  }
+  const manifestFile = 'lib/course-asset-sizes.ts';
+  const liveManifest = fieldFilmSizesBefore(manifestFile, read(manifestFile), true);
   for (const [file, row] of Object.entries(proof.files) as [string, any][]) {
-    const live = wave13ThemeSourceBefore(file, read(file));
+    const live = wave13ThemeSourceBefore(file, file === manifestFile ? liveManifest : read(file));
     assert.equal(live.length, row.afterBytes, file + ': complete live successor size');
     assert.equal(sha(live), row.afterSha256, file + ': complete live successor, including every unlisted byte');
   }
-  const liveManifest = read('lib/course-asset-sizes.ts').toString();
-  assert.deepEqual(manifestRows(liveManifest), manifestExpectation, 'live manifest rows are exactly the predecessor rows moved to WebP');
+  assert.deepEqual(manifestRows(liveManifest.toString()), manifestExpectation, 'live manifest rows are exactly the predecessor rows moved to WebP');
   // Only a completely successful observation is reused.
   lastSuccessfulSignature = signature;
 }
@@ -104,7 +112,7 @@ const ensureOutsideScope = () => { if (scopedDepth === 0) ensureSlidesWebpCurren
 /** Live media listing → the exact 12 October predecessor listing. */
 export function slidesWebpListingBefore(paths: string[]): string[] {
   ensureOutsideScope();
-  return paths.filter(path => !added.has(path)).map(path => successors.get(path)?.path ?? path).sort();
+  return paths.filter(path => !additionsSinceOctober.has(path)).map(path => successors.get(path)?.path ?? path).sort();
 }
 
 /** Recorded size/digest of a JPEG this layer retired, after the live WebP successor passed. */
@@ -122,7 +130,7 @@ export function slidesWebpOwnsSource(file: string): boolean {
 /** Exact live successor source → its exact predecessor; any other bytes pass through for the caller's own check. */
 export function slidesWebpSourceBefore<T extends string | Uint8Array>(file: string, supplied: T): T {
   // w25-03 re-pin: the newest layer (lazy-chunk precache in app/sw.js/route.ts) projects first, for every owner.
-  supplied = wave25SourceBefore(file, supplied);
+  supplied = fieldFilmSizesBefore(file, wave25SourceBefore(file, supplied));
   const row = proof.files[file];
   if (!row) return supplied;
   ensureOutsideScope();
@@ -160,7 +168,7 @@ const absent = (path: string, syscall: string) => Object.assign(new Error(`ENOEN
  * ensureSlidesWebpCurrent). Checking it per lookup made each media walk quadratic. */
 export const slidesWebpHistoryStatSync = ((path: any, options?: any) => {
   const file = repoPath(path);
-  if (file && (successors.has(file) || added.has(file))) {
+  if (file && (successors.has(file) || additionsSinceOctober.has(file))) {
     if (options?.throwIfNoEntry === false) return undefined;
     throw absent(String(path), 'stat');
   }
@@ -172,14 +180,14 @@ export const slidesWebpHistoryStatSync = ((path: any, options?: any) => {
 
 export const slidesWebpHistoryExistsSync = ((path: any) => {
   const file = repoPath(path);
-  if (file && (successors.has(file) || added.has(file))) return false;
+  if (file && (successors.has(file) || additionsSinceOctober.has(file))) return false;
   if (file && retired.has(file)) { return true; }
   return existsSync(path);
 }) as typeof existsSync;
 
 export const slidesWebpHistoryReadFileSync = ((...args: any[]) => {
   const file = typeof args[0] === 'number' ? undefined : repoPath(args[0]);
-  if (file && (successors.has(file) || added.has(file))) throw absent(String(args[0]), 'open');
+  if (file && (successors.has(file) || additionsSinceOctober.has(file))) throw absent(String(args[0]), 'open');
   const row = file ? retired.get(file) : undefined;
   if (!row) return (readFileSync as any)(...args);
   const bytes = Buffer.from(retiredContent(row));
@@ -196,8 +204,8 @@ export const slidesWebpHistoryReaddirSync = ((path: any, options?: any) => {
     const parent = entry.parentPath ?? entry.path;
     return join(repoPath(parent) ?? directory, entry.name);
   };
-  if (!entries.some(entry => successors.has(keyOf(entry)) || added.has(keyOf(entry)))) return entries;
-  return entries.filter(entry => !added.has(keyOf(entry))).map(entry => {
+  if (!entries.some(entry => successors.has(keyOf(entry)) || additionsSinceOctober.has(keyOf(entry)))) return entries;
+  return entries.filter(entry => !additionsSinceOctober.has(keyOf(entry))).map(entry => {
     const row = successors.get(keyOf(entry));
     if (!row) return entry;
     const name = row.path.split('/').pop()!;

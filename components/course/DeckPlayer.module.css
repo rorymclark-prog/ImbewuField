@@ -179,7 +179,7 @@
 
 .expanded .playerHeader,
 .expanded .zoomBar,
-.expanded .zoomLink,
+.expanded .pictureActions,
 .expanded .audioControl,
 .expanded .controlStrip {
   position: absolute;
@@ -214,10 +214,11 @@
   background: rgba(255, 254, 250, .96);
   box-shadow: 0 1px 9px #20190f33;
 }
-.expanded .zoomLink {
+.expanded .pictureActions {
   top: calc(max(8px, env(safe-area-inset-top)) + 66px);
   right: max(8px, env(safe-area-inset-right));
-  max-width: min(50vw, 240px);
+  max-width: min(calc(100% - 160px), 420px);
+  justify-content: flex-end;
   padding: 4px 9px;
   border-radius: 10px;
   background: rgba(255, 254, 250, .96);
@@ -226,7 +227,7 @@
 }
 .expanded.chromeHidden .playerHeader,
 .expanded.chromeHidden .zoomBar,
-.expanded.chromeHidden .zoomLink,
+.expanded.chromeHidden .pictureActions:not(:focus-within):not(:has(dialog[open])),
 .expanded.chromeHidden .audioControl,
 .expanded.chromeHidden .controlStrip { opacity: 0; pointer-events: none; }
 
@@ -287,8 +288,15 @@
   min-width: 0;
 }
 
+.pictureActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .zoomLink {
-  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   min-height: 40px;
@@ -497,8 +505,8 @@
 
 /* Wrapped voice choices must not sit beneath the image zoom tools. */
 .expanded .zoomBar,
-.expanded .zoomLink {
+.expanded .pictureActions {
   top: calc(max(8px, env(safe-area-inset-top)) + var(--deck-header-height, 150px) + 8px);
 }
 .expanded:has(.sourcePair[open]) .zoomBar,
-.expanded:has(.sourcePair[open]) .zoomLink { display: none; }
+.expanded:has(.sourcePair[open]) .pictureActions { display: none; }

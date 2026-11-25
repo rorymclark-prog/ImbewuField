@@ -259,3 +259,37 @@ export function figuresBySection(figures: ManualFigure[], chapter: ManualChapter
   }
   return out;
 }
+
+export interface EarthworksFilmPlacement {
+  film: 'earth' | 'level' | 'walk';
+  anchor: string;
+  blockIndex: number;
+  /** One-based so the location agrees with the numbered instruction the learner sees. */
+  afterStep?: number;
+}
+
+/** Like the figure slots, these use the shared heading structure. Paragraph counts can vary
+ * between translations, so find the first matching block beneath each heading in this edition. */
+export function earthworksFilmPlacements(blocks: Block[]): EarthworksFilmPlacement[] {
+  let section = -1;
+  let subsection = -1;
+  const positions = blocks.map((block) => {
+    if (block.type === 'h2') {
+      section++;
+      subsection = -1;
+    } else if (block.type === 'h3') {
+      subsection++;
+    }
+    return { section, subsection, type: block.type };
+  });
+  const first = (section: number, subsection: number, type: 'p' | 'ol') =>
+    positions.findIndex((p) => p.section === section && p.subsection === subsection && p.type === type);
+  const exercise = first(10, -1, 'ol'); // Try it
+  const slots: EarthworksFilmPlacement[] = [
+    { film: 'earth', anchor: 'digging-the-swale-film', blockIndex: first(5, 3, 'ol') },
+    { film: 'earth', anchor: 'double-reach-bed-film', blockIndex: first(7, 0, 'p') },
+    { film: 'level', anchor: 'check-a-frame', blockIndex: exercise, afterStep: 4 },
+    { film: 'walk', anchor: 'peg-a-contour', blockIndex: exercise, afterStep: 7 },
+  ];
+  return slots.filter((slot) => slot.blockIndex >= 0);
+}
