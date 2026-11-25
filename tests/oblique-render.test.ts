@@ -343,3 +343,58 @@ test('the ground guide preserves paving recesses beside the gate even with no dr
   assert.ok(captions.includes('◆  Gate'));
   assert.ok(!captions.some(s => s.includes('driveway trace')));
 });
+
+test('the access detail registers every paving corner to the photo and keeps a separate driveway track open', () => {
+  type Ring = [number, number][];
+  const paving: Ring = [[.43,.43],[.68,.43],[.68,.52],[.73,.52],[.73,.59],[.43,.59]];
+  const driveway: Ring = [[.03,.44],[.08,.46],[.14,.6]];
+  const westApron: Ring = [[.05,.4],[.09,.4],[.1,.43],[.05,.43]];
+  const photo = {width:1800, height:1200} as HTMLCanvasElement;
+  const design = {width:900, height:600} as HTMLCanvasElement;
+  const original = JSON.stringify([paving, driveway, westApron]);
+  const shapes: { ink: string; closed: boolean; points: number[][] }[] = [];
+  const crops: number[][] = [], labels: string[] = [];
+  let detail = false, ink = '', closed = false, points: number[][] = [];
+  const ctx = new Proxy({}, {
+    get: (_, key) => (...args: unknown[]) => {
+      if (key === 'fillText') {
+        labels.push(String(args[0]));
+        if (args[0] === 'PAVING AND ACCESS') detail = true;
+      }
+      if (!detail) return;
+      if (key === 'drawImage' && args[0] === photo) crops.push(args.slice(1) as number[]);
+      if (key === 'beginPath') { points = []; closed = false; }
+      if (key === 'moveTo' || key === 'lineTo') points.push(args as number[]);
+      if (key === 'closePath') closed = true;
+      if (key === 'stroke') shapes.push({ ink, closed, points });
+    },
+    set: (_, key, value) => { if (key === 'strokeStyle') ink = value; return true; },
+  }) as CanvasRenderingContext2D;
+  const input = { design, photo, boundary: [], frame: {...frame, imgW:900, imgH:600, satDataUrl:null},
+    contours:unavailable, terrain:obliqueTerrainEvidence(unavailable,null) };
+  paintObliqueReferenceBoard(ctx, {...input, paving:[paving], driveway, drivewayAreas:[westApron]});
+  assert.equal(crops.length,1);
+  const [sx,sy,sw,sh,x,y,w,h] = crops[0];
+  assert.equal(crops[0].length,8);
+  assert.ok(sw < photo.width && sh < photo.height, 'a full-site thumbnail would hide the recesses');
+  assert.ok(Math.abs((h/w)/(sh/sw) - Math.sin(Math.PI/4)) < 1e-9);
+  for (const [ring, colour, close] of [[paving,'#70419A',true],[driveway,'#B55C17',false],[westApron,'#B55C17',true]] as const) {
+    const drawn = shapes.find(shape => shape.ink === colour && shape.closed === close);
+    assert.ok(drawn); assert.equal(drawn.points.length,ring.length);
+    ring.forEach(([u,v],i) => {
+      assert.ok(Math.abs(drawn.points[i][0] - (x + (u*photo.width-sx)/sw*w)) < 1e-8);
+      assert.ok(Math.abs(drawn.points[i][1] - (y + (v*photo.height-sy)/sh*h)) < 1e-8);
+    });
+  }
+  assert.equal(JSON.stringify([paving, driveway, westApron]),original);
+
+  detail = false; labels.length = 0; shapes.length = 0;
+  paintObliqueReferenceBoard(ctx, {...input, photo:undefined, driveway:westApron, drivewayClosed:true,
+    drivewayAreas:[structuredClone(westApron)]});
+  assert.equal(shapes.filter(s => s.ink === '#B55C17').length,1, 'a promoted Studio area should appear once');
+  assert.ok(labels.includes('No registered photo'));
+  detail = false; labels.length = 0;
+  paintObliqueReferenceBoard(ctx, {...input, driveway:[[.2,.3],[.2,.3]], paving:[[[NaN,.4],[.6,.4],[.7,.7]]],
+    anchors:obliqueAnchors([{defId:'gate',x:.1,y:.5}])});
+  assert.ok(!labels.includes('PAVING AND ACCESS'), 'a gate or unusable trace cannot establish a vehicle approach');
+});
