@@ -4947,10 +4947,16 @@ async function burnExactLabelLayer(
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
-  if (!ctx) return { map: mapDataUrl, gutterLayout };
+  if (!ctx) {
+    if (filter === 'water') throw new UserFacingError('Could not draw the Water labels. Reassemble the saved artwork to try again.');
+    return { map: mapDataUrl, gutterLayout };
+  }
   ctx.drawImage(await loadImage(mapDataUrl), 0, 0, W, H);
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
+  // The Water route overlay contains ink only. Keep names on the finished sheet and
+  // out of the clean artwork reused by a second pass or a free reassembly.
+  if (filter === 'water') drawWaterLeaderLabels(ctx, state, refLayers, W, H);
   if (filter === 'planting') drawGroundAreaNames(ctx, state, refLayers, W, H, filter);
   drawPlantMarks(ctx, state, filter, px, py, W / (frame.imgW * frame.mPerPx), labelMode);
   return { map: drainCanvasToDataUrl(canvas, 'image/png'), gutterLayout };
@@ -14623,16 +14629,14 @@ export default function DesignGlossy({
       const boundaryPx = locked || renderRefLayers.boundary.length < 3
         ? undefined
         : renderRefLayers.boundary.flatMap(([x, y]) => [x * W, y * H]);
-      // The locked Water sheet must NOT also go through burnLabels: buildWaterOverlay below is
-      // called with includeLeaderLabels = locked and already draws every water label itself.
-      // Passing labels here too burned a SECOND set a few pixels off the first, which is why every
-      // pill had a half-hidden twin behind it ("MULCH BANK" over "MU…", "SMALL POND" over "SM…").
+      // The shared label pass names the Water equipment and routes after the clean map
+      // has been saved for polishing. Generic callouts here would name each feature twice.
       // Focused planting and structure sheets use side leaders; the full design keeps compact
       // map codes and its one grouped legend. All three draw no on-map pills, otherwise a tree
       // would be named by its pill, code and legend at once.
       const gutterOwnsLabels = locked && (f === 'planting' || f === 'structures');
-      const exactMapOwnsLabels = locked && (gutterOwnsLabels || f === 'all');
-      const labels = (f === 'water' && locked) || exactMapOwnsLabels
+      const exactMapOwnsLabels = locked && (gutterOwnsLabels || f === 'all' || f === 'water');
+      const labels = exactMapOwnsLabels
         ? []
         // The exact zone overlay already carries a numbered badge at every saved zone and the
         // legend expands each number into its full name. Margin leaders added the same facts a

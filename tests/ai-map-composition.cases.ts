@@ -1143,6 +1143,32 @@ test('the swale callout stays halfway along the drawn bank when its trace is rev
   assert.equal(tracedLineLabelMidpoint([[0,0],[NaN,0],[1,1]],800,200),null);
 });
 
+test('the paid Water label pass draws the saved equipment and pipe names once over the artwork', async () => {
+  const probe = artProbe();
+  const events: string[] = [];
+  const state = { items: [{ defId: 'jojo_2500', x: .3, y: .2 }], lines: [] };
+  const refs = { boundary: [], house: [], driveway: [] };
+  probe.ctx.drawImage = (image: string) => events.push(image);
+  const label = helper('burnExactLabelLayer', {
+    document: { createElement: () => probe.canvas },
+    loadImage: async (image: string) => image,
+    drawWaterLeaderLabels: (_ctx: unknown, saved: unknown, layers: unknown, w: number, h: number) => {
+      assert.equal(saved, state);
+      assert.equal(layers, refs);
+      assert.deepEqual([w, h], [800, 600]);
+      events.push('Water callouts');
+    },
+    drawPlantMarks() {},
+    drainCanvasToDataUrl: () => events.join(' / '),
+  });
+  const frame = { imgW: 400, mPerPx: .2 };
+  const water = await label('painting', state, frame, refs, 'water', 800, 600, 'codes');
+  assert.equal(water.map, 'painting / Water callouts');
+  events.length = 0;
+  const whole = await label('painting', state, frame, refs, 'all', 800, 600, 'codes');
+  assert.equal(whole.map, 'painting');
+});
+
 test('terrain plan keeps sourced contour heights when no consistent downhill section can be supported',async()=>{
   const probe=artProbe(),refs={boundary:[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],house:[],driveway:[]},state={siteId:'test-terrain',items:[],lines:[],zones:[]},frame={imgW:600,imgH:600,mPerPx:.5,centerLat:-33.9};
   probe.ctx.measureText=()=>({width:40});
