@@ -251,6 +251,24 @@ test('a design with no mapped ground has no plan, and a map ring traced for othe
   assert.match(words(byId('site-plan')), /Site boundary/);
 });
 
+test('each narrow bed in a closely spaced rotated block keeps its saved number on the drawing', () => {
+  for (const rotation of [4, 94]) {
+    const frame = { ...canvas.frame, imgW: 200, imgH: 200, mPerPx: 1 };
+    const angle = rotation * Math.PI / 180;
+    const items = Array.from({ length: 9 }, (_, i) => ({
+      ...canvas.items[0], id: `bed-${i}`, defId: 'veg_bed', label: `Bed ${41 + i}`,
+      x: 0.5 + i * 0.0075 * Math.cos(angle), y: 0.5 + i * 0.0075 * Math.sin(angle),
+      wM: 1, hM: 9, rot: rotation,
+    }));
+    const field = { ...refs, house: [], driveway: [], boundary: [[0.35, 0.35], [0.65, 0.35], [0.65, 0.65], [0.35, 0.65]] } as typeof refs;
+    const figure = sitePlanFigure({ ...canvas, scaleFactor: 1, frame, items, zones: [], lines: [] }, 'en', field)!;
+    const printed = words(figure).split(' | ');
+    for (let i = 0; i < items.length; i++) {
+      assert.equal(printed.filter(text => text === String(41 + i)).length, 1, `bed ${41 + i} at ${rotation}°`);
+    }
+  }
+});
+
 test('one figure failing never takes the report\'s other pictures with it', () => {
   const broken = { ...canvas, items: [{ defId: 'raised_bed', get x(): number { throw new Error('corrupt'); } }] } as unknown as DesignCanvasState;
   assert.throws(() => sitePlanFigure(broken, 'en', refs), /corrupt/, 'the plan builder really does fail on this design');

@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 November 2026', sha: 'a52824cc4', changes: [
+    'Match narrow vegetable beds to the bed list using the numbers on your Record Plan.',
+  ] },
   { when: '25 November 2026', sha: '7400812c', changes: [
     'Satellite Overlay gives banana clumps their own canopy without adding a pit.',
     'Explore the path of the sun and the shade it casts in an interactive 3D view.',
