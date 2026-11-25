@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 November 2026', sha: 'b3feb7dd', changes: [
+    'New oblique illustrations use a close-up of your traced paving and driveway.',
+  ] },
   {
     when: '25 November 2026', sha: 'da911cad',
     changes: ['View and download Berlin-Tempelhof weather readings from the crop preview.'],

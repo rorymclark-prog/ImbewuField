@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+- [25 November 2026 — Paving fidelity in the Whole Design oblique](2026-11-25/oblique-paving-detail.md) follows the paid site comparison.
+
 - [25 November 2026 — Water routes and oblique access](2026-11-25/water-and-oblique.md) follows the twelve-map review.
 
 - [25 November 2026 — All design maps and Record Plan bed numbers](2026-11-25/all-design-maps.md) records the twelve-view comparison and the nine-bed label correction.

@@ -15141,6 +15141,7 @@ export default function DesignGlossy({
         if (!ctx) throw new Error('Image preparation unavailable.');
         paintObliqueReferenceBoard(ctx, { design: designImage, photo, frame: p.frame, boundary: p.refLayers.boundary,
           driveway: p.refLayers.driveway, drivewayClosed: p.refLayers.drivewayClosed,
+          drivewayAreas: p.state.zones.filter(zone => zone.feature === 'driveway').map(zone => zone.points),
           paving: p.state.zones.filter(zone => zone.feature === 'patio').map(zone => zone.points),
           contours, terrain, anchors, roofs });
         compositeDataUrl = board.toDataURL('image/png');

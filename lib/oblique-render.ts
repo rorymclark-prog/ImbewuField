@@ -129,7 +129,8 @@ export function buildObliquePrompt(input: {
 }): string {
   return `${obliqueStyleDescription(input.style)}
 Create ONE finished oblique aerial illustration of this saved garden design. Camera south of the plot looking north, approximately ${OBLIQUE_PITCH_DEG} degrees above the ground: north at the back, east on the right. Show building sides and tree/tank volume. Keep the whole property and complete tree crowns/tanks in frame, with breathing room around every edge. This is an illustrative viewpoint, not a measured 3D reconstruction.
-The supplied reference board has four labelled panels. UPPER LEFT: saved top-down DESIGN, the authority for boundary shape, planted beds, feature counts, footprints and relative positions. LOWER LEFT: the same saved footprints projected into the requested camera angle. Use this as the ground-plane layout for the result: keep the same boundary corners, openings, separate buildings, bed groups and their order. Raise the objects from those footprints. The projection shows no heights or terrain relief. Where marked, the violet outlines follow the exact corners of ground-level paving. Keep the paved surface open and preserve how it meets the buildings, including shared edges and recesses. The outline is a guide only; do not add a raised border, roof or separate rectangular platform. ${input.hasPhoto ? 'Outside the traced boundary it carries the registered ground photo. Preserve visible vehicle access on its actual side: follow the through-road past the property and any photographed driveway branching through the boundary to the yard. Keep the entrance open where the road meets the yard. Follow the photographed surface. A road can be real even when it has no saved design symbol. Add no route where neither a trace nor the aerial shows one.' : 'Use saved access traces only; the empty exterior carries no road evidence.'} ${input.roofBrief ? 'Its outlined buildings and the enlarged R1 roof detail lock their ground orientation. The highlighted sides of the detail follow the longest traced wall. Diagram wall height is illustrative. ' : ''}TOP RIGHT: ${input.hasPhoto ? 'registered site aerial/drone PHOTO, appearance and surrounding context only; the planned design takes priority over old bare ground. Photographic inset seams and blurred repeated strips are not physical fences or paths; do not reproduce them.' : 'no photo is available; use restrained illustrative materials.'} BOTTOM RIGHT: TERRAIN reference, with real contour elevation labels only when available. Panel titles are reference instructions, not text to reproduce.
+Read the labelled views on the reference board. UPPER LEFT: saved top-down DESIGN, the authority for boundary shape, planted beds, feature counts, footprints and relative positions. LOWER LEFT: the same saved footprints projected into the requested camera angle. Use this as the ground-plane layout for the result: keep the same boundary corners, openings, separate buildings, bed groups and their order. Raise the objects from those footprints. The projection shows no heights or terrain relief. Where marked, the violet outlines follow the exact corners of ground-level paving. Keep the paved surface open and preserve how it meets the buildings, including shared edges and recesses. The outline is a guide only; do not add a raised border, roof or separate rectangular platform. ${input.hasPhoto ? 'Outside the traced boundary it carries the registered ground photo. Preserve visible vehicle access on its actual side: follow the through-road past the property and any photographed driveway branching through the boundary to the yard. Keep the entrance open where the road meets the yard. Follow the photographed surface. A road can be real even when it has no saved design symbol. Add no route where neither a trace nor the aerial shows one.' : 'Use saved access traces only; the empty exterior carries no road evidence.'} ${input.roofBrief ? 'Its outlined buildings and the enlarged R1 roof detail lock their ground orientation. The highlighted sides of the detail follow the longest traced wall. Diagram wall height is illustrative. ' : ''}TOP RIGHT: ${input.hasPhoto ? 'registered site aerial/drone PHOTO, appearance and surrounding context only; the planned design takes priority over old bare ground. Photographic inset seams and blurred repeated strips are not physical fences or paths; do not reproduce them.' : 'no photo is available; use restrained illustrative materials.'} BOTTOM RIGHT: TERRAIN reference, with real contour elevation labels only when available. Panel titles are reference instructions, not text to reproduce.
+When the board includes PAVING AND ACCESS, use that enlarged south-camera view for ground surfaces. Match the violet paving silhouette corner for corner, including its recesses beside buildings. Ochre shows only a saved driveway. Follow an open trace as a route without guessing its width. Where the aerial shows a vehicle opening, keep that opening and its visible connection to the yard readable through the planting. Never join a gate to a road by assumption. Leave all coloured guides out of the illustration.
 Reconstruct the design in oblique perspective; do not return a tilted flat map or a copy of this board. Keep all placed tanks, buildings, beds, orchard rows, routes and plants, including features touching the boundary. Tree crowns may overlap the boundary naturally. Retain hidden features in their saved positions rather than moving them to face the camera. Building and vegetation heights are illustrative unless explicitly measured in the supplied facts. Do not turn footprint dimensions or catalogue species heights into surveyed object heights.
 TERRAIN EVIDENCE: ${input.terrain.note}
 Draw only the artwork: no panel divisions, text, plant codes, legend, scale bar, compass, border or cream paper. The app adds a white presentation sheet and the saved-design inventory afterwards. Do not invent additional buildings, tanks, ponds, crops or roads. Surrounding context should agree with the photo where available.
@@ -149,6 +150,7 @@ export function fitObliqueReference(width: number, height: number, box: { x: num
 export const OBLIQUE_BOARD = { width: 1920, height: 1280,
   design: { x: 24, y: 64, w: 1200, h: 710 },
   groundView: { x: 24, y: 846, w: 1200, h: 410 },
+  access: { x: 696, y: 88, w: 528, h: 530 },
   roof: { x: 808, y: 894, w: 378, h: 268 },
   photo: { x: 1256, y: 64, w: 640, h: 550 },
   terrain: { x: 1256, y: 700, w: 640, h: 490 },
@@ -197,26 +199,116 @@ function appendObliquePath(ctx: CanvasRenderingContext2D, points: readonly [numb
   });
 }
 
-export function paintObliqueReferenceBoard(ctx: CanvasRenderingContext2D, input: {
+type GroundTrace = { points: readonly [number, number][]; closed: boolean; kind: 'paving' | 'driveway' };
+const GROUND_INK = { paving: '#70419A', driveway: '#B55C17' };
+
+type ObliqueBoardInput = {
   design: CanvasImageSource & { width: number; height: number };
   photo?: CanvasImageSource & { width: number; height: number };
   contours: SheetContourResult; frame: CanvasFrame; terrain: ObliqueTerrainEvidence;
   boundary: Array<[number, number]>; driveway?: readonly [number, number][]; drivewayClosed?: boolean;
+  drivewayAreas?: ReadonlyArray<Array<[number, number]>>;
   paving?: ReadonlyArray<Array<[number, number]>>; anchors?: readonly ObliqueAnchor[]; roofs?: readonly RoofGuide[];
-}): void {
+};
+
+function groundTraces(input: ObliqueBoardInput): GroundTrace[] {
+  const validRing = (ring: Array<[number, number]>) => ring.length >= 3
+    && ring.every(([x, y]) => Number.isFinite(x) && Number.isFinite(y)) && ringAreaOf(ring) > 0;
+  const traces: GroundTrace[] = [];
+  for (const points of input.paving ?? []) {
+    if (validRing(points)) traces.push({ kind: 'paving', points, closed: true });
+  }
+  const driveway = input.driveway;
+  if (driveway && driveway.length >= 2 && driveway.every(([x, y]) => Number.isFinite(x) && Number.isFinite(y))
+    && driveway.some(([x, y]) => x !== driveway[0][0] || y !== driveway[0][1])
+    && (!input.drivewayClosed || validRing([...driveway]))) {
+    traces.push({ kind: 'driveway', points: driveway, closed: !!input.drivewayClosed });
+  }
+  for (const points of input.drivewayAreas ?? []) {
+    // The base layer can promote one Studio driveway into the reference slot.
+    if (validRing(points) && !(input.drivewayClosed && driveway?.length === points.length
+      && driveway.every(([x, y], i) => x === points[i][0] && y === points[i][1]))) {
+      traces.push({ kind: 'driveway', points, closed: true });
+    }
+  }
+  return traces;
+}
+
+function traceGroundPath(ctx: CanvasRenderingContext2D, trace: GroundTrace,
+  box: { x: number; y: number; w: number; h: number }) {
+  ctx.beginPath(); appendObliquePath(ctx, trace.points, box);
+  if (trace.closed) ctx.closePath();
+}
+
+// On the whole diagram a projected paving recess can occupy just a few pixels under a tree.
+// Use the registered ground photo beneath the traced edges, before adding proposed canopies.
+function paintAccessDetail(ctx: CanvasRenderingContext2D, input: ObliqueBoardInput, traces: GroundTrace[]) {
+  let left = 1, right = 0, top = 1, bottom = 0;
+  for (const { points } of traces) for (const [x, y] of points) {
+    left = Math.min(left, x); right = Math.max(right, x);
+    top = Math.min(top, y); bottom = Math.max(bottom, y);
+  }
+  const { imgW, imgH } = input.frame;
+  const padding = Math.max((right - left) * imgW, (bottom - top) * imgH, Math.min(imgW, imgH) * .10) / 3;
+  left = Math.max(0, left - padding / imgW); right = Math.min(1, right + padding / imgW);
+  top = Math.max(0, top - padding / imgH); bottom = Math.min(1, bottom + padding / imgH);
+  if (right <= left || bottom <= top) return;
+  const width = right - left, height = bottom - top;
+  const b = OBLIQUE_BOARD.access;
+  const r = fitObliqueReference(width * imgW, height * imgH * Math.sin(OBLIQUE_PITCH_DEG * Math.PI / 180), b);
+  r.y = b.y;
+  const w = r.w / width, h = r.h / height;
+  const frame = { x: r.x - left * w, y: r.y - top * h, w, h };
+  ctx.save();
+  ctx.fillStyle = '#203C28'; ctx.font = 'bold 25px Arial';
+  ctx.fillText('PAVING AND ACCESS', b.x, 38);
+  ctx.font = '18px Arial'; ctx.fillText('Enlarged ground footprints · looking north', b.x, 65);
+  ctx.save(); ctx.beginPath(); ctx.rect(r.x, r.y, r.w, r.h); ctx.clip();
+  const photo = input.photo;
+  if (photo) ctx.drawImage(photo, left * photo.width, top * photo.height, width * photo.width, height * photo.height,
+    r.x, r.y, r.w, r.h);
+  else { ctx.fillStyle = '#F1F3EF'; ctx.fillRect(r.x, r.y, r.w, r.h); }
+  for (const { ring } of input.roofs ?? []) {
+    ctx.beginPath(); appendObliquePath(ctx, ring, frame); ctx.closePath();
+    ctx.fillStyle = 'rgba(71,92,101,0.19)'; ctx.fill(); ctx.strokeStyle = '#274659'; ctx.lineWidth = 2; ctx.stroke();
+  }
+  for (const trace of traces) {
+    traceGroundPath(ctx, trace, frame);
+    if (trace.closed) {
+      ctx.fillStyle = trace.kind === 'paving' ? 'rgba(112,65,154,0.16)' : 'rgba(181,92,23,0.16)'; ctx.fill();
+    }
+    ctx.strokeStyle = '#FFFFFF'; ctx.lineWidth = 6; ctx.stroke();
+    ctx.strokeStyle = GROUND_INK[trace.kind]; ctx.lineWidth = 3; ctx.stroke();
+  }
+  ctx.restore();
+  ctx.font = '19px Arial'; ctx.fillStyle = '#203C28';
+  let captionY = r.y + r.h + 32;
+  if (traces.some(t => t.kind === 'paving')) {
+    ctx.fillText('Violet · saved paving perimeter', b.x, captionY);
+    captionY += 29;
+  }
+  const hasDriveway = traces.some(t => t.kind === 'driveway');
+  ctx.fillText(hasDriveway ? 'Ochre · saved driveway trace' : 'Vehicle access · untraced', b.x, captionY);
+  ctx.fillText(photo ? 'Photo · visible ground and access' : 'No registered photo', b.x, captionY + 29);
+  ctx.restore();
+}
+
+export function paintObliqueReferenceBoard(ctx: CanvasRenderingContext2D, input: ObliqueBoardInput): void {
   const b = OBLIQUE_BOARD;
+  const traces = groundTraces(input);
+  const hasDriveway = traces.some(t => t.kind === 'driveway');
   ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, b.width, b.height);
   ctx.fillStyle = '#203C28'; ctx.font = 'bold 25px Arial';
   ctx.fillText('DESIGN — north up', 24, 38);
   ctx.fillText('GROUND FOOTPRINTS — looking north from the south', 24, 823);
   ctx.fillText(input.photo ? 'SITE PHOTO — north up' : 'NO SITE PHOTO', 1256, 38);
   ctx.fillText('TERRAIN — north up', 1256, 670);
-  const draw = (image: typeof input.design, box: typeof b.design | typeof b.photo) => {
+  const draw = (image: typeof input.design, box: { x: number; y: number; w: number; h: number }) => {
     const r = fitObliqueReference(image.width, image.height, box);
     ctx.drawImage(image, r.x, r.y, r.w, r.h);
     return r;
   };
-  const designFrame = draw(input.design, b.design);
+  const designFrame = draw(input.design, traces.length ? { ...b.design, w: b.access.x - b.design.x - 24 } : b.design);
   // The numeric bed register spans the source image, including any quiet margin inside it.
   // A faint image frame distinguishes that extent from the much wider white board panel.
   ctx.strokeStyle = '#C1C9C2'; ctx.lineWidth = 1;
@@ -235,24 +327,17 @@ export function paintObliqueReferenceBoard(ctx: CanvasRenderingContext2D, input:
     ctx.drawImage(input.photo, projected.x, projected.y, projected.w, projected.h);
     ctx.restore();
   }
-  const paving = (input.paving ?? []).filter(ring => ring.length >= 3 && ring.every(([x, y]) => Number.isFinite(x) && Number.isFinite(y))
-    && ringAreaOf(ring) > 0);
   ctx.save();
   ctx.lineWidth = 2;
-  ctx.strokeStyle = '#70419A';
-  for (const ring of paving) {
-    ctx.beginPath(); appendObliquePath(ctx, ring, projected); ctx.closePath(); ctx.stroke();
+  for (const trace of traces) {
+    traceGroundPath(ctx, trace, projected); ctx.strokeStyle = GROUND_INK[trace.kind]; ctx.stroke();
   }
-  if (paving.length) {
-    ctx.fillStyle = ctx.strokeStyle; ctx.font = '17px Arial';
-    ctx.fillText('Violet outline · ground-level paving', 24, 1276);
+  ctx.font = '17px Arial';
+  if (traces.some(t => t.kind === 'paving')) {
+    ctx.fillStyle = GROUND_INK.paving; ctx.fillText('Violet outline · ground-level paving', 24, 1276);
   }
-  if (input.driveway && input.driveway.length >= 2) {
-    ctx.beginPath(); appendObliquePath(ctx, input.driveway, projected);
-    if (input.drivewayClosed) ctx.closePath();
-    ctx.strokeStyle = '#B55C17'; ctx.stroke();
-    ctx.fillStyle = ctx.strokeStyle; ctx.font = '17px Arial';
-    ctx.fillText('Ochre line · saved driveway trace', 382, 1276);
+  if (hasDriveway) {
+    ctx.fillStyle = GROUND_INK.driveway; ctx.fillText('Ochre line · saved driveway trace', 382, 1276);
   }
   ctx.restore();
   if (input.roofs?.length) {
@@ -300,14 +385,15 @@ export function paintObliqueReferenceBoard(ctx: CanvasRenderingContext2D, input:
       ctx.beginPath(); appendObliquePath(ctx, input.boundary, photoBox); ctx.closePath();
       ctx.strokeStyle = '#465B35'; ctx.lineWidth = 1.4; ctx.stroke();
     }
-    if (input.driveway && input.driveway.length >= 2) {
-      ctx.beginPath(); appendObliquePath(ctx, input.driveway, photoBox);
-      if (input.drivewayClosed) ctx.closePath();
-      ctx.strokeStyle = '#B55C17'; ctx.lineWidth = 2.5; ctx.stroke();
+    if (hasDriveway) {
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = GROUND_INK.driveway;
+      for (const trace of traces) if (trace.kind === 'driveway') { traceGroundPath(ctx, trace, photoBox); ctx.stroke(); }
       ctx.font = '18px Arial'; ctx.fillStyle = '#734016'; ctx.fillText('Ochre line: saved driveway trace', b.photo.x, 639);
     }
     ctx.restore();
   }
+  if (traces.length) paintAccessDetail(ctx, input, traces);
   const r = fitObliqueReference(input.frame.imgW, input.frame.imgH, b.terrain);
   const path = (points: Array<[number, number]>) => {
     ctx.beginPath();
