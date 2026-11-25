@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 November 2026', sha: '25086e69', changes: [
+    'AI Earthworks maps label swales, beds and basins beside their saved positions.',
+  ] },
   { when: '25 November 2026', sha: '46b57cea2', changes: [
     'AI Water maps now label tanks, taps and irrigation lines on the drawing.',
   ] },
