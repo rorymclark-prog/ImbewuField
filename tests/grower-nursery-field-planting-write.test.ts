@@ -232,3 +232,46 @@ test('a postwrite form withdrawal retains an uncertain entry ID and the attempte
     assert.equal((await recordGrowerNurseryFieldPlanting(current, task, input, { isCurrent: () => form })).status, 'held'); assert.equal(local.writes, writes);
   } finally { fixture.events.removeEventListener(storage.JOURNAL_STORAGE_EVENT, withdraw); }
 });
+
+test('a crop progress report reopens one saved crop and its recorded work without exporting other records', async () => {
+  const { current, task } = await source();
+  const { buildGrowerProgressReport, captureGrowerReportJournal } = await import('../lib/grower-progress-report.ts');
+  const legacyEntry = journal.createJournalEntry({ date: input.observedDate, title: 'Unrelated', notes: 'Exclude this legacy note', category: 'other' });
+  await readyJournal([legacyEntry]);
+  const note = 'Moved seedlings into this bed. <script>escape this</script>';
+  const saved = await recordGrowerNurseryFieldPlanting(current, task, { ...input, note }, { isCurrent: () => true });
+  assert.equal(saved.status, 'saved');
+  const reopened = await core.loadGrowerOperationsSources();
+  if (reopened.status !== 'ready') assert.fail('Saved operations could not be reopened');
+  const copy = captureGrowerReportJournal(false);
+  assert.ok(copy?.rows);
+  assert.equal(copy.isCurrent(), true);
+  const linked = copy.rows.find(row => row.id === saved.journalEntryId);
+  assert.ok(linked && task.growerJournalLink);
+  const otherPlan = { ...linked, notes: 'Exclude this other planting', growerCycleLink: { ...task.growerJournalLink, plantingId: 'other-plan' } };
+  const otherDate = { ...linked, notes: 'Exclude this obsolete planned date', growerCycleLink: { ...task.growerJournalLink, plannedDate: '2028-12-30' } };
+  const build = (entries: Parameters<typeof buildGrowerProgressReport>[3], sample = false) =>
+    buildGrowerProgressReport(reopened.book.plantings, reopened.contexts, task.growerJournalLink, entries, sample);
+  const report = build([...copy.rows, otherPlan, otherDate]);
+  assert.ok(report);
+  assert.match(report, /Saved site measurement[\s\S]+m²/);
+  assert.match(report, new RegExp(`Observed <strong>${input.observedDate}</strong> · planned ${task.dueDate}`));
+  assert.match(report, /Plants recorded as planted: 0/);
+  assert.match(report, /&lt;script&gt;escape this&lt;\/script&gt;/);
+  assert.doesNotMatch(report, /<script>|Exclude this|sowing-member|file:|site:/);
+  assert.match(report, /Actual harvest, costs and water use are unknown/);
+  assert.match(build(null, true) ?? '', /DEMO · [\s\S]*Journal unavailable/);
+  assert.match(build([]) ?? '', /No journal observations matched/);
+  assert.equal(buildGrowerProgressReport(reopened.book.plantings, reopened.contexts,
+    { ...task.growerJournalLink, plannedDate: '2028-12-31' }, copy.rows, false), null);
+
+  const original = local.rows.get(key())!;
+  local.rows.set(key(), JSON.stringify({ ...JSON.parse(original), journalRaw: '[]' }));
+  assert.equal(copy.isCurrent(), false);
+  local.rows.set(key(), original);
+  actor('another-grower');
+  actor('owner-a');
+  assert.equal(copy.isCurrent(), false);
+  copy.release();
+  assert.equal(captureGrowerReportJournal(true), null);
+});

@@ -43,3 +43,17 @@ Node 24 typecheck, 116 affected checks and whitespace passed on local integratio
 The signed-out sample at hosted `c6cfe1471` returned five original Berlin days. The actual downloadable and rendered HTML matched all 35 readings and codes, with measured zeroes, attribution and both instrument heights. A live April record showed distinct 2 m and near-ground minimums. The profile save and reopen retained a grower-entered 37-day nursery interval, an unknown first harvest and no station readings. Date and country changes retired old results. Ottawa's measured zero, both Wisconsin tomato intervals and the South African sample calendar still reproduced. This is evidence of the named station, the signed-out sample and the selected archive only. Local agronomy and additional station admissions require their own evidence.
 
 The integration is refreshed against published main `31e8916bb005246683de2018348237da61ef1e46` after an intervening earthworks release. The station application and test files are byte-identical to the hosted candidate. The dated audit index and update notes retain both changes. The integration has its own required release checks.
+
+### 25 November station batch
+
+The following stations share the same DWD CDC recent KL product and passed the existing checks for station identity, sensor height, observation interval, missing values and quality codes. DWD's catalogue marked each one `Frei` on 25 November. The original ZIPs are retained as attributed test fixtures with SHA-256 pins. [DWD catalogue and original archives](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/recent/)
+
+| Station | ID | Returned dates |
+| --- | --- | --- |
+| Dresden-Klotzsche | 01048 | 366 |
+| Hamburg-Fuhlsbüttel | 01975 | 366 |
+| Köln/Bonn | 02667 | 366 |
+| München-Stadt | 03379 | 366 |
+| Potsdam | 03987 | 366 |
+
+The selected window was 23 November 2025 through 23 November 2026. An independent CSV read directly from each ZIP matched all 12,810 observation and quality-code cells across the five outputs. Wrong-station download URLs and mislabelled archives are rejected. The picker and export reuse the released station panel. Each source remains preliminary, and readings apply to that station. Site microclimate and local crop guidance require separate evidence.
