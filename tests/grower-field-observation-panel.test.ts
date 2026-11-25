@@ -15,6 +15,12 @@ Object.assign(globalThis, { __observationPanel: probe, IS_REACT_ACT_ENVIRONMENT:
 const panelUrl = new URL('../components/crops/GrowerOperationsPanel.tsx', import.meta.url).href;
 const data = (source: string) => ({ shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent(source) });
 const hooks = registerHooks({ resolve(specifier, context, next) {
+  // The renderer has no browser idle callbacks. Mark the anchor so a plain link cannot pass.
+  if (context.parentURL === panelUrl && specifier === 'next/link') return data(`
+    import React from ${JSON.stringify(import.meta.resolve('react'))};
+    export default function Link({ children, href }) {
+      return React.createElement('a', { href, 'data-client-navigation': true }, children);
+    }`);
   if (context.parentURL === panelUrl && specifier === '@/lib/task-board') return data(`
     const p=globalThis.__observationPanel;
     export function buildGrowerBoardTasks(){p.generated=p.tasks.map(task=>({...task}));return {tasks:p.generated,heldPlantings:0};}
@@ -119,7 +125,9 @@ test('a successful save passes the exact shown task and confirmed observation on
     assert.equal(ui.attempts.length, 1); assert.equal(ui.attempts[0].task, shown);
     assert.deepEqual(ui.attempts[0].input, { observedDate: '2028-03-09', note: 'I checked the ground and recorded what I saw.', confirmed: true });
     assert.equal(Object.isFrozen(ui.attempts[0].input), true); assert.equal(ui.renderer.root.findAllByType('form').length, 0);
-    assert.match(ui.text(), /Observation saved in your journal/); assert.equal(ui.renderer.root.findByType('a').props.href, '/journal');
+    assert.match(ui.text(), /Observation saved in your journal/);
+    const link = ui.renderer.root.findByType('a');
+    assert.equal(link.props.href, '/journal'); assert.equal(link.props['data-client-navigation'], true);
     await act(async () => { submit({ preventDefault() {} }); }); assert.equal(ui.attempts.length, 1);
     assert.equal(probe.checklistWrites, 0); assert.equal(probe.calendars, 0);
   } finally { ui.dispose(); }
@@ -143,7 +151,9 @@ for (const failure of ['unconfirmed', 'throw'] as const) {
         return { status: 'unconfirmed', message: 'A note may have been saved; check the journal.' };
       }); await ui.submit();
       assert.equal(ui.attempts.length, 1); assert.equal(ui.button('Save observation in journal').props.disabled, true);
-      assert.equal(ui.field('What happened').props.disabled, true); assert.equal(ui.renderer.root.findByType('a').props.href, '/journal');
+      assert.equal(ui.field('What happened').props.disabled, true);
+      const link = ui.renderer.root.findByType('a');
+      assert.equal(link.props.href, '/journal'); assert.equal(link.props['data-client-navigation'], true);
       assert.match(ui.text(), /A note may already be saved/); assert.doesNotMatch(ui.text(), /private raw journal bytes/);
       await ui.submit(); assert.equal(ui.attempts.length, 1); ui.cancel();
       assert.equal(ui.button('Record what happened').props.disabled, true); ui.open(); assert.equal(ui.renderer.root.findAllByType('form').length, 0);
