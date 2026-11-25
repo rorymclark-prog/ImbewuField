@@ -155,6 +155,16 @@ test('energy release draft pairs retain exact source, provisional status and exi
     ts: '1a3e80d8381b36251ece84b9dffa316cfbcccf3e83b30b00beba2e1209aa5f33',
     ve: '0ac9b89309953362fdab4e6ac4e20b64d011abc03a0735c42d837d90da4f1430',
   };
+  // The only later changes between 6ec4a916f and 7400812c add nine release
+  // captions before the Editorial block (#1403–#1407). Admit their exact
+  // bytes separately so the historical energy and caption proofs remain intact.
+  const laterReleaseBlocks: Record<string, string> = {
+    zu: 'cb27f1c3666d4e385a5333606eeea54420ef443417c0307b70faf61f35b5ab52',
+    st: '0cc8439a3a4437713a9204add709af71e187feb73a749e5fd7d747cc5b016f37',
+    ts: '02d3fd139136b58957c1e3776fc02588daedaa74d39ceca0c7c123098fec2719',
+    ve: 'fa76e5a5dac4d6e8fc28fb0c297275999ab2a46c113e860294826dd8ab965429',
+  };
+  const dictionaryOpen = 'const copy:UpdateCopy={';
   assert.equal(hash(read(dir + 'adoption.json')), composition.historicalAdoptionSha256);
   assert.equal(hash(read(composition.independentCaptionAdoption.path)), composition.independentCaptionAdoption.sha256);
   const expectedLocales = ['st', 'ts', 've', 'zu'];
@@ -201,11 +211,27 @@ test('energy release draft pairs retain exact source, provisional status and exi
     const assertPreserved = (candidate: string) => {
       assert.equal(candidate.split(inserted).length, 2, 'the reviewed block is added once');
       assert.equal(candidate.split(mapInserted).length, 2, 'the complete upstream map block is added once');
-      if (hash(candidate) === mapPostimages[language]) candidate = candidate.replace(mapInserted, '');
-      assert.equal(hash(candidate.replace(inserted, '')), priorCaption.afterSha256,
+      assert.equal(candidate.split(dictionaryOpen).length, 2, 'the dictionary has one opening boundary');
+      const blockStart = candidate.indexOf(dictionaryOpen) + dictionaryOpen.length;
+      const blockEnd = candidate.indexOf(mapInserted);
+      assert.ok(blockEnd >= blockStart, 'later release captions precede the Editorial block');
+      const laterReleaseBlock = candidate.slice(blockStart, blockEnd);
+      assert.equal(hash(laterReleaseBlock), laterReleaseBlocks[language], 'later release caption bytes remain exact');
+      const historicalMapPostimage = candidate.slice(0, blockStart) + candidate.slice(blockEnd);
+      assert.equal(hash(historicalMapPostimage), mapPostimages[language],
+        'every existing international dictionary byte remains beneath the additive energy block');
+      assert.equal(hash(historicalMapPostimage.replace(mapInserted, '').replace(inserted, '')), priorCaption.afterSha256,
         'every existing international dictionary byte remains beneath the additive energy block');
     };
     assertPreserved(dictionary);
+    const blockStart = dictionary.indexOf(dictionaryOpen) + dictionaryOpen.length;
+    const laterReleaseBlock = dictionary.slice(blockStart, dictionary.indexOf(mapInserted));
+    const changedReleaseBlock = laterReleaseBlock.replace(/[A-Za-z]/, letter => letter === 'X' ? 'Y' : 'X');
+    assert.notEqual(changedReleaseBlock, laterReleaseBlock);
+    assert.equal(Buffer.byteLength(changedReleaseBlock), Buffer.byteLength(laterReleaseBlock));
+    assert.throws(() => assertPreserved(dictionary.replace(laterReleaseBlock, changedReleaseBlock)),
+      /later release caption bytes remain exact/);
+    assert.throws(() => assertPreserved(dictionary.replace(laterReleaseBlock, '')), /later release caption bytes remain exact/);
     const unrelatedSource = captionSource.messages[0].english;
     const unrelatedLine = `  ${JSON.stringify(unrelatedSource)}: ${JSON.stringify(copy[unrelatedSource])},\n`;
     assert.equal(dictionary.split(unrelatedLine).length, 2, 'the adverse fixture selects one real non-energy caption');

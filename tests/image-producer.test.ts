@@ -655,12 +655,17 @@ test('Reference Blueprint never briefs an absent Water route or empty subsystem'
   assert.match(routed, /If a feature is absent from the list, it must be absent/);
 });
 
-test('a banana planting only receives a compost hollow when the saved item is a banana circle', () => {
-  const promptFor = (elementsText: string) => buildSatelliteOverlayPrompt({
-    layerLabel: 'Whole', sheetKind: 'all', stylePreset: 'satellite_overlay', elementsText,
-  });
-  assert.doesNotMatch(promptFor('Banana Clump'), /SUNKEN pit/);
-  assert.match(promptFor('Banana Circle'), /SUNKEN pit/);
+test('Satellite Overlay distinguishes saved banana clumps from banana circles', () => {
+  const promptFor = (elementsText: string, sheetKind: 'all' | 'planting' | 'water' = 'all') =>
+    buildSatelliteOverlayPrompt({ layerLabel: 'Design', sheetKind, stylePreset: 'satellite_overlay', elementsText });
+  const clump = promptFor('Banana Clump');
+  assert.match(clump, /compact cluster of broad banana leaves/);
+  assert.doesNotMatch(clump, /SUNKEN pit/);
+  const circle = promptFor('Banana Circle');
+  assert.match(circle, /SUNKEN pit/);
+  assert.doesNotMatch(circle, /compact cluster of broad banana leaves/);
+  assert.match(promptFor('Banana Clump', 'planting'), /compact cluster of broad banana leaves/);
+  assert.doesNotMatch(promptFor('JoJo Tank, Banana Clump', 'water'), /compact cluster of broad banana leaves/);
 });
 
 test('Satellite Overlay gives a Planting-sheet Vetiver Bank its exact marker vocabulary', () => {
