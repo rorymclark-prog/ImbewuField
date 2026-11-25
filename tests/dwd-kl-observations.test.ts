@@ -5,7 +5,7 @@ import test from 'node:test';
 import { buildDwdKlObservationHtml } from '../lib/international/dwd-kl-observation-report.ts';
 import { extractDwdKlRecentProduct, loadDwdKlRecentObservations } from '../lib/international/providers/dwd-kl-http.ts';
 import {
-  DWD_KL_ARCHIVE_URL, dwdKlRequestableDays, parseDwdKlRecentObservations, type DwdKlRecentProduct,
+  DWD_KL_STATIONS, dwdKlArchiveUrl, dwdKlRequestableDays, parseDwdKlRecentObservations, type DwdKlRecentProduct,
 } from '../lib/international/providers/dwd-kl-observations.ts';
 
 // Deutscher Wetterdienst (DWD CDC), Daily station observations for Germany, KL v24.3.
@@ -14,7 +14,7 @@ import {
 const archive = readFileSync(new URL('./fixtures/dwd-berlin-tempelhof-00433-recent.zip', import.meta.url));
 assert.equal(createHash('sha256').update(archive).digest('hex'), '9d3004fe42ef3fd05f10975ae27714e0621cbe31a45a59f047a5f91a181831ec');
 const retrievedAt = '2026-11-19T20:12:32.616Z';
-const fixture = await extractDwdKlRecentProduct(archive, retrievedAt, new AbortController().signal);
+const fixture = await extractDwdKlRecentProduct(archive, retrievedAt, new AbortController().signal, '00433');
 assert.ok(fixture, 'the bounded archive reader accepts the exact DWD file');
 const product = fixture;
 
@@ -50,6 +50,59 @@ test('the admitted original recent archive retains real zeros, heights, dates, s
   assert.equal(result.days[4].kind, 'returned');
   assert.equal(result.days[4].airMean, 0);
 });
+
+// Original DWD recent archives retrieved 25 November 2026, CC BY 4.0.
+const batchFixtures = {
+  '01048': ['04828b635ebc6ec92cc9b5206075409f8ac3b8ae4cc786caeefc68f884dc45af', [-0.7, 0.6, 1.9, -1.9]],
+  '01975': ['1b8c8b9983dde58a785fd01f7194314474ec07e02eba08f3dfa6dfe5e44daafc', [-3.3, 0.1, 4.1, -6.3]],
+  '02667': ['d275e841639c998e119c60b2074e4326042ea3b71d43a4da1d58625f07ca5120', [-2.5, -1.6, -0.4, -2.3]],
+  '03379': ['3080d28224ecb447c51bf07b5b411c1c9d073ced46958f61a4ca7635068613e8', [-2.9, 0.4, 2.9, -4.4]],
+  '03987': ['286be5f63efa98114115cb34a61698cd9e2983ff5badd22653df15d91dea0872', [-1.6, 0.6, 3.5, -3.8]],
+} as const;
+
+for (const station of DWD_KL_STATIONS) {
+  if (station.id === '00433') continue;
+  test(`the original ${station.name} archive uses the admitted measurement rules`, async ({ mock }) => {
+    const [checksum, readings] = batchFixtures[station.id];
+    const bytes = readFileSync(new URL(`./fixtures/dwd-${station.id}-recent.zip`, import.meta.url));
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), checksum);
+    const sourceUrl = dwdKlArchiveUrl(station.id);
+    const selection = { stationId: station.id, firstDay: '2025-11-23', lastDay: '2026-11-23' };
+    const now = new Date('2026-11-25T09:00:00.000Z');
+    const signal = new AbortController().signal;
+    const makeResponse = (body: Uint8Array, url: string) => Object.defineProperty(
+      new Response(Uint8Array.from(body), { headers: { 'content-type': 'application/zip' } }),
+      'url', { value: url },
+    );
+    const responses = [
+      makeResponse(bytes, sourceUrl),
+      makeResponse(bytes, dwdKlArchiveUrl('00433')),
+      makeResponse(archive, sourceUrl),
+    ];
+    mock.method(globalThis, 'fetch', async (input: RequestInfo | URL) => {
+      assert.equal(input, sourceUrl);
+      assert.equal(new URL(sourceUrl).hostname, 'opendata.dwd.de');
+      assert.ok(sourceUrl.endsWith(`/tageswerte_KL_${station.id}_akt.zip`));
+      return responses.shift()!;
+    });
+    const result = await loadDwdKlRecentObservations(selection, signal, now);
+    assert.equal(result.status, 'available');
+    assert.deepEqual(result.station, station);
+    assert.equal(result.source.url, sourceUrl);
+    assert.equal(result.source.firstArchiveDay, '2025-05-23');
+    assert.equal(result.source.lastArchiveDay, '2026-11-23');
+    assert.equal(result.returnedDays, 366);
+    const [airMinimum, airMean, airMaximum, nearGroundMinimum] = readings;
+    assert.deepEqual(result.days.at(-1), {
+      kind: 'returned', day: '2026-11-23', airMinimum, airMean, airMaximum, nearGroundMinimum,
+      precipitationMm: 0, qn3: 1, qn4: 1,
+    });
+    for (let attempt = 0; attempt < 2; attempt++) {
+      assert.deepEqual(await loadDwdKlRecentObservations(selection, signal, now),
+        { status: 'held', reason: 'invalid-archive' });
+    }
+  });
+}
 
 test('the near-ground minimum remains independent of the air minimum', () => {
   for (const [day, air, nearGround] of [['2026-04-07', 2.2, -5], ['2026-01-13', -0.8, -0.2]] as const) {
@@ -111,7 +164,7 @@ test('missing sensor coverage, changed units, MEZ labels and mismatched geograph
   }
 });
 
-test('selection is bounded to whole past UTC dates and the single admitted station', () => {
+test('selection is bounded to whole past UTC dates and the admitted stations', () => {
   assert.deepEqual(dwdKlRequestableDays(new Date(product.retrievedAt)), { firstDay: '2025-07-07', lastDay: '2026-11-18' });
   for (const stationId of ['433', ' 00433', '00433\n']) {
     assert.deepEqual(parseDwdKlRecentObservations(product, { ...window, stationId }), { status: 'held', reason: 'invalid-selection' });
@@ -127,12 +180,12 @@ test('selection is bounded to whole past UTC dates and the single admitted stati
 
 function archiveResponse(body: BodyInit, mime = 'application/zip') {
   const response = new Response(body, { headers: { 'content-type': mime } });
-  return Object.defineProperty(response, 'url', { value: DWD_KL_ARCHIVE_URL });
+  return Object.defineProperty(response, 'url', { value: dwdKlArchiveUrl('00433') });
 }
 
 test('the public loader reads only the fixed ZIP and produces a report from original data', async ({ mock }) => {
   const request = mock.method(globalThis, 'fetch', async (input: RequestInfo | URL, init?: RequestInit) => {
-    assert.equal(input, DWD_KL_ARCHIVE_URL);
+    assert.equal(input, dwdKlArchiveUrl('00433'));
     assert.equal(init?.redirect, 'error');
     assert.equal(init?.credentials, 'omit');
     assert.equal(init?.referrerPolicy, 'no-referrer');
