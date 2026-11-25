@@ -109,6 +109,8 @@ function geometryLockTail(): string {
   );
 }
 
+const WATER_ROUTE_PAINTING = 'Paint the ground beneath the coloured pipe, drip and greywater guides. The app draws these routes and emitters over the finished artwork. Keep every tank and fitting in place. Leave out duplicate pipes.';
+
 /**
  * Geometry Lock's illustration pass — paint the WHOLE sheet, invent nothing.
  *
@@ -133,7 +135,8 @@ export function buildLockedIllustrationPrompt(
   footprintRegister = '',
 ): string {
   const layer = layerLabel.toUpperCase();
-  const diggingStage = showcaseSheetKindForLabel(layerLabel) === 'earthworks';
+  const sheetKind = showcaseSheetKindForLabel(layerLabel);
+  const diggingStage = sheetKind === 'earthworks';
   const exactFeatures = elementsText.trim()
     ? `AUTHORITATIVE FEATURE REGISTER: ${elementsText.trim()}.`
     : 'AUTHORITATIVE FEATURE REGISTER: use only the placed features already visible in the source.';
@@ -154,7 +157,7 @@ export function buildLockedIllustrationPrompt(
   // the fourth documented instance in this one file of a fix reaching some prompt paths and not
   // others; reusing showcaseMarkerGlossary rather than writing a fourth table is the point, so the
   // next bed/basin/vetiver correction cannot miss the app's most-used renderer again.
-  const markerGlossary = showcaseMarkerGlossary(showcaseSheetKindForLabel(layerLabel), elementsText);
+  const markerGlossary = showcaseMarkerGlossary(sheetKind, elementsText, sheetKind === 'water');
   const ground = groundContractFor(stylePreset, groundSource);
   const onPaper = ground === 'paper';
   const paintGround = ground === 'paint';
@@ -163,9 +166,9 @@ export function buildLockedIllustrationPrompt(
   // Kept as its own name because several clauses below mean "do not invent ground" rather than
   // "keep the photograph" — and on paper there is no photograph to keep.
   const photoPreserving = ground === 'photo';
-  const waterArtDirection = /water/i.test(layerLabel)
+  const waterArtDirection = sheetKind === 'water'
     ? [
-        `WATER FEATURE ROLE: polish every already-marked tank, tap, basin, pond and fitting into a recognisable realistic top-down farm feature at its exact saved centre, count, orientation and footprint. Keep buried water pipe blue, filtered-greywater routes purple, and drip irrigation blue with sparse emitters. The app reinforces the measured routes, leaders, labels and legend afterwards.`,
+        `WATER FEATURE ROLE: polish every already-marked tank, tap, basin, pond and fitting into a recognisable realistic top-down farm feature at its exact saved centre, count, orientation and footprint. Blue marks buried pipes and drip lines; purple marks filtered greywater. ${WATER_ROUTE_PAINTING} The app also adds the leaders, labels and legend.`,
         // Painted styles may change texture, never the site's land cover. A dark forest outside
         // every property was an art-direction instruction with no basis in the source photograph.
         // Photo and paper contracts still skip this block entirely.
@@ -226,7 +229,7 @@ export function buildLockedIllustrationPrompt(
     task,
     exactFeatures,
     footprintRegister,
-    sheetDrawingScope(showcaseSheetKindForLabel(layerLabel)),
+    sheetDrawingScope(sheetKind),
     markerGlossary ? `WHAT THE MARKERS ARE: ${markerGlossary}.` : '',
     designBrief.trim() ? `${diggingStage ? 'ORIENTATION CONTEXT ONLY — the whole-site planting list describes a later stage; draw none of its proposed planting on this digging sheet' : 'WHOLE-SITE CONSISTENCY BRIEF'}: ${designBrief.trim()}` : '',
     `PLACED-FEATURE CONTRACT: every coloured footprint, route and editor marker already visible in the source is a saved feature, not a suggestion. Replace each marker with a realistic orthographic illustration of that named feature at the same centre, count, rotation and footprint. Keep the illustration confined to its saved footprint. Do not duplicate it, omit it, move it or leave an emoji/tool marker in the finished artwork.`,
@@ -777,9 +780,10 @@ export function bedFootprintRegister(
   return `BED FOOTPRINTS — ${beds.length} separate saved rectangles. Coordinates are percentages of the ${reference}, x right, y down; size is unrotated width,height; rotation is clockwise. Preserve every outer corner and gap; crop rows are texture INSIDE one bed, never extra beds. ${listed.join('; ')}${remainder}. Do not merge or subdivide beds or add a tunnel, roof, hedge or border beside them.` + (covers.length ? ` ${covers.join(' ')}` : '');
 }
 
-function showcaseMarkerGlossary(sheetKind: ShowcaseSheetKind, elementsText: string): string {
+function showcaseMarkerGlossary(sheetKind: ShowcaseSheetKind, elementsText: string, appDrawsPipes = false): string {
   if (sheetKind === 'earthworks') return earthworksDrawingContract();
   return SHOWCASE_MARKERS_BY_SHEET[sheetKind]
+    .filter(key => !appDrawsPipes || (key !== 'pipe' && key !== 'drip' && key !== 'greywater_line'))
     .filter((key) => SHOWCASE_MARKER_MATCH[key].test(elementsText))
     .map((key) => M[key])
     .join('; ');
@@ -1444,6 +1448,9 @@ export function buildPhasingRestylePrompt(stylePreset: StylePreset, placeName?: 
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }
 
+// Older Water jobs asked the model to paint the pipes itself. Keep their original finish on recovery.
+export const WATER_POLISH_ROUTE_GUIDE = 'WATER NETWORK OVERPRINT.';
+
 /**
  * Paid design-sheet polish — the input is the Hybrid's finished MAP PANEL, text-free.
  *
@@ -1466,16 +1473,18 @@ export function buildFinishedSheetPolishPrompt(
   structureRegister?: string,
   footprintRegister = '',
 ): string {
-  const diggingStage = showcaseSheetKindForLabel(layerLabel) === 'earthworks';
+  const sheetKind = showcaseSheetKindForLabel(layerLabel);
+  const diggingStage = sheetKind === 'earthworks';
   const body = [
     `WHAT YOU HAVE BEEN GIVEN: a FIRST-PASS AI render of the MAP of a ${layerLabel} plan sheet${placeName ? ` for ${placeName}` : ''}. It is a draft, not finished artwork. Its geometry is correct and must stay correct, but its ARTWORK is unfinished: symbols are flat and diagrammatic, materials read as coloured shapes rather than real surfaces, linework is thin and uniform, ground texture is muddy and evenly lit, and the whole image has the look of something plotted rather than drawn.`,
     `YOUR JOB IS THE SECOND PASS: bring that draft up to a frame-worthy authored illustration in the requested style. Give every surface a real material — corrugated roofing, turned soil, mulch, standing water, plastic tank walls, gravel, grass. Vary line weight so structure reads before detail. Light the whole image from one consistent direction with real shadow. Replace flat map symbols with orthographic top-down illustrations of the SAME things, in place.`,
     `RETURNING THE SUPPLIED IMAGE UNCHANGED IS A FAILED RESULT. So is returning it with a global filter, grain, warmth or vignette over the top. This is a second pass over an image that already looks acceptable at a glance — the temptation is to copy it, and a copy is worthless here. Someone has paid for this pass specifically to get artwork the first pass could not produce. Every surface should be visibly re-rendered.`,
-    `WHAT MUST NOT MOVE: canvas aspect ratio, map crop, north-up view, and the position, shape, size and count of the boundary, house, driveway, beds, trees, tanks, basins, ponds, structures and routes. Redraw all of them; move none of them. Keep blue water pipes, blue drip emitters and purple greywater routes distinct, with every connection and endpoint where it already is. Invent nothing that is not already on the map, and leave open ground open.`,
+    sheetKind === 'water' && `${WATER_POLISH_ROUTE_GUIDE} ${WATER_ROUTE_PAINTING}`,
+    `WHAT MUST NOT MOVE: canvas aspect ratio, map crop, north-up view, and the position, shape, size and count of the boundary, house, driveway, beds, trees, tanks, basins, ponds, structures and routes. ${sheetKind === 'water' ? 'Keep the connection points on the supplied network.' : 'Redraw all of them; move none of them. Keep blue water pipes, blue drip emitters and purple greywater routes distinct, with every connection and endpoint where it already is.'} Invent nothing that is not already on the map, and leave open ground open.`,
     `WRITE NOTHING: no labels, no numbers, no legend, no title, no scale bar, no north arrow, no lettering of any kind anywhere on the image — the sheet's title, legend, plant codes and callouts are drawn afterwards from the farmer's saved design, and any text you add will collide with them and be wrong.`,
     `SOURCE INVENTORY: the supplied map is authoritative. Draw only features already present on it, at the counts it shows. Never reinterpret a dark roof, driveway or paving patch as a tank, basin, building or other new feature. A circular tank may be redrawn only where a circular tank already exists in the supplied map. If a shape is ambiguous, preserve it as the same roof or ground surface instead of inventing an object.`,
     ...(footprintRegister ? [footprintRegister] : []),
-    sheetDrawingScope(showcaseSheetKindForLabel(layerLabel)),
+    sheetDrawingScope(sheetKind),
     ...(structureRegister?.trim()
       ? [
           `STRUCTURE REGISTER: ${structureRegister.trim()} Roof ONLY the buildings this register calls roofed — one roof per building, on its exact footprint, and never merge neighbouring structures under one shared roof. Everything the register calls flat, ground-level or a track stays fully open to the sky: bare concrete reads as bare concrete and a tar or gravel track reads as tar or gravel, drawn in this sheet's art style but never as a building. A small existing building already visible inside the supplied photo keeps its own roof exactly where it is.`,
