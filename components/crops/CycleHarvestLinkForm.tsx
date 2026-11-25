@@ -71,7 +71,7 @@ export default function CycleHarvestLinkForm({ options, linked, status, disabled
                   {' · ref '}{link.recordId.slice(-8)}
                 </p>
                 {onRemove && (confirming ? <>
-                  <p id={`${descriptionId}-notice`}>The harvest stays in Harvest Records. You can link it to the correct crop cycle and enter the correct picking date.</p>
+                  <p id={`${descriptionId}-notice`}>Removing the link leaves Harvest Records unchanged. You can link an available harvest again with the correct picking date.</p>
                   <div className="flex flex-wrap gap-2">
                     <button type="button" className={button} disabled={disabled} aria-describedby={`${descriptionId} ${descriptionId}-notice`}
                       onClick={() => { if (!disabled) { setRemoval(null); onRemove(link); } }}>Confirm remove harvest link</button>

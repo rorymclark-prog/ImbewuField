@@ -17,7 +17,7 @@ The first-pick action now asks the grower to select an existing own harvest and 
 | CROP-HARVEST-LINK-02 | A detached report could outlive a harvest edit or delete. | Checked report rows come from the current owner-scoped book. Changed evidence cancels the handoff, and unavailable rows leave part or all of the total unknown. |
 | CROP-HARVEST-LINK-03 | An entry timestamp could be mistaken for a harvest date. | The actual day starts blank and must be confirmed. The report shows it separately from the planned day. A real harvest date cannot be later than today on the device. |
 
-An independent review of `705bbe7de` identified two gaps. The workflow now lets the grower remove the exact association, even when the harvest row is unavailable. The original harvest stays available for linking again. Actual dates in signed-in records are limited to today or earlier. Isolated demo cases can still use illustrative future dates.
+An independent review of `705bbe7de` identified two gaps. The workflow now lets the grower remove the exact association, even when the harvest row is unavailable. Removing the association leaves Harvest Records unchanged. A harvest that is still available can be linked again. Actual dates in signed-in records are limited to today or earlier. Isolated demo cases can still use illustrative future dates.
 
 ## Verification boundary
 

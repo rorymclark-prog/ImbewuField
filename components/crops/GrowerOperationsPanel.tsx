@@ -196,7 +196,7 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
       if (!harvestIsCurrent(pending)) return;
       setCurrentHarvest(result.status === 'saved' ? null : { ...draft, status: 'held' });
       if (result.status === 'saved') {
-        setMessage(action === 'remove' ? 'Harvest link removed. The original harvest record is still in your records.'
+        setMessage(action === 'remove' ? 'Harvest link removed. Harvest Records are unchanged.'
           : draft.sample ? 'DEMO harvest linked to this sample crop cycle.' : 'Harvest linked to this crop cycle. It will appear in the crop progress report.');
       } else {
         setMessage(result.status === 'conflict' ? 'This harvest already has a different link. Its saved link is unchanged.'

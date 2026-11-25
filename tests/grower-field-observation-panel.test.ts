@@ -272,6 +272,6 @@ test('removing a linked harvest requires a second action and passes the exact li
     act(() => ui.button('Remove harvest link').props.onClick());
     await act(async () => { ui.button('Confirm remove harvest link').props.onClick(); });
     assert.deepEqual(calls, [{ taskId: firstPick.id, input: link }]);
-    assert.match(ui.text(), /Harvest link removed. The original harvest record is still in your records/);
+    assert.match(ui.text(), /Harvest link removed. Harvest Records are unchanged/);
   } finally { ui.dispose(); }
 });
