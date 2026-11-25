@@ -26,6 +26,28 @@
 
 export type LeaderSide = 'left' | 'right';
 
+/** Sheet fractions at half the drawn length. Sampling density and trace direction must
+ * not decide which end of a swale its callout points to. */
+export function tracedLineLabelMidpoint(
+  points: ReadonlyArray<readonly [number, number]>, width: number, height: number,
+): [number, number] | null {
+  const lengths = points.slice(1).map(([x, y], i) =>
+    Math.hypot((x - points[i][0]) * width, (y - points[i][1]) * height));
+  const total = lengths.reduce((sum, length) => sum + length, 0);
+  if (!Number.isFinite(total) || total <= 0) return null;
+
+  let remaining = total / 2;
+  for (const [i, length] of lengths.entries()) {
+    if (length > 0 && remaining <= length) {
+      const [x, y] = points[i];
+      const [nextX, nextY] = points[i + 1];
+      return [x + (nextX - x) * remaining / length, y + (nextY - y) * remaining / length];
+    }
+    remaining -= length;
+  }
+  return null;
+}
+
 export interface LeaderLabelPlacement {
   /** Left edge of the text, in canvas pixels. */
   x: number;

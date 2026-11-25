@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 November 2026', sha: '12ff32d9', changes: [
+    'On labelled Earthworks maps, each swale callout points halfway along its saved route.',
+  ] },
   { when: '25 November 2026', sha: 'b3feb7dd', changes: [
     'New oblique illustrations use a close-up of your traced paving and driveway.',
   ] },

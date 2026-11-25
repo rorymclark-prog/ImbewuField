@@ -99,7 +99,7 @@ import {
   type GutterLayout,
   type GutterRow,
 } from '@/lib/plan-label-gutter';
-import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
+import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath, tracedLineLabelMidpoint } from '@/lib/leader-labels';
 import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, recommendedSheetSettings, renderAuthorityFlagsForStyle, renderPolicyForStyle, type SheetPresentationSettings } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
@@ -5014,14 +5014,15 @@ function earthworksReferenceLabels(state:DesignCanvasState,refLayers:DesignGloss
   let swale=0;
   for(const line of state.lines){
     if(exactSheetLineRegister(line.kind,'earthworks')!=='content'||line.points.length<2)continue;
-    const point=line.points[Math.floor(line.points.length/2)];
-    if(point.every(Number.isFinite))anchors.push({id:line.id,text:line.kind==='swale'?`SWALE ${++swale}`:line.kind.toUpperCase(),point});
+    const point=tracedLineLabelMidpoint(line.points,W,H);
+    if(point)anchors.push({id:line.id,text:line.kind==='swale'?`SWALE ${++swale}`:line.kind.toUpperCase(),point});
   }
   const box=plotBox(refLayers.boundary),centre=(box.x0+box.x1)/2;
   return anchors.map(({id,text,point})=>{
     const pw=Math.min(W*.42,Math.max(80,text.length*Math.max(24,W*.0145)*.58+28));
-    const ax=point[0]<centre?W*.025:W*.975-pw;
-    return {id,text,cx:point[0]*W,cy:point[1]*H,ax,ay:point[1]*H,lx:point[0]<centre?ax+pw:ax,leader:true};
+    const left=point[0]<centre-Number.EPSILON;
+    const ax=left?W*.025:W*.975-pw;
+    return {id,text,cx:point[0]*W,cy:point[1]*H,ax,ay:point[1]*H,lx:left?ax+pw:ax,leader:true};
   });
 }
 
