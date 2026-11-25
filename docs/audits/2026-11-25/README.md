@@ -1,5 +1,7 @@
 # 25 November 2026
 
+- [Paid Earthworks callout contrast](earthworks-paid-callout-contrast.md) checks the labelled swales, banana circle and bed group on the original paid painting.
+
 - [Saved Water artwork and direct labels](paid-water-labels.md) compares the exact and paid exports from one revision and checks the corrected labels on the same painting.
 
 - [Design map review and Record Plan bed numbers](all-design-maps.md) covers nine layer sheets and three additional views.

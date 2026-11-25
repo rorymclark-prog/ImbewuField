@@ -4948,7 +4948,7 @@ async function burnExactLabelLayer(
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) {
-    if (filter === 'water') throw new UserFacingError('Could not draw the Water labels. Reassemble the saved artwork to try again.');
+    if (filter === 'water' || filter === 'earthworks') throw new UserFacingError('Could not draw the map labels. Reassemble the saved artwork to try again.');
     return { map: mapDataUrl, gutterLayout };
   }
   ctx.drawImage(await loadImage(mapDataUrl), 0, 0, W, H);
@@ -4959,6 +4959,7 @@ async function burnExactLabelLayer(
   if (filter === 'water') drawWaterLeaderLabels(ctx, state, refLayers, W, H);
   if (filter === 'planting') drawGroundAreaNames(ctx, state, refLayers, W, H, filter);
   drawPlantMarks(ctx, state, filter, px, py, W / (frame.imgW * frame.mPerPx), labelMode);
+  if (filter === 'earthworks') drawBlueprintLabelPills(ctx, referenceBlueprintLabels(state, refLayers, W, H, filter, labelMode));
   return { map: drainCanvasToDataUrl(canvas, 'image/png'), gutterLayout };
 }
 
@@ -14635,7 +14636,7 @@ export default function DesignGlossy({
       // map codes and its one grouped legend. All three draw no on-map pills, otherwise a tree
       // would be named by its pill, code and legend at once.
       const gutterOwnsLabels = locked && (f === 'planting' || f === 'structures');
-      const exactMapOwnsLabels = locked && (gutterOwnsLabels || f === 'all' || f === 'water');
+      const exactMapOwnsLabels = locked && (gutterOwnsLabels || f === 'all' || f === 'water' || f === 'earthworks');
       const labels = exactMapOwnsLabels
         ? []
         // The exact zone overlay already carries a numbered badge at every saved zone and the

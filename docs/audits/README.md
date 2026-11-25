@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+- [25 November 2026 — Directly readable AI Earthworks swale names](2026-11-25/earthworks-paid-callout-contrast.md) follows the Water and Earthworks label comparisons.
+
 - [25 November 2026 — Direct labels on saved AI Water artwork](2026-11-25/paid-water-labels.md) follows the live phone review and same-revision reassembly.
 
 - [25 November 2026 — Paving fidelity in the Whole Design oblique](2026-11-25/oblique-paving-detail.md) follows the paid site comparison.

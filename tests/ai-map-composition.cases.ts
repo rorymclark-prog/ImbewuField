@@ -1169,6 +1169,28 @@ test('the paid Water label pass draws the saved equipment and pipe names once ov
   assert.equal(whole.map, 'painting');
 });
 
+test('paid Earthworks artwork gets the same swale anchors and legible plaques as its exact plan', async () => {
+  const probe = artProbe();
+  const labels: string[] = [];
+  const state = { items: [], zones: [], lines: [
+    { id: 'upper', kind: 'swale', points: [[.2, .2], [.8, .2]] },
+    { id: 'lower', kind: 'swale', points: [[.8, .7], [.2, .7]] },
+  ] };
+  const refs = { boundary: [[.1, .1], [.9, .1], [.9, .9], [.1, .9]], house: [], driveway: [] };
+  const rows = helper('earthworksReferenceLabels', { tracedLineLabelMidpoint, ELEMENTS_BY_ID,
+    exactSheetElementLegendGroups, exactSheetLineRegister, statusOf, plotBox });
+  const label = helper('burnExactLabelLayer', {
+    document: { createElement: () => probe.canvas }, loadImage: async () => ({}),
+    drawPlantMarks() {}, referenceBlueprintLabels: rows,
+    drawBlueprintLabelPills: (_ctx: unknown, anchors: Array<{ text: string; cx: number; cy: number }>) => {
+      for (const { text, cx, cy } of anchors) labels.push(`${text} @ ${cx},${cy}`);
+    },
+    drainCanvasToDataUrl: () => 'sheet with callouts',
+  });
+  await label('art', state, { imgW: 400, mPerPx: .2 }, refs, 'earthworks', 800, 600, 'codes');
+  assert.deepEqual(labels, ['SWALE 1 @ 400,120', 'SWALE 2 @ 400,420']);
+});
+
 test('terrain plan keeps sourced contour heights when no consistent downhill section can be supported',async()=>{
   const probe=artProbe(),refs={boundary:[[.1,.1],[.9,.1],[.9,.9],[.1,.9]],house:[],driveway:[]},state={siteId:'test-terrain',items:[],lines:[],zones:[]},frame={imgW:600,imgH:600,mPerPx:.5,centerLat:-33.9};
   probe.ctx.measureText=()=>({width:40});
