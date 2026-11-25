@@ -34,6 +34,7 @@ import type { CropPlanState, CashflowSettings } from './crop-plan';
 import type { FacilitatorDesignState } from './facilitator-design';
 import type { SalesLog, ExpenseLog, ProductionLog, Profile } from './db/types';
 import type { SavedInvoice, Product, Customer } from './invoices';
+import type { CycleHarvestLink } from './cycle-harvest';
 import type { SellerLetterhead } from './invoice-seller';
 import type { SavedPlace } from './saved-places';
 import { buildDemoCropPlan, buildDemoFacilitatorState, buildDemoFinance, buildDemoLetterhead, buildDemoProfile, buildDemoSavedPlace, buildDemoStorageSeeds } from './demo-farm';
@@ -54,6 +55,7 @@ interface SampleSandbox {
   sales: SalesLog[];
   expenses: ExpenseLog[];
   production: ProductionLog[];
+  cycleHarvestLinks: ReadonlyMap<string, CycleHarvestLink>;
   invoices: SavedInvoice[];
   pendingInvoiceLinks: SavedInvoice[];
   customers: Customer[];
@@ -84,6 +86,7 @@ function freshSandbox(): SampleSandbox {
     sales: finance.sales,
     expenses: finance.expenses,
     production: finance.production,
+    cycleHarvestLinks: new Map(),
     invoices: finance.invoices,
     // No pending sale-invoice links in the seeded demo book — they only ever exist
     // transiently between a farmer staging a link and the ledger write confirming it.
@@ -114,14 +117,16 @@ function ensure(): SampleSandbox {
   return sandbox;
 }
 
-export function isSampleMode(): boolean {
-  if (typeof window === 'undefined') return false;
+export function readSampleModeFlag(): boolean | null {
+  if (typeof window === 'undefined') return null;
   try {
     return window.sessionStorage.getItem(FLAG_KEY) === '1';
   } catch {
-    return false;
+    return null;
   }
 }
+
+export function isSampleMode(): boolean { return readSampleModeFlag() === true; }
 
 /**
  * Sample farm is look-don't-spend: every route that bills a real vendor account must refuse while
@@ -352,6 +357,17 @@ export function deleteSandboxExpense(id: string): void {
 }
 
 export function getSandboxProduction(): ProductionLog[] { return ensure().production; }
+export function getSandboxCycleHarvestLinks(): ReadonlyMap<string, CycleHarvestLink> { return ensure().cycleHarvestLinks; }
+export function addSandboxCycleHarvestLink(documentId: string, link: CycleHarvestLink): void {
+  const sandbox = ensure();
+  sandbox.cycleHarvestLinks = new Map([...sandbox.cycleHarvestLinks, [documentId, Object.freeze(link)]]);
+}
+export function removeSandboxCycleHarvestLink(documentId: string): void {
+  const sandbox = ensure();
+  const links = new Map(sandbox.cycleHarvestLinks);
+  links.delete(documentId);
+  sandbox.cycleHarvestLinks = links;
+}
 export function addSandboxProduction(row: Partial<ProductionLog>): void {
   const s = ensure();
   const full: ProductionLog = {

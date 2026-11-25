@@ -555,6 +555,26 @@ test('a farmer can read and write their own production, sales, and expense logs'
   }
 });
 
+test('private harvest associations stay owner-only even when a mentor can read the underlying harvest', async () => {
+  const farmer = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  const mentor = env.authenticatedContext(LINKED_MENTOR).firestore();
+  const other = env.authenticatedContext(FARMER_WITHOUT_LINK).firestore();
+  const recordId = `${FARMER_WITH_LINK}-production_logs`;
+  const linkId = `cycle-harvest-link-${recordId}`;
+  const link = { kind: 'cycle-harvest-link', version: 1, recordId, plantingId: 'own-cycle',
+    scopeKey: 'mapped-site:site:0.00000,0.00000', bedId: 'bed-1', cropKey: 'cabbage', observedOn: '2026-08-06' };
+  const target = (db: Firestore) => doc(db, 'user_map_data', FARMER_WITH_LINK, 'data', linkId);
+  const ownerLinks = query(collection(farmer, 'user_map_data', FARMER_WITH_LINK, 'data'), where('plantingId', '==', link.plantingId));
+  await assertSucceeds(getDoc(target(farmer)));
+  await assertSucceeds(setDoc(target(farmer), link));
+  await assertSucceeds(getDocs(ownerLinks));
+  await assertSucceeds(getDoc(doc(mentor, 'production_logs', recordId)));
+  await assertFails(getDoc(target(mentor)));
+  await assertFails(getDocs(query(collection(mentor, 'user_map_data', FARMER_WITH_LINK, 'data'), where('plantingId', '==', link.plantingId))));
+  await assertFails(setDoc(target(other), { ...link, plantingId: 'foreign-cycle' }));
+  await assertSucceeds(deleteDoc(target(farmer)));
+});
+
 test('counted produce is stored with unknown weight and retains the same owner gates', async () => {
   const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
   const other = env.authenticatedContext(FARMER_WITHOUT_LINK).firestore();

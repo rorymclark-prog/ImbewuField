@@ -16,7 +16,7 @@ const panelUrl = new URL('../components/crops/GrowerOperationsPanel.tsx', import
 const data = (source: string) => ({ shortCircuit: true, url: 'data:text/javascript,' + encodeURIComponent(source) });
 const hooks = registerHooks({ resolve(specifier, context, next) {
   // The renderer has no browser idle callbacks. Mark the anchor so a plain link cannot pass.
-  if (context.parentURL === panelUrl && specifier === 'next/link') return data(`
+  if ((context.parentURL === panelUrl || context.parentURL?.endsWith('/components/crops/CycleHarvestLinkForm.tsx')) && specifier === 'next/link') return data(`
     import React from ${JSON.stringify(import.meta.resolve('react'))};
     export default function Link({ children, href }) {
       return React.createElement('a', { href, 'data-client-navigation': true }, children);
@@ -35,7 +35,7 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
     return data('export const isBackendConfigured=()=>false;export const getFirebase=()=>null;');
   return next(specifier, context);
 }, load(url, context, next) {
-  if (url === panelUrl) return { format: 'module', shortCircuit: true,
+  if (url === panelUrl || url.endsWith('/components/crops/CycleHarvestLinkForm.tsx')) return { format: 'module', shortCircuit: true,
     source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
       target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
     } }).outputText };
@@ -204,5 +204,74 @@ test('sample copy remains explicit and observation controls retain phone-sized t
     assert.match(ui.button('Save observation in journal').props.className, /min-h-11/);
     assert.match(ui.field('Date you observed this').props.className, /min-h-11.*min-w-0/);
     assert.match(ui.field('What happened').props.className, /min-w-0/);
+  } finally { ui.dispose(); }
+});
+
+test('the first-pick action links the chosen record and confirmed observed date once', async () => {
+  const firstPick = task('first-pick', 'first-pick');
+  probe.tasks = [task(), firstPick];
+  const record = { recordId: 'existing-record', crop: 'Cabbage', quantity: 3, unit: 'bunches' as const, enteredAt: '2028-03-10' };
+  const gate = deferred<{ status: 'saved' }>();
+  const selections: unknown[] = [];
+  const ui = mount({
+    loadHarvest: async (_task, current) => {
+      assert.equal(current(), true);
+      return { status: 'ready', options: [record] };
+    },
+    saveHarvest: async (selectedTask, input, selected, current) => {
+      assert.equal(current(), true);
+      assert.equal(selectedTask.id, firstPick.id);
+      selections.push({ input, selected });
+      return gate.promise;
+    },
+  });
+  try {
+    assert.equal(ui.buttons('Link recorded harvest').length, 1);
+    await act(async () => { ui.button('Link recorded harvest').props.onClick(); });
+    assert.equal(ui.field('Actual harvest date').props.value, '');
+    assert.equal(ui.button('Link harvest record').props.disabled, true);
+    ui.change('Harvest record', record.recordId);
+    ui.change('Actual harvest date', '2099-11-25');
+    act(() => ui.field('Confirm harvest belongs to this crop cycle').props.onChange({ target: { checked: true } }));
+    assert.equal(ui.button('Link harvest record').props.disabled, true);
+    ui.change('Actual harvest date', '2026-08-09');
+    act(() => ui.field('Confirm harvest belongs to this crop cycle').props.onChange({ target: { checked: true } }));
+    const submit = ui.renderer.root.findByType('form').props.onSubmit;
+    act(() => { submit({ preventDefault() {} }); submit({ preventDefault() {} }); });
+    assert.deepEqual(selections, [{ input: { recordId: record.recordId, observedOn: '2026-08-09' }, selected: record }]);
+    assert.equal(ui.button('Link harvest record').props.disabled, true);
+    gate.resolve({ status: 'saved' });
+    await flush();
+    assert.match(ui.text(), /Harvest linked to this crop cycle/);
+    assert.equal(ui.renderer.root.findAllByType('form').length, 0);
+    assert.equal(probe.checklistWrites, 0);
+  } finally { ui.dispose(); }
+});
+
+test('removing a linked harvest requires a second action and passes the exact link', async () => {
+  const firstPick = task('first-pick', 'first-pick');
+  probe.tasks = [firstPick];
+  const link = { recordId: 'older-picked-record', observedOn: '2026-08-09' };
+  const calls: unknown[] = [];
+  const ui = mount({
+    loadHarvest: async () => ({ status: 'ready', options: [], linked: [link] }),
+    saveHarvest: async () => { assert.fail('Removal does not write a new link.'); },
+    removeHarvest: async (selectedTask, input, current) => {
+      assert.equal(current(), true);
+      calls.push({ taskId: selectedTask.id, input });
+      return { status: 'saved' };
+    },
+  });
+  try {
+    await act(async () => { ui.button('Link recorded harvest').props.onClick(); });
+    assert.match(ui.text(), /Harvest record unavailable/);
+    act(() => ui.button('Remove harvest link').props.onClick());
+    assert.equal(calls.length, 0);
+    act(() => ui.button('Cancel removal').props.onClick());
+    assert.equal(calls.length, 0);
+    act(() => ui.button('Remove harvest link').props.onClick());
+    await act(async () => { ui.button('Confirm remove harvest link').props.onClick(); });
+    assert.deepEqual(calls, [{ taskId: firstPick.id, input: link }]);
+    assert.match(ui.text(), /Harvest link removed. The original harvest record is still in your records/);
   } finally { ui.dispose(); }
 });

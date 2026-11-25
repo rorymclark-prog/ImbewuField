@@ -1,5 +1,6 @@
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { cropByKey } from './crop-catalog';
+import { recordQuantityLabel, recordQuantityPayload, type RecordUnit } from './farm-records';
 import { inspectJournalGrowerLink, inspectJournalNurseryFieldPlanting, inspectJournalRowsForWrite, normaliseGrowerJournalLink, type JournalEntry } from './field-journal';
 import { JOURNAL_LEGACY_KEY, readJournalStorage } from './journal-storage';
 import { captureJournalObservationContext, journalObservationContextIsCurrent, revokeJournalObservationContext } from './length-unit-preference';
@@ -9,6 +10,16 @@ import { growerPlanningScopeKey } from './international/grower-planning';
 import { buildProvisionalCycleEvidence } from './international/provisional-crop-export';
 
 type JournalRows = readonly JournalEntry[] | null;
+
+/** Readback from the harvest book, scoped by the caller to this exact cycle. */
+export type GrowerReportHarvest =
+  | { status: 'held' }
+  | { status: 'ready'; rows: readonly {
+    recordId: string;
+    observedOn: string;
+    quantity: number;
+    unit: RecordUnit;
+  }[]; incomplete?: boolean };
 
 function readJournalCopy() {
   const state = readJournalStorage();
@@ -58,11 +69,32 @@ function html(value: string | number): string {
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]!));
 }
 
+function renderHarvestSection(harvest: GrowerReportHarvest): string {
+  const heading = '<section><h2>Actual harvest</h2>';
+  if (harvest.status === 'held') {
+    return heading + '<p>Harvest records could not be checked. Actual harvest is unknown.</p></section>';
+  }
+  if (harvest.rows.length === 0) {
+    const evidence = harvest.incomplete ? 'Linked harvest records could not be verified.'
+      : 'No verified harvest records are linked to this crop cycle.';
+    return heading + '<p>' + evidence + ' Actual harvest is unknown.</p></section>';
+  }
+
+  const rows = harvest.rows.map(({ recordId, observedOn, quantity, unit }) => {
+    const label = recordQuantityLabel(recordQuantityPayload(quantity, unit));
+    return `<tr><td><time datetime="${html(observedOn)}">${html(observedOn)}</time></td><td>${html(label)}</td><td>${html(recordId)}</td></tr>`;
+  }).join('');
+  const incomplete = harvest.incomplete ? '<p>Some linked harvest records could not be verified. This list is incomplete.</p>' : '';
+  return `${heading}<p class="quiet">These picking dates were confirmed by the grower. Quantities come from linked harvest records.</p>
+<table aria-label="Recorded harvest"><thead><tr><th scope="col">Harvest date</th><th scope="col">Recorded quantity</th><th scope="col">Harvest record</th></tr></thead><tbody>${rows}</tbody></table>
+${incomplete}</section>`;
+}
+
 /** Export only the selected planting, even if a book contains several sites
  * with identically named beds. A retained note must match its exact event. */
 export function buildGrowerProgressReport(
   plantings: unknown, contexts: readonly GrowerCycleContext[], selection: unknown,
-  journal: JournalRows, sample: boolean,
+  journal: JournalRows, sample: boolean, harvest?: GrowerReportHarvest,
 ): string | null {
   const link = normaliseGrowerJournalLink(selection);
   if (!link) return null;
@@ -126,11 +158,11 @@ ${sample ? '<p><strong>Demonstration only.</strong> The plan and observations ar
 <section><h2>Planned work</h2><p class="quiet">Saved estimates. Dates use the UTC calendar. End and next-entry boundaries do not record an activity.</p>
 <table aria-label="Planned work"><thead><tr><th scope="col">Activity or boundary</th><th scope="col">Planned date</th></tr></thead><tbody>${plan}</tbody></table></section>
 <section><h2>Recorded work</h2><p class="quiet">Grower-entered notes linked to this crop cycle.</p>
-${records || (journal === null ? '<p>Journal unavailable for this report. Recorded work is unknown.</p>' : '<p>No journal observations matched the current plan. Recorded work is unknown.</p>')}</section>
+${records || (journal === null ? '<p>Journal unavailable for this report. Recorded work is unknown.</p>' : '<p>No journal observations matched the current plan. Recorded work is unknown.</p>')}</section>${harvest ? '\n' + renderHarvestSection(harvest) : ''}
 <section><h2>Planning evidence and limits</h2>
 <ul>${inputRows}</ul>
 ${provisional ? `<h3>Reviewed sources, assumptions and limits</h3><ul>${provisional.lines.map(line => `<li>${html(line)}</li>`).join('')}</ul>`
   : '<p>A reviewed regional source is unavailable in this report.</p>'}
-<p>Actual harvest, costs and water use are unknown in this report.</p></section>
+<p>${harvest ? 'Costs' : 'Actual harvest, costs'} and water use are unknown in this report.</p></section>
 </main></body></html>`;
 }

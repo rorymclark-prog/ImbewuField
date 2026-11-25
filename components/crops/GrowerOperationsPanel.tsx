@@ -6,9 +6,12 @@ import type { CropPlanState } from '@/lib/crop-plan';
 import type { GrowerCycleContext } from '@/lib/international/grower-cycle';
 import { buildGrowerBoardTasks, buildGrowerTasksIcs, loadCompletedTaskIds, setCompletedTaskState, type BoardTask } from '@/lib/task-board';
 import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
-import { isJournalDate, MAX_NOTES_LEN } from '@/lib/field-journal';
+import { isJournalDate, MAX_NOTES_LEN, todayISODate } from '@/lib/field-journal';
 import { downloadFile } from '@/lib/file-delivery';
 import { buildGrowerProgressReport, captureGrowerReportJournal } from '@/lib/grower-progress-report';
+import CycleHarvestLinkForm from './CycleHarvestLinkForm';
+import type { CycleHarvestOption, CycleHarvestSelection } from '@/lib/cycle-harvest';
+import type { CycleHarvestOptions, CycleHarvestReportRead, CycleHarvestSave } from '@/lib/db/cycle-harvest';
 import type { GrowerFieldObservationInput, GrowerFieldObservationResult } from '@/lib/grower-field-observation';
 export type { GrowerFieldObservationInput as GrowerObservationInput, GrowerFieldObservationResult as GrowerObservationResult } from '@/lib/grower-field-observation';
 
@@ -20,12 +23,25 @@ export interface GrowerOperationsPanelProps {
   isCurrent: () => boolean;
   now?: Date;
   sample?: boolean;
+  loadHarvest?: (task: BoardTask, isCurrent: () => boolean) => Promise<CycleHarvestOptions>;
+  saveHarvest?: (task: BoardTask, input: CycleHarvestSelection, selected: CycleHarvestOption, isCurrent: () => boolean) => Promise<CycleHarvestSave>;
+  removeHarvest?: (task: BoardTask, input: CycleHarvestSelection, isCurrent: () => boolean) => Promise<CycleHarvestSave>;
+  readHarvestReport?: (task: BoardTask, isCurrent: () => boolean) => Promise<CycleHarvestReportRead | null>;
   onRecordObservation?: (task: BoardTask, input: GrowerFieldObservationInput, formIsCurrent: () => boolean) => Promise<GrowerFieldObservationResult>;
 }
 const button = 'min-h-11 rounded-lg border border-[var(--border)] px-3 py-2 text-sm disabled:opacity-50';
 const field = 'min-h-11 w-full min-w-0 rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-[var(--text-primary)]';
 type ObservationDraft = { epoch: number; state: GrowerOperationsPanelProps['state']; task: BoardTask;
   sample: boolean; propSample: boolean | undefined; observedDate: string; note: string; confirmed: boolean };
+type HarvestDraft = {
+  task: BoardTask;
+  source: GrowerOperationsPanelProps['state'];
+  sample: boolean;
+  status: 'loading' | 'ready' | 'held';
+  options: readonly CycleHarvestOption[];
+  linked?: readonly CycleHarvestSelection[];
+  saving: boolean;
+};
 const linkedTask = (task: BoardTask) => task.kind === 'grower-cycle' && 'growerJournalLink' in task
   && !!task.growerJournalLink && typeof task.growerJournalLink === 'object';
 
@@ -73,6 +89,15 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
     calendarContext.current = { state, check: props.checkCurrent, current: props.isCurrent, sample: props.sample };
     calendarPending.current = null;
   }
+  const [harvestDraft, setHarvestDraft] = useState<HarvestDraft | null>(null);
+  const harvestLive = useRef<HarvestDraft | null>(null);
+  const harvestCallbacks = useRef({ load: props.loadHarvest, save: props.saveHarvest, remove: props.removeHarvest });
+  if (harvestLive.current && (harvestLive.current.source !== state
+    || harvestCallbacks.current.load !== props.loadHarvest || harvestCallbacks.current.save !== props.saveHarvest
+    || harvestCallbacks.current.remove !== props.removeHarvest)) {
+    harvestLive.current = null;
+  }
+  harvestCallbacks.current = { load: props.loadHarvest, save: props.saveHarvest, remove: props.removeHarvest };
   const observationEpoch = useRef(0), observationActive = useRef(true), observationPending = useRef<object | null>(null);
   const observationContext = useRef({ state, sample: props.sample });
   const [observation, setObservation] = useState<ObservationDraft | null>(null);
@@ -96,11 +121,11 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
     const lifetime = {}; calendarLifetime.current = lifetime;
     const sampleChanged = () => {
       calendarPending.current = null; setCalendarBusy(false); setMessage('');
-      withdrawObservation(); setClientSample(isSampleMode());
+      withdrawObservation(); setCurrentHarvest(null); setClientSample(isSampleMode());
     };
     window.addEventListener(SAMPLE_MODE_EVENT, sampleChanged);
     return () => {
-      observationActive.current = false; observationEpoch.current++; observationLive.current = null;
+      observationActive.current = false; observationEpoch.current++; observationLive.current = null; harvestLive.current = null;
       if (calendarLifetime.current === lifetime) { calendarLifetime.current = null; calendarPending.current = null; }
       window.removeEventListener(SAMPLE_MODE_EVENT, sampleChanged);
     };
@@ -114,7 +139,8 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
   const noSavedPlan = state.status === 'held' && state.heldSources.some(source =>
     !!source && typeof source === 'object' && 'reason' in source && source.reason === 'no-saved-plan');
   const currentObservation = observation?.epoch === observationEpoch.current && observationLive.current === observation ? observation : null;
-  const actionBusy = busy || observationSaving || calendarBusy;
+  const harvest = harvestLive.current === harvestDraft ? harvestDraft : null;
+  const actionBusy = busy || observationSaving || calendarBusy || harvest?.saving === true;
   const progressReportTasks = new Map<string, BoardTask>();
   for (const task of result.tasks) {
     const planting = task.growerJournalLink?.plantingId;
@@ -126,12 +152,70 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
   function withdrawObservation() {
     observationEpoch.current++; observationLive.current = null; setObservation(null); setObservationMessage(null);
   }
+  function setCurrentHarvest(next: HarvestDraft | null) {
+    harvestLive.current = next; setHarvestDraft(next);
+  }
+  function harvestIsCurrent(draft: HarvestDraft): boolean {
+    return harvestLive.current === draft && observationActive.current && live.current.state === draft.source
+      && isSampleMode() === draft.sample && sourceIsCurrent() && harvestLive.current === draft;
+  }
+  async function openHarvest(task: BoardTask) {
+    const load = props.loadHarvest;
+    if (!load || !props.saveHarvest || actionBusy || harvestLive.current?.saving || calendarPending.current
+      || observationPending.current || !result.tasks.includes(task)
+      || task.growerEventKind !== 'first-pick' || !linkedTask(task) || !sourceIsCurrent()) return;
+    withdrawObservation(); setMessage('');
+    const draft: HarvestDraft = { task, source: state, sample: isSampleMode(), status: 'loading', options: [], saving: false };
+    setCurrentHarvest(draft);
+    try {
+      const outcome = await load(task, () => harvestIsCurrent(draft));
+      if (harvestIsCurrent(draft)) setCurrentHarvest({ ...draft, ...outcome });
+    } catch {
+      if (harvestIsCurrent(draft)) setCurrentHarvest({ ...draft, status: 'held' });
+    }
+  }
+  async function changeHarvestLink(draft: HarvestDraft, input: CycleHarvestSelection, action: 'link' | 'remove') {
+    if (actionBusy || draft.status !== 'ready' || !harvestIsCurrent(draft)) return;
+    let apply: ((current: () => boolean) => Promise<CycleHarvestSave>) | undefined;
+    if (action === 'remove') {
+      const remove = props.removeHarvest;
+      if (remove && draft.linked?.some(row => row.recordId === input.recordId && row.observedOn === input.observedOn)) {
+        apply = current => remove(draft.task, input, current);
+      }
+    } else {
+      const save = props.saveHarvest;
+      const option = draft.options.find(row => row.recordId === input.recordId);
+      if (save && option) apply = current => save(draft.task, input, option, current);
+    }
+    if (!apply) return;
+    const pending = { ...draft, saving: true };
+    setCurrentHarvest(pending);
+    setMessage('');
+    try {
+      const result = await apply(() => harvestIsCurrent(pending));
+      if (!harvestIsCurrent(pending)) return;
+      setCurrentHarvest(result.status === 'saved' ? null : { ...draft, status: 'held' });
+      if (result.status === 'saved') {
+        setMessage(action === 'remove' ? 'Harvest link removed. The original harvest record is still in your records.'
+          : draft.sample ? 'DEMO harvest linked to this sample crop cycle.' : 'Harvest linked to this crop cycle. It will appear in the crop progress report.');
+      } else {
+        setMessage(result.status === 'conflict' ? 'This harvest already has a different link. Its saved link is unchanged.'
+          : 'The change could not be confirmed. Reopen the record picker to check current records.');
+      }
+    } catch {
+      if (harvestIsCurrent(pending)) {
+        setCurrentHarvest({ ...draft, status: 'held' });
+        setMessage('The change could not be confirmed. Reopen the record picker to check current records.');
+      }
+    }
+  }
   function openObservation(task: BoardTask) {
-    if (calendarPending.current || observationPending.current || blockedLive.current || busy || state !== live.current.state
+    if (calendarPending.current || observationPending.current || blockedLive.current || actionBusy || state !== live.current.state
       || state.status !== 'ready' || !linkedTask(task) || !live.current.onRecordObservation) return;
     if (!sourceIsCurrent()) {
       setObservationMessage({ epoch: observationEpoch.current, status: 'held', text: 'The saved plan or design changed. Check its current records before recording an observation.' }); return;
     }
+    setCurrentHarvest(null);
     const next: ObservationDraft = { epoch: ++observationEpoch.current, state, task, sample: isSampleMode(),
       propSample: props.sample, observedDate: '', note: '', confirmed: false };
     observationLive.current = next; setObservation(next); setObservationMessage(null);
@@ -188,7 +272,7 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
     // An individual demo date needs the same identity and source lease as the
     // full calendar; the generic Home task downloader has no sample context.
     if (action === 'calendar') { await downloadCheckedWork(task); return; }
-    if (calendarPending.current || observationPending.current) return;
+    if (calendarPending.current || observationPending.current || harvestLive.current?.saving) return;
     const turn = ++generation.current, expected = state;
     setBusy(true); setMessage('');
     try {
@@ -209,10 +293,11 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
   }
   async function downloadCheckedWork(selectedTask?: BoardTask, format: 'calendar' | 'progress' = 'calendar') {
     if (currentCalendarRender.current !== calendarRender || !calendarLifetime.current || calendarPending.current
-      || observationPending.current || actionBusy || state !== live.current.state || state.status !== 'ready'
+      || observationPending.current || harvestLive.current?.saving || actionBusy || state !== live.current.state || state.status !== 'ready'
       || !state.book || !result.tasks.length
       || (selectedTask ? !result.tasks.includes(selectedTask) : result.heldPlantings || state.heldSources.length)) return;
     const expected = state, book = state.book, checker = props.checkCurrent, sourceCurrent = props.isCurrent;
+    const harvestReader = props.readHarvestReport;
     const propSample = props.sample, deviceSample = isSampleMode(), demo = propSample === true || deviceSample;
     const lifetime = calendarLifetime.current, operation = {}, turn = ++generation.current;
     // Keep only public event fields. Neither a journal link nor the source book
@@ -224,7 +309,7 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
     calendarPending.current = operation;
     const owned = () => calendarLifetime.current === lifetime && calendarPending.current === operation
       && generation.current === turn && live.current.state === expected && live.current.checkCurrent === checker
-      && live.current.isCurrent === sourceCurrent && live.current.sample === propSample && isSampleMode() === deviceSample;
+      && live.current.isCurrent === sourceCurrent && live.current.readHarvestReport === harvestReader && live.current.sample === propSample && isSampleMode() === deviceSample;
     const current = () => {
       if (!owned()) return false;
       try { return sourceCurrent() === true && owned(); } catch { return false; }
@@ -239,18 +324,25 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
         if (owned()) setMessage('The saved plan or design changed. Check its current records before continuing.'); return;
       }
       if (format === 'progress') {
+        const harvestRead = harvestReader && selectedTask ? await harvestReader(selectedTask, current) : undefined;
+        if (!current() || harvestRead === null) {
+          if (owned()) setMessage('The saved crop cycle changed. Check it again before downloading the report.');
+          return;
+        }
         journal = captureGrowerReportJournal(demo);
         const content = journal && buildGrowerProgressReport(book.plantings, expected.contexts,
-          selectedTask?.growerJournalLink, journal.rows, demo);
-        const canDeliver = () => current() && journal?.isCurrent() === true && current();
+          selectedTask?.growerJournalLink, journal.rows, demo, harvestRead?.evidence);
+        const canDeliver = () => current() && journal?.isCurrent() === true
+          && (!harvestRead || harvestRead.isCurrent()) && current();
+        const checkDelivery = async () => canDeliver() && (!harvestRead || await harvestRead.checkCurrent()) && canDeliver();
         if (!content || !canDeliver()) {
           if (owned()) setMessage('Could not check this crop and its journal for the report.');
           return;
         }
         const filename = demo ? 'DEMO-crop-progress-report.html' : 'crop-progress-report.html';
-        const delivery = await downloadFile(new Blob([content], { type: 'text/html;charset=utf-8' }), filename, canDeliver, canDeliver);
+        const delivery = await downloadFile(new Blob([content], { type: 'text/html;charset=utf-8' }), filename, checkDelivery, canDeliver);
         if (owned()) setMessage(delivery === 'downloaded' ? 'Progress report downloaded. Review it before sharing.'
-          : 'The plan or journal changed before the download. Try again to include the current records.');
+          : 'Saved records changed before the download. Try again to include the current plan, journal and harvest.');
         return;
       }
       const content = buildGrowerTasksIcs(tasks, { sample: demo });
@@ -293,7 +385,7 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
       </div>}
       {progressReportTasks.size > 0 && <details className="rounded-xl border border-[var(--border)] px-3">
         <summary className="min-h-11 cursor-pointer py-2 font-semibold">Crop progress reports</summary>
-        <p>Choose a saved crop cycle. Its report includes the bed area, planned dates and matching journal notes. You can review the file before sharing it.</p>
+        <p>Choose a saved crop cycle. Its report includes the bed area, planned dates, matching journal notes and linked harvest records. You can review the file before sharing it.</p>
         <ul className="space-y-2 py-3">{[...progressReportTasks.values()].map(task => <li key={task.id} className="flex flex-wrap items-center gap-2">
           <span>{task.bedLabel} · {task.title} · {task.dueDate}</span>
           <button type="button" className={button} disabled={actionBusy}
@@ -313,9 +405,16 @@ export default function GrowerOperationsPanel(props: GrowerOperationsPanelProps)
           <button type="button" className={button} disabled={actionBusy} aria-pressed={task.completed}
             onClick={() => void actOnTask(task, 'complete')}>{task.completed ? 'Reopen checklist item' : 'Mark checklist item done'}</button>
           <button type="button" className={button} disabled={actionBusy} onClick={() => void actOnTask(task, 'calendar')}>Download planned-date calendar</button>
+          {props.loadHarvest && props.saveHarvest && task.growerEventKind === 'first-pick' && linkedTask(task) &&
+            <button type="button" className={button} disabled={actionBusy} onClick={() => void openHarvest(task)}>Link recorded harvest</button>}
           {props.onRecordObservation && linkedTask(task) && <button type="button" className={button} disabled={actionBusy || observationBlocked}
             onClick={() => openObservation(task)}>Record what happened</button>}
         </div>
+        {harvest?.task.id === task.id && <CycleHarvestLinkForm options={harvest.options} status={harvest.status} linked={harvest.linked}
+          disabled={actionBusy} maxObservedOn={harvest.sample ? undefined : todayISODate()}
+          onClose={() => { if (!harvest.saving) setCurrentHarvest(null); }}
+          onSave={input => void changeHarvestLink(harvest, input, 'link')}
+          onRemove={props.removeHarvest ? input => void changeHarvestLink(harvest, input, 'remove') : undefined} />}
         {currentObservation?.task.id === task.id && <form aria-label="Field observation" className="min-w-0 space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-0)] p-3"
           onSubmit={event => { event.preventDefault(); void saveObservation(currentObservation); }}>
           <h3 className="font-semibold">Record what happened</h3>

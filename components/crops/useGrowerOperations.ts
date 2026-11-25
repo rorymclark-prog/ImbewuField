@@ -8,6 +8,8 @@ import { DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 import { recordGrowerFieldObservation, type GrowerFieldObservationInput } from '@/lib/grower-field-observation';
 import type { BoardTask } from '@/lib/task-board';
+import type { CycleHarvestOption, CycleHarvestSelection } from '@/lib/cycle-harvest';
+import { openGrowerHarvestOptions, readGrowerCycleHarvestReport, updateGrowerCycleHarvest } from '@/lib/grower-cycle-harvest';
 import { loadGrowerOperationsSources, isGrowerOperationsCurrent, checkGrowerOperationsCurrent,
   type GrowerOperationsSources } from '@/lib/international/grower-operations-source';
 
@@ -66,7 +68,18 @@ export function useGrowerOperations() {
       isCurrent: () => mounted.current && epoch.current === turn && live.current === previous && formIsCurrent(),
     });
   }
+  const harvestSource = observationSource.status === 'loading' ? withdrawn() : observationSource;
+  const harvestCurrent = (actionIsCurrent: () => boolean) => () => mounted.current
+    && epoch.current === observationEpoch && live.current === observationSource && actionIsCurrent();
+  const loadHarvest = (task: BoardTask, actionIsCurrent: () => boolean) =>
+    openGrowerHarvestOptions(harvestSource, task, harvestCurrent(actionIsCurrent));
+  const saveHarvest = (task: BoardTask, input: CycleHarvestSelection, selected: CycleHarvestOption, actionIsCurrent: () => boolean) =>
+    updateGrowerCycleHarvest(harvestSource, task, input, selected, harvestCurrent(actionIsCurrent));
+  const removeHarvest = (task: BoardTask, input: CycleHarvestSelection, actionIsCurrent: () => boolean) =>
+    updateGrowerCycleHarvest(harvestSource, task, input, null, harvestCurrent(actionIsCurrent));
+  const readHarvestReport = (task: BoardTask, actionIsCurrent: () => boolean) =>
+    readGrowerCycleHarvestReport(harvestSource, task, harvestCurrent(actionIsCurrent));
   // Parent UI uses this object's identity to withdraw old task actions. An
   // unrelated parent render must not masquerade as a new source snapshot.
-  return useMemo(() => ({ ...result, refresh, checkCurrent, isCurrent, onRecordObservation }), [result]);
+  return useMemo(() => ({ ...result, refresh, checkCurrent, isCurrent, onRecordObservation, loadHarvest, saveHarvest, removeHarvest, readHarvestReport }), [result]);
 }
