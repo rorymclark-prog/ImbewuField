@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 // Design Studio final plan-sheet renderer. The model may paint background texture, but
 // the app owns factual geometry, placed features, labels and sheet chrome. Satellite
 // Overlay remains the explicit model-authored comparison/rollback style.
@@ -17160,6 +17162,12 @@ export default function DesignGlossy({
           )}
         </div>
       ) : <>
+      {exactSheet === 'implementation' && (
+        <Link href="/journal#design-observation" lang="en"
+          style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontWeight: 700 }}>
+          Record a design observation in the Field Journal
+        </Link>
+      )}
       {lockedPolishStage && (
         <div
           role="status"

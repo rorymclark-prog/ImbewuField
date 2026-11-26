@@ -16,6 +16,7 @@ import { drainCanvasToDataUrl, releaseImageSource } from '@/lib/release-canvas';
 import { deviceBakeScale, deviceImageryRatio } from '@/lib/device-grade';
 import { isSampleMode } from './sample-mode';
 import { canonicalCoordinateSiteId } from './site-id';
+import { rawJsonIsLossless } from './lossless-json';
 import type { RawGrowerSourceReceipt } from './international/grower-workflow-source';
 import {
   accountLocalStorageKey,
@@ -1410,7 +1411,7 @@ export function loadCanvasState(
 
 /** Read the authored bytes before normalisation can deduplicate corrupt geometry.
  * This receipt is active-account/sample bound and grants no write authority. */
-export function readCanvasSourceReceipt(siteId: string): RawGrowerSourceReceipt {
+export function readCanvasSourceReceipt(siteId: string, options?: { requireLosslessJson?: boolean }): RawGrowerSourceReceipt {
   if (!canonicalCoordinateSiteId(siteId)) return { status: 'held', reasons: ['invalid-source-id'] };
   try {
     if (typeof window === 'undefined') return { status: 'held', reasons: ['source-unavailable'] };
@@ -1420,6 +1421,7 @@ export function readCanvasSourceReceipt(siteId: string): RawGrowerSourceReceipt 
       return { status: 'held', reasons: ['source-owner-changed'] };
     }
     if (raw === null) return { status: 'held', reasons: ['missing-source'] };
+    if (options?.requireLosslessJson && !rawJsonIsLossless(raw)) return { status: 'held', reasons: ['source-unreadable'] };
     return { status: 'ready', raw: JSON.parse(raw), revision: JSON.stringify([sample, key, raw]), ownerUid, sample };
   } catch { return { status: 'held', reasons: ['source-unreadable'] }; }
 }
