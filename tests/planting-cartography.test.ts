@@ -5,6 +5,7 @@ import {
   PLANTING_CANOPY_PAINT,
   PLANTING_LEGEND_SECTION_ORDER,
   PLANTING_ROUTE_STYLE,
+  canopyLegendNote,
   drawExactCanopy,
   plantingFeaturePresentationDimensions,
   plantingLegendSectionForFeature,
@@ -238,4 +239,34 @@ test('outline crowns keep the measured outer edge and mark the trunk without cov
   assert.equal(dots.length, 1);
   assert.deepEqual(dots[0].slice(0, 2), [91, 75]);
   assert.ok(dots[0][2] < ry / 4);
+});
+
+test('an existing tree has a second ink ring around its centre while its crown keeps the proposed footprint', () => {
+  const arcs: number[][] = [];
+  const edges: number[][] = [];
+  const ctx = {
+    lineWidth: 0, save() {}, restore() {}, beginPath() {}, stroke() {}, fill() {},
+    ellipse(...args: number[]) { edges.push(args); },
+    arc(...args: number[]) { arcs.push(args); },
+  };
+  const canvas = ctx as unknown as CanvasRenderingContext2D;
+  drawExactCanopy(canvas, 'tree_mango', 'outline', 100, 50, 60, 45, 'existing');
+  const [ring, dot] = arcs;
+  assert.deepEqual(ring.slice(0, 2), dot.slice(0, 2));
+  assert.ok(ring[2] > dot[2] + ctx.lineWidth && ring[2] < 45 / 2);
+  drawExactCanopy(canvas, 'tree_mango', 'outline', 100, 50, 60, 45, 'proposed');
+  assert.deepEqual(arcs, [ring, dot, dot]);
+  assert.deepEqual(edges[0], edges[1]);
+});
+
+test('the canopy key only explains marks actually present, including legacy planting positions', () => {
+  const mango = { defId: 'tree_mango' };
+  const existing = { ...mango, status: 'existing' as const };
+  const basin = { defId: 'tree_basin', status: 'existing' as const };
+  assert.equal(canopyLegendNote([basin]), '');
+  assert.doesNotMatch(canopyLegendNote([mango, basin]), /existing/);
+  assert.doesNotMatch(canopyLegendNote([existing]), /proposed/);
+  const mixed = canopyLegendNote([existing, mango, basin]);
+  assert.match(mixed, /Ringed dot = existing/);
+  assert.match(mixed, /Plain dot = proposed/);
 });

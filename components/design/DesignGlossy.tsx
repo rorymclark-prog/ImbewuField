@@ -24,7 +24,7 @@ import {
 
 import polygonClipping from 'polygon-clipping';
 
-import type { CanvasFrame, DesignCanvasState, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
+import type { CanvasFrame, DesignCanvasState, ElementStatus, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { clampBaseNudge, clampBaseRotation, clampBaseScale, designBaseMode, groundFeatureLayer, statusOf, buildSatelliteUrl, fetchImageAsDataUrl, pointInRing } from '@/lib/design-canvas';
 import { resolveBaseAlign } from '@/lib/base-photo-align';
 import type { DesignElementDef } from '@/lib/design-elements';
@@ -102,7 +102,7 @@ import {
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath, tracedLineLabelMidpoint } from '@/lib/leader-labels';
 import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, recommendedSheetSettings, renderAuthorityFlagsForStyle, renderPolicyForStyle, type SheetPresentationSettings } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
-import { EXACT_PLANTING_FINISHES, drawExactCanopy, supportsExactCanopies, type ExactPlantingFinish, PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
+import { EXACT_PLANTING_FINISHES, canopyCentreMark, canopyLegendNote, drawExactCanopy, supportsExactCanopies, type ExactPlantingFinish, PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
 import RecordPlanOption from './RecordPlanOption';
 import { SHEET_RENDER_RECIPE, savedSheetFreshness, type SavedSheetFreshness } from '@/lib/sheet-render-recipe';
@@ -6877,8 +6877,8 @@ function drawFilteredItems(
     const it = items[index];
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def) continue;
-    if (drawExactCanopy(ctx, def.id, exactFinish, px(it.x), py(it.y),
-      (it.wM ?? def.wM) * pxPerM, (it.hM ?? def.hM) * pxPerM)) continue;
+    if (exactFinish !== 'detailed' && drawExactCanopy(ctx, def.id, exactFinish, px(it.x), py(it.y),
+      (it.wM ?? def.wM) * pxPerM, (it.hM ?? def.hM) * pxPerM, statusOf(it))) continue;
     drawTrueFootprint(
       ctx,
       it,
@@ -7051,7 +7051,9 @@ function drawPlantMarks(
     // Lifted slightly off centre so the leader's own terminus dot stays visible under it.
     const lift = printed.height * 0.18;
     const showTrunk = exactFinish !== 'detailed' && plantingLegendSectionForFeature(def.id) === 'PERENNIAL GUILDS';
-    const offset = showTrunk ? Math.max(lift, chipH / 2 + Math.max(2, shortSide * 0.055)) : lift;
+    const offset = showTrunk
+      ? Math.max(lift, chipH / 2 + canopyCentreMark(shortSide, statusOf(it)).extent + 1)
+      : lift;
     paintChip(text, fs, px(it.x), py(it.y) - offset, chipW, chipH);
   }
   ctx.restore();
@@ -10806,6 +10808,7 @@ export async function buildImplementationMap(
 // Legend rows for a Style sheet — the real design content on this layer (zones, grouped
 // elements, line kinds, driveway). Deterministic: read straight from state.
 interface StyleLegendRow {
+  status?: ElementStatus;
   swatch: string;
   text: string;
   photoNumber?: number;
@@ -10919,6 +10922,7 @@ export function sheetLegendRows(
       contentRows.push({
         swatch: summary.swatch,
         defId: group.defId,
+        status: group.status,
         text: countedLegendText(summary.text, group.count, group.status),
         section: summary.section,
       });
@@ -10978,6 +10982,7 @@ export function sheetLegendRows(
     rows.push({
       swatch: group.color,
       defId: group.defId,
+      status: group.status,
       text: codedLegendText(legendPlantCodes.get(group.defId), countedLegendText(group.name, group.n, group.status)),
       section: group.section,
       // SHEET 05 DOES NOT PAINT ITS AREAS THE WAY THE OTHER SHEETS DO. drawEarthworksFeatures
@@ -11242,7 +11247,7 @@ function drawStyleLegendSymbol(
 
   if (row.defId) {
     const diameter = Math.min(w, h) * 0.9;
-    if (drawExactCanopy(ctx, row.defId, exactFinish, x + w / 2, y, diameter, diameter)) return;
+    if (drawExactCanopy(ctx, row.defId, exactFinish, x + w / 2, y, diameter, diameter, row.status)) return;
     const def = ELEMENTS_BY_ID[row.defId];
     if (def) {
       const aspect = Math.max(0.35, Math.min(2.8, def.wM / Math.max(0.01, def.hM)));
@@ -11687,6 +11692,7 @@ async function composeStyleSheet(
   // credit and the picture can never disagree.
   const attributionLine = options.imageAttribution ?? (frame.satDataUrl ? basemapAttribution() : '');
   const defaultFooterText = [
+    options.exactFinish && options.exactFinish !== 'detailed' ? canopyLegendNote(rows) : '',
     exactGeometry
       ? 'Exact plan — geometry and counts\ncome from your saved design.\nNo unsaved features added.'
       : AI_MAP_REVIEW_NOTICE,

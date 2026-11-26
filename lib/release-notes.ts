@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 November 2026', sha: '9ddb9146d', changes: [
+    'On exact canopy maps, a ring around the centre dot marks trees already on the farm.',
+  ] },
   { when: '26 November 2026', sha: '700c04479', changes: [
     'Free Planting and Whole Design maps now offer green or black-and-white canopy circles.',
   ] },
