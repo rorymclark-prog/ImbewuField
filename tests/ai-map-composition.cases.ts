@@ -602,6 +602,23 @@ test('reassembling a saved paid map reconnects only its existing job and clears 
     'a free reassembly can subscribe to the old job but must never buy another generation');
 });
 
+test('saved artwork names the print setting that can recover it on the current device', () => {
+  const scene = { renderRecipe: 'recipe', planVersion: 'v1', outputScale: 3 };
+  const message = (scale: number, phone = false, light = false) => helper('savedArtworkSettingsMessage', {
+    SCALE: scale, SHEET_RENDER_RECIPE: 'recipe', PLAN_VERSION: 'v1', deviceSheetScale: () => phone ? 2 : 3, peekSafeMode: () => ({ active: light }),
+  });
+  assert.equal(message(3)(scene), null);
+  assert.match(message(2)(scene), /Choose High under Underlay/);
+  assert.match(message(3)({ ...scene, outputScale: 2 }), /Choose Standard under Underlay/);
+  assert.match(message(2, true)(scene), /on a computer/);
+  assert.match(message(2, false, true)(scene), /Try the photo again/);
+  assert.match(message(2)({ ...scene, renderRecipe: 'older' }), /different map version/);
+  assert.match(message(3)({ ...scene, planVersion: 'v0' }), /different map version/);
+  assert.match(message(2)({ ...scene, outputScale: 4 }), /earlier print size/);
+  assert.match(source, /if \(settingsMessage\) break;[\s\S]*?setError\(settingsMessage \?\? formatDesignTranslation/,
+    'a saved settings mismatch must reach the screen without suggesting an unchanged refresh');
+});
+
 // These checks execute the actual painters. They fail when post-processing hides a paid
 // illustration, even if the provider returned a visibly different picture.
 function artProbe() {
@@ -1141,6 +1158,54 @@ test('the swale callout stays halfway along the drawn bank when its trace is rev
   }
   assert.equal(tracedLineLabelMidpoint([[.2,.3],[.2,.3]],800,200),null);
   assert.equal(tracedLineLabelMidpoint([[0,0],[NaN,0],[1,1]],800,200),null);
+});
+
+test('the paid Water label pass draws the saved equipment and pipe names once over the artwork', async () => {
+  const probe = artProbe();
+  const events: string[] = [];
+  const state = { items: [{ defId: 'jojo_2500', x: .3, y: .2 }], lines: [] };
+  const refs = { boundary: [], house: [], driveway: [] };
+  probe.ctx.drawImage = (image: string) => events.push(image);
+  const label = helper('burnExactLabelLayer', {
+    document: { createElement: () => probe.canvas },
+    loadImage: async (image: string) => image,
+    drawWaterLeaderLabels: (_ctx: unknown, saved: unknown, layers: unknown, w: number, h: number) => {
+      assert.equal(saved, state);
+      assert.equal(layers, refs);
+      assert.deepEqual([w, h], [800, 600]);
+      events.push('Water callouts');
+    },
+    drawPlantMarks() {},
+    drainCanvasToDataUrl: () => events.join(' / '),
+  });
+  const frame = { imgW: 400, mPerPx: .2 };
+  const water = await label('painting', state, frame, refs, 'water', 800, 600, 'codes');
+  assert.equal(water.map, 'painting / Water callouts');
+  events.length = 0;
+  const whole = await label('painting', state, frame, refs, 'all', 800, 600, 'codes');
+  assert.equal(whole.map, 'painting');
+});
+
+test('paid Earthworks artwork gets the same swale anchors and legible plaques as its exact plan', async () => {
+  const probe = artProbe();
+  const labels: string[] = [];
+  const state = { items: [], zones: [], lines: [
+    { id: 'upper', kind: 'swale', points: [[.2, .2], [.8, .2]] },
+    { id: 'lower', kind: 'swale', points: [[.8, .7], [.2, .7]] },
+  ] };
+  const refs = { boundary: [[.1, .1], [.9, .1], [.9, .9], [.1, .9]], house: [], driveway: [] };
+  const rows = helper('earthworksReferenceLabels', { tracedLineLabelMidpoint, ELEMENTS_BY_ID,
+    exactSheetElementLegendGroups, exactSheetLineRegister, statusOf, plotBox });
+  const label = helper('burnExactLabelLayer', {
+    document: { createElement: () => probe.canvas }, loadImage: async () => ({}),
+    drawPlantMarks() {}, referenceBlueprintLabels: rows,
+    drawBlueprintLabelPills: (_ctx: unknown, anchors: Array<{ text: string; cx: number; cy: number }>) => {
+      for (const { text, cx, cy } of anchors) labels.push(`${text} @ ${cx},${cy}`);
+    },
+    drainCanvasToDataUrl: () => 'sheet with callouts',
+  });
+  await label('art', state, { imgW: 400, mPerPx: .2 }, refs, 'earthworks', 800, 600, 'codes');
+  assert.deepEqual(labels, ['SWALE 1 @ 400,120', 'SWALE 2 @ 400,420']);
 });
 
 test('terrain plan keeps sourced contour heights when no consistent downhill section can be supported',async()=>{

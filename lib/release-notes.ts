@@ -41,8 +41,17 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 November 2026', sha: '054e38824', changes: [
+  { when: '26 November 2026', sha: '054e38824', changes: [
     'Link recorded harvests to crop cycles and show them in your progress report.',
+  ] },
+  { when: '26 November 2026', sha: 'f68de314', changes: [
+    'Saved AI maps now tell you which print quality to choose to reuse their artwork.',
+  ] },
+  { when: '25 November 2026', sha: '25086e69', changes: [
+    'AI Earthworks maps label swales, beds and basins beside their saved positions.',
+  ] },
+  { when: '25 November 2026', sha: '46b57cea2', changes: [
+    'AI Water maps now label tanks, taps and irrigation lines on the drawing.',
   ] },
   { when: '25 November 2026', sha: 'ad2e67b0f', changes: [
     'Download a crop progress report with planned dates and your journal notes.',

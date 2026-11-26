@@ -683,6 +683,7 @@ export interface DesignGlossyProps {
 export { SCALE, setSheetScale, AI_INPUT_WIDTH } from '@/lib/sheet-scale';
 import { SCALE, AI_INPUT_WIDTH, deviceSheetScale, setSheetScale } from '@/lib/sheet-scale';
 import { phoneGradeDevice } from '@/lib/device-grade';
+import { peekSafeMode } from '@/lib/crash-loop';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 
 /** Farmer-facing names for the underlay control. Short enough to sit on a pill on a phone. */
@@ -4947,12 +4948,19 @@ async function burnExactLabelLayer(
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
-  if (!ctx) return { map: mapDataUrl, gutterLayout };
+  if (!ctx) {
+    if (filter === 'water' || filter === 'earthworks') throw new UserFacingError('Could not draw the map labels. Reassemble the saved artwork to try again.');
+    return { map: mapDataUrl, gutterLayout };
+  }
   ctx.drawImage(await loadImage(mapDataUrl), 0, 0, W, H);
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
+  // The Water route overlay contains ink only. Keep names on the finished sheet and
+  // out of the clean artwork reused by a second pass or a free reassembly.
+  if (filter === 'water') drawWaterLeaderLabels(ctx, state, refLayers, W, H);
   if (filter === 'planting') drawGroundAreaNames(ctx, state, refLayers, W, H, filter);
   drawPlantMarks(ctx, state, filter, px, py, W / (frame.imgW * frame.mPerPx), labelMode);
+  if (filter === 'earthworks') drawBlueprintLabelPills(ctx, referenceBlueprintLabels(state, refLayers, W, H, filter, labelMode));
   return { map: drainCanvasToDataUrl(canvas, 'image/png'), gutterLayout };
 }
 
@@ -12711,6 +12719,24 @@ function WorkflowHeading({ number, title, help }: { number: number; title: strin
   );
 }
 
+function savedArtworkSettingsMessage(scene: RenderSceneSnapshot): string | null {
+  if (scene.renderRecipe !== SHEET_RENDER_RECIPE || scene.planVersion !== PLAN_VERSION) {
+    return 'This artwork uses a different map version. Open the existing copy in Saved maps to view or download it.';
+  }
+  if (scene.outputScale === SCALE) return null;
+  if (scene.outputScale === 3 && deviceSheetScale(3) === 2) {
+    return 'This artwork was saved at High print quality. To reassemble it, open the map on a computer and choose High under Underlay → Quality.';
+  }
+  if (scene.outputScale === 3 && peekSafeMode().active) {
+    return 'This artwork was saved at High print quality. The map opened in light mode. On a computer, choose “Try the photo again”, then choose High under Underlay → Quality if needed.';
+  }
+  if (scene.outputScale === 2 || scene.outputScale === 3) {
+    const quality = scene.outputScale === 3 ? 'High' : 'Standard';
+    return `This artwork was saved at ${quality} print quality. Choose ${quality} under Underlay → Quality to reassemble it using the original artwork.`;
+  }
+  return 'This artwork uses an earlier print size. Open the existing copy in Saved maps to view or download it.';
+}
+
 export default function DesignGlossy({
   state,
   frame: frameProp,
@@ -14623,16 +14649,14 @@ export default function DesignGlossy({
       const boundaryPx = locked || renderRefLayers.boundary.length < 3
         ? undefined
         : renderRefLayers.boundary.flatMap(([x, y]) => [x * W, y * H]);
-      // The locked Water sheet must NOT also go through burnLabels: buildWaterOverlay below is
-      // called with includeLeaderLabels = locked and already draws every water label itself.
-      // Passing labels here too burned a SECOND set a few pixels off the first, which is why every
-      // pill had a half-hidden twin behind it ("MULCH BANK" over "MU…", "SMALL POND" over "SM…").
+      // The shared label pass names the Water equipment and routes after the clean map
+      // has been saved for polishing. Generic callouts here would name each feature twice.
       // Focused planting and structure sheets use side leaders; the full design keeps compact
       // map codes and its one grouped legend. All three draw no on-map pills, otherwise a tree
       // would be named by its pill, code and legend at once.
       const gutterOwnsLabels = locked && (f === 'planting' || f === 'structures');
-      const exactMapOwnsLabels = locked && (gutterOwnsLabels || f === 'all');
-      const labels = (f === 'water' && locked) || exactMapOwnsLabels
+      const exactMapOwnsLabels = locked && (gutterOwnsLabels || f === 'all' || f === 'water' || f === 'earthworks');
+      const labels = exactMapOwnsLabels
         ? []
         // The exact zone overlay already carries a numbered badge at every saved zone and the
         // legend expands each number into its full name. Margin leaders added the same facts a
@@ -15899,6 +15923,7 @@ export default function DesignGlossy({
     const rejected = new Set<string>();
     let lastAssembledGalleryId: string | null = null;
     let lastAssembleError = '';
+    let settingsMessage: string | null = null;
     let scenePromise: Promise<RenderSceneSnapshot | null> | null = null;
     let roofReferencePromise: Promise<PaperRoofReference | undefined> | null = null;
     // Snapshots must be handled ONE AT A TIME. Assembling a sheet takes seconds (two downloads plus
@@ -15966,9 +15991,10 @@ export default function DesignGlossy({
               if (!frozenScene) {
                 throw new UserFacingError('This older AI job has no saved design snapshot. Its original output is retained; it cannot be combined safely with the current design.');
               }
-              if (frozenScene.outputScale !== SCALE || frozenScene.renderRecipe !== SHEET_RENDER_RECIPE || frozenScene.planVersion !== PLAN_VERSION) {
-                throw new UserFacingError('This AI job belongs to a different export setting or renderer version. Its original output is retained; finish it with the original settings.');
-              }
+              // Every sheet in this job shares the frozen export settings. Reloading with
+              // the same mismatch cannot repair it and should never suggest buying a render.
+              settingsMessage = savedArtworkSettingsMessage(frozenScene);
+              if (settingsMessage) break;
               const obliqueStyle = obliqueStyleFromJob(job.style);
               if (isObliqueJobStyle(job.style) && (!obliqueStyle || sheet.key !== 'all'
                 || sheet.geometryLock !== false || sheet.showcase !== false || sheet.resultKind !== 'hybrid'
@@ -16441,7 +16467,7 @@ export default function DesignGlossy({
               ? 'Oblique illustration ready in Saved maps. Review positions, heights and terrain against your measured top-down plan.'
               : refreshPendingRef.current
               ? `AI POLISH COMPLETE — the new ${attribution.label} result is open now — review it against the exact map. The exact no-AI master remains separately saved.`
-              : `AI POLISH COMPLETE — ${done} paid ${attribution.label} result${done === 1 ? '' : 's'} finished for review against the exact map${failedSheets.length ? ` · ${failedSheets.length} failed — try again` : ''}. Results are saved in the gallery; the exact no-AI master remains the reference for positions and counts.`);
+              : `Saved ${done} map${done === 1 ? '' : 's'} from the completed, previously paid ${attribution.label} result. Open the exact map to check positions and counts.${failedSheets.length ? ` ${failedSheets.length} sheet${failedSheets.length === 1 ? '' : 's'} failed.` : ''}`);
             refreshPendingRef.current = false;
             setGalleryViewId(lastAssembledGalleryId);
             setGalleryOpen(true);
@@ -16454,7 +16480,7 @@ export default function DesignGlossy({
             refreshPendingRef.current = false;
           } else if (serverDone > 0) {
             // The render succeeded and was paid for, but this device could not assemble it.
-            setError(formatDesignTranslation(t('designGlossyAssembleError'), {
+            setError(settingsMessage ?? formatDesignTranslation(t('designGlossyAssembleError'), {
               detail: lastAssembleError ? ` (${lastAssembleError})` : '',
             }));
             setHybridHandoffReady(false);
