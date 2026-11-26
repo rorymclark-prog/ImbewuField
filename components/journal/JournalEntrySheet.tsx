@@ -71,6 +71,7 @@ export default function JournalEntrySheet({ entry, initialDraft, phaseLink, beds
   const fileRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLFormElement>(null);
   const savedPhase = entry && inspectJournalPhaseLink(entry);
+  const phaseDated = Boolean(phaseLink) || savedPhase?.status === 'recorded';
   useDialogFocus(true, dialogRef);
   // bug-12: two-tap delete, same pattern as app/records/page.tsx's SalesLedger — first tap
   // arms a confirm (reverting on its own after 3.5s), second tap within that window deletes.
@@ -132,8 +133,8 @@ export default function JournalEntrySheet({ entry, initialDraft, phaseLink, beds
     });
   }
 
-  const canSave = phaseLink ? isJournalDate(date) && Boolean(notes.trim()) : Boolean(title.trim() || notes.trim());
-  const dateLabel = phaseLink ? ui('Observed on', 'Usuku lokubona') : ui('Date', 'Usuku');
+  const canSave = (!phaseDated || isJournalDate(date)) && (phaseLink ? Boolean(notes.trim()) : Boolean(title.trim() || notes.trim()));
+  const dateLabel = phaseDated ? ui('Observed on', 'Usuku lokubona') : ui('Date', 'Usuku');
 
   return (
     <div
@@ -234,13 +235,13 @@ export default function JournalEntrySheet({ entry, initialDraft, phaseLink, beds
 
           {/* Date defaults to today (or the entry's own date on edit) whether or not this
               field is shown — Simple keeps that default instead of asking for it. */}
-          {(!simple || initialDraft || phaseLink || savedPhase?.status === 'recorded') && (
+          {(!simple || initialDraft || phaseDated) && (
             <div>
               <Label>{dateLabel}</Label>
               <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                 type="date"
                 aria-label={dateLabel}
-                required={Boolean(phaseLink)}
+                required={phaseDated}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
                 style={inputStyle}

@@ -10,7 +10,7 @@ import {
 } from './length-unit-preference';
 import { buildPhasePlan, type PhaseKey } from './phasing';
 import { isSampleMode } from './sample-mode';
-import { readPlacesForPhaseObservation } from './saved-places';
+import { readPlacesForPhaseObservation, type SavedPlace } from './saved-places';
 
 const LINE_NAMES: Record<LineShape['kind'], string> = {
   swale: 'Swale', fence: 'Fence line', path: 'Walking path', bedpath: 'Bed path',
@@ -52,6 +52,7 @@ interface SourceBinding {
   readonly context: JournalObservationContext;
   readonly placeId: string;
   readonly placeStamp: string;
+  readonly placeName: string;
   readonly revision: string;
 }
 
@@ -73,11 +74,23 @@ function visibleLabel(value: string): string {
   return value.replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, LABEL_LIMIT).trimEnd();
 }
 
-export function phaseJournalSites(): readonly { id: string; name: string }[] {
-  return readPlacesForPhaseObservation().flatMap(place => {
+function namedPlaces(places: readonly SavedPlace[]): { place: SavedPlace; name: string }[] {
+  const choices = places.flatMap(place => {
     const name = visibleLabel(place.name);
-    return validIdentity(place.id) && name ? [{ id: place.id, name }] : [];
+    return validIdentity(place.id) && name ? [{ place, name }] : [];
   });
+  const counts = new Map<string, number>();
+  const keyFor = (name: string) => name.normalize('NFKC').toLowerCase();
+  for (const { name } of choices) counts.set(keyFor(name), (counts.get(keyFor(name)) ?? 0) + 1);
+  return choices.map(choice => {
+    if (counts.get(keyFor(choice.name)) === 1) return choice;
+    const { lat, lon } = choice.place;
+    return { ...choice, name: `${choice.name} · ${lat.toFixed(5)}, ${lon.toFixed(5)}` };
+  });
+}
+
+export function phaseJournalSites(): readonly { id: string; name: string }[] {
+  return namedPlaces(readPlacesForPhaseObservation()).map(({ place, name }) => ({ id: place.id, name }));
 }
 
 /** Inspect raw authored ids before the normalizer can collapse a duplicate. */
@@ -96,8 +109,9 @@ function uniqueFeatureIds(raw: unknown): boolean {
 
 function matchingRevision(binding: SourceBinding, siteId: string): boolean {
   if (!journalObservationContextIsCurrent(binding.context)) return false;
-  const place = readPlacesForPhaseObservation().find(candidate => candidate.id === binding.placeId);
-  if (!place || coordinateSiteIdForPlace(place) !== siteId || JSON.stringify(place) !== binding.placeStamp) return false;
+  const current = namedPlaces(readPlacesForPhaseObservation()).find(candidate => candidate.place.id === binding.placeId);
+  if (!current || current.name !== binding.placeName || coordinateSiteIdForPlace(current.place) !== siteId
+    || JSON.stringify(current.place) !== binding.placeStamp) return false;
   const receipt = readCanvasSourceReceipt(siteId);
   return receipt.status === 'ready' && receipt.ownerUid === activeAccountUid() && receipt.sample === isSampleMode()
     && receipt.revision === binding.revision && journalObservationContextIsCurrent(binding.context);
@@ -110,12 +124,12 @@ export function reviewPhaseJournalSource(placeId: string): PhaseJournalSource | 
   let admitted = false;
   try {
     if (!context || !journalObservationContextIsCurrent(context) || !validIdentity(placeId)) return null;
-    const place = readPlacesForPhaseObservation().find(candidate => candidate.id === placeId);
-    const siteId = place && coordinateSiteIdForPlace(place);
-    if (!place || !siteId) return null;
-    const siteName = visibleLabel(place.name);
-    if (!siteName) return null;
-    const receipt = readCanvasSourceReceipt(siteId);
+    const selected = namedPlaces(readPlacesForPhaseObservation()).find(candidate => candidate.place.id === placeId);
+    if (!selected) return null;
+    const { place, name: siteName } = selected;
+    const siteId = coordinateSiteIdForPlace(place);
+    if (!siteId) return null;
+    const receipt = readCanvasSourceReceipt(siteId, { requireLosslessJson: true });
     if (receipt.status !== 'ready' || !uniqueFeatureIds(receipt.raw)) return null;
     const state = normaliseCanvasState(receipt.raw, siteId);
     if (!state || state.lines.some(line => !Object.hasOwn(LINE_NAMES, line.kind))) return null;
@@ -144,7 +158,7 @@ export function reviewPhaseJournalSource(placeId: string): PhaseJournalSource | 
       if (distinct.length !== features.length) hasAmbiguousNames = true;
       return distinct.length ? [Object.freeze({ key: phase.key, title: phase.title, features: Object.freeze(distinct) })] : [];
     });
-    const binding = { context, placeId, placeStamp: JSON.stringify(place), revision: receipt.revision };
+    const binding = { context, placeId, placeStamp: JSON.stringify(place), placeName: siteName, revision: receipt.revision };
     if (!matchingRevision(binding, siteId)) return null;
     const source = Object.freeze({ siteId, siteName, phases: Object.freeze(phases), hasAmbiguousNames });
     sources.set(source, binding);

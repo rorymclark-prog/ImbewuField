@@ -12,6 +12,7 @@ import {
 } from './international/site-context';
 import { placeRevision, sameSiteContext, withoutStaleSiteContext } from './international/place-context-merge';
 import { canonicalCoordinateSiteId } from './site-id';
+import { rawJsonIsLossless } from './lossless-json';
 
 export type PlaceLabel = 'home' | 'field' | 'water' | 'other';
 
@@ -149,9 +150,10 @@ function swapLocalContext(uid: string, confirmed: SiteCountryContext, replacemen
 // Deletion markers decide whether a site still exists, so an unreadable marker map must stop a
 // metadata write rather than read as "nothing was deleted" (local-tombstones' own reader fails open
 // by design for its merge callers).
-function readTombstonesStrict(storageKey: string): Record<string, number> | null {
+function readTombstonesStrict(storageKey: string, requireLosslessJson = false): Record<string, number> | null {
   const raw = localStorage.getItem(storageKey);
   if (raw === null) return {};
+  if (requireLosslessJson && !rawJsonIsLossless(raw)) return null;
   let parsed: unknown;
   try { parsed = JSON.parse(raw); } catch { return null; }
   if (!isRecord(parsed)) return null;
@@ -260,8 +262,10 @@ export function readPlacesForPhaseObservation(): SavedPlace[] {
   try {
     if (typeof window === 'undefined') return [];
     const sample = isSampleMode();
-    const raw: unknown = sample ? getSandboxPlaces() : JSON.parse(localStorage.getItem(activeAccountLocalStorageKey(KEY)) ?? '[]');
-    const tombstones = sample ? {} : readTombstonesStrict(activeAccountLocalStorageKey(DELETED_KEY));
+    const saved = sample ? '[]' : localStorage.getItem(activeAccountLocalStorageKey(KEY)) ?? '[]';
+    if (!rawJsonIsLossless(saved)) return [];
+    const raw: unknown = sample ? getSandboxPlaces() : JSON.parse(saved);
+    const tombstones = sample ? {} : readTombstonesStrict(activeAccountLocalStorageKey(DELETED_KEY), true);
     if (!Array.isArray(raw) || !tombstones) return [];
     const idCounts = new Map<unknown, number>();
     const siteCounts = new Map<string, number>();

@@ -183,7 +183,7 @@ export function inspectJournalPhaseLink(entry: JournalEntry):
   | { readonly status: 'recorded'; readonly link: PhaseJournalLink } {
   try {
     const property = Object.getOwnPropertyDescriptor(entry, 'implementationPhase');
-    if (!property) return { status: 'legacy' };
+    if (!property) return { status: 'implementationPhase' in entry ? 'held' : 'legacy' };
     if (!property.enumerable || !Object.hasOwn(property, 'value')) return { status: 'held' };
     const fields = ownLinkFields(property.value, PHASE_LINK_FIELDS);
     const validText = (value: unknown) => typeof value === 'string' && value.trim() === value
@@ -267,10 +267,12 @@ export function inspectJournalNurserySowing(entry: unknown): JournalNurserySowin
 }
 
 function preserveJournalNurserySowing(entry: object): Pick<JournalEntry, 'nurserySowing'> {
-  return preserveJournalNurseryPayload(entry, 'nurserySowing');
+  return preserveJournalEvidence(entry, 'nurserySowing');
 }
 
-function preserveJournalNurseryPayload(entry: object, key: NurseryObservationKey): Pick<JournalEntry, NurseryObservationKey> {
+type JournalEvidenceKey = NurseryObservationKey | 'implementationPhase';
+
+function preserveJournalEvidence(entry: object, key: JournalEvidenceKey): Pick<JournalEntry, JournalEvidenceKey> {
   const held = () => ({ [key]: { version: 0, held: true } });
   try {
     const property = Object.getOwnPropertyDescriptor(entry, key);
@@ -524,9 +526,9 @@ export function normaliseJournal(value: unknown): JournalEntry[] {
       photos: cleanPhotos(raw.photos),
       ...preserveJournalGrowerLink(raw),
       ...preserveJournalNurserySowing(raw),
-      ...preserveJournalNurseryPayload(raw, 'nurseryProgress'),
-      ...preserveJournalNurseryPayload(raw, 'nurseryFieldPlanting'),
-      ...(Object.hasOwn(raw, 'implementationPhase') ? { implementationPhase: raw.implementationPhase } : {}),
+      ...preserveJournalEvidence(raw, 'nurseryProgress'),
+      ...preserveJournalEvidence(raw, 'nurseryFieldPlanting'),
+      ...preserveJournalEvidence(raw, 'implementationPhase'),
       createdAt,
       updatedAt: finiteTime(raw.updatedAt, createdAt),
     });
@@ -570,8 +572,8 @@ export function createJournalEntry(input: JournalEntryInput, now: number = Date.
     photos: cleanPhotos(input.photos),
     ...preserveJournalGrowerLink(input),
     ...preserveJournalNurserySowing(input),
-    ...preserveJournalNurseryPayload(input, 'nurseryProgress'),
-    ...preserveJournalNurseryPayload(input, 'nurseryFieldPlanting'),
+    ...preserveJournalEvidence(input, 'nurseryProgress'),
+    ...preserveJournalEvidence(input, 'nurseryFieldPlanting'),
     createdAt: now,
     updatedAt: now,
   };
@@ -593,7 +595,9 @@ export function editJournalEntry(
   input: JournalEntryInput,
   now: number = Date.now(),
 ): JournalEntry {
-  const edited = createJournalEntry(input, now);
+  // A blank date in an older editor cannot silently turn a dated observation into today's work.
+  const preserveObservedDate = inspectJournalPhaseLink(entry).status === 'recorded' && !isJournalDate(input.date);
+  const edited = createJournalEntry(preserveObservedDate ? { ...input, date: entry.date } : input, now);
   // An ordinary editor cannot attach a new observed fact to a legacy note.
   // Original evidence alone survives, including retained malformed evidence.
   delete edited.nurserySowing;
@@ -603,9 +607,9 @@ export function editJournalEntry(
     ...edited,
     ...preserveJournalGrowerLink(entry),
     ...preserveJournalNurserySowing(entry),
-    ...preserveJournalNurseryPayload(entry, 'nurseryProgress'),
-    ...preserveJournalNurseryPayload(entry, 'nurseryFieldPlanting'),
-    ...(Object.hasOwn(entry, 'implementationPhase') ? { implementationPhase: entry.implementationPhase } : {}),
+    ...preserveJournalEvidence(entry, 'nurseryProgress'),
+    ...preserveJournalEvidence(entry, 'nurseryFieldPlanting'),
+    ...preserveJournalEvidence(entry, 'implementationPhase'),
     id: entry.id,
     createdAt: entry.createdAt,
     updatedAt: now,

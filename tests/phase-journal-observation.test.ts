@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test, { after, beforeEach } from 'node:test';
+import { act } from 'react-test-renderer';
 import type { JournalEntry, JournalEntryInput } from '../lib/field-journal.ts';
 import type { JournalStorageLocks } from '../lib/journal-storage.ts';
 import type { PhaseJournalDraft, PhaseJournalSource } from '../lib/phase-journal-source.ts';
@@ -169,6 +170,28 @@ test('foreign designs and duplicate identities across mapped item and line kinds
   assert.equal(source.confirmPhaseJournalFeature(current, 'beds', 'bed-a'), null);
 });
 
+test('equal visible names at distinct saved sites are separated by their exact coordinates', () => {
+  const name = 'N'.repeat(120);
+  local.rows.set(placesKey(), JSON.stringify([
+    { ...place, name: `${name} orchard` },
+    { ...place, name: `${name} market garden`, id: 'other', lat: 1 },
+  ]));
+  const options = source.phaseJournalSites();
+  assert.deepEqual(options.map(option => option.name), [`${name} · 0.00000, 0.00000`, `${name} · 1.00000, 0.00000`]);
+  assert.equal(confirm().link.siteName, options[0].name);
+});
+
+test('duplicate JSON members cannot hide a different place or feature before identity review', () => {
+  const originalCanvas = JSON.stringify(design());
+  local.rows.set(studioKey(), originalCanvas.replace('"id":"bed-a"', '"id":"hidden-bed","id":"bed-a"'));
+  assert.equal(source.reviewPhaseJournalSource(place.id), null);
+  local.rows.set(studioKey(), originalCanvas);
+  const originalPlaces = JSON.stringify([place]);
+  local.rows.set(placesKey(), originalPlaces.replace('"id":"own-place"', '"id":"different-place","id":"own-place"'));
+  assert.equal(source.reviewPhaseJournalSource(place.id), null);
+  assert.deepEqual(source.phaseJournalSites(), []);
+});
+
 test('an ordinary journal save cannot create, replace or remove the reference on an existing note', () => {
   const draft = confirm(), initial = readJournal();
   const forged = { ...journal.createJournalEntry(observed), implementationPhase: draft.link };
@@ -179,6 +202,7 @@ test('an ordinary journal save cannot create, replace or remove the reference on
   reads.add(valid.entries);
   const note = valid.entries.find(row => row.id !== old.id)!;
   local.rows.delete(studioKey());
+  assert.equal(journal.editJournalEntry(note, { ...observed, date: '' }, Date.UTC(2026, 11, 24)).date, observed.date);
   const edited = journal.editJournalEntry(note, { ...observed, notes: 'Corrected what I saw.' });
   assert.deepEqual(edited.implementationPhase, note.implementationPhase);
   const { implementationPhase: _removed, ...without } = edited;
@@ -215,4 +239,24 @@ test('an observation prepared in sample mode does not read or modify the real jo
   }
   assert.deepEqual(local.rows, real);
   assert.deepEqual(readJournal().map(entry => entry.id), [old.id]);
+});
+
+test('reopening a recorded design observation keeps the original date until the grower chooses a valid replacement', async () => {
+  const written = journal.savePhaseJournalObservation(observed, confirm(), readJournal());
+  assert.equal(written.ok, true);
+  reads.add(written.entries);
+  const recorded = written.entries.find(entry => entry.id !== old.id)!;
+  const { mountJournal, renderedButton } = await import('./journal-workflow-renderer.ts');
+  const app = await mountJournal({ simple: true, entries: [recorded] });
+  try {
+    await act(async () => app.renderer.root.findAllByType('button')
+      .find(button => String(button.props['aria-label']).startsWith('Edit entry:'))!.props.onClick());
+    const date = app.renderer.root.findByProps({ 'aria-label': 'Observed on' });
+    assert.equal(date.props.value, observed.date);
+    await act(async () => date.props.onChange({ target: { value: '' } }));
+    assert.equal(renderedButton(app.renderer, 'Save changes').props.disabled, true);
+    assert.equal(app.writes.length, 0);
+  } finally {
+    await app.close();
+  }
 });
