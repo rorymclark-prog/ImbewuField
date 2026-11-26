@@ -857,13 +857,19 @@ export default function StudentPage() {
             <h1 id="studies-title" className="font-display">{t('studentMyStudies')}</h1>
             <p className={`font-sans ${styles.description}`}>{t('studentCourseDescription')}</p>
 
-            <button type="button" className={`font-sans ${styles.studyButton}`} onClick={() => {
-              setCourseOpen(true);
-              setExpandedModuleId(studyModule.id);
-              requestAnimationFrame(() => document.getElementById(`module-${studyModule.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-
-            }}><PlayCircle size={18} />{pct === 100 ? t('studentRevisit') : doneCount === 0 ? t('studentStart') : t('studentContinue')}</button>
-            <span className={`font-sans ${styles.nextLesson}`}>{studyModulePresentation.title}</span>
+            <div className={styles.studyActions}>
+              <div>
+                <button type="button" className={`font-sans ${styles.studyButton}`} onClick={() => {
+                  setCourseOpen(true);
+                  setExpandedModuleId(studyModule.id);
+                  requestAnimationFrame(() => document.getElementById(`module-${studyModule.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+                }}><PlayCircle size={18} />{pct === 100 ? t('studentRevisit') : doneCount === 0 ? t('studentStart') : t('studentContinue')}</button>
+                <span className={`font-sans ${styles.nextLesson}`}>{studyModulePresentation.title}</span>
+              </div>
+              <Link href="/manual" className={`font-sans ${styles.studyButton} ${styles.manualLink}`}>
+                <BookOpen size={18} aria-hidden="true" />{t('navManual')}
+              </Link>
+            </div>
           </div>
           <div className={styles.progress}>
           {/* Ring */}

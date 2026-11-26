@@ -11,8 +11,7 @@ interface FieldCase {
   question: Copy;
   reasoning: Copy;
   chapter: ManualChapter;
-  /** Same zero-based heading order the manual uses for its figures. */
-  section: number;
+  anchor: `section-${number}`;
   figure?: string;
 }
 
@@ -24,7 +23,7 @@ export const FIELD_CASES: Readonly<Record<string, FieldCase>> = {
     question: copy('What would you ask before calling any of it surplus?', 'Ungabuzani ngaphambi kokuthi uthi kukhona okusele?'),
     reasoning: copy('Ask the cook what the household needs. Ask the grower what should go back into the garden. Find out what the neighbour actually wants to grow. Only then can the family discuss what to sell or share. A fair decision begins with those conversations.',
       'Buza ophekayo ukuthi umndeni udingani. Buza umlimi ukuthi yini okufanele ibuyele engadini. Thola ukuthi umakhelwane ufuna ukutshalani. Ngemva kwalokho umndeni ungaxoxa ngokudayisa noma ngokwabelana. Isinqumo esinobulungisa siqala ngalezo zingxoxo.'),
-    chapter: '01-what-is-permaculture', section: 2, figure: '02-planning-together',
+    chapter: '01-what-is-permaculture', anchor: 'section-3', figure: '02-planning-together',
   },
   'reading-landscape': {
     title: copy('The path tells a different story after rain', 'Indlela ixoxa enye indaba ngemva kwemvula'),
@@ -33,7 +32,7 @@ export const FIELD_CASES: Readonly<Record<string, FieldCase>> = {
     question: copy('Where would you put the first arrow on the sketch?', 'Ungawudweba kuphi umcibisholo wokuqala?'),
     reasoning: copy('Start where you can see a mark. Trace it back from the gate while it is still visible and safe to walk. Draw a solid arrow for flow you saw and a question mark where the trail disappears. Ask someone who uses the gate what happens in other storms.',
       'Qala lapho ubona khona umkhondo. Wulandele ubuyele emuva usuka esangweni uma kusabonakala futhi kuphephile ukuhamba. Dweba umcibisholo lapho ubone amanzi egeleza khona. Faka uphawu lombuzo lapho umkhondo unyamalala khona. Buza osebenzisa isango ukuthi kwenzekani ngezinye izimvula.'),
-    chapter: '02-planning-your-farm', section: 0, figure: '02-base-map',
+    chapter: '02-planning-your-farm', anchor: 'section-1', figure: '02-base-map',
   },
   'water-harvesting': {
     title: copy('The tank is full. Where does the next rain go?', 'Ithangi ligcwele. Imvula elandelayo iya kuphi?'),
@@ -42,7 +41,7 @@ export const FIELD_CASES: Readonly<Record<string, FieldCase>> = {
     question: copy('What is missing from the water plan?', 'Yini eshodayo ohlelweni lwamanzi?'),
     reasoning: copy('Follow the overflow on paper as carefully as the water coming in. Mark what it crosses, where it pools and who uses that ground. A wet patch is evidence to investigate. You still need to check the site and downstream effects before deciding whether any earthwork belongs there.',
       'Landela emdwebeni amanzi achichimayo ngendlela olandela ngayo angenayo. Maka ukuthi awela kuphi, abuthana kuphi nokuthi ubani osebenzisa leyo ndawo. Indawo emanzi iwubufakazi okufanele buhlolwe. Hlola indawo nomphumela ezansi ngaphambi kokunquma ngokumba.'),
-    chapter: '07-earthworks-and-water', section: 1, figure: '07-linked-tanks',
+    chapter: '07-earthworks-and-water', anchor: 'section-2', figure: '07-linked-tanks',
   },
   'soil-health': {
     title: copy('Same rain, different ground', 'Imvula iyefana, umhlabathi wehlukile'),
@@ -51,7 +50,7 @@ export const FIELD_CASES: Readonly<Record<string, FieldCase>> = {
     question: copy('What could you learn from these patches before spending money?', 'Ungafundani kulezi zindawo ngaphambi kokusebenzisa imali?'),
     reasoning: copy('Look beneath each surface. Record cover, moisture, roots and signs of foot traffic. Compare the feel of the soil under similar conditions. A difference gives you a question to test. It cannot by itself tell you whether the cause was mulch, soil texture or people walking there.',
       'Bheka ngaphansi kwengaphezulu lendawo ngayinye. Bhala ngesembozo, umswakama, izimpande nezimpawu zokunyathelwa. Qhathanisa ukuthinteka kwenhlabathi ezimweni ezifanayo. Umehluko ukunika umbuzo wokuhlola. Wodwa awusho ukuthi imbangela isembozo, uhlobo lwenhlabathi noma ukuhamba kwabantu.'),
-    chapter: '08-soil', section: 0, figure: '08-soil-profile',
+    chapter: '08-soil', anchor: 'section-1', figure: '08-soil-profile',
   },
   'vegetables-staples': {
     title: copy('Plan backwards from the kitchen door', 'Qala emnyango wekhishi lapho uhlela'),
@@ -60,7 +59,7 @@ export const FIELD_CASES: Readonly<Record<string, FieldCase>> = {
     question: copy('Which journeys would you draw before choosing the bed?', 'Yiziphi izindlela ongazidweba ngaphambi kokukhetha indawo yombhede?'),
     reasoning: copy('Walk the route from the kitchen, then the route from the water source. Ask who will weed, water and harvest, and when they can come. Space for a bed is only part of the decision. A plan the household can tend is worth more than a full page of beds nobody can reach.',
       'Hamba usuka ekhishini, bese uhamba usuka emthonjeni wamanzi. Buza ukuthi ubani ozosusa ukhula, anisele futhi avune, nokuthi angafika nini. Isikhala sombhede siyingxenye nje yesinqumo. Uhlelo umndeni ongalunakekela lulungele ukusetshenziswa.'),
-    chapter: '04-vegetable-and-staple-crops', section: 1, figure: '04-kitchen-garden',
+    chapter: '04-vegetable-and-staple-crops', anchor: 'section-2', figure: '04-kitchen-garden',
   },
   'seeds-sovereignty': {
     title: copy('Two envelopes with the same name', 'Izimvilophu ezimbili ezinegama elifanayo'),
@@ -69,7 +68,7 @@ export const FIELD_CASES: Readonly<Record<string, FieldCase>> = {
     question: copy('What would you write down before taking either envelope home?', 'Ungabhalani ngaphambi kokuthatha imvilophu uye nayo ekhaya?'),
     reasoning: copy('Keep the lots separate. Ask about their origin, variety, harvest and storage. Record what the giver knows and leave gaps where nobody knows. A name on paper cannot tell the next grower whether a seed will germinate or whether its offspring will resemble the parent.',
       'Gcina imbewu yemvilophu ngayinye yodwa. Buza ngemvelaphi, uhlobo, ukuvuna nokugcina. Bhala okwaziwa onikelayo bese ushiya izikhala lapho kungaziwa khona. Igama ephepheni alisho ukuthi imbewu izohluma noma ukuthi izitshalo ezintsha zizofana nesitshalo esingumzali.'),
-    chapter: '01-what-is-permaculture', section: 3,
+    chapter: '01-what-is-permaculture', anchor: 'section-4',
   },
   'plant-guilds': {
     title: copy('When the helper starts competing', 'Lapho isitshalo esisizayo siqala ukuncintisana'),
@@ -78,7 +77,7 @@ export const FIELD_CASES: Readonly<Record<string, FieldCase>> = {
     question: copy('How would you decide which plants are helping here?', 'Unganquma kanjani ukuthi yiziphi izitshalo ezisizayo lapha?'),
     reasoning: copy('Name the job expected of each plant. Look for evidence of that job and for costs such as shade, water competition or lost access. Compare a crowded spot with an open one. Choose what to adjust from those observations, and come back to see what changed.',
       'Yisho umsebenzi olindelwe esitshalweni ngasinye. Bheka ubufakazi balowo msebenzi nezinkinga ezifana nomthunzi, ukuncintisana ngamanzi noma ukuvaleka kwendlela. Qhathanisa indawo eminyene nevulekile. Sebenzisa okubonile ukukhetha okuzolungiswa, bese ubuya ubheke ushintsho.'),
-    chapter: '09-balanced-ecology', section: 3, figure: '09-cowpea-ground-cover',
+    chapter: '09-balanced-ecology', anchor: 'section-4', figure: '09-cowpea-ground-cover',
   },
   'food-forest': {
     title: copy('A path that disappears as the trees grow', 'Indlela enyamalalayo njengoba izihlahla zikhula'),
@@ -87,7 +86,7 @@ export const FIELD_CASES: Readonly<Record<string, FieldCase>> = {
     question: copy('What would you add to the drawing before buying trees?', 'Yini obungayengeza emdwebeni ngaphambi kokuthenga izihlahla?'),
     reasoning: copy('Find a reliable mature size for the trees being considered. Sketch their future crowns, the route for harvest and the places that still need sunlight. Mark where water and care will come from. Keep an unknown size or an unconfirmed planting site as an open question.',
       'Thola ubukhulu obuthembekile bezihlahla lapho sezikhulile. Dweba imiqhele yazo, indlela yokuvuna nezindawo ezisadinga ilanga. Maka lapho kuzovela khona amanzi nokunakekelwa. Shiya uphawu lombuzo uma ubukhulu noma indawo yokutshala kungakaqinisekiswa.'),
-    chapter: '06-tree-systems', section: 4, figure: '06-food-forest-layers',
+    chapter: '06-tree-systems', anchor: 'section-5', figure: '06-food-forest-layers',
   },
   'small-livestock': {
     title: copy('The same scratching, in a different bed', 'Ukukhuhla okufanayo emibhedeni eyehlukene'),
@@ -96,7 +95,7 @@ export const FIELD_CASES: Readonly<Record<string, FieldCase>> = {
     question: copy('What goes on the plan besides the job you want the hen to do?', 'Ngaphandle komsebenzi wesikhukhukazi, yini enye efakwa ohlelweni?'),
     reasoning: copy('Draw the animal’s needs alongside the work: water, suitable feed, shelter, protection and someone to check it. Mark growing crops and where food is handled. Think through how people will keep animals and manure away from produce before choosing a place.',
       'Dweba izidingo zaso kanye nomsebenzi: amanzi, ukudla okufanele, indawo yokukhosela, ukuvikeleka nomuntu ozosihlola. Maka izitshalo ezikhulayo nalapho kuphathwa khona ukudla. Cabanga ngendlela yokugcina izilwane nomquba kude nokudla ngaphambi kokukhetha indawo.'),
-    chapter: '05-animal-systems', section: 0, figure: '05-chicken-needs-yields',
+    chapter: '05-animal-systems', anchor: 'section-1', figure: '05-chicken-needs-yields',
   },
   'market-community': {
     title: copy('A full basket can come home empty of cash', 'Ubhasikidi ogcwele ungabuya ungenamali'),
@@ -105,7 +104,7 @@ export const FIELD_CASES: Readonly<Record<string, FieldCase>> = {
     question: copy('Which records would help the family explain the day?', 'Yimaphi amarekhodi angasiza umndeni uchaze okwenzekile?'),
     reasoning: copy('Start with what was picked and account for where it went. Then record money actually received and the cost of the trip. The household food and gifts still have a place in the harvest record. Treating every picked basket as a cash sale would hide both their value and the cost of selling.',
       'Qala ngalokho okuvuniwe bese ubhala ukuthi kuye kuphi. Bhala imali etholakele ngempela nezindleko zohambo. Ukudla kwasekhaya nezipho nakho kubhalwa kwirekhodi lesivuno. Ukubala wonke ubhasikidi ovuniwe njengendali yemali kungafihla ukubaluleka kokudla nezindleko zokudayisa.'),
-    chapter: '04-vegetable-and-staple-crops', section: 4, figure: '04-market-garden-rows',
+    chapter: '04-vegetable-and-staple-crops', anchor: 'section-5', figure: '04-market-garden-rows',
   },
 };
 

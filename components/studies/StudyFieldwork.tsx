@@ -56,7 +56,7 @@ export function ModuleFieldCase({ moduleId, lang }: { moduleId: string; lang: st
           </div>
         )}
       </div>
-      <OfflinePageLink className={styles.manual} lang={edition} href={`/manual/${edition}/${example.chapter}#section-${example.section}`}>
+      <OfflinePageLink className={styles.manual} lang={edition} href={`/manual/${edition}/${example.chapter}#${example.anchor}`}>
         <BookOpen size={17} aria-hidden="true" />
         {ui.title} · {excerpt.sectionTitle}
       </OfflinePageLink>

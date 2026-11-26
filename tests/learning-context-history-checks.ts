@@ -12,13 +12,56 @@ const page = 'app/student/page.tsx';
 const notice = 'components/studies/LearningRegionNotice.tsx';
 const sha = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 const studyPageSha = '19c818fbe83297f8a42874cab0411a38726613298df1130dd6bc49328ed6d4d9';
-const studyPageSize = 88635;
+const shortcutPageSha = 'b63181ee9d1cca5d83da3084e8a0c1c477d59720827e01da11e851fedc4a5599';
 const noticePageSha = 'ece4f0787a0e0c5e14d6d5f406aef782e195cedb22b1578013a0b2781e173730';
 const previousPageSha = 'a361890bfdb03c22e74a01b61516f759cf93225ca20b83edf422aa37a9712272';
 const additions = [
   Buffer.from("import LearningRegionContext from '@/components/studies/LearningRegionNotice';\n"),
   Buffer.from('        <LearningRegionContext scope="core-farming" />\n'),
 ];
+
+// The 26 November Study shortcut (#1423, 49147aa46) replaced one JSX span.
+// The source on each side is kept here so shallow CI and the isolated history
+// fixtures can verify the exact edit without reading Git or trusting a marker.
+const actionsWithManual = Buffer.from([
+  "            <div className={styles.studyActions}>",
+  "              <div>",
+  "                <button type=\"button\" className={`font-sans ${styles.studyButton}`} onClick={() => {",
+  "                  setCourseOpen(true);",
+  "                  setExpandedModuleId(studyModule.id);",
+  "                  requestAnimationFrame(() => document.getElementById(`module-${studyModule.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));",
+  "                }}><PlayCircle size={18} />{pct === 100 ? t('studentRevisit') : doneCount === 0 ? t('studentStart') : t('studentContinue')}</button>",
+  "                <span className={`font-sans ${styles.nextLesson}`}>{studyModulePresentation.title}</span>",
+  "              </div>",
+  "              <Link href=\"/manual\" className={`font-sans ${styles.studyButton} ${styles.manualLink}`}>",
+  "                <BookOpen size={18} aria-hidden=\"true\" />{t('navManual')}",
+  "              </Link>",
+  "            </div>",
+  '',
+].join('\n'));
+const actionsBeforeManual = Buffer.from([
+  "            <button type=\"button\" className={`font-sans ${styles.studyButton}`} onClick={() => {",
+  "              setCourseOpen(true);",
+  "              setExpandedModuleId(studyModule.id);",
+  "              requestAnimationFrame(() => document.getElementById(`module-${studyModule.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));",
+  "",
+  "            }}><PlayCircle size={18} />{pct === 100 ? t('studentRevisit') : doneCount === 0 ? t('studentStart') : t('studentContinue')}</button>",
+  "            <span className={`font-sans ${styles.nextLesson}`}>{studyModulePresentation.title}</span>",
+  '',
+].join('\n'));
+
+export function beforeStudyManualShortcut(live: Buffer): Buffer {
+  assert.equal(live.length, 88519, page + ': complete archived shortcut size');
+  assert.equal(sha(live), shortcutPageSha, page + ': exact archived shortcut, including the manual link and every unlisted byte');
+  const start = live.indexOf(actionsWithManual);
+  assert.ok(start >= 0, page + ': exact Study manual shortcut and neighbouring course action');
+  const end = start + actionsWithManual.length;
+  assert.equal(live.indexOf(actionsWithManual, end), -1, page + ': one reviewed Study action group');
+  const restored = Buffer.concat([live.subarray(0, start), actionsBeforeManual, live.subarray(end)]);
+  assert.equal(restored.length, 88187, page + ': original complete learning-context successor size');
+  assert.equal(sha(restored), noticePageSha, page + ': original complete learning-context successor bytes');
+  return restored;
+}
 
 function removeReviewedAdditions(supplied: Uint8Array): Buffer {
   let bytes = Buffer.from(supplied);
@@ -34,36 +77,34 @@ function removeReviewedAdditions(supplied: Uint8Array): Buffer {
   return bytes;
 }
 
-// The Study redesign moves the source notice beside the course. Preserve the exact
-// earlier screen so historical translation checks still examine the UI they reviewed.
-function reviewedNoticePage(): Buffer {
-  const archived = readFileSync(resolve(root, 'tests/fixtures/student-page-learning-context.tsx.txt'));
-  assert.equal(archived.length, 88187, page + ': complete archived notice successor size');
-  assert.equal(sha(archived), noticePageSha, page + ': exact archived notice successor');
-  return archived;
-}
-
-export function ensureLearningContextCurrent(): void {
+function readCheckedSources() {
   // Do not reuse a successful stat signature here. Historical callers can nest
   // inside an older checked scope; a changed current read must still be visible.
   const live = readFileSync(resolve(root, page));
-  assert.equal(live.length, studyPageSize, page + ': complete actual live successor size');
+  assert.equal(live.length, 88635, page + ': complete actual live successor size');
   assert.equal(sha(live), studyPageSha, page + ': complete actual live successor, including every unlisted byte');
+  // The redesigned screen moved both the actions and notice. Project the separately
+  // verified shortcut edition through its actual edits for older language reviewers.
+  const shortcut = readFileSync(resolve(root, 'tests/fixtures/student-page-manual-shortcut.tsx.txt'));
+  const withNotice = beforeStudyManualShortcut(shortcut);
   const component = readFileSync(resolve(root, notice));
   assert.equal(component.length, 9886, notice + ': complete actual live successor size');
   assert.equal(sha(component), '334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747',
     notice + ': complete actual live successor of the reviewed learning-context layer');
-  removeReviewedAdditions(reviewedNoticePage());
+  return { live, shortcut, withNotice, before: removeReviewedAdditions(withNotice) };
+}
+
+export function ensureLearningContextCurrent(): void {
+  readCheckedSources();
 }
 
 /** Reverse only the exact reviewed UI additions. Unknown caller bytes stay
  * exposed to the original dated owner's complete byte/hash assertions. */
 export function learningContextSourceBefore<T extends string | Uint8Array>(file: string, supplied: T): T {
   if (file !== page) return supplied;
-  ensureLearningContextCurrent();
-  const suppliedSha = sha(supplied);
-  if (suppliedSha !== studyPageSha && suppliedSha !== noticePageSha) return supplied;
-  const before = removeReviewedAdditions(reviewedNoticePage());
+  const { live, shortcut, withNotice, before } = readCheckedSources();
+  const bytes = typeof supplied === 'string' ? Buffer.from(supplied) : supplied as Uint8Array;
+  if (!live.equals(bytes) && !shortcut.equals(bytes) && !withNotice.equals(bytes)) return supplied;
   return (typeof supplied === 'string' ? before.toString()
     : Buffer.isBuffer(supplied) ? Buffer.from(before) : new Uint8Array(before)) as T;
 }

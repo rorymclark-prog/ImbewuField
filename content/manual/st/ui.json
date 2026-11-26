@@ -11,5 +11,16 @@
   "draftNotice": "Phetolelo ena e entswe ke motjhini mme ha e so hlahlojwe ke motho ya buang Sesotho hantle. Haeba ho na le ntho e sa hlakang, bala kgaolo ya Senyesemane.",
   "credit": "E kgobokeditswe ke Rory Clark, Imbewu Yoshintso NPC. E hlahlobilwe mme ya ntjhafatswa bakeng sa Afrika Borwa, 2026. Dikarolo tse ding di fetotswe ho tswa bukeng ya African Conservation Trust, Introduction to Permaculture and Homestead Gardening (2014).",
   "minutes": "Metsotso e {n} ya ho bala",
-  "book": "Hatisa kapa o boloke buka yohle"
+  "book": "Hatisa kapa o boloke buka yohle",
+  "findTopic": "Batla sehlooho",
+  "searchHint": "Leka manyolo kapa metsi",
+  "searching": "E ntse e batla…",
+  "searchFailed": "Patlo ha e a bula. Hlahloba kgokelo ya hao mme o leke hape.",
+  "retrySearch": "Leka hape",
+  "noMatches": "Ha ho letho le fumanweng. Leka lentswe le leng.",
+  "resultCount": "Diphetho ({n})",
+  "showMore": "Bontsha diphetho tse ding",
+  "clearSearch": "Hlakola patlo",
+  "inThisChapter": "Kgaolong ena",
+  "film": "Video"
 }

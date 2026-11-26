@@ -3,8 +3,12 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
+import './manual-outline-checks.ts';
 import { filmEdition, matchingFilmTime } from '@/lib/field-films';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
+import { manualSearchIndex } from '@/lib/manual-search-index';
+import { prepareManualSearch, searchManual, type ManualSearchSection } from '@/lib/manual-search';
+import { manualGlossaryAnchor, manualOutline } from '@/lib/manual-outline';
 import {
   MANUAL_CHAPTERS, MANUAL_LANGS, MANUAL_LANG_NAMES, blockShape, chapterTitle, earthworksFilmPlacements, inlineText, isManualChapter, isManualLang, manualUi,
   parseInline, parseManual, type ManualFigure,
@@ -20,6 +24,60 @@ import {
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const file = (lang: string, slug: string) => path.join(ROOT, 'content', 'manual', lang, `${slug}.md`);
 const read = (lang: string, slug: string) => readFileSync(file(lang, slug), 'utf8');
+
+test('each manual search entry opens a chapter, heading, glossary word or field film in its own edition', () => {
+  for (const lang of MANUAL_LANGS) {
+    const index = manualSearchIndex(lang);
+    for (const slug of MANUAL_CHAPTERS) {
+      const blocks = parseManual(read(lang, slug));
+      const title = blocks.find(block => block.type === 'h1');
+      const body = blocks.filter(block => block !== title);
+      const anchors = ['chapter-start', ...manualOutline(body).map(heading => heading.anchor)];
+      if (slug === '07-earthworks-and-water') {
+        const films = index.filter(entry => entry.slug === slug && entry.kind === 'film');
+        assert.deepEqual(films.map(entry => entry.anchor), ['digging-the-swale-film', 'check-a-frame', 'peg-a-contour']);
+        anchors.push(...films.map(entry => entry.anchor));
+        assert.ok(films.every(entry => entry.passages.length === 1));
+      }
+      if (slug === '12-glossary') {
+        const glossary = body.find(block => block.type === 'table');
+        assert.ok(glossary?.type === 'table');
+        for (const [term, ...definition] of glossary.rows) {
+          const anchor = manualGlossaryAnchor(inlineText(term));
+          anchors.push(anchor);
+          const entry: ManualSearchSection | undefined = index.find(item => item.slug === slug && item.anchor === anchor);
+          assert.equal(entry?.title, inlineText(term));
+          assert.equal(entry?.titleLang, 'en');
+          assert.deepEqual(entry?.passages, definition.map(inlineText));
+        }
+      }
+      const entries = index.filter(entry => entry.slug === slug);
+      assert.deepEqual(entries.map(entry => entry.anchor).sort(), anchors.sort(), lang + '/' + slug);
+      assert.ok(entries.every(entry => entry.lang === lang));
+    }
+  }
+});
+
+test('topic search ranks matching titles and compounds, requires every term and excerpts the matching source text', () => {
+  const chapter: ManualSearchSection = {
+    slug: '07-earthworks-and-water', chapter: 'Water', lang: 've', anchor: 'chapter-start', title: 'Water', passages: [],
+  };
+  const exact = { ...chapter, anchor: 'section-1', title: 'Mavu na maḓi', passages: ['A short introduction.'] };
+  const quoted = 'Keep the ṱshisima near the bed.';
+  const source = 'Read this first. '.repeat(20) + quoted;
+  const body = { ...chapter, anchor: 'section-2', title: 'A guide', passages: ['Other text.', source, 'Mavu na maḓi.'] };
+  assert.deepEqual(searchManual(prepareManualSearch([body, exact]), '  MAVU–NA madi! ').map(hit => hit.section.anchor), [exact.anchor, body.anchor]);
+  const [hit] = searchManual(prepareManualSearch([body]), 'water tshisima');
+  assert.ok(hit.excerpt.includes(quoted));
+  assert.ok(source.includes(hit.excerpt.replace(/^…|…$/g, '')));
+  assert.deepEqual(searchManual(prepareManualSearch([body]), 'water'), []);
+  assert.deepEqual(searchManual(prepareManualSearch([body]), 'mavu missing'), []);
+  assert.deepEqual(searchManual(prepareManualSearch([body]), '— !'), []);
+  const en = prepareManualSearch(manualSearchIndex('en'));
+  assert.equal(searchManual(en, 'windbreak')[0].section.anchor, 'term-windbreak');
+  assert.equal(searchManual(en, 'A frame')[0].section.anchor, 'check-a-frame');
+  assert.ok(searchManual(en, 'digging swales').some(hit => hit.section.title === 'Digging the swale'));
+});
 
 test('inline parser: bold, italic and unmatched markers', () => {
   assert.deepEqual(parseInline('Plant **comfrey** (*Symphytum*) now'), [
@@ -115,6 +173,7 @@ test('UI strings: English complete, translated languages complete, placeholders 
       assert.ok(own[key].trim(), `${lang} has translated chapters but ui.json "${key}" is blank`);
     }
     assert.ok(own.minutes.includes('{n}'), `${lang}/ui.json "minutes" must keep the {n} placeholder`);
+    assert.ok(own.resultCount.includes('{n}'), `${lang}/ui.json search result count must keep the {n} placeholder`);
   }
 });
 
@@ -306,6 +365,7 @@ test('every Study module opens its own case, lessons have distinct field tasks, 
     assert.ok(tasks.every(Boolean));
     assert.equal(new Set(tasks).size, lessons.length);
   }
+  const editions = MANUAL_LANGS.map(lang => ({ lang, index: manualSearchIndex(lang) }));
   for (const id of modules) {
     const entry = FIELD_CASES[id];
     for (const copy of [entry.title, entry.scene, entry.question, entry.reasoning]) {
@@ -315,14 +375,15 @@ test('every Study module opens its own case, lessons have distinct field tasks, 
       const figure = figures.find(item => item.id === entry.figure);
       assert.ok(figure && existsSync(path.join(ROOT, 'public', figure.src)), id);
     }
-    for (const lang of MANUAL_LANGS) {
+    for (const { lang, index } of editions) {
       const excerpt = passages[id][lang];
-      const sections = read(lang, entry.chapter).split(/^## /m).slice(1);
-      const section = sections[entry.section]?.trim().split(/\n\s*\n/);
+      const section = index.find(item => item.slug === entry.chapter && item.anchor === entry.anchor);
       assert.ok(section, `${id}: manual anchor must exist in ${lang}`);
-      assert.equal(section[0], excerpt.sectionTitle);
-      const paragraphs = section.slice(1).map(text => text.replace(/^> /, '').replaceAll('*', ''));
-      assert.ok(paragraphs.includes(excerpt.passage), `${id}: show a complete, current ${lang} passage`);
+      assert.equal(section.title, excerpt.sectionTitle);
+      // The chapter link opens the topic; its example can come from a subheading underneath.
+      const withinTopic = index.filter(item => item.slug === entry.chapter
+        && (item.anchor === entry.anchor || item.anchor.startsWith(entry.anchor + '-')));
+      assert.ok(withinTopic.some(item => item.passages.includes(excerpt.passage)), `${id}: show a complete, current ${lang} passage`);
     }
   }
 });
