@@ -7,6 +7,7 @@ import * as journal from '../lib/field-journal.ts';
 import * as view from '../lib/journal-view.ts';
 import * as taskLinks from '../lib/task-record-link.ts';
 import * as copy from '../lib/farm-memory-copy.ts';
+import * as phaseJournal from '../lib/phase-journal-source.ts';
 import { JOURNAL_STORAGE_EVENT } from '../lib/journal-storage.ts';
 import { journalPlanningReferenceText } from '../lib/journal-link-display.ts';
 
@@ -71,6 +72,7 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
     '@/lib/farm-memory-copy': copy,
     '@/components/LanguageDraftNote': { __esModule: true, default: ({ lang }: { lang: string }) => lang === 'zu' ? React.createElement('p', { role: 'note', lang }, copy.farmMemoryText(lang, 'draftNotice')) : null },
     '@/lib/task-record-link': taskLinks,
+    '@/lib/phase-journal-source': phaseJournal,
     '@/lib/sample-mode': { isSampleMode: () => false },
     '@/lib/journal-export': {
       downloadJournalCsv: async (entries: journal.JournalEntry[], exportOptions: Record<string, unknown>) => { if (options.exportError) throw Error('File unavailable'); exports.push({ format: 'csv', entries, options: exportOptions }); return options.delivery ?? 'downloaded'; },
@@ -88,6 +90,8 @@ export async function mountJournal(options: { url?: string; entries?: journal.Jo
   dependencies['./JournalNurseryProgressSummary'] = { __esModule: true, default: NurseryProgressSummary };
   const NurseryFieldPlantingSummary = component('components/journal/JournalNurseryFieldPlantingSummary.tsx', dependencies);
   dependencies['./JournalNurseryFieldPlantingSummary'] = { __esModule: true, default: NurseryFieldPlantingSummary };
+  dependencies['./PhaseObservationContext'] = { __esModule: true, default: component('components/journal/PhaseObservationContext.tsx', dependencies) };
+  dependencies['./PhaseObservationPicker'] = { __esModule: true, default: component('components/journal/PhaseObservationPicker.tsx', dependencies) };
   const Sheet = component('components/journal/JournalEntrySheet.tsx', dependencies);
   dependencies['./JournalEntrySheet'] = { __esModule: true, default: Sheet };
   const FieldJournal = component('components/journal/FieldJournal.tsx', dependencies);
