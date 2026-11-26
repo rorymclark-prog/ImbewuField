@@ -68,7 +68,7 @@ const hooks = registerHooks({
     return next(specifier, context);
   },
 });
-const { captureCycleHarvestReport, linkExistingCycleHarvest, readCycleHarvestOptions, unlinkExistingCycleHarvest } = await import('../lib/db/cycle-harvest.ts');
+const { captureCycleHarvestReport, captureGardenCycleHarvest, linkExistingCycleHarvest, readCycleHarvestOptions, unlinkExistingCycleHarvest } = await import('../lib/db/cycle-harvest.ts');
 after(() => hooks.deregister());
 
 class TestStorage {
@@ -143,6 +143,33 @@ test('changed, pending, withdrawn and foreign source records cannot gain a link'
   assert.deepEqual(await linkExistingCycleHarvest(link, option, current), { status: 'held' });
   assert.equal(state.writes, 0);
   assert.equal(state.documents.has(linkPath), false);
+});
+
+test('garden read keeps recorded day and guarded explicit zero without changing harvest entry', async () => {
+  const option = await displayed();
+  assert.equal((await linkExistingCycleHarvest(association(), option, current)).status, 'saved');
+  const before = await captureGardenCycleHarvest(plan, 'cabbage', current);
+  assert.deepEqual(before.evidence, { status: 'ready', incomplete: false,
+    rows: [{ recordId, observedOn, recordedOn: '2026-08-09', quantity: 2, unit: 'bunches' }] });
+  state.documents.set(rowPath, { ...row, logged_at: '2026-08-09T23:58:00-02:00', unit: 'kg', kg: 0, quantity: 0 });
+  assert.equal(await before.checkCurrent(), false);
+  const zero = await captureGardenCycleHarvest(plan, 'cabbage', current);
+  assert.deepEqual(zero.evidence, { status: 'ready', incomplete: false,
+    rows: [{ recordId, observedOn, recordedOn: '2026-08-10', quantity: 0, unit: 'kg' }] });
+  assert.deepEqual((await readCycleHarvestOptions('cabbage', current)).options, []);
+  assert.deepEqual((await captureCycleHarvestReport(plan, 'cabbage', current)).evidence,
+    { status: 'ready', rows: [], incomplete: true });
+  state.documents.set(rowPath, { ...row, logged_at: '2026-08-09Tbad' });
+  const unknownDate = await captureGardenCycleHarvest(plan, 'cabbage', current);
+  assert.equal(unknownDate.evidence.status, 'ready');
+  if (unknownDate.evidence.status === 'ready') assert.equal(unknownDate.evidence.rows[0]?.recordedOn, null);
+  assert.equal(await zero.checkCurrent(), false);
+  const foreign = await captureGardenCycleHarvest({ ...plan, scope: { kind: 'mapped-site', siteId: 'site:1.00000,0.00000' } }, 'cabbage', current);
+  assert.deepEqual(foreign.evidence, { status: 'ready', rows: [], incomplete: true });
+  state.documents.set(rowPath, { ...row, profile_id: 'somebody-else' });
+  assert.deepEqual((await captureGardenCycleHarvest(plan, 'cabbage', current)).evidence,
+    { status: 'ready', rows: [], incomplete: true });
+  assert.equal(state.writes, 1);
 });
 
 test('export rechecks after a quantity edit and omits unavailable or changed-product records', async () => {

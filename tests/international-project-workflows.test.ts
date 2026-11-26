@@ -5,6 +5,8 @@ import { reviewProjectIndicator, validProjectDate } from '@/lib/international/pr
 import { existingProjectReference, productionProjectEvidence } from '@/lib/international/projects/sources';
 import { PROJECT_DEMO_CONTEXT, projectDemoEvidence } from '@/lib/international/projects/demo';
 import type { ProjectEvidence, ProjectReviewContext } from '@/lib/international/projects/types';
+import { buildGardenReport, reportableGardenSites, type GardenReportRecords } from '@/lib/international/projects/garden-report';
+import { buildGardenProgressReportHtml } from '@/lib/international/projects/garden-report-html';
 
 const context: ProjectReviewContext = { projectId: 'demo-project', siteId: 'demo-site', periodStart: '2026-10-01',
   periodEnd: '2026-10-31', cutoffDate: '2026-11-02', timeZone: 'Africa/Johannesburg', audience: 'grower-review', allowDemo: true };
@@ -24,6 +26,61 @@ const paired = (kind: 'survival' | 'soil-observation' = 'survival'): ProjectEvid
   row({ reference: { authority: 'programme-evidence', id: 'follow-up' }, kind, level: 'outcome', unit: kind === 'survival' ? 'trees' : 'example-score',
     stage: 'follow-up', quantity: 8, denominator: 10, population: 'cohort-A', method: 'documented-example' }),
 ];
+
+test('private garden report counts selected kilograms, keeps entered dates and separates notes and other units', () => {
+  const source: GardenReportRecords = { siteId: 'scope-A', siteLabel: 'My <garden>', sample: false, incomplete: false,
+    harvest: [
+      { recordId: 'weight', observedOn: '2026-10-03', recordedOn: '2026-10-04', quantity: 0, unit: 'kg' },
+      { recordId: 'crate', observedOn: '2026-10-12', recordedOn: '2026-10-14', quantity: 3, unit: 'crates' },
+      { recordId: 'unselected', observedOn: '2026-10-12', recordedOn: '2026-10-14', quantity: 13, unit: 'kg' },
+    ],
+    notes: [
+      { recordId: 'note', observedOn: '2026-10-04', recordedOn: '2026-10-05', text: 'Mulched <bed1>.' },
+      { recordId: 'late-note', observedOn: '2026-10-04', recordedOn: '2026-11-03', text: 'Too late for this cutoff.' },
+    ] };
+  const report = buildGardenReport(source, context, new Set(['weight', 'crate']), new Set(['note', 'late-note']));
+  assert.ok(report);
+  assert.equal(report.total.value, null);
+  assert.equal(report.total.knownSubtotal, 0);
+  assert.deepEqual(report.harvest.map(item => [item.recordId, item.pickedOn, item.recordedOn, item.unit, item.includedInWeight]), [
+    ['weight', '2026-10-03', '2026-10-04', 'kg', true], ['crate', '2026-10-12', '2026-10-14', 'crates', false],
+  ]);
+  assert.deepEqual(report.notes?.map(entry => entry.recordId), ['note']);
+  const html = buildGardenProgressReportHtml(report);
+  assert.match(html, /My &lt;garden&gt;/);
+  assert.match(html, /Mulched &lt;bed1&gt;/);
+  assert.match(html, /3 crates/);
+  assert.doesNotMatch(html, /Too late|unselected|<bed1>/);
+});
+
+test('garden chooser binds saved pin aliases to checked map identity, ignoring pin IDs and other sites', () => {
+  const places = [
+    { id: 'demo-place-ubhejane', name: 'Ubhejane', lat: -27.72623, lon: 31.96304 },
+    { id: 'mkuze-alias', name: 'Crèche', lat: -27.72623, lon: 31.96304 },
+    { id: 'site:-27.72623,31.96304', name: 'Distinct garden', lat: 43.1, lon: -89.35 },
+  ];
+  assert.deepEqual(reportableGardenSites(places, new Set(['site:-27.72623,31.96304'])), [
+    { id: 'site:-27.72623,31.96304', label: 'Crèche / Ubhejane' },
+  ]);
+  assert.deepEqual(reportableGardenSites(places, new Set(['site:43.10000,-89.35000'])), [
+    { id: 'site:43.10000,-89.35000', label: 'Distinct garden' },
+  ]);
+});
+
+test('garden report cannot count duplicate, missing-date or out-of-period records', () => {
+  const valid = { recordId: 'repeat', observedOn: '2026-10-01', recordedOn: '2026-10-02', quantity: 6, unit: 'kg' };
+  const source: GardenReportRecords = { siteId: 'garden', siteLabel: 'Garden', sample: true, incomplete: false,
+    harvest: [valid, valid, { ...valid, recordId: 'early', observedOn: '2026-09-30' },
+      { ...valid, recordId: 'missing-day', recordedOn: null }, { ...valid, recordId: 'late', recordedOn: '2026-11-03' }],
+    notes: [],
+  };
+  const report = buildGardenReport(source, context, new Set(source.harvest.map(item => item.recordId)), new Set());
+  assert.ok(report);
+  assert.equal(report.total.state, 'unavailable');
+  assert.equal(report.total.knownSubtotal, null);
+  assert.ok(report.harvest.every(item => !item.includedInWeight && item.reasons.length > 0));
+  assert.equal(buildGardenReport(source, { ...context, cutoffDate: '2026-10-30' }, new Set(), new Set()), null);
+});
 
 test('all five grower-owned workflows have actionable source-linked steps and defined indicator limits', () => {
   assert.deepEqual(new Set(PROJECT_TEMPLATES.map(template => template.id)), new Set(['food-security', 'livelihoods', 'agroforestry', 'agroecology', 'market-garden']));

@@ -10,6 +10,7 @@ import { recordGrowerFieldObservation, type GrowerFieldObservationInput } from '
 import type { BoardTask } from '@/lib/task-board';
 import type { CycleHarvestOption, CycleHarvestSelection } from '@/lib/cycle-harvest';
 import { openGrowerHarvestOptions, readGrowerCycleHarvestReport, updateGrowerCycleHarvest } from '@/lib/grower-cycle-harvest';
+import { gardenReportSites, openGardenReport } from '@/lib/international/projects/garden-report-source';
 import { loadGrowerOperationsSources, isGrowerOperationsCurrent, checkGrowerOperationsCurrent,
   type GrowerOperationsSources } from '@/lib/international/grower-operations-source';
 
@@ -79,7 +80,12 @@ export function useGrowerOperations() {
     updateGrowerCycleHarvest(harvestSource, task, input, null, harvestCurrent(actionIsCurrent));
   const readHarvestReport = (task: BoardTask, actionIsCurrent: () => boolean) =>
     readGrowerCycleHarvestReport(harvestSource, task, harvestCurrent(actionIsCurrent));
+  const readGardenReport = (siteId: string, actionIsCurrent: () => boolean) =>
+    openGardenReport(harvestSource, siteId, harvestCurrent(actionIsCurrent));
   // Parent UI uses this object's identity to withdraw old task actions. An
   // unrelated parent render must not masquerade as a new source snapshot.
-  return useMemo(() => ({ ...result, refresh, checkCurrent, isCurrent, onRecordObservation, loadHarvest, saveHarvest, removeHarvest, readHarvestReport }), [result]);
+  return useMemo(() => ({
+    ...result, refresh, checkCurrent, isCurrent, onRecordObservation, loadHarvest, saveHarvest, removeHarvest, readHarvestReport,
+    gardenRevision: observationEpoch, gardenSites: gardenReportSites(harvestSource), readGardenReport,
+  }), [result]);
 }
