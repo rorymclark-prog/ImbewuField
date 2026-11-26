@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Sprout, Users, GraduationCap, BarChart3, Building2, type LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { useRouter } from 'next/navigation';
-import { useRoleNavigation, startRolePreview } from '@/lib/use-role-navigation';
+import { useRoleNavigation, openRolePreview } from '@/lib/use-role-navigation';
 import { visibleRoleTabs } from '@/lib/role-navigation';
 import { sampleWorkspaceText } from '@/lib/sample-tour-localization';
 
@@ -68,7 +68,7 @@ export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { 
       })}
       {(accountRole === 'ngo' || accountRole === 'admin') && <label className="font-sans text-sm" style={{ padding: '4px 8px', color: 'var(--text-primary)' }}>
         <span className="sr-only">{ui('View as with demonstration records', 'Buka njengendima ethile ngamarekhodi okubonisa')}</span>
-        <select aria-label={ui('View as with demonstration records', 'Buka njengendima ethile ngamarekhodi okubonisa')} value="" onChange={e => { const target = ROLES.find(r => r.key === e.target.value); if (target && startRolePreview(target.key)) { onNavigate?.(); router.push(target.href); } }} style={{ minHeight: 44, maxWidth: 180, background: 'var(--bg-1)', color: 'var(--text-primary)', borderRadius: 8, padding: 6 }}>
+        <select aria-label={ui('View as with demonstration records', 'Buka njengendima ethile ngamarekhodi okubonisa')} value="" onChange={e => { const target = ROLES.find(r => r.key === e.target.value); if (target && openRolePreview(target.key, target.href, router.push)) onNavigate?.(); }} style={{ minHeight: 44, maxWidth: 180, background: 'var(--bg-1)', color: 'var(--text-primary)', borderRadius: 8, padding: 6 }}>
           <option value="">{sample ? ui('Switch view…', 'Shintsha isikrini…') : ui('Switch practice view…', 'Shintsha isikrini sokuzilolonga…')}</option>
           {ROLES.map(r => <option key={r.key} value={r.key}>{t(r.labelKey)}</option>)}
         </select>

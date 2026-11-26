@@ -25,8 +25,7 @@ import { useLanguage, translate } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
-import { isSampleMode } from '@/lib/sample-mode';
-import { DEMO_SITE } from '@/lib/demo-farm';
+import { getSampleMapSite, getSampleWorkspace, isSampleMode } from '@/lib/sample-mode';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { monthlyTemperatureStatus } from '@/lib/climate-temperature';
@@ -260,7 +259,7 @@ function HomeInner() {
   }, [searchKey]);
 
   const locationRequest = useRef(0);
-  const handleLocationSelect = useCallback(async (lat: number, lon: number, options?: { openDetails?: boolean }) => {
+  const handleLocationSelect = useCallback(async (lat: number, lon: number, options?: { openDetails?: boolean; skipLocationFetch?: boolean }) => {
     const request = ++locationRequest.current;
     const named = loadPlaces().find(p=>designSiteIdFromLocation(p)===designSiteIdFromLocation({lat,lon}));
     setActivePlaceId(named?.id??null);setActivePlaceName(named?.name??null);
@@ -274,6 +273,12 @@ function HomeInner() {
     setError('');
     if (options?.openDetails !== false) {
       setSheetOpen(true);
+    }
+    if (options?.skipLocationFetch) {
+      // A fictional farm opens on its saved map without looking up or
+      // attributing real terrain, soil or weather to the schematic town marker.
+      setLoading(false);
+      return;
     }
 
     // Check localStorage cache. MUST key at 5 dp (~1.1 m) to match designSiteIdFromLocation —
@@ -467,7 +472,7 @@ function HomeInner() {
     }
   }, [user, authLoading, router, pathname, searchParams]);
 
-  // Sample mode: auto-load the real Ubhejane Creche site so the evaluator lands
+  // Sample mode: auto-load the chosen demo site so the evaluator lands
   // straight on a populated map instead of an empty "tap to survey" state.
   //
   // Automatic sample map loading initializes location data but does not itself
@@ -480,9 +485,13 @@ function HomeInner() {
   // main-site paths above use; the delay lets the map finish mounting before
   // it is told to fly.
   useEffect(() => {
-    if (isSampleMode() && !selected && !searchParams.get('site') && !reportSiteFlow) {
-      handleLocationSelect(DEMO_SITE.lat, DEMO_SITE.lon, { openDetails: false });
-      const t = setTimeout(() => setJumpTo({ lat: DEMO_SITE.lat, lon: DEMO_SITE.lon }), 800);
+    const site = getSampleMapSite();
+    if (site && !selected && !searchParams.get('site') && !reportSiteFlow) {
+      handleLocationSelect(site.lat, site.lon, {
+        openDetails: false,
+        skipLocationFetch: getSampleWorkspace() === 'green-horizon',
+      });
+      const t = setTimeout(() => setJumpTo({ lat: site.lat, lon: site.lon }), 800);
       return () => clearTimeout(t);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

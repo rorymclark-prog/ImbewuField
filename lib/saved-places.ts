@@ -33,7 +33,7 @@ export interface SavedPlace {
   biome: string;
   rainfall?: number;
   rainfallSource?: string;
-  elevation: number;
+  elevation: number | null;
   savedAt: string; // ISO date
   updatedAt?: number; // ms — last edit time, drives cross-device newest-wins merge
   label?: PlaceLabel;
@@ -63,7 +63,7 @@ export function isValidSavedPlace(value: unknown): value is SavedPlace {
     && typeof value.lon === 'number' && Number.isFinite(value.lon) && value.lon >= -180 && value.lon <= 180
     && typeof value.biome === 'string'
     && (value.rainfall === undefined || (typeof value.rainfall === 'number' && Number.isFinite(value.rainfall)))
-    && typeof value.elevation === 'number' && Number.isFinite(value.elevation)
+    && (value.elevation === null || (typeof value.elevation === 'number' && Number.isFinite(value.elevation)))
     // Pre-sync local records used an empty timestamp. Keep them readable at timestamp zero;
     // network shares apply the stricter ISO requirement at their own trust boundary.
     && typeof value.savedAt === 'string'
