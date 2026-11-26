@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 November 2026', sha: '700c04479', changes: [
+    'Record a dated Field Journal observation for a saved design phase and mapped feature.',
+  ] },
   { when: '26 November 2026', sha: '03000781e', changes: [
     'Search the manual for a topic or a glossary term and open the matching passage.',
     'Jump to a section inside a chapter and keep that section when you switch languages.',
