@@ -123,6 +123,7 @@ async function isolatedGuard() {
     // The wave 17 layer sits on the wave 16 one the same way.
     'tests/wave-17-history-checks.ts','tests/fixtures/student-page-before-wave-17.tsx.txt',
     'tests/learning-context-history-checks.ts','components/studies/LearningRegionNotice.tsx',
+    'tests/fixtures/student-page-manual-shortcut.tsx.txt',
     // w25-03: the service-worker layer is projected first by slides-webp-history-checks.ts.
     'tests/wave-25-offline-history-checks.ts','tests/fixtures/sw-route-before-w25-offline.ts.txt']);
   for (const file of fieldFilmMedia.keys()) files.add(file);

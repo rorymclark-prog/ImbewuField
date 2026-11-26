@@ -11,6 +11,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const page = 'app/student/page.tsx';
 const notice = 'components/studies/LearningRegionNotice.tsx';
 const sha = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
+const studyPageSha = '19c818fbe83297f8a42874cab0411a38726613298df1130dd6bc49328ed6d4d9';
 const shortcutPageSha = 'b63181ee9d1cca5d83da3084e8a0c1c477d59720827e01da11e851fedc4a5599';
 const noticePageSha = 'ece4f0787a0e0c5e14d6d5f406aef782e195cedb22b1578013a0b2781e173730';
 const previousPageSha = 'a361890bfdb03c22e74a01b61516f759cf93225ca20b83edf422aa37a9712272';
@@ -50,8 +51,8 @@ const actionsBeforeManual = Buffer.from([
 ].join('\n'));
 
 export function beforeStudyManualShortcut(live: Buffer): Buffer {
-  assert.equal(live.length, 88519, page + ': complete actual live successor size');
-  assert.equal(sha(live), shortcutPageSha, page + ': complete actual live successor, including the manual link and every unlisted byte');
+  assert.equal(live.length, 88519, page + ': complete archived shortcut size');
+  assert.equal(sha(live), shortcutPageSha, page + ': exact archived shortcut, including the manual link and every unlisted byte');
   const start = live.indexOf(actionsWithManual);
   assert.ok(start >= 0, page + ': exact Study manual shortcut and neighbouring course action');
   const end = start + actionsWithManual.length;
@@ -80,12 +81,17 @@ function readCheckedSources() {
   // Do not reuse a successful stat signature here. Historical callers can nest
   // inside an older checked scope; a changed current read must still be visible.
   const live = readFileSync(resolve(root, page));
-  const withNotice = beforeStudyManualShortcut(live);
+  assert.equal(live.length, 88635, page + ': complete actual live successor size');
+  assert.equal(sha(live), studyPageSha, page + ': complete actual live successor, including every unlisted byte');
+  // The redesigned screen moved both the actions and notice. Project the separately
+  // verified shortcut edition through its actual edits for older language reviewers.
+  const shortcut = readFileSync(resolve(root, 'tests/fixtures/student-page-manual-shortcut.tsx.txt'));
+  const withNotice = beforeStudyManualShortcut(shortcut);
   const component = readFileSync(resolve(root, notice));
   assert.equal(component.length, 9886, notice + ': complete actual live successor size');
   assert.equal(sha(component), '334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747',
     notice + ': complete actual live successor of the reviewed learning-context layer');
-  return { live, withNotice, before: removeReviewedAdditions(withNotice) };
+  return { live, shortcut, withNotice, before: removeReviewedAdditions(withNotice) };
 }
 
 export function ensureLearningContextCurrent(): void {
@@ -96,9 +102,9 @@ export function ensureLearningContextCurrent(): void {
  * exposed to the original dated owner's complete byte/hash assertions. */
 export function learningContextSourceBefore<T extends string | Uint8Array>(file: string, supplied: T): T {
   if (file !== page) return supplied;
-  const { live, withNotice, before } = readCheckedSources();
+  const { live, shortcut, withNotice, before } = readCheckedSources();
   const bytes = typeof supplied === 'string' ? Buffer.from(supplied) : supplied as Uint8Array;
-  if (!live.equals(bytes) && !withNotice.equals(bytes)) return supplied;
+  if (!live.equals(bytes) && !shortcut.equals(bytes) && !withNotice.equals(bytes)) return supplied;
   return (typeof supplied === 'string' ? before.toString()
     : Buffer.isBuffer(supplied) ? Buffer.from(before) : new Uint8Array(before)) as T;
 }

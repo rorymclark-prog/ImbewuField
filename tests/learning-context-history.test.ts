@@ -36,7 +36,9 @@ for (const oldSpan of [
     + predecessorText.slice(at + oldSpan.length);
 }
 const predecessor = Buffer.from(predecessorText);
-assert.equal(current.length, 88519); assert.equal(sha(current), 'b63181ee9d1cca5d83da3084e8a0c1c477d59720827e01da11e851fedc4a5599');
+assert.equal(current.length, 88635); assert.equal(sha(current), '19c818fbe83297f8a42874cab0411a38726613298df1130dd6bc49328ed6d4d9');
+const shortcut = readFileSync(absolute('tests/fixtures/student-page-manual-shortcut.tsx.txt'));
+assert.equal(shortcut.length, 88519); assert.equal(sha(shortcut), 'b63181ee9d1cca5d83da3084e8a0c1c477d59720827e01da11e851fedc4a5599');
 assert.equal(predecessor.length, 88053); assert.equal(sha(predecessor), 'a361890bfdb03c22e74a01b61516f759cf93225ca20b83edf422aa37a9712272');
 const overrides = new Map<string, Buffer>(), reads = new Map<string, number>();
 const oldGlobal = Object.getOwnPropertyDescriptor(globalThis, '__learningContextHistoryReads');
@@ -78,10 +80,11 @@ const changedByte = (input: Buffer, at = Math.floor(input.length / 2)) => {
 const rejectLive = /complete actual live successor/;
 
 test('the exact Study shortcut restores the complete pinned learning-context page before its history is projected', () => {
-  const withNotice = layer.beforeStudyManualShortcut(current);
+  const withNotice = layer.beforeStudyManualShortcut(shortcut);
   assert.equal(withNotice.length, 88187);
   assert.equal(sha(withNotice), 'ece4f0787a0e0c5e14d6d5f406aef782e195cedb22b1578013a0b2781e173730');
   assert.deepEqual(layer.learningContextSourceBefore(page, withNotice), predecessor);
+  assert.deepEqual(layer.learningContextSourceBefore(page, shortcut), predecessor);
   const changedPredecessor = changedByte(withNotice);
   assert.equal(layer.learningContextSourceBefore(page, changedPredecessor), changedPredecessor);
 
@@ -94,7 +97,8 @@ test('a same-size change to the manual destination or label stays visible to his
   for (const marker of ['href="/manual"', "t('navManual')"]) {
     const offset = current.indexOf(marker); assert.ok(offset >= 0);
     const changed = changedByte(current, offset + marker.length - 3);
-    assert.throws(() => layer.beforeStudyManualShortcut(changed), rejectLive);
+    const oldOffset = shortcut.indexOf(marker); assert.ok(oldOffset >= 0);
+    assert.throws(() => layer.beforeStudyManualShortcut(changedByte(shortcut, oldOffset)), /exact archived shortcut/);
     assert.equal(layer.learningContextSourceBefore(page, changed), changed);
     overrides.set(absolute(page), changed);
     assert.throws(() => wave17.ensureWave17Current(), rejectLive);
@@ -107,7 +111,7 @@ test('the reviewed notice removes only its two exact additions and the original 
   assert.deepEqual(layer.learningContextSourceBefore(page, current), predecessor);
   assert.deepEqual(wave17.wave17SourceBefore(page, current), before17);
   assert.deepEqual(wave16.wave16SourceBefore(page, current), before16);
-  let removed = layer.beforeStudyManualShortcut(current);
+  let removed = layer.beforeStudyManualShortcut(shortcut);
   for (const addition of [
     Buffer.from("import LearningRegionContext from '@/components/studies/LearningRegionNotice';\n"),
     Buffer.from('        <LearningRegionContext scope="core-farming" />\n'),
@@ -117,6 +121,11 @@ test('the reviewed notice removes only its two exact additions and the original 
     removed = Buffer.concat([removed.subarray(0, at), removed.subarray(at + addition.length)]);
   }
   assert.deepEqual(removed, predecessor, 'all unlisted bytes equal the independently pinned wave17 successor');
+});
+
+test('a same-size edit to the archived manual shortcut cannot stand in for the reviewed course', () => {
+  overrides.set(absolute('tests/fixtures/student-page-manual-shortcut.tsx.txt'), changedByte(shortcut));
+  assert.throws(() => layer.learningContextSourceBefore(page, current), /exact archived shortcut/);
 });
 
 test('string, Buffer and Uint8Array callers receive their own detached historical value', () => {
@@ -225,6 +234,7 @@ test('the existing isolated history copy plan carries the new guard and notice, 
   const code = stripTypeScriptTypes(declaration[0]) + '\nreturn files;';
   const planned = new Function('inventory', 'proof', 'webp', code)(inventory, proof, webp) as Set<string>;
   const required = [page, notice, 'tests/learning-context-history-checks.ts',
+    'tests/fixtures/student-page-manual-shortcut.tsx.txt',
     'tests/wave-17-history-checks.ts', 'tests/fixtures/student-page-before-wave-17.tsx.txt',
     'tests/wave-16-history-checks.ts', 'tests/fixtures/student-page-before-wave-16.tsx.txt'];
   for (const file of required) assert.ok(planned.has(file), 'the actual history fixture copy plan must include ' + file);

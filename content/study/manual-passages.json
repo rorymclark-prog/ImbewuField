@@ -1,0 +1,222 @@
+{
+  "intro-permaculture": {
+    "en": {
+      "sectionTitle": "The three ethics",
+      "passage": "Use the ethics as a test. Before you plough a slope, buy a spray or fence off a spring, ask three questions. Is it good for the land? Is it good for people? Is it fair? If any answer is no, look for another way."
+    },
+    "zu": {
+      "sectionTitle": "Izimiso zokuziphatha ezintathu",
+      "passage": "Sebenzisa lezi zimiso njengesivivinyo. Ngaphambi kokuthi ulime umthambeka, uthenge isifutho noma ubiyele umthombo, buza imibuzo emithathu. Ingabe kuhle emhlabeni? Ingabe kuhle ebantwini? Ingabe kulungile? Uma noma iyiphi impendulo ithi cha, funa enye indlela."
+    },
+    "st": {
+      "sectionTitle": "Melao ya boitshwaro e meraro",
+      "passage": "Sebedisa melao ya boitshwaro e le teko. Pele o lema letswapo ka mohoma, o reka sefafatsi kapa o kwalla sediba ka terata, botsa dipotso tse tharo. Na ho lokile bakeng sa naha? Na ho lokile bakeng sa batho? Na ho na le toka? Haeba karabo efe kapa efe e le tjhe, batla tsela e nngwe."
+    },
+    "ts": {
+      "sectionTitle": "Mahanyelo manharhu",
+      "passage": "Tirhisa mahanyelo lawa tanihi xikambelo. U nga si rima ndhawu yo rhelela, u xava xifafazelo kumbe u biyela xihlovo lexi humaka, vutisa swivutiso swinharhu. Xana swi kahle eka misava? Xana swi kahle eka vanhu? Xana swa ringana? Loko nhlamulo yin'wana yi ri \"e-e\", lava ndlela yin'wana."
+    },
+    "ve": {
+      "sectionTitle": "Milayo miraru ya vhuḓifari",
+      "passage": "Shumisani milayo ya vhuḓifari sa ndingo. Phanḓa ha musi ni tshi gwa fhethu ho sendamaho, ni tshi renga mushonga wa u pfafadza kana ni tshi pfalela tshisima, vhudzisani mbudziso tharu. Zwi a vhuyelwa mavu naa? Zwi a vhuyelwa vhathu naa? Zwo fanela naa? Arali phindulo iṅwe i \"hai\", ṱoḓani iṅwe nḓila."
+    }
+  },
+  "reading-landscape": {
+    "en": {
+      "sectionTitle": "Step 1: Site assessment",
+      "passage": "A mistake on paper costs nothing to fix. A mistake on the ground costs sweat. So learn the land before you change it."
+    },
+    "zu": {
+      "sectionTitle": "Isinyathelo 1: Ukuhlola indawo",
+      "passage": "Iphutha elisephepheni alibizi lutho ukulilungisa. Iphutha elisemhlabathini libiza umjuluko. Ngakho funda umhlaba ngaphambi kokuwushintsha."
+    },
+    "st": {
+      "sectionTitle": "Mohato wa 1: Tlhahlobo ya setsha",
+      "passage": "Phoso pampiring ha e bitse letho ho e lokisa. Phoso fatshe e bitsa mofufutso. Kahoo ithute naha pele o e fetola."
+    },
+    "ts": {
+      "sectionTitle": "Goza 1: Nxopaxopo wa ndhawu",
+      "passage": "Xihoxo lexi nga ephepheni a xi durhi nchumu ku xi lulamisa. Xihoxo lexi nga emisaveni xi durha ntsembyana. Hikwalaho dyondza misava u nga si yi cinca."
+    },
+    "ve": {
+      "sectionTitle": "Lwendo lwa 1: Tsedzuluso ya fhethu",
+      "passage": "Vhukhakhi kha bammbiri a vhu ḓuri tshithu u vhu lugisa. Vhukhakhi kha mavu vhu ḓura mushumo muhulu. Ngauralo gudani mavu phanḓa ha u a shandukisa."
+    }
+  },
+  "water-harvesting": {
+    "en": {
+      "sectionTitle": "Harvesting and storing rainwater",
+      "passage": "We store it in drums, tanks, ponds and dams. But the biggest store is the soil itself. Soil rich in organic matter (rotting plant and animal material), covered with plants and mulch (a blanket of dry grass, leaves or straw), soaks up rain and holds it far better than bare, hard ground. Permaculture calls this soil a living sponge."
+    },
+    "zu": {
+      "sectionTitle": "Ukuvuna nokugcina amanzi emvula",
+      "passage": "Siyigcina ezigubhini, emathangini, emachibini nasemadamu. Kodwa indawo enkulu kakhulu yokugcina ngumhlabathi uqobo. Umhlabathi onothe nge-organic matter (izinto zezitshalo nezilwane ezibolayo), ombozwe ngezitshalo ne-mulch (ingubo yotshani obomile, amaqabunga noma amahlanga), umunca imvula futhi uyibambe kangcono kakhulu kunomhlabathi ongenalutho, oqinile. I-permaculture ibiza lo mhlabathi ngokuthi isipontshi esiphilayo."
+    },
+    "st": {
+      "sectionTitle": "Ho kotula le ho boloka metsi a pula",
+      "passage": "Re a boloka ka meropa, ditanka, matangwana le matamo. Empa polokelo e kgolo ka ho fetisisa ke mobu ka bowona. Mobu o nang le organic matter e ngata (dintho tsa dimela le diphoofolo tse bolang), o kwahetsweng ke dimela le mulch (kobo ya jwang bo omileng, makgasi kapa jwang ba koro), o monya pula mme o e tshwara hantle haholo ho feta mobu o se nang letho, o thata. Permaculture e bitsa mobu ona sepontjhe se phelang (living sponge)."
+    },
+    "ts": {
+      "sectionTitle": "Ku hlengeleta no hlayisa mati ya mpfula",
+      "passage": "Hi ma hlayisa etidiramini, etithankini, eswidziveni na le madamu. Kambe xihlayiselo lexikulu ngopfu i misava hi yoxe. Misava leyi teleke hi organic matter (swilo swa swimilana na swiharhi leswi bolaka), leyi funengetiweke hi swimilana na mulch (xifunengeto xa byanyi byo oma, matluka kumbe mahlanga), yi nwa mpfula naswona yi yi khoma kahle swinene ku tlula misava leyi nga riki na nchumu, yo tiya. Permaculture yi vitana misava leyi xiponji lexi hanyaka."
+    },
+    "ve": {
+      "sectionTitle": "U kuvhanganya na u vhulunga maḓi a mvula",
+      "passage": "Ri a vhulunga kha migomo, dzithanngi, zwidziva na madamu. Fhedzi vhuvhulungelo vhuhulwane ndi mavu one mathihi. Mavu a re na organic matter (zwithu zwa zwimela na zwipuka zwi khou vhola) nnzhi, o fukedzwaho nga zwimela na mulch (tshifukedzi tsha mahatsi o omaho, maṱari kana mahatsi a thoro), a mona mvula a i fara zwavhuḓi vhukuma u fhira mavu a si na tshifukedzi, o khwaṱhaho. Permaculture i vhidza aya mavu tshiponndo tshi tshilaho (living sponge)."
+    }
+  },
+  "soil-health": {
+    "en": {
+      "sectionTitle": "The layers of the soil",
+      "passage": "A hole in the ground is a history book. Dig one, or look at a road cutting or gully, and you will see layers: the soil profile."
+    },
+    "zu": {
+      "sectionTitle": "Izingqimba zomhlabathi",
+      "passage": "Umgodi emhlabathini uyincwadi yomlando. Mba owodwa, noma ubheke lapho umgwaqo usike khona noma eziweni, uzobona izingqimba: isimo sezingqimba zomhlabathi (soil profile)."
+    },
+    "st": {
+      "sectionTitle": "Mekgahlelo ya mobu",
+      "passage": "Sekoti fatshe ke buka ya histori. Tjheka se le seng, kapa o shebe moo tsela e sehileng naha teng kapa donga, mme o tla bona mekgahlelo: soil profile (setshwantsho sa mekgahlelo ya mobu)."
+    },
+    "ts": {
+      "sectionTitle": "Swiyenge swa misava",
+      "passage": "Mugodi emisaveni i buku ya matimu. Cela wun'we, kumbe u languta laha gondzo ri tsemeke kona kumbe mugero, kutani u ta vona swiyenge: xivumbeko xa misava (soil profile)."
+    },
+    "ve": {
+      "sectionTitle": "Miṱaṱo ya mavu",
+      "passage": "Buranngo mavuni ndi bugu ya ḓivhazwakale. Gwani ḽithihi, kana ni sedze hune bada ya gwiwa hone kana mugero muhulwane, ni ḓo vhona miṱaṱo: muṱaṱo wa mavu (soil profile)."
+    }
+  },
+  "vegetables-staples": {
+    "en": {
+      "sectionTitle": "Plan for the life you have",
+      "passage": "A big garden you cannot look after soon becomes a weedy, wasted one. Before you dig, be honest about your time, money and interest."
+    },
+    "zu": {
+      "sectionTitle": "Hlela ngokuya ngempilo onayo",
+      "passage": "Ingadi enkulu ongakwazi ukuyinakekela ngokushesha iba yingadi egcwele ukhula, echithekile. Ngaphambi kokuba wembe, tshela iqiniso ngesikhathi sakho, imali nentshisekelo yakho."
+    },
+    "st": {
+      "sectionTitle": "Rala ho ya ka bophelo boo o nang le bona",
+      "passage": "Serapa se seholo seo o sa kgoneng ho se hlokomela kapele se fetoha se tletseng mefoka, se senyehileng. Pele o tjheka, bua nnete ka nako, tjhelete le thahasello ya hao."
+    },
+    "ts": {
+      "sectionTitle": "Hlela hi ku ya hi vutomi lebyi u nga na byona",
+      "passage": "Ntanga lowukulu lowu u nga kotiki ku wu hlayisa hi ku hatlisa wu hundzuka ntanga lowu teleke hi nhova lowu onhakeke. U nga si cela, tshembeka hi nkarhi, mali na ku tsakela ka wena."
+    },
+    "ve": {
+      "sectionTitle": "Pulanani u ya nga vhutshilo vhune na vha naho",
+      "passage": "Ngade khulwane ine na sa kone u i ṱhogomela i ṱavhanya u vha ngade yo ḓalaho zwimela zwi sa ṱoḓei, yo xelaho. Phanḓa ha u gwa, ambani ngoho nga ha tshifhinga, tshelede na dzangalelo zwaṋu."
+    }
+  },
+  "seeds-sovereignty": {
+    "en": {
+      "sectionTitle": "The design principles of permaculture",
+      "passage": "Diversity is strength. Think of a rope: one thread snaps, but many threads twisted together hold. A monoculture, one crop over a big area and often from near-identical seed, is poor in life and open to every pest, disease and bad season. A diverse farm bends and recovers."
+    },
+    "zu": {
+      "sectionTitle": "Izimiso zokuklama ze-permaculture",
+      "passage": "Ukwehlukahlukana kungamandla. Cabanga ngentambo: uhala olulodwa luyaqhephuka, kodwa izintambo eziningi ezisontwe ndawonye ziyabamba. I-monoculture (isitshalo esisodwa endaweni enkulu), ngokuvamile evela embewini ecishe ifane yonke, impofu ngempilo futhi ivulekele zonke izinambuzane, izifo nezinkathi ezimbi. Ipulazi elinokwehlukahlukana liyagoba bese liyavuseleleka."
+    },
+    "st": {
+      "sectionTitle": "Melao-motheo ya moralo ya permaculture",
+      "passage": "Mefutafuta ke matla. Nahana ka thapo: kgwele e le nngwe e a kgaoha, empa dikgwele tse ngata tse lohilweng mmoho di a tshwarella. Monoculture, sejalo se le seng sebakeng se seholo mme hangata ka peo e batlang e tshwana ka ho fetisisa, e futsanehile ka bophelo mme e bulehetse sesenyi se seng le se seng, lefu le leng le le leng le sehla se seng le se seng se sebe. Polasi e nang le mefutafuta e a kobeha mme e a iphodisa."
+    },
+    "ts": {
+      "sectionTitle": "Misinya ya milawu ya dizayini ya permaculture",
+      "passage": "Ku hambana-hambana i matimba. Ehleketa hi ntambhu: xirhendze xin'we xa tsemeka, kambe swirhendze swo tala leswi pfotiweke swin'we swa khoma. Monoculture (ku byala muxaka wun'we ntsena) i xibyariwa xin'we endhawini leyikulu, hakanyingi hi mbewu leyi fanaka ku fana, naswona yi pfumala vutomi, yi pfulekele swivungu swo onha hinkwaswo, mavabyi na tinguva to biha. Purasi leri nga na ku hambana-hambana ra korhama kutani ri pfuka."
+    },
+    "ve": {
+      "sectionTitle": "Maitele a u pulana a permaculture",
+      "passage": "U fhambana ndi maanḓa. Humbulani lutambo: luraḓo luthihi lu a kwashea, fhedzi maraḓo manzhi o monwaho khathihi a a fara. U lima tshiliṅwa tshithihi fhedzi (monoculture), tshiliṅwa tshithihi fhethu hohulwane, kanzhi nga mbeu dzi fanaho, hu shaya vhutshilo nahone hu vulelwa zwikukumi zwoṱhe, malwadze na khalaṅwaha dzi si dzavhuḓi. Bulasi yo fhambanaho i a kotama ya vusuluwa."
+    }
+  },
+  "plant-guilds": {
+    "en": {
+      "sectionTitle": "Habitat",
+      "passage": "A habitat is the home of a plant or animal: the place that gives it food, water, shelter, space and a safe place to breed. A frog needs water for its eggs, long grass and rocks around the pond to hide from birds and snakes, and insects to eat. That pond is its habitat. Losing habitat is one of the main reasons plants and animals die out."
+    },
+    "zu": {
+      "sectionTitle": "I-habitat",
+      "passage": "I-habitat yikhaya lesitshalo noma lesilwane: indawo esinika ukudla, amanzi, indawo yokukhosela, indawo nendawo ephephile yokuzalela. Ixoxo lidinga amanzi amaqanda alo, utshani obude namatshe azungeze ichibi ukuze licashe ezinyonini nasezinyokeni, nezinambuzane zokudla. Lelo chibi yi-habitat yalo. Ukulahleka kwama-habitat kungesinye sezizathu ezinkulu ezenza izitshalo nezilwane zishabalale."
+    },
+    "st": {
+      "sectionTitle": "Habitat",
+      "passage": "Habitat ke lehae la semela kapa phoofolo: sebaka se e fang dijo, metsi, setshabelo, sebaka le moo e ka tswalelang teng ka polokeho. Sehwaswa se hloka metsi bakeng sa mahe a sona, jwang bo bolelele le majwe ho potoloha letangwana ho ipata ho dinonyana le dinoha, le dikokonyana tseo se di jang. Letangwana leo ke habitat ya sona. Ho lahleha ha habitat ke le leng la mabaka a maholo a etsang hore dimela le diphoofolo di fele."
+    },
+    "ts": {
+      "sectionTitle": "Habitat",
+      "passage": "Habitat (ndhawu yo tshama ya ximilana kumbe xiharhi) i kaya ra ximilana kumbe xiharhi: ndhawu leyi xi nyikaka swakudya, mati, vutumbelo, ndhawu na ndhawu leyi hlayisekeke yo tswalana. Xiketlane xi lava mati ya mandza ya xona, byanyi byo leha na maribye ku rhendzela xidziva ku tumbela eka swinyenyani na tinyoka, na swivungwana swo dya. Xidziva xexo i habitat ya xona. Ku lahlekeriwa hi habitat i xin'wana xa swivangelo leswikulu leswi endlaka leswaku swimilana na swiharhi swi hela."
+    },
+    "ve": {
+      "sectionTitle": "Habitat",
+      "passage": "Habitat (vhudzulo ha zwipuka na zwimela) ndi hayani ha tshimela kana tshipuka: fhethu hune ha tshi ṋea zwiḽiwa, maḓi, vhudzulo, tshikhala na fhethu ho tsireledzeaho ha u aṱa. Ḓula ḽi ṱoḓa maḓi a makumba aḽo, mahatsi malapfu na matombo u mona tshidziva u dzumbama kha zwiṋoni na ṋowa, na zwikukumi zwa u ḽa. Tshenetsho tshidziva ndi habitat yaḽo. U xela ha habitat ndi tshiṅwe tsha zwiitisi zwihulwane zwa u fhela ha zwimela na zwipuka."
+    }
+  },
+  "food-forest": {
+    "en": {
+      "sectionTitle": "The layers of a food forest",
+      "passage": "A food forest is usually described in seven layers. Choose plants for each layer that suit your climate. The understorey is the layer of smaller trees and shrubs beneath the tallest trees."
+    },
+    "zu": {
+      "sectionTitle": "Izingqimba ze-food forest",
+      "passage": "I-food forest ivame ukuchazwa ngezingqimba eziyisikhombisa. Khetha izitshalo zongqimba ngalunye ezifanele isimo sezulu sakho. I-understorey wungqimba lwezihlahla ezincane nezihlahlana ezingaphansi kwezihlahla ezinde kakhulu."
+    },
+    "st": {
+      "sectionTitle": "Mekgahlelo ya food forest",
+      "passage": "Food forest hangata e hlaloswa ka mekgahlelo e supileng. Kgetha dimela bakeng sa mokgahlelo ka mong tse loketseng boemo ba lehodimo ba heno. Understorey ke mokgahlelo wa difate tse nyane le dihlahla tse ka tlasa difate tse telele ka ho fetisisa."
+    },
+    "ts": {
+      "sectionTitle": "Swiyenge swa food forest",
+      "passage": "Food forest hakanyingi yi hlamuseriwa hi swiyenge swa nkombo. Hlawula swimilana swa xiyenge xin'wana na xin'wana leswi fambelanaka na maxelo ya wena. Understorey (xiyenge xa mirhi leyitsongo ehansi ka leyikulu) i xiyenge xa mirhi leyitsongo na swihlahla ehansi ka mirhi leyi lehaka ngopfu."
+    },
+    "ve": {
+      "sectionTitle": "Miṱaṱo ya food forest",
+      "passage": "Food forest kanzhi i ṱalutshedzwa nga miṱaṱo ya sumbe. Nangani zwimela zwa muṱaṱo muṅwe na muṅwe zwi teaho mutsho waṋu. Understorey (miri miṱuku na zwiṱaka zwi re fhasi ha miri mirapfu) ndi muṱaṱo wa miri miṱuku na zwiṱaka zwi re fhasi ha miri mirapfu-rapfu."
+    }
+  },
+  "small-livestock": {
+    "en": {
+      "sectionTitle": "Place animals where they work for you",
+      "passage": "A goat browses. A pig digs. A chicken scratches and eats every grub it finds. Left to chance, these habits cause damage. Designed in, they save you days of labour."
+    },
+    "zu": {
+      "sectionTitle": "Beka izilwane lapho zikusebenzela khona",
+      "passage": "Imbuzi iyahlaba amahlamvu. Ingulube iyamba. Inkukhu iyaphenya futhi idle sonke isibungu esithola. Uma kuyekelwa kwenzeke noma kanjani, le mikhuba idala umonakalo. Uma iklanywe ngamabomu, ikonga izinsuku zomsebenzi."
+    },
+    "st": {
+      "sectionTitle": "Beha diphoofolo moo di o sebeletsang",
+      "passage": "Podi e ja makgasi a difate. Kolobe e a tjheka. Kgoho e a fata mme e je seboko se seng le se seng seo e se fumanang. Ha e siuwa feela, mekgwa ena e baka tshenyo. Ha e raletswe, e o bolokela matsatsi a mosebetsi."
+    },
+    "ts": {
+      "sectionTitle": "Veka swiharhi laha swi ku tirhelaka kona",
+      "passage": "Mbuti yi dya matluka ya swihlahla. Nguluve yi cela. Huku yi kokota naswona yi dya xivungu xin'wana na xin'wana lexi yi xi kumaka. Loko mikhuva leyi yi tshikiwa hi nkateko, yi vanga ku onhaka. Loko yi dizayiniwile, yi ku ponisa masiku ya ntirho."
+    },
+    "ve": {
+      "sectionTitle": "Vhewani zwifuwo hune zwa ni shumela hone",
+      "passage": "Mbudzi i ḽa maṱari a miri. Nguluvhe i a gwa. Khuhu i kwenya ya ḽa zwivhungu zwoṱhe zwine ya zwi wana. Arali zwi tshi litshelwa zwoṱhe, aya maitele a ḓisa tshinyalelo. Arali a pulanelwa, a ni vhulungela maḓuvha a mushumo."
+    }
+  },
+  "market-community": {
+    "en": {
+      "sectionTitle": "3. Small-scale commercial vegetable farming (Zone 3)",
+      "passage": "Tip: Talk to your buyers before you plant. Find out what they want, how much, how often and at what price. Grow for a market you know, not one you hope for."
+    },
+    "zu": {
+      "sectionTitle": "3. Ukulima imifino okuncane kwezohwebo (i-Zone 3)",
+      "passage": "Icebiso: Khuluma nabathengi bakho ngaphambi kokuthi utshale. Thola ukuthi bafunani, kangakanani, kangaki nangentengo engakanani. Tshalela imakethe oyaziyo, hhayi leyo oyithembayo."
+    },
+    "st": {
+      "sectionTitle": "3. Temo e nyane ya meroho ya kgwebo (Zone 3)",
+      "passage": "Keletso: Bua le bareki ba hao pele o lema. Fumana hore na ba batla eng, bokae, hangata hakae le ka theko efe. Lemela mmaraka oo o o tsebang, e seng oo o o tshepang feela."
+    },
+    "ts": {
+      "sectionTitle": "3. Vurimi bya matsavu bya xibindzu lebyitsongo (Zone 3)",
+      "passage": "Xiletelo: Vulavula na vaxavi va wena u nga si byala. Kuma leswaku va lava yini, swo fika kwihi, kangani na hi nxavo wihi. Byalela makete lowu u wu tivaka, ku nga ri lowu u wu tshembaka."
+    },
+    "ve": {
+      "sectionTitle": "3. U lima miroho ya u rengisa nga tshikalo tshiṱuku (Zone 3)",
+      "passage": "Tsevhedzo: Ambani na vharengi vhaṋu phanḓa ha u ṱavha. Wanani zwine vha zwi ṱoḓa, zwingafhani, lunzhi hani na nga mutengo ufhio. Limelani makete une na u ḓivha, hu si une na fulufhela."
+    }
+  }
+}

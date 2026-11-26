@@ -45,6 +45,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Compare finishes on the same example garden before choosing a map style.',
     'Try Ink & wash or Hatched field plan on free exact Planting and Whole Design maps.',
   ] },
+  { when: '26 November 2026', sha: 'e331c1303', changes: [
+    'Start your current module or open the permaculture manual at the top of Study.',
+    'After the slides, work through a farm case and try a field task with each lesson.',
+  ] },
   { when: '26 November 2026', sha: '9ddb9146d', changes: [
     'On exact canopy maps, a ring around the centre dot marks trees already on the farm.',
   ] },
