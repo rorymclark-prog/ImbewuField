@@ -67,10 +67,7 @@ export default function CourseSyllabus({ id, units, basePath, eyebrowPrefix, con
       {first && (
         <section className={styles.card}>
           <p className={styles.eyebrow}>{continueEyebrow}</p>
-          <h2>{first.title}</h2>
-          <div className={styles.actions}>
-            <OfflinePageLink className={styles.primary} href={hrefFor(first.id)}><ArrowLabel>{first.title}</ArrowLabel></OfflinePageLink>
-          </div>
+          <h2 className={styles.firstLesson}><OfflinePageLink href={hrefFor(first.id)}><ArrowLabel>{first.title}</ArrowLabel></OfflinePageLink></h2>
         </section>
       )}
       <details className={styles.card}>

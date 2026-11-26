@@ -18,6 +18,14 @@
 .eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: 12px !important; font-weight: 700; color: var(--text-secondary); }
 .hero { background: var(--bg-1); border: 1px solid var(--border-strong); border-radius: 22px; overflow: hidden; }
 .heroText { padding: 32px; max-width: 880px; }
+/* Keep the course introduction and its illustration in view together on a wider screen. */
+@media screen and (min-width: 800px) {
+  .hero:has(> img) { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: stretch; }
+  .hero:has(> img) > .heroText { align-self: center; }
+  .hero:has(> img) > img { height: 100%; min-height: 260px; aspect-ratio: auto; }
+}
+.firstLesson { margin-bottom: 0; }
+.card .firstLesson > a { display: flex; align-items: center; justify-content: space-between; min-height: 44px; }
 .hero img { display: block; width: 100%; aspect-ratio: 16/7; object-fit: cover; }
 .notice { margin: 20px 0; padding: 16px 20px; border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent); border-radius: 12px; background: color-mix(in srgb, var(--gold) 12%, var(--bg-1)); }
 .notice p { margin: 0; }

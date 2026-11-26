@@ -318,6 +318,44 @@ test('every figure has body text in its section to sit under, in every language'
   }
 });
 
+test('every Study module opens its own case, lessons have distinct field tasks, and manual excerpts lead to their exact section in each edition', async () => {
+  const { FIELD_CASES, LESSON_FIELD_TASKS } = await import('../lib/study-fieldwork.ts');
+  const { COURSE_MODULES } = await import('../lib/course-modules.ts');
+  const passages = JSON.parse(readFileSync(path.join(ROOT, 'content/study/manual-passages.json'), 'utf8'));
+  const figures: ManualFigure[] = JSON.parse(readFileSync(path.join(ROOT, 'content/manual/figures.json'), 'utf8'));
+  const modules = COURSE_MODULES.map(module => module.id).sort();
+  const lessons = COURSE_MODULES.flatMap(module => module.lessons.map(lesson => lesson.id)).sort();
+  assert.deepEqual(Object.keys(FIELD_CASES).sort(), modules);
+  assert.deepEqual(Object.keys(passages).sort(), modules);
+  assert.deepEqual(Object.keys(LESSON_FIELD_TASKS).sort(), lessons);
+  for (const language of ['en', 'zu'] as const) {
+    const tasks = Object.values(LESSON_FIELD_TASKS).map(task => task[language].trim());
+    assert.ok(tasks.every(Boolean));
+    assert.equal(new Set(tasks).size, lessons.length);
+  }
+  const editions = MANUAL_LANGS.map(lang => ({ lang, index: manualSearchIndex(lang) }));
+  for (const id of modules) {
+    const entry = FIELD_CASES[id];
+    for (const copy of [entry.title, entry.scene, entry.question, entry.reasoning]) {
+      assert.ok(copy.en.trim() && copy.zu.trim() && copy.en !== copy.zu, id);
+    }
+    if (entry.figure) {
+      const figure = figures.find(item => item.id === entry.figure);
+      assert.ok(figure && existsSync(path.join(ROOT, 'public', figure.src)), id);
+    }
+    for (const { lang, index } of editions) {
+      const excerpt = passages[id][lang];
+      const section = index.find(item => item.slug === entry.chapter && item.anchor === entry.anchor);
+      assert.ok(section, `${id}: manual anchor must exist in ${lang}`);
+      assert.equal(section.title, excerpt.sectionTitle);
+      // The chapter link opens the topic; its example can come from a subheading underneath.
+      const withinTopic = index.filter(item => item.slug === entry.chapter
+        && (item.anchor === entry.anchor || item.anchor.startsWith(entry.anchor + '-')));
+      assert.ok(withinTopic.some(item => item.passages.includes(excerpt.passage)), `${id}: show a complete, current ${lang} passage`);
+    }
+  }
+});
+
 test('figure files: at most 400 KB and the size figures.json says', () => {
   for (const f of figures) {
     const file = figureFile(f);

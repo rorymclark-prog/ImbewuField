@@ -5,7 +5,7 @@ import styles from './Studies.module.css';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { Check, CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy, PlayCircle } from 'lucide-react';
+import { Check, CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy, PlayCircle, ArrowRight, ChevronRight, LibraryBig, MapPin, Download } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { isBackendConfigured } from '@/lib/firebase/init';
@@ -22,6 +22,7 @@ import LessonLink from '@/components/design/LessonLink';
 import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
 import LessonInfographic from '@/components/course/LessonInfographic';
 import DesignDraftCopy from '@/components/studies/DesignDraftCopy';
+import { ModuleFieldCase, LessonFieldTask } from '@/components/studies/StudyFieldwork';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
 import LearningRegionContext from '@/components/studies/LearningRegionNotice';
 import AppHeader from '@/components/layout/AppHeader';
@@ -204,6 +205,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
   // The slide player is opt-in per lesson and resets when the panel is left. Nothing in the deck
   // downloads until it is opened, and reopening a lesson should not re-spend anyone's data.
   const [deckOpen, setDeckOpen] = useState(false);
+  const [audioOpen, setAudioOpen] = useState(false);
   useEffect(() => { if (autoOpen) setOpen(true); }, [autoOpen]);
   const lessonTracks = tracksForLesson(moduleId, lesson.id);
   const presentation = resolveLearnerLessonPresentation(lesson, lang);
@@ -295,14 +297,17 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
           {regionalFallback && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', background: 'rgba(140,122,98,0.08)', border: '1px solid var(--border)' }}>This lesson is in English. {regionalMediaNotice}</div>}
           {lang === 've' && regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: 'var(--gold-dim)', background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>Unreviewed Tshivenda AI draft. It has not been checked by a fluent speaker or local farming reviewer. Exact English source is shown alongside the lesson and answers. {regionalMediaNotice}</div>}
           {hasAudio && (
-            <div className="pt-4">
-              <CourseAudioPlayer
-                moduleId={moduleId}
-                appLang={lang}
-                tracks={lessonTracks}
-                label={t('studentListenToLesson')}
-              />
-            </div>
+            <details className={styles.audioTracks} open={audioOpen} onToggle={event => setAudioOpen(event.currentTarget.open)}>
+              <summary><Headphones size={17} aria-hidden="true" />{t('studentListenToLesson')}<ChevronDown size={16} aria-hidden="true" /></summary>
+              {audioOpen && (
+                <CourseAudioPlayer
+                  moduleId={moduleId}
+                  appLang={lang}
+                  tracks={lessonTracks}
+                  label={t('studentListenToLesson')}
+                />
+              )}
+            </details>
           )}
 
           {/* Watch and listen — the lesson in the form it was authored in: slides, in order, with
@@ -351,7 +356,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
           )}
 
           {/* Body */}
-          <div className={hasLeadIn ? 'space-y-3' : 'space-y-3 pt-4'}>
+          <div className={`${styles.reading} ${hasLeadIn ? 'space-y-3' : 'space-y-3 pt-4'}`}>
             {sourcePairedDraft && lessonContent.body === lesson.body ? (
               <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: 'var(--text-secondary)' }}>
                 <p className="font-semibold">Exact English source</p>
@@ -401,6 +406,8 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               <ExternalLink size={12} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
             </a>
           )}
+
+          <LessonFieldTask lessonId={lesson.id} lang={lang} />
 
           {/* Quiz */}
           <div className="space-y-3">
@@ -601,10 +608,7 @@ export default function StudentPage() {
   const router = useRouter();
   const sampleRole = useSampleRole();
   const isLive = isBackendConfigured() && !sampleRole;
-  // Simple / All tools (lib/app-level.ts). All tools is this screen exactly as it always was;
-  // Simple hides the production-readiness badges, the offline quality picker, the dual
-  // overdue/due-soon counts, the redundant category chip and shrinks the progress hero — see the
-  // Study — Simple mode track brief.
+  // Study keeps its core actions in both modes. Additional course metadata is for All tools.
   const simple = useAppLevel() === 'simple';
 
   const [doneIds, setDoneIds] = useState<Set<string>>(new Set());
@@ -816,15 +820,14 @@ export default function StudentPage() {
   const dashOffset = C - (C * pct) / 100;
 
   return (
-    <div className={`flex flex-col overflow-hidden ${styles.page}`} style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+    <div className={`flex flex-col overflow-hidden ${styles.page}`} style={{ height: '100dvh' }}>
       <AppHeader title={t('studentMyStudies')} backFallback="/home" right={<LessonLink id="student:overview" label={t('homeQuickStudy')} />} />
 
-      <main className={`flex-1 overflow-y-auto space-y-4 ${styles.main}`}>
+      <main className={`flex-1 overflow-y-auto ${styles.main}`}>
         {/* zu-04: the one shared language-draft note (components/LanguageDraftNote.tsx), once under
             the header, never inside a card or button; the course-specific line below it says which
             lessons carry isiZulu drafts. */}
         <LanguageDraftNote lang={lang} scope="student" />
-        <LearningRegionContext scope="core-farming" />
         {lang === 'zu' && (
           <p className="font-sans" role="note" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
             {t('studentZuluCourseLanguageNote')}
@@ -850,34 +853,36 @@ export default function StudentPage() {
             <span lang="en">{t('studentTshivendaUiDraftNotice')}</span>
           </p>
         )}
-        {/* Progress hero */}
         <section className={styles.intro} aria-labelledby="studies-title">
-          <div>
-            <p className={`font-sans ${styles.eyebrow}`}><GraduationCap size={17} /> {t('studentLearnPracticeGrow')}</p>
+          <div className={styles.titleRow}>
             <h1 id="studies-title" className="font-display">{t('studentMyStudies')}</h1>
-            <p className={`font-sans ${styles.description}`}>{t('studentCourseDescription')}</p>
-
-            <div className={styles.studyActions}>
-              <div>
-                <button type="button" className={`font-sans ${styles.studyButton}`} onClick={() => {
-                  setCourseOpen(true);
-                  setExpandedModuleId(studyModule.id);
-                  requestAnimationFrame(() => document.getElementById(`module-${studyModule.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-                }}><PlayCircle size={18} />{pct === 100 ? t('studentRevisit') : doneCount === 0 ? t('studentStart') : t('studentContinue')}</button>
-                <span className={`font-sans ${styles.nextLesson}`}>{studyModulePresentation.title}</span>
-              </div>
-              <Link href="/manual" className={`font-sans ${styles.studyButton} ${styles.manualLink}`}>
-                <BookOpen size={18} aria-hidden="true" />{t('navManual')}
-              </Link>
+            <Link href="/manual" className={styles.manualLink}>
+              <BookOpen size={18} aria-hidden="true" />{t('navManual')}
+            </Link>
+          </div>
+          <div className={styles.feature}>
+            <img className={styles.landscape} src="/home-images/sample-farm-landscape.webp" alt="" width={720} height={405} />
+            <div className={styles.featureText}>
+              <p className={styles.featureLabel}>{t('homeQuickStudyDesc')}<span aria-hidden="true"> · </span>{t('studentModule').replace('{number}', String(MODULE_NUMBER.get(studyModule.id)))}</p>
+              <h2 className="font-display">{studyModulePresentation.title}</h2>
+              <button type="button" className={styles.studyButton} onClick={() => {
+                setCourseOpen(true);
+                setExpandedModuleId(studyModule.id);
+                requestAnimationFrame(() => {
+                  const module = document.getElementById(`module-${studyModule.id}`);
+                  module?.querySelector<HTMLButtonElement>('button[aria-expanded]')?.focus({ preventScroll: true });
+                  module?.scrollIntoView({ block: 'start' });
+                });
+              }}>{pct === 100 ? t('studentRevisit') : doneCount === 0 ? t('studentStart') : t('studentContinue')}<ArrowRight size={17} aria-hidden="true" /></button>
             </div>
           </div>
           <div className={styles.progress}>
           {/* Ring */}
-          <div className="flex-shrink-0 relative" style={{ width: 64, height: 64 }}>
+          <div className={styles.progressRing}>
             <svg width="64" height="64" viewBox="0 0 100 100" aria-hidden="true" style={{ transform: 'rotate(-90deg)' }}>
-              <circle cx="50" cy="50" r={R} fill="none" stroke="rgba(32,25,15,0.10)" strokeWidth="8" />
+              <circle cx="50" cy="50" r={R} fill="none" stroke="var(--border-strong)" strokeWidth="8" />
               <circle cx="50" cy="50" r={R} fill="none"
-                stroke={pct === 100 ? 'var(--color-forest-800)' : '#C07A1E'}
+                stroke="var(--color-forest-800)"
                 strokeWidth="8"
                 strokeLinecap="round"
                 strokeDasharray={C}
@@ -890,15 +895,15 @@ export default function StudentPage() {
                 <Loader2 size={20} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
               ) : (
                 <>
-                  <span className="font-display font-bold text-xl leading-none" style={{ color: 'var(--text-primary)' }}>{pct}%</span>
+                  <span className="font-sans font-semibold text-xs leading-none" style={{ color: 'var(--text-primary)' }}>{pct}%</span>
                 </>
               )}
             </div>
           </div>
 
           {/* Text */}
-          <div className="flex-1 min-w-0">
-            <div className="font-display font-semibold text-base leading-tight" role={fetching ? 'status' : undefined} aria-live={fetching ? 'polite' : undefined} style={{ color: 'var(--text-primary)' }}>
+          <div className={styles.progressText}>
+            <div className="font-sans font-semibold text-sm leading-tight" role={fetching ? 'status' : undefined} aria-live={fetching ? 'polite' : undefined} style={{ color: 'var(--text-primary)' }}>
               {fetching
                 ? lang === 'zu' ? 'Ilayisha inqubekelaphambili… Loading progress…' : 'Loading progress…'
                 : pct === 100 ? t('studentCourseComplete') : doneCount === 0 ? t('studentReady') : t('studentKeepGoing')}
@@ -991,24 +996,29 @@ export default function StudentPage() {
           </div>
         )}
 
-        {/* ONE TAP, THE WHOLE COURSE, WHILE THE SIGNAL IS GOOD.
-            The learner is in town roughly once a fortnight; that is the only moment this is cheap.
-            It sits above the module list rather than in a settings screen because it is a thing
-            you do on purpose before you leave, not a preference you configure. */}
-        <details className={styles.offline}>
-          <summary className="font-sans"><BookOpen size={18} /> {t('studentStudyOffline')} <span className={styles.offlineHint}>{t('studentSaveBeforeSignal')}</span></summary>
-          <OfflineDownload moduleIds={orderedModules.filter((m) => isModuleUnlocked(m.id, gatingCtx)).map((m) => m.id)} lang={lang} label={t('studentSaveAvailable')} />
-        </details>
-
+        {/* ONE TAP, THE WHOLE COURSE, WHILE THE SIGNAL IS GOOD. */}
+        <div className={styles.utilities}>
+          <details className={`${styles.utility} ${styles.offline}`}>
+            <summary><Download size={18} aria-hidden="true" /><span>{t('studentStudyOffline')}</span><ChevronDown size={16} aria-hidden="true" /></summary>
+            <div className={styles.utilityBody}>
+              <p>{t('studentSaveBeforeSignal')}</p>
+              <OfflineDownload moduleIds={orderedModules.filter((m) => isModuleUnlocked(m.id, gatingCtx)).map((m) => m.id)} lang={lang} label={t('studentSaveAvailable')} />
+            </div>
+          </details>
+          <details className={styles.utility} lang="en">
+            <summary><MapPin size={18} aria-hidden="true" /><span>South African course material<small>Local suitability has not been assessed here.</small></span><ChevronDown size={16} aria-hidden="true" /></summary>
+            <LearningRegionContext scope="core-farming" />
+          </details>
+        </div>
 
         <details className={styles.courseDisclosure} open={courseOpen} onToggle={(event) => setCourseOpen(event.currentTarget.open)}>
           <summary className={styles.courseHeading}>
-            <img src="/home-images/sample-farm-landscape.webp" alt="" loading="lazy" width={220} height={124} />
+            <span className={styles.sectionIcon}><LibraryBig size={22} aria-hidden="true" /></span>
             <div className={styles.courseHeadingText}>
-              <span className={styles.choiceLabel}>{t('studentYourCourse')}</span>
               <h2 className="font-display">{t('homeQuickStudyDesc')}</h2>
               <span className="font-sans">{TOTAL_MODULES} {t('studentModules')} · {COURSE_MODULES.reduce((n, m) => n + (m.lessons?.length ?? 0), 0)} {t('studentLessons')}</span>
             </div>
+            <ChevronDown className={styles.chevron} size={20} aria-hidden="true" />
           </summary>
 
         {/* Module list */}
@@ -1141,6 +1151,7 @@ export default function StudentPage() {
                           {t(CATEGORY_LABEL_KEYS[mod.category])}
                         </span>
                       )}
+                      {done && <span className={styles.doneStatus}><CheckCircle size={14} aria-hidden="true" />{t('studentDone')}</span>}
                       {isCurrent && (
                         <span className="min-w-0 max-w-full whitespace-normal break-words text-xs font-sans font-semibold px-2 py-0.5 rounded-2xl"
                           style={{ background: 'color-mix(in srgb, var(--color-forest-800) 9%, transparent)', color: 'var(--color-forest-800)', border: '1px solid color-mix(in srgb, var(--color-forest-800) 19%, transparent)' }}>
@@ -1234,42 +1245,12 @@ export default function StudentPage() {
                     </div>
                   </button>
 
-                  {/* Mark done toggle */}
-                  <button
-                    onClick={() => toggle(mod.id)}
-                    disabled={isToggling}
-                    aria-label={done ? t('studentMarkNotDone') : t('studentMarkComplete')}
-                    aria-pressed={done}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold transition-all ${styles.markDone}`}
-                    style={{
-                      background: done ? 'rgba(31,77,43,0.08)' : 'var(--color-forest-800)',
-                      border: done ? '1px solid rgba(31,77,43,0.2)' : 'none',
-                      color: done ? 'var(--color-forest-800)' : 'var(--on-forest-800)',
-                      cursor: isToggling ? 'wait' : 'pointer',
-                      opacity: isToggling ? 0.6 : 1,
-                    }}
-                  >
-                    {isToggling
-                      ? <Loader2 size={12} className="animate-spin" />
-                      : done
-                        ? <><CheckCircle size={12} />{t('studentDone')}</>
-                        : <><Circle size={12} />{t('studentMarkDone')}</>}
-                  </button>
+
                 </div>
 
                 {/* Lessons panel */}
                 {isExpanded && mod.lessons && mod.lessons.length > 0 && (
                   <div className={`px-4 pb-4 space-y-2 ${styles.moduleContent}`} style={{ borderTop: '1px solid var(--border)' }}>
-                    {/* TAKE IT HOME. Sits directly above the players, because it is the answer to
-                        the question those players raise: a farmer who has just seen what the
-                        slides and narration are worth is the one who wants them on the phone
-                        before leaving town. */}
-                    <OfflineDownload
-                      moduleIds={[mod.id]}
-                      lang={lang}
-                      compact
-                      label={t('studentSaveModule').replace('{title}', modulePresentation.title)}
-                    />
                     {lang === 'zu' && (!zuluSlidesReady || !zuluAudioReady) && (
                       <p className="rounded-xl px-3 py-2 font-sans text-sm leading-relaxed" role="note"
                         style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: 'var(--text-secondary)' }}>
@@ -1315,9 +1296,14 @@ export default function StudentPage() {
                         />
                       </div>
                     ) : null}
-                    <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: 'var(--text-muted)' }}>
-                      {t('studentLessonsLabel')}
-                    </p>
+                    <ModuleFieldCase moduleId={mod.id} lang={lang} />
+                    <OfflineDownload
+                      moduleIds={[mod.id]}
+                      lang={lang}
+                      compact
+                      label={t('studentSaveModule').replace('{title}', modulePresentation.title)}
+                    />
+                    <h3 className={`font-display ${styles.lessonsHeading}`}>{t('studentLessonsLabel')}</h3>
                     {mod.lessons.map((lesson) => (
                       <LessonPanel
                         key={lesson.id}
@@ -1330,6 +1316,31 @@ export default function StudentPage() {
                         onJumpToLesson={jumpToLesson}
                       />
                     ))}
+                  </div>
+                )}
+
+                {isExpanded && (
+                  <div className={styles.completionAction}>
+                    <button
+                      onClick={() => toggle(mod.id)}
+                      disabled={isToggling}
+                      aria-label={done ? t('studentMarkNotDone') : t('studentMarkComplete')}
+                      aria-pressed={done}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold transition-all ${styles.markDone}`}
+                      style={{
+                        background: done ? 'rgba(31,77,43,0.08)' : 'var(--color-forest-800)',
+                        border: done ? '1px solid rgba(31,77,43,0.2)' : 'none',
+                        color: done ? 'var(--color-forest-800)' : 'var(--on-forest-800)',
+                        cursor: isToggling ? 'wait' : 'pointer',
+                        opacity: isToggling ? 0.6 : 1,
+                      }}
+                    >
+                      {isToggling
+                        ? <Loader2 size={12} className="animate-spin" />
+                        : done
+                          ? <><CheckCircle size={12} />{t('studentDone')}</>
+                          : <><Circle size={12} />{t('studentMarkDone')}</>}
+                    </button>
                   </div>
                 )}
 
@@ -1402,73 +1413,62 @@ export default function StudentPage() {
         </div>
         </details>
 
-        {simple ? (
-          // Two plain links — the full preview cards below (image, intro paragraph, nested card)
-          // are an All tools companion for a facilitator, not a farmer's next tap.
+        <section className={styles.library} aria-labelledby="more-courses">
+          <h2 id="more-courses" className="font-display"><DesignDraftCopy en="More courses" zu="Ezinye izifundo" /></h2>
           <div className={styles.coursePreviews}>
-            <OfflinePageLink href="/student/design" className={styles.coursePreviewLink}>
-              <span><strong className="font-display">{t('studentDesignPreviewSimpleLabel')}</strong><span>{t('studentDesignPreviewCardTitle')}</span></span>
-            </OfflinePageLink>
-            <OfflinePageLink href="/student/finance" className={styles.coursePreviewLink}>
-              <span><strong className="font-display">{t('studentFinancePreviewSimpleLabel')}</strong><span>{t('studentFinancePreviewCardTitle')}</span></span>
-            </OfflinePageLink>
+            {simple ? (
+              // Two plain links keep the learner's course choices short in Simple mode.
+              <>
+                <OfflinePageLink href="/student/design" className={styles.coursePreviewLink}>
+                  <img src="/studies-guides/thumbs/sketch-the-site.webp" alt="" loading="lazy" width={150} height={100} />
+                  <span><strong className="font-display">{t('studentDesignPreviewSimpleLabel')}</strong><span>{t('studentDesignPreviewCardTitle')}</span></span>
+                  <ChevronRight size={18} aria-hidden="true" />
+                </OfflinePageLink>
+                <OfflinePageLink href="/student/finance" className={styles.coursePreviewLink}>
+                  <img src="/studies-guides/thumbs/expense-record.webp" alt="" loading="lazy" width={150} height={100} />
+                  <span><strong className="font-display">{t('studentFinancePreviewSimpleLabel')}</strong><span>{t('studentFinancePreviewCardTitle')}</span></span>
+                  <ChevronRight size={18} aria-hidden="true" />
+                </OfflinePageLink>
+              </>
+            ) : (
+              <>
+                <OfflinePageLink href="/student/design" className={styles.coursePreviewLink}>
+                  <img src="/studies-guides/thumbs/sketch-the-site.webp" alt="" loading="lazy" width={150} height={100} />
+                  <span><strong className="font-display">{t('studentDesignPreviewTitle')}</strong><span>{t('studentDesignEnglishPreview')}</span></span>
+                  <ChevronRight size={18} aria-hidden="true" />
+                </OfflinePageLink>
+                <OfflinePageLink href="/student/finance" className={styles.coursePreviewLink}>
+                  <img src="/studies-guides/thumbs/expense-record.webp" alt="" loading="lazy" width={150} height={100} />
+                  <span><strong className="font-display">{t('studentFinancePreviewTitle')}</strong><span>{t('studentFinanceEnglishPreview')}</span></span>
+                  <ChevronRight size={18} aria-hidden="true" />
+                </OfflinePageLink>
+              </>
+            )}
+            <Link href="/student/teach-the-teachers" className={styles.coursePreviewLink}>
+              <span><strong className="font-display"><DesignDraftCopy en="Teach the Teachers · ACT refresher" zu="Fundisa Othisha · Ukuvuselelwa kwe-ACT" /></strong>
+                <span><DesignDraftCopy en="Two-day teaching preview in English" zu="Ukubuka kuqala kokufundisa kwezinsuku ezimbili ngesiNgisi" /></span></span>
+              <ChevronRight size={18} aria-hidden="true" />
+            </Link>
           </div>
-        ) : (
-        <div className={styles.coursePreviews}>
-        <details className={`${styles.companions} ${styles.collapsible}`}>
-          <summary className={styles.previewSummary} aria-labelledby="design-pathway-title">
-            <img src="/studies-guides/thumbs/sketch-the-site.webp" alt="" loading="lazy" width={150} height={100} />
-            <div><span className={styles.choiceLabel}>{t('studentDesignEnglishPreview')}</span>
-              <h2 id="design-pathway-title" className="font-display">{t('studentDesignPreviewTitle')}</h2></div>
-          </summary>
-          <div>
-            <p>{t('studentDesignPreviewIntro')}</p>
-          </div>
-          <OfflinePageLink href="/student/design" className={styles.coursePreviewLink}>
-            <span><strong className="font-display">{t('studentDesignPreviewCardTitle')}</strong><span>{t('studentDesignPreviewCardBody')}</span><em>{t('studentDesignPreviewAction')}</em></span>
-          </OfflinePageLink>
-        </details>
+        </section>
 
-        <details className={`${styles.companions} ${styles.collapsible}`}>
-          <summary className={styles.previewSummary} aria-labelledby="finance-course-title">
-            <img src="/studies-guides/thumbs/expense-record.webp" alt="" loading="lazy" width={150} height={100} />
-            <div><span className={styles.choiceLabel}>{t('studentFinanceEnglishPreview')}</span>
-              <h2 id="finance-course-title" className="font-display">{t('studentFinancePreviewTitle')}</h2></div>
+        <details className={styles.appGuides}>
+          <summary className={styles.courseHeading} aria-labelledby="app-guides-title">
+            <span className={styles.sectionIcon}><BookOpen size={22} aria-hidden="true" /></span>
+            <div className={styles.courseHeadingText}>
+              <h2 id="app-guides-title" className="font-display">{t('studentAppGuidesTitle')}</h2>
+              <span>{t('studentAppGuidesHeading')}</span>
+            </div>
+            <ChevronDown className={styles.chevron} size={20} aria-hidden="true" />
           </summary>
-          <div>
-            <p>{t('studentFinancePreviewIntro')}</p>
+          <div className={styles.guideGrid}>
+            {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
+              <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" width={160} height={107} />
+              <span lang="en"><strong className="font-display">{guide.cardTitle}</strong>{!simple && <span>{guide.summary}</span>}</span>
+              <ChevronRight size={16} aria-hidden="true" />
+            </OfflinePageLink>)}
           </div>
-          <OfflinePageLink href="/student/finance" className={styles.coursePreviewLink}>
-            <span><strong className="font-display">{t('studentFinancePreviewCardTitle')}</strong><span>{t('studentFinancePreviewCardBody')}</span><em>{t('studentFinancePreviewAction')}</em></span>
-          </OfflinePageLink>
-        </details>
-        </div>
-        )}
-
-        <div className={styles.coursePreviews}>
-          <Link href="/student/teach-the-teachers" className={styles.coursePreviewLink}>
-            <span><strong className="font-display"><DesignDraftCopy en="Teach the Teachers · ACT refresher" zu="Fundisa Othisha · Ukuvuselelwa kwe-ACT" /></strong>
-              <span><DesignDraftCopy en="Two days of facilitation practice with the core agroecology lessons, app exercises and a paper fallback. English teaching preview." zu="Izinsuku ezimbili zokuzilolonga ekufundiseni ngezifundo ezisemqoka ze-agroecology, imisebenzi yohlelo lokusebenza nesu lephepha uma kungekho i-inthanethi. Okokufundisa kuboniswa ngesiNgisi." /></span>
-              <em><DesignDraftCopy en="Open the two-day course" zu="Vula ikhosi yezinsuku ezimbili" /></em></span>
-          </Link>
-        </div>
-
-        <details className={`${styles.companions} ${styles.collapsible} ${styles.appGuides}`}>
-          <summary aria-labelledby="app-guides-title">
-            <p className={styles.eyebrow}>{t('studentAppGuidesHeading')}</p>
-            <h2 id="app-guides-title" className="font-display">{t('studentAppGuidesTitle')}</h2>
-          </summary>
-          <div>
-            <p>{t('studentGuidesDescription')}</p>
-          </div>
-          {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
-            <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" width={160} height={107} />
-            {/* Simple: the card itself is the "read the guide" link — the identical "Read the
-                guide · English →" line does not need to repeat once per card (14 times). */}
-            <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span>{!simple && <em>{t('studentAppGuideAction')}</em>}</span>
-          </OfflinePageLink>)}
           <Link href="/tour" className={styles.guideTour}>{t('studentSampleTourAction')}</Link>
-
         </details>
 
         {/* Completion banner */}
@@ -1495,7 +1495,10 @@ export default function StudentPage() {
           </p>
         )}
       </main>
-      <LimaBar />
+      <details className={styles.help}>
+        <summary><Sprout size={18} aria-hidden="true" /><span>Lima · {t('limaAskButton')}</span><ChevronUp size={16} aria-hidden="true" /></summary>
+        <LimaBar />
+      </details>
       <TabBar hideAtDesktop />
     </div>
   );
