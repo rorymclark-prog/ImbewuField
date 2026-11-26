@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 November 2026', sha: '4790a7579', changes: [
+    'Choose gouache, folk print or engraving for a new illustrated map.',
+    'While a map is being painted, the progress screen shows the AI engine you selected.',
+  ] },
   { when: '26 November 2026', sha: 'f57c8ab27', changes: [
     'Scroll through the permaculture manual to read each chapter and reach the next one.',
     'Links to field films open at the exercise inside the chapter.',

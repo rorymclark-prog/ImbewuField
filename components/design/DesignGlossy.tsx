@@ -16556,6 +16556,7 @@ export default function DesignGlossy({
   // maps, but never present it in the main preview while the paid style pass is still running:
   // doing that made the selected style look as though it had silently degraded to Geometry Lock.
   const visibleResultImage = lockedPolishStage === null ? resultImage : null;
+  const selectedEngineLabel = ENGINES.find((entry) => entry.key === engine)?.label ?? '';
   const lockedPolishStyleLabel =
     PRODUCER_STYLES.find((style) => style.key === polishStyleRef.current)?.label ?? 'selected style';
   const selectedStyleLabel = PRODUCER_STYLES.find((style) => style.key === producerStyle)?.label
@@ -17116,8 +17117,8 @@ export default function DesignGlossy({
             {lockedPolishStage === 'exact'
               ? 'The accurate master is being saved to Saved maps. It will not replace your chosen style.'
               : lockedPolishStage === 'hybrid'
-              ? `Your exact master is safe. ${engine === 'gemini' ? 'Gemini' : 'gpt-image-2'} is painting the ${lockedPolishStyleLabel} map artwork — then your boundary, labels, legend, north arrow and scale bar are drawn back on top by the app, not by the model.`
-              : `Your exact master and your AI-polished sheet are both safe. ${engine === 'gemini' ? 'Gemini' : 'gpt-image-2'} is running a second pass over the finished artwork; only that finished AI image will replace this progress screen.`}
+              ? `${selectedEngineLabel} is painting your ${lockedPolishStyleLabel} artwork. The app then adds the boundary, labels, legend, north arrow and scale bar from your exact map.`
+              : `${selectedEngineLabel} is running a second pass over your finished artwork. Your earlier sheets are in Saved maps.`}
           </span>
         </div>
       )}
@@ -17399,7 +17400,7 @@ export default function DesignGlossy({
                 <div style={{ fontSize: 11, opacity: 0.72, lineHeight: 1.5, marginTop: 6 }}>
                   {engine === 'gemini'
                     ? 'Gemini renders in the background — cheaper per sheet; the sheets drop into your gallery when ready and you can keep working. (Print / Export always builds the exact plan set.)'
-                    : 'gpt-image-2 renders in the background — sharpest result, a few minutes; the sheets drop into your gallery when ready and you can keep working. (Print / Export always builds the exact plan set.)'}
+                    : `${selectedEngineLabel} renders in the background. The sheets appear in Saved maps when ready. Print / Export builds the exact plan set.`}
                 </div>
               </div>)}
               <button
@@ -17634,7 +17635,7 @@ export default function DesignGlossy({
               {analysisStyle
                 ? t('designGlossyAnalysisFootnote')
                 : formatDesignTranslation(t('designGlossyEngineFootnote'), {
-                  engine: ENGINES.find((e) => e.key === engine)?.label ?? '',
+                  engine: selectedEngineLabel,
                 })}{' '}
               {t('designGlossyExactVersion')}
             </>
