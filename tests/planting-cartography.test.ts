@@ -5,6 +5,7 @@ import {
   PLANTING_CANOPY_PAINT,
   PLANTING_LEGEND_SECTION_ORDER,
   PLANTING_ROUTE_STYLE,
+  drawExactCanopy,
   plantingFeaturePresentationDimensions,
   plantingLegendSectionForFeature,
   plantingRouteStyleFor,
@@ -215,4 +216,26 @@ test('nearestWaterNeighbourPx ignores un-emphasised features and self', () => {
   ];
   assert.equal(nearestWaterNeighbourPx(feats, 0), 100);
   assert.equal(nearestWaterNeighbourPx([feats[0]], 0), undefined, 'a lone feature has no neighbour');
+});
+
+test('outline crowns keep the measured outer edge and mark the trunk without covering the ground', () => {
+  const ellipses: number[][] = [];
+  const dots: number[][] = [];
+  const ctx = {
+    lineWidth: 0, save() {}, restore() {}, beginPath() {}, stroke() {}, fill() {},
+    ellipse(...args: number[]) { ellipses.push(args); },
+    arc(...args: number[]) { dots.push(args); },
+  };
+  const canvas = ctx as unknown as CanvasRenderingContext2D;
+  for (const id of ['tree_basin', 'banana_circle', 'veg_bed', 'unknown']) {
+    assert.equal(drawExactCanopy(canvas, id, 'outline', 91, 75, 62, 42), false);
+  }
+  assert.equal(drawExactCanopy(canvas, 'tree_mango', 'detailed', 91, 75, 62, 42), false);
+  assert.equal(drawExactCanopy(canvas, 'tree_mango', 'outline', 91, 75, 62, 42), true);
+  assert.equal(ellipses.length, 1);
+  const [x, y, rx, ry] = ellipses[0];
+  assert.deepEqual([x, y, 2 * rx + ctx.lineWidth, 2 * ry + ctx.lineWidth], [91, 75, 62, 42]);
+  assert.equal(dots.length, 1);
+  assert.deepEqual(dots[0].slice(0, 2), [91, 75]);
+  assert.ok(dots[0][2] < ry / 4);
 });
