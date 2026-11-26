@@ -80,7 +80,7 @@ export default function ManualChapterPage({ params }: { params: { lang: string; 
               <Link href={`/manual/en/${slug}`} lang="en" style={{ textDecoration: 'underline', fontWeight: 600 }}>{manualUi('en').readInEnglish}</Link>
             </p>
           )}
-          <ManualBlocks blocks={body} figures={figuresBySection(manualFigures(), slug)} lang={contentLang} insertAt={filmSlots.length ? filmAt : undefined} />
+          <ManualBlocks sectionAnchors blocks={body} figures={figuresBySection(manualFigures(), slug)} lang={contentLang} insertAt={filmSlots.length ? filmAt : undefined} />
         </article>
         <nav aria-label={ui.chapters} style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'space-between', marginTop: 40 }}>
           {prev ? <Link href={`/manual/${lang}/${prev}`} style={navLink}><ChevronLeft size={18} aria-hidden />{ui.previous}</Link> : <span />}

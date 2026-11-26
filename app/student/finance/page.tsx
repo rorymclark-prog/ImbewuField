@@ -51,7 +51,7 @@ export default function FarmFinancePage() {
         }))}
         basePath="/student/finance"
         eyebrowPrefix="Unit"
-        continueEyebrow="Continue here"
+        continueEyebrow="First lesson"
         seeAllLabel="See all units"
       />
       <FullToolsOnly>

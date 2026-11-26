@@ -84,8 +84,8 @@ export function ManualFigureGroup({ figures, lang }: { figures: ManualFigure[]; 
  * (or between a lead-in sentence ending in a colon and its list).
  */
 type InsertAt = (blockIndex: number, afterStep?: number) => ReactNode;
-export default function ManualBlocks({ blocks, figures, lang = 'en', insertAt }: {
-  blocks: Block[]; figures?: Map<number, ManualFigure[]>; lang?: ManualLang; insertAt?: InsertAt;
+export default function ManualBlocks({ blocks, figures, lang = 'en', insertAt, sectionAnchors = false }: {
+  blocks: Block[]; figures?: Map<number, ManualFigure[]>; lang?: ManualLang; insertAt?: InsertAt; sectionAnchors?: boolean;
 }) {
   let section = -1;
   const placed = new Set<number>();
@@ -106,8 +106,9 @@ export default function ManualBlocks({ blocks, figures, lang = 'en', insertAt }:
   return (
     <>
       {blocks.map((block, i) => {
-        const rendered = renderBlock(block, i, insertAt);
         const extra = after(i);
+        const headingId = sectionAnchors && block.type === 'h2' ? `section-${section}` : undefined;
+        const rendered = renderBlock(block, i, insertAt, headingId);
         const insert = insertAt?.(i);
         return extra || insert ? <Fragment key={i}>{rendered}{insert}{extra}</Fragment> : rendered;
       })}
@@ -115,14 +116,14 @@ export default function ManualBlocks({ blocks, figures, lang = 'en', insertAt }:
   );
 }
 
-function renderBlock(block: Block, i: number, insertAt?: InsertAt): ReactNode {
+function renderBlock(block: Block, i: number, insertAt?: InsertAt, headingId?: string): ReactNode {
   switch (block.type) {
     // The page itself owns the <h1> (the chapter title), so a stray "# " inside the body
     // renders as a section heading rather than a second h1.
     case 'h1':
     case 'h2':
       return (
-        <h2 key={i} className="font-display" style={{ fontSize: 'clamp(22px, 1.6vw + 16px, 28px)', lineHeight: 1.25, fontWeight: 600, color: 'var(--text-primary)', margin: '32px 0 12px' }}>
+        <h2 key={i} id={headingId} className="font-display" style={{ scrollMarginTop: 72, fontSize: 'clamp(22px, 1.6vw + 16px, 28px)', lineHeight: 1.25, fontWeight: 600, color: 'var(--text-primary)', margin: '32px 0 12px' }}>
           <InlineText parts={block.content} />
         </h2>
       );

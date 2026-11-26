@@ -36,7 +36,9 @@ for (const oldSpan of [
     + predecessorText.slice(at + oldSpan.length);
 }
 const predecessor = Buffer.from(predecessorText);
-assert.equal(current.length, 88187); assert.equal(sha(current), 'ece4f0787a0e0c5e14d6d5f406aef782e195cedb22b1578013a0b2781e173730');
+assert.equal(current.length, 88747); assert.equal(sha(current), '5d2b307c50cb4b22eb0c79b1d0de51df8271a1ffaa2539effd412f2b0bd08aca');
+const archivedNoticePage = readFileSync(absolute('tests/fixtures/student-page-learning-context.tsx.txt'));
+assert.equal(archivedNoticePage.length, 88187); assert.equal(sha(archivedNoticePage), 'ece4f0787a0e0c5e14d6d5f406aef782e195cedb22b1578013a0b2781e173730');
 assert.equal(predecessor.length, 88053); assert.equal(sha(predecessor), 'a361890bfdb03c22e74a01b61516f759cf93225ca20b83edf422aa37a9712272');
 const overrides = new Map<string, Buffer>(), reads = new Map<string, number>();
 const oldGlobal = Object.getOwnPropertyDescriptor(globalThis, '__learningContextHistoryReads');
@@ -82,7 +84,10 @@ test('the reviewed notice removes only its two exact additions and the original 
   assert.deepEqual(layer.learningContextSourceBefore(page, current), predecessor);
   assert.deepEqual(wave17.wave17SourceBefore(page, current), before17);
   assert.deepEqual(wave16.wave16SourceBefore(page, current), before16);
-  let removed = Buffer.from(current);
+  // The historical notice added two spans. The present-day Study layout also moves actions
+  // and the notice; both callers must reach the exact same reviewed predecessor.
+  assert.deepEqual(layer.learningContextSourceBefore(page, archivedNoticePage), predecessor);
+  let removed = Buffer.from(archivedNoticePage);
   for (const addition of [
     Buffer.from("import LearningRegionContext from '@/components/studies/LearningRegionNotice';\n"),
     Buffer.from('        <LearningRegionContext scope="core-farming" />\n'),
@@ -102,6 +107,11 @@ test('string, Buffer and Uint8Array callers receive their own detached historica
   assert.deepEqual(Buffer.from(bytes), predecessor); assert.deepEqual(Buffer.from(input), current);
   buffer.fill(0); bytes.fill(0);
   assert.deepEqual(layer.learningContextSourceBefore(page, current), predecessor, 'a modified output cannot poison later projection');
+});
+
+test('a changed archived Study screen cannot stand in for the approved language review', () => {
+  overrides.set(absolute('tests/fixtures/student-page-learning-context.tsx.txt'), changedByte(archivedNoticePage));
+  assert.throws(() => layer.learningContextSourceBefore(page, current), /exact archived notice successor/);
 });
 
 test('an already historical caller is retained only while the actual newer page and notice remain valid', () => {
@@ -200,6 +210,7 @@ test('the existing isolated history copy plan carries the new guard and notice, 
   const code = stripTypeScriptTypes(declaration[0]) + '\nreturn files;';
   const planned = new Function('inventory', 'proof', 'webp', code)(inventory, proof, webp) as Set<string>;
   const required = [page, notice, 'tests/learning-context-history-checks.ts',
+    'tests/fixtures/student-page-learning-context.tsx.txt',
     'tests/wave-17-history-checks.ts', 'tests/fixtures/student-page-before-wave-17.tsx.txt',
     'tests/wave-16-history-checks.ts', 'tests/fixtures/student-page-before-wave-16.tsx.txt'];
   for (const file of required) assert.ok(planned.has(file), 'the actual history fixture copy plan must include ' + file);
@@ -227,9 +238,9 @@ for(const[file,bytes]of[[page,current],[notice,component]]){
  history.ensureWave17Current();
 }
 assert.deepEqual(prior.wave16SourceBefore(page,current),readFileSync(join(root,'tests/fixtures/student-page-before-wave-16.tsx.txt')));
-process.stdout.write(JSON.stringify({rejected,sourceFiles:7}));`;
+process.stdout.write(JSON.stringify({rejected,sourceFiles:8}));`;
     const output = execFileSync(process.execPath, ['--input-type=module', '--eval', child],
       { cwd: fixture, encoding: 'utf8', timeout: 30_000, maxBuffer: 1 << 20 });
-    assert.deepEqual(JSON.parse(output), { rejected: 2, sourceFiles: 7 });
+    assert.deepEqual(JSON.parse(output), { rejected: 2, sourceFiles: 8 });
   } finally { rmSync(fixture, { recursive: true, force: true }); }
 });

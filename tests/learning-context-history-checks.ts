@@ -11,7 +11,9 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const page = 'app/student/page.tsx';
 const notice = 'components/studies/LearningRegionNotice.tsx';
 const sha = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
-const currentPageSha = 'ece4f0787a0e0c5e14d6d5f406aef782e195cedb22b1578013a0b2781e173730';
+const studyPageSha = '5d2b307c50cb4b22eb0c79b1d0de51df8271a1ffaa2539effd412f2b0bd08aca';
+const studyPageSize = 88747;
+const noticePageSha = 'ece4f0787a0e0c5e14d6d5f406aef782e195cedb22b1578013a0b2781e173730';
 const previousPageSha = 'a361890bfdb03c22e74a01b61516f759cf93225ca20b83edf422aa37a9712272';
 const additions = [
   Buffer.from("import LearningRegionContext from '@/components/studies/LearningRegionNotice';\n"),
@@ -32,17 +34,26 @@ function removeReviewedAdditions(supplied: Uint8Array): Buffer {
   return bytes;
 }
 
+// The Study redesign moves the source notice beside the course. Preserve the exact
+// earlier screen so historical translation checks still examine the UI they reviewed.
+function reviewedNoticePage(): Buffer {
+  const archived = readFileSync(resolve(root, 'tests/fixtures/student-page-learning-context.tsx.txt'));
+  assert.equal(archived.length, 88187, page + ': complete archived notice successor size');
+  assert.equal(sha(archived), noticePageSha, page + ': exact archived notice successor');
+  return archived;
+}
+
 export function ensureLearningContextCurrent(): void {
   // Do not reuse a successful stat signature here. Historical callers can nest
   // inside an older checked scope; a changed current read must still be visible.
   const live = readFileSync(resolve(root, page));
-  assert.equal(live.length, 88187, page + ': complete actual live successor size');
-  assert.equal(sha(live), currentPageSha, page + ': complete actual live successor, including every unlisted byte');
+  assert.equal(live.length, studyPageSize, page + ': complete actual live successor size');
+  assert.equal(sha(live), studyPageSha, page + ': complete actual live successor, including every unlisted byte');
   const component = readFileSync(resolve(root, notice));
   assert.equal(component.length, 9886, notice + ': complete actual live successor size');
   assert.equal(sha(component), '334871cadceedffd6dd2c6de33a9457ade8b89882685c03e5bcebb81488ae747',
     notice + ': complete actual live successor of the reviewed learning-context layer');
-  removeReviewedAdditions(live);
+  removeReviewedAdditions(reviewedNoticePage());
 }
 
 /** Reverse only the exact reviewed UI additions. Unknown caller bytes stay
@@ -50,8 +61,9 @@ export function ensureLearningContextCurrent(): void {
 export function learningContextSourceBefore<T extends string | Uint8Array>(file: string, supplied: T): T {
   if (file !== page) return supplied;
   ensureLearningContextCurrent();
-  if (sha(supplied) !== currentPageSha) return supplied;
-  const before = removeReviewedAdditions(typeof supplied === 'string' ? Buffer.from(supplied) : supplied);
+  const suppliedSha = sha(supplied);
+  if (suppliedSha !== studyPageSha && suppliedSha !== noticePageSha) return supplied;
+  const before = removeReviewedAdditions(reviewedNoticePage());
   return (typeof supplied === 'string' ? before.toString()
     : Buffer.isBuffer(supplied) ? Buffer.from(before) : new Uint8Array(before)) as T;
 }
