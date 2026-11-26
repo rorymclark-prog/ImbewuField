@@ -13,7 +13,7 @@ import { replaceCanonicalCropPlanFixtureRaw } from './crop-plan-storage-fixture.
 import { account, core, crop, local, ownRow, reset, cleanup, studio, studioKey } from './international-grower-operations-fixture.ts';
 const board = await import('../lib/task-board.ts');
 const hooks = registerHooks({ load(url, context, next) {
-  if (url.endsWith('/components/crops/GrowerOperationsPanel.tsx')) return { format: 'module', shortCircuit: true,
+  if (url.endsWith('/components/crops/GrowerOperationsPanel.tsx') || url.endsWith('/components/crops/CycleHarvestLinkForm.tsx')) return { format: 'module', shortCircuit: true,
     source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: { target: ts.ScriptTarget.ES2022,
       module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX } }).outputText };
   return next(url, context);

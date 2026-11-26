@@ -30,7 +30,7 @@ const hooks = registerHooks({
     return next(specifier, context);
   },
   load(url, context, next) {
-    if (url === panelUrl) return { format: 'module', shortCircuit: true,
+    if (url === panelUrl || url.endsWith('/components/crops/CycleHarvestLinkForm.tsx')) return { format: 'module', shortCircuit: true,
       source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
         target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
       } }).outputText };

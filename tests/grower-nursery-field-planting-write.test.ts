@@ -250,8 +250,9 @@ test('a crop progress report reopens one saved crop and its recorded work withou
   assert.ok(linked && task.growerJournalLink);
   const otherPlan = { ...linked, notes: 'Exclude this other planting', growerCycleLink: { ...task.growerJournalLink, plantingId: 'other-plan' } };
   const otherDate = { ...linked, notes: 'Exclude this obsolete planned date', growerCycleLink: { ...task.growerJournalLink, plannedDate: '2028-12-30' } };
-  const build = (entries: Parameters<typeof buildGrowerProgressReport>[3], sample = false) =>
-    buildGrowerProgressReport(reopened.book.plantings, reopened.contexts, task.growerJournalLink, entries, sample);
+  const build = (entries: Parameters<typeof buildGrowerProgressReport>[3], sample = false,
+    harvest?: Parameters<typeof buildGrowerProgressReport>[5]) =>
+    buildGrowerProgressReport(reopened.book.plantings, reopened.contexts, task.growerJournalLink, entries, sample, harvest);
   const report = build([...copy.rows, otherPlan, otherDate]);
   assert.ok(report);
   assert.match(report, /Saved site measurement[\s\S]+m²/);
@@ -260,6 +261,24 @@ test('a crop progress report reopens one saved crop and its recorded work withou
   assert.match(report, /&lt;script&gt;escape this&lt;\/script&gt;/);
   assert.doesNotMatch(report, /<script>|Exclude this|sowing-member|file:|site:/);
   assert.match(report, /Actual harvest, costs and water use are unknown/);
+  assert.doesNotMatch(report, /<h2>Actual harvest<\/h2>/, 'existing callers still render the original report');
+  const withHarvest = build(copy.rows, false, { status: 'ready', incomplete: true, rows: [
+    { recordId: 'record<one>&', observedOn: '2028-07-14', quantity: 2.75, unit: 'kg' },
+    { recordId: 'record-two', observedOn: '2028-07-16', quantity: 3, unit: 'crates' },
+  ] });
+  assert.ok(withHarvest);
+  assert.match(withHarvest, /<h2>Planned work<\/h2>[\s\S]+<h2>Recorded work<\/h2>[\s\S]+<h2>Actual harvest<\/h2>/);
+  assert.match(withHarvest, /<time datetime="2028-07-14">2028-07-14<\/time><\/td><td>2[.,]75 kg<\/td><td>record&lt;one&gt;&amp;<\/td>/);
+  assert.match(withHarvest, /<time datetime="2028-07-16">2028-07-16<\/time><\/td><td>3 crates<\/td><td>record-two<\/td>/);
+  assert.doesNotMatch(withHarvest, /record<one>|Actual harvest, costs and water use are unknown/);
+  assert.match(withHarvest, /Some linked harvest records could not be verified\. This list is incomplete/);
+  assert.match(withHarvest, /Costs and water use are unknown/);
+  assert.match(build(copy.rows, false, { status: 'ready', rows: [] }) ?? '',
+    /No verified harvest records are linked to this crop cycle\. Actual harvest is unknown/);
+  assert.match(build(copy.rows, false, { status: 'ready', rows: [], incomplete: true }) ?? '',
+    /Linked harvest records could not be verified\. Actual harvest is unknown/);
+  assert.match(build(copy.rows, false, { status: 'held' }) ?? '',
+    /Harvest records could not be checked\. Actual harvest is unknown/);
   assert.match(build(null, true) ?? '', /DEMO · [\s\S]*Journal unavailable/);
   assert.match(build([]) ?? '', /No journal observations matched/);
   assert.equal(buildGrowerProgressReport(reopened.book.plantings, reopened.contexts,

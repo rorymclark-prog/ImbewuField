@@ -373,7 +373,8 @@ export default function CropPlanPage() {
           <JournalStorageNotice />
           <GrowerOperationsPanel state={operations} refresh={operations.refresh}
             checkCurrent={operations.checkCurrent} isCurrent={operations.isCurrent}
-            onRecordObservation={operations.onRecordObservation} />
+            onRecordObservation={operations.onRecordObservation} loadHarvest={operations.loadHarvest}
+            saveHarvest={operations.saveHarvest} removeHarvest={operations.removeHarvest} readHarvestReport={operations.readHarvestReport} />
           {withheldPlantings > 0 && <section aria-label="Planning support" className="mb-4 rounded-2xl p-4 font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <p>Catalogue-derived jobs are unavailable for {withheldPlantings} saved sowing {withheldPlantings === 1 ? 'entry' : 'entries'} without a supported country or workspace basis. The saved entries remain in your plan.</p>
             <Link href="/facilitator/crops" className="mt-2 inline-block underline">Review country and planning references</Link>
