@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 November 2026', sha: '03000781e', changes: [
+  { when: '26 November 2026', sha: 'c6c8381dc', changes: [
     'Start your current module or open the permaculture manual at the top of Study.',
     'After the slides, work through a farm case and try a field task with each lesson.',
   ] },

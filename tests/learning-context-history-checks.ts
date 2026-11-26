@@ -11,8 +11,8 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const page = 'app/student/page.tsx';
 const notice = 'components/studies/LearningRegionNotice.tsx';
 const sha = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
-const studyPageSha = '5d2b307c50cb4b22eb0c79b1d0de51df8271a1ffaa2539effd412f2b0bd08aca';
-const studyPageSize = 88747;
+const studyPageSha = '19c818fbe83297f8a42874cab0411a38726613298df1130dd6bc49328ed6d4d9';
+const studyPageSize = 88635;
 const noticePageSha = 'ece4f0787a0e0c5e14d6d5f406aef782e195cedb22b1578013a0b2781e173730';
 const previousPageSha = 'a361890bfdb03c22e74a01b61516f759cf93225ca20b83edf422aa37a9712272';
 const additions = [

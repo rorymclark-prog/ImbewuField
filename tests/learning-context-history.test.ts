@@ -36,7 +36,7 @@ for (const oldSpan of [
     + predecessorText.slice(at + oldSpan.length);
 }
 const predecessor = Buffer.from(predecessorText);
-assert.equal(current.length, 88747); assert.equal(sha(current), '5d2b307c50cb4b22eb0c79b1d0de51df8271a1ffaa2539effd412f2b0bd08aca');
+assert.equal(current.length, 88635); assert.equal(sha(current), '19c818fbe83297f8a42874cab0411a38726613298df1130dd6bc49328ed6d4d9');
 const archivedNoticePage = readFileSync(absolute('tests/fixtures/student-page-learning-context.tsx.txt'));
 assert.equal(archivedNoticePage.length, 88187); assert.equal(sha(archivedNoticePage), 'ece4f0787a0e0c5e14d6d5f406aef782e195cedb22b1578013a0b2781e173730');
 assert.equal(predecessor.length, 88053); assert.equal(sha(predecessor), 'a361890bfdb03c22e74a01b61516f759cf93225ca20b83edf422aa37a9712272');

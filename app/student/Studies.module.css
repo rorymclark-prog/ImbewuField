@@ -45,8 +45,9 @@
   overflow: hidden;
   min-height: clamp(225px, 24vw, 290px);
   border-radius: 18px 18px 0 0;
-  background: #173b2b;
-  color: #fffdf4;
+  --study-forest: var(--color-forest-800);
+  background: var(--study-forest);
+  color: var(--on-forest-800);
 }
 .landscape { position: absolute; z-index: -2; inset: 0 0 0 auto; width: 74%; height: 100%; object-fit: cover; object-position: center 55%; }
 .feature::before {
@@ -54,12 +55,12 @@
   position: absolute;
   z-index: -1;
   inset: 0;
-  background: linear-gradient(90deg, #173b2b 20%, rgba(23,59,43,.96) 33%, rgba(23,59,43,.8) 44%, transparent 73%);
+  background: linear-gradient(90deg, var(--study-forest) 20%, color-mix(in srgb, var(--study-forest) 96%, transparent) 33%, color-mix(in srgb, var(--study-forest) 80%, transparent) 44%, transparent 73%);
 }
 .featureText { width: 56%; padding: clamp(24px, 4vw, 48px); }
-.featureLabel { color: #f2e5c4; font: 650 12px/1.5 var(--font-sans), sans-serif; letter-spacing: .045em; }
+.featureLabel { color: var(--on-forest-800); font: 650 12px/1.5 var(--font-sans), sans-serif; letter-spacing: .045em; }
 .featureText h2 { margin: 9px 0 21px; color: inherit; font-size: clamp(31px, 4vw, 52px); font-weight: 400; line-height: 1.06; text-wrap: balance; }
-.studyButton { padding: 10px 17px; border-radius: 9px; color: #173b2b; background: #fffdf4; }
+.studyButton { padding: 10px 17px; border-radius: 9px; color: var(--study-forest); background: var(--on-forest-800); }
 .progress {
   gap: 12px;
   min-height: 62px;
@@ -90,7 +91,7 @@
 .utilityBody > p { padding-bottom: 8px; font-size: 14px; color: var(--text-secondary); }
 .utility > section { border: 0; border-top: 1px solid var(--border); border-radius: 0 0 14px 14px; }
 .courseHeading { gap: 15px; padding: 18px 20px; color: var(--color-forest-800); }
-.sectionIcon, .teacherArt {
+.sectionIcon {
   display: grid;
   flex-shrink: 0;
   place-items: center;
@@ -103,13 +104,15 @@
 .courseHeadingText > span { display: block; margin-top: 3px; font-size: 13px; color: var(--text-secondary); }
 .library { padding-block: 6px 0; }
 .library > h2 { margin: 0 0 10px; }
-.coursePreviews { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.coursePreviews { overflow: hidden; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .coursePreviewLink, .guideCard { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 14px; color: var(--text-primary); text-decoration: none; }
+.coursePreviewLink { background: var(--bg-1); }
 .coursePreviewLink + .coursePreviewLink { border-inline-start: 1px solid var(--border); }
-.coursePreviewLink > img, .teacherArt { flex: 0 0 auto; width: 62px; height: 66px; border-radius: 8px; object-fit: cover; }
-.coursePreviewLink > span:not(.teacherArt), .guideCard > span { flex: 1; min-width: 0; }
+.coursePreviewLink > img, .coursePreviewLink[href$="teach-the-teachers"]::before { flex: 0 0 auto; width: 62px; height: 66px; border-radius: 8px; object-fit: cover; }
+.coursePreviewLink[href$="teach-the-teachers"]::before { content: ""; background: var(--bg-2) url("/studies-guides/thumbs/sketch-the-site.webp") center / cover no-repeat; }
+.coursePreviewLink > span, .guideCard > span { flex: 1; min-width: 0; }
 .coursePreviewLink > svg, .guideCard > svg { flex-shrink: 0; color: var(--color-forest-800); }
-.coursePreviewLink strong, .guideCard strong { display: block; color: var(--color-forest-800); font-size: 20px; font-weight: 500; line-height: 1.15; }
+.guideCard strong, .coursePreviewLink strong { display: block; color: var(--color-forest-800); font-family: var(--font-display), Georgia, serif; font-size: 20px; font-weight: 400; line-height: 1.15; }
 .coursePreviewLink > span > span, .guideCard > span > span { display: block; margin-top: 4px; font-size: 13px; line-height: 1.4; color: var(--text-secondary); }
 .guideGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--border); }
 .guideCard { border-bottom: 1px solid var(--border); }
@@ -136,17 +139,21 @@
 .lessonHint { display: block; margin-top: 4px; color: var(--text-secondary); font-size: 12px; }
 .lessonContent { max-width: 72ch; margin-inline: auto; }
 .reading > p { font-size: 1rem; line-height: 1.65; }
-.page :is(a, button, summary):focus-visible { outline: 3px solid var(--gold-dim); outline-offset: -3px; }
-.studyButton:focus-visible { outline-color: #173b2b; }
+.page :is(a, button, summary):focus-visible { outline: 3px solid var(--study-focus, var(--gold-dim)); outline-offset: -3px; }
+.studyButton { --study-focus: var(--study-forest); }
 @media (hover: hover) {
   .coursePreviewLink:hover strong, .guideCard:hover strong, .manualLink:hover { text-decoration: underline; text-underline-offset: 3px; }
   .utility summary:hover, .courseHeading:hover { background: color-mix(in srgb, var(--color-forest-800) 5%, transparent); border-radius: inherit; }
   .lessonHeader:hover, .studyButton:hover { filter: brightness(.94); }
 }
+@media (min-width: 851px) and (max-width: 1040px) {
+  .coursePreviews { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .coursePreviewLink:last-child:nth-child(odd) { grid-column: 1 / -1; border-inline-start: 0; border-top: 1px solid var(--border); }
+}
 @media (max-width: 850px) {
   .coursePreviews { grid-template-columns: 1fr; }
   .coursePreviewLink + .coursePreviewLink { border-inline-start: 0; border-top: 1px solid var(--border); }
-  .coursePreviewLink > img, .teacherArt { width: 64px; height: 52px; }
+  .coursePreviewLink > img, .coursePreviewLink[href$="teach-the-teachers"]::before { width: 64px; height: 52px; }
 }
 @media (max-width: 680px) {
   .main { padding: 12px 12px max(32px, env(safe-area-inset-bottom)); }
@@ -155,13 +162,14 @@
   .manualLink { max-width: 52%; font-size: 13px; }
   .feature { min-height: 210px; }
   .landscape { width: 100%; object-position: center 44%; }
-  .feature::before { background: linear-gradient(0deg, #112d20 0%, rgba(17,45,32,.93) 18%, rgba(17,45,32,.74) 51%, rgba(17,45,32,.04) 93%); }
+  .feature::before { background: linear-gradient(0deg, var(--study-forest) 0%, color-mix(in srgb, var(--study-forest) 98%, transparent) 18%, color-mix(in srgb, var(--study-forest) 88%, transparent) 51%, color-mix(in srgb, var(--study-forest) 4%, transparent) 93%); }
   .featureText { width: 100%; padding: 56px 20px 18px; }
   .featureText h2 { margin: 6px 0 14px; font-size: clamp(28px, 7.8vw, 38px); }
   .progress { min-height: 54px; padding: 7px 16px; }
   .progressText { gap: 2px 10px; }
   .utilities { grid-template-columns: 1fr; gap: 0; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-1); }
   .utility { border: 0; background: transparent; }
+  .offline { border-radius: 14px 14px 0 0; background: var(--bg-1); }
   .utility + .utility { border-top: 1px solid var(--border); border-radius: 0 0 14px 14px; }
   .utility summary { min-height: 46px; }
   .courseHeading { padding: 13px; gap: 12px; }

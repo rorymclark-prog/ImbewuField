@@ -5,7 +5,7 @@ import styles from './Studies.module.css';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { Check, CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy, PlayCircle, ArrowRight, ChevronRight, LibraryBig, MapPin, Download, Presentation } from 'lucide-react';
+import { Check, CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy, PlayCircle, ArrowRight, ChevronRight, LibraryBig, MapPin, Download } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { isBackendConfigured } from '@/lib/firebase/init';
@@ -998,7 +998,7 @@ export default function StudentPage() {
 
         {/* ONE TAP, THE WHOLE COURSE, WHILE THE SIGNAL IS GOOD. */}
         <div className={styles.utilities}>
-          <details className={styles.utility}>
+          <details className={`${styles.utility} ${styles.offline}`}>
             <summary><Download size={18} aria-hidden="true" /><span>{t('studentStudyOffline')}</span><ChevronDown size={16} aria-hidden="true" /></summary>
             <div className={styles.utilityBody}>
               <p>{t('studentSaveBeforeSignal')}</p>
@@ -1445,7 +1445,6 @@ export default function StudentPage() {
               </>
             )}
             <Link href="/student/teach-the-teachers" className={styles.coursePreviewLink}>
-              <span className={styles.teacherArt}><Presentation size={30} strokeWidth={1.5} aria-hidden="true" /></span>
               <span><strong className="font-display"><DesignDraftCopy en="Teach the Teachers · ACT refresher" zu="Fundisa Othisha · Ukuvuselelwa kwe-ACT" /></strong>
                 <span><DesignDraftCopy en="Two-day teaching preview in English" zu="Ukubuka kuqala kokufundisa kwezinsuku ezimbili ngesiNgisi" /></span></span>
               <ChevronRight size={18} aria-hidden="true" />
