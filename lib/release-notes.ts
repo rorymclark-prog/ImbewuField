@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 November 2026', sha: '054e38824', changes: [
+  { when: '26 November 2026', sha: '341afd86e', changes: [
     'Link recorded harvests to crop cycles and show them in your progress report.',
   ] },
   { when: '26 November 2026', sha: 'f68de314', changes: [
