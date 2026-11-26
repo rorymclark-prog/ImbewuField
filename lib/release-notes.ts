@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 November 2026', sha: 'd671810af', changes: [
+    'Try Watercolour, Graphite Pencil or Pen & Ink in your AI map styles.',
+    'Pencil and ink maps print in greyscale, including their labels and legends.',
+  ] },
   { when: '26 November 2026', sha: '150da7f81', changes: [
     'Open the permaculture manual directly from the top of My studies.',
   ] },

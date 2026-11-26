@@ -1,3 +1,4 @@
+import { isClassicMapStyle } from '@/lib/classic-map-media';
 import type { ExactPlanSheetKey, GlossyLayerFilter } from '@/lib/glossy-filters';
 import type { CanvasFrame } from '@/lib/design-canvas';
 import type { SheetLabelMode } from '@/lib/plant-codes';
@@ -34,8 +35,11 @@ export function recommendedSheetSettings(
   const aerial: SheetUnderlay = frame.satDataUrl
     ? hasFarmerPhoto(frame) ? 'photo' : 'satellite'
     : frame.underlayDataUrl ? 'satellite' : 'plain';
+  const paper = mode === 'exact'
+    ? sheet === 'zones'
+    : isClassicMapStyle(defaultStyle) && (sheet === 'zones' || sheet === 'planting' || sheet === 'water');
   return {
-    underlay: mode === 'exact' && sheet === 'zones' ? 'plain' : aerial,
+    underlay: paper ? 'plain' : aerial,
     style: defaultStyle,
     labelMode: sheet === 'earthworks' || sheet === 'planting' || sheet === 'all' ? 'codes' : 'names',
     view: 'top-down',

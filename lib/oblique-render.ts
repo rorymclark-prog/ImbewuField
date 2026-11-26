@@ -40,6 +40,9 @@ export function obliqueTerrainEvidence(contours: SheetContourResult, site: Secto
 }
 
 const OBLIQUE_LOOK: Record<StylePreset, string> = {
+  watercolour: 'Transparent watercolour landscape on white paper, with layered green canopies, soft pigment edges and a light pencil framework.',
+  graphite_pencil: 'Neutral graphite landscape on white paper, using visible pencil strokes, soft canopy shading and darker roof edges.',
+  pen_and_ink: 'Black pen landscape on white paper, using open foliage outlines, sparse directional hatching and clear roof edges.',
   editorial_atlas: 'Clean architectural landscape illustration with fine ink detail, restrained sage and teal colours and light neutral materials.',
   precision_atlas: 'Polished naturalistic landscape illustration, crisp detailed foliage and roofs, restrained realistic colours.',
   photo_plan: 'Naturalistic photographic garden visualisation, realistic foliage, roofs and ground materials.',
