@@ -108,6 +108,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/InvoiceStorageStatus.tsx': 'farmers read invoice recovery and copy-conflict choices on Records and invoice screens; zero-debt 12px floor',
   'components/crops/GrowerOperationsPanel.tsx': 'growers read exact planned dates and operate checklists on phones; zero-debt 12px floor',
   'components/crops/CycleHarvestLinkForm.tsx': 'growers match actual harvest records and dates on phones; zero-debt 12px floor',
+  'components/crops/GardenProgressReport.tsx': 'growers choose, review and download mapped-garden evidence on phones; zero-debt 12px floor',
   // Direct crop-route traversal exposes these existing record/confirmation forms.
   // Each is already at zero debt in HEAD; keep the phone-readable floor, not a ratchet.
   'components/crops/HarvestTargetsPanel.tsx': 'growers enter buyer targets and own records; zero-debt 12px floor',
