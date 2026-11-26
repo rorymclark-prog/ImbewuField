@@ -5,7 +5,7 @@ import {
 } from './user-sync';
 import { getFirebase } from './firebase/init';
 import { isSampleMode, getSandboxPlaces, upsertSandboxPlace, deleteSandboxPlace } from './sample-mode';
-import { addTombstone, readTombstones } from './local-tombstones';
+import { addTombstone, readTombstones, LOCAL_TOMBSTONE_TTL_MS } from './local-tombstones';
 import { accountLocalStorageKey, activeAccountLocalStorageKey, activeAccountUid } from './account-local-storage';
 import {
   bindSiteContext, coordinateSiteIdForPlace, isContextBoundToPlace, normaliseSiteCountryContext, type SiteCountryContext,
@@ -159,6 +159,12 @@ function readTombstonesStrict(storageKey: string, requireLosslessJson = false): 
   if (!isRecord(parsed)) return null;
   for (const value of Object.values(parsed)) {
     if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) return null;
+  }
+  if (requireLosslessJson) {
+    const now = Date.now();
+    // Use the validated bytes. A second read can race a write in another tab.
+    return Object.fromEntries(Object.entries(parsed as Record<string, number>)
+      .filter(([, deletedAt]) => now - deletedAt < LOCAL_TOMBSTONE_TTL_MS));
   }
   return readTombstones(storageKey);
 }

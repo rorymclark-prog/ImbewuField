@@ -179,6 +179,13 @@ test('equal visible names at distinct saved sites are separated by their exact c
   const options = source.phaseJournalSites();
   assert.deepEqual(options.map(option => option.name), [`${name} · 0.00000, 0.00000`, `${name} · 1.00000, 0.00000`]);
   assert.equal(confirm().link.siteName, options[0].name);
+  local.rows.set(placesKey(), JSON.stringify([
+    place, { ...place, id: 'other', lat: 1 },
+    { ...place, name: 'Home farm · 0.00000, 0.00000', id: 'third', lat: 2 },
+  ]));
+  const finalLabels = source.phaseJournalSites().map(option => option.name);
+  assert.equal(new Set(finalLabels).size, 3, 'a literal name can overlap an automatically disambiguated label');
+  assert.equal(confirm().link.siteName, finalLabels[0]);
 });
 
 test('duplicate JSON members cannot hide a different place or feature before identity review', () => {

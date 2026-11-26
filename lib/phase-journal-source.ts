@@ -82,11 +82,15 @@ function namedPlaces(places: readonly SavedPlace[]): { place: SavedPlace; name: 
   const counts = new Map<string, number>();
   const keyFor = (name: string) => name.normalize('NFKC').toLowerCase();
   for (const { name } of choices) counts.set(keyFor(name), (counts.get(keyFor(name)) ?? 0) + 1);
-  return choices.map(choice => {
-    if (counts.get(keyFor(choice.name)) === 1) return choice;
+  const withCoordinates = (choice: (typeof choices)[number]) => {
     const { lat, lon } = choice.place;
     return { ...choice, name: `${choice.name} · ${lat.toFixed(5)}, ${lon.toFixed(5)}` };
-  });
+  };
+  const labelled = choices.map(choice => counts.get(keyFor(choice.name)) === 1 ? choice : withCoordinates(choice));
+  // A grower can name another site exactly like a generated coordinate label.
+  // Distinct canonical coordinates on every option resolve even that collision.
+  return new Set(labelled.map(choice => keyFor(choice.name))).size === labelled.length
+    ? labelled : choices.map(withCoordinates);
 }
 
 export function phaseJournalSites(): readonly { id: string; name: string }[] {
