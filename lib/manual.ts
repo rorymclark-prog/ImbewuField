@@ -73,6 +73,17 @@ export interface ManualUi {
   minutes: string;
   /** Link to /manual/<lang>/book, the printable whole-book page. */
   book: string;
+  film: string;
+  findTopic: string;
+  searchHint: string;
+  searching: string;
+  searchFailed: string;
+  retrySearch: string;
+  noMatches: string;
+  resultCount: string;
+  showMore: string;
+  clearSearch: string;
+  inThisChapter: string;
 }
 
 const UI: Record<ManualLang, ManualUi> = { en: uiEn, zu: uiZu, st: uiSt, ve: uiVe, ts: uiTs };

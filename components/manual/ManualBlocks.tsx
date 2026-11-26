@@ -1,5 +1,7 @@
 import { Fragment, type CSSProperties, type ReactNode } from 'react';
 import { figureCaption, inlineText, type Block, type Inline, type ManualFigure, type ManualLang } from '@/lib/manual';
+import { manualGlossaryAnchor } from '@/lib/manual-outline';
+import styles from './ManualOutline.module.css';
 
 // Renders lib/manual.ts's parsed blocks. No hooks and no HTML strings, so it runs inside the
 // statically generated chapter page and a translation can only ever produce text.
@@ -84,8 +86,9 @@ export function ManualFigureGroup({ figures, lang }: { figures: ManualFigure[]; 
  * (or between a lead-in sentence ending in a colon and its list).
  */
 type InsertAt = (blockIndex: number, afterStep?: number) => ReactNode;
-export default function ManualBlocks({ blocks, figures, lang = 'en', insertAt }: {
+export default function ManualBlocks({ blocks, figures, lang = 'en', insertAt, headingIds, glossaryTableAt }: {
   blocks: Block[]; figures?: Map<number, ManualFigure[]>; lang?: ManualLang; insertAt?: InsertAt;
+  headingIds?: ReadonlyMap<number, string>; glossaryTableAt?: number;
 }) {
   let section = -1;
   const placed = new Set<number>();
@@ -106,7 +109,7 @@ export default function ManualBlocks({ blocks, figures, lang = 'en', insertAt }:
   return (
     <>
       {blocks.map((block, i) => {
-        const rendered = renderBlock(block, i, insertAt);
+        const rendered = renderBlock(block, i, insertAt, headingIds?.get(i), glossaryTableAt === i);
         const extra = after(i);
         const insert = insertAt?.(i);
         return extra || insert ? <Fragment key={i}>{rendered}{insert}{extra}</Fragment> : rendered;
@@ -115,20 +118,20 @@ export default function ManualBlocks({ blocks, figures, lang = 'en', insertAt }:
   );
 }
 
-function renderBlock(block: Block, i: number, insertAt?: InsertAt): ReactNode {
+function renderBlock(block: Block, i: number, insertAt: InsertAt | undefined, anchor: string | undefined, glossaryTable: boolean): ReactNode {
   switch (block.type) {
     // The page itself owns the <h1> (the chapter title), so a stray "# " inside the body
     // renders as a section heading rather than a second h1.
     case 'h1':
     case 'h2':
       return (
-        <h2 key={i} className="font-display" style={{ fontSize: 'clamp(22px, 1.6vw + 16px, 28px)', lineHeight: 1.25, fontWeight: 600, color: 'var(--text-primary)', margin: '32px 0 12px' }}>
+        <h2 key={i} id={anchor} tabIndex={anchor ? -1 : undefined} className={`font-display ${styles.target}`} style={{ fontSize: 'clamp(22px, 1.6vw + 16px, 28px)', lineHeight: 1.25, fontWeight: 600, color: 'var(--text-primary)', margin: '32px 0 12px' }}>
           <InlineText parts={block.content} />
         </h2>
       );
     case 'h3':
       return (
-        <h3 key={i} style={{ fontSize: 'clamp(18px, 0.8vw + 15px, 21px)', lineHeight: 1.35, fontWeight: 700, color: 'var(--text-primary)', margin: '24px 0 8px' }}>
+        <h3 key={i} id={anchor} tabIndex={anchor ? -1 : undefined} className={styles.target} style={{ fontSize: 'clamp(18px, 0.8vw + 15px, 21px)', lineHeight: 1.35, fontWeight: 700, color: 'var(--text-primary)', margin: '24px 0 8px' }}>
           <InlineText parts={block.content} />
         </h3>
       );
@@ -165,7 +168,10 @@ function renderBlock(block: Block, i: number, insertAt?: InsertAt): ReactNode {
             </thead>
             <tbody>
               {block.rows.map((row, r) => (
-                <tr key={r}>{row.map((c, j) => <td key={j} style={cell}><InlineText parts={c} /></td>)}</tr>
+                <tr key={r} id={glossaryTable ? manualGlossaryAnchor(inlineText(row[0])) : undefined}
+                  tabIndex={glossaryTable ? -1 : undefined} className={glossaryTable ? styles.target : undefined}>
+                  {row.map((c, j) => <td key={j} style={cell}><InlineText parts={c} /></td>)}
+                </tr>
               ))}
             </tbody>
           </table>

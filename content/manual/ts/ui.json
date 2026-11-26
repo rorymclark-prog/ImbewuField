@@ -11,5 +11,16 @@
   "draftNotice": "Vuhundzuluxeri lebyi byi endliwile hi muchini naswona a byi si kamberiwa hi munhu loyi a vulavulaka Xitsonga kahle. Loko swin'wana swi nga twisiseki, hlaya ndzima ya Xinghezi.",
   "credit": "Yi hlengeletiwile hi Rory Clark, Imbewu Yoshintso NPC. Yi kamberiwile naswona yi pfuxetiwile eka Afrika Dzonga, 2026. Swiphemu swin'wana swi cinciwile ku suka eka Introduction to Permaculture and Homestead Gardening (2014) ya African Conservation Trust.",
   "minutes": "Timinete ta {n} to hlaya",
-  "book": "Kandziyisa kumbe u hlayisa buku hinkwayo"
+  "book": "Kandziyisa kumbe u hlayisa buku hinkwayo",
+  "findTopic": "Lava nhlokomhaka",
+  "searchHint": "Ringeta mati kumbe compost",
+  "searching": "Yi le ku laveni…",
+  "searchFailed": "Ku lavisisa a ku pfulanga. Kambela vuhlanganisi bya wena kutani u ringeta nakambe.",
+  "retrySearch": "Ringeta nakambe",
+  "noMatches": "Ku hava leswi kumekeke. Ringeta rito rin’wana.",
+  "resultCount": "Mimbuyelo ({n})",
+  "showMore": "Kombisa mimbuyelo yin’wana",
+  "clearSearch": "Sula leswi u swi laveke",
+  "inThisChapter": "Eka ndzima leyi",
+  "film": "Vhidiyo"
 }

@@ -36,7 +36,7 @@ for (const oldSpan of [
     + predecessorText.slice(at + oldSpan.length);
 }
 const predecessor = Buffer.from(predecessorText);
-assert.equal(current.length, 88187); assert.equal(sha(current), 'ece4f0787a0e0c5e14d6d5f406aef782e195cedb22b1578013a0b2781e173730');
+assert.equal(current.length, 88519); assert.equal(sha(current), 'b63181ee9d1cca5d83da3084e8a0c1c477d59720827e01da11e851fedc4a5599');
 assert.equal(predecessor.length, 88053); assert.equal(sha(predecessor), 'a361890bfdb03c22e74a01b61516f759cf93225ca20b83edf422aa37a9712272');
 const overrides = new Map<string, Buffer>(), reads = new Map<string, number>();
 const oldGlobal = Object.getOwnPropertyDescriptor(globalThis, '__learningContextHistoryReads');
@@ -77,12 +77,37 @@ const changedByte = (input: Buffer, at = Math.floor(input.length / 2)) => {
 };
 const rejectLive = /complete actual live successor/;
 
+test('the exact Study shortcut restores the complete pinned learning-context page before its history is projected', () => {
+  const withNotice = layer.beforeStudyManualShortcut(current);
+  assert.equal(withNotice.length, 88187);
+  assert.equal(sha(withNotice), 'ece4f0787a0e0c5e14d6d5f406aef782e195cedb22b1578013a0b2781e173730');
+  assert.deepEqual(layer.learningContextSourceBefore(page, withNotice), predecessor);
+  const changedPredecessor = changedByte(withNotice);
+  assert.equal(layer.learningContextSourceBefore(page, changedPredecessor), changedPredecessor);
+
+  // An old valid fixture must not impersonate the live app after the shortcut shipped.
+  overrides.set(absolute(page), withNotice);
+  assert.throws(() => wave17.ensureWave17Current(), rejectLive);
+});
+
+test('a same-size change to the manual destination or label stays visible to historical callers', () => {
+  for (const marker of ['href="/manual"', "t('navManual')"]) {
+    const offset = current.indexOf(marker); assert.ok(offset >= 0);
+    const changed = changedByte(current, offset + marker.length - 3);
+    assert.throws(() => layer.beforeStudyManualShortcut(changed), rejectLive);
+    assert.equal(layer.learningContextSourceBefore(page, changed), changed);
+    overrides.set(absolute(page), changed);
+    assert.throws(() => wave17.ensureWave17Current(), rejectLive);
+    overrides.delete(absolute(page));
+  }
+});
+
 test('the reviewed notice removes only its two exact additions and the original wave17 and wave16 predecessors still match', () => {
   layer.ensureLearningContextCurrent(); wave17.ensureWave17Current(); wave16.ensureWave16Current();
   assert.deepEqual(layer.learningContextSourceBefore(page, current), predecessor);
   assert.deepEqual(wave17.wave17SourceBefore(page, current), before17);
   assert.deepEqual(wave16.wave16SourceBefore(page, current), before16);
-  let removed = Buffer.from(current);
+  let removed = layer.beforeStudyManualShortcut(current);
   for (const addition of [
     Buffer.from("import LearningRegionContext from '@/components/studies/LearningRegionNotice';\n"),
     Buffer.from('        <LearningRegionContext scope="core-farming" />\n'),

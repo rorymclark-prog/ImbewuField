@@ -1,0 +1,106 @@
+.finder {
+  margin: 24px 0 28px;
+  padding: clamp(14px, 3vw, 22px);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  background: var(--bg-1);
+  color: var(--text-primary);
+}
+
+.finder h2 {
+  margin: 0 0 12px;
+  color: var(--text-primary);
+  font-size: clamp(22px, 3vw, 26px);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding-inline: 12px 3px;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: var(--bg-0);
+  color: var(--text-secondary);
+}
+
+.field:focus-within,
+.finder :is(button, a):focus-visible {
+  outline: 2px solid var(--cat-foundation-text);
+  outline-offset: 2px;
+}
+
+.field input {
+  flex: 1;
+  min-width: 0;
+  padding-block: 10px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 16px;
+}
+
+.field input::placeholder { color: var(--text-secondary); }
+.field input::-webkit-search-cancel-button { display: none; }
+
+.clear, .action {
+  min-height: 44px;
+  border-radius: 8px;
+  color: var(--cat-foundation-text);
+  cursor: pointer;
+}
+
+.clear {
+  display: grid;
+  min-width: 44px;
+  place-items: center;
+}
+
+.action {
+  margin-top: 10px;
+  padding: 8px 14px;
+  border: 1px solid var(--border-strong);
+  font-weight: 600;
+}
+
+.status {
+  margin: 14px 0 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.45;
+}
+.status:empty { margin: 0; }
+
+.results { margin: 8px 0 0; padding: 0; list-style: none; }
+.results li { border-top: 1px solid var(--border); }
+
+.result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 4px 12px;
+  padding: 12px 4px;
+  overflow-wrap: anywhere;
+  color: var(--text-primary);
+  scroll-margin-top: 80px;
+}
+.result > span, .result > strong { grid-column: 1; }
+.result > svg { grid-column: 2; grid-row: 2; align-self: center; color: var(--cat-foundation-text); }
+.result strong { font-size: 21px; font-weight: 600; line-height: 1.2; }
+.context { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
+.film { display: inline-flex; align-items: center; gap: 4px; color: var(--cat-foundation-text); }
+.excerpt { font-size: 15px; line-height: 1.5; }
+
+@media (hover: hover) {
+  .result:hover strong { text-decoration: underline; }
+  .clear:hover, .action:hover { background: var(--bg-2); }
+}
+
+@media print {
+  .finder { display: none; }
+}
