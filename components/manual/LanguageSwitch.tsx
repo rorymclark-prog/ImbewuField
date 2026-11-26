@@ -1,14 +1,18 @@
 import Link from 'next/link';
 import { MANUAL_LANGS, MANUAL_LANG_NAMES, type ManualLang } from '@/lib/manual';
+import ChapterLanguageLink from './ChapterLanguageLink';
 
 /** One link per manual language; `hrefFor` decides whether it lands on contents or this chapter. */
-export default function LanguageSwitch({ current, label, hrefFor }: { current: ManualLang; label: string; hrefFor: (lang: ManualLang) => string }) {
+export default function LanguageSwitch({ current, label, hrefFor, preserveChapterAnchor = false }: {
+  current: ManualLang; label: string; hrefFor: (lang: ManualLang) => string; preserveChapterAnchor?: boolean;
+}) {
+  const LanguageLink = preserveChapterAnchor ? ChapterLanguageLink : Link;
   return (
     <nav aria-label={label} style={{ display: 'flex', flexWrap: 'wrap', gap: 8, margin: '0 0 20px' }}>
       {MANUAL_LANGS.map((code) => {
         const active = code === current;
         return (
-          <Link
+          <LanguageLink
             key={code}
             href={hrefFor(code)}
             lang={code}
@@ -21,7 +25,7 @@ export default function LanguageSwitch({ current, label, hrefFor }: { current: M
             }}
           >
             {MANUAL_LANG_NAMES[code]}
-          </Link>
+          </LanguageLink>
         );
       })}
     </nav>

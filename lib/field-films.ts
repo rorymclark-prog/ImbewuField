@@ -6,6 +6,21 @@ export type FieldFilm = 'harvest' | 'level' | 'walk' | 'earth';
 export const FILM_LANGUAGES = MANUAL_LANGS;
 export const FILM_LANGUAGE_NAMES = MANUAL_LANG_NAMES;
 export type FilmLanguage = ManualLang;
+
+const frameFilmTitles = {
+  en: { level: 'Check the A-frame', walk: 'Peg a contour' },
+  zu: { level: 'Hlola i-A-frame', walk: 'Bethela i-contour ngezikhonkwane' },
+  st: { level: 'Hlahloba A-frame', walk: 'Tshwaya contour ka dithupana' },
+  ve: { level: 'Ṱolani A-frame', walk: 'Swayani contour nga zwiṱanda' },
+  ts: { level: 'Kambela A-frame', walk: 'Fungha contour hi swikhomelo' },
+};
+
+export function fieldFilmTitle(film: FieldFilm, lang: FilmLanguage): string {
+  if (film === 'harvest') return 'Where did the harvest go?';
+  if (film === 'earth') return 'Raised bed and swale';
+  return frameFilmTitles[lang][film];
+}
+
 type Edition = { bytes: number; pictures: number[]; ends: number[] };
 type Versions = { en: Edition; zu?: Edition; captions?: Edition };
 const versions: Record<FieldFilm, Versions> = {

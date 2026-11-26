@@ -2,23 +2,18 @@
 
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { ArrowRight, Download, Play, X } from 'lucide-react';
-import { filmEdition, FILM_LANGUAGES, FILM_LANGUAGE_NAMES, matchingFilmTime, type FieldFilm, type FilmLanguage } from '@/lib/field-films';
+import { fieldFilmTitle, filmEdition, FILM_LANGUAGES, FILM_LANGUAGE_NAMES, matchingFilmTime, type FieldFilm, type FilmLanguage } from '@/lib/field-films';
 import styles from './FieldFilmButton.module.css';
 import FieldFilmCaptions from './FieldFilmCaptions';
 
 const copy = {
-  en: { level: 'Check the A-frame', walk: 'Peg a contour', play: 'Play', next: 'Next', close: 'Close', language: 'Language', captions: 'Captions', voice: 'Narration and captions', save: 'Download film', captionError: 'The captions could not load.', error: 'The film could not load. Check your connection or download the film.' },
-  zu: { level: 'Hlola i-A-frame', walk: 'Bethela i-contour ngezikhonkwane', play: 'Dlala', next: 'Okulandelayo', close: 'Vala', language: 'Ulimi', captions: 'Imibhalo engezansi', voice: 'Izwi nemibhalo engezansi', save: 'Landa ividiyo', captionError: 'Imibhalo engezansi ayilayishekanga.', error: 'Ividiyo ayilayishekanga. Hlola uxhumano lwakho noma ulande ividiyo.' },
-  st: { level: 'Hlahloba A-frame', walk: 'Tshwaya contour ka dithupana', play: 'Bapala', next: 'E latelang', close: 'Kwala', language: 'Puo', captions: 'Mengolo e ka tlase', voice: 'Lentswe le mengolo e ka tlase', save: 'Jarolla video', captionError: 'Mengolo e ka tlase ha e a buleha.', error: 'Video ha e a buleha. Hlahloba kgokelo ya hao kapa o jarolle video.' },
-  ve: { level: 'Ṱolani A-frame', walk: 'Swayani contour nga zwiṱanda', play: 'Tshimbidzani', next: 'I tevhelaho', close: 'Valani', language: 'Luambo', captions: 'Maṅwalwa a fhasi', voice: 'Ipfi na maṅwalwa a fhasi', save: 'Dzhiani vidio', captionError: 'Maṅwalwa a fhasi a songo vulea.', error: 'Vidio a yo ngo vulea. Ṱolani vhukwamani haṋu kana ni dzhiye vidio.' },
-  ts: { level: 'Kambela A-frame', walk: 'Fungha contour hi swikhomelo', play: 'Tlanga', next: 'Lexi landzelaka', close: 'Pfala', language: 'Ririmi', captions: 'Matsalwa ya le hansi', voice: 'Rito ni matsalwa ya le hansi', save: 'Dawuniloda vhidiyo', captionError: 'Matsalwa ya le hansi a ma pfulanga.', error: 'Vhidiyo a yi pfulanga. Kambela vuhlanganisi bya wena kumbe u dawuniloda vhidiyo.' },
+  en: { play: 'Play', next: 'Next', close: 'Close', language: 'Language', captions: 'Captions', voice: 'Narration and captions', save: 'Download film', captionError: 'The captions could not load.', error: 'The film could not load. Check your connection or download the film.' },
+  zu: { play: 'Dlala', next: 'Okulandelayo', close: 'Vala', language: 'Ulimi', captions: 'Imibhalo engezansi', voice: 'Izwi nemibhalo engezansi', save: 'Landa ividiyo', captionError: 'Imibhalo engezansi ayilayishekanga.', error: 'Ividiyo ayilayishekanga. Hlola uxhumano lwakho noma ulande ividiyo.' },
+  st: { play: 'Bapala', next: 'E latelang', close: 'Kwala', language: 'Puo', captions: 'Mengolo e ka tlase', voice: 'Lentswe le mengolo e ka tlase', save: 'Jarolla video', captionError: 'Mengolo e ka tlase ha e a buleha.', error: 'Video ha e a buleha. Hlahloba kgokelo ya hao kapa o jarolle video.' },
+  ve: { play: 'Tshimbidzani', next: 'I tevhelaho', close: 'Valani', language: 'Luambo', captions: 'Maṅwalwa a fhasi', voice: 'Ipfi na maṅwalwa a fhasi', save: 'Dzhiani vidio', captionError: 'Maṅwalwa a fhasi a songo vulea.', error: 'Vidio a yo ngo vulea. Ṱolani vhukwamani haṋu kana ni dzhiye vidio.' },
+  ts: { play: 'Tlanga', next: 'Lexi landzelaka', close: 'Pfala', language: 'Ririmi', captions: 'Matsalwa ya le hansi', voice: 'Rito ni matsalwa ya le hansi', save: 'Dawuniloda vhidiyo', captionError: 'Matsalwa ya le hansi a ma pfulanga.', error: 'Vhidiyo a yi pfulanga. Kambela vuhlanganisi bya wena kumbe u dawuniloda vhidiyo.' },
 };
 
-function title(film: FieldFilm, lang: FilmLanguage) {
-  if (film === 'harvest') return 'Where did the harvest go?';
-  if (film === 'earth') return 'Raised bed and swale';
-  return copy[lang][film];
-}
 
 type Props = { film: FieldFilm; lang: string; onOpen?: () => void };
 
@@ -31,7 +26,7 @@ export default function FieldFilmButton({ film, lang, onOpen }: Props) {
     <button type="button" ref={trigger} className={styles.launch} aria-haspopup="dialog" data-field-film={film}
       onClick={() => { onOpen?.(); setOpen(true); }}>
       <Play size={18} aria-hidden="true" />
-      <span><strong>{ui.play} · <span lang={entry.lang}>{title(film, entry.lang)}</span></strong>
+      <span><strong>{ui.play} · <span lang={entry.lang}>{fieldFilmTitle(film, entry.lang)}</span></strong>
         <span className={styles.detail}>{FILM_LANGUAGE_NAMES[entry.lang]} · {entry.captionOnly ? ui.captions + ' · ' : ''}{entry.seconds}s · {entry.size}</span>
       </span>
     </button>
@@ -122,7 +117,7 @@ function FieldFilmPlayer({ film: first, lang: initial, onClose }: { film: FieldF
     }} onCancel={e => { e.preventDefault(); e.stopPropagation(); dialog.current?.close(); }} onClose={e => { e.stopPropagation(); onClose(); }}>
     <div className={styles.body}>
       <header className={styles.header}>
-        <h3 ref={heading} tabIndex={-1} id={headingId}>{title(film, lang)}</h3>
+        <h3 ref={heading} tabIndex={-1} id={headingId}>{fieldFilmTitle(film, lang)}</h3>
         <button type="button" className={styles.close} aria-label={ui.close} onClick={() => dialog.current?.close()}><X size={20} aria-hidden="true" /></button>
       </header>
       {isFrame ? <label className={styles.choice}>{ui.language}
@@ -131,7 +126,7 @@ function FieldFilmPlayer({ film: first, lang: initial, onClose }: { film: FieldF
         </select>
       </label> : <p className={styles.choice}>English · {ui.voice}</p>}
       <video className={styles.film} key={edition.src} ref={player} src={edition.src}
-        controls playsInline preload="auto" onLoadedData={selectCaptions} onCanPlay={selectCaptions} aria-label={title(film, lang)} onError={() => setFailed(true)}
+        controls playsInline preload="auto" onLoadedData={selectCaptions} onCanPlay={selectCaptions} aria-label={fieldFilmTitle(film, lang)} onError={() => setFailed(true)}
         onLoadedMetadata={e => {
           const video = e.currentTarget;
           if (start.current.seconds > 0) video.currentTime = start.current.seconds;
@@ -146,7 +141,7 @@ function FieldFilmPlayer({ film: first, lang: initial, onClose }: { film: FieldF
       {failed && <p className={styles.error} role="status">{ui.error}</p>}
       <div className={styles.footer}>
         {film === 'level' && <button type="button" className={styles.next} data-field-film="walk" onClick={continueToSlope}>
-          <ArrowRight size={18} aria-hidden="true" /><span><strong>{ui.next} · {ui.walk}</strong>
+          <ArrowRight size={18} aria-hidden="true" /><span><strong>{ui.next} · {fieldFilmTitle('walk', lang)}</strong>
             <span className={styles.detail}>{FILM_LANGUAGE_NAMES[lang]} · {next.seconds}s · {next.size}</span></span>
         </button>}
         <a className={styles.download} href={edition.src} download><Download size={16} aria-hidden="true" />{ui.save} · {edition.size}</a>

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { ChevronRight, Printer } from 'lucide-react';
 import ManualHeader from '@/components/manual/ManualHeader';
 import LanguageSwitch from '@/components/manual/LanguageSwitch';
+import ManualTopicFinder from '@/components/manual/ManualTopicFinder';
 import { MANUAL_CHAPTERS, MANUAL_LANGS, isManualLang, manualUi } from '@/lib/manual';
 import { chapterIndex } from '@/lib/manual-content';
 
@@ -41,6 +42,7 @@ export default function ManualContentsPage({ params }: { params: { lang: string 
             {ui.draftNotice}
           </p>
         )}
+        <ManualTopicFinder key={lang} lang={lang} ui={ui} />
         <h2 className="font-display" style={{ fontSize: 24, fontWeight: 400, color: 'var(--color-forest-800)', margin: '8px 0 12px' }}>{ui.chapters}</h2>
         <ol style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: 10 }}>
           {chapters.map((chapter) => (

@@ -11,5 +11,16 @@
   "draftNotice": "Ino phindulelo yo itwa nga mutshini nahone a i athu sedzuluswa nga muthu a ambaho Tshivenḓa zwavhuḓi. Arali tshiṅwe tshithu tshi songo pfala, vhalani ndima ya Luisimane.",
   "credit": "Yo kuvhanganywa nga Rory Clark, Imbewu Yoshintso NPC. Yo sedzuluswa mafhungo nahone ya vusuludzwa u itela Afrika Tshipembe, 2026. Zwiṅwe zwipiḓa zwo shandukiswa u bva kha Introduction to Permaculture and Homestead Gardening (2014) ya African Conservation Trust.",
   "minutes": "mimunithi ya {n} ya u vhala",
-  "book": "Gandisani kana ni vhulunge bugu yoṱhe"
+  "book": "Gandisani kana ni vhulunge bugu yoṱhe",
+  "findTopic": "Ṱoḓani thero",
+  "searchHint": "Lingedzani maḓi kana compost",
+  "searching": "I khou ṱoḓa…",
+  "searchFailed": "A zwo konadzei u vula u ṱoḓa. Ṱolani vhukwamani haṋu ni lingedze hafhu.",
+  "retrySearch": "Lingedzani hafhu",
+  "noMatches": "A hu na zwe zwa wanala. Lingedzani ḽiṅwe ipfi.",
+  "resultCount": "Mvelelo ({n})",
+  "showMore": "Sumbedzani dziṅwe mvelelo",
+  "clearSearch": "Thuthani zwe na ṱoḓa",
+  "inThisChapter": "Kha ndima iyi",
+  "film": "Vidio"
 }

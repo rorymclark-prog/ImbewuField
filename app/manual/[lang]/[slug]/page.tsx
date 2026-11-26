@@ -1,15 +1,18 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ChevronLeft, ChevronRight, List } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight, List } from 'lucide-react';
 import ManualHeader from '@/components/manual/ManualHeader';
 import ManualBlocks from '@/components/manual/ManualBlocks';
 import FieldFilmButton from '@/components/course/FieldFilmButton';
 import LanguageSwitch from '@/components/manual/LanguageSwitch';
+import ChapterLanguageLink from '@/components/manual/ChapterLanguageLink';
+import styles from '@/components/manual/ManualOutline.module.css';
 import {
   MANUAL_CHAPTERS, MANUAL_LANGS, chapterTitle, earthworksFilmPlacements, figuresBySection, isManualChapter, isManualLang, manualUi, parseManual, readingMinutes,
 } from '@/lib/manual';
 import { manualFigures, readChapter } from '@/lib/manual-content';
+import { manualOutline } from '@/lib/manual-outline';
 
 // One chapter in one language, generated at build time. A language whose chapter file does not
 // exist yet shows the English chapter (marked lang="en") rather than a 404, so the contents list
@@ -48,6 +51,9 @@ export default function ManualChapterPage({ params }: { params: { lang: string; 
   const blocks = parseManual(markdown);
   const titleBlock = blocks.find((b) => b.type === 'h1');
   const body = blocks.filter((b) => b !== titleBlock);
+  const outline = manualOutline(body);
+  const headingIds = new Map(outline.map((h) => [h.blockIndex, h.anchor]));
+  const glossaryTableAt = slug === '12-glossary' ? body.findIndex((b) => b.type === 'table') : undefined;
   const index = MANUAL_CHAPTERS.indexOf(slug);
   const prev = index > 0 ? MANUAL_CHAPTERS[index - 1] : null;
   const next = index < MANUAL_CHAPTERS.length - 1 ? MANUAL_CHAPTERS[index + 1] : null;
@@ -66,21 +72,35 @@ export default function ManualChapterPage({ params }: { params: { lang: string; 
     <div style={{ minHeight: '100dvh', background: 'var(--bg-0)' }}>
       <ManualHeader fallback={`/manual/${lang}`} label={ui.title} />
       <main style={{ maxWidth: 760, margin: '0 auto', padding: '20px 16px 0', paddingBottom: 'max(64px, var(--lima-fab-clearance, 0px))' }}>
-        <LanguageSwitch current={lang} label={ui.language} hrefFor={(code) => `/manual/${code}/${slug}`} />
+        <LanguageSwitch current={lang} label={ui.language} hrefFor={(code) => `/manual/${code}/${slug}`} preserveChapterAnchor />
         <article lang={contentLang}>
           <p style={{ fontSize: 14, fontWeight: 600, letterSpacing: 0.3, color: 'var(--text-secondary)', margin: '0 0 6px' }}>
             {ui.chapter} {index} · {ui.minutes.replace('{n}', String(readingMinutes(markdown)))}
           </p>
-          <h1 className="font-display" style={{ fontSize: 'clamp(28px, 2.4vw + 18px, 40px)', lineHeight: 1.15, fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 20px' }}>
+          <h1 id="chapter-start" tabIndex={-1} className={`font-display ${styles.target}`} style={{ fontSize: 'clamp(28px, 2.4vw + 18px, 40px)', lineHeight: 1.15, fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 20px' }}>
             {chapterTitle(markdown)}
           </h1>
           {lang !== 'en' && (
             <p role="note" lang={lang} style={{ fontSize: 15, lineHeight: 1.55, color: 'var(--text-primary)', background: 'var(--bg-2)', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px', margin: '0 0 24px' }}>
               {ui.draftNotice}{' '}
-              <Link href={`/manual/en/${slug}`} lang="en" style={{ textDecoration: 'underline', fontWeight: 600 }}>{manualUi('en').readInEnglish}</Link>
+              <ChapterLanguageLink href={`/manual/en/${slug}`} lang="en" style={{ textDecoration: 'underline', fontWeight: 600 }}>{manualUi('en').readInEnglish}</ChapterLanguageLink>
             </p>
           )}
-          <ManualBlocks blocks={body} figures={figuresBySection(manualFigures(), slug)} lang={contentLang} insertAt={filmSlots.length ? filmAt : undefined} />
+          {outline.length > 0 && (
+            <details className={styles.outline}>
+              <summary lang={lang}><List size={18} aria-hidden />{ui.inThisChapter}<ChevronDown size={18} aria-hidden className={styles.chevron} /></summary>
+              <nav aria-label={ui.inThisChapter} lang={lang}>
+                <ul lang={contentLang}>
+                  {outline.map((heading) => (
+                    <li key={heading.anchor} className={heading.level === 3 ? styles.subsection : undefined}>
+                      <a href={`#${heading.anchor}`}>{heading.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </details>
+          )}
+          <ManualBlocks blocks={body} headingIds={headingIds} glossaryTableAt={glossaryTableAt} figures={figuresBySection(manualFigures(), slug)} lang={contentLang} insertAt={filmSlots.length ? filmAt : undefined} />
         </article>
         <nav aria-label={ui.chapters} style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'space-between', marginTop: 40 }}>
           {prev ? <Link href={`/manual/${lang}/${prev}`} style={navLink}><ChevronLeft size={18} aria-hidden />{ui.previous}</Link> : <span />}
