@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+- [26 November 2026 — Private garden project progress report](2026-11-26/private-garden-progress.md) records the private mapped-site draft and verified evidence boundaries.
+
 - [26 November 2026 — Saved maps and device review](2026-11-26/map-recovery-and-device-review.md) records live artwork recovery, browser checks and regional terrain and Sector comparisons.
 
 - [25 November 2026 — Directly readable AI Earthworks swale names](2026-11-25/earthworks-paid-callout-contrast.md) follows the Water and Earthworks label comparisons.

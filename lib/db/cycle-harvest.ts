@@ -9,6 +9,7 @@ import {
   type CycleHarvestLink, type CycleHarvestOption, type CycleHarvestSelection,
 } from '../cycle-harvest';
 import { isJournalDate, todayISODate, type GrowerJournalLink } from '../field-journal';
+import { recordUnit, type RecordUnit } from '../farm-records';
 import { getFirebase } from '../firebase/init';
 import type { GrowerReportHarvest } from '../grower-progress-report';
 import { getSandboxProduction, SAMPLE_MODE_EVENT } from '../sample-mode';
@@ -26,7 +27,7 @@ export type CycleHarvestSave =
 type Current = () => boolean;
 
 const heldOptions: CycleHarvestOptions = { status: 'held', options: [] };
-const heldReport: GrowerReportHarvest = { status: 'held' };
+const heldReport = { status: 'held' } as const;
 const unavailable: CycleHarvestSave = { status: 'held' };
 const saved: CycleHarvestSave = { status: 'saved' };
 const conflict: CycleHarvestSave = { status: 'conflict' };
@@ -73,6 +74,25 @@ function serverOption(snapshot: DocumentSnapshot, owner: string): CycleHarvestOp
 function sampleOption(actor: Actor, recordId: string): CycleHarvestOption | null {
   const row = getSandboxProduction().find(record => record.id === recordId);
   return row ? cycleHarvestOption(row.id, row, actor.owner) : null;
+}
+
+function linkedOption(id: string, row: ProductionLog, owner: string, forGarden: boolean): CycleHarvestOption | null {
+  const option = cycleHarvestOption(id, row, owner);
+  if (option || !forGarden || row.profile_id !== owner || !validCycleHarvestRecordId(id)
+    || typeof row.crop !== 'string' || !row.crop.trim()) return option;
+  const unit = recordUnit(row);
+  // Read an explicit zero if an already linked source now contains one.
+  // Existing harvest entry and link controls keep their positive-quantity contract.
+  if (!unit || row.quantity !== 0 || (unit === 'kg' ? row.kg !== 0 : row.kg !== null)) return null;
+  return { recordId: id, crop: row.crop, quantity: 0, unit, enteredAt: null };
+}
+
+function entryDay(value: unknown): string | null {
+  if (isJournalDate(value)) return value;
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value)
+    || !isJournalDate(value.slice(0, 10))) return null;
+  const time = Date.parse(value);
+  return Number.isFinite(time) ? new Date(time).toISOString().slice(0, 10) : null;
 }
 
 export async function readCycleHarvestOptions(
@@ -179,9 +199,13 @@ function checkedLink({ id, value, pending }: LinkRow, reference: GrowerJournalLi
   return expected && sameCycleHarvestLink(value, expected) ? expected : null;
 }
 
+type LinkedHarvestRow = { recordId: string; observedOn: string; recordedOn: string | null; quantity: number; unit: RecordUnit };
+type LinkedHarvestEvidence = { status: 'held' }
+  | { status: 'ready'; rows: readonly LinkedHarvestRow[]; incomplete: boolean };
+
 async function readLinkedHarvests(
-  actor: Actor, reference: GrowerJournalLink, cropKey: string,
-): Promise<GrowerReportHarvest> {
+  actor: Actor, reference: GrowerJournalLink, cropKey: string, forGarden: boolean,
+): Promise<LinkedHarvestEvidence> {
   if (!actor.isCurrent()) return heldReport;
   const admitted = await readLinkRows(actor, reference.plantingId);
   if (!actor.isCurrent()) return heldReport;
@@ -189,10 +213,14 @@ async function readLinkedHarvests(
     const expected = checkedLink(row, reference, cropKey);
     if (!expected || (!actor.sample && expected.observedOn > todayISODate()) || !actor.isCurrent()) return null;
     try {
-      const option = actor.sample ? sampleOption(actor, expected.recordId)
-        : serverOption(await getDocFromServer(doc(production(actor), expected.recordId)), actor.owner);
+      const snapshot = actor.sample ? null : await getDocFromServer(doc(production(actor), expected.recordId));
+      const row = snapshot === null ? getSandboxProduction().find(item => item.id === expected.recordId)
+        : snapshot.exists() && !snapshot.metadata.fromCache && !snapshot.metadata.hasPendingWrites
+          ? snapshot.data() as ProductionLog : undefined;
+      const option = row && linkedOption(expected.recordId, row, actor.owner, forGarden);
       if (!option || !cycleHarvestCropMatches(option, cropKey) || !actor.isCurrent()) return null;
-      return { recordId: option.recordId, observedOn: expected.observedOn, quantity: option.quantity, unit: option.unit };
+      return { recordId: option.recordId, observedOn: expected.observedOn, recordedOn: forGarden ? entryDay(row.logged_at) : null,
+        quantity: option.quantity, unit: option.unit };
     } catch { return null; }
   }));
   if (!actor.isCurrent()) return heldReport;
@@ -207,16 +235,22 @@ export interface CycleHarvestReportRead {
   isCurrent: Current;
 }
 
+export interface GardenCycleHarvestRead {
+  evidence: LinkedHarvestEvidence;
+  checkCurrent: () => Promise<boolean>;
+  isCurrent: Current;
+}
+
 /** The exporter re-reads server-confirmed entries through its handoff guard.
  * A missing, pending or inaccessible record can never stand in for a harvest. */
-export async function captureCycleHarvestReport(
-  reference: GrowerJournalLink, cropKey: string, isCurrent: Current,
-): Promise<CycleHarvestReportRead> {
+async function captureLinkedHarvests(
+  reference: GrowerJournalLink, cropKey: string, isCurrent: Current, forGarden: boolean,
+): Promise<GardenCycleHarvestRead> {
   const unavailableRead = { evidence: heldReport, checkCurrent: async () => isCurrent(), isCurrent };
   try {
     const actor = captureActor(isCurrent);
     if (!actor) return unavailableRead;
-    const evidence = await readLinkedHarvests(actor, reference, cropKey);
+    const evidence = await readLinkedHarvests(actor, reference, cropKey, forGarden);
     if (evidence.status !== 'ready') return unavailableRead;
     const signature = JSON.stringify(evidence);
     const sampleBook = actor.sample ? getSandboxProduction() : null;
@@ -224,6 +258,21 @@ export async function captureCycleHarvestReport(
     const stillCurrent = () => actor.isCurrent() && (!actor.sample
       || getSandboxProduction() === sampleBook && sampleScope().links === sampleLinks);
     return { evidence, isCurrent: stillCurrent, checkCurrent: async () => stillCurrent()
-      && JSON.stringify(await readLinkedHarvests(actor, reference, cropKey)) === signature && stillCurrent() };
+      && JSON.stringify(await readLinkedHarvests(actor, reference, cropKey, forGarden)) === signature && stillCurrent() };
   } catch { return unavailableRead; }
+}
+
+export async function captureCycleHarvestReport(
+  reference: GrowerJournalLink, cropKey: string, isCurrent: Current,
+): Promise<CycleHarvestReportRead> {
+  const captured = await captureLinkedHarvests(reference, cropKey, isCurrent, false);
+  const { evidence } = captured;
+  return { ...captured, evidence: evidence.status === 'held' ? heldReport
+    : { ...evidence, rows: evidence.rows.map(({ recordId, observedOn, quantity, unit }) => ({ recordId, observedOn, quantity, unit })) } };
+}
+
+export function captureGardenCycleHarvest(
+  reference: GrowerJournalLink, cropKey: string, isCurrent: Current,
+): Promise<GardenCycleHarvestRead> {
+  return captureLinkedHarvests(reference, cropKey, isCurrent, true);
 }
