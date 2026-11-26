@@ -11,9 +11,7 @@ import {
 import { isJournalDate, todayISODate, type GrowerJournalLink } from '../field-journal';
 import { getFirebase } from '../firebase/init';
 import type { GrowerReportHarvest } from '../grower-progress-report';
-import {
-  addSandboxCycleHarvestLink, getSandboxCycleHarvestLinks, getSandboxProduction, readSampleModeFlag, removeSandboxCycleHarvestLink,
-} from '../sample-mode';
+import { getSandboxProduction, SAMPLE_MODE_EVENT } from '../sample-mode';
 import type { ProductionLog } from './types';
 
 export type CycleHarvestOptions =
@@ -32,6 +30,23 @@ const heldReport: GrowerReportHarvest = { status: 'held' };
 const unavailable: CycleHarvestSave = { status: 'held' };
 const saved: CycleHarvestSave = { status: 'saved' };
 const conflict: CycleHarvestSave = { status: 'conflict' };
+
+function readSampleModeFlag(): boolean | null {
+  try { return typeof window === 'undefined' ? null : window.sessionStorage.getItem('imbewu_sample_mode') === '1'; }
+  catch { return null; }
+}
+
+// The association contains no harvest values. Bind it to the existing demo
+// lifecycle without changing the historical sample module or device storage.
+const sampleScopes = new WeakMap<Window, { links: ReadonlyMap<string, CycleHarvestLink> }>();
+function sampleScope() {
+  const existing = sampleScopes.get(window);
+  if (existing) return existing;
+  const scope: { links: ReadonlyMap<string, CycleHarvestLink> } = { links: new Map() };
+  sampleScopes.set(window, scope);
+  window.addEventListener(SAMPLE_MODE_EVENT, () => { scope.links = new Map(); });
+  return scope;
+}
 
 function captureActor(sourceIsCurrent: Current) {
   const sample = readSampleModeFlag();
@@ -95,10 +110,11 @@ export async function linkExistingCycleHarvest(
     const sourceMatches = (source: CycleHarvestOption | null) => !!source && sameCycleHarvestOption(source, selected);
     if (actor.sample) {
       const source = sampleOption(actor, link.recordId);
-      const old = getSandboxCycleHarvestLinks().get(storageId);
+      const old = sampleScope().links.get(storageId);
       if (!sourceMatches(source) || !actor.isCurrent()) return unavailable;
       if (old) return sameCycleHarvestLink(old, link) ? saved : conflict;
-      addSandboxCycleHarvestLink(storageId, link);
+      const scope = sampleScope();
+      scope.links = new Map([...scope.links, [storageId, Object.freeze(link)]]);
       return actor.isCurrent() ? saved : unavailable;
     }
     const target = doc(privateLinks(actor), storageId);
@@ -123,11 +139,13 @@ export async function unlinkExistingCycleHarvest(link: CycleHarvestLink, isCurre
     if (!actor || !validCycleHarvestRecordId(link.recordId)) return unavailable;
     const storageId = cycleHarvestDocumentId(link.recordId);
     if (actor.sample) {
-      const existing = getSandboxCycleHarvestLinks().get(storageId);
+      const existing = sampleScope().links.get(storageId);
       if (!actor.isCurrent()) return unavailable;
       if (!existing) return saved;
       if (!sameCycleHarvestLink(existing, link)) return conflict;
-      removeSandboxCycleHarvestLink(storageId);
+      const scope = sampleScope(), links = new Map(scope.links);
+      links.delete(storageId);
+      scope.links = links;
       return actor.isCurrent() ? saved : unavailable;
     }
     const target = doc(privateLinks(actor), storageId);
@@ -148,7 +166,7 @@ type LinkRow = { id: string; value: Partial<CycleHarvestLink>; pending?: boolean
 
 async function readLinkRows(actor: Actor, plantingId: string): Promise<LinkRow[]> {
   const rows: LinkRow[] = actor.sample
-    ? [...getSandboxCycleHarvestLinks()].map(([id, value]) => ({ id, value }))
+    ? [...sampleScope().links].map(([id, value]) => ({ id, value }))
     : (await getDocsFromServer(query(privateLinks(actor), where('plantingId', '==', plantingId))))
       .docs.map(row => ({ id: row.id, value: row.data(), pending: row.metadata.hasPendingWrites || row.metadata.fromCache }));
   return rows.filter(row => row.id.startsWith(CYCLE_HARVEST_LINK_KIND + '-') && row.value.plantingId === plantingId);
@@ -202,9 +220,9 @@ export async function captureCycleHarvestReport(
     if (evidence.status !== 'ready') return unavailableRead;
     const signature = JSON.stringify(evidence);
     const sampleBook = actor.sample ? getSandboxProduction() : null;
-    const sampleLinks = actor.sample ? getSandboxCycleHarvestLinks() : null;
+    const sampleLinks = actor.sample ? sampleScope().links : null;
     const stillCurrent = () => actor.isCurrent() && (!actor.sample
-      || getSandboxProduction() === sampleBook && getSandboxCycleHarvestLinks() === sampleLinks);
+      || getSandboxProduction() === sampleBook && sampleScope().links === sampleLinks);
     return { evidence, isCurrent: stillCurrent, checkCurrent: async () => stillCurrent()
       && JSON.stringify(await readLinkedHarvests(actor, reference, cropKey)) === signature && stillCurrent() };
   } catch { return unavailableRead; }

@@ -183,6 +183,7 @@ test('sample links use the existing sample harvest book and are withdrawn on del
   exitSampleMode();
   assert.equal(state.reads, 0);
   assert.equal(state.writes, 0);
+  assert.equal((window.localStorage as unknown as TestStorage).data.size, 0);
   assert.equal(enterSampleMode(), true);
   assert.deepEqual((await captureCycleHarvestReport(plan, 'cabbage', current)).evidence, { status: 'ready', rows: [], incomplete: false });
   exitSampleMode();
@@ -214,4 +215,13 @@ test('only the exact current private link can be removed even when its harvest i
   state.documents.set(rowPath, row);
   assert.deepEqual(await linkExistingCycleHarvest(association(plan, '2026-08-05'), option, current), { status: 'saved' });
   assert.equal(state.documents.get(linkPath)?.observedOn, '2026-08-05');
+});
+
+test('an unreadable sample flag holds the operation even with a signed-in Firebase owner', async () => {
+  Object.defineProperty(window, 'sessionStorage', { configurable: true, get() { throw Error('Storage unavailable'); } });
+  assert.deepEqual(await readCycleHarvestOptions('cabbage', current), { status: 'held', options: [] });
+  const report = await captureCycleHarvestReport(plan, 'cabbage', current);
+  assert.deepEqual(report.evidence, { status: 'held' });
+  assert.equal(state.reads, 0);
+  assert.equal(state.writes, 0);
 });
