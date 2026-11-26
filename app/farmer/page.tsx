@@ -25,7 +25,7 @@ import { useLanguage, translate } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
-import { getSampleMapSite, getSampleWorkspace, isSampleMode } from '@/lib/sample-mode';
+import { getSampleMapSite, isFictionalSampleLocation, isSampleMode } from '@/lib/sample-mode';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { monthlyTemperatureStatus } from '@/lib/climate-temperature';
@@ -259,7 +259,7 @@ function HomeInner() {
   }, [searchKey]);
 
   const locationRequest = useRef(0);
-  const handleLocationSelect = useCallback(async (lat: number, lon: number, options?: { openDetails?: boolean; skipLocationFetch?: boolean }) => {
+  const handleLocationSelect = useCallback(async (lat: number, lon: number, options?: { openDetails?: boolean }) => {
     const request = ++locationRequest.current;
     const named = loadPlaces().find(p=>designSiteIdFromLocation(p)===designSiteIdFromLocation({lat,lon}));
     setActivePlaceId(named?.id??null);setActivePlaceName(named?.name??null);
@@ -274,7 +274,7 @@ function HomeInner() {
     if (options?.openDetails !== false) {
       setSheetOpen(true);
     }
-    if (options?.skipLocationFetch) {
+    if (isFictionalSampleLocation(lat, lon)) {
       // A fictional farm opens on its saved map without looking up or
       // attributing real terrain, soil or weather to the schematic town marker.
       setLoading(false);
@@ -487,10 +487,7 @@ function HomeInner() {
   useEffect(() => {
     const site = getSampleMapSite();
     if (site && !selected && !searchParams.get('site') && !reportSiteFlow) {
-      handleLocationSelect(site.lat, site.lon, {
-        openDetails: false,
-        skipLocationFetch: getSampleWorkspace() === 'green-horizon',
-      });
+      handleLocationSelect(site.lat, site.lon, { openDetails: false });
       const t = setTimeout(() => setJumpTo({ lat: site.lat, lon: site.lon }), 800);
       return () => clearTimeout(t);
     }

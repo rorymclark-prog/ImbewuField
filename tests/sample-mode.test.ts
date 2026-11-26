@@ -155,6 +155,9 @@ test('Green Horizon keeps its typed and raw edits apart from Ubhejane and real r
 
   assert.equal(sample.enterSampleMode('green-horizon'), true);
   assert.deepEqual(sample.getSampleMapSite(), GREEN_HORIZON_SITE);
+  const { lat, lon } = GREEN_HORIZON_SITE;
+  assert.equal(sample.isFictionalSampleLocation(lat, lon), true);
+  assert.equal(sample.isFictionalSampleLocation(lat + 0.00001, lon), false);
   assert.deepEqual(loadPlaces().map(({ name, elevation }) => ({ name, elevation })), [{ name: GREEN_HORIZON_SITE.name, elevation: null }]);
   const seeds = buildGreenHorizonStorageSeeds();
   assert.deepEqual(seeds, buildGreenHorizonStorageSeeds(), 'the sample records and geometry are reproducible');
@@ -175,12 +178,14 @@ test('Green Horizon keeps its typed and raw edits apart from Ubhejane and real r
   sample.addSandboxSale({ crop: 'Green Horizon only' });
   assert.equal(sample.enterSampleMode(), true);
   assert.deepEqual(sample.getSampleMapSite(), DEMO_SITE);
+  assert.equal(sample.isFictionalSampleLocation(lat, lon), false);
   assert.ok(!sample.getSandboxSales().some(row => row.crop.includes('only')));
   assert.equal(realLocal.getItem(canvasKey), null);
   assert.ok(realLocal.getItem(ubhejaneCanvasKey));
   assert.notEqual(realLocal.getItem('imbewu_field_journal_v1'), 'Green Horizon journal edit');
 
   sample.exitSampleMode();
+  assert.equal(sample.isFictionalSampleLocation(lat, lon), false);
   assert.equal(sample.getSampleWorkspace(), null);
   assert.equal(sample.getSampleMapSite(), null);
   assert.equal(session.getItem('imbewu_sample_workspace'), null);

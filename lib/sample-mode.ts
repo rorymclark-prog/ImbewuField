@@ -146,6 +146,11 @@ export function getSampleMapSite() {
   return workspace === 'green-horizon' ? GREEN_HORIZON_SITE : DEMO_SITE;
 }
 
+export function isFictionalSampleLocation(lat: number, lon: number): boolean {
+  return getSampleWorkspace() === 'green-horizon'
+    && lat === GREEN_HORIZON_SITE.lat && lon === GREEN_HORIZON_SITE.lon;
+}
+
 /**
  * Sample farm is look-don't-spend: every route that bills a real vendor account must refuse while
  * sampling, and say so in the farmer's own words rather than failing silently. lib/render-jobs.ts's

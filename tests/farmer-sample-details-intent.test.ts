@@ -107,7 +107,10 @@ function harness(options: { sample?: boolean; sampleSite?: Point; sampleWorkspac
     },
     locationRequest: { current: 0 }, siteParamHandled: { current: '' },
     loadPlaces: () => places, getSampleMapSite: () => settings.sample ? options.sampleSite ?? demo : null,
-    isSampleMode: () => settings.sample, getSampleWorkspace: () => settings.sample ? options.sampleWorkspace ?? 'ubhejane' : null,
+    isSampleMode: () => settings.sample,
+    isFictionalSampleLocation: (lat: number, lon: number) => settings.sample
+      && options.sampleWorkspace === 'green-horizon'
+      && lat === options.sampleSite?.lat && lon === options.sampleSite?.lon,
     monthlyTemperatureStatus, withLocalRainfallSeason,
     // The comparison boundary distinguishes fixture sites. Five-decimal cache
     // spelling comes from the extracted cache expression, not a copied rule.
@@ -172,6 +175,22 @@ test('the fictional market garden opens its saved map without looking up real si
   assert.equal(h.headerCalls, 0);
   h.advance(800);
   assert.deepEqual(h.state.jumpTo, other);
+});
+
+test('explicit selection and a saved-site link leave the fictional market garden without location data', async () => {
+  const h = harness({ sampleSite: other, sampleWorkspace: 'green-horizon', params: 'site=other-place' });
+  h.seed(other);
+  h.savedSite();
+  await h.settle();
+  assert.equal(h.state.sheetOpen, true);
+  assert.equal(h.state.activePlaceId, 'other-place');
+  assert.equal(h.state.data, null);
+  await h.handleLocationSelect(other.lat, other.lon);
+  assert.equal(h.state.data, null);
+  assert.equal(h.requests.length, 0);
+  assert.equal(h.headerCalls, 0);
+  await h.handleLocationSelect(demo.lat, demo.lon);
+  assert.equal(h.requests.length, 1, 'other coordinates retain the explicitly requested lookup');
 });
 
 for (const initiallyOpen of [false, true]) test(`automatic cached DEMO data preserves the ${initiallyOpen ? 'open' : 'closed'} sheet and does not refetch`, async () => {

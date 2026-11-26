@@ -46,7 +46,7 @@ import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-s
 import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-workflow';
 import { activeAccountLocalStorageKey, activeAccountUid } from '@/lib/account-local-storage';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
-import { isSampleMode } from '@/lib/sample-mode';
+import { isFictionalSampleLocation, isSampleMode } from '@/lib/sample-mode';
 import { sampleSowingCalendarFor } from '@/lib/sample-sowing-calendar';
 import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import NurseryForecastSummary from '@/components/crops/NurseryForecastSummary';
@@ -1700,6 +1700,10 @@ function FacilitatorCropsPageInner() {
   const climateMissing: SiteClimateMissingReason | 'loading' = climateAnswered ? climateSnapshot?.missing ?? 'unavailable' : 'loading';
   useEffect(() => {
     if (!allowCataloguePlanning || !climateSiteKey) { setClimateSnapshot(null); return; }
+    if (isFictionalSampleLocation(siteLat!, siteLon!)) {
+      setClimateSnapshot({ siteKey: climateSiteKey, climate: null, missing: 'unavailable' });
+      return;
+    }
     let cancelled = false;
     // The render guard also blocks the old site's climate before this effect runs.
     setClimateSnapshot(null);
