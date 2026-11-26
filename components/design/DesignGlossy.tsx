@@ -102,7 +102,7 @@ import {
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath, tracedLineLabelMidpoint } from '@/lib/leader-labels';
 import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, recommendedSheetSettings, renderAuthorityFlagsForStyle, renderPolicyForStyle, type SheetPresentationSettings } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
-import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
+import { EXACT_PLANTING_FINISHES, drawExactCanopy, supportsExactCanopies, type ExactPlantingFinish, PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
 import RecordPlanOption from './RecordPlanOption';
 import { SHEET_RENDER_RECIPE, savedSheetFreshness, type SavedSheetFreshness } from '@/lib/sheet-render-recipe';
@@ -136,7 +136,7 @@ import {
 } from '@/lib/sheet-legend-layout';
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
 import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, PLAIN_PAPER_GROUND, savedSheetUnderlayNote, SHEET_UNDERLAY_LABEL, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
-import { finishClassicSheet, isClassicMapStyle } from '@/lib/classic-map-media';
+import { convertSheetToGreyscale, finishClassicSheet, isClassicMapStyle } from '@/lib/classic-map-media';
 import { drainCanvasToDataUrl, releaseCanvas, releaseImageSource } from '@/lib/release-canvas';
 import { drawEarthworksBasin, swaleBankSide, type FallVector } from '@/lib/earthworks-relief';
 import { terrainFallVector, overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
@@ -6849,7 +6849,7 @@ function drawFilteredItems(
   px: (n: number) => number,
   py: (n: number) => number,
   pxPerM: number,
-  excludeWater = false,
+  exactFinish: ExactPlantingFinish = 'detailed',
 ): void {
   const items = byCartographicStack(state, filter);
   const neighbourInputs = items.map((it) => ({
@@ -6876,10 +6876,9 @@ function drawFilteredItems(
   for (let index = 0; index < items.length; index++) {
     const it = items[index];
     const def = ELEMENTS_BY_ID[it.defId];
-    // The masterplan draws Water first, then all remaining items. Integrated features such as a
-    // banana circle are Water AND Planting content, so test Water membership rather than only the
-    // single primary sheet or they are painted twice in the same output.
-    if (!def || (excludeWater && itemInFilter(def.category, 'water', def.id))) continue;
+    if (!def) continue;
+    if (drawExactCanopy(ctx, def.id, exactFinish, px(it.x), py(it.y),
+      (it.wM ?? def.wM) * pxPerM, (it.hM ?? def.hM) * pxPerM)) continue;
     drawTrueFootprint(
       ctx,
       it,
@@ -6929,6 +6928,7 @@ function drawPlantMarks(
   py: (n: number) => number,
   pxPerM: number,
   mode: SheetLabelMode,
+  exactFinish: ExactPlantingFinish = 'detailed',
 ): void {
   if (sheetElementNaming(filter) !== 'individual') return;
   if (!marksPlantsOnMap(mode)) return;
@@ -7049,7 +7049,10 @@ function drawPlantMarks(
     const chipW = ctx.measureText(text).width + fs * 0.84;
     const chipH = fs * 1.5;
     // Lifted slightly off centre so the leader's own terminus dot stays visible under it.
-    paintChip(text, fs, px(it.x), py(it.y) - printed.height * 0.18, chipW, chipH);
+    const lift = printed.height * 0.18;
+    const showTrunk = exactFinish !== 'detailed' && plantingLegendSectionForFeature(def.id) === 'PERENNIAL GUILDS';
+    const offset = showTrunk ? Math.max(lift, chipH / 2 + Math.max(2, shortSide * 0.055)) : lift;
+    paintChip(text, fs, px(it.x), py(it.y) - offset, chipW, chipH);
   }
   ctx.restore();
 }
@@ -7213,6 +7216,7 @@ async function buildExactLayerOverlay(
   /** Sheet 01 only — see drawBlueprintGround's own note. */
   siteRecord = false,
   fall?: FallVector | null,
+  exactFinish: ExactPlantingFinish = 'detailed',
 ): Promise<string | undefined> {
   await preloadReferenceFeatureArtwork(state, filter, frame);
   const canvas = document.createElement('canvas');
@@ -7233,7 +7237,7 @@ async function buildExactLayerOverlay(
   // is the same signal the composers use to decide whether sourceStructures can restore the roof
   // from the photo — absent here means nothing else will ever draw one. First in the features
   // phase, so a tank or tap placed on the roof still draws on top of it.
-  if (!frame.satDataUrl) drawPaperRoofs(ctx, state, refLayers, px, py, pxPerM);
+  if (!frame.satDataUrl && exactFinish === 'detailed') drawPaperRoofs(ctx, state, refLayers, px, py, pxPerM);
 
   // THE PROPERTY LINE IS A SITE FACT, NOT THE TOP OF THE DRAWING.
   //
@@ -7300,7 +7304,7 @@ async function buildExactLayerOverlay(
     // category happened to be painted in an earlier subsystem pass.
     drawWaterRoutes(ctx, state, frame, W, H, filter, fall);
     drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
-      drawFilteredItems(featureCtx, state, filter, px, py, pxPerM);
+      drawFilteredItems(featureCtx, state, filter, px, py, pxPerM, exactFinish);
     });
   } else if (filter === 'structures') {
     // Prior planting remains visible as quiet context, matching the benchmark infrastructure
@@ -7312,7 +7316,7 @@ async function buildExactLayerOverlay(
     ctx.restore();
     drawFilteredLines(ctx, state, filter, px, py, pxPerM);
     drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
-      drawFilteredItems(featureCtx, state, filter, px, py, pxPerM);
+      drawFilteredItems(featureCtx, state, filter, px, py, pxPerM, exactFinish);
     });
   } else if (filter === 'earthworks') {
     // EARTH, NOT FOLIAGE. Sheet 05 is what a farmer digs before anything is planted, so a raised
@@ -7325,7 +7329,7 @@ async function buildExactLayerOverlay(
   } else {
     drawFilteredLines(ctx, state, filter, px, py, pxPerM);
     drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
-      drawFilteredItems(featureCtx, state, filter, px, py, pxPerM);
+      drawFilteredItems(featureCtx, state, filter, px, py, pxPerM, exactFinish);
     });
   }
 
@@ -7930,6 +7934,7 @@ async function buildReferenceBlueprintMap(
   /** Codes on every plant, or named callouts on one plant per kind — see SheetLabelMode. Optional
    *  so DesignPrint's per-layer render table keeps the default without a signature change. */
   labelMode: SheetLabelMode = DEFAULT_SHEET_LABEL_MODE,
+  exactFinish: ExactPlantingFinish = 'detailed',
 ): Promise<string> {
   const presentation = await boundaryPresentationContext(state, frame, refLayers);
   const renderState = presentation.state;
@@ -8009,7 +8014,7 @@ async function buildReferenceBlueprintMap(
     // It only went missing on PAPER. The photo path composes through buildHouseOverlay, which has
     // always used authoritativeHouseFootprints and so has always known about both — which is
     // exactly why this survived: the same sheet, rendered on satellite, looked right.
-    for (const footprint of authoritativeHouseFootprints(state, renderRefLayers)) {
+    for (const footprint of authoritativeHouseFootprints(renderState, renderRefLayers)) {
       drawBlueprintHouse(
         ctx,
         footprint,
@@ -8070,7 +8075,7 @@ async function buildReferenceBlueprintMap(
       : [];
   }
 
-  const featureOverlay = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'features', 'standard', 'solid', false, terrainFallVector(site?.elevation));
+  const featureOverlay = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'features', 'standard', 'solid', false, terrainFallVector(site?.elevation), exactFinish);
   if (featureOverlay) {
     const featureImage = await loadImage(featureOverlay);
     try {
@@ -8095,7 +8100,7 @@ async function buildReferenceBlueprintMap(
   // them; with the callouts moved into a reserved band there is nothing left to hide behind, and
   // the band must be free to cover anything that strays into it.
   if (filter === 'planting') drawGroundAreaNames(ctx, renderState, renderRefLayers, W, H, filter);
-  drawPlantMarks(ctx, renderState, filter, px, py, W / (renderFrame.imgW * renderFrame.mPerPx), labelMode);
+  drawPlantMarks(ctx, renderState, filter, px, py, W / (renderFrame.imgW * renderFrame.mPerPx), labelMode, exactFinish);
   // The setting-out symbols need names on the drawing as well as a key. Reuse the same callout
   // authority as the paid compositor so the exact and illustrated Earthworks cannot disagree.
   if (filter === 'earthworks') drawBlueprintLabelPills(ctx, referenceBlueprintLabels(renderState, renderRefLayers, W, H, filter, labelMode));
@@ -8113,7 +8118,7 @@ async function buildReferenceBlueprintMap(
   // weird circle around the one tree"), so its legend row must not print either: a key to a mark
   // that never appears is the legend lying about the map. Kept for 'footprint' mode, where the
   // dash still draws.
-  const canopiesAbove = CANOPY_EDGE_MODE === 'footprint' && (filter === 'planting' || filter === 'all')
+  const canopiesAbove = exactFinish === 'detailed' && CANOPY_EDGE_MODE === 'footprint' && (filter === 'planting' || filter === 'all')
     ? overstoryCanopyIds(byCartographicStack(renderState, filter).map((it) => {
       const def = ELEMENTS_BY_ID[it.defId];
       if (!def) return { id: it.id, cx: px(it.x), cy: py(it.y), rPx: 0 };
@@ -8143,7 +8148,7 @@ async function buildReferenceBlueprintMap(
     renderRefLayers,
     filter,
     placeName,
-    'Reference Blueprint',
+    exactFinish === 'detailed' ? 'Reference Blueprint' : EXACT_PLANTING_FINISHES[exactFinish],
     REFERENCE_SHEET_LABEL[filter],
     false,
     true,
@@ -8151,6 +8156,7 @@ async function buildReferenceBlueprintMap(
       // The legend is the key the map codes are looked up in, so it only carries them in the mode
       // that draws them. A "MG ·" prefix on a sheet with no MG anywhere is a key to nothing.
       labelMode,
+      exactFinish,
       gutterLayout,
       includeLabelGutters: filter !== 'all',
       zoneMatte: filter === 'zones' ? zonePhotoMatte(state, frame, refLayers) : undefined,
@@ -11052,6 +11058,7 @@ function drawStyleLegendSymbol(
   y: number,
   w: number,
   h: number,
+  exactFinish: ExactPlantingFinish = 'detailed',
 ): void {
   if (row.visual === 'zone-boundary') {
     ctx.save();
@@ -11234,6 +11241,8 @@ function drawStyleLegendSymbol(
   }
 
   if (row.defId) {
+    const diameter = Math.min(w, h) * 0.9;
+    if (drawExactCanopy(ctx, row.defId, exactFinish, x + w / 2, y, diameter, diameter)) return;
     const def = ELEMENTS_BY_ID[row.defId];
     if (def) {
       const aspect = Math.max(0.35, Math.min(2.8, def.wM / Math.max(0.01, def.hM)));
@@ -11458,6 +11467,7 @@ async function composeStyleSheet(
   options: {
     styleKey?: StylePreset;
     aiArtwork?: boolean;
+    exactFinish?: ExactPlantingFinish;
     /** An archive photo must not acquire the current basemap provider's credit. */
     imageAttribution?: string;
     /** Perspective art cannot carry a metric bar or the top-down north marker. */
@@ -11511,6 +11521,9 @@ async function composeStyleSheet(
   if (!ctx) {
     releaseCanvas(canvas);
     releaseImageSource(map);
+    if (options.exactFinish && options.exactFinish !== 'detailed') {
+      throw new UserFacingError('Could not assemble the exact canopy sheet on this device. Try Standard print quality.');
+    }
     if (options.styleKey && isClassicMapStyle(options.styleKey)) {
       throw new UserFacingError('Could not assemble the illustrated sheet on this device. The artwork is available to retry.');
     }
@@ -12020,6 +12033,7 @@ async function composeStyleSheet(
         symbolY,
         column.symbolSize,
         Math.min(column.symbolSize, contentHeight * 0.82),
+        options.exactFinish,
       );
       ctx.fillStyle = '#241E12';
       ctx.font = `600 ${column.fontSize}px ${SHEET_BODY_FONT}`;
@@ -12114,7 +12128,8 @@ async function composeStyleSheet(
   // A2 LANDSCAPE, added as PAPER rather than taken out of the map. See PAPER_SHEET_RATIO.
   // The compact masterplan omits leaders, not paper size. A smaller exported bitmap was being
   // enlarged in the PDF, making its supposedly shared legend and lettering visibly bigger.
-  finishClassicSheet(ctx, options.styleKey);
+  if (options.exactFinish === 'outline') convertSheetToGreyscale(ctx);
+  else finishClassicSheet(ctx, options.styleKey);
   return padToPaperSheet(canvas, sheetSize.W);
 }
 
@@ -12929,6 +12944,7 @@ export default function DesignGlossy({
    * same input the renderer and the legend use, so the control cannot appear when the sheet would
    * draw no codes, or vanish when it would.
    */
+  const [exactFinishes, setExactFinishes] = useState<Record<string, ExactPlantingFinish>>({});
   const [labelMode, setLabelMode] = useState<SheetLabelMode>(() => openingSettings.labelMode);
   const sheetHasPlantCodes = useMemo(
     () => plantCodesForSheet(exactSheetElementLegendGroups(state, filter).map((group) => group.defId)).size > 0,
@@ -13008,6 +13024,8 @@ export default function DesignGlossy({
   // case that needs the Style/engine pickers. AI on 01/02/08 uses the Gemini analysis path (no
   // Style), and exact mode uses no AI at all.
   const selectedSheet = DESIGN_SHEETS.find((s) => s.no === selectedNo);
+  const exactFinish = selectedSheet && 'filter' in selectedSheet
+    ? exactFinishes[`${state.siteId}:${selectedSheet.filter}`] ?? 'detailed' : 'detailed';
   const [historicalEnabled,setHistoricalEnabled] = useState(true);
   const availableHistoricalBaseline = historicalBaselineForSite(state.siteId);
   const historicalSheet = !!selectedSheet && 'exact' in selectedSheet && ['base','sector'].includes(selectedSheet.exact);
@@ -13363,7 +13381,7 @@ export default function DesignGlossy({
         // …:<mode> so Exact, Hybrid and Full Treatment can never share a slot. Without it the
         // three treatments overwrote and re-served each other's pictures — see requestedMode.
         ? `producer:${producerStyle}:${filter}:${requestedMode}`
-        : (analysisStyle ?? filter)) + underlaySuffix
+        : (analysisStyle ?? (filter + (exactFinish === 'detailed' ? '' : `:${exactFinish}`)))) + underlaySuffix
     // PAID QUALITY, on paid keys only. The dial is offered so the same sheet can be rendered all
     // three ways and COMPARED; sharing one slot meant switching it re-served the last picture and
     // the setting looked inert — on a control that costs roughly 4x at medium and 35x at high
@@ -14056,7 +14074,7 @@ export default function DesignGlossy({
       // last rung is a real sheet cannot fail loudly — every filter it forgets silently becomes
       // the masterplan — and buildBlueprintEarthworksMap had existed the whole time. One call
       // makes forgetting impossible.
-      const composite = await buildReferenceBlueprintMap(state, frame, refLayers, filter, placeName, site, labelMode);
+      const composite = await buildReferenceBlueprintMap(state, frame, refLayers, filter, placeName, site, labelMode, exactFinish);
       setResultImage(composite);
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
@@ -14064,7 +14082,7 @@ export default function DesignGlossy({
       const mapLabel = filter === 'all'
         ? 'Whole design'
         : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label ?? filter} map`;
-      pushGallery(`${mapLabel} · Design Map`, composite, {
+      pushGallery(`${mapLabel} · ${exactFinish === 'detailed' ? '' : EXACT_PLANTING_FINISHES[exactFinish] + ' · '}Design Map`, composite, {
         resultKind: 'exact',
         provider: 'exact',
         geometryLock: true,
@@ -14085,7 +14103,7 @@ export default function DesignGlossy({
     } finally {
       setLoading(null);
     }
-  }, [state, frame, refLayers, filter, mapKey, pushGallery, placeName]);
+  }, [state, frame, refLayers, filter, mapKey, pushGallery, placeName, site, labelMode, exactFinish, t]);
 
   // Deterministic Implementation & Phasing sheet (plan-set 08) — the RULES-ENGINE render. Unlike
   // the Gemini 'Implementation' analysis style, nothing here is drawn by a model: lib/phasing
@@ -14241,10 +14259,12 @@ export default function DesignGlossy({
       const sheetOrder = [...GLOSSY_FILTERS].sort((a, b) => SHEET_NO[a.key].localeCompare(SHEET_NO[b.key]));
       for (const { key: f } of sheetOrder) {
         if (layerContentCount(state, refLayers, f) === 0) continue;
+        const finish = exactFinishes[`${state.siteId}:${f}`] ?? 'detailed';
+        const finishLabel = finish === 'detailed' ? '' : ' · ' + EXACT_PLANTING_FINISHES[finish];
         step(
-          `${SHEET_NO[f]} · ${GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? f} map`,
-          await buildReferenceBlueprintMap(state, frame, refLayers, f, placeName, site, labelMode),
-          f,
+          `${SHEET_NO[f]} · ${GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? f} map${finishLabel}`,
+          await buildReferenceBlueprintMap(state, frame, refLayers, f, placeName, site, labelMode, finish),
+          finish === 'detailed' ? f : `${f}:${finish}`,
         );
       }
       // 09 — Implementation & phasing (exact rules-engine sheet), when there's anything to phase.
@@ -14260,7 +14280,7 @@ export default function DesignGlossy({
     } finally {
       setLoading(null);
     }
-  }, [state, frame, refLayers, site, placeName, pushGallery]);
+  }, [state, frame, refLayers, site, placeName, pushGallery, exactFinishes, labelMode, t]);
 
   // "Generate ALL sheets in this style" — the AI counterpart Rory asked for ("generating all
   // images at once was best · gpt gave the best results"). Runs the full boundary-locked producer
@@ -16579,7 +16599,7 @@ export default function DesignGlossy({
   const lockedPolishStyleLabel =
     PRODUCER_STYLES.find((style) => style.key === polishStyleRef.current)?.label ?? 'selected style';
   const selectedStyleLabel = PRODUCER_STYLES.find((style) => style.key === producerStyle)?.label
-    ?? (isExactRender ? 'Design Map' : 'AI Polished');
+    ?? (isExactRender ? (exactFinish === 'detailed' ? 'Design Map' : EXACT_PLANTING_FINISHES[exactFinish]) : 'AI Polished');
   // Selecting a saved row previews exactly ONE durable full image in the centre. The gallery
   // effect above already enforces that memory boundary; the rail never points its thumbnails at
   // full-size fallbacks, which is what previously killed iPhone Safari on this screen.
@@ -16805,6 +16825,38 @@ export default function DesignGlossy({
             );
           })}
         </div>
+        )}
+        {selectedSheet && 'filter' in selectedSheet && supportsExactCanopies(selectedSheet.filter) && (
+          <label style={{ display: 'grid', gap: 6, margin: '12px 0', fontWeight: 700 }}>
+            Exact map finish
+            <select
+              value={exactFinishes[`${state.siteId}:${selectedSheet.filter}`] ?? 'detailed'}
+              disabled={loading !== null || lockedPolishStage !== null}
+              onChange={(event) => {
+                const finish = event.target.value as ExactPlantingFinish;
+                setExactFinishes(previous => ({ ...previous, [`${state.siteId}:${selectedSheet.filter}`]: finish }));
+                if (!manualUnderlaysRef.current.has(`${state.siteId}:${selectedNo}`)) {
+                  setUnderlay(finish === 'detailed'
+                    ? recommendedSheetSettings(selectedSheet.filter, frameProp, DEFAULT_PRODUCER_STYLE, 'exact').underlay
+                    : 'plain');
+                }
+                autoPreviewHandledKeyRef.current = `${gallerySiteId}:${selectedNo}`;
+                setGalleryViewId(null);
+                setResultImage(null);
+                setError(null);
+                setNotice(null);
+                requestedModeRef.current = 'exact';
+                setRequestedMode('exact');
+                setHybridHandoffReady(false);
+                exactAfterFlipRef.current = true;
+                setMode('exact');
+                applySheet(selectedSheet, 'exact');
+              }}
+              style={{ width: '100%', minHeight: 44, borderRadius: 8, padding: '6px 10px', font: 'inherit' }}
+            >
+              {Object.entries(EXACT_PLANTING_FINISHES).map(([value, name]) => <option key={value} value={value}>{name}</option>)}
+            </select>
+          </label>
         )}
         {/* WHICH PICTURE THE SHEETS SIT ON — always all three: the farmer's own drone/phone aerial,
             the satellite, and plain paper. The drone pill used to disappear on a site with no

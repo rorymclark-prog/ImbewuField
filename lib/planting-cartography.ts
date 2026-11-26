@@ -54,6 +54,57 @@ const PERENNIAL_GUILDS = new Set([
   'tree_olive',
 ]);
 
+export const EXACT_PLANTING_FINISHES = {
+  detailed: 'Detailed symbols',
+  canopy: 'Canopy circles',
+  outline: 'Canopy outlines · black & white',
+} as const;
+export type ExactPlantingFinish = keyof typeof EXACT_PLANTING_FINISHES;
+
+export function supportsExactCanopies(sheet: string): boolean {
+  return sheet === 'planting' || sheet === 'all';
+}
+
+// Use the same measured crown and trunk mark in the drawing and the key. With a clear centre,
+// paths and neighbouring trees remain visible even where two crowns overlap.
+export function drawExactCanopy(
+  ctx: CanvasRenderingContext2D, id: string | undefined, finish: ExactPlantingFinish,
+  x: number, y: number, width: number, height: number,
+): boolean {
+  if (finish === 'detailed' || !id || !PERENNIAL_GUILDS.has(id)) return false;
+  if (![x, y, width, height].every(Number.isFinite) || width <= 0 || height <= 0) return false;
+  const shortSide = Math.min(width, height);
+  ctx.save();
+  if (finish === 'canopy') {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(width / 2, height / 2);
+    const wash = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
+    wash.addColorStop(0, 'rgba(134,183,92,0)');
+    wash.addColorStop(0.52, 'rgba(134,183,92,0.03)');
+    wash.addColorStop(0.83, 'rgba(112,164,75,0.48)');
+    wash.addColorStop(1, 'rgba(143,181,104,0.31)');
+    ctx.fillStyle = wash;
+    ctx.beginPath();
+    ctx.arc(0, 0, 1, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.restore();
+  }
+  const ink = finish === 'outline' ? '#2A2A2A' : '#375632';
+  ctx.strokeStyle = ink;
+  ctx.lineWidth = Math.min(shortSide * 0.08, Math.max(0.9, shortSide * 0.016));
+  // The outer edge, including its ink, lies on the saved footprint.
+  ctx.beginPath();
+  ctx.ellipse(x, y, (width - ctx.lineWidth) / 2, (height - ctx.lineWidth) / 2, 0, 0, 2 * Math.PI);
+  ctx.stroke();
+  ctx.fillStyle = '#232723';
+  ctx.beginPath();
+  ctx.arc(x, y, Math.min(shortSide * 0.12, Math.max(1.1, shortSide * 0.035)), 0, 2 * Math.PI);
+  ctx.fill();
+  ctx.restore();
+  return true;
+}
+
 /** Returns null for an unknown ID so a renamed/custom feature cannot be invented in the legend. */
 export function plantingLegendSectionForFeature(id: string): PlantingLegendSection | null {
   if (PRODUCTION_PLANTING.has(id)) return 'PRODUCTION PLANTING';
