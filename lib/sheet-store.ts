@@ -23,6 +23,7 @@ import {
 } from './account-local-storage';
 import { reportMapType, type ReportMapType } from './report-map-selection';
 import type { SheetUnderlay } from './sheet-underlay';
+import { isComparisonSource, type ComparisonSource } from './saved-plan-comparison';
 import { isMapModelId } from './ai-render/model';
 
 const DB_NAME = 'imbewu-sheets';
@@ -73,6 +74,8 @@ export interface StoredSheet {
   validationStatus?: SheetValidationStatus;
   /** Original worker output location, retained separately from the final composed bitmap. */
   rawOutputPath?: string;
+  /** Frozen inputs travel with the illustration after its cloud job expires. */
+  comparisonSource?: ComparisonSource;
   /** The base actually baked into this immutable bitmap. The picker may since have changed. */
   underlay?: SheetUnderlay;
 }
@@ -152,6 +155,7 @@ function normaliseStoredSheet(value: unknown): StoredSheet | null {
     label: row.label,
     ...(sheetType ? { sheetType } : {}),
     image: row.image,
+    ...(isComparisonSource(row.comparisonSource) ? { comparisonSource: row.comparisonSource } : {}),
     at: row.at,
     ...(row.thumb === undefined ? {} : { thumb: row.thumb }),
     ...(row.planVersion === undefined ? {} : { planVersion: row.planVersion }),
@@ -314,7 +318,7 @@ export async function loadSheets(
  *  the app runs under, and the one Rory's crash screenshot came from) that baseline is most of
  *  the budget; expanding one sheet then tips it over. The grid shows thumbnails; it has no
  *  business holding the print-resolution originals. */
-export type StoredSheetMeta = Omit<StoredSheet, 'image'>;
+export type StoredSheetMeta = Omit<StoredSheet, 'image' | 'comparisonSource'>;
 
 /** Load every sheet for a site WITHOUT retaining the image payloads. Pair with loadSheetImage.
  *
@@ -347,7 +351,7 @@ export async function loadSheetMetas(
           }
           const logical = logicalSheet(cursor.value, siteId);
           if (logical) {
-            const { image: _image, ...meta } = logical;
+            const { image: _image, comparisonSource: _source, ...meta } = logical;
             rows.push(meta);
           }
           cursor.continue();
@@ -357,6 +361,24 @@ export async function loadSheetMetas(
         resolve([]);
       }
     });
+  } finally {
+    db.close();
+  }
+}
+
+/** Reading one illustration's frozen scene is opt-in, just like loading its full bitmap. */
+export async function loadSheetComparison(id: string, siteId: string, ownerUid?: string | null) {
+  const key = ownedKey(id, ownerUid);
+  const db = await openDb();
+  if (!db) return null;
+  try {
+    return await new Promise<ComparisonSource | null>(resolve => {
+      const req = tx(db, 'readonly').get(key);
+      req.onsuccess = () => resolve(logicalSheet(req.result, siteId)?.comparisonSource ?? null);
+      req.onerror = () => resolve(null);
+    });
+  } catch {
+    return null;
   } finally {
     db.close();
   }

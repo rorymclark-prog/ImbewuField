@@ -559,3 +559,17 @@ test('a saved bitmap is current only when both its plan and drawing recipe are c
     renderRecipe: SHEET_RENDER_RECIPE,
   }, PLAN_VERSION), 'older-plan');
 });
+
+test('a saved illustration keeps its own plan for offline comparison without loading aerials into the grid', async () => {
+  install(new FakeIndexedDb());
+  const { loadSheetComparison } = await import('../lib/sheet-store.ts');
+  const src = { sceneJson: '{"example":true}', sheetKey: 'earthworks' as const, historical: false, oblique: false };
+  const row = sheet('art', 'farm', '2026-11-26T00:00:00Z', {comparisonSource: src});
+  assert.ok(await saveSheet(row, 'farmer-a'));
+  assert.equal('comparisonSource' in (await loadSheetMetas('farm','farmer-a'))[0], false);
+  assert.deepEqual(await loadSheetComparison('art','farm','farmer-a'), src);
+  assert.equal(await loadSheetComparison('art','other farm','farmer-a'), null);
+  assert.equal(await loadSheetComparison('art','farm','farmer-b'), null);
+  await deleteSheet('art','farmer-a');
+  assert.equal(await loadSheetComparison('art','farm','farmer-a'), null);
+});

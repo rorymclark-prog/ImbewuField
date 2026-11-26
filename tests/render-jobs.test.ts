@@ -731,3 +731,32 @@ test('the Studio charges the budget before re-attaching and retires it on every 
   assert.ok(persistFn.includes('clearResumeAttempts('), 'a new job must start with a full budget');
   assert.ok(clearFn.includes('clearResumeAttempts('), 'terminal paths must retire the count');
 });
+
+test('comparison recovers the original tree and image and rejects another site, job, sheet or revision', async () => {
+  const { openComparisonSource } = await import('../lib/saved-plan-comparison.ts');
+  const input = sceneInput();
+  const prepared = await createRenderSceneSnapshot(input);
+  const source = { ...prepared, historical: false, oblique: false, sheetKey: 'planting' as const };
+  const id = { jobId: 'job-a', rawOutputPath: 'renders/owner/job-a/output-planting.png', designRevision: prepared.designRevision };
+  input.state.items[0].x = .85;
+  const result = await openComparisonSource(source, id, 'farm-1');
+  assert.equal(result?.state.items[0].x, .25);
+  assert.equal(result?.frame.satDataUrl, png);
+  assert.equal(await openComparisonSource(source, id, 'other farm'), null);
+  assert.equal(await openComparisonSource(source, { ...id, jobId: 'other-job' }, 'farm-1'), null);
+  assert.equal(await openComparisonSource({ ...source, sheetKey: 'water' }, id, 'farm-1'), null);
+  await assert.rejects(openComparisonSource(source, { ...id, designRevision: 'f'.repeat(64) }, 'farm-1'));
+});
+
+test('an older paid illustration resolves only to its own completed output and attempt', async () => {
+  const { originalJobSheet } = await import('../lib/saved-plan-comparison.ts');
+  const outputPath = 'renders/owner/job-a/output-water.png';
+  const job = { siteId: 'farm-1', designRevision: 'rev-a', attemptId: 'attempt-a',
+    sheets: [{ status: 'done', key: 'water', outputPath }] } as import('../lib/render-jobs.ts').RenderJobDoc;
+  const id = { jobId: 'job-a', attemptId: 'attempt-a', rawOutputPath: outputPath, designRevision: 'rev-a' };
+  assert.equal(originalJobSheet(job, id, 'farm-1')?.key, 'water');
+  for (const changed of [{ attemptId: 'other' }, { designRevision: 'other' }, { rawOutputPath: 'another.png' }]) {
+    assert.equal(originalJobSheet(job, { ...id, ...changed }, 'farm-1'), undefined);
+  }
+  assert.equal(originalJobSheet(job, id, 'another farm'), undefined);
+});

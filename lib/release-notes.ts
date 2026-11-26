@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 November 2026', sha: 'b4119568e', changes: [
+    'Compare a saved AI map with the original plan, even after editing the farm.',
+    'Hatched maps have clearer crop codes and paler fields for black-and-white printing.',
+  ] },
   { when: '26 November 2026', sha: 'e18386060', changes: [
     'Follow water from a tank to the roots in the drip irrigation film in five languages.',
   ] },
