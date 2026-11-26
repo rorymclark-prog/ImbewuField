@@ -6,6 +6,8 @@
  * only while composing the finished sheet.
  */
 
+import type { ElementStatus } from '@/lib/design-canvas';
+
 export type PlantingLegendSection =
   | 'PRODUCTION PLANTING'
   | 'PERENNIAL GUILDS'
@@ -65,11 +67,33 @@ export function supportsExactCanopies(sheet: string): boolean {
   return sheet === 'planting' || sheet === 'all';
 }
 
+// The footprint stays to scale. Its centre mark distinguishes trees already present from
+// planting positions, even on a monochrome print where both crowns have identical edges.
+export function canopyCentreMark(shortSide: number, status: ElementStatus) {
+  const dotRadius = Math.min(shortSide * 0.12, Math.max(1.1, shortSide * 0.035));
+  const ringRadius = status === 'existing' ? dotRadius * 2.8 : 0;
+  const ringWidth = dotRadius * 0.7;
+  return { dotRadius, ringRadius, ringWidth, extent: ringRadius ? ringRadius + ringWidth / 2 : dotRadius };
+}
+
+export function canopyLegendNote(rows: readonly { defId?: string; status?: ElementStatus }[]): string {
+  const statuses = new Set(rows
+    .filter(row => row.defId && PERENNIAL_GUILDS.has(row.defId))
+    .map(row => row.status ?? 'proposed'));
+  if (!statuses.size) return '';
+  return [
+    'The outer edge shows canopy spread on the plan.',
+    statuses.has('existing') && 'Ringed dot = existing planting.',
+    statuses.has('proposed') && 'Plain dot = proposed planting.',
+  ].filter(Boolean).join(' ');
+}
+
 // Use the same measured crown and trunk mark in the drawing and the key. With a clear centre,
 // paths and neighbouring trees remain visible even where two crowns overlap.
 export function drawExactCanopy(
   ctx: CanvasRenderingContext2D, id: string | undefined, finish: ExactPlantingFinish,
   x: number, y: number, width: number, height: number,
+  status: ElementStatus = 'proposed',
 ): boolean {
   if (finish === 'detailed' || !id || !PERENNIAL_GUILDS.has(id)) return false;
   if (![x, y, width, height].every(Number.isFinite) || width <= 0 || height <= 0) return false;
@@ -97,9 +121,19 @@ export function drawExactCanopy(
   ctx.beginPath();
   ctx.ellipse(x, y, (width - ctx.lineWidth) / 2, (height - ctx.lineWidth) / 2, 0, 0, 2 * Math.PI);
   ctx.stroke();
+  const { dotRadius, ringRadius, ringWidth } = canopyCentreMark(shortSide, status);
+  if (ringRadius) {
+    ctx.beginPath();
+    ctx.arc(x, y, ringRadius, 0, 2 * Math.PI);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fill();
+    ctx.strokeStyle = '#232723';
+    ctx.lineWidth = ringWidth;
+    ctx.stroke();
+  }
   ctx.fillStyle = '#232723';
   ctx.beginPath();
-  ctx.arc(x, y, Math.min(shortSide * 0.12, Math.max(1.1, shortSide * 0.035)), 0, 2 * Math.PI);
+  ctx.arc(x, y, dotRadius, 0, 2 * Math.PI);
   ctx.fill();
   ctx.restore();
   return true;
