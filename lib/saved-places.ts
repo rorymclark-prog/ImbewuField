@@ -5,13 +5,14 @@ import {
 } from './user-sync';
 import { getFirebase } from './firebase/init';
 import { isSampleMode, getSandboxPlaces, upsertSandboxPlace, deleteSandboxPlace } from './sample-mode';
-import { addTombstone, readTombstones } from './local-tombstones';
+import { addTombstone, readTombstones, LOCAL_TOMBSTONE_TTL_MS } from './local-tombstones';
 import { accountLocalStorageKey, activeAccountLocalStorageKey, activeAccountUid } from './account-local-storage';
 import {
   bindSiteContext, coordinateSiteIdForPlace, isContextBoundToPlace, normaliseSiteCountryContext, type SiteCountryContext,
 } from './international/site-context';
 import { placeRevision, sameSiteContext, withoutStaleSiteContext } from './international/place-context-merge';
 import { canonicalCoordinateSiteId } from './site-id';
+import { rawJsonIsLossless } from './lossless-json';
 
 export type PlaceLabel = 'home' | 'field' | 'water' | 'other';
 
@@ -149,14 +150,21 @@ function swapLocalContext(uid: string, confirmed: SiteCountryContext, replacemen
 // Deletion markers decide whether a site still exists, so an unreadable marker map must stop a
 // metadata write rather than read as "nothing was deleted" (local-tombstones' own reader fails open
 // by design for its merge callers).
-function readTombstonesStrict(storageKey: string): Record<string, number> | null {
+function readTombstonesStrict(storageKey: string, requireLosslessJson = false): Record<string, number> | null {
   const raw = localStorage.getItem(storageKey);
   if (raw === null) return {};
+  if (requireLosslessJson && !rawJsonIsLossless(raw)) return null;
   let parsed: unknown;
   try { parsed = JSON.parse(raw); } catch { return null; }
   if (!isRecord(parsed)) return null;
   for (const value of Object.values(parsed)) {
     if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) return null;
+  }
+  if (requireLosslessJson) {
+    const now = Date.now();
+    // Use the validated bytes. A second read can race a write in another tab.
+    return Object.fromEntries(Object.entries(parsed as Record<string, number>)
+      .filter(([, deletedAt]) => now - deletedAt < LOCAL_TOMBSTONE_TTL_MS));
   }
   return readTombstones(storageKey);
 }
@@ -249,6 +257,37 @@ export function loadPlaces(): SavedPlace[] {
   if (typeof window === 'undefined') return [];
   try {
     return normalisePlaces(JSON.parse(localStorage.getItem(activeAccountLocalStorageKey(KEY)) ?? '[]'));
+  } catch {
+    return [];
+  }
+}
+
+/** A phase observation needs a single current place for its coordinate-keyed design.
+ * The usual display loader merges duplicate ids, which would hide ambiguity here. */
+export function readPlacesForPhaseObservation(): SavedPlace[] {
+  try {
+    if (typeof window === 'undefined') return [];
+    const sample = isSampleMode();
+    const saved = sample ? '[]' : localStorage.getItem(activeAccountLocalStorageKey(KEY)) ?? '[]';
+    if (!rawJsonIsLossless(saved)) return [];
+    const raw: unknown = sample ? getSandboxPlaces() : JSON.parse(saved);
+    const tombstones = sample ? {} : readTombstonesStrict(activeAccountLocalStorageKey(DELETED_KEY), true);
+    if (!Array.isArray(raw) || !tombstones) return [];
+    const idCounts = new Map<unknown, number>();
+    const siteCounts = new Map<string, number>();
+    for (const row of raw) {
+      if (!isRecord(row)) continue;
+      idCounts.set(row.id, (idCounts.get(row.id) ?? 0) + 1);
+      const site = typeof row.lat === 'number' && typeof row.lon === 'number'
+        ? canonicalCoordinateSiteId(`site:${row.lat.toFixed(5)},${row.lon.toFixed(5)}`) : null;
+      if (site) siteCounts.set(site, (siteCounts.get(site) ?? 0) + 1);
+    }
+    return raw.filter((row): row is SavedPlace => {
+      if (!isValidSavedPlace(row) || !row.name.trim() || idCounts.get(row.id) !== 1) return false;
+      const site = coordinateSiteIdForPlace(row);
+      const deletedAt = Object.hasOwn(tombstones, row.id) ? tombstones[row.id] : undefined;
+      return Boolean(site && siteCounts.get(site) === 1 && (deletedAt === undefined || deletedAt < placeTimestamp(row)));
+    });
   } catch {
     return [];
   }
