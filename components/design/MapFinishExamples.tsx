@@ -24,17 +24,21 @@ export default function MapFinishExamples({ exact, aiStyles }: {
   exact?: boolean;
   aiStyles: ReadonlyArray<{ key: StylePreset; label: string }>;
 }) {
+  const launch = useRef<HTMLButtonElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const heading = useId();
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <button type="button" aria-haspopup="dialog" className={styles.launch} onClick={() => {
+      <button ref={launch} type="button" aria-haspopup="dialog" className={styles.launch} onClick={() => {
         dialog.current?.showModal();
         setOpen(true);
       }}>Compare finish samples</button>
-      <dialog ref={dialog} className={styles.dialog} aria-labelledby={heading} onClose={() => setOpen(false)}>
+      <dialog ref={dialog} className={styles.dialog} aria-labelledby={heading} onClose={() => {
+        setOpen(false);
+        launch.current?.focus({ preventScroll: true });
+      }}>
         <header className={styles.header}>
           <h2 id={heading}>Compare map finishes</h2>
           <form method="dialog"><button autoFocus aria-label="Close finish samples">Close</button></form>
