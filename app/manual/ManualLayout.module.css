@@ -1,0 +1,16 @@
+.reader {
+  display: contents;
+}
+
+/* The app shell locks the viewport. Manual pages use the document for reading,
+   chapter links and browser back/forward scroll restoration. */
+@media screen {
+  body:has(.reader) {
+    height: auto;
+    overflow-y: auto;
+  }
+
+  body:has(.reader):has(dialog:modal) {
+    overflow-y: hidden;
+  }
+}
