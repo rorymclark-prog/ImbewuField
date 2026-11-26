@@ -170,6 +170,13 @@ test('the menu links to the manual', () => {
   assert.match(drawer, /href: '\/manual'/);
 });
 
+test('the My studies introduction links directly to the language-aware manual entry', () => {
+  const studies = readFileSync(path.join(ROOT, 'app', 'student', 'page.tsx'), 'utf8');
+  const intro = studies.match(/<section[^>]*aria-labelledby="studies-title"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+  assert.ok(intro);
+  assert.match(intro, /<Link\s+href="\/manual"[^>]*>[\s\S]*?\bt\('navManual'\)[\s\S]*?<\/Link>/);
+});
+
 // ── Figures (content/manual/figures.json → public/manual/figures/) ────────────────────────────
 //
 // An entry whose file is missing is a replacement slot waiting for a picture (the loader hides it),
