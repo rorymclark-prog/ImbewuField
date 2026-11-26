@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 November 2026', sha: '7ddb59a90', changes: [
+    'Compare finishes on the same example garden before choosing a map style.',
+    'Try Ink & wash or Hatched field plan on free exact Planting and Whole Design maps.',
+  ] },
   { when: '26 November 2026', sha: '9ddb9146d', changes: [
     'On exact canopy maps, a ring around the centre dot marks trees already on the farm.',
   ] },

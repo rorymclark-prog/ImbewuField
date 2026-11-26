@@ -270,3 +270,14 @@ test('the canopy key only explains marks actually present, including legacy plan
   assert.match(mixed, /Ringed dot = existing/);
   assert.match(mixed, /Plain dot = proposed/);
 });
+
+test('a rotated oval crown turns around its saved trunk on the exact planting plan', () => {
+  const transforms: number[][] = [];
+  const canvas = {
+    save() {}, restore() {}, beginPath() {}, fill() {}, stroke() {}, ellipse() {}, arc() {},
+    translate(x: number, y: number) { transforms.push([x, y]); },
+    rotate(radians: number) { transforms.push([radians]); },
+  } as unknown as CanvasRenderingContext2D;
+  assert.ok(drawExactCanopy(canvas, 'tree_mango', 'outline', 91, 75, 62, 42, 'existing', 90));
+  assert.deepEqual(transforms, [[91, 75], [Math.PI / 2], [-91, -75]]);
+});

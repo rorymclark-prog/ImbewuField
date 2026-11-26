@@ -102,6 +102,8 @@ import {
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath, tracedLineLabelMidpoint } from '@/lib/leader-labels';
 import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, recommendedSheetSettings, renderAuthorityFlagsForStyle, renderPolicyForStyle, type SheetPresentationSettings } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
+import { drawExactBed, isExactSurfaceFinish, paintExactSurface } from '@/lib/exact-surface-finish';
+import MapFinishExamples from './MapFinishExamples';
 import { EXACT_PLANTING_FINISHES, canopyCentreMark, canopyLegendNote, drawExactCanopy, supportsExactCanopies, type ExactPlantingFinish, PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
 import RecordPlanOption from './RecordPlanOption';
@@ -572,28 +574,27 @@ const STYLE_TITLE: Record<AnalysisStyle, string> = {
 // the model beautifies the whole scene, then we deterministically composite (satellite
 // everywhere → clip the model to the boundary → stroke the boundary → burn true labels),
 // so accuracy is guaranteed by construction. Seven researched site-plan styles.
-// swatch = the card's colour chip (Rory's mockup shows each style as a card with a colour block).
-const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; labelStyle: LabelStyle; swatch: string; recommended?: boolean }> = [
+const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; labelStyle: LabelStyle; recommended?: boolean }> = [
   // Rory is building two companion looks. Keep both visible before the older optional packs;
   // adding the editorial choice must never silently replace the accepted illustrated default.
-  { key: 'precision_atlas', label: 'Reference Blueprint', blurb: 'richly illustrated site · exact labels and key', labelStyle: 'reference', swatch: 'linear-gradient(135deg, #526B59 0%, #A9B58B 45%, #D9C89F 100%)', recommended: true },
-  { key: 'editorial_atlas', label: 'Editorial Atlas', blurb: 'clean illustrated atlas · circular Sector diagram', labelStyle: 'reference', swatch: 'conic-gradient(from 315deg, #B5512E, #FFFFFF 20%, #207F70 35%, #FFFFFF 50%, #286783 70%, #FFFFFF 90%, #B5512E)' },
+  { key: 'precision_atlas', label: 'Reference Blueprint', blurb: 'richly illustrated site · exact labels and key', labelStyle: 'reference', recommended: true },
+  { key: 'editorial_atlas', label: 'Editorial Atlas', blurb: 'clean illustrated atlas · circular Sector diagram', labelStyle: 'reference' },
   // labelStyle is required by the type but unused here: this style always takes the showcase path,
   // which passes labels: [] because the MODEL letters the sheet itself.
   // Photo Plan remains available because it keeps the farmer's real aerial
   // photograph AND our exact labels, counts and legend. Every other AI style repaints the ground;
   // Satellite Overlay keeps it but hands the lettering to the model.
-  { key: 'photo_plan',          label: 'Photo Plan',          blurb: 'your real aerial photo · design drawn on top · exact labels', labelStyle: 'reference', swatch: 'linear-gradient(135deg,#2B3A24 0%,#4E8B3A 50%,#B4E000 100%)', recommended: true },
-  { key: 'watercolour', label: 'Watercolour', blurb: 'transparent colour washes on white paper', labelStyle: 'reference', swatch: 'radial-gradient(ellipse at 25% 60%, #77976F99, transparent 48%), radial-gradient(ellipse at 65% 40%, #93B5A6CC, transparent 48%), #FEFCF7' },
-  { key: 'graphite_pencil', label: 'Graphite Pencil', blurb: 'soft pencil shading · greyscale print', labelStyle: 'ink', swatch: 'repeating-linear-gradient(127deg, transparent 0 3px, #9998 3px 4px), linear-gradient(105deg, #FFF 8%, #CCC 75%, #888)' },
-  { key: 'pen_and_ink', label: 'Pen & Ink', blurb: 'open canopies · black linework on white', labelStyle: 'ink', swatch: 'repeating-linear-gradient(48deg, #FFF 0 5px, #383838 5px 6px)' },
-  { key: 'satellite_overlay',   label: 'Satellite Overlay',   blurb: 'experimental · AI controls the labels and layout', labelStyle: 'clean', swatch: 'linear-gradient(135deg,#12140F 0%,#2F4A2A 55%,#B4E000 100%)' },
-  { key: 'field_ledger',        label: 'Field Ledger',        blurb: 'hand-inked surveyor plan',      labelStyle: 'ink',       swatch: '#E4D8B8' },
-  { key: 'homestead_storybook', label: 'Homestead Storybook', blurb: 'warm illustrated garden map',   labelStyle: 'storybook', swatch: '#8FAE62' },
-  { key: 'extension_blueprint', label: 'Extension Blueprint', blurb: 'clean plan for funders/mentors', labelStyle: 'blueprint', swatch: '#69819B' },
-  { key: 'chatgpt_atlas',       label: 'ChatGPT Atlas',       blurb: 'polished editorial cartography', labelStyle: 'blueprint', swatch: '#B7B09D' },
-  { key: 'karoo_folk',          label: 'Karoo Folk Map',      blurb: 'bold folk-art farm map',         labelStyle: 'folk',      swatch: '#B5502E' },
-  { key: 'master_atlas',        label: 'Master Atlas',        blurb: 'engraved masterplan for boards & funders', labelStyle: 'blueprint', swatch: 'linear-gradient(135deg, #2B2E33 0%, #3E4A5C 55%, #B08D3E 100%)' },
+  { key: 'photo_plan',          label: 'Photo Plan',          blurb: 'your real aerial photo · design drawn on top · exact labels', labelStyle: 'reference', recommended: true },
+  { key: 'watercolour', label: 'Watercolour', blurb: 'transparent colour washes on white paper', labelStyle: 'reference' },
+  { key: 'graphite_pencil', label: 'Graphite Pencil', blurb: 'soft pencil shading · greyscale print', labelStyle: 'ink' },
+  { key: 'pen_and_ink', label: 'Pen & Ink', blurb: 'open canopies · black linework on white', labelStyle: 'ink' },
+  { key: 'satellite_overlay',   label: 'Satellite Overlay',   blurb: 'experimental · AI controls the labels and layout', labelStyle: 'clean' },
+  { key: 'field_ledger',        label: 'Field Ledger',        blurb: 'hand-inked surveyor plan',      labelStyle: 'ink' },
+  { key: 'homestead_storybook', label: 'Homestead Storybook', blurb: 'warm illustrated garden map',   labelStyle: 'storybook' },
+  { key: 'extension_blueprint', label: 'Extension Blueprint', blurb: 'clean plan for funders/mentors', labelStyle: 'blueprint' },
+  { key: 'chatgpt_atlas',       label: 'ChatGPT Atlas',       blurb: 'polished editorial cartography', labelStyle: 'blueprint' },
+  { key: 'karoo_folk',          label: 'Karoo Folk Map',      blurb: 'bold folk-art farm map',         labelStyle: 'folk' },
+  { key: 'master_atlas',        label: 'Master Atlas',        blurb: 'engraved masterplan for boards & funders', labelStyle: 'blueprint' },
 ];
 
 // Sector's paid polish starts from a complete exact sheet. Satellite Overlay is omitted because
@@ -5967,6 +5968,7 @@ function drawProductionBedCrop(
   px: (n: number) => number,
   py: (n: number) => number,
   pxPerM: number,
+  exactFinish: ExactPlantingFinish = 'detailed',
 ): boolean {
   const wPx = Math.max(1, (it.wM ?? def.wM) * pxPerM);
   const hPx = Math.max(1, (it.hM ?? def.hM) * pxPerM);
@@ -5983,10 +5985,11 @@ function drawProductionBedCrop(
   // asks the page how big a vegetable has to be to be a vegetable, then the layout is given that
   // pitch so the bed carries a few large heads instead of a dusting of dots. The bed's own
   // footprint, rotation, legend row and count are untouched: this is symbol size only.
+  const styledBed = drawExactBed(ctx, def.id, exactFinish, px(it.x), py(it.y), wPx, hPx, it.rot);
   const markUnitPx = bedCropMarkUnitPx(Math.min(wPx, hPx), Math.max(wPx, hPx), ctx.canvas.width);
   // Zero means this bed is too small on THIS sheet for any vegetable to read — the shared bed
   // artwork is the honest answer there. See MIN_DRAWN_VEG_MARK_SHEET_FRACTION.
-  if (markUnitPx <= 0) return false;
+  if (markUnitPx <= 0) return styledBed;
   const layout = bedCropRows(
     wPx,
     hPx,
@@ -6001,7 +6004,7 @@ function drawProductionBedCrop(
   // drawing below was never reached at all. That is the "beds are still small generic marks"
   // report, one layer under the mark size. With the marks now page-sized, a bed carrying a single
   // recognisable cabbage says more than the sticker ever did.
-  if (!layout.plants.length) return false;
+  if (!layout.plants.length) return styledBed;
 
   const cx = px(it.x);
   const cy = py(it.y);
@@ -6013,24 +6016,29 @@ function drawProductionBedCrop(
 
   // Cream casing, then worked soil, then the crop — the same body-inside-a-casing order every
   // other mark on these sheets now uses to survive an aerial photograph.
-  roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
-  ctx.strokeStyle = 'rgba(252,248,236,0.92)';
-  ctx.lineWidth = Math.max(2.5, ctx.canvas.width * 0.0022);
-  ctx.stroke();
-  roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
-  ctx.fillStyle = CROP_SOIL_COLOR;
-  ctx.fill();
+  if (!styledBed) {
+    roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
+    ctx.strokeStyle = 'rgba(252,248,236,0.92)';
+    ctx.lineWidth = Math.max(2.5, ctx.canvas.width * 0.0022);
+    ctx.stroke();
+    roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
+    ctx.fillStyle = CROP_SOIL_COLOR;
+    ctx.fill();
+  }
 
   ctx.save();
   roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
   ctx.clip();
+  if (styledBed) ctx.globalAlpha *= 0.74;
   drawCropRowLayout(ctx, layout, '#6B8F4E', 1, markUnitPx);
   ctx.restore();
 
-  roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
-  ctx.strokeStyle = 'rgba(38,28,18,0.9)';
-  ctx.lineWidth = Math.max(1.2, ctx.canvas.width * 0.0011);
-  ctx.stroke();
+  if (!styledBed) {
+    roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
+    ctx.strokeStyle = 'rgba(38,28,18,0.9)';
+    ctx.lineWidth = Math.max(1.2, ctx.canvas.width * 0.0011);
+    ctx.stroke();
+  }
   ctx.restore();
   return true;
 }
@@ -6046,6 +6054,7 @@ function drawTrueFootprint(
   nearestNeighbourPx?: number,
   /** Ids of canopies with something smaller planted inside them — see overstoryCanopyIds. */
   overstory?: ReadonlySet<string>,
+  exactFinish: ExactPlantingFinish = 'detailed',
 ): void {
   // A gate is a measured opening, not a point symbol or a stretched stock illustration.
   // Draw it before artwork/minimum-size scaling so its posts meet the actual fence gap.
@@ -6074,7 +6083,7 @@ function drawTrueFootprint(
   // when the bed is too small on this sheet to read as rows — an unreadable smudge of dots is
   // worse than the rectangle it replaced.
   if (PRODUCTION_BED_IDS.has(def.id)) {
-    if (drawProductionBedCrop(ctx, it, def, px, py, pxPerM)) return;
+    if (drawProductionBedCrop(ctx, it, def, px, py, pxPerM, exactFinish)) return;
   }
   // Ahead of the artwork for the same reason production beds are: the shared asset is a photograph
   // taken from the side, and this draws the thing itself, from above. Falls through only when the
@@ -6877,8 +6886,11 @@ function drawFilteredItems(
     const it = items[index];
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def) continue;
-    if (exactFinish !== 'detailed' && drawExactCanopy(ctx, def.id, exactFinish, px(it.x), py(it.y),
-      (it.wM ?? def.wM) * pxPerM, (it.hM ?? def.hM) * pxPerM, statusOf(it))) continue;
+    if (exactFinish !== 'detailed') {
+      const x = px(it.x), y = py(it.y);
+      const width = (it.wM ?? def.wM) * pxPerM, height = (it.hM ?? def.hM) * pxPerM;
+      if (drawExactCanopy(ctx, def.id, exactFinish, x, y, width, height, statusOf(it), it.rot)) continue;
+    }
     drawTrueFootprint(
       ctx,
       it,
@@ -6889,6 +6901,7 @@ function drawFilteredItems(
       true,
       nearestWaterNeighbourPx(neighbourInputs, index),
       overstory,
+      exactFinish,
     );
   }
 }
@@ -8017,6 +8030,16 @@ async function buildReferenceBlueprintMap(
     // always used authoritativeHouseFootprints and so has always known about both — which is
     // exactly why this survived: the same sheet, rendered on satellite, looked right.
     for (const footprint of authoritativeHouseFootprints(renderState, renderRefLayers)) {
+      if (onPaper && isExactSurfaceFinish(exactFinish) && footprint.length >= 3) {
+        const roof = new Path2D();
+        const xs = footprint.map(([x]) => px(x)), ys = footprint.map(([, y]) => py(y));
+        roof.moveTo(xs[0], ys[0]);
+        for (let i = 1; i < xs.length; i++) roof.lineTo(xs[i], ys[i]);
+        roof.closePath();
+        const left = Math.min(...xs), top = Math.min(...ys);
+        paintExactSurface(ctx, roof, 'roof', exactFinish, left, top, Math.max(...xs) - left, Math.max(...ys) - top);
+        continue;
+      }
       drawBlueprintHouse(
         ctx,
         footprint,
@@ -11269,6 +11292,9 @@ function drawStyleLegendSymbol(
         (n) => n * ctx.canvas.height,
         1,
         false,
+        undefined,
+        undefined,
+        exactFinish,
       );
       return;
     }
@@ -12134,7 +12160,7 @@ async function composeStyleSheet(
   // A2 LANDSCAPE, added as PAPER rather than taken out of the map. See PAPER_SHEET_RATIO.
   // The compact masterplan omits leaders, not paper size. A smaller exported bitmap was being
   // enlarged in the PDF, making its supposedly shared legend and lettering visibly bigger.
-  if (options.exactFinish === 'outline') convertSheetToGreyscale(ctx);
+  if (options.exactFinish === 'outline' || options.exactFinish === 'hatch') convertSheetToGreyscale(ctx);
   else finishClassicSheet(ctx, options.styleKey);
   return padToPaperSheet(canvas, sheetSize.W);
 }
@@ -16864,6 +16890,10 @@ export default function DesignGlossy({
             </select>
           </label>
         )}
+        <MapFinishExamples
+          exact={selectedSheet && 'filter' in selectedSheet && supportsExactCanopies(selectedSheet.filter)}
+          aiStyles={availableStyleChoices}
+        />
         {/* WHICH PICTURE THE SHEETS SIT ON — always all three: the farmer's own drone/phone aerial,
             the satellite, and plain paper. The drone pill used to disappear on a site with no
             imported photo, which read as the option having been removed. It is always present now;
@@ -17049,13 +17079,12 @@ export default function DesignGlossy({
                   scrollSnapAlign: 'start',
                 }}
               >
+                <img src={`/map-finishes/ai-${s.key}.webp`} alt="" width={240} height={180}
+                  loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', borderRadius: 6 }} />
                 {s.recommended && (
                   <span
                     style={{
-                      position: 'absolute',
-                      zIndex: 1,
-                      top: 9,
-                      left: 9,
+                      alignSelf: 'center',
                       padding: '2px 6px',
                       borderRadius: 999,
                       background: '#F8E0A2',
@@ -17069,7 +17098,6 @@ export default function DesignGlossy({
                     {t('designGlossyRecommended')}
                   </span>
                 )}
-                <span aria-hidden style={{ display: 'block', height: 34, borderRadius: 8, background: s.swatch, border: '1px solid rgba(20,16,10,0.12)' }} />
                 <span style={{ textAlign: 'center', lineHeight: 1.15 }}>{s.label}</span>
                 <span style={{ fontSize: 9.5, fontWeight: 600, textAlign: 'center', opacity: 0.6, lineHeight: 1.2 }}>{aiView === 'oblique' ? obliqueStyleDescription(s.key).split(',')[0] : s.blurb}</span>
               </button>
