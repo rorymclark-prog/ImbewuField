@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 November 2026', sha: '9dd8e9886', changes: [
+    'Record a dated Field Journal observation for a saved design phase and mapped feature.',
+  ] },
   { when: '26 November 2026', sha: '9ddb9146d', changes: [
     'On exact canopy maps, a ring around the centre dot marks trees already on the farm.',
   ] },
