@@ -6,6 +6,7 @@
  * only while composing the finished sheet.
  */
 
+import { isExactSurfaceFinish, paintExactSurface } from '@/lib/exact-surface-finish';
 import type { ElementStatus } from '@/lib/design-canvas';
 
 export type PlantingLegendSection =
@@ -60,6 +61,8 @@ export const EXACT_PLANTING_FINISHES = {
   detailed: 'Detailed symbols',
   canopy: 'Canopy circles',
   outline: 'Canopy outlines · black & white',
+  wash: 'Ink & wash',
+  hatch: 'Hatched field plan',
 } as const;
 export type ExactPlantingFinish = keyof typeof EXACT_PLANTING_FINISHES;
 
@@ -93,12 +96,22 @@ export function canopyLegendNote(rows: readonly { defId?: string; status?: Eleme
 export function drawExactCanopy(
   ctx: CanvasRenderingContext2D, id: string | undefined, finish: ExactPlantingFinish,
   x: number, y: number, width: number, height: number,
-  status: ElementStatus = 'proposed',
+  status: ElementStatus = 'proposed', rotation = 0,
 ): boolean {
   if (finish === 'detailed' || !id || !PERENNIAL_GUILDS.has(id)) return false;
-  if (![x, y, width, height].every(Number.isFinite) || width <= 0 || height <= 0) return false;
+  if (![x, y, width, height, rotation].every(Number.isFinite) || width <= 0 || height <= 0) return false;
   const shortSide = Math.min(width, height);
   ctx.save();
+  if (rotation && width !== height) {
+    ctx.translate(x, y);
+    ctx.rotate(rotation * Math.PI / 180);
+    ctx.translate(-x, -y);
+  }
+  if (isExactSurfaceFinish(finish)) {
+    const crown = new Path2D();
+    crown.ellipse(x, y, width / 2, height / 2, 0, 0, 2 * Math.PI);
+    paintExactSurface(ctx, crown, 'crown', finish, x - width / 2, y - height / 2, width, height);
+  }
   if (finish === 'canopy') {
     ctx.save();
     ctx.translate(x, y);
@@ -114,13 +127,15 @@ export function drawExactCanopy(
     ctx.fill();
     ctx.restore();
   }
-  const ink = finish === 'outline' ? '#2A2A2A' : '#375632';
-  ctx.strokeStyle = ink;
-  ctx.lineWidth = Math.min(shortSide * 0.08, Math.max(0.9, shortSide * 0.016));
-  // The outer edge, including its ink, lies on the saved footprint.
-  ctx.beginPath();
-  ctx.ellipse(x, y, (width - ctx.lineWidth) / 2, (height - ctx.lineWidth) / 2, 0, 0, 2 * Math.PI);
-  ctx.stroke();
+  if (!isExactSurfaceFinish(finish)) {
+    const ink = finish === 'outline' ? '#2A2A2A' : '#375632';
+    ctx.strokeStyle = ink;
+    ctx.lineWidth = Math.min(shortSide * 0.08, Math.max(0.9, shortSide * 0.016));
+    // The outer edge, including its ink, lies on the saved footprint.
+    ctx.beginPath();
+    ctx.ellipse(x, y, (width - ctx.lineWidth) / 2, (height - ctx.lineWidth) / 2, 0, 0, 2 * Math.PI);
+    ctx.stroke();
+  }
   const { dotRadius, ringRadius, ringWidth } = canopyCentreMark(shortSide, status);
   if (ringRadius) {
     ctx.beginPath();

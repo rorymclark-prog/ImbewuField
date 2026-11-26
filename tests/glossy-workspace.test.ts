@@ -1,4 +1,7 @@
 import test from 'node:test';
+import { createHash } from 'node:crypto';
+import { STYLE_LINES } from '../lib/producer-prompt.ts';
+import { EXACT_PLANTING_FINISHES } from '../lib/planting-cartography.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import React from 'react';
@@ -399,4 +402,19 @@ test('finish choices appear before advanced options and their longer explanation
     'advanced controls must visually follow the primary finish controls');
   assert.doesNotMatch(actions.slice(0, finish), /designGlossyFinishHelp/,
     'the long finish explanation must stay collapsed until after the finish choice');
+});
+
+test('every offered finish has its own decodable-format garden sample before a farmer spends a credit', () => {
+  const seen = new Set<string>();
+  for (const [kind, choices] of [['ai', STYLE_LINES], ['exact', EXACT_PLANTING_FINISHES]] as const) {
+    for (const key of Object.keys(choices)) {
+      const image = readFileSync(new URL(`../public/map-finishes/${kind}-${key}.webp`, import.meta.url));
+      assert.equal(image.toString('ascii', 0, 4), 'RIFF');
+      assert.equal(image.toString('ascii', 8, 12), 'WEBP');
+      assert.equal(image.readUInt32LE(4), image.length - 8, `complete sample for ${key}`);
+      const digest = createHash('sha256').update(image).digest('hex');
+      assert.ok(!seen.has(digest), `${key} needs an illustration of its own finish`);
+      seen.add(digest);
+    }
+  }
 });
