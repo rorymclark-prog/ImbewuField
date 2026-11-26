@@ -27,7 +27,7 @@ export default function FieldFilmButton({ film, lang, onOpen }: Props) {
       onClick={() => { onOpen?.(); setOpen(true); }}>
       <Play size={18} aria-hidden="true" />
       <span><strong>{ui.play} · <span lang={entry.lang}>{fieldFilmTitle(film, entry.lang)}</span></strong>
-        <span className={styles.detail}>{FILM_LANGUAGE_NAMES[entry.lang]} · {entry.captionOnly ? ui.captions + ' · ' : ''}{entry.seconds}s · {entry.size}</span>
+        <span className={styles.detail}>{FILM_LANGUAGE_NAMES[entry.lang]} · {entry.captionOnly ? ui.captions : ui.voice} · {entry.seconds}s · {entry.size}</span>
       </span>
     </button>
     {open && <FieldFilmPlayer film={film} lang={entry.lang} onClose={() => { setOpen(false); trigger.current?.focus({ preventScroll: true }); }} />}
@@ -48,7 +48,6 @@ function FieldFilmPlayer({ film: first, lang: initial, onClose }: { film: FieldF
   const edition = filmEdition(film, lang);
   const ui = copy[lang];
   const next = filmEdition('walk', lang);
-  const isFrame = film === 'level' || film === 'walk';
 
   useEffect(() => { dialog.current?.showModal(); }, []);
 
@@ -92,7 +91,9 @@ function FieldFilmPlayer({ film: first, lang: initial, onClose }: { film: FieldF
     const nextEdition = filmEdition(film, value);
     const video = player.current;
     if (video && edition.src !== nextEdition.src) {
-      start.current = { seconds: matchingFilmTime(edition, nextEdition, video.currentTime), play: !video.paused };
+      // A second selection can arrive while the first replacement is still loading.
+      const progress = video.readyState === 0 ? start.current : { seconds: video.currentTime, play: !video.paused };
+      start.current = { seconds: matchingFilmTime(edition, nextEdition, progress.seconds), play: progress.play };
       video.pause();
     }
     nativeFallback.current = false;
@@ -120,9 +121,9 @@ function FieldFilmPlayer({ film: first, lang: initial, onClose }: { film: FieldF
         <h3 ref={heading} tabIndex={-1} id={headingId}>{fieldFilmTitle(film, lang)}</h3>
         <button type="button" className={styles.close} aria-label={ui.close} onClick={() => dialog.current?.close()}><X size={20} aria-hidden="true" /></button>
       </header>
-      {isFrame ? <label className={styles.choice}>{ui.language}
+      {edition.languages.length > 1 ? <label className={styles.choice}>{ui.language}
         <select value={lang} onChange={e => changeLanguage(e.target.value)}>
-          {FILM_LANGUAGES.map(code => <option key={code} value={code}>{FILM_LANGUAGE_NAMES[code]} · {filmEdition(film, code).captionOnly ? ui.captions : ui.voice}</option>)}
+          {edition.languages.map(code => <option key={code} value={code}>{FILM_LANGUAGE_NAMES[code]} · {filmEdition(film, code).captionOnly ? ui.captions : ui.voice}</option>)}
         </select>
       </label> : <p className={styles.choice}>English · {ui.voice}</p>}
       <video className={styles.film} key={edition.src} ref={player} src={edition.src}

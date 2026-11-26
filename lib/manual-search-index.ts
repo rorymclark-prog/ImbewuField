@@ -1,7 +1,7 @@
 import {
   MANUAL_CHAPTERS, chapterTitle, earthworksFilmPlacements, inlineText, parseManual, type Block, type ManualLang,
 } from '@/lib/manual';
-import { fieldFilmTitle, type FieldFilm } from '@/lib/field-films';
+import { fieldFilmTitle, filmEdition, type FieldFilm } from '@/lib/field-films';
 import { readChapter } from '@/lib/manual-content';
 import { manualGlossaryAnchor, manualOutline } from '@/lib/manual-outline';
 import type { ManualSearchSection } from '@/lib/manual-search';
@@ -55,9 +55,10 @@ export function manualSearchIndex(lang: ManualLang): ManualSearchSection[] {
         indexed.add(slot.film);
         const passages = blockPassages(body[slot.blockIndex]);
         const passage = passages[(slot.afterStep ?? passages.length) - 1];
+        const titleLang = filmEdition(slot.film, lang).lang;
         sections.push({
-          ...source, kind: 'film', title: fieldFilmTitle(slot.film, lang),
-          titleLang: slot.film === 'earth' ? 'en' : lang, anchor: slot.anchor, passages: passage ? [passage] : [],
+          ...source, kind: 'film', title: fieldFilmTitle(slot.film, titleLang),
+          titleLang, anchor: slot.anchor, passages: passage ? [passage] : [],
         });
       }
     }

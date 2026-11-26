@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import './manual-outline-checks.ts';
-import { filmEdition, matchingFilmTime } from '@/lib/field-films';
+import { fieldFilmTitle, filmEdition, matchingFilmTime } from '@/lib/field-films';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 import { manualSearchIndex } from '@/lib/manual-search-index';
 import { prepareManualSearch, searchManual, type ManualSearchSection } from '@/lib/manual-search';
@@ -35,7 +35,15 @@ test('each manual search entry opens a chapter, heading, glossary word or field 
       const anchors = ['chapter-start', ...manualOutline(body).map(heading => heading.anchor)];
       if (slug === '07-earthworks-and-water') {
         const films = index.filter(entry => entry.slug === slug && entry.kind === 'film');
-        assert.deepEqual(films.map(entry => entry.anchor), ['digging-the-swale-film', 'check-a-frame', 'peg-a-contour']);
+        assert.deepEqual(films.map(entry => entry.anchor), ['digging-the-swale-film', 'drip-irrigation-film', 'check-a-frame', 'peg-a-contour']);
+        const drip = films.find(entry => entry.anchor === 'drip-irrigation-film');
+        assert.ok(drip);
+        assert.equal(drip.titleLang, lang);
+        assert.equal(drip.title, fieldFilmTitle('drip', lang));
+        const prepared = prepareManualSearch(index);
+        assert.equal(searchManual(prepared, drip.title)[0].section, drip);
+        const firstPage = searchManual(prepared, 'drip irrigation').slice(0, 6);
+        assert.ok(firstPage.some(hit => hit.section === drip), `${lang}: find the film using the subsection name`);
         anchors.push(...films.map(entry => entry.anchor));
         assert.ok(films.every(entry => entry.passages.length === 1));
       }
@@ -195,7 +203,7 @@ test('all four home languages Rory asked for are public: isiZulu, Sesotho, Tshiv
 });
 
 
-test('the films stay beside the digging, double-reach and individual A-frame instructions in each edition', () => {
+test('each field film follows its own instruction in all five editions', () => {
   const headings = {
     en: ['Digging the swale', 'Double-reach raised beds', 'Try it'],
     zu: ['Ukumba i-swale', 'Imibhede ephakanyisiwe ye-double-reach', 'Zama lokhu'],
@@ -206,7 +214,10 @@ test('the films stay beside the digging, double-reach and individual A-frame ins
   for (const lang of MANUAL_LANGS) {
     const body = parseManual(read(lang, '07-earthworks-and-water')).filter((b) => b.type !== 'h1');
     const slots = earthworksFilmPlacements(body);
-    assert.equal(new Set(slots.map((slot) => slot.anchor)).size, 4, lang);
+    assert.equal(new Set(slots.map((slot) => slot.anchor)).size, 5, lang);
+    const drip = slots.find(slot => slot.anchor === 'drip-irrigation-film');
+    assert.ok(drip);
+    assert.equal(body[drip.blockIndex - 1].type, 'h3', 'play follows the opening paragraph under the drip heading');
     const locations = slots.map(({ blockIndex, film, afterStep }) => {
       const heading = body.slice(0, blockIndex).reverse().find((b) => b.type === 'h2' || b.type === 'h3');
       assert.ok(heading && 'content' in heading);
@@ -218,6 +229,7 @@ test('the films stay beside the digging, double-reach and individual A-frame ins
     assert.deepEqual(locations, [
       ['earth', swale, 'ol', undefined],
       ['earth', beds, 'p', undefined],
+      ['drip', lang === 'zu' ? 'I-drip irrigation' : 'Drip irrigation', 'p', undefined],
       ['level', exercise, 'ol', 4],
       ['walk', exercise, 'ol', 7],
     ], lang);
@@ -348,4 +360,43 @@ test('switching at the halfway mark stays on the halfway mark even when the new 
   // The halfway shot starts at source frame 396. Its English cut starts at 435.
   assert.equal(matchingFilmTime(en, zu, 440 / 24), 401 / 24);
   assert.equal(matchingFilmTime(zu, en, 401 / 24), 440 / 24);
+});
+
+test('all five drip editions carry the full six-stage water journey on the same clock', () => {
+  const cueEnds = [6, 12, 19, 26, 34, 42];
+  const english = filmEdition('drip', 'en');
+  const sidecars = new Set<string>();
+  const titles = new Set<string>();
+  const stamp = (seconds: number) => `00:00:${String(seconds).padStart(2, '0')}.000`;
+  for (const lang of MANUAL_LANGS) {
+    const edition = filmEdition('drip', lang);
+    assert.deepEqual(edition.languages, MANUAL_LANGS);
+    assert.equal(edition.lang, lang);
+    const narrated = lang === 'en' || lang === 'zu';
+    assert.equal(edition.captionOnly, !narrated);
+    assert.equal(edition.src, `/manual/films/drip/v1/drip-${narrated ? lang : 'captions'}.mp4`);
+    assert.equal(edition.track, `/manual/films/drip/v1/drip-${lang}.vtt`);
+    assert.equal(edition.seconds, 42);
+    const bytes = statSync(path.join(ROOT, 'public', edition.src)).size;
+    assert.ok(bytes > 0);
+    assert.equal(edition.bytes, bytes);
+    assert.equal(edition.size, (bytes / 1_000_000).toFixed(1) + ' MB');
+    assert.deepEqual(edition.ends, cueEnds.map(seconds => seconds * 24));
+    assert.deepEqual(edition.pictures, edition.ends);
+    const vtt = readFileSync(path.join(ROOT, 'public', edition.track), 'utf8');
+    const [header, ...blocks] = vtt.trim().split(/\r?\n\s*\r?\n/);
+    assert.equal(header, 'WEBVTT');
+    assert.equal(blocks.length, cueEnds.length);
+    blocks.forEach((block, i) => {
+      const [timing, ...lines] = block.split(/\r?\n/);
+      const start = cueEnds[i - 1] ?? 0;
+      assert.equal(timing, `${stamp(start)} --> ${stamp(cueEnds[i])}`);
+      assert.ok(lines.join(' ').trim(), `missing ${lang} caption ${i + 1}`);
+      assert.equal(matchingFilmTime(english, edition, start + 0.5), start + 0.5);
+    });
+    sidecars.add(vtt);
+    titles.add(fieldFilmTitle('drip', lang));
+  }
+  assert.equal(sidecars.size, MANUAL_LANGS.length, 'each edition has its own text');
+  assert.equal(titles.size, MANUAL_LANGS.length, 'each edition has its own film title');
 });
