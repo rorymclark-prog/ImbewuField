@@ -15,6 +15,10 @@ export function isClassicMapStyle(style: string): style is ClassicMapStyle {
 // afterwards, so a pencil or ink prompt alone still sends coloured pixels to a printer.
 export function finishClassicSheet(ctx: CanvasRenderingContext2D, style?: string): void {
   if (style !== 'graphite_pencil' && style !== 'pen_and_ink') return;
+  convertSheetToGreyscale(ctx);
+}
+
+export function convertSheetToGreyscale(ctx: CanvasRenderingContext2D): void {
   const { width, height } = ctx.canvas;
   // A full-size print sheet already occupies a large canvas on a phone. Read one strip at a time.
   for (let y = 0; y < height; y += 64) {
