@@ -541,6 +541,25 @@ test('buildProducerPrompt keeps the style anchor first and the geometry lock las
   assert.ok(!prompt.includes('clean right-hand title/legend panel'));
 });
 
+test('painted finishes keep their own medium on saved features, water and the second paid pass', () => {
+  for (const [style, medium] of [
+    ['homestead_storybook', 'opaque gouache brushwork'],
+    ['karoo_folk', 'flat relief-print ink shapes'],
+    ['master_atlas', 'fine indigo and graphite engraving'],
+  ] as const) {
+    for (const ground of ['photo', 'paper'] as const) {
+      const prompt = buildLockedIllustrationPrompt('Water', style, 'JoJo Tank ×2', '', ground);
+      assert.ok(prompt.split('PLACED-FEATURE CONTRACT:')[1].split('ONE COHERENT DRAWING:')[0].includes(medium));
+      assert.match(prompt, /same centre, count, rotation and footprint/);
+      assert.doesNotMatch(prompt, /realistic orthographic illustration|one restrained, consistent top-down botanical map style|through layered watercolor-and-gouache texture/);
+      assert.match(prompt, /app draws these routes and emitters over the finished artwork/i);
+    }
+    assert.ok(buildFinishedSheetPolishPrompt('Whole Design', style).includes(`Describe light and shade in ${medium}`));
+  }
+  assert.doesNotMatch(STYLE_LINES.homestead_storybook, /rounded beds/);
+  assert.match(buildLockedIllustrationPrompt('Whole Design', 'photo_plan'), /KEEP THE PHOTOGRAPH/);
+});
+
 test('locked illustration prompt paints the whole sheet without inventing features', () => {
   const p = buildLockedIllustrationPrompt(
     'Water',

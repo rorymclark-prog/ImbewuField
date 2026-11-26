@@ -81,6 +81,14 @@ export function groundContractFor(style: StylePreset, groundSource: 'photo' | 'p
   return isPhotoPreservingStyle(style) ? groundSource === 'paper' ? 'paper' : 'photo' : 'paint';
 }
 
+// On the same photographed site, these three paid finishes all came back as shaded aerial
+// paintings. Use the medium on the features themselves, where texture is most visible.
+const ART_MEDIA: Partial<Record<StylePreset, string>> = {
+  homestead_storybook: 'opaque gouache brushwork',
+  karoo_folk: 'flat relief-print ink shapes',
+  master_atlas: 'fine indigo and graphite engraving',
+};
+
 // STYLE_LINES lives further down (with the showcase-prompt rewrite) since both the strict
 // buildProducerPrompt below and the showcase prompts share the one definition.
 
@@ -158,6 +166,7 @@ export function buildLockedIllustrationPrompt(
   // others; reusing showcaseMarkerGlossary rather than writing a fourth table is the point, so the
   // next bed/basin/vetiver correction cannot miss the app's most-used renderer again.
   const markerGlossary = showcaseMarkerGlossary(sheetKind, elementsText, sheetKind === 'water');
+  const medium = ART_MEDIA[stylePreset];
   const ground = groundContractFor(stylePreset, groundSource);
   const onPaper = ground === 'paper';
   const paintGround = ground === 'paint';
@@ -168,12 +177,12 @@ export function buildLockedIllustrationPrompt(
   const photoPreserving = ground === 'photo';
   const waterArtDirection = sheetKind === 'water'
     ? [
-        `WATER FEATURE ROLE: polish every already-marked tank, tap, basin, pond and fitting into a recognisable realistic top-down farm feature at its exact saved centre, count, orientation and footprint. Blue marks buried pipes and drip lines; purple marks filtered greywater. ${WATER_ROUTE_PAINTING} The app also adds the leaders, labels and legend.`,
+        `WATER FEATURE ROLE: polish every already-marked tank, tap, basin, pond and fitting into a recognisable ${medium ? `top-down farm feature in ${medium}` : 'realistic top-down farm feature'} at its exact saved centre, count, orientation and footprint. Blue marks buried pipes and drip lines; purple marks filtered greywater. ${WATER_ROUTE_PAINTING} The app also adds the leaders, labels and legend.`,
         // Painted styles may change texture, never the site's land cover. A dark forest outside
         // every property was an art-direction instruction with no basis in the source photograph.
         // Photo and paper contracts still skip this block entirely.
         paintedPhoto ? `TONAL HIERARCHY: preserve the source land-cover pattern and relative light and dark areas inside and beyond the property. Apply the selected illustration style only to surfaces already evidenced by the source; keep unidentifiable surroundings neutral and do not infer vegetation or terrain. Use contrast to make the saved water features readable from directly overhead.` : '',
-        paintedPhoto ? `MATERIAL SEPARATION: distinguish only surfaces identified in the source photograph or saved design through layered watercolor-and-gouache texture with fine dry-brush grain. Preserve each surface's identity and extent; use neutral texture wherever its identity is unknown. Where a driveway is present, keep its supplied surface quiet and flat, with no bright border, kerb, raised edge, hatch, shadow or roof-like treatment.` : '',
+        paintedPhoto ? `MATERIAL SEPARATION: distinguish only surfaces identified in the source photograph or saved design through ${medium ?? 'layered watercolor-and-gouache texture with fine dry-brush grain'}. Preserve each surface's identity and extent; use neutral texture wherever its identity is unknown. Where a driveway is present, keep its supplied surface quiet and flat, with no bright border, kerb, raised edge, hatch, shadow or roof-like treatment.` : '',
         `SOURCE LOCK: preserve the exact top-down source crop, scale, aspect ratio, camera position and geometry. Invent nothing: add no trees, beds, tanks, ponds, paths, fences, buildings or other features not already visible or marked. Add no writing or sheet furniture; the app adds those afterwards.`,
       ].filter(Boolean).join('\n\n')
     : '';
@@ -232,8 +241,8 @@ export function buildLockedIllustrationPrompt(
     sheetDrawingScope(sheetKind),
     markerGlossary ? `WHAT THE MARKERS ARE: ${markerGlossary}.` : '',
     designBrief.trim() ? `${diggingStage ? 'ORIENTATION CONTEXT ONLY — the whole-site planting list describes a later stage; draw none of its proposed planting on this digging sheet' : 'WHOLE-SITE CONSISTENCY BRIEF'}: ${designBrief.trim()}` : '',
-    `PLACED-FEATURE CONTRACT: every coloured footprint, route and editor marker already visible in the source is a saved feature, not a suggestion. Replace each marker with a realistic orthographic illustration of that named feature at the same centre, count, rotation and footprint. Keep the illustration confined to its saved footprint. Do not duplicate it, omit it, move it or leave an emoji/tool marker in the finished artwork.`,
-    `ONE COHERENT DRAWING: coloured source marks are placement guides only, never finished artwork to copy. Repaint every marked feature in one restrained, consistent top-down ${diggingStage ? 'earth-and-soil' : 'botanical'} map style. Do not use stickers, clip-art, cut-out collages, cartoon icons, outlined placeholders or repeated code badges.`,
+    `PLACED-FEATURE CONTRACT: every coloured footprint, route and editor marker already visible in the source is a saved feature, not a suggestion. Replace each marker with ${medium ? `an orthographic illustration in ${medium}` : 'a realistic orthographic illustration'} of that named feature at the same centre, count, rotation and footprint. Keep the illustration confined to its saved footprint. Do not duplicate it, omit it, move it or leave an emoji/tool marker in the finished artwork.`,
+    `ONE COHERENT DRAWING: coloured source marks are placement guides only, never finished artwork to copy. Repaint every marked feature ${medium ? `using ${medium} across the whole drawing, including roofs, crowns and open ground` : `in one restrained, consistent top-down ${diggingStage ? 'earth-and-soil' : 'botanical'} map style`}. Do not use stickers, clip-art, cut-out collages, cartoon icons, outlined placeholders or repeated code badges.`,
     onPaper
       ? `PAPER FINISH: the app draws exact feature outlines, technical routes, labels, legend and title over your artwork afterwards. Make each illustrated element clean, well-separated and confident enough to read beneath that precise linework — and leave the white between elements genuinely empty, because that white is where the app's labels and leaders land.`
       : photoPreserving
@@ -531,11 +540,11 @@ export const STYLE_LINES: Record<StylePreset, string> = {
   field_ledger:
     'STYLE — Field Ledger: a hand-inked site plan — fine dark sepia pen linework over rich watercolour, warm credible surveyor character. Fixed palette: sage-green lawn, olive veld, warm buff soil, slate-grey roofs, muted terracotta accents, off-white paper panels. The ground is always painted as living land with visible lawn/veld/soil texture.' + PLAN_SET_ANCHOR,
   homestead_storybook:
-    'STYLE — Homestead Storybook: a saturated gouache picture-book garden map, rounded beds bursting with vegetables, canopy-textured fruit trees, whimsical but legible. Fixed palette: leaf green, warm ochre, terracotta, cream, denim-blue water, charcoal linework.' + PLAN_SET_ANCHOR,
+    'STYLE — Homestead Storybook: a hand-painted gouache picture-book plate. Use broad opaque brushstrokes, scalloped leaf-green crowns with two or three painted light and shade shapes, and small cream dry-brush highlights. Brush warm ochre and terracotta ground in quiet patches, and use denim blue for water. Describe roofs with a few charcoal brush lines on opaque planes. Fit the painting to the exact bed corners, routes and roof silhouettes in the source. The supplied image describes the site; replace its photographic grain, individual leaf detail and lens shadows with visible brushwork. The brush shapes should read at thumbnail size.' + PLAN_SET_ANCHOR,
   extension_blueprint:
     'STYLE — Extension Blueprint: a polished flat orthographic technical site plan with disciplined ink linework, subtle hand-painted terrain texture, strong figure-ground contrast and high legibility at small print size. Fixed palette: deep slate roofs, layered olive and sage vegetation, cool blue-green water accents, warm buff soil, charcoal linework and off-white paper. The ground remains richly textured living land, never blank white, while every structure stays directly top-down with no perspective or isometric distortion.' + PLAN_SET_ANCHOR,
   karoo_folk:
-    'STYLE — Karoo Folk Map: a bold naive folk-art farm map, flattened bird’s-eye view, decorative South African folk-pattern textures, charming handmade brushwork. Fixed palette: barn red, cobalt blue, sunflower yellow, pine green, whitewash cream.' + PLAN_SET_ANCHOR,
+    'STYLE — Karoo Folk Map: a hand-pulled South African folk-art relief print. Work in broad, interlocking flat ink shapes with crisp hand-cut edges. Render each saved crown as a pine-green silhouette with a few whitewash carved leaf cuts; articulate roof planes with cobalt parallel cuts. Use a limited palette of pine green, cobalt, barn red and whitewash cream, with small sunflower-yellow spot accents confined to the interiors of already marked features. Paths and driveways have quiet solid surfaces. Apply the cut marks inside real shapes, never as dashed route edges, ornamental fences or extra objects. Replace aerial grain, photographic shadows and soft gradients with solid ink and carved negative space. Keep every bed corner, roof angle and open yard from the supplied plan.' + PLAN_SET_ANCHOR,
   chatgpt_atlas:
     'STYLE — ChatGPT Atlas: polished editorial cartography with a hand-painted feel, crisp plan-sheet composition, soft watercolor terrain washes, disciplined ink linework, cream paper border, and highly legible labels. Fixed palette: olive greens, muted blue-greys, warm ochre, parchment cream, charcoal text. The map reads like a premium printed design sheet from the direct ChatGPT examples.' + PLAN_SET_ANCHOR,
   // Deliberately a different texture AND palette axis from precision_atlas (watercolor wash, greens)
@@ -1475,9 +1484,10 @@ export function buildFinishedSheetPolishPrompt(
 ): string {
   const sheetKind = showcaseSheetKindForLabel(layerLabel);
   const diggingStage = sheetKind === 'earthworks';
+  const medium = ART_MEDIA[stylePreset];
   const body = [
     `WHAT YOU HAVE BEEN GIVEN: a FIRST-PASS AI render of the MAP of a ${layerLabel} plan sheet${placeName ? ` for ${placeName}` : ''}. It is a draft, not finished artwork. Its geometry is correct and must stay correct, but its ARTWORK is unfinished: symbols are flat and diagrammatic, materials read as coloured shapes rather than real surfaces, linework is thin and uniform, ground texture is muddy and evenly lit, and the whole image has the look of something plotted rather than drawn.`,
-    `YOUR JOB IS THE SECOND PASS: bring that draft up to a frame-worthy authored illustration in the requested style. Give every surface a real material — corrugated roofing, turned soil, mulch, standing water, plastic tank walls, gravel, grass. Vary line weight so structure reads before detail. Light the whole image from one consistent direction with real shadow. Replace flat map symbols with orthographic top-down illustrations of the SAME things, in place.`,
+    `YOUR JOB IS THE SECOND PASS: bring that draft up to a frame-worthy authored illustration in the requested style. Give every surface a real material — corrugated roofing, turned soil, mulch, standing water, plastic tank walls, gravel, grass. Vary line weight so structure reads before detail. ${medium ? `Describe light and shade in ${medium} with a consistent light direction.` : 'Light the whole image from one consistent direction with real shadow.'} Replace flat map symbols with orthographic top-down illustrations of the SAME things, in place.`,
     `RETURNING THE SUPPLIED IMAGE UNCHANGED IS A FAILED RESULT. So is returning it with a global filter, grain, warmth or vignette over the top. This is a second pass over an image that already looks acceptable at a glance — the temptation is to copy it, and a copy is worthless here. Someone has paid for this pass specifically to get artwork the first pass could not produce. Every surface should be visibly re-rendered.`,
     sheetKind === 'water' && `${WATER_POLISH_ROUTE_GUIDE} ${WATER_ROUTE_PAINTING}`,
     `WHAT MUST NOT MOVE: canvas aspect ratio, map crop, north-up view, and the position, shape, size and count of the boundary, house, driveway, beds, trees, tanks, basins, ponds, structures and routes. ${sheetKind === 'water' ? 'Keep the connection points on the supplied network.' : 'Redraw all of them; move none of them. Keep blue water pipes, blue drip emitters and purple greywater routes distinct, with every connection and endpoint where it already is.'} Invent nothing that is not already on the map, and leave open ground open.`,
