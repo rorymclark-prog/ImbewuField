@@ -16,6 +16,8 @@ import { readJournalStorage, writeJournalStorageRaw, JOURNAL_LEGACY_KEY } from '
 import { captureJournalObservationContext, journalObservationContextIsCurrent, revokeJournalObservationContext, type JournalObservationContext } from './length-unit-preference';
 import { normaliseGrowerPlanningScope, type GrowerPlanningScope } from './international/grower-planning';
 import type { GrowerCycleEventKind } from './international/grower-cycle-projection';
+import { currentPhaseJournalLink, releasePhaseJournalDraft, type PhaseJournalDraft, type PhaseJournalLink } from './phase-journal-source';
+import { canonicalCoordinateSiteId } from './site-id';
 
 /* ── Types ───────────────────────────────────────────────────────────────── */
 
@@ -84,6 +86,8 @@ export interface JournalEntry {
   nurseryProgress?: unknown;
   /** Entered field-planting quantity; no establishment or stock movement. */
   nurseryFieldPlanting?: unknown;
+  /** Historical design context, attached only by the confirmed phase action. */
+  implementationPhase?: unknown;
   createdAt: number;
   updatedAt: number;
 }
@@ -169,6 +173,32 @@ function preserveJournalGrowerLink(entry: object): Pick<JournalEntry, 'growerCyc
     if (!Object.hasOwn(property, 'value')) return held();
     return { growerCycleLink: detachJournalJSON(property.value) };
   } catch { return held(); }
+}
+
+const PHASE_LINK_FIELDS = ['version', 'siteId', 'placeId', 'siteName', 'phaseKey', 'phaseTitle',
+  'featureId', 'featureKind', 'featureLabel'] as const;
+
+export function inspectJournalPhaseLink(entry: JournalEntry):
+  | { readonly status: 'legacy' | 'held' }
+  | { readonly status: 'recorded'; readonly link: PhaseJournalLink } {
+  try {
+    const property = Object.getOwnPropertyDescriptor(entry, 'implementationPhase');
+    if (!property) return { status: 'legacy' };
+    if (!property.enumerable || !Object.hasOwn(property, 'value')) return { status: 'held' };
+    const fields = ownLinkFields(property.value, PHASE_LINK_FIELDS);
+    const validText = (value: unknown) => typeof value === 'string' && value.trim() === value
+      && value.length > 0 && value.length <= 240 && !/[\u0000-\u001f\u007f]/.test(value);
+    if (fields?.version === 1 && canonicalCoordinateSiteId(fields.siteId)
+      && (fields.featureKind === 'item' || fields.featureKind === 'line')
+      && typeof fields.phaseKey === 'string'
+      && ['access_water', 'earthworks', 'beds', 'perennials', 'livestock'].includes(fields.phaseKey)
+      && [fields.placeId, fields.siteName, fields.phaseTitle, fields.featureId, fields.featureLabel].every(validText)) {
+      return { status: 'recorded', link: fields as unknown as PhaseJournalLink };
+    }
+    return { status: 'held' };
+  } catch {
+    return { status: 'held' };
+  }
 }
 
 export interface JournalNurserySowingObservation {
@@ -496,6 +526,7 @@ export function normaliseJournal(value: unknown): JournalEntry[] {
       ...preserveJournalNurserySowing(raw),
       ...preserveJournalNurseryPayload(raw, 'nurseryProgress'),
       ...preserveJournalNurseryPayload(raw, 'nurseryFieldPlanting'),
+      ...(Object.hasOwn(raw, 'implementationPhase') ? { implementationPhase: raw.implementationPhase } : {}),
       createdAt,
       updatedAt: finiteTime(raw.updatedAt, createdAt),
     });
@@ -574,6 +605,7 @@ export function editJournalEntry(
     ...preserveJournalNurserySowing(entry),
     ...preserveJournalNurseryPayload(entry, 'nurseryProgress'),
     ...preserveJournalNurseryPayload(entry, 'nurseryFieldPlanting'),
+    ...(Object.hasOwn(entry, 'implementationPhase') ? { implementationPhase: entry.implementationPhase } : {}),
     id: entry.id,
     createdAt: entry.createdAt,
     updatedAt: now,
@@ -726,6 +758,29 @@ export interface JournalSaveResult {
 /** The original loaded list is explicit write provenance. A new actor, stale
  * editor or display-normalized empty list cannot overwrite the canonical book. */
 export function saveJournal(entries: JournalEntry[], sourceEntries?: JournalEntry[]): JournalSaveResult {
+  return writeJournal(entries, sourceEntries);
+}
+
+export function savePhaseJournalObservation(
+  input: JournalEntryInput, draft: PhaseJournalDraft, sourceEntries: JournalEntry[],
+): JournalSaveResult {
+  const link = currentPhaseJournalLink(draft);
+  const held = (): JournalSaveResult => ({ ok: false, entries: sourceEntries, trimmed: false, held: true });
+  if (!link || !isJournalDate(input.date) || !input.notes.trim() || sourceEntries.length >= MAX_ENTRIES) return held();
+  const entry = createJournalEntry({
+    date: input.date, title: input.title, notes: input.notes, category: input.category, photos: input.photos,
+  });
+  if (sourceEntries.some(existing => existing.id === entry.id)) return held();
+  entry.implementationPhase = link;
+  if (inspectJournalPhaseLink(entry).status !== 'recorded') return held();
+  const result = writeJournal(upsertJournalEntry(sourceEntries, entry), sourceEntries, { draft, id: entry.id });
+  if (result.ok || result.unconfirmed) releasePhaseJournalDraft(draft);
+  return result;
+}
+
+function writeJournal(
+  entries: JournalEntry[], sourceEntries?: JournalEntry[], phase?: { draft: PhaseJournalDraft; id: string },
+): JournalSaveResult {
   const fail = (): JournalSaveResult => ({ ok: false, entries, trimmed: false, held: true });
   const admission = sourceEntries && journalReadAdmissions.get(sourceEntries);
   if (!admission || !journalObservationContextIsCurrent(admission.context)
@@ -734,7 +789,9 @@ export function saveJournal(entries: JournalEntry[], sourceEntries?: JournalEntr
   const before = inspectJournalRowsForWrite(admission.raw);
   if (!before || typeof window === 'undefined' || window.localStorage !== admission.storage) return fail();
   let attempted = false;
-  const current = () => journalObservationContextIsCurrent(admission.context)
+  const sourceCurrent = () => journalObservationContextIsCurrent(admission.context)
+    && (!phase || Boolean(currentPhaseJournalLink(phase.draft)));
+  const current = () => sourceCurrent()
     && window.localStorage === admission.storage && activeAccountLocalStorageKey(JOURNAL_LEGACY_KEY) === admission.key
     && (admission.sample ? admission.storage.getItem(admission.key) === admission.raw : readJournalStorage().token === admission.token);
   try {
@@ -758,6 +815,12 @@ export function saveJournal(entries: JournalEntry[], sourceEntries?: JournalEntr
       if (!original && Object.hasOwn(entry, 'nurseryFieldPlanting')) throw Error('new-field-planting-requires-current-cycle');
       if (original && (Object.hasOwn(original, 'nurseryFieldPlanting') !== Object.hasOwn(entry, 'nurseryFieldPlanting')
         || JSON.stringify(original.nurseryFieldPlanting) !== JSON.stringify(entry.nurseryFieldPlanting))) throw Error('field-planting-changed');
+      if (Object.hasOwn(entry, 'implementationPhase') && !original
+        && (!phase || entry.id !== phase.id || JSON.stringify(entry.implementationPhase) !== JSON.stringify(phase.draft.link))) {
+        throw Error('new-phase-observation-requires-current-design');
+      }
+      if (original && (Object.hasOwn(original, 'implementationPhase') !== Object.hasOwn(entry, 'implementationPhase')
+        || JSON.stringify(original.implementationPhase) !== JSON.stringify(entry.implementationPhase))) throw Error('phase-link-changed');
       return { ...original, ...entry };
     });
     const next = JSON.stringify(nextRows);
@@ -765,15 +828,15 @@ export function saveJournal(entries: JournalEntry[], sourceEntries?: JournalEntr
     let unconfirmed = false, writtenToken: string | null = null;
     if (admission.sample) {
       attempted = true; admission.storage.setItem(admission.key, next);
-      unconfirmed = !journalObservationContextIsCurrent(admission.context) || admission.storage.getItem(admission.key) !== next;
+      unconfirmed = !sourceCurrent() || admission.storage.getItem(admission.key) !== next;
     } else {
       attempted = true;
-      const result = writeJournalStorageRaw(next, admission.token, undefined, () => journalObservationContextIsCurrent(admission.context));
+      const result = writeJournalStorageRaw(next, admission.token, undefined, sourceCurrent);
       if (result.status === 'held') return fail();
       unconfirmed = result.status === 'unconfirmed';
       if (result.status === 'written') writtenToken = result.token;
     }
-    if (!journalObservationContextIsCurrent(admission.context)) unconfirmed = true;
+    if (!sourceCurrent()) unconfirmed = true;
     if (unconfirmed) return { ok: false, entries, trimmed: false, unconfirmed: true };
     const ownReceiptMatches = () => admission.sample
       ? admission.storage.getItem(admission.key) === next
@@ -781,7 +844,7 @@ export function saveJournal(entries: JournalEntry[], sourceEntries?: JournalEntr
     if (!ownReceiptMatches()) return { ok: false, entries, trimmed: false, unconfirmed: true };
     const saved = loadJournal(); notifyJournal();
     if (!ownReceiptMatches()) { releaseJournalRead(saved); return { ok: false, entries, trimmed: false, unconfirmed: true }; }
-    if (!journalObservationContextIsCurrent(admission.context)) { releaseJournalRead(saved); return { ok: false, entries, trimmed: false, unconfirmed: true }; }
+    if (!sourceCurrent()) { releaseJournalRead(saved); return { ok: false, entries, trimmed: false, unconfirmed: true }; }
     releaseJournalRead(sourceEntries!);
     return { ok: true, entries: saved, trimmed: false };
   } catch { return attempted ? { ok: false, entries, trimmed: false, unconfirmed: true } : fail(); }

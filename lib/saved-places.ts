@@ -254,6 +254,35 @@ export function loadPlaces(): SavedPlace[] {
   }
 }
 
+/** A phase observation needs a single current place for its coordinate-keyed design.
+ * The usual display loader merges duplicate ids, which would hide ambiguity here. */
+export function readPlacesForPhaseObservation(): SavedPlace[] {
+  try {
+    if (typeof window === 'undefined') return [];
+    const sample = isSampleMode();
+    const raw: unknown = sample ? getSandboxPlaces() : JSON.parse(localStorage.getItem(activeAccountLocalStorageKey(KEY)) ?? '[]');
+    const tombstones = sample ? {} : readTombstonesStrict(activeAccountLocalStorageKey(DELETED_KEY));
+    if (!Array.isArray(raw) || !tombstones) return [];
+    const idCounts = new Map<unknown, number>();
+    const siteCounts = new Map<string, number>();
+    for (const row of raw) {
+      if (!isRecord(row)) continue;
+      idCounts.set(row.id, (idCounts.get(row.id) ?? 0) + 1);
+      const site = typeof row.lat === 'number' && typeof row.lon === 'number'
+        ? canonicalCoordinateSiteId(`site:${row.lat.toFixed(5)},${row.lon.toFixed(5)}`) : null;
+      if (site) siteCounts.set(site, (siteCounts.get(site) ?? 0) + 1);
+    }
+    return raw.filter((row): row is SavedPlace => {
+      if (!isValidSavedPlace(row) || !row.name.trim() || idCounts.get(row.id) !== 1) return false;
+      const site = coordinateSiteIdForPlace(row);
+      const deletedAt = Object.hasOwn(tombstones, row.id) ? tombstones[row.id] : undefined;
+      return Boolean(site && siteCounts.get(site) === 1 && (deletedAt === undefined || deletedAt < placeTimestamp(row)));
+    });
+  } catch {
+    return [];
+  }
+}
+
 function notify() {
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('permamap-places-changed'));
 }
