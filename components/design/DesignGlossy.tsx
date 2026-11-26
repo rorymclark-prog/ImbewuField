@@ -136,6 +136,7 @@ import {
 } from '@/lib/sheet-legend-layout';
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
 import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, PLAIN_PAPER_GROUND, savedSheetUnderlayNote, SHEET_UNDERLAY_LABEL, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
+import { finishClassicSheet, isClassicMapStyle } from '@/lib/classic-map-media';
 import { drainCanvasToDataUrl, releaseCanvas, releaseImageSource } from '@/lib/release-canvas';
 import { drawEarthworksBasin, swaleBankSide, type FallVector } from '@/lib/earthworks-relief';
 import { terrainFallVector, overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
@@ -583,6 +584,9 @@ const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; l
   // photograph AND our exact labels, counts and legend. Every other AI style repaints the ground;
   // Satellite Overlay keeps it but hands the lettering to the model.
   { key: 'photo_plan',          label: 'Photo Plan',          blurb: 'your real aerial photo · design drawn on top · exact labels', labelStyle: 'reference', swatch: 'linear-gradient(135deg,#2B3A24 0%,#4E8B3A 50%,#B4E000 100%)', recommended: true },
+  { key: 'watercolour', label: 'Watercolour', blurb: 'transparent colour washes on white paper', labelStyle: 'reference', swatch: 'radial-gradient(ellipse at 25% 60%, #77976F99, transparent 48%), radial-gradient(ellipse at 65% 40%, #93B5A6CC, transparent 48%), #FEFCF7' },
+  { key: 'graphite_pencil', label: 'Graphite Pencil', blurb: 'soft pencil shading · greyscale print', labelStyle: 'ink', swatch: 'repeating-linear-gradient(127deg, transparent 0 3px, #9998 3px 4px), linear-gradient(105deg, #FFF 8%, #CCC 75%, #888)' },
+  { key: 'pen_and_ink', label: 'Pen & Ink', blurb: 'open canopies · black linework on white', labelStyle: 'ink', swatch: 'repeating-linear-gradient(48deg, #FFF 0 5px, #383838 5px 6px)' },
   { key: 'satellite_overlay',   label: 'Satellite Overlay',   blurb: 'experimental · AI controls the labels and layout', labelStyle: 'clean', swatch: 'linear-gradient(135deg,#12140F 0%,#2F4A2A 55%,#B4E000 100%)' },
   { key: 'field_ledger',        label: 'Field Ledger',        blurb: 'hand-inked surveyor plan',      labelStyle: 'ink',       swatch: '#E4D8B8' },
   { key: 'homestead_storybook', label: 'Homestead Storybook', blurb: 'warm illustrated garden map',   labelStyle: 'storybook', swatch: '#8FAE62' },
@@ -7468,7 +7472,7 @@ function drawHistoricalPhotoFacts(ctx: CanvasRenderingContext2D,state:DesignCanv
   });
 }
 
-async function composeHistoricalBaseSheet(baseImage:string|null,state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],placeName:string|undefined,baseline:HistoricalBaseline,aiArtwork=false,styleLabel='Archive photograph',labelMode:SheetLabelMode='names'):Promise<string> {
+async function composeHistoricalBaseSheet(baseImage:string|null,state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],placeName:string|undefined,baseline:HistoricalBaseline,aiArtwork=false,styleLabel='Archive photograph',labelMode:SheetLabelMode='names',styleKey?:StylePreset):Promise<string> {
   const p=await boundaryPresentationContext(state,frame,refs),W=p.frame.imgW*SCALE,H=p.frame.imgH*SCALE;
   const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
   const ctx=canvas.getContext('2d');if(!ctx){releaseCanvas(canvas);throw new Error('Historical sheet unavailable');}
@@ -7479,7 +7483,7 @@ async function composeHistoricalBaseSheet(baseImage:string|null,state:DesignCanv
   const legendRows:StyleLegendRow[]=baseline.features.map((feature,index)=>({swatch:'#FFFFFF',text:feature.label.replace(/^Existing /,'').replace(/^./,c=>c.toUpperCase()),...(labelMode==='codes'?{photoNumber:index+1}:{historicalFeature:feature.id})}));
   legendRows.push({swatch:BOUNDARY_LINE_GREEN,text:'Current design extent — not the historic fence',visual:'historical-extent'});
   return composeStyleSheet(drainCanvasToDataUrl(canvas,'image/png'),p.state,p.frame,p.refLayers,'all',placeName,styleLabel,'Existing Site — before works',false,true,
-    {sheetNumber:'01',legendRows,aiArtwork,imageAttribution:'Historic drone photograph: Imbewu project archive.',footerHeading:'HISTORICAL PHOTO',footerText:[baseline.provenance,baseline.alignment,baseline.coverage].join('\n'),footerBox:true});
+    {sheetNumber:'01',legendRows,aiArtwork,styleKey,imageAttribution:'Historic drone photograph: Imbewu project archive.',footerHeading:'HISTORICAL PHOTO',footerText:[baseline.provenance,baseline.alignment,baseline.coverage].join('\n'),footerBox:true});
 }
 
 export async function buildBlueprintBaseMap(
@@ -10176,6 +10180,7 @@ async function composeSectorSheet(
     true,
     {
       sheetNumber: '02',
+      styleKey,
       aiArtwork: baseImage !== null,
       ...(baseline ? {imageAttribution:'Historic drone photograph: Imbewu project archive.'} : {}),
       legendRows,
@@ -10372,6 +10377,7 @@ async function composePhasingSheet(
   placeName?: string,
   paintedArtwork = false,
   styleLabel = 'AI illustration',
+  styleKey?: StylePreset,
 ): Promise<string> {
   if (!baseImage) return buildImplementationMap(state, frame, refLayers, site, placeName);
 
@@ -10426,6 +10432,7 @@ async function composePhasingSheet(
     ctx.fillText('AI illustration — review against exact plan.', lgX + pad, H - pad * 2, W - lgX - pad * 2);
   }
 
+  finishClassicSheet(ctx, styleKey);
   return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
@@ -11449,6 +11456,7 @@ async function composeStyleSheet(
   includeToolGlyphs = true,
   exactGeometry = false,
   options: {
+    styleKey?: StylePreset;
     aiArtwork?: boolean;
     /** An archive photo must not acquire the current basemap provider's credit. */
     imageAttribution?: string;
@@ -11503,6 +11511,9 @@ async function composeStyleSheet(
   if (!ctx) {
     releaseCanvas(canvas);
     releaseImageSource(map);
+    if (options.styleKey && isClassicMapStyle(options.styleKey)) {
+      throw new UserFacingError('Could not assemble the illustrated sheet on this device. The artwork is available to retry.');
+    }
     return mapDataUrl;
   }
   // Paper under the bands first: the map is inset, and whatever is not map must read as sheet.
@@ -12103,6 +12114,7 @@ async function composeStyleSheet(
   // A2 LANDSCAPE, added as PAPER rather than taken out of the map. See PAPER_SHEET_RATIO.
   // The compact masterplan omits leaders, not paper size. A smaller exported bitmap was being
   // enlarged in the PDF, making its supposedly shared legend and lettering visibly bigger.
+  finishClassicSheet(ctx, options.styleKey);
   return padToPaperSheet(canvas, sheetSize.W);
 }
 
@@ -12204,6 +12216,7 @@ async function composeSheetChromeOverMapArt(opts: {
   H: number;
   placeName: string | undefined;
   styleLabel: string;
+  styleKey: StylePreset;
   labelMode: SheetLabelMode;
   site: SectorSite | null;
 }): Promise<{ sheet: string; mapArt: string }> {
@@ -12249,6 +12262,7 @@ async function composeSheetChromeOverMapArt(opts: {
     false,
     true,
     {
+      styleKey: opts.styleKey,
       aiArtwork: true,
       labelMode,
       gutterLayout: labelled.gutterLayout,
@@ -12999,6 +13013,7 @@ export default function DesignGlossy({
   const historicalSheet = !!selectedSheet && 'exact' in selectedSheet && ['base','sector'].includes(selectedSheet.exact);
   const historicalActive = historicalEnabled && historicalSheet && availableHistoricalBaseline !== null;
   const sheetSettingsRef = useRef(new Map<string, SheetPresentationSettings>());
+  const styleCarouselRef = useRef<HTMLDivElement>(null);
   const manualUnderlaysRef = useRef(new Set<string>());
   const chooseStyle = (style: StylePreset) => {
     if (!selectedSheet || loading !== null) return;
@@ -13985,11 +14000,12 @@ export default function DesignGlossy({
         geometryLock,
         geometryLock
           ? {
+              styleKey: styleDef.key,
               aiArtwork: true,
               includeLabelGutters: filter !== 'all',
               ...(filter === 'water' ? waterReferenceFooter(state, frame, refLayers, site) : {}),
             }
-          : {},
+          : { styleKey: styleDef.key },
       );
       // h. Show, cache (mapKey = producer:<style>) and add to the session gallery.
       setResultImage(sheet);
@@ -14363,11 +14379,12 @@ export default function DesignGlossy({
           geometryLock,
           geometryLock
             ? {
+                styleKey: styleDef.key,
                 aiArtwork: true,
                 includeLabelGutters: f !== 'all',
                 ...(f === 'water' ? waterReferenceFooter(state, frame, refLayers, site) : {}),
               }
-            : {},
+            : { styleKey: styleDef.key },
         );
         try {
           saveGlossy(state.siteId, `producer:${styleKey}:${f}`, {
@@ -14540,6 +14557,7 @@ export default function DesignGlossy({
           H,
           placeName,
           styleLabel: styleDef.label,
+          styleKey: styleDef.key,
           labelMode,
           site,
           appDrawsWaterRoutes: sourcePrompt?.includes(`\n\n${WATER_POLISH_ROUTE_GUIDE} `) === true,
@@ -14741,6 +14759,7 @@ export default function DesignGlossy({
           ? {
               // The legend prints code prefixes only in the mode that draws them, and the gutter
               // rows must honour the farmer's label-mode choice — same contract as the exact sheet.
+              styleKey: styleDef.key,
               aiArtwork: true,
               preserveLegacyPathGuides: !hideDrivewayGuides,
               labelMode,
@@ -14754,7 +14773,7 @@ export default function DesignGlossy({
                   }
                 : { footerText: roofCredit ?? '' }),
             }
-          : {},
+          : { styleKey: styleDef.key },
       );
     },
     [state, frame, refLayers, site, placeName, labelMode, underlay],
@@ -15209,7 +15228,7 @@ export default function DesignGlossy({
   // Measured pins, scale and schedule remain app-owned in both contracts.
   const finishPhasingSheet = useCallback(
     (modelImage: string, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }, sourcePrompt?: string, styleKey?: StylePreset): Promise<string> =>
-      composePhasingSheet(modelImage, snapshot.state, snapshot.frame, snapshot.refLayers, snapshot.site, snapshot.placeName, sourcePrompt?.includes(PHASING_ARTWORK_PROMPT_MARKER) ?? false, PRODUCER_STYLES.find((style) => style.key === styleKey)?.label),
+      composePhasingSheet(modelImage, snapshot.state, snapshot.frame, snapshot.refLayers, snapshot.site, snapshot.placeName, sourcePrompt?.includes(PHASING_ARTWORK_PROMPT_MARKER) ?? false, PRODUCER_STYLES.find((style) => style.key === styleKey)?.label, styleKey),
     [state, frame, refLayers, site, placeName],
   );
 
@@ -15218,7 +15237,7 @@ export default function DesignGlossy({
   const finishSiteSheet = useCallback(
     async (modelImage: string, styleKey: StylePreset, snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName'> = { state, frame, refLayers, site, placeName }, baseline: HistoricalBaseline | null = null,photoLabelMode:SheetLabelMode='names'): Promise<string> => {
       const { state, frame, refLayers, site, placeName } = snapshot;
-      if(baseline) return composeHistoricalBaseSheet(modelImage,state,frame,refLayers,placeName,baseline,true,PRODUCER_STYLES.find(style=>style.key===styleKey)?.label ?? 'AI illustration',photoLabelMode);
+      if(baseline) return composeHistoricalBaseSheet(modelImage,state,frame,refLayers,placeName,baseline,true,PRODUCER_STYLES.find(style=>style.key===styleKey)?.label ?? 'AI illustration',photoLabelMode,styleKey);
       const presentation = await boundaryPresentationContext(state, frame, refLayers);
       const renderState = presentation.state;
       const renderFrame = presentation.frame;
@@ -15318,7 +15337,7 @@ export default function DesignGlossy({
         'Existing Site',
         false,
         true,
-        { sheetNumber: '01', legendRows, aiArtwork: true },
+        { sheetNumber: '01', legendRows, aiArtwork: true, styleKey },
       );
     },
     [frame, refLayers, state, placeName],
@@ -16099,7 +16118,7 @@ export default function DesignGlossy({
                 const obliqueLabel = PRODUCER_STYLES.find((entry) => entry.key === obliqueStyle)?.label ?? obliqueStyle;
                 const finalSheet = await composeStyleSheet(raw, frozenScene.state, frozenScene.frame,
                   frozenScene.refLayers, 'all', frozenScene.placeName, obliqueLabel, 'Oblique design view', true, false,
-                  { aiArtwork: true, obliqueArtwork: true, sheetNumber: 'VIEW', labelMode: 'names', includeLabelGutters: false });
+                  { aiArtwork: true, styleKey: obliqueStyle, obliqueArtwork: true, sheetNumber: 'VIEW', labelMode: 'names', includeLabelGutters: false });
                 if (!active) return;
                 lastAssembledGalleryId = pushGalleryRef.current(
                   `Oblique design view · ${obliqueLabel} · ${validationStatus === 'unscored' ? 'comparison unavailable' : 'review against measured plan'}`,
@@ -16941,7 +16960,7 @@ export default function DesignGlossy({
         <div lang={aiView === 'oblique' ? 'en' : undefined} style={{ fontSize: 10.5, opacity: 0.6, margin: '-5px 0 7px 34px' }}>
           {aiView === 'oblique' ? 'For the whole oblique view' : `${t('designGlossyStyle')} (on your ${selectedSheet?.label ?? 'design'} map)`}
         </div>
-        <div style={{ display: 'grid', gridAutoFlow: 'column', gridAutoColumns: 'calc((100% - 16px) / 3)', gap: 8, overflowX: 'auto', padding: '2px 1px 7px', scrollSnapType: 'x proximity', scrollbarWidth: 'thin' }}>
+        <div ref={styleCarouselRef} style={{ display: 'grid', gridAutoFlow: 'column', gridAutoColumns: 'calc((100% - 16px) / 3)', gap: 8, overflowX: 'auto', padding: '2px 1px 7px', scrollSnapType: 'x proximity', scrollbarWidth: 'thin' }}>
           {availableStyleChoices.map((s) => {
             const active = (producerStyle ?? (aiView === 'oblique' ? DEFAULT_PRODUCER_STYLE : null)) === s.key;
             return (
@@ -16999,9 +17018,14 @@ export default function DesignGlossy({
             );
           })}
         </div>
-        <div style={{ color: GREEN, fontSize: 10.5, fontWeight: 750, textAlign: 'right' }}>
+        <button type="button" onClick={() => {
+          const carousel = styleCarouselRef.current;
+          if (!carousel) return;
+          const end = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 2;
+          carousel.scrollTo({ left: end ? 0 : carousel.scrollLeft + carousel.clientWidth });
+        }} style={{ color: GREEN, background: 'transparent', border: 0, cursor: 'pointer', display: 'block', marginLeft: 'auto', padding: '6px 0', fontSize: 10.5, fontWeight: 750 }}>
           {t('designGlossyMoreStyles')}
-        </div>
+        </button>
         </>
         )}
       </div>
