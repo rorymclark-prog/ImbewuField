@@ -29,6 +29,7 @@ import {
 import { taskJournalHref, taskHarvestHref } from '@/lib/task-record-link';
 import { farmMemoryText } from '@/lib/farm-memory-copy';
 import GrowerOperationsPanel from '@/components/crops/GrowerOperationsPanel';
+import GardenProgressReport from '@/components/crops/GardenProgressReport';
 import { CropPlanStorageNotice } from '@/components/CropPlanStorageStatus';
 import { useGrowerOperations } from '@/components/crops/useGrowerOperations';
 import { hasGrowerCycleMarker } from '@/lib/international/grower-cycle';
@@ -371,6 +372,8 @@ export default function CropPlanPage() {
         <div className={`${workspace.workspace} px-4 py-5 sm:px-6 sm:py-6`}>
           <CropPlanStorageNotice />
           <JournalStorageNotice />
+          {operations.gardenSites.length > 0 && <GardenProgressReport key={operations.gardenRevision}
+            sites={operations.gardenSites} load={operations.readGardenReport} />}
           <GrowerOperationsPanel state={operations} refresh={operations.refresh}
             checkCurrent={operations.checkCurrent} isCurrent={operations.isCurrent}
             onRecordObservation={operations.onRecordObservation} loadHarvest={operations.loadHarvest}
