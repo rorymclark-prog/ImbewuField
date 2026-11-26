@@ -8,7 +8,8 @@ import {
   type SheetRoutePath,
 } from '@/lib/sheet-render-route';
 import { hasConflictingRenderAuthority, recommendedSheetSettings, renderAuthorityFlagsForStyle, type RenderAuthorityFlags } from '@/lib/render-policy';
-import { isModelChromeStyle, STYLE_LINES } from '@/lib/producer-prompt';
+import { CLASSIC_MAP_MEDIA, finishClassicSheet, type ClassicMapStyle } from '@/lib/classic-map-media';
+import { buildSectorRestylePrompt, isModelChromeStyle, STYLE_LINES } from '@/lib/producer-prompt';
 import type { SheetOutputMode } from '@/lib/locked-polish-flow';
 import type { StylePreset } from '@/lib/producer-prompt';
 import type { GlossyLayerFilter } from '@/lib/glossy-filters';
@@ -210,4 +211,40 @@ test('no engine can route a sheet away from the render queue', async () => {
 
   // And the route-agreement constant must not consult the engine again.
   assert.doesNotMatch(code, /const viaQueue = [^;]*engine ===/);
+});
+
+
+test('each classic finish reaches every paid plan and keeps aerial evidence on the building-sensitive sheets', () => {
+  const frame = { satDataUrl: 'drone', underlayDataUrl: 'satellite' };
+  for (const style of Object.keys(CLASSIC_MAP_MEDIA) as ClassicMapStyle[]) {
+    for (const { spec } of SHEETS) {
+      const sheet = 'exact' in spec ? spec.exact : spec.filter;
+      assert.equal(sheetRenderRoute(spec, 'hybrid', style).styleUsed, style);
+      const aim = recommendedSheetSettings(sheet, frame, style);
+      assert.equal(aim.underlay, ['zones', 'planting', 'water'].includes(sheet) ? 'plain' : 'photo');
+    }
+    assert.ok(buildSectorRestylePrompt(style).includes(CLASSIC_MAP_MEDIA[style]));
+    assert.doesNotMatch(buildSectorRestylePrompt(style), /layered natural greens/);
+  }
+});
+
+test('pencil and ink convert artwork and overlays through the last print row, preserving transparency and tonal contrast', () => {
+  for (const style of ['pen_and_ink', 'graphite_pencil', 'watercolour', 'photo_plan']) {
+    const writes: number[][] = [];
+    const ctx = {
+      canvas: { width: 2, height: 65 },
+      getImageData(_x: number, _y: number, _w: number, h: number) {
+        const data = new Uint8ClampedArray(h * 8);
+        for (let i = 0; i < h; i++) data.set([0, 255, 0, 255, 0, 0, 255, 128], i * 8);
+        return { data };
+      },
+      putImageData(strip: {data: Uint8ClampedArray}, _x: number, y: number) {
+        writes.push([y, ...strip.data.slice(-8)]);
+      },
+    };
+    finishClassicSheet(ctx as unknown as CanvasRenderingContext2D, style);
+    const neutral = [182, 182, 182, 255, 18, 18, 18, 128];
+    assert.deepEqual(writes, style === 'pen_and_ink' || style === 'graphite_pencil'
+      ? [[0, ...neutral], [64, ...neutral]] : []);
+  }
 });

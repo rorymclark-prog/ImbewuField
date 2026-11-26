@@ -9,8 +9,10 @@
 import { groundRegister, exactSheetElementRegister, type GlossyLayerFilter } from '@/lib/glossy-filters';
 import type { CanvasFrame, PlacedItem } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import { CLASSIC_MAP_MEDIA, isClassicMapStyle, type ClassicMapStyle } from '@/lib/classic-map-media';
 
 export type StylePreset =
+  | ClassicMapStyle
   | 'precision_atlas'
   | 'editorial_atlas'
   | 'satellite_overlay'
@@ -84,6 +86,7 @@ export function groundContractFor(style: StylePreset, groundSource: 'photo' | 'p
 // On the same photographed site, these three paid finishes all came back as shaded aerial
 // paintings. Use the medium on the features themselves, where texture is most visible.
 const ART_MEDIA: Partial<Record<StylePreset, string>> = {
+  ...CLASSIC_MAP_MEDIA,
   homestead_storybook: 'opaque gouache brushwork',
   karoo_folk: 'flat relief-print ink shapes',
   master_atlas: 'fine indigo and graphite engraving',
@@ -505,6 +508,9 @@ const PLAN_SET_ANCHOR_PHOTO =
 // blank white is exactly the satellite-disappears failure. Named colours (not just mood words) give
 // the model something concrete to hold constant across the 5 independent calls of one batch.
 export const STYLE_LINES: Record<StylePreset, string> = {
+  watercolour: 'STYLE — Watercolour. Transparent washes on white drawing paper. Build each canopy from overlapping pale leaf-green and olive washes, with a fine broken pencil edge and small areas of untouched white. Let pigment gather at the shaded edge of a crown. Use ochre soil and a cool wash for water. Keep bed corners, paths and roof ridges legible through the paint. Reserve white for light and open ground.',
+  graphite_pencil: 'STYLE — Graphite Pencil. Draw on clean white paper entirely in neutral graphite. Use light circular construction strokes for open tree crowns, a small trunk mark, and darker pressure at the shadow edge. Short directional strokes describe roofs, soil and planting. Leave open ground white. Differentiate features with line weight and pencil tone. No colour tint, parchment or all-over grey texture.',
+  pen_and_ink: 'STYLE — Pen & Ink. Crisp black pen on white paper. Use thin, open canopy outlines, a small trunk mark, and sparse hatching on the shaded side. Draw beds with clean corners and fine parallel strokes that stop at their edges. Vary pen weight between major outlines and interior detail. Leave generous white space. No grey wash, sepia, solid black crowns or invented contour lines.',
   editorial_atlas:
     'STYLE — Editorial Atlas: a clean contemporary illustrated field atlas. Use precise flat orthographic drawing, delicate ink contours, restrained natural texture and clear uncluttered surfaces. Fixed palette: slate roofs, sage vegetation, buff soil, teal water, ochre summer and indigo winter accents. Fine detailed plants and roof materials, with a light neutral ground and pure white page space. Avoid lush gouache, heavy shadows, dark vignettes, parchment or decorative fencing. This is the quieter editorial companion to Reference Blueprint. Draw artwork only: the app supplies typography, labels, analytical graphics and the white key. Keep the complete supplied site, source crop and geometry; never borrow the reference site’s numbers, features or directions.' + PLAN_SET_ANCHOR,
   precision_atlas:
@@ -1394,6 +1400,8 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
     edgeToEdge,
     stylePreset === 'editorial_atlas'
       ? `EDITORIAL SECTOR APPEARANCE: a light, finely drawn site illustration with restrained natural materials and open legible surfaces. Keep the full rectangular source crop: do not draw a circle or crop any boundary tip. The app fits the complete proposed boundary inside a circular compass diagram on white paper, with ochre summer suns, indigo winter suns, teal and rust wind bands, clear callout cards and an editorial key. Paint none of those graphics or lettering. Preserve THIS site's land cover and feature positions; never copy the reference site's directions, season dates, terrain numbers or advice. No vignette or dark surround.`
+      : isClassicMapStyle(stylePreset)
+      ? `CLASSIC SECTOR APPEARANCE: illustrate this entire source landscape using ${CLASSIC_MAP_MEDIA[stylePreset]}. Reserve the strongest contrast for the app's analytical marks. Retain the positions of photographed features. The app adds the sun paths, weather, boundary, contour labels and key. Leave these out of the artwork.`
       : `APPROVED SECTOR APPEARANCE: rich, finely detailed aerial illustration with layered natural greens, distinct roof materials and readable open ground. Preserve THIS source site's land cover and every feature position; do not import another site's buildings, garden, reserve, fence, terrain or vegetation. The app adds bright gold summer suns, blue winter suns, flowing weather arrows, the fine saved boundary with small round post symbols, local contour labels and a pure white key AFTER painting. Draw none of these analytical graphics yourself, and apply no vignette or boundary-shaped dark patch: the app alone shades the surroundings of the saved proposed polygon.`,
     paintWhatIsThere,
     restyleOnly,

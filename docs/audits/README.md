@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+- [26 November 2026 — Classic illustration finishes](2026-11-26/classic-map-media.md) covers the style picker, paper defaults and monochrome print checks.
+
 - [26 November 2026 — Paid map finish comparison](2026-11-26/ai-map-art-finishes.md) compares four High-quality Whole Design exports.
 
 - [26 November 2026 — Private garden project progress report](2026-11-26/private-garden-progress.md) records the private mapped-site draft and verified evidence boundaries.
