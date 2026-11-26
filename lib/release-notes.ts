@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 November 2026', sha: '700c04479', changes: [
+  { when: '26 November 2026', sha: 'b906adf44', changes: [
     'Free Planting and Whole Design maps now offer green or black-and-white canopy circles.',
     'Start your current module or open the permaculture manual at the top of Study.',
     'After the slides, work through a farm case and try a field task with each lesson.',
