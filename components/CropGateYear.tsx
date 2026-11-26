@@ -187,12 +187,25 @@ export default function CropGateYear({ site, climateSource }: Props) {
 
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const draggingColRef = useRef(false);
+
+  const allCropRows = useMemo(
+    () =>
+      crops.map((c) => {
+        const vs = sowingYear(c, site, rainFed) ?? [];
+        const calCount = vs.filter((x) => x.inCalendar).length;
+        const okCount = vs.filter((x) => x.inCalendar && x.verdict === 'ok').length;
+        return { crop: c, verdicts: vs, calCount, okCount };
+      }),
+    [crops, site, rainFed],
+  );
 
   const live = useRef({
     t: 0,
     col: 0,
     fromCol: 0,
     slide: 1,
+    irrBlend: 0,
     playing: true,
     reduced: false,
     visible: true,
@@ -212,6 +225,7 @@ export default function CropGateYear({ site, climateSource }: Props) {
   useEffect(() => {
     const L = live.current;
     L.year = year; L.verdicts = verdicts; L.heat = heat; L.crop = crop; L.rainFed = rainFed;
+    if (L.reduced) L.irrBlend = rainFed ? 0 : 1;
     L.draw?.();
   }, [year, verdicts, heat, crop, rainFed]);
 
@@ -350,12 +364,26 @@ export default function CropGateYear({ site, climateSource }: Props) {
         const bw = Math.min(cw * 0.46, 30);
         const bx = x + (cw - bw) / 2;
         const red = refusedHere(month);
-        // shortfall: the gap between the rain and the half-evaporation line
+        // shortfall: the gap between the rain and the half-evaporation line (bridged smoothly when irrigated)
         if (!m.rainFed) {
-          ctx.save();
-          ctx.globalAlpha = red ? 0.9 : 0.55;
-          hatch(bx, yMm(m.halfPetMm), bw, yMm(m.rainMm) - yMm(m.halfPetMm), P.warn, 4);
-          ctx.restore();
+          const gapH = yMm(m.rainMm) - yMm(m.halfPetMm);
+          if (L.irrBlend < 0.99) {
+            ctx.save();
+            ctx.globalAlpha = (red ? 0.9 : 0.55) * (1 - L.irrBlend * 0.75);
+            hatch(bx, yMm(m.halfPetMm), bw, gapH, P.warn, 4);
+            ctx.restore();
+          }
+          if (L.irrBlend > 0.01) {
+            const fillH = gapH * L.irrBlend;
+            const fy = yMm(m.rainMm) - fillH;
+            ctx.save();
+            ctx.fillStyle = P.water;
+            ctx.globalAlpha = (field.has(month) ? 0.34 : 0.18) * L.irrBlend;
+            ctx.fillRect(bx, fy, bw, fillH);
+            ctx.globalAlpha = 0.85 * L.irrBlend;
+            hatch(bx, fy, bw, fillH, P.water, 4);
+            ctx.restore();
+          }
         }
         ctx.save();
         ctx.fillStyle = P.water; ctx.globalAlpha = 0.62;
@@ -544,6 +572,15 @@ export default function CropGateYear({ site, climateSource }: Props) {
       if (L.reduced || !L.visible) { last = 0; return; }
       let dirty = false;
       if (L.slide < 1) { L.slide = Math.min(1, L.slide + dt / SLIDE_SECONDS); dirty = true; }
+      const targetIrr = L.rainFed ? 0 : 1;
+      if (Math.abs(L.irrBlend - targetIrr) > 0.004) {
+        const step = dt / 0.38;
+        L.irrBlend = L.irrBlend < targetIrr ? Math.min(targetIrr, L.irrBlend + step) : Math.max(targetIrr, L.irrBlend - step);
+        dirty = true;
+      } else if (L.irrBlend !== targetIrr) {
+        L.irrBlend = targetIrr;
+        dirty = true;
+      }
       if (L.playing) {
         L.t += dt;
         if (L.t >= STEP_SECONDS) { L.t = 0; L.setCol(L.col + 1); }
@@ -593,10 +630,25 @@ export default function CropGateYear({ site, climateSource }: Props) {
 
   const stepTo = (c: number) => { setPlaying(false); live.current.t = 0; goTo(c, true); };
 
-  const onCanvasPointer = (e: React.PointerEvent<HTMLCanvasElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    const i = Math.floor(((e.clientX - r.left - 8) / (r.width - 16)) * 12);
-    if (i >= 0 && i < 12) stepTo(i);
+  const pickColFromX = (el: HTMLCanvasElement, clientX: number) => {
+    const r = el.getBoundingClientRect();
+    const i = Math.max(0, Math.min(11, Math.floor(((clientX - r.left - 8) / Math.max(1, r.width - 16)) * 12)));
+    stepTo(i);
+  };
+
+  const onCanvasPointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    draggingColRef.current = true;
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
+    pickColFromX(e.currentTarget, e.clientX);
+  };
+
+  const onCanvasPointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!draggingColRef.current) return;
+    pickColFromX(e.currentTarget, e.clientX);
+  };
+
+  const onCanvasPointerUp = () => {
+    draggingColRef.current = false;
   };
 
   const onCanvasKey = (e: React.KeyboardEvent<HTMLCanvasElement>) => {
@@ -608,10 +660,15 @@ export default function CropGateYear({ site, climateSource }: Props) {
   if (!year || !crop || !verdicts || !heat || !v) return null;
 
   const wetCount = year.filter((m) => m.rainFed).length;
+  const bedShortfallMm = v.dryMonths.reduce((sum, m) => sum + Math.max(0, year[m - 1].halfPetMm - year[m - 1].rainMm), 0);
   const stats: { label: string; value: string; warn?: boolean }[] = [
     { label: 'Months the rain covers', value: `${wetCount} of 12` },
     { label: 'Hottest month', value: `${MONTH_SHORT[heat.hottestMonth - 1]}, ${deg(heat.hottestC)}` },
-    { label: `${plainName(crop)} heat limit`, value: deg(heat.limitC) },
+    {
+      label: rainFed ? 'Dry-month gap in bed' : 'Irrigation bridge in bed',
+      value: bedShortfallMm > 0.05 ? `${numberLabel(Math.round(bedShortfallMm))} L/m²` : '0 L/m²',
+      warn: rainFed && bedShortfallMm > 0.05,
+    },
     { label: rainFed ? 'Calendar months allowed, rain-fed' : 'Calendar months allowed, irrigated', value: `${allowed} of ${cal.length}`, warn: allowed < cal.length },
   ];
   const sowMonth = GATE_YEAR_ORDER[col];
@@ -672,8 +729,11 @@ export default function CropGateYear({ site, climateSource }: Props) {
           className={s.canvas}
           role="img"
           tabIndex={0}
-          aria-label={`${summary} Use the left and right arrow keys to step through the sowing months.`}
-          onPointerDown={onCanvasPointer}
+          aria-label={`${summary} Drag or use the left and right arrow keys to step through the sowing months.`}
+          onPointerDown={onCanvasPointerDown}
+          onPointerMove={onCanvasPointerMove}
+          onPointerUp={onCanvasPointerUp}
+          onPointerCancel={onCanvasPointerUp}
           onKeyDown={onCanvasKey}
         />
       </div>
@@ -702,6 +762,57 @@ export default function CropGateYear({ site, climateSource }: Props) {
         <span className={s.key}><span className={s.swTray} />seed tray</span>
         <span className={s.key}><span className={s.swNo} />month the planner refuses on</span>
         {!rainFed && <span className={s.key}><span className={s.swWatered} />dry month, watered</span>}
+      </div>
+
+      <div className={s.matrix} aria-label="All six crops across the twelve sowing months">
+        <div className={s.matrixHead}>
+          <span className={s.groupLabel}>All 6 crops ({rainFed ? 'rain only' : 'reliable irrigation'})</span>
+          <div className={s.matrixMonths} aria-hidden>
+            {GATE_YEAR_ORDER.map((m, ci) => (
+              <span key={m} className={ci === col ? s.matrixMonthOn : ''}>{MONTH_NAMES[m - 1][0]}</span>
+            ))}
+          </div>
+        </div>
+        {allCropRows.map((row) => {
+          const isCurCrop = row.crop.key === crop.key;
+          return (
+            <div key={row.crop.key} className={`${s.matrixRow} ${isCurCrop ? s.matrixRowActive : ''}`}>
+              <button
+                type="button"
+                className={s.matrixCropBtn}
+                onClick={() => setCropKey(row.crop.key)}
+                aria-pressed={isCurCrop}
+              >
+                <span>{plainName(row.crop)}</span>
+                <span className={s.matrixRatio}>{row.okCount}/{row.calCount}</span>
+              </button>
+              <div className={s.matrixCells}>
+                {GATE_YEAR_ORDER.map((m, ci) => {
+                  const mv = row.verdicts[m - 1];
+                  const stateCls = !mv?.inCalendar
+                    ? s.cellOff
+                    : mv.verdict === 'ok'
+                      ? s.cellOk
+                      : s.cellNo;
+                  return (
+                    <button
+                      key={m}
+                      type="button"
+                      className={`${s.matrixCell} ${stateCls} ${isCurCrop && ci === col ? s.cellCurrent : ''}`}
+                      aria-label={`${plainName(row.crop)}, sow in ${MONTH_NAMES[m - 1]}: ${!mv?.inCalendar ? 'not in calendar' : mv.verdict === 'ok' ? 'allowed' : 'refused'}`}
+                      onClick={() => {
+                        setCropKey(row.crop.key);
+                        stepTo(ci);
+                      }}
+                    >
+                      {!mv?.inCalendar ? '·' : mv.verdict === 'ok' ? '✓' : '×'}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <p className={s.caption} aria-live="polite">{caption}</p>

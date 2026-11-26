@@ -32,6 +32,9 @@ const END_HOLD = 6;
 const LOOP_SECONDS = YEAR_SECONDS + END_HOLD;
 const MIN_PEOPLE = 1;
 const MAX_PEOPLE = 10;
+const MIN_ROOF_M2 = 20;
+const MAX_ROOF_M2 = 260;
+const ROOF_STEP_M2 = 10;
 
 interface Props {
   /** Monthly rainfall, January first, mm. */
@@ -148,9 +151,12 @@ function yearSentence(year: WaterYearResult, bigger: WaterYearResult | null): st
 }
 
 export default function WaterYear({ monthlyMm, roofM2, defaultPeople = DEFAULT_HOUSEHOLD, rainSource }: Props) {
+  const baseRoofM2 = Math.max(MIN_ROOF_M2, Math.round(roofM2));
+  const [activeRoofM2, setActiveRoofM2] = useState(baseRoofM2);
+  useEffect(() => { setActiveRoofM2(Math.max(MIN_ROOF_M2, Math.round(roofM2))); }, [roofM2]);
   const [people, setPeople] = useState(Math.min(MAX_PEOPLE, Math.max(MIN_PEOPLE, defaultPeople)));
-  // The recommendation counts the household: it is re-sized every time the people change.
-  const rec = useMemo(() => householdTank({ monthlyMm, roofM2, people }), [monthlyMm, roofM2, people]);
+  // The recommendation counts the household and active roof area: re-sized whenever either changes.
+  const rec = useMemo(() => householdTank({ monthlyMm, roofM2: activeRoofM2, people }), [monthlyMm, activeRoofM2, people]);
   const recommended = rec?.tankL ?? null;
   // The tank follows the recommendation until someone picks one.
   const [picked, setPicked] = useState<number | null>(null);
@@ -163,12 +169,13 @@ export default function WaterYear({ monthlyMm, roofM2, defaultPeople = DEFAULT_H
   const biggest = sizes[sizes.length - 1];
   const [playing, setPlaying] = useState(true);
   const [reduced, setReduced] = useState(false);
+  const [scrubDay, setScrubDay] = useState(365);
 
-  const year = useMemo(() => waterYear({ monthlyMm, roofM2, people, tankL }), [monthlyMm, roofM2, people, tankL]);
+  const year = useMemo(() => waterYear({ monthlyMm, roofM2: activeRoofM2, people, tankL }), [monthlyMm, activeRoofM2, people, tankL]);
   const bigger = useMemo(() => {
     const n = nextTank(tankL, sizes);
-    return n ? waterYear({ monthlyMm, roofM2, people, tankL: n }) : null;
-  }, [monthlyMm, roofM2, people, tankL, sizes]);
+    return n ? waterYear({ monthlyMm, roofM2: activeRoofM2, people, tankL: n }) : null;
+  }, [monthlyMm, activeRoofM2, people, tankL, sizes]);
   const summary = useMemo(
     () => (year ? yearSentence(year, bigger) + recommendSentence(year, rec) : ''),
     [year, bigger, rec],
@@ -178,9 +185,12 @@ export default function WaterYear({ monthlyMm, roofM2, defaultPeople = DEFAULT_H
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const monthRef = useRef<HTMLSpanElement>(null);
   const rainRef = useRef<HTMLSpanElement>(null);
+  const dayRangeRef = useRef<HTMLInputElement>(null);
+  const dayLabelRef = useRef<HTMLSpanElement>(null);
   const captionRef = useRef<HTMLParagraphElement>(null);
   const statRefs = useRef<(HTMLDivElement | null)[]>([]);
   const statBoxRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const draggingStripRef = useRef(false);
 
   // Everything the draw loop needs, kept in one mutable bag so the loop never re-subscribes.
   const live = useRef({
@@ -246,6 +256,25 @@ export default function WaterYear({ monthlyMm, roofM2, defaultPeople = DEFAULT_H
     L.draw?.();
   }, []);
 
+  const seekDay = useCallback((dayRaw: number) => {
+    const L = live.current;
+    const yr = L.year;
+    if (!yr) return;
+    const d = Math.max(0, Math.min(365, dayRaw));
+    setScrubDay(Math.round(d));
+    if (d >= 364.95) {
+      L.t = YEAR_SECONDS + 0.01;
+    } else {
+      const starts = monthStarts();
+      let mi = 0;
+      while (mi < 11 && d >= starts[mi + 1]) mi += 1;
+      const frac = (d - starts[mi]) / yr.months[mi].days;
+      L.t = (mi + Math.max(0, Math.min(0.999, frac))) * MONTH_SECONDS;
+    }
+    L.lastMonth = -1;
+    L.draw?.();
+  }, []);
+
   useEffect(() => {
     const wrap = wrapRef.current;
     const canvas = canvasRef.current;
@@ -269,13 +298,14 @@ export default function WaterYear({ monthlyMm, roofM2, defaultPeople = DEFAULT_H
       L.palette = readPalette(wrap);
     };
 
-    const geom = (tank: number) => {
+    const geom = (tank: number, roofArea: number) => {
       const w = L.w;
       const narrow = w < 560;
       const sceneH = Math.round(narrow ? w * 0.82 : Math.min(w * 0.44, 340));
       const ground = sceneH - 22;
       const houseX = w * (narrow ? 0.03 : 0.07);
-      const houseW = w * (narrow ? 0.34 : 0.3);
+      const roofScale = Math.max(0.78, Math.min(1.26, Math.sqrt(roofArea / Math.max(20, baseRoofM2))));
+      const houseW = w * (narrow ? 0.31 : 0.27) * roofScale;
       const eaveY = sceneH * 0.3;
       const ridgeY = sceneH * 0.17;
       const roofL = houseX - 10;
@@ -330,7 +360,7 @@ export default function WaterYear({ monthlyMm, roofM2, defaultPeople = DEFAULT_H
       ctx.setTransform(L.dpr, 0, 0, L.dpr, 0, 0);
       ctx.clearRect(0, 0, L.w, L.h);
       if (!year) return;
-      const g = geom(year.input.tankL);
+      const g = geom(year.input.tankL, year.input.roofM2);
       const c = clock(L.t, starts, year);
       const m = year.months[c.i];
       const dayIn = c.f * m.days;
@@ -599,6 +629,27 @@ export default function WaterYear({ monthlyMm, roofM2, defaultPeople = DEFAULT_H
         ctx.globalAlpha = mi === c.i && !c.ended ? 0.5 : 0.24;
         ctx.fillRect(sx0 + mi * cw + cw * 0.33, base - bh, cw * 0.34, bh);
       });
+      // full-year preview curve behind the playhead so scrubbing shows the full hydrological trajectory
+      if (!c.ended) {
+        ctx.save();
+        ctx.strokeStyle = P.water;
+        ctx.globalAlpha = 0.2;
+        ctx.lineWidth = 1.25;
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        for (let mi = 0; mi < 12; mi += 1) {
+          const mo = year.months[mi];
+          const d0 = starts[mi];
+          for (let k = 0; k <= 6; k += 1) {
+            const din = (mo.days * k) / 6;
+            const gx = xAt(mi, din);
+            const gy = base - (levelAtDay(year, d0 + din) / tank) * chH;
+            if (mi === 0 && k === 0) ctx.moveTo(gx, gy); else ctx.lineTo(gx, gy);
+          }
+        }
+        ctx.stroke();
+        ctx.restore();
+      }
       // tank level, drawn up to the playhead
       const endDay = c.ended ? 365 : c.day;
       const pts: [number, number][] = [];
@@ -659,6 +710,15 @@ export default function WaterYear({ monthlyMm, roofM2, defaultPeople = DEFAULT_H
       ctx.restore();
 
       // ── DOM readouts, touched only when their text changes.
+      const roundedDay = c.ended ? 365 : Math.round(c.day);
+      if (dayRangeRef.current && document.activeElement !== dayRangeRef.current) {
+        dayRangeRef.current.value = String(roundedDay);
+      }
+      if (dayLabelRef.current) {
+        dayLabelRef.current.textContent = c.ended
+          ? 'Full 365-day cycle (Oct → Sep)'
+          : `${dayOf(dayIn, m.days)} ${MONTH_NAMES[m.month].slice(0, 3)} · ${dry ? 'tank empty' : lit(level)}`;
+      }
       const monthChanged = L.lastMonth !== c.i || L.lastEnded !== c.ended;
       if (monthChanged) {
         L.lastMonth = c.i; L.lastEnded = c.ended;
@@ -743,11 +803,32 @@ export default function WaterYear({ monthlyMm, roofM2, defaultPeople = DEFAULT_H
     return () => { delete w.__waterYear; };
   }, []);
 
-  const onCanvasPointer = (e: React.PointerEvent<HTMLCanvasElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const i = Math.floor(((x - 8) / (r.width - 16)) * 12);
-    if (i >= 0 && i < 12) seekMonth(i);
+  const scrubFromClientX = (el: HTMLCanvasElement, clientX: number) => {
+    const r = el.getBoundingClientRect();
+    const frac = Math.max(0, Math.min(1, (clientX - r.left - 8) / Math.max(1, r.width - 16)));
+    const starts = monthStarts();
+    const yr = live.current.year;
+    if (!yr) return;
+    const mFloat = frac * 12;
+    const mi = Math.min(11, Math.floor(mFloat));
+    const day = starts[mi] + (mFloat - mi) * yr.months[mi].days;
+    seekDay(day);
+  };
+
+  const onCanvasPointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    setPlaying(false);
+    draggingStripRef.current = true;
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
+    scrubFromClientX(e.currentTarget, e.clientX);
+  };
+
+  const onCanvasPointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!draggingStripRef.current) return;
+    scrubFromClientX(e.currentTarget, e.clientX);
+  };
+
+  const onCanvasPointerUp = () => {
+    draggingStripRef.current = false;
   };
 
   const onCanvasKey = (e: React.KeyboardEvent<HTMLCanvasElement>) => {
@@ -798,10 +879,33 @@ export default function WaterYear({ monthlyMm, roofM2, defaultPeople = DEFAULT_H
           className={s.canvas}
           role="img"
           tabIndex={0}
-          aria-label={`${summary} Use the left and right arrow keys to step through the months.`}
-          onPointerDown={onCanvasPointer}
+          aria-label={`${summary} Drag across the chart or use the left and right arrow keys to scrub through the year.`}
+          onPointerDown={onCanvasPointerDown}
+          onPointerMove={onCanvasPointerMove}
+          onPointerUp={onCanvasPointerUp}
+          onPointerCancel={onCanvasPointerUp}
           onKeyDown={onCanvasKey}
         />
+      </div>
+
+      <div className={s.scrubRow}>
+        <label htmlFor="water-year-day" className={s.groupLabel}>Scrub 365 days</label>
+        <input
+          ref={dayRangeRef}
+          id="water-year-day"
+          type="range"
+          min={0}
+          max={365}
+          step={1}
+          defaultValue={scrubDay}
+          className={s.dayRange}
+          aria-label="Scrub day by day from 1 October to 30 September"
+          onChange={(e) => {
+            setPlaying(false);
+            seekDay(Number(e.currentTarget.value));
+          }}
+        />
+        <span ref={dayLabelRef} className={s.dayReadout}>1 Oct</span>
       </div>
 
       <div className={s.legend} aria-hidden>
@@ -835,6 +939,39 @@ export default function WaterYear({ monthlyMm, roofM2, defaultPeople = DEFAULT_H
           </div>
         </div>
         <div className={s.group}>
+          <span className={s.groupLabel} id="water-year-roof">
+            Roof area {activeRoofM2 !== baseRoofM2 ? `(${baseRoofM2} m² on site)` : ''}
+          </span>
+          <div className={s.roofControlRow}>
+            <div className={s.stepper} role="group" aria-labelledby="water-year-roof">
+              <button
+                type="button"
+                className={s.stepBtn}
+                aria-label="Ten square metres less roof"
+                disabled={activeRoofM2 <= MIN_ROOF_M2}
+                onClick={() => setActiveRoofM2((r) => Math.max(MIN_ROOF_M2, r - ROOF_STEP_M2))}
+              >
+                <Minus size={16} aria-hidden />
+              </button>
+              <span className={s.stepValueWide} aria-live="polite">{numberLabel(activeRoofM2)}&nbsp;m²</span>
+              <button
+                type="button"
+                className={s.stepBtn}
+                aria-label="Ten square metres more roof"
+                disabled={activeRoofM2 >= MAX_ROOF_M2}
+                onClick={() => setActiveRoofM2((r) => Math.min(MAX_ROOF_M2, r + ROOF_STEP_M2))}
+              >
+                <Plus size={16} aria-hidden />
+              </button>
+            </div>
+            {activeRoofM2 !== baseRoofM2 && (
+              <button type="button" className={s.resetRoofBtn} onClick={() => setActiveRoofM2(baseRoofM2)}>
+                Site roof
+              </button>
+            )}
+          </div>
+        </div>
+        <div className={s.group}>
           <span className={s.groupLabel} id="water-year-tank">Tank</span>
           <div className={s.tanks} role="group" aria-labelledby="water-year-tank">
             {sizes.map((size) => (
@@ -857,7 +994,7 @@ export default function WaterYear({ monthlyMm, roofM2, defaultPeople = DEFAULT_H
       </div>
 
       <p className={s.note}>
-        Roof {numberLabel(Math.round(roofM2))} m² × each month&rsquo;s rain × 0.80 runoff (the app&rsquo;s one roof coefficient).
+        Roof {numberLabel(Math.round(activeRoofM2))} m² × each month&rsquo;s rain × 0.80 runoff (the app&rsquo;s one roof coefficient).
         80 L per person per day. Rain and use are spread evenly through each month, and the year starts with whatever September
         left in the tank. Recommended: for this many people, the smallest standard tank within {EMPTY_DAY_TOLERANCE} day
         of the fewest empty days any size can give. Rainfall: {rainSource}.

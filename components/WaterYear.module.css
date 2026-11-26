@@ -67,8 +67,33 @@
   display: block;
   width: 100%;
   border-radius: 8px;
-  touch-action: manipulation;
+  touch-action: pan-y;
+  cursor: ew-resize;
+}
+
+.scrubRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.dayRange {
+  flex: 1;
+  min-width: 150px;
+  min-height: 40px;
+  accent-color: var(--blue);
   cursor: pointer;
+}
+
+.dayReadout {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  min-width: 138px;
+  text-align: right;
 }
 
 .canvas:focus-visible {
@@ -198,6 +223,37 @@
   font-size: 18px;
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
+}
+
+.stepValueWide {
+  min-width: 68px;
+  padding: 0 4px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.roofControlRow {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.resetRoofBtn {
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 9999px;
+  border: 1px solid var(--border-strong, var(--border));
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .tanks {
