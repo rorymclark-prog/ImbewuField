@@ -272,7 +272,7 @@ export function figuresBySection(figures: ManualFigure[], chapter: ManualChapter
 }
 
 export interface EarthworksFilmPlacement {
-  film: 'earth' | 'level' | 'walk';
+  film: 'earth' | 'level' | 'walk' | 'drip';
   anchor: string;
   blockIndex: number;
   /** One-based so the location agrees with the numbered instruction the learner sees. */
@@ -299,6 +299,7 @@ export function earthworksFilmPlacements(blocks: Block[]): EarthworksFilmPlaceme
   const slots: EarthworksFilmPlacement[] = [
     { film: 'earth', anchor: 'digging-the-swale-film', blockIndex: first(5, 3, 'ol') },
     { film: 'earth', anchor: 'double-reach-bed-film', blockIndex: first(7, 0, 'p') },
+    { film: 'drip', anchor: 'drip-irrigation-film', blockIndex: first(8, 2, 'p') },
     { film: 'level', anchor: 'check-a-frame', blockIndex: exercise, afterStep: 4 },
     { film: 'walk', anchor: 'peg-a-contour', blockIndex: exercise, afterStep: 7 },
   ];

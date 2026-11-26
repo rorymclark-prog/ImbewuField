@@ -2,30 +2,36 @@ import { MANUAL_LANGS, MANUAL_LANG_NAMES, type ManualLang } from './manual';
 
 // The longer localised readings hold a settled picture. Each pair lists the final
 // picture and edition frames for a cue, so a language change can keep the same action.
-export type FieldFilm = 'harvest' | 'level' | 'walk' | 'earth';
+export type FieldFilm = 'harvest' | 'level' | 'walk' | 'earth' | 'drip';
 export const FILM_LANGUAGES = MANUAL_LANGS;
 export const FILM_LANGUAGE_NAMES = MANUAL_LANG_NAMES;
 export type FilmLanguage = ManualLang;
 
-const frameFilmTitles = {
-  en: { level: 'Check the A-frame', walk: 'Peg a contour' },
-  zu: { level: 'Hlola i-A-frame', walk: 'Bethela i-contour ngezikhonkwane' },
-  st: { level: 'Hlahloba A-frame', walk: 'Tshwaya contour ka dithupana' },
-  ve: { level: 'Ṱolani A-frame', walk: 'Swayani contour nga zwiṱanda' },
-  ts: { level: 'Kambela A-frame', walk: 'Fungha contour hi swikhomelo' },
+const localisedFilmTitles = {
+  en: { level: 'Check the A-frame', walk: 'Peg a contour', drip: 'From the tank to the roots' },
+  zu: { level: 'Hlola i-A-frame', walk: 'Bethela i-contour ngezikhonkwane', drip: 'Ukusuka ethangini kuya ezimpandeni' },
+  st: { level: 'Hlahloba A-frame', walk: 'Tshwaya contour ka dithupana', drip: 'Ho tloha tankeng ho ya metsong' },
+  ve: { level: 'Ṱolani A-frame', walk: 'Swayani contour nga zwiṱanda', drip: 'U bva thanngini u ya midzini' },
+  ts: { level: 'Kambela A-frame', walk: 'Fungha contour hi swikhomelo', drip: 'Ku suka ethankini ku ya etimitsweni' },
 };
 
 export function fieldFilmTitle(film: FieldFilm, lang: FilmLanguage): string {
   if (film === 'harvest') return 'Where did the harvest go?';
   if (film === 'earth') return 'Raised bed and swale';
-  return frameFilmTitles[lang][film];
+  return localisedFilmTitles[lang][film];
 }
 
 type Edition = { bytes: number; pictures: number[]; ends: number[] };
-type Versions = { en: Edition; zu?: Edition; captions?: Edition };
+type Versions = { en: Edition; captions?: Edition } & Partial<Record<FilmLanguage, Edition>>;
+const dripFrames = [144, 288, 456, 624, 816, 1008];
 const versions: Record<FieldFilm, Versions> = {
   harvest: { en: { bytes: 2408019, pictures: [936], ends: [979] } },
   earth: { en: { bytes: 1844924, pictures: [720], ends: [807] } },
+  drip: {
+    en: { bytes: 3894033, pictures: dripFrames, ends: dripFrames },
+    zu: { bytes: 3952301, pictures: dripFrames, ends: dripFrames },
+    captions: { bytes: 3610429, pictures: dripFrames, ends: dripFrames },
+  },
   level: {
     en: { bytes: 4826644, pictures: [84, 180, 312, 396, 480, 594, 672], ends: [110, 206, 343, 435, 519, 674, 752] },
     zu: { bytes: 4659422, pictures: [180, 396, 480, 672], ends: [180, 396, 517, 715] },
@@ -40,12 +46,14 @@ const versions: Record<FieldFilm, Versions> = {
 
 export function filmEdition(film: FieldFilm, requested: string) {
   const all = versions[film];
-  const lang = FILM_LANGUAGES.find((code) => code === requested && (code === 'en' || all.captions)) ?? 'en';
-  const kind = lang === 'en' || lang === 'zu' ? lang : 'captions';
+  const languages = FILM_LANGUAGES.filter(code => all[code] || all.captions);
+  const lang = languages.find(code => code === requested) ?? 'en';
+  const kind = all[lang] ? lang : 'captions';
   const edition = all[kind] ?? all.en;
-  const base = '/course-animations/field-films/v1/' + film + '-';
+  const directory = film === 'drip' ? '/manual/films/drip/v1' : '/course-animations/field-films/v1';
+  const base = directory + '/' + film + '-';
   return {
-    ...edition, lang, src: base + kind + '.mp4', track: base + lang + '.vtt',
+    ...edition, lang, languages, src: base + kind + '.mp4', track: base + lang + '.vtt',
     seconds: Math.round(edition.ends[edition.ends.length - 1] / 24),
     size: (edition.bytes / 1_000_000).toFixed(1) + ' MB',
     captionOnly: kind === 'captions',

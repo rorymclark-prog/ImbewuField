@@ -782,6 +782,58 @@ test('the harvest is a separate choice on the farm-record slide, and opening it 
   } finally { act(() => view.unmount()); }
 });
 
+test('the drip player opens on demand and keeps the same action through rapid language changes', async (t) => {
+  await loadDeckPlayer();
+  const { default: FieldFilmButton } = await import('../components/course/FieldFilmButton.tsx');
+  const captions = t.mock.method(globalThis, 'fetch', async () => new Response('WEBVTT\n\n00:00:00.000 --> 00:00:42.000\nWater'));
+  class Video extends EventTarget {
+    currentTime = 0;
+    paused = true;
+    readyState = 0;
+    pause() { this.paused = true; }
+    play() { this.paused = false; return Promise.resolve(); }
+  }
+  let view!: ReactTestRenderer;
+  let video!: Video;
+  act(() => { view = create(createElement(FieldFilmButton, { film: 'drip', lang: 've' }), {
+    createNodeMock: element => {
+      if (element.type !== 'video') return null;
+      video = new Video();
+      return video;
+    },
+  }); });
+  const switchTo = (lang: string) => act(() => view.root.findByType('select').props.onChange({ target: { value: lang } }));
+  const loaded = () => act(() => {
+    video.readyState = 1;
+    view.root.findByType('video').props.onLoadedMetadata({ currentTarget: video });
+  });
+  try {
+    assert.equal(view.root.findAllByType('video').length, 0);
+    assert.equal(captions.mock.callCount(), 0);
+    act(() => view.root.findByType('button').props.onClick());
+    assert.equal(view.root.findByType('select').props.value, 've');
+    assert.equal(view.root.findByType('track').props.srcLang, 've');
+    loaded();
+    video.currentTime = 29.25;
+    video.pause();
+    switchTo('en');
+    switchTo('zu'); // Change again before the English video receives its metadata.
+    loaded();
+    assert.match(view.root.findByType('video').props.src, /drip-zu\.mp4$/);
+    assert.equal(video.currentTime, 29.25);
+    assert.equal(video.paused, true);
+    await video.play();
+    switchTo('st');
+    loaded();
+    assert.equal(video.currentTime, 29.25);
+    assert.equal(video.paused, false);
+    const sharedMovie = video;
+    switchTo('ts');
+    assert.equal(view.root.findByType('track').props.srcLang, 'ts');
+    assert.equal(video, sharedMovie, 'two caption editions use the same playing video');
+  } finally { act(() => view.unmount()); }
+});
+
 test('the landscape slide opens A-frame calibration in the language of its picture', async () => {
   const DeckPlayer = await loadDeckPlayer();
   const { default: FieldFilmButton } = await import('../components/course/FieldFilmButton.tsx');
