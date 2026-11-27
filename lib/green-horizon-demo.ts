@@ -27,15 +27,19 @@ const BED_LENGTH = 16;
 const BED_WIDTH = 1.2;
 const BED_TOP = 5;
 
-export const GREEN_HORIZON_LETTUCE_TARGET = {
-  id: 'green-horizon-practice-lettuce-target',
-  siteId: designSiteIdFromLocation(GREEN_HORIZON_SITE),
-  cropKey: 'lettuce',
-  outlet: 'Weekly veg boxes (practice)',
-  weeklyKg: 8,
-  timing: 'date-window',
-  window: { start: DATE, endExclusive: '2026-11-09' },
-} as const satisfies DatedKgHarvestTarget;
+const PRACTICE_BUYER = 'Weekly veg boxes (practice)';
+
+export function buildGreenHorizonLettuceTarget(): DatedKgHarvestTarget {
+  return {
+    id: 'green-horizon-practice-lettuce-target',
+    siteId: designSiteIdFromLocation(GREEN_HORIZON_SITE),
+    cropKey: 'lettuce',
+    outlet: PRACTICE_BUYER,
+    weeklyKg: 8,
+    timing: 'date-window',
+    window: { start: DATE, endExclusive: '2026-11-09' },
+  };
+}
 
 function samplePoint(xM: number, yM: number): [number, number] {
   const metresPerDegree = 111_320;
@@ -73,10 +77,7 @@ export function buildGreenHorizonLetterhead(): SellerLetterhead {
 export function buildGreenHorizonCropPlan(): CropPlanState {
   return {
     version: 1, updatedAt: RECORD_TIME,
-    harvestTargets: [{
-      ...GREEN_HORIZON_LETTUCE_TARGET,
-      window: { ...GREEN_HORIZON_LETTUCE_TARGET.window },
-    }],
+    harvestTargets: [buildGreenHorizonLettuceTarget()],
     plantings: BEDS.map(bed => ({
       id: `${bed.id}-planting`, bedId: bed.id, cropKey: bed.cropKey, sowMonth: 10,
     })),
@@ -103,7 +104,7 @@ export function buildGreenHorizonRecords(): { sales: SalesLog[]; production: Pro
     }],
     sales: [{
       id: 'green-horizon-example-sale', profile_id: PROFILE_ID, garden_id: null,
-      crop: 'Lettuce', kg: 4, amount: 100, buyer: GREEN_HORIZON_LETTUCE_TARGET.outlet,
+      crop: 'Lettuce', kg: 4, amount: 100, buyer: PRACTICE_BUYER,
       sold_at: TIMESTAMP, created_at: TIMESTAMP,
     }],
   };

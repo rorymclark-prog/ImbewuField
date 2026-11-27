@@ -39,7 +39,7 @@ Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, value:
 
 const sample = await import('../lib/sample-mode.ts');
 const { DEMO_SITE, buildDemoStorageSeeds } = await import('../lib/demo-farm.ts');
-const { GREEN_HORIZON_SITE, GREEN_HORIZON_LETTUCE_TARGET, buildGreenHorizonStorageSeeds } = await import('../lib/green-horizon-demo.ts');
+const { GREEN_HORIZON_SITE, buildGreenHorizonLettuceTarget, buildGreenHorizonStorageSeeds } = await import('../lib/green-horizon-demo.ts');
 const { loadCropPlan, saveCropPlanWithReceipt } = await import('../lib/crop-plan.ts');
 const { designSiteIdFromLocation } = await import('../lib/design-studio.ts');
 const { loadPlaces } = await import('../lib/saved-places.ts');
@@ -217,19 +217,20 @@ test('Green Horizon’s dated lettuce target survives the normal sample save and
   reset();
   assert.equal(sample.enterSampleMode('green-horizon'), true);
   const plan = loadCropPlan();
-  assert.deepEqual(plan.harvestTargets, [GREEN_HORIZON_LETTUCE_TARGET]);
-  assert.equal(GREEN_HORIZON_LETTUCE_TARGET.siteId, designSiteIdFromLocation(GREEN_HORIZON_SITE));
+  const target = buildGreenHorizonLettuceTarget();
+  assert.deepEqual(plan.harvestTargets, [target]);
+  assert.equal(target.siteId, designSiteIdFromLocation(GREEN_HORIZON_SITE));
   assert.equal(saveCropPlanWithReceipt({
     ...plan,
-    harvestTargets: [{ ...GREEN_HORIZON_LETTUCE_TARGET, weeklyKg: 9 }],
+    harvestTargets: [{ ...target, weeklyKg: 9 }],
   }).saved, true);
   assert.equal(loadCropPlan().harvestTargets?.[0]?.weeklyKg, 9);
   assert.equal(sample.getSandboxProduction()[0]?.kg, 6);
   assert.equal(sample.getSandboxSales()[0]?.kg, 4);
   assert.equal(sample.enterSampleMode('ubhejane'), true);
-  assert.ok(!loadCropPlan().harvestTargets?.some(target => target.id === GREEN_HORIZON_LETTUCE_TARGET.id));
+  assert.ok(!loadCropPlan().harvestTargets?.some(row => row.id === target.id));
   assert.equal(sample.enterSampleMode('green-horizon'), true);
-  assert.deepEqual(loadCropPlan().harvestTargets, [GREEN_HORIZON_LETTUCE_TARGET]);
+  assert.deepEqual(loadCropPlan().harvestTargets, [target]);
 });
 
 test('a refused workspace switch preserves the active sample isolation and edits', () => {
