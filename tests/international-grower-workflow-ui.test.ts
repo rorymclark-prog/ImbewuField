@@ -28,19 +28,24 @@ const { default: Panel } = await import('../components/crops/GrowerAutoPlanPanel
 const { default: ProductionPlan } = await import('../components/crops/GreenHorizonProductionPlan.tsx');
 after(() => hooks.deregister());
 
-test('the example opens with a worked lettuce cycle, saved sowings and explicit missing forecasts', () => {
+test('the example opens with staggered worked cycles, explicit weekly gaps and unresolved sowing dates', () => {
   const { siteId } = buildGreenHorizonLettuceTarget();
   const beds = bedsFromDesignCanvas(JSON.parse(buildGreenHorizonStorageSeeds()[`imbewu_design_canvas_${siteId}`]));
   const plan = buildGreenHorizonCropPlan();
   const original = JSON.stringify(plan);
-  const render = () => renderToStaticMarkup(React.createElement(ProductionPlan, { siteId, beds, plan }));
+  const render = () => renderToStaticMarkup(React.createElement(ProductionPlan, { siteId, beds, plan, source: null }));
   const html = render();
   assert.match(html, /Green Horizon production plan/);
   assert.match(html, /8 kg\/week of Lettuce/);
   assert.match(html, /field entry 1 Oct 2026 · pick 2 Nov 2026 – 4 Nov 2026/);
   assert.match(html, /Estimated 11\.52 kg for the cycle/);
   assert.match(html, /A2 · Roots.*Carrots.*Saved sowing month · October/);
-  assert.match(html, /B1 · Leafy greens.*Swiss [Cc]hard.*Picking dates and yield are unknown/);
+  assert.match(html, /B1 · Leafy greens.*Swiss [Cc]hard.*field entry 8 Oct 2026 · pick 9 Nov 2026 – 11 Nov 2026/);
+  assert.match(html, /Weekly production and buyer orders/);
+  assert.match(html, /Planned 0 bunches \(practice entry\)/);
+  assert.match(html, /Planning gap of 12 bunches/);
+  assert.match(html, /Quantity gap unknown/);
+  assert.match(html, /Available in example/);
   assert.match(html, /Delivery quantity is unknown/);
   assert.match(html, /Some requested dates fall outside this picking window/);
   assert.match(html, /<button[^>]+>Review the practice crop cycle<\/button>/);
@@ -76,9 +81,10 @@ test('the production overview reads the accepted cycle from the plan after reope
     binding: { draft, source, recordedAt }, acceptedAt: recordedAt,
     plantingIds: [{ cycleId: review.proposal.cycles[0].cycleId, plantingId: 'accepted-green-horizon-preview' }] });
   assert.equal(accepted.status, 'prepared');
-  const html = renderToStaticMarkup(React.createElement(ProductionPlan, { siteId, beds: source.beds, plan: accepted.book }));
+  const html = renderToStaticMarkup(React.createElement(ProductionPlan, { siteId, beds: source.beds, plan: accepted.book, source }));
   assert.match(html, /Saved plan as accepted · field entry 1 Oct 2026 · picking 2 Nov 2026 – 4 Nov 2026/);
-  assert.doesNotMatch(html, /Worked example/);
+  assert.doesNotMatch(html, /Worked example · field entry 1 Oct 2026/);
+  assert.match(html, /A1 · Salad greens · 2 Nov 2026 – 4 Nov 2026 · accepted plan/);
 });
 
 // Synthetic review fixtures. These are neither crop instructions nor equipment defaults.

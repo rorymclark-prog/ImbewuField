@@ -1,9 +1,13 @@
 import { cropByKey } from '@/lib/crop-catalog';
 import { resolveHarvestTargetDateWindow, type CropPlanState, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { MONTH_NAMES } from '@/lib/crop-export-schedule';
-import { buildGreenHorizonPlanningDraft } from '@/lib/green-horizon-demo';
+import { buildGreenHorizonWeeklyAllocations, buildGreenHorizonWeeklyPracticeDraft } from '@/lib/green-horizon-demo';
 import { hasGrowerCycleMarker, normaliseGrowerCycleAttachment } from '@/lib/international/grower-cycle';
-import { assessGrowerPlanning, type GrowerDateEstimate } from '@/lib/international/grower-planning';
+import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
+import { addGrowerUtcDays, assessGrowerPlanning, type GrowerDateEstimate } from '@/lib/international/grower-planning';
+import { weeklyProductionOrders, type WeeklyProductionCycle, type WeeklyProductionWindow } from '@/lib/international/grower-weekly-production';
+import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
+import Link from 'next/link';
 
 const day = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 const formatDate = (date: string) => day.format(new Date(date));
@@ -25,28 +29,52 @@ function savedSchedule(row: Planting, siteId: string) {
   return assessment.status === 'ready' ? assessment.schedule : null;
 }
 
-export default function GreenHorizonProductionPlan({ siteId, beds, plan }: {
+function periodLabel(period: WeeklyProductionWindow): string {
+  const last = addGrowerUtcDays(period.endExclusive, -1) ?? period.start;
+  return period.start === last ? formatDate(last) : `${formatDate(period.start)} – ${formatDate(last)}`;
+}
+
+function showQuantity(quantity: number, unit: string): string {
+  return `${quantity.toLocaleString('en-GB', { maximumFractionDigits: 2 })} ${unit === 'each' ? 'items' : unit}`;
+}
+
+export default function GreenHorizonProductionPlan({ siteId, beds, plan, source }: {
   siteId: string;
   beds: readonly PlanBed[];
   plan: CropPlanState | null;
+  source: GrowerWorkflowSource | null;
 }) {
-  const practice = buildGreenHorizonPlanningDraft();
+  const practice = buildGreenHorizonWeeklyPracticeDraft();
   const [reference] = practice.targetProfiles;
-  const [availability] = practice.available;
-  const target = plan?.harvestTargets?.find(row => row.id === reference.targetId && row.siteId === siteId);
+  const targets = plan?.harvestTargets?.filter(row => row.siteId === siteId) ?? [];
+  const target = targets.find(row => row.id === reference.targetId);
   const targetWindow = resolveHarvestTargetDateWindow(target);
-  const profile = plan?.growerPlanningProfiles?.find(row => row.profileId === reference.profileId && row.cropKey === target?.cropKey);
-  const practiceBed = beds.find(bed => bed.id === availability.bedId);
   const plantings = plan?.plantings ?? [];
   const scope = { kind: 'mapped-site' as const, siteId };
   const provenance = { kind: 'grower-estimate' as const, recordedAt: '2026-11-02T08:00:00.000Z', note: 'Fictional plan example.' };
-  // The worked row uses the same arithmetic as the planner. Opening this view
-  // does not check the design, confirm availability or save a cycle.
-  const worked = profile && practiceBed && !plantings.some(row => row.bedId === practiceBed.id)
-    ? assessGrowerPlanning({ profile, scope, countAreaBinding: { bedId: practiceBed.id },
-      measuredAreaM2: { state: 'provided', value: practiceBed.areaM2, unit: 'm2', provenance },
-      fieldEntryDate: { state: 'provided', value: availability.start, unit: 'utc-date', provenance } })
-    : null;
+  const worked = practice.available.flatMap((availability, index): WeeklyProductionCycle[] => {
+    const reference = practice.targetProfiles[index];
+    const order = targets.find(row => row.id === reference.targetId);
+    const profile = plan?.growerPlanningProfiles?.find(row => row.profileId === reference.profileId && row.cropKey === order?.cropKey);
+    const bed = beds.find(row => row.id === availability.bedId);
+    // Fictional draft only. Don't fill over an existing crop, even if its
+    // saved dates are currently held by the planner.
+    if (!profile || !bed || plantings.some(row => row.bedId === bed.id)) return [];
+    const estimate = assessGrowerPlanning({ profile, scope, countAreaBinding: { bedId: bed.id },
+      measuredAreaM2: { state: 'provided', value: bed.areaM2, unit: 'm2', provenance },
+      fieldEntryDate: { state: 'provided', value: availability.start, unit: 'utc-date', provenance } });
+    if (estimate.status !== 'ready' || estimate.schedule.nextFieldEntryDate > availability.endExclusive) return [];
+    return [{ siteId, plantingId: null, targetId: reference.targetId, bedId: bed.id, cropKey: profile.cropKey, basis: 'worked-example',
+      schedule: estimate.schedule, wholeCycleKg: estimate.capacity.estimatedYieldKg }];
+  });
+  const accepted = source ? projectGrowerCycles(plantings, source).ownCycles.map((cycle): WeeklyProductionCycle => ({
+    siteId, plantingId: cycle.plantingId, bedId: cycle.bedId, cropKey: cycle.cropKey, basis: 'accepted', schedule: cycle.assessment.schedule,
+    targetId: cycle.origin?.status === 'recorded' && cycle.origin.origin.kind === 'buyer-target'
+      ? cycle.origin.origin.harvestTargetId : null,
+    wholeCycleKg: cycle.totalCycleKg,
+  })) : [];
+  const cycles = [...accepted, ...worked];
+  const allocations = buildGreenHorizonWeeklyAllocations();
 
   return (
     <section lang="en" aria-labelledby="green-horizon-production-title"
@@ -61,7 +89,7 @@ export default function GreenHorizonProductionPlan({ siteId, beds, plan }: {
       <ul className="my-3 grid gap-2 md:grid-cols-3">
         {beds.map(bed => {
           const rows = plantings.filter(row => row.bedId === bed.id);
-          const example = bed.id === practiceBed?.id && worked?.status === 'ready' ? worked : null;
+          const example = worked.find(row => row.bedId === bed.id);
           return (
             <li key={bed.id} className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--bg-0)] p-3">
               <h2 className="font-display font-semibold">{bed.label}</h2>
@@ -77,10 +105,10 @@ export default function GreenHorizonProductionPlan({ siteId, beds, plan }: {
                 </div>;
               })}
               {example && <div className="mt-2">
-                <strong>{cropByKey(profile?.cropKey ?? '')?.name ?? 'Practice crop'}</strong>
+                <strong>{cropByKey(example.cropKey)?.name ?? 'Practice crop'}</strong>
                 <p>Worked example · field entry {formatDate(example.schedule.fieldEntryDate)} · pick {pickingDates(example.schedule)}</p>
-                <p>Estimated {example.capacity.estimatedYieldKg.toLocaleString('en-GB', { maximumFractionDigits: 2 })} kg for the cycle. Review before saving.</p>
-                {targetWindow && (example.schedule.firstHarvestDate > targetWindow.start
+                <p>Estimated {showQuantity(example.wholeCycleKg, 'kg')} for the cycle. Review before saving.</p>
+                {example.targetId === target?.id && targetWindow && (example.schedule.firstHarvestDate > targetWindow.start
                   || example.schedule.harvestEndExclusiveDate < targetWindow.endExclusive)
                   && <p>Some requested dates fall outside this picking window.</p>}
               </div>}
@@ -90,6 +118,51 @@ export default function GreenHorizonProductionPlan({ siteId, beds, plan }: {
         })}
       </ul>
       {beds.length === 0 && <p className="mb-3">No mapped beds are available for this example.</p>}
+      <section aria-labelledby="green-horizon-weekly-title" className="my-4 space-y-3">
+        <h2 id="green-horizon-weekly-title" className="font-display text-lg font-semibold">Weekly production and buyer orders</h2>
+        <p>Practice quantities are entered per period. Crop-cycle estimates stay in the bed plan above.</p>
+        {targets.map(order => {
+          const periods = weeklyProductionOrders(order, cycles, allocations);
+          return <details key={order.id} open className="rounded-lg border border-[var(--border)] p-3">
+            <summary className="min-h-11 cursor-pointer font-semibold">
+              {order.outlet ?? 'Buyer target'} · {cropByKey(order.cropKey)?.name ?? order.cropKey}
+            </summary>
+            <ul className="grid gap-3 lg:grid-cols-3">
+              {periods.map(period => <li key={period.start} className="min-w-0 rounded-lg bg-[var(--bg-0)] p-3">
+                <h3 className="font-semibold">{periodLabel(period)}</h3>
+                <p>Requested {period.requested === null ? 'quantity unknown for this shorter period' : showQuantity(period.requested, period.unit)}</p>
+                <p>Planned {period.planned === null ? 'quantity unknown' : `${showQuantity(period.planned, period.unit)} (practice entry)`}</p>
+                <p>{period.planningGap === null ? 'Quantity gap unknown' : period.planningGap === 0 ? 'No gap in the entered plan'
+                  : `Planning gap of ${showQuantity(period.planningGap, period.unit)}`}</p>
+                <p>{period.picking.length === 0 ? 'No picking dates established' : period.daysWithoutPicking > 0
+                  ? `${period.daysWithoutPicking} days outside the dated picking windows` : 'Dated picking spans this period'}</p>
+                {period.picking.length > 0 && <ul className="mt-2">
+                  {period.picking.map((picking, index) => <li key={`${picking.bedId}:${picking.start}:${index}`}>
+                    {beds.find(bed => bed.id === picking.bedId)?.label ?? 'Mapped bed'} · {periodLabel(picking)}
+                    {picking.basis === 'accepted' ? ' · accepted plan' : ' · worked example'}
+                  </li>)}
+                </ul>}
+                <dl className="mt-2 border-t border-[var(--border)] pt-2">
+                  {beds.map(bed => {
+                    const occupied = cycles.find(cycle => cycle.bedId === bed.id
+                      && cycle.schedule.fieldEntryDate < period.endExclusive && period.start < cycle.schedule.nextFieldEntryDate);
+                    const declared = practice.available.some(interval => interval.bedId === bed.id
+                      && interval.start <= period.start && period.endExclusive <= interval.endExclusive);
+                    const unknown = plantings.some(row => row.bedId === bed.id && !accepted.some(cycle => cycle.plantingId === row.id));
+                    return <div key={bed.id} className="flex flex-wrap gap-x-2">
+                      <dt>{bed.label}</dt>
+                      <dd>{occupied ? (occupied.basis === 'accepted' ? 'Occupied in saved plan' : 'Occupied in worked plan')
+                        : declared && !unknown ? 'Available in example' : 'Availability unknown'}</dd>
+                    </div>;
+                  })}
+                </dl>
+              </li>)}
+            </ul>
+          </details>;
+        })}
+        {targets.length === 0 && <p>No buyer targets are saved for these beds.</p>}
+        <Link className="inline-flex min-h-11 items-center underline" href="/cropplan" prefetch={false}>See sowing and picking tasks</Link>
+      </section>
       <button type="button" className="inline-flex min-h-11 items-center underline" onClick={() => {
         const panel = document.querySelector<HTMLDetailsElement>('details#practice-crop-cycle');
         if (!panel) return;

@@ -1,5 +1,5 @@
 import type { FeatureCollection, Polygon } from 'geojson';
-import type { CropPlanState, DatedKgHarvestTarget } from './crop-plan';
+import type { CropPlanState, DatedKgHarvestTarget, DatedPackHarvestTarget } from './crop-plan';
 import type { Profile, ProductionLog, SalesLog } from './db/types';
 import { computeCanvasFrame, type DesignCanvasState } from './design-canvas';
 import { designSiteIdFromLocation, type DesignLayer } from './design-studio';
@@ -9,6 +9,7 @@ import type { SellerLetterhead } from './invoice-seller';
 import type { SavedPlace } from './saved-places';
 import type { GrowerInput, GrowerPlanningProfile } from './international/grower-planning';
 import type { GrowerWorkflowDraft } from './international/grower-workflow';
+import type { WeeklyProductionAllocation } from './international/grower-weekly-production';
 
 // The town point matches the fictional Green Horizon entry in /samples/gardens.
 // The plot, beds, crop dates and records are an exercise with no surveyed site.
@@ -31,6 +32,7 @@ const BED_TOP = 5;
 
 const PRACTICE_BUYER = 'Weekly veg boxes (practice)';
 const PRACTICE_PROFILE_ID = 'green-horizon-practice-lettuce-estimate';
+const CHARD_PROFILE_ID = 'green-horizon-practice-chard-estimate';
 
 export function buildGreenHorizonLettuceTarget(): DatedKgHarvestTarget {
   return {
@@ -42,6 +44,21 @@ export function buildGreenHorizonLettuceTarget(): DatedKgHarvestTarget {
     marketablePercent: 80,
     timing: 'date-window',
     window: { start: DATE, endExclusive: '2026-11-09' },
+  };
+}
+
+export function buildGreenHorizonChardTarget(): DatedPackHarvestTarget {
+  return {
+    id: 'green-horizon-practice-chard-target',
+    siteId: designSiteIdFromLocation(GREEN_HORIZON_SITE),
+    cropKey: 'swiss-chard',
+    outlet: 'Market stall (practice)',
+    weeklyQuantity: 12,
+    unit: 'bunches',
+    kgPerUnit: 0.35,
+    marketablePercent: 80,
+    timing: 'date-window',
+    window: { start: '2026-11-09', endExclusive: '2026-11-30' },
   };
 }
 
@@ -71,6 +88,25 @@ export function buildGreenHorizonPlanningDraft(): GrowerWorkflowDraft {
     available: [{ bedId: BEDS[0].id, start: '2026-10-01', endExclusive: '2026-11-10', confirmed: false }],
     assumptionsConfirmed: false,
   };
+}
+
+/** Alternate practice review. Existing lettuce-only instructions still use
+ * their one-cycle draft; the weekly example also lets a grower try B1. */
+export function buildGreenHorizonWeeklyPracticeDraft(): GrowerWorkflowDraft {
+  const lettuce = buildGreenHorizonPlanningDraft();
+  return {
+    ...lettuce,
+    targetProfiles: [...lettuce.targetProfiles, { targetId: buildGreenHorizonChardTarget().id, profileId: CHARD_PROFILE_ID }],
+    available: [...lettuce.available, { bedId: BEDS[2].id, start: '2026-10-08', endExclusive: '2026-11-30', confirmed: false }],
+  };
+}
+
+export function buildGreenHorizonWeeklyAllocations(): WeeklyProductionAllocation[] {
+  const { id: targetId, siteId, cropKey, unit } = buildGreenHorizonChardTarget();
+  return [
+    { targetId, siteId, cropKey, unit, start: '2026-11-09', endExclusive: '2026-11-16', quantity: 12 },
+    { targetId, siteId, cropKey, unit, start: '2026-11-16', endExclusive: '2026-11-23', quantity: 0 },
+  ];
 }
 
 function samplePoint(xM: number, yM: number): [number, number] {
@@ -108,14 +144,18 @@ export function buildGreenHorizonLetterhead(): SellerLetterhead {
 
 export function buildGreenHorizonCropPlan(): CropPlanState {
   const target = buildGreenHorizonLettuceTarget();
+  const chard = buildGreenHorizonChardTarget();
+  const lettuceEstimate = buildGreenHorizonLettuceEstimate(target.siteId);
+  // The chard profile starts with the same fictional practice estimates so
+  // the example isolates staggered timing. They are not crop recommendations.
+  const chardEstimate = { ...lettuceEstimate, profileId: CHARD_PROFILE_ID, cropKey: chard.cropKey };
   return {
     version: 1, updatedAt: RECORD_TIME,
-    harvestTargets: [target],
-    growerPlanningProfiles: [buildGreenHorizonLettuceEstimate(target.siteId)],
-    // A1 is the available bed that visitors plan for the lettuce request.
-    plantings: BEDS.slice(1).map(bed => ({
-      id: `${bed.id}-planting`, bedId: bed.id, cropKey: bed.cropKey, sowMonth: 10,
-    })),
+    harvestTargets: [target, chard],
+    growerPlanningProfiles: [lettuceEstimate, chardEstimate],
+    // A1 and B1 are available for practice review. Only A2 starts with a
+    // saved month-only entry, so its picking and clearing dates stay unknown.
+    plantings: [{ id: `${BEDS[1].id}-planting`, bedId: BEDS[1].id, cropKey: BEDS[1].cropKey, sowMonth: 10 }],
   };
 }
 

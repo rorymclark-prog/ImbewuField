@@ -5,7 +5,7 @@ import React from 'react';
 import ts from 'typescript';
 import { bindSiteContext, createSiteCountryContext } from '../lib/international/site-context.ts';
 import { resolvePlanningSupport } from '../lib/international/planning-policy.ts';
-import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft } from '../lib/green-horizon-demo.ts';
+import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonWeeklyPracticeDraft } from '../lib/green-horizon-demo.ts';
 
 // Execute actual route JSX availability and prop expressions without importing
 // the page's hooks/browser. Boundary components are markers, not mounted editors
@@ -96,7 +96,7 @@ function input(allowCataloguePlanning: boolean) {
     growerWorkflow: { source, sourceIssue: null, checking: false, contextRevision: 4, onReview, onRefresh() {}, onAccept() {},
       onCheckPreviewSource() { throw Error('Consumer mount must not read preview source automatically'); }, acceptance: { status: 'idle' }, savedNurseryReview: null },
     placeName: 'Engineering source', designTitle: 'Engineering design', growerSample: false, growerOwner: 'fixture-owner',
-    getSampleWorkspace: () => null, buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft,
+    getSampleWorkspace: () => null, buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonWeeklyPracticeDraft,
     countryPlaces: [{ id: 'fictional-place', name: 'Engineering fixture' }],
     siteClimate: null, hasSiteCoords: false, siteLat: 0, siteSurvey: null, saved,
     growerConditions, exportSavedGrowerRecord,
@@ -177,11 +177,13 @@ test('only the active Green Horizon workspace at its mapped site receives the pr
   const practiceSiteId = buildGreenHorizonLettuceTarget().siteId;
   const draftFor = (workspace: string | null, productionSiteId: string) => elements(renderOwn({
     ...input(false), getSampleWorkspace: () => workspace, productionSiteId,
-  })).find(element => element.type === boundaries.GrowerAutoPlanPanel)?.props.practiceDraft;
-  assert.deepEqual(draftFor('green-horizon', practiceSiteId), buildGreenHorizonPlanningDraft());
-  assert.equal(draftFor('green-horizon', siteId), undefined);
-  assert.equal(draftFor('ubhejane', practiceSiteId), undefined);
-  assert.equal(draftFor(null, practiceSiteId), undefined);
+  })).find(element => element.type === boundaries.GrowerAutoPlanPanel)?.props;
+  assert.deepEqual(draftFor('green-horizon', practiceSiteId)?.practiceDraft, buildGreenHorizonPlanningDraft());
+  assert.deepEqual(draftFor('green-horizon', practiceSiteId)?.weeklyPracticeDraft, buildGreenHorizonWeeklyPracticeDraft());
+  for (const props of [draftFor('green-horizon', siteId), draftFor('ubhejane', practiceSiteId), draftFor(null, practiceSiteId)]) {
+    assert.equal(props?.practiceDraft, undefined);
+    assert.equal(props?.weeklyPracticeDraft, undefined);
+  }
 });
 
 test('the filled production overview uses the active Green Horizon mapped plan only', () => {

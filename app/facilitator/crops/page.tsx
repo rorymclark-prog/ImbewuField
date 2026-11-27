@@ -48,7 +48,7 @@ import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-work
 import { activeAccountLocalStorageKey, activeAccountUid } from '@/lib/account-local-storage';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 import { getSampleWorkspace, isFictionalSampleLocation, isSampleMode } from '@/lib/sample-mode';
-import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft } from '@/lib/green-horizon-demo';
+import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonWeeklyPracticeDraft } from '@/lib/green-horizon-demo';
 import { sampleSowingCalendarFor } from '@/lib/sample-sowing-calendar';
 import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import NurseryForecastSummary from '@/components/crops/NurseryForecastSummary';
@@ -2609,7 +2609,7 @@ function FacilitatorCropsPageInner() {
   const loading = design === undefined || plan === null || !mounted;
   const greenHorizonProduction = getSampleWorkspace() === 'green-horizon'
     && productionSiteId === buildGreenHorizonLettuceTarget().siteId
-    ? <GreenHorizonProductionPlan siteId={productionSiteId} beds={beds} plan={plan} /> : null;
+    ? <GreenHorizonProductionPlan siteId={productionSiteId} beds={beds} plan={plan} source={selectedGrowerSource} /> : null;
   const growerPlanningPanel = <>
     <SavedGrowerRows rows={markedPlantings} wholeBookRows={plan?.plantings ?? []} source={selectedGrowerSource} scope={growerScope} conditions={growerConditions} onExport={exportSavedGrowerRecord} />
     {productionSiteId && growerScope?.kind === 'mapped-site' && <HarvestTargetsPanel
@@ -2641,6 +2641,8 @@ function FacilitatorCropsPageInner() {
       targets={plan?.harvestTargets ?? []} targetSiteId={productionSiteId} profiles={plan?.growerPlanningProfiles ?? []}
       practiceDraft={getSampleWorkspace() === 'green-horizon' && productionSiteId === buildGreenHorizonLettuceTarget().siteId
         ? buildGreenHorizonPlanningDraft() : undefined}
+      weeklyPracticeDraft={getSampleWorkspace() === 'green-horizon' && productionSiteId === buildGreenHorizonLettuceTarget().siteId
+        ? buildGreenHorizonWeeklyPracticeDraft() : undefined}
       onRefresh={growerWorkflow.onRefresh} onReview={growerWorkflow.onReview}
       onAccept={growerWorkflow.onAccept} acceptance={growerWorkflow.acceptance}
       nurseryReview={review => growerWorkflow.source && <GrowerNurseryReviewPanel review={review}
