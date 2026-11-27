@@ -3,7 +3,7 @@
 import { numberLabel } from '@/lib/format-figures';
 import { Fragment, useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { startRolePreview } from '@/lib/use-role-navigation';
+import { openRolePreview } from '@/lib/use-role-navigation';
 import SampleLimaConversation from './SampleLimaConversation';
 import ReportComposer from './ReportComposer';
 import { sampleGardenReportUrl } from '@/lib/sample-garden-reports';
@@ -665,7 +665,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       </div>
                     </div>
 
-                    {isDemo && <><button type="button" className="w-full rounded-xl p-3 text-sm font-semibold" style={{ background: 'var(--bg-2)', color: 'var(--color-forest-800)' }} onClick={() => setSampleView('design')}>{ui('Open example garden design →','Vula umklamo wengadi oyisibonelo →')}</button>{sampleView && <div><button type="button" className="text-sm underline py-2" onClick={() => setSampleView(null)}>{ui('Close example','Vala isibonelo')}</button><SampleGardenVisual kind={garden.kind} variant={garden.id} key={`${garden.id}-${sampleView}`} name={garden.name} initial={sampleView} /></div>}<button type="button" className="text-xs underline py-2" onClick={() => { if (startRolePreview('farmer')) router.push('/farmer'); }}>{ui('Explore the separate Ubhejane design workspace →','Hlola indawo ehlukile yokuklama yase-Ubhejane →')}</button></>}
+                    {isDemo && <><button type="button" className="w-full rounded-xl p-3 text-sm font-semibold" style={{ background: 'var(--bg-2)', color: 'var(--color-forest-800)' }} onClick={() => setSampleView('design')}>{ui('Open example garden design →','Vula umklamo wengadi oyisibonelo →')}</button>{sampleView && <div><button type="button" className="text-sm underline py-2" onClick={() => setSampleView(null)}>{ui('Close example','Vala isibonelo')}</button><SampleGardenVisual kind={garden.kind} variant={garden.id} key={`${garden.id}-${sampleView}`} name={garden.name} initial={sampleView} /></div>}<button type="button" className="text-xs underline py-2" onClick={() => { openRolePreview('farmer', '/farmer', router.push); }}>{ui('Explore the separate Ubhejane design workspace →','Hlola indawo ehlukile yokuklama yase-Ubhejane →')}</button></>}
                     {!isDemo && <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{ui('This register does not include the farmer’s private design.','Le rejista ayifaki umklamo wangasese womlimi.')}</p>}
                     {lang === 'zu' && <p className="text-xs leading-relaxed" style={{color:'var(--text-muted)'}}>{ui('', 'Umbiko we-PDF ongezansi usalokhu unombhalo wesiNgisi. Usayizi wesiza oqoshiwe awuqinisekisi indawo ekhiqizayo esebenzayo; izindleko azifakiwe, ngakho lo mbiko awubonisi inzuzo.')}</p>}
                     <details className={reportStyles.root} style={{ padding: 12, borderRadius: 12 }}><summary>{ui('Preview & download this garden record','Buka bese ulanda irekhodi lale ngadi')}</summary>

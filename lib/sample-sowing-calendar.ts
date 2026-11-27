@@ -6,14 +6,14 @@
 // manifest.json and two translation packets record its SHA-256, and
 // tests/shape-sync-v2-old-client.test.ts and tests/tour-practice-localization.test.ts
 // fail if the file changes at all. Adding one function there broke both. So the accessor
-// lives here and reads sample mode through that file's own isSampleMode().
+// lives here and identifies the Ubhejane workspace through its session selector.
 //
 // WHAT IT IS FOR (Rory, 10 November 2026: "go ahead with the fixed calendar for the
 // sample farm"). See DEMO_SOWING_CALENDAR in lib/demo-farm.ts for the reasoning.
 
 import type { RainPattern } from './crop-catalog';
 import { DEMO_SOWING_CALENDAR, demoSowingCalendarScopeId } from './demo-farm';
-import { isSampleMode } from './sample-mode';
+import { getSampleWorkspace } from './sample-mode';
 
 /**
  * The sample farm's declared calendar for a plan scope, or null outside sample mode and
@@ -21,5 +21,5 @@ import { isSampleMode } from './sample-mode';
  * another site opened inside the sample is read the ordinary way.
  */
 export function sampleSowingCalendarFor(scopeId: string | null | undefined): RainPattern | null {
-  return isSampleMode() && typeof scopeId === 'string' && scopeId === demoSowingCalendarScopeId() ? DEMO_SOWING_CALENDAR : null;
+  return getSampleWorkspace() === 'ubhejane' && scopeId === demoSowingCalendarScopeId() ? DEMO_SOWING_CALENDAR : null;
 }

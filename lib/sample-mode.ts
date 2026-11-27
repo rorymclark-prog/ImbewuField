@@ -1,5 +1,4 @@
-// Session-scoped "sample mode" — lets anyone see a fully-populated demo farm
-// (Ubhejane Creche, lib/demo-farm.ts) without ever touching a real farmer's
+// Session-scoped "sample mode" — lets anyone try a demo farm without touching a real farmer's
 // data. The ON/OFF flag lives in sessionStorage (survives a reload or a shared
 // deep-link in THIS tab, but is invisible to other tabs and clears the instant
 // the tab closes); the demo DATA lives only in memory and is never written to
@@ -36,10 +35,16 @@ import type { SalesLog, ExpenseLog, ProductionLog, Profile } from './db/types';
 import type { SavedInvoice, Product, Customer } from './invoices';
 import type { SellerLetterhead } from './invoice-seller';
 import type { SavedPlace } from './saved-places';
-import { buildDemoCropPlan, buildDemoFacilitatorState, buildDemoFinance, buildDemoLetterhead, buildDemoProfile, buildDemoSavedPlace, buildDemoStorageSeeds } from './demo-farm';
+import { DEMO_SITE, buildDemoCropPlan, buildDemoFacilitatorState, buildDemoFinance, buildDemoLetterhead, buildDemoProfile, buildDemoSavedPlace, buildDemoStorageSeeds } from './demo-farm';
+import {
+  GREEN_HORIZON_SITE, buildGreenHorizonCropPlan, buildGreenHorizonFacilitatorState, buildGreenHorizonLetterhead,
+  buildGreenHorizonProfile, buildGreenHorizonRecords, buildGreenHorizonSavedPlace, buildGreenHorizonStorageSeeds,
+} from './green-horizon-demo';
 import { emptyConsent, revokeAll, setScope, type ConsentScope, type FarmerConsent } from './consent';
 
 const FLAG_KEY = 'imbewu_sample_mode';
+const WORKSPACE_KEY = 'imbewu_sample_workspace';
+export type SampleWorkspace = 'ubhejane' | 'green-horizon';
 // Language is a harmless interface preference, not farm data. Keep it inside the sample tab
 // across hard reloads while the storage shim hides the real account's localStorage.
 const SAMPLE_LANG_KEY = 'imbewu_sample_lang';
@@ -64,23 +69,26 @@ interface SampleSandbox {
   consent: FarmerConsent;
 }
 
-let sandbox: SampleSandbox | null = null;
+let sandbox: { workspace: SampleWorkspace; data: SampleSandbox } | null = null;
 
 // allowBedSharing defaults ON here (unlike the real app's off-by-default) so
 // the demo's kale/beetroot intercrop on demo-bed-6 renders as intended
 // without the evaluator having to find and flip a settings toggle first.
-function freshSandbox(): SampleSandbox {
-  const finance = buildDemoFinance();
-  const profile = buildDemoProfile();
+function freshSandbox(workspace: SampleWorkspace): SampleSandbox {
+  const marketGarden = workspace === 'green-horizon';
+  const finance = marketGarden
+    ? { expenses: [], invoices: [], customers: [], products: [], ...buildGreenHorizonRecords() }
+    : buildDemoFinance();
+  const profile = marketGarden ? buildGreenHorizonProfile() : buildDemoProfile();
   return {
-    cropPlan: buildDemoCropPlan(),
+    cropPlan: marketGarden ? buildGreenHorizonCropPlan() : buildDemoCropPlan(),
     favouriteCropKeys: new Set(),
-    allowBedSharing: true,
+    allowBedSharing: !marketGarden,
     // Keep in lockstep with DEFAULT_CASHFLOW_SETTINGS in crop-plan.ts (a value
     // import here would be circular — crop-plan imports this module). The
     // cashflow-loss-default test asserts the two stay equal.
     cashflowSettings: { sellPercent: 100, lossPercent: 25, confirmed: false },
-    facilitatorDesign: buildDemoFacilitatorState(),
+    facilitatorDesign: marketGarden ? buildGreenHorizonFacilitatorState() : buildDemoFacilitatorState(),
     sales: finance.sales,
     expenses: finance.expenses,
     production: finance.production,
@@ -89,7 +97,7 @@ function freshSandbox(): SampleSandbox {
     // transiently between a farmer staging a link and the ledger write confirming it.
     pendingInvoiceLinks: [],
     customers: finance.customers,
-    letterhead: buildDemoLetterhead(),
+    letterhead: marketGarden ? buildGreenHorizonLetterhead() : buildDemoLetterhead(),
     products: finance.products,
     profile,
     // Consent (POPIA) starts EMPTY here too — unlike allowBedSharing above, this is not a
@@ -105,13 +113,14 @@ function freshSandbox(): SampleSandbox {
     // The crèche arrives pre-saved so the saved-places list, the farmer map and the Design
     // entry point all light up immediately (loadPlaces() serves THIS list in sample mode —
     // the localStorage seed alone never reaches it).
-    places: [buildDemoSavedPlace()],
+    places: [marketGarden ? buildGreenHorizonSavedPlace() : buildDemoSavedPlace()],
   };
 }
 
 function ensure(): SampleSandbox {
-  if (!sandbox) sandbox = freshSandbox();
-  return sandbox;
+  const workspace = getSampleWorkspace() ?? 'ubhejane';
+  if (sandbox?.workspace !== workspace) sandbox = { workspace, data: freshSandbox(workspace) };
+  return sandbox.data;
 }
 
 export function isSampleMode(): boolean {
@@ -123,6 +132,25 @@ export function isSampleMode(): boolean {
   }
 }
 
+export function getSampleWorkspace(): SampleWorkspace | null {
+  if (!isSampleMode()) return null;
+  try {
+    if (window.sessionStorage.getItem(WORKSPACE_KEY) === 'green-horizon') return 'green-horizon';
+  } catch { /* Keep compatibility with legacy tabs that have only the sample flag. */ }
+  return 'ubhejane';
+}
+
+export function getSampleMapSite() {
+  const workspace = getSampleWorkspace();
+  if (!workspace) return null;
+  return workspace === 'green-horizon' ? GREEN_HORIZON_SITE : DEMO_SITE;
+}
+
+export function isFictionalSampleLocation(lat: number, lon: number): boolean {
+  return getSampleWorkspace() === 'green-horizon'
+    && lat === GREEN_HORIZON_SITE.lat && lon === GREEN_HORIZON_SITE.lon;
+}
+
 /**
  * Sample farm is look-don't-spend: every route that bills a real vendor account must refuse while
  * sampling, and say so in the farmer's own words rather than failing silently. lib/render-jobs.ts's
@@ -132,25 +160,36 @@ export function isSampleMode(): boolean {
  * identical text no matter which render path they hit.
  */
 export const SAMPLE_MODE_RENDER_REFUSAL =
-  "AI sheets are switched off in the Ubhejane farm. Exit the tour and open your own farm to render AI sheets.";
+  "AI sheets are switched off in sample workspaces. Exit the sample and open your own farm to render AI sheets.";
 
-export function enterSampleMode(): boolean {
+export function enterSampleMode(workspace: SampleWorkspace = 'ubhejane'): boolean {
   if (typeof window === 'undefined') return false;
+  if (workspace !== 'ubhejane' && workspace !== 'green-horizon') return false;
+  const previousWorkspace = getSampleWorkspace();
   let selectedLanguage: string | null = null;
   try { selectedLanguage = window.localStorage.getItem('permamap_lang'); } catch { /* use the default */ }
-  sandbox = freshSandbox(); // always a clean slate — never a previous demo session's edits
-  resetShimStore(); // reseed the localStorage shim too
   try {
-    window.sessionStorage.setItem(FLAG_KEY, '1');
-    // A storage implementation can silently refuse a write (privacy/quota modes), so
-    // verify the flag before callers navigate into a view that promises demo isolation.
-    if (window.sessionStorage.getItem(FLAG_KEY) !== '1') throw new Error('sample flag refused');
+    const storage = window.sessionStorage;
+    // Switch between demos without clearing the isolation flag. A failed switch
+    // must never expose a still-mounted sample to real account storage or sync.
+    storage.setItem(WORKSPACE_KEY, workspace);
+    if (storage.getItem(WORKSPACE_KEY) !== workspace) throw new Error('sample workspace refused');
+    if (!previousWorkspace) {
+      storage.setItem(FLAG_KEY, '1');
+      if (storage.getItem(FLAG_KEY) !== '1') throw new Error('sample flag refused');
+    }
   } catch {
-    sandbox = null;
-    resetShimStore();
-    try { window.sessionStorage.removeItem(FLAG_KEY); } catch { /* best-effort cleanup */ }
+    try {
+      if (previousWorkspace) window.sessionStorage.setItem(WORKSPACE_KEY, previousWorkspace);
+      else {
+        window.sessionStorage.removeItem(FLAG_KEY);
+        window.sessionStorage.removeItem(WORKSPACE_KEY);
+      }
+    } catch { /* best-effort cleanup */ }
     return false;
   }
+  sandbox = null; // always a clean slate — never a previous demo's edits
+  resetShimStore();
   try {
     if (selectedLanguage) window.sessionStorage.setItem(SAMPLE_LANG_KEY, selectedLanguage);
     else window.sessionStorage.removeItem(SAMPLE_LANG_KEY);
@@ -168,6 +207,7 @@ export function exitSampleMode(): void {
   sandbox = null;
   resetShimStore();
   try { window.sessionStorage.removeItem(FLAG_KEY); } catch { /* ignore */ }
+  try { window.sessionStorage.removeItem(WORKSPACE_KEY); } catch { /* ignore */ }
   try { window.sessionStorage.removeItem(SAMPLE_LANG_KEY); } catch { /* ignore */ }
   window.dispatchEvent(new CustomEvent(SAMPLE_MODE_EVENT));
 }
@@ -189,10 +229,10 @@ export function exitSampleMode(): void {
    (lib/design-canvas.ts, DesignGlossy) can neither read nor delete real values
    while sampling.
 
-   The memory store LAZILY seeds from lib/demo-farm's buildDemoStorageSeeds() —
+   The memory store LAZILY seeds from the selected sample's builders —
    lazy, not eager at enterSampleMode only, because the flag survives a reload
    (sessionStorage) while module state does not: the first localStorage touch of
-   the reloaded sample tab must find the crèche already there. */
+   the reloaded sample tab must find the selected farm already there. */
 
 /**
  * APPEARANCE IS THE DEVICE'S, NOT THE FARM'S.
@@ -219,23 +259,25 @@ export function exitSampleMode(): void {
  */
 const APPEARANCE_KEYS = new Set(['fp-theme', 'fp-mode', 'fp-textscale']);
 
-let shimStore: Map<string, string> | null = null;
+let shimStore: { workspace: SampleWorkspace; data: Map<string, string> } | null = null;
 
 function resetShimStore(): void {
   shimStore = null;
 }
 
 function shimStoreEnsured(): Map<string, string> {
-  if (!shimStore) {
-    // Lazy import cycle-breaker not needed: demo-farm is pure data/builders and
-    // never reads storage, so seeding from inside a patched method cannot recurse.
-    shimStore = new Map(Object.entries(buildDemoStorageSeeds()));
+  const workspace = getSampleWorkspace() ?? 'ubhejane';
+  if (shimStore?.workspace !== workspace) {
+    // The seed builders do not read storage, so they can safely run in the shim.
+    const seeds = workspace === 'green-horizon' ? buildGreenHorizonStorageSeeds() : buildDemoStorageSeeds();
+    const data = new Map(Object.entries(seeds));
     try {
       const selectedLanguage = window.sessionStorage.getItem(SAMPLE_LANG_KEY);
-      if (selectedLanguage) shimStore.set('permamap_lang', selectedLanguage);
+      if (selectedLanguage) data.set('permamap_lang', selectedLanguage);
     } catch { /* fall back to English */ }
+    shimStore = { workspace, data };
   }
-  return shimStore;
+  return shimStore.data;
 }
 
 function installStorageShim(): void {
@@ -317,7 +359,7 @@ export function getSandboxSales(): SalesLog[] { return ensure().sales; }
 export function addSandboxSale(row: Partial<SalesLog>): void {
   const s = ensure();
   const full: SalesLog = {
-    id: genId(), profile_id: 'demo', garden_id: null, crop: '', kg: 0, amount: 0,
+    id: genId(), profile_id: s.profile.id, garden_id: null, crop: '', kg: 0, amount: 0,
     buyer: null, sold_at: new Date().toISOString(), created_at: new Date().toISOString(),
     ...row,
   };
@@ -336,7 +378,7 @@ export function getSandboxExpenses(): ExpenseLog[] { return ensure().expenses; }
 export function addSandboxExpense(row: Partial<ExpenseLog>): void {
   const s = ensure();
   const full: ExpenseLog = {
-    id: genId(), profile_id: 'demo', garden_id: null, item: '', amount: 0,
+    id: genId(), profile_id: s.profile.id, garden_id: null, item: '', amount: 0,
     supplier: null, spent_at: new Date().toISOString(), created_at: new Date().toISOString(),
     ...row,
   };
@@ -355,7 +397,7 @@ export function getSandboxProduction(): ProductionLog[] { return ensure().produc
 export function addSandboxProduction(row: Partial<ProductionLog>): void {
   const s = ensure();
   const full: ProductionLog = {
-    id: genId(), profile_id: 'demo', garden_id: null, crop: '', kg: 0,
+    id: genId(), profile_id: s.profile.id, garden_id: null, crop: '', kg: 0,
     photo_url: null, logged_at: new Date().toISOString(), created_at: new Date().toISOString(),
     ...row,
   };

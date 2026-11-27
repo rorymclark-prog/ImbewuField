@@ -49,6 +49,7 @@ const ROUTES = [
   'app/invoice/page.tsx',
   'app/finances/page.tsx',
   'app/farmer/page.tsx',
+  'app/samples/market-garden/page.tsx',
   'app/reports/page.tsx',
   // Added 24 September. The audit measured the rendered pages at 390x844 and found 46 sub-12px
   // text nodes on /journal (the smallest at 10.5px), 19 on /calendar (every month chip at 10px)
@@ -98,6 +99,7 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'app/samples/market-garden/page.tsx': 'growers explore their way into the market-garden example from a phone',
   'app/invoice/page.tsx': 'farmers enter and read their own saved invoice amounts; zero-debt 12px floor',
   'components/invoice/InvoiceCurrencyChoice.tsx': 'farmers explicitly choose and review the recorded invoice currency; zero-debt 12px floor',
   'components/invoice/QuickSaleCurrencyNotice.tsx': 'growers distinguish rand quick entry from other invoice currencies before recording money; zero-debt 12px floor',
