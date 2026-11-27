@@ -593,6 +593,10 @@ test('corrections remain with the original illustration, survive thumbnail updat
   await assert.rejects(editSheetPins('illustration','farm',{previous:second},'farmer-a'));
   await assert.rejects(editSheetPins('illustration','farm',{next:{...first,id:'three',x:1.1}},'farmer-a'));
   assert.deepEqual(await editSheetPins('illustration','farm',{previous:first},'farmer-a'),[edited]);
+  const wider = {...edited,width:.42,height:.06};
+  await editSheetPins('illustration','farm',{previous:edited,next:wider},'farmer-a');
+  await assert.rejects(editSheetPins('illustration','farm',{previous:edited},'farmer-a'));
+  assert.deepEqual(await editSheetPins('illustration','farm',undefined,'farmer-a'),[wider]);
   assert.equal('correctionPins' in (await loadSheetMetas('farm','farmer-a'))[0],false);
   await deleteSheet('illustration','farmer-a');
   await assert.rejects(editSheetPins('illustration','farm',{next:first},'farmer-a'));

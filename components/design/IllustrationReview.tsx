@@ -1,6 +1,6 @@
 'use client';
-import { useState } from 'react';
-import { MAX_CORRECTION_NOTE, MAX_CORRECTION_PINS, type CorrectionPin } from '@/lib/map-correction-pins';
+import { Fragment, useState } from 'react';
+import { correctionArea, DEFAULT_CORRECTION_SIZE, MAX_CORRECTION_SIZE, MAX_CORRECTION_NOTE, MAX_CORRECTION_PINS, type CorrectionPin } from '@/lib/map-correction-pins';
 import styles from './SavedPlanComparison.module.css';
 
 export interface ReviewActions {
@@ -10,8 +10,8 @@ export interface ReviewActions {
   renderLabel: string;
 }
 
-export function ReviewImage({ image, pins, placing, place, edit }: {
-  image: string; pins: CorrectionPin[]; placing: boolean;
+export function ReviewImage({ image, pins, outlined, placing, place, edit }: {
+  image: string; pins: CorrectionPin[]; outlined: string[]; placing: boolean;
   place: (point: {x:number; y:number}) => void; edit: (pin: CorrectionPin) => void;
 }) {
   const [ratio, setRatio] = useState(1);
@@ -23,21 +23,25 @@ export function ReviewImage({ image, pins, placing, place, edit }: {
           const rect = e.currentTarget.getBoundingClientRect();
           place(e.detail ? {x:Math.min(1,Math.max(0,(e.clientX-rect.left)/rect.width)), y:Math.min(1,Math.max(0,(e.clientY-rect.top)/rect.height))} : {x:.5,y:.5});
         }} />}
-      {pins.map((pin,i) => <button type="button" key={pin.id} className={styles.pin} title={pin.note}
+      {pins.map((pin,i) => {
+        const area = correctionArea(pin);
+        return <Fragment key={pin.id}>{outlined.includes(pin.id) && <span className={styles.editArea} aria-hidden="true"
+          style={{left:area.left*100+'%', top:area.top*100+'%', width:(area.right-area.left)*100+'%', height:(area.bottom-area.top)*100+'%'}} />}
+        <button type="button" className={styles.pin} title={pin.note}
         style={{left:pin.x*100+'%',top:pin.y*100+'%'}} aria-label={`Edit pin ${i+1}: ${pin.note}`}
-        onClick={() => edit(pin)}>{i+1}</button>)}
+        onClick={() => edit(pin)}>{i+1}</button></Fragment>; })}
     </div>
   </div>;
 }
 
 export interface PinDraft { previous?: CorrectionPin; next: CorrectionPin }
 
-export function ReviewNotes({ actions, pins, setPins, draft, setDraft, placing, begin, cancel, illustration, done }: {
+export function ReviewNotes({ actions, pins, setPins, selected, select, draft, setDraft, placing, begin, cancel, illustration, done }: {
   actions: ReviewActions; pins: CorrectionPin[]; setPins: (pins: CorrectionPin[]) => void;
+  selected: string[]; select: (ids: string[]) => void;
   draft: PinDraft | null; setDraft: (draft: PinDraft | null) => void; placing: boolean;
   begin: () => void; cancel: () => void; illustration: string; done: () => void;
 }) {
-  const [selected, select] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [error, setError] = useState('');
@@ -48,7 +52,7 @@ export function ReviewNotes({ actions, pins, setPins, draft, setDraft, placing, 
     try {
       const result = await actions.save({previous:draft.previous, next:remove ? undefined : {...draft.next,note:draft.next.note.trim()}});
       setPins(result); setDraft(null); setConfirm(false);
-      if (remove) select(ids => ids.filter(id => id !== draft.next.id));
+      if (remove) select(selected.filter(id => id !== draft.next.id));
     } catch (e) { setError(e instanceof Error ? e.message : 'Could not save this change.'); }
     finally { setBusy(false); }
   }
@@ -60,12 +64,20 @@ export function ReviewNotes({ actions, pins, setPins, draft, setDraft, placing, 
     {draft && <form className={styles.editor} onSubmit={e => {e.preventDefault(); void save(false);}}>
       <label>Correction note<textarea autoFocus maxLength={MAX_CORRECTION_NOTE} value={draft.next.note}
         onChange={e => setDraft({...draft,next:{...draft.next,note:e.target.value}})} /></label>
+      <fieldset className={styles.areaControls}><legend>Edit area</legend>
+        {(['width','height'] as const).map(axis => {
+          const value = Math.round((draft.next[axis] ?? DEFAULT_CORRECTION_SIZE)*100);
+          return <label key={axis}>{axis === 'width' ? 'Width' : 'Height'} · {value}%
+            <input type="range" aria-label={'Edit area ' + axis} min={1} max={MAX_CORRECTION_SIZE*100} value={value}
+              onChange={e => setDraft({...draft, next:{...draft.next, [axis]:Number(e.target.value)/100}})} /></label>;
+        })}
+      </fieldset>
       <div><button disabled={busy || !draft.next.note.trim()}>Save pin</button>
         <button type="button" disabled={busy} onClick={cancel}>Cancel</button>
         {draft.previous && <button type="button" disabled={busy} onClick={() => void save(true)}>Delete pin</button>}</div>
     </form>}
     {!!pins.length && !draft && !placing && <>
-      <p>Select the corrections to include in a new illustration.</p>
+      <p>Select the areas you want the AI to correct.</p>
       <ol>{pins.map((pin,i) => <li key={pin.id}>
         <label><input type="checkbox" disabled={busy || confirm} checked={selected.includes(pin.id)}
           onChange={e => select(e.target.checked ? [...selected,pin.id] : selected.filter(id => id !== pin.id))} />
@@ -73,7 +85,7 @@ export function ReviewNotes({ actions, pins, setPins, draft, setDraft, placing, 
         {!confirm && <button type="button" disabled={busy} aria-label={`Edit correction ${i+1}`} onClick={() => setDraft({previous:pin,next:{...pin}})}>Edit</button>}
       </li>)}</ol>
       {actions.render ? chosen.length > 0 && (confirm ? <div className={styles.confirm}>
-        <p>Create one paid illustration from the original saved design and {chosen.length} selected {chosen.length === 1 ? 'correction' : 'corrections'}? {actions.renderLabel}. Your existing illustration stays in Saved maps.</p>
+        <p>Create one paid illustration from the original saved design and {chosen.length} selected {chosen.length === 1 ? 'correction' : 'corrections'}? {actions.renderLabel}. Only the selected areas can change. Your original stays in Saved maps.</p>
         <button type="button" disabled={busy} onClick={async () => {
           if (!actions.render || busy) return;
           setBusy(true); setError('');

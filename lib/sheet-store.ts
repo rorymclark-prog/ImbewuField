@@ -24,7 +24,7 @@ import {
 import { reportMapType, type ReportMapType } from './report-map-selection';
 import type { SheetUnderlay } from './sheet-underlay';
 import { isComparisonSource, type ComparisonSource } from './saved-plan-comparison';
-import { correctionPins, validCorrectionPin, MAX_CORRECTION_PINS, type CorrectionPin } from './map-correction-pins';
+import { correctionPins, sameCorrectionPin, validCorrectionPin, MAX_CORRECTION_PINS, type CorrectionPin } from './map-correction-pins';
 import { isMapModelId } from './ai-render/model';
 
 const DB_NAME = 'imbewu-sheets';
@@ -476,8 +476,7 @@ export async function editSheetPins(id: string, siteId: string, change?: {
         const pinId = (previous ?? next)?.id;
         const current = pins.find(p => p.id === pinId);
         if (!pinId || (next && (!validCorrectionPin(next) || next.id !== pinId)) ||
-          (!!current !== !!previous) || (current && previous && (current.note !== previous.note ||
-          current.x !== previous.x || current.y !== previous.y))) {
+          (!!current !== !!previous) || (current && previous && !sameCorrectionPin(current, previous))) {
           reject(new Error('This pin changed. Reopen the comparison to see the latest notes.')); return;
         }
         if (next && !previous && pins.length >= MAX_CORRECTION_PINS) {

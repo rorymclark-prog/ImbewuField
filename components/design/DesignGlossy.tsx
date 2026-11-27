@@ -54,7 +54,7 @@ import {
   type FrameLike as BoundaryFrameGeom,
 } from '@/lib/boundary-geometry';
 import { structureRegisterText } from '@/lib/structure-register';
-import { historicalBaselineForSite, historicalBaselineFromPrompt, historicalBaselinePrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, UBHEJANE_BEFORE_WORKS, type HistoricalBaseline } from '@/lib/historical-map-baseline';
+import { HISTORICAL_BASELINE_MARKER, historicalBaselineForSite, historicalBaselineFromPrompt, historicalBaselinePrompt, historicalPhotoPoint, historicalPhotoTransform, historicalPhotoExtent, UBHEJANE_BEFORE_WORKS, type HistoricalBaseline } from '@/lib/historical-map-baseline';
 import { bedFootprintRegister, buildFinishedSheetPolishPrompt, WATER_POLISH_ROUTE_GUIDE, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, PHASING_ARTWORK_PROMPT_MARKER, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
@@ -106,6 +106,8 @@ import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPo
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { drawExactBed, isExactSurfaceFinish, paintExactSurface } from '@/lib/exact-surface-finish';
 import { savedDesignChanges } from '@/lib/saved-design-changes';
+import { correctionArea, LOCAL_CORRECTION_PROMPT, sameCorrectionPin } from '@/lib/map-correction-pins';
+import { applyLocalCorrection, correctionScoreMask, NoVisibleCorrection, originalStripPath } from '@/lib/local-map-correction';
 import { correctionReference } from '@/lib/correction-reference';
 import SavedPlanComparison from './SavedPlanComparison';
 import { comparisonSource, originalRecipe, openComparisonSource, type ComparisonSource } from '@/lib/saved-plan-comparison';
@@ -16116,7 +16118,8 @@ export default function DesignGlossy({
               // Both paid stages use the durable input, including after a page reload.
               const sourceImage = await fetchRenderOutput(sheet.inputPath);
               if (job.engine === 'openai') raw = await registerOpenAiMapOutput(sourceImage, raw);
-              const protectMask = sheet.protectMaskPath ? await fetchRenderOutput(sheet.protectMaskPath) : undefined;
+              const protectMask = sheet.correctionFrame ? correctionScoreMask(sheet.correctionFrame)
+                : sheet.protectMaskPath ? await fetchRenderOutput(sheet.protectMaskPath) : undefined;
               const inputDimensions = await loadImage(sourceImage);
               const outputDimensions = await loadImage(raw);
               try {
@@ -16166,6 +16169,7 @@ export default function DesignGlossy({
                     continue;
                   }
                 } catch (err) {
+                  if (sheet.correctionFrame) throw new UserFacingError('The selected correction could not be checked against its original artwork.');
                   // Scoring is diagnostic, never a new failure mode. If pixels cannot be measured,
                   // finish and keep the paid result exactly as before — but SAY that it went
                   // unmeasured, so an unscored pass can never later be read as a proven one.
@@ -16182,6 +16186,22 @@ export default function DesignGlossy({
                     note: 'comparison unavailable; retained as an unverified review candidate',
                   });
                 }
+              }
+              if (sheet.correctionFrame) {
+                // The worker returned only the requested crop. It must never enter the full-map
+                // finisher, which would stretch it across the site and paint a second legend.
+                const image = await applyLocalCorrection(raw, sheet.correctionFrame,
+                  y => fetchRenderOutput(originalStripPath(sheet.inputPath, y)));
+                if (!active) return;
+                const styleLabel = PRODUCER_STYLES.find(s => s.key === (obliqueStyle ?? styleKey))?.label ?? styleKey;
+                lastAssembledGalleryId = pushGalleryRef.current(
+                  (obliqueStyle ? 'Oblique design view' : sheet.label) + ' · ' + styleLabel + ' · Corrected AI illustration · review against saved plan',
+                  image, {resultKind:obliqueStyle ? 'ai-illustrated' : 'hybrid', provider:attribution.gallery,
+                    model:job.model, geometryLock:false, showcase:false, underlay:frozenScene.underlay,
+                    ...auditContext, validationStatus, rawOutputPath:sheet.outputPath},
+                  comparisonSource(job,sheet,frozenScene.frame.satDataUrl,originalRecipe(job,sheet,sourceImage)));
+                assembled.add(sheet.key);
+                continue;
               }
               if (obliqueStyle) {
                 // Perspective artwork has no top-down pixel correspondence. Restoring the
@@ -16535,6 +16555,11 @@ export default function DesignGlossy({
               assembled.add(sheet.key);
             } catch (e) {
               if (!active) return;
+              if (e instanceof NoVisibleCorrection) {
+                rejected.add(sheet.key);
+                setPolishNoChange(e.message);
+                continue;
+              }
               console.error('[glossy] finishing a queued sheet failed', sheet.key, e);
               // Let a later snapshot retry this sheet — the worker's output is still in Storage.
               finished.delete(sheet.key);
@@ -16698,7 +16723,7 @@ export default function DesignGlossy({
           setLoading('falgpt');
           try {
             const savedPins = await editSheetPins(item.id, gallerySiteId);
-            if (!selected.every(p => savedPins.some(q => q.id === p.id && q.note === p.note && q.x === p.x && q.y === p.y))) {
+            if (!selected.every(p => savedPins.some(q => sameCorrectionPin(p,q)))) {
               throw new Error('The selected pins changed. Reopen this illustration to review them.');
             }
             const {readOriginalPlan,readOriginalRecipe} = await import('@/lib/read-saved-plan');
@@ -16710,23 +16735,29 @@ export default function DesignGlossy({
             const incompatible = savedArtworkSettingsMessage(frozen);
             if (incompatible) throw new Error(incompatible);
             const recipe = source.recipe ?? await readOriginalRecipe(item,gallerySiteId);
-            if (!recipe || recipe.sheet.key !== source.sheetKey || (recipe.sheet.protectMaskDataUrl && recipe.sheet.useProtectMaskForEdit !== false)) {
+            if (!recipe || recipe.sheet.key !== source.sheetKey) {
               throw new Error('The original rendering inputs for this older sheet are unavailable or incompatible. Your notes are saved.');
             }
-            const reviewImage = source.sheetKey === 'implementation'
-              ? await blankPhasingPanel(illustration, phasingSheetSize(frozen.frame,frozen.refLayers))
-              : illustration;
-            const marked = await correctionReference(reviewImage, selected);
+            let scheduleStart: number | undefined;
+            if (source.sheetKey === 'implementation') {
+              const size = phasingSheetSize(frozen.frame,frozen.refLayers);
+              scheduleStart = phasingPanelRect(size).lgX / size.W;
+              if (selected.some(pin => correctionArea(pin).right > scheduleStart!))
+                throw new Error('Keep the edit area on the illustrated map. The schedule comes from your saved plan.');
+            }
+            const patch = await correctionReference(illustration,selected,scheduleStart);
             if (!stillHere()) throw new Error('The active farm or account changed.');
             // This is exactly one paid pass, even when the original was part of a two-pass job.
             // Its stored input is also the baseline used by the normal difference and restoration checks.
             polishAfterHybridRef.current = false;
             setHybridHandoffReady(false); setLockedPolishStage(null);
-            polishInputRef.current = recipe.sheet.compositeDataUrl;
+            polishInputRef.current = patch.clean;
             const id = await enqueueRenderJobCapped({siteId:gallerySiteId, style:recipe.style, engine:queueEngine, quality,
               attemptId:crypto.randomUUID(), outputMode:'hybrid',
               sceneSnapshot:{sceneJson:source.sceneJson,designRevision:item.designRevision,sourceDataUrl:source.sourceDataUrl},
-              sheets:[{...recipe.sheet,review:{image:marked,notes:selected.map(p => p.note)}}]});
+              sheets:[{key:recipe.sheet.key, label:recipe.sheet.label, resultKind:'hybrid', showcase:false, geometryLock:false,
+                prompt:LOCAL_CORRECTION_PROMPT + (source.historical ? ' '+HISTORICAL_BASELINE_MARKER : ''),
+                compositeDataUrl:patch.clean, review:{image:patch.marked,notes:selected.map(p => p.note),original:illustration,frame:patch.frame}}]});
             if (stillHere()) {
               persistJobId(gallerySiteId,id);
               setQueueJobId(id); setNotice('Your corrected illustration is rendering. The original is in Saved maps.');

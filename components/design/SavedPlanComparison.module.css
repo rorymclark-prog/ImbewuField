@@ -41,3 +41,8 @@
 .changes summary { cursor:pointer; padding:.65rem .15rem; font-weight:650; }
 .changes ul { max-height:12rem; overflow:auto; padding-left:1.4rem; }
 .panes[data-single="true"] { grid-template-columns:minmax(0,1fr); }
+
+.editArea { position:absolute; pointer-events:none; box-sizing:border-box; border:2px dashed #722756; outline:1px solid white; outline-offset:-3px; }
+.areaControls { display:flex; flex-wrap:wrap; gap:.5rem 1rem; margin:.5rem 0; border:1px solid #cbd3ca; }
+.areaControls label { flex:1 1 8rem; }
+.areaControls input { display:block; width:100%; accent-color:#722756; }
