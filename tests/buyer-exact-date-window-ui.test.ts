@@ -142,6 +142,22 @@ test('weekly entry rejects ambiguous numbers, saves an exact zero and reloads it
   current.dispose();
 });
 
+test('a tiny saved quantity stays editable when another weekly quantity changes', () => {
+  const current = boundMount([{ ...dated(), window: { start: '2028-02-28', endExclusive: '2028-03-13' } }]);
+  const { ui } = current;
+  ui.click('Plan weekly quantities');
+  ui.change('2028-02-28', '0.0000001');
+  ui.submit();
+  assert.equal(current.saves, 1);
+  ui.click('Plan weekly quantities');
+  assert.equal(ui.field('2028-02-28').props.value, '0.0000001');
+  ui.change('2028-03-06', '0');
+  ui.submit();
+  assert.equal(current.saves, 2);
+  assert.deepEqual(saved().weeklyPlan?.map(week => week.quantity), [0.0000001, 0]);
+  current.dispose();
+});
+
 test('SSR withholds dated private buyer fields before actor context, and own-record date mode starts blank explicitly', () => {
   const html = renderToString(React.createElement(Panel, { siteId, targets: [dated()], beds: [], plantings: [], pattern: 'mild-frost', climate: {}, basis: 'own-records', onTargets() {}, onAccept() {} }));
   assert.doesNotMatch(html, /Private dated buyer|2028-02-28/);

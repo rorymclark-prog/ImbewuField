@@ -7,7 +7,7 @@ import { HARVEST_TARGET_UNITS, sanitiseHarvestTargets, resolveHarvestTargetDateW
   harvestTargetUnit, harvestTargetWeekWindows, validHarvestTargetWeekQuantity,
   type MonthlyHarvestTiming, type DatedHarvestTiming, type HarvestTarget, type PlanBed, type Planting, type HarvestPackUnit } from '@/lib/crop-plan';
 import { addGrowerUtcDays } from '@/lib/international/grower-planning';
-import { parseExactUnitDecimal } from '@/lib/length-units';
+import { formatExactUnitDecimal, parseExactUnitDecimal } from '@/lib/length-units';
 import { suggestHarvestTargets, type AutoSuggestAnswers, type AutoSuggestResult } from '@/lib/crop-autosuggest';
 import { assessHarvestTarget, HARVEST_TARGET_BASIS, targetMonthStamp, type HarvestTargetAssessment } from '@/lib/harvest-targets';
 import { COVERAGE_TOLERANCE_KG, HARVEST_TARGET_COVERAGE_LABEL as COVERAGE_LABEL } from '@/lib/harvest-target-coverage';
@@ -268,7 +268,7 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
   }
   function editWeeklyPlan(target: HarvestTarget) {
     if (editor.dirty) return;
-    const quantities = Object.fromEntries((target.weeklyPlan ?? []).map(week => [week.start, String(week.quantity)]));
+    const quantities = Object.fromEntries((target.weeklyPlan ?? []).map(week => [week.start, formatExactUnitDecimal(week.quantity)]));
     mutate(previous => ({ ...previous, weeklyEdit: { targetId: target.id, quantities }, dirty: true }));
     setError(''); setSaveStatus('');
   }
