@@ -300,6 +300,10 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
     : `${purposeLabel(row.purpose)} · ${cropByKey(row.cropKey)?.name ?? 'crop not chosen'}`;
   const enteredMeta = (demandId: string) => review?.status === 'review' ? review.enteredDemandMetadata?.find(row => row.demandId === demandId) : undefined;
   const practice = props.practiceDraft;
+  const practiceReady = practice && practice.targetProfiles.every(({ targetId, profileId }) => {
+    const target = targets.find(row => row.id === targetId);
+    return target && profiles.some(profile => profile.profileId === profileId && profile.cropKey === target.cropKey);
+  }) && practice.available.every(row => beds.some(bed => bed.id === row.bedId));
   return <details id={practice ? 'practice-crop-cycle' : undefined} open={practice ? true : undefined}
     className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] text-[var(--text-primary)]">
     <summary className="min-h-12 cursor-pointer px-4 py-3 font-display font-semibold">Automatic plan from your estimates</summary>
@@ -314,8 +318,9 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
       {!props.source && <p>No current design has been checked for this review.</p>}
       {practice && <>
         <p>Check the saved design, then load the fictional lettuce estimate and proposed dates for bed A1. Confirm its availability and the planning assumptions before reviewing the cycle.</p>
-        <button type="button" className={button} disabled={!props.source || props.checking || busy || saving}
-          onClick={() => change({
+        {props.source && !practiceReady && <p>The original target, estimate or bed has changed. Choose current inputs below or <Link className="underline" href="/samples/market-garden">return to the example to reset it</Link>.</p>}
+        <button type="button" className={button} disabled={!practiceReady || props.checking || busy || saving}
+          onClick={() => practiceReady && change({
             ...practice,
             demands: practice.targetProfiles.map(({ targetId, profileId }) => ({ kind: 'buyer-target', targetId, profileId })),
             available: practice.available.map(row => ({ ...row, rowKey: newRowKey() })),
@@ -443,7 +448,7 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
             </article>)}
             {usable && review.proposal.demandResults.map(target => <p key={target.demandId}>{review.enteredDemandMetadata
               ? `${enteredMeta(target.demandId) ? purposeLabel(enteredMeta(target.demandId)!.purpose) : 'Buyer target'}: ` : ''}Estimated gross capacity: {quantity(target.estimatedAllocatedKg)} kg; remaining: {quantity(target.unmetKg)} kg; excess: {quantity(target.excessEstimatedKg)} kg.</p>)}
-            {usable && buyerPicking && (buyerPicking.status === 'held' || buyerPicking.buyers.length > 0) && <details aria-label="Buyer picking date review" className="min-w-0 rounded-lg border border-[var(--border)] p-3 [overflow-wrap:anywhere]">
+            {usable && buyerPicking && (buyerPicking.status === 'held' || buyerPicking.buyers.length > 0) && <details open={practice ? true : undefined} aria-label="Buyer picking date review" className="min-w-0 rounded-lg border border-[var(--border)] p-3 [overflow-wrap:anywhere]">
               <summary className="min-h-11 cursor-pointer font-semibold">Buyer picking dates by review period</summary>
               <div className="mt-2 space-y-3">
                 <p>Proposed picking dates only, not observed harvest or promised deliveries. Harvest and delivery quantities for each period remain Unknown. Saved target facts have not been independently verified.</p>

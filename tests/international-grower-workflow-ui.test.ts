@@ -79,6 +79,39 @@ function fill(screen: ReturnType<typeof mount>) {
   screen.check('I supply these planning dates and availability as my estimates.');
 }
 
+test('practice input loading uses current matching target, estimate and bed without confirming choices', async () => {
+  const originalSelf = Object.getOwnPropertyDescriptor(globalThis, 'self');
+  Object.defineProperty(globalThis, 'self', { configurable: true, value: globalThis });
+  const screen = mount();
+  try {
+    screen.update({ practiceDraft: {
+      planningStart: '2028-02-01', planningEndExclusive: '2028-03-01', maxAssessments: '1000',
+      targetProfiles: [{ targetId: target.id, profileId: profile.profileId }],
+      available: [{ bedId: source.beds[0].id, start: '2028-02-01', endExclusive: '2028-03-01', confirmed: false }],
+      assumptionsConfirmed: false,
+    } });
+    const load = () => screen.renderer.root.findAllByType('button').find(item => text(item) === 'Load practice inputs');
+    assert.equal(load()?.props.disabled, false);
+    screen.update({ targets: [] });
+    assert.equal(load()?.props.disabled, true);
+    await screen.click('Load practice inputs');
+    assert.equal(screen.field('First planning date').props.value, '');
+    screen.update({ targets: [target], profiles: [{ ...profile, cropKey: 'other-crop' }] });
+    assert.equal(load()?.props.disabled, true);
+    screen.update({ profiles: [profile] });
+    await screen.click('Load practice inputs');
+    assert.equal(screen.field('First planning date').props.value, '2028-02-01');
+    assert.equal(screen.field('Growing estimate for this target').props.value, profile.profileId);
+    assert.equal(screen.field('I confirm availability').props.checked, false);
+    assert.equal(screen.field('I supply these planning dates').props.checked, false);
+    assert.deepEqual(screen.attempts, []);
+  } finally {
+    screen.dispose();
+    if (originalSelf) Object.defineProperty(globalThis, 'self', originalSelf);
+    else Reflect.deleteProperty(globalThis, 'self');
+  }
+});
+
 // Locate the actual rendered row, so ordinary edits never reuse a callback
 // captured before a sibling was inserted or removed.
 function intervals(screen: ReturnType<typeof mount>, bedLabel = source.beds[0].label) {

@@ -42,11 +42,11 @@ export default function MarketGardenSamplePage() {
             {workspace === 'green-horizon' ? (
               <>
                 <h2>Weekly veg box target</h2>
-                <p>Plan for {target.weeklyKg} kg of lettuce in the week of {targetWeek}. This is a fictional buyer’s requested quantity. The practice harvest and sale are recorded separately.</p>
+                <p>The exercise starts with a fictional buyer requesting {target.weeklyKg} kg of lettuce for the week of {targetWeek}. You can edit the request in the crop plan.</p>
                 <ol className="my-4 list-decimal space-y-2 pl-5">
                   <li>Open the crop plan to review the target or try planning lettuce in bed A1.</li>
-                  <li>Save the proposed cycle, then open the Task Planner to log a dated observation and link the 6 kg practice harvest.</li>
-                  <li>Check the separate 4 kg sale in Records, then download a private report from the Task Planner.</li>
+                  <li>Save the proposed cycle, then open the Task Planner to log a dated observation and link a practice harvest. The example starts with a 6 kg harvest.</li>
+                  <li>Check the separate sale in Records, which starts at 4 kg, then download a private report from the Task Planner.</li>
                 </ol>
                 <nav aria-label="Market garden workspace" className={styles.actions}>
                   <Link className={`${styles.button} ${styles.primary}`} href={cropPlanHref}>Open crop plan</Link>
@@ -57,6 +57,7 @@ export default function MarketGardenSamplePage() {
                   <Link className={styles.button} href="/journal">Open the field journal</Link>
                   <Link className={styles.button} href="/records">View harvest and sales</Link>
                 </nav>
+                <button type="button" onClick={openGarden}>Reset practice workspace</button>
               </>
             ) : (
               <button type="button" className={styles.primary} onClick={openGarden}>Open market garden workspace</button>
