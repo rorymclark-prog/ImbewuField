@@ -1,5 +1,7 @@
 # ImbewuField audit archive
 
+- [27 November 2026 — Correction pins and design changes](2026-11-27/saved-illustration-review.md)
+
 - [26 November 2026 — Classic illustration finishes](2026-11-26/classic-map-media.md) covers the style picker, paper defaults and monochrome print checks.
 
 - [26 November 2026 — Paid map finish comparison](2026-11-26/ai-map-art-finishes.md) compares four High-quality Whole Design exports.
