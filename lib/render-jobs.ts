@@ -1,3 +1,4 @@
+import { validCorrectionNotes } from './map-correction-pins';
 // Client side of the background AI-render pipeline (worker: functions/src/index.ts).
 //
 // Flow: the browser builds each sheet's composite (existing DesignGlossy code), calls
@@ -61,6 +62,7 @@ export interface RenderSheetSpec {
   label: string;
   prompt: string; // the complete prompt (built client-side so all prompt logic stays here)
   compositeDataUrl: string; // data:image/png;base64,… — the model input
+  review?: { image: string; notes: string[] };
   protectMaskDataUrl?: string; // optional geometry-lock mask for the strict queue path
   /**
    * Pass the protect mask to the edits endpoint as well as using it for deterministic restoration.
@@ -82,6 +84,7 @@ export interface RenderSheetSpec {
 
 /** A sheet's state as it lives in the job doc (input uploaded; worker fills output/status). */
 export interface RenderSheetState {
+  correctionNotes?: string[];
   key: string;
   label: string;
   prompt: string;
@@ -353,6 +356,13 @@ export async function enqueueRenderJob(opts: {
   if (isSampleMode()) {
     throw new RenderJobError(SAMPLE_MODE_RENDER_REFUSAL);
   }
+  for (const sheet of opts.sheets) {
+    if (sheet.review && (!validCorrectionNotes(sheet.review.notes) || !sheet.review.image.startsWith('data:image/jpeg;base64,')
+      || !validImageDataUrl(sheet.review.image) || dataUrlBytes(sheet.review.image) > 2 * 1024 * 1024
+      || (sheet.protectMaskDataUrl && sheet.useProtectMaskForEdit !== false))) {
+      throw new RenderJobError('The saved correction reference is incompatible with this render.');
+    }
+  }
   const requestError = renderJobRequestError(opts.sheets);
   if (requestError) throw new RenderJobError(requestError);
   if (!opts.siteId.trim()) throw new RenderJobError('Choose a farm before rendering AI sheets.');
@@ -403,6 +413,11 @@ export async function enqueueRenderJob(opts: {
       const inputPath = `renders/${uid}/${jobId}/input-${s.key}.jpg`;
       await uploadString(ref(fb.storage, inputPath), s.compositeDataUrl, 'data_url');
       uploaded.push(inputPath);
+      if (s.review) {
+        const reviewPath = `renders/${uid}/${jobId}/review-${s.key}.jpg`;
+        await uploadString(ref(fb.storage, reviewPath), s.review.image, 'data_url');
+        uploaded.push(reviewPath);
+      }
       let protectMaskPath: string | undefined;
       // A mask that protects NOTHING must never be uploaded. At the edits endpoint a fully
       // transparent mask is not a no-op — it states that every pixel is editable, and a real
@@ -420,6 +435,7 @@ export async function enqueueRenderJob(opts: {
         key: s.key,
         label: s.label,
         prompt: s.prompt,
+        ...(s.review ? { correctionNotes: s.review.notes.slice() } : {}),
         inputPath,
         ...(protectMaskPath ? { protectMaskPath } : {}),
         ...(typeof s.useProtectMaskForEdit === 'boolean'
@@ -549,7 +565,9 @@ export function normaliseRenderJobDoc(jobId: string, value: unknown): RenderJobD
     ) return null;
     if (sheet.error !== undefined && typeof sheet.error !== 'string') return null;
 
+    if (sheet.correctionNotes !== undefined && !validCorrectionNotes(sheet.correctionNotes)) return null;
     sheets.push({
+      ...(sheet.correctionNotes ? {correctionNotes:sheet.correctionNotes} : {}),
       key: sheet.key,
       label: sheet.label,
       prompt: sheet.prompt,

@@ -1,6 +1,6 @@
 import { RENDER_SHEET_KEYS, type RenderSheetKey } from './render-job-contract';
 import { decodeRenderSceneSnapshot, MAX_RENDER_SCENE_BYTES } from './render-scene';
-import type { RenderJobDoc, RenderSheetState } from './render-jobs';
+import type { RenderJobDoc, RenderSheetState, RenderSheetSpec } from './render-jobs';
 import { historicalBaselineFromPrompt } from './historical-map-baseline';
 import { isObliqueJobStyle } from './oblique-render';
 
@@ -10,6 +10,18 @@ export interface ComparisonSource {
   sheetKey: RenderSheetKey;
   historical: boolean;
   oblique: boolean;
+  recipe?: CorrectionRecipe;
+}
+
+export interface CorrectionRecipe {
+  style: string;
+  sheet: RenderSheetSpec;
+}
+
+export function originalRecipe(job: RenderJobDoc, sheet: RenderSheetState, input: string, mask?: string): CorrectionRecipe {
+  return { style: job.style, sheet: { key: sheet.key, label: sheet.label, prompt: sheet.prompt,
+    compositeDataUrl: input, protectMaskDataUrl: mask, useProtectMaskForEdit: sheet.useProtectMaskForEdit,
+    geometryLock: sheet.geometryLock, showcase: sheet.showcase, resultKind: sheet.resultKind } };
 }
 
 export interface IllustrationIdentity {
@@ -29,10 +41,10 @@ export function isComparisonSource(value: unknown): value is ComparisonSource {
     && (s.sourceDataUrl === undefined || typeof s.sourceDataUrl === 'string');
 }
 
-export function comparisonSource(job: RenderJobDoc, sheet: RenderSheetState, image?: string | null): ComparisonSource | undefined {
+export function comparisonSource(job: RenderJobDoc, sheet: RenderSheetState, image?: string | null, recipe?: CorrectionRecipe): ComparisonSource | undefined {
   const sheetKey = RENDER_SHEET_KEYS.find(key => key === sheet.key);
   if (!job.sceneJson || !sheetKey || !job.designRevision) return undefined;
-  return { sceneJson: job.sceneJson, sheetKey, historical: !!historicalBaselineFromPrompt(sheet.prompt),
+  return { sceneJson: job.sceneJson, sheetKey, recipe, historical: !!historicalBaselineFromPrompt(sheet.prompt),
     oblique: isObliqueJobStyle(job.style), ...(image ? { sourceDataUrl: image } : {}) };
 }
 

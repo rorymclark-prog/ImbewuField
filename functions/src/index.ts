@@ -1,3 +1,4 @@
+import { correctionInstructions, validCorrectionNotes } from '../../lib/map-correction-pins';
 // ImbewuField — background AI render worker (hardened after adversarial review, 2026-07-17).
 //
 // WHY THIS EXISTS: gpt-image renders take minutes; Vercel kills any request past 60s, and at
@@ -124,6 +125,7 @@ interface RenderSheet {
   label: string;
   prompt: string;
   inputPath: string;
+  correctionNotes?: unknown;
   protectMaskPath?: string;
   useProtectMaskForEdit?: boolean;
   status: 'queued' | 'running' | 'done' | 'error';
@@ -190,13 +192,14 @@ async function openaiEdit(
   imageB64: string,
   prompt: string,
   maskB64?: string,
-  styleReference?: Buffer | null,
+  references?: {style?: Buffer | null; review?: Buffer} | null,
   attempt = 0,
   // Keep the requested money dial across retries; model upgrades do not raise the quality tier.
   // Defaulted here as well as at the call site so an old job doc written before the field existed
   // still renders exactly as it always did.
   quality: 'high' | 'medium' | 'low' = 'high',
-): Promise<string> {
+ ): Promise<string> {
+  const {style:styleReference,review} = references ?? {};
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), ATTEMPT_TIMEOUT_MS);
   let res: Response;
@@ -224,6 +227,7 @@ async function openaiEdit(
     if (styleReference) {
       form.append('image[]', new Blob([styleReference as unknown as Uint8Array], { type: 'image/jpeg' }), 'precision-atlas-style-reference.jpg');
     }
+    if (review) form.append('image[]', new Blob([review as unknown as Uint8Array], { type: 'image/jpeg' }), 'previous-illustration-with-pins.jpg');
     if (maskB64) {
       const maskBuf = Buffer.from(maskB64, 'base64');
       form.append('mask', new Blob([maskBuf as unknown as Uint8Array], { type: 'image/png' }), 'mask.png');
@@ -238,7 +242,7 @@ async function openaiEdit(
     clearTimeout(timer);
     if (attempt < MAX_RETRIES) {
       await sleep(1500 * (attempt + 1));
-      return openaiEdit(key, imageB64, prompt, maskB64, styleReference, attempt + 1, quality);
+      return openaiEdit(key, imageB64, prompt, maskB64, references, attempt + 1, quality);
     }
     throw new Error(`network/abort: ${String(e)}`);
   }
@@ -252,11 +256,11 @@ async function openaiEdit(
     const ra = Number(res.headers.get('retry-after'));
     const wait = Number.isFinite(ra) && ra > 0 ? ra * 1000 : 30_000 + Math.floor(Math.random() * 15_000);
     await sleep(wait);
-    return openaiEdit(key, imageB64, prompt, maskB64, styleReference, attempt + 1, quality);
+    return openaiEdit(key, imageB64, prompt, maskB64, references, attempt + 1, quality);
   }
   if (res.status >= 500 && attempt < MAX_RETRIES) {
     await sleep(2000 * (attempt + 1));
-    return openaiEdit(key, imageB64, prompt, maskB64, styleReference, attempt + 1, quality);
+    return openaiEdit(key, imageB64, prompt, maskB64, references, attempt + 1, quality);
   }
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
@@ -444,7 +448,7 @@ export const runRenderJob = onDocumentCreated(
             // inputPath is DERIVED, never trusted from the client — closes the confused-deputy hole.
             const inputPath = `renders/${job.uid}/${jobId}/input-${sheet.key}.jpg`;
             const [buf] = await bucket.file(inputPath).download();
-            const prompt = String(sheet.prompt ?? '').slice(0, PROMPT_MAX);
+            let prompt = String(sheet.prompt ?? '').slice(0, PROMPT_MAX);
             if (!prompt) throw new Error('empty prompt');
             let maskB64: string | undefined;
             if (sheet.protectMaskPath && sheet.useProtectMaskForEdit !== false) {
@@ -454,6 +458,16 @@ export const runRenderJob = onDocumentCreated(
               const protectMaskPath = `renders/${job.uid}/${jobId}/mask-${sheet.key}.png`;
               const maskBuf = (await bucket.file(protectMaskPath).download().catch(() => [Buffer.alloc(0)]))[0];
               if (maskBuf.length) maskB64 = maskBuf.toString('base64');
+            }
+            let review: Buffer | undefined;
+            if (sheet.correctionNotes !== undefined) {
+              if (!validCorrectionNotes(sheet.correctionNotes) || maskB64) throw new Error('Invalid correction guide.');
+              const file = bucket.file(`renders/${job.uid}/${jobId}/review-${sheet.key}.jpg`);
+              const [meta] = await file.getMetadata();
+              if (Number(meta.size) > 2 * 1024 * 1024 || meta.contentType !== 'image/jpeg') throw new Error('Invalid correction image.');
+              [review] = await file.download();
+              if (!jpegDims(review)) throw new Error('Unreadable correction image.');
+              prompt += '\n\n' + correctionInstructions(sheet.correctionNotes);
             }
             // Precision Atlas is the reversible, reference-guided path.
             //
@@ -493,6 +507,7 @@ export const runRenderJob = onDocumentCreated(
                 0,
                 geminiModelForQuality(quality),
                 geminiConfig,
+                false, review,
               );
 
               if (maskB64) {
@@ -516,7 +531,7 @@ export const runRenderJob = onDocumentCreated(
               const styleReference = job.style === 'precision_atlas' && sheet.geometryLock === true && !maskB64
                 ? await loadPrecisionAtlasReference()
                 : null;
-              outB64 = await openaiEdit(key, buf.toString('base64'), prompt, maskB64, styleReference, 0, quality);
+              outB64 = await openaiEdit(key, buf.toString('base64'), prompt, maskB64, {style:styleReference,review}, 0, quality);
             }
             
             const outputPath = `renders/${job.uid}/${jobId}/output-${sheet.key}.png`; // output_format is png now
