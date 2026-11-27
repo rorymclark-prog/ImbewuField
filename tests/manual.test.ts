@@ -406,10 +406,10 @@ test('switching at the halfway mark stays on the halfway mark even when the new 
   assert.equal(matchingFilmTime(zu, en, 401 / 24), 440 / 24);
 });
 
-for (const [film, cueEnds] of [
-  ['drip', [6, 12, 19, 26, 34, 42]],
-  ['roof', [6, 12, 19, 26, 34, 42]],
-  ['bottle', [5, 11, 17, 23, 29, 36]],
+for (const [film, version, cueEnds] of [
+  ['drip', 1, [6, 12, 19, 26, 34, 42]],
+  ['roof', 1, [6, 12, 19, 26, 34, 42]],
+  ['bottle', 2, [5, 11, 17, 23, 29, 36]],
 ] as const) {
   test(`all five ${film} editions carry six timed stages and report the delivered media size`, () => {
     const english = filmEdition(film, 'en');
@@ -422,8 +422,8 @@ for (const [film, cueEnds] of [
       assert.equal(edition.lang, lang);
       const narrated = lang === 'en' || lang === 'zu';
       assert.equal(edition.captionOnly, !narrated);
-      assert.equal(edition.src, `/manual/films/${film}/v1/${film}-${narrated ? lang : 'captions'}.mp4`);
-      assert.equal(edition.track, `/manual/films/${film}/v1/${film}-${lang}.vtt`);
+      assert.equal(edition.src, `/manual/films/${film}/v${version}/${film}-${narrated ? lang : 'captions'}.mp4`);
+      assert.equal(edition.track, `/manual/films/${film}/v${version}/${film}-${lang}.vtt`);
       assert.equal(edition.seconds, cueEnds[cueEnds.length - 1]);
       const bytes = statSync(path.join(ROOT, 'public', edition.src)).size;
       assert.ok(bytes > 0);
