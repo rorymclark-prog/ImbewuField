@@ -3,11 +3,14 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
 import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'react-test-renderer';
 import { AppRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime.js';
 import ts from 'typescript';
 import { CROPS } from '../lib/crop-catalog.ts';
 import { buildDemoDesignCanvasState } from '../lib/demo-farm.ts';
+import { bedsFromDesignCanvas } from '../lib/design-beds-bridge.ts';
+import { buildGreenHorizonCropPlan, buildGreenHorizonLettuceTarget, buildGreenHorizonStorageSeeds } from '../lib/green-horizon-demo.ts';
 import type { CropPlanState, HarvestTarget } from '../lib/crop-plan.ts';
 import type { GrowerPlanningProfile, GrowerInput } from '../lib/international/grower-planning.ts';
 import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
@@ -15,14 +18,34 @@ import { assembleGrowerWorkflowReview, type GrowerWorkflowDraft, type GrowerWork
 import type { GrowerAutoPlanPanelProps } from '../components/crops/GrowerAutoPlanPanel.tsx';
 
 const hooks = registerHooks({ load(url, context, next) {
-  if (url.endsWith('/components/crops/GrowerAutoPlanPanel.tsx')) return { format: 'module', shortCircuit: true,
+  if (/\/components\/crops\/(GrowerAutoPlanPanel|GreenHorizonProductionPlan)\.tsx$/.test(url)) return { format: 'module', shortCircuit: true,
     source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
       target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
     } }).outputText };
   return next(url, context);
 } });
 const { default: Panel } = await import('../components/crops/GrowerAutoPlanPanel.tsx');
+const { default: ProductionPlan } = await import('../components/crops/GreenHorizonProductionPlan.tsx');
 after(() => hooks.deregister());
+
+test('the example opens with a worked lettuce cycle, saved sowings and explicit missing forecasts', () => {
+  const { siteId } = buildGreenHorizonLettuceTarget();
+  const beds = bedsFromDesignCanvas(JSON.parse(buildGreenHorizonStorageSeeds()[`imbewu_design_canvas_${siteId}`]));
+  const plan = buildGreenHorizonCropPlan();
+  const original = JSON.stringify(plan);
+  const render = () => renderToStaticMarkup(React.createElement(ProductionPlan, { siteId, beds, plan }));
+  const html = render();
+  assert.match(html, /Green Horizon production plan/);
+  assert.match(html, /8 kg of Lettuce/);
+  assert.match(html, /sow 1 Oct 2026 · pick 2 Nov 2026 – 4 Nov 2026/);
+  assert.match(html, /Estimated 11\.52 kg for the cycle/);
+  assert.match(html, /A2 · Roots.*Carrots.*Saved sowing month · October/);
+  assert.match(html, /B1 · Leafy greens.*Swiss [Cc]hard.*Picking dates and yield are unknown/);
+  assert.match(html, /Delivery quantity is unknown/);
+  assert.equal(JSON.stringify(plan), original, 'reading Production never accepts a cycle or writes to the sample');
+  plan.harvestTargets = [];
+  assert.doesNotMatch(render(), /Worked example|8 kg of Lettuce/);
+});
 
 // Synthetic review fixtures. These are neither crop instructions nor equipment defaults.
 const recordedAt = '2026-11-03T12:00:00.000Z';

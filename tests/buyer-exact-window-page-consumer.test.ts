@@ -13,10 +13,12 @@ import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft } from '
 const source = readFileSync(new URL('../app/facilitator/crops/page.tsx', import.meta.url), 'utf8');
 const page = ts.createSourceFile('page.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 let ownSection: ts.Expression | undefined;
+let productionOverview: ts.Expression | undefined;
 const targetNodes: ts.JsxSelfClosingElement[] = [];
 const ownReferences: ts.JsxExpression[] = [];
 function visit(node: ts.Node) {
   if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === 'growerPlanningPanel') ownSection = node.initializer;
+  if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === 'greenHorizonProduction') productionOverview = node.initializer;
   if (ts.isJsxSelfClosingElement(node) && node.tagName.getText(page) === 'HarvestTargetsPanel') targetNodes.push(node);
   if (ts.isJsxExpression(node) && node.expression && ts.isIdentifier(node.expression) && node.expression.text === 'growerPlanningPanel') ownReferences.push(node);
   ts.forEachChild(node, visit);
@@ -46,7 +48,7 @@ const legacyExpression = `(${legacyCountry.condition.getText(page)}) ? (${contai
   : (${contains(legacyCountry.whenFalse, legacyNode) ? legacyAvailability.getText(page) : 'null'})`;
 // The shared section now also mounts the provisional preview. Keep it as a
 // boundary here; its actual UI/source lifecycle has its own mounted tests.
-const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel'];
+const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel', 'GreenHorizonProductionPlan'];
 const boundaries = Object.fromEntries(names.map(name => [name, function Boundary() { return null; }]));
 function compile(expression: string): (input: Record<string, unknown>) => unknown {
   const compiled = ts.transpileModule(`function view(){return (${expression});}`, { compilerOptions: {
@@ -180,6 +182,20 @@ test('only the active Green Horizon workspace at its mapped site receives the pr
   assert.equal(draftFor('green-horizon', siteId), undefined);
   assert.equal(draftFor('ubhejane', practiceSiteId), undefined);
   assert.equal(draftFor(null, practiceSiteId), undefined);
+});
+
+test('the filled production overview uses the active Green Horizon mapped plan only', () => {
+  assert.ok(productionOverview);
+  const render = compile(productionOverview.getText(page));
+  const fixture = input(false);
+  const selected = { ...fixture, productionSiteId: buildGreenHorizonLettuceTarget().siteId, getSampleWorkspace: () => 'green-horizon' };
+  const overview = elements(render(selected)).find(element => element.type === boundaries.GreenHorizonProductionPlan);
+  assert.ok(overview);
+  assert.equal(overview.props.plan, fixture.plan);
+  assert.equal(overview.props.beds, fixture.beds);
+  assert.equal(render({ ...selected, getSampleWorkspace: () => null }), null);
+  assert.equal(render({ ...selected, getSampleWorkspace: () => 'ubhejane' }), null);
+  assert.equal(render({ ...selected, productionSiteId: siteId }), null);
 });
 
 test('an absent current plan passes empty target rows rather than borrowing another source', () => {
