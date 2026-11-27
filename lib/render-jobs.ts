@@ -1,4 +1,5 @@
-import { validCorrectionNotes } from './map-correction-pins';
+import { freezeCorrectionOriginal, originalStripPath, validCorrectionFrame, type CorrectionFrame } from './local-map-correction';
+import { validCorrectionNotes, LOCAL_CORRECTION_PROMPT } from './map-correction-pins';
 // Client side of the background AI-render pipeline (worker: functions/src/index.ts).
 //
 // Flow: the browser builds each sheet's composite (existing DesignGlossy code), calls
@@ -16,7 +17,7 @@ import { UserFacingError } from '@/lib/user-facing-error';
 import { isMapModelId, openAiMapModelLabel } from './ai-render/model';
 import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
 import { doc, onSnapshot, serverTimestamp, setDoc, Timestamp, type FirestoreError } from 'firebase/firestore';
-import { deleteObject, getDownloadURL, ref, uploadString } from 'firebase/storage';
+import { deleteObject, getDownloadURL, ref, uploadBytes, uploadString } from 'firebase/storage';
 import { hasConflictingRenderAuthority } from '@/lib/render-policy';
 import { releaseCanvas, releaseImageSource } from '@/lib/release-canvas';
 import {
@@ -62,7 +63,7 @@ export interface RenderSheetSpec {
   label: string;
   prompt: string; // the complete prompt (built client-side so all prompt logic stays here)
   compositeDataUrl: string; // data:image/png;base64,… — the model input
-  review?: { image: string; notes: string[] };
+  review?: { image: string; notes: string[]; original: string; frame: CorrectionFrame };
   protectMaskDataUrl?: string; // optional geometry-lock mask for the strict queue path
   /**
    * Pass the protect mask to the edits endpoint as well as using it for deterministic restoration.
@@ -85,6 +86,7 @@ export interface RenderSheetSpec {
 /** A sheet's state as it lives in the job doc (input uploaded; worker fills output/status). */
 export interface RenderSheetState {
   correctionNotes?: string[];
+  correctionFrame?: CorrectionFrame;
   key: string;
   label: string;
   prompt: string;
@@ -359,6 +361,8 @@ export async function enqueueRenderJob(opts: {
   for (const sheet of opts.sheets) {
     if (sheet.review && (!validCorrectionNotes(sheet.review.notes) || !sheet.review.image.startsWith('data:image/jpeg;base64,')
       || !validImageDataUrl(sheet.review.image) || dataUrlBytes(sheet.review.image) > 2 * 1024 * 1024
+      || !validCorrectionFrame(sheet.review.frame) || sheet.review.frame.areas.length !== sheet.review.notes.length
+      || !validImageDataUrl(sheet.review.original)
       || (sheet.protectMaskDataUrl && sheet.useProtectMaskForEdit !== false))) {
       throw new RenderJobError('The saved correction reference is incompatible with this render.');
     }
@@ -413,7 +417,15 @@ export async function enqueueRenderJob(opts: {
       const inputPath = `renders/${uid}/${jobId}/input-${s.key}.jpg`;
       await uploadString(ref(fb.storage, inputPath), s.compositeDataUrl, 'data_url');
       uploaded.push(inputPath);
+      let correctionFrame: CorrectionFrame | undefined;
       if (s.review) {
+        correctionFrame = await freezeCorrectionOriginal(s.review.original, s.review.frame.areas, async (y, png) => {
+          const path = originalStripPath(inputPath,y);
+          await uploadBytes(ref(fb.storage,path),png);
+          uploaded.push(path);
+        });
+        if (correctionFrame.width !== s.review.frame.width || correctionFrame.height !== s.review.frame.height)
+          throw new RenderJobError('The review guide and original illustration have different dimensions.');
         const reviewPath = `renders/${uid}/${jobId}/review-${s.key}.jpg`;
         await uploadString(ref(fb.storage, reviewPath), s.review.image, 'data_url');
         uploaded.push(reviewPath);
@@ -435,7 +447,7 @@ export async function enqueueRenderJob(opts: {
         key: s.key,
         label: s.label,
         prompt: s.prompt,
-        ...(s.review ? { correctionNotes: s.review.notes.slice() } : {}),
+        ...(s.review ? { correctionNotes: s.review.notes.slice(), correctionFrame } : {}),
         inputPath,
         ...(protectMaskPath ? { protectMaskPath } : {}),
         ...(typeof s.useProtectMaskForEdit === 'boolean'
@@ -566,7 +578,11 @@ export function normaliseRenderJobDoc(jobId: string, value: unknown): RenderJobD
     if (sheet.error !== undefined && typeof sheet.error !== 'string') return null;
 
     if (sheet.correctionNotes !== undefined && !validCorrectionNotes(sheet.correctionNotes)) return null;
+    if (sheet.prompt.startsWith(LOCAL_CORRECTION_PROMPT) && !sheet.correctionFrame) return null;
+    if (sheet.correctionFrame !== undefined && (!validCorrectionFrame(sheet.correctionFrame)
+      || !Array.isArray(sheet.correctionNotes) || sheet.correctionFrame.areas.length !== sheet.correctionNotes.length)) return null;
     sheets.push({
+      ...(sheet.correctionFrame ? {correctionFrame:sheet.correctionFrame} : {}),
       ...(sheet.correctionNotes ? {correctionNotes:sheet.correctionNotes} : {}),
       key: sheet.key,
       label: sheet.label,

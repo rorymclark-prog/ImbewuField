@@ -360,6 +360,13 @@ test('subscription snapshots are accepted only when every storage path belongs t
   };
 
   assert.deepEqual(normaliseRenderJobDoc(jobId, valid), valid);
+  const areas = [{left:.3,right:.5,top:.5,bottom:.6}];
+  const correction = {...valid.sheets[0], correctionNotes:['Reshape swale'], correctionFrame:{version:1,width:3462,height:2448,areas}};
+  const recovered = normaliseRenderJobDoc(jobId,{...valid,sheets:[correction]});
+  assert.deepEqual(recovered?.sheets[0].correctionFrame,correction.correctionFrame);
+  for (const bad of [{...correction,correctionNotes:[]},{...correction,correctionFrame:{width:100,height:100,areas:[{...areas[0],right:1.3}]}}]) {
+    assert.equal(normaliseRenderJobDoc(jobId,{...valid,sheets:[bad]}),null);
+  }
   const current = { ...valid, model: OPENAI_MAP_MODEL };
   assert.deepEqual(normaliseRenderJobDoc(jobId, current), current,
     'a reload must retain the worker model rather than guessing from the current picker');
@@ -779,4 +786,24 @@ test('design changes distinguish moved tanks, new beds and removed lines across 
   assert.deepEqual(savedDesignChanges(baseline,{state:edited,refLayers,frame:next}),[
     {action:'Moved',name:'Rain tank',count:1},{action:'Added',name:'Vegetable bed',count:2},{action:'Removed',name:'fence',count:1}]);
   assert.equal(savedDesignChanges(baseline,{...baseline,state:{...state,siteId:'other'}}),null);
+});
+
+test('only the selected pixels can change across edges, strip seams and overlapping pins', async () => {
+  const {correctionCoverage} = await import('../lib/local-map-correction.ts');
+  const {correctionArea} = await import('../lib/map-correction-pins.ts');
+  const pin = {id:'swale',x:.4,y:.5,note:'Widen the downslope berm',width:.4,height:.14};
+  const legacyEdge = correctionArea({...pin,x:0,y:0,width:undefined,height:undefined});
+  assert.deepEqual(legacyEdge,{left:0,top:0,right:.04,bottom:.04});
+  const areas = [legacyEdge,correctionArea(pin),correctionArea({...pin,x:.5})];
+  const frame={version:1 as const,width:101,height:99,areas};
+  const whole=correctionCoverage(frame,0,99);
+  assert.deepEqual(whole,correctionCoverage({...frame,areas:[...areas].reverse()},0,99));
+  assert.deepEqual([...whole],[...correctionCoverage(frame,0,49),...correctionCoverage(frame,49,50)]);
+  assert.equal(whole[49*101+40],255);
+  assert.ok(whole.some(v => v>0 && v<255));
+  for (let y=0;y<99;y++) for (let x=0;x<101;x++) {
+    if (!areas.some(a => (x+.5)/101>=a.left && (x+.5)/101<a.right && (y+.5)/99>=a.top && (y+.5)/99<a.bottom)) {
+      assert.equal(whole[y*101+x],0);
+    }
+  }
 });

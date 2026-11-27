@@ -26,6 +26,7 @@ export default function SavedPlanComparison({ load, review, loadIllustration }: 
   const [zoom, setZoom] = useState(1);
   const [pins, setPins] = useState<CorrectionPin[]>([]);
   const [draft, setDraft] = useState<PinDraft | null>(null);
+  const [selectedPins, selectPins] = useState<string[]>([]);
   const [placing, setPlacing] = useState(false);
   const [pinsError, setPinsError] = useState('');
   const centres = useRef<Record<Side, [number, number]>>({ plan: [.5,.5], illustration: [.5,.5] });
@@ -88,7 +89,7 @@ export default function SavedPlanComparison({ load, review, loadIllustration }: 
       onKeyDown={e => { if (e.key === 'Escape') e.stopPropagation(); }}
       onClose={() => {
         attempt.current++;
-        setPins([]); setDraft(null); setPlacing(false); setPinsError('');
+        setPins([]); selectPins([]); setDraft(null); setPlacing(false); setPinsError('');
         setPair(null); setMessage(''); setSide('plan'); setZoom(1);
         centres.current = {plan:[.5,.5], illustration:[.5,.5]};
         opener.current?.focus({preventScroll:true});
@@ -126,9 +127,10 @@ export default function SavedPlanComparison({ load, review, loadIllustration }: 
               }}>
               <div style={{width: zoom * 100 + '%', height: zoom * 100 + '%'}}>
                 {which === 'plan' ? <img src={pair.plan ?? undefined} alt="Exact map from the original saved design" /> :
-                  <ReviewImage image={pair.illustration} pins={pins} placing={placing} place={point => {
+                  <ReviewImage image={pair.illustration} outlined={draft ? [draft.next.id] : selectedPins} pins={draft
+                    ? (draft.previous ? pins.map(p => p.id === draft.next.id ? draft.next : p) : [...pins, draft.next]) : pins} placing={placing} place={point => {
                     setDraft({next:{id:crypto.randomUUID(),...point,note:''}}); setPlacing(false);
-                  }} edit={pin => { setPlacing(false); setDraft({previous:pin,next:{...pin}}); }} />}
+                  }} edit={pin => { if (draft) return; setPlacing(false); setDraft({previous:pin,next:{...pin}}); }} />}
               </div>
             </div>
           </section>)}
@@ -141,7 +143,7 @@ export default function SavedPlanComparison({ load, review, loadIllustration }: 
             </>}
         </details>
         {pinsError ? <p role="status">{pinsError}</p> : <ReviewNotes actions={pair.plan ? review : {...review,render:undefined,renderLabel:'Original inputs are unavailable for this saved illustration.'}} pins={pins} setPins={setPins}
-          draft={draft} setDraft={setDraft} placing={placing} illustration={pair.illustration}
+          selected={selectedPins} select={selectPins} draft={draft} setDraft={setDraft} placing={placing} illustration={pair.illustration}
           begin={() => { if (narrow && side !== 'illustration') {
             remember(side); if (!pair.oblique) centres.current.illustration = centres.current.plan;
           } setSide('illustration'); setPlacing(true); }}
