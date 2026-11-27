@@ -409,7 +409,7 @@ test('switching at the halfway mark stays on the halfway mark even when the new 
 for (const [film, version, cueEnds] of [
   ['drip', 1, [6, 12, 19, 26, 34, 42]],
   ['roof', 1, [6, 12, 19, 26, 34, 42]],
-  ['bottle', 2, [5, 11, 17, 23, 29, 36]],
+  ['bottle', 3, [5, 11, 17, 23, 29, 36]],
 ] as const) {
   test(`all five ${film} editions carry six timed stages and report the delivered media size`, () => {
     const english = filmEdition(film, 'en');

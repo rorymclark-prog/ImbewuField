@@ -50,7 +50,7 @@ const versions: Record<FieldFilm, Versions> = {
   earth: { en: { bytes: 1844924, pictures: [720], ends: [807] } },
   drip: manualEditions([6, 12, 19, 26, 34, 42], { en: 3894033, zu: 3952301, captions: 3610429 }),
   roof: manualEditions([6, 12, 19, 26, 34, 42], { en: 4946589, zu: 4952807, captions: 4648115 }),
-  bottle: manualEditions([5, 11, 17, 23, 29, 36], { en: 4344508, zu: 4359523, captions: 4073841 }, 2),
+  bottle: manualEditions([5, 11, 17, 23, 29, 36], { en: 4027171, zu: 4042186, captions: 3756504 }, 3),
   level: {
     en: { bytes: 4826644, pictures: [84, 180, 312, 396, 480, 594, 672], ends: [110, 206, 343, 435, 519, 674, 752] },
     zu: { bytes: 4659422, pictures: [180, 396, 480, 672], ends: [180, 396, 517, 715] },
