@@ -46,7 +46,8 @@ import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-s
 import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-workflow';
 import { activeAccountLocalStorageKey, activeAccountUid } from '@/lib/account-local-storage';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
-import { isFictionalSampleLocation, isSampleMode } from '@/lib/sample-mode';
+import { getSampleWorkspace, isFictionalSampleLocation, isSampleMode } from '@/lib/sample-mode';
+import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft } from '@/lib/green-horizon-demo';
 import { sampleSowingCalendarFor } from '@/lib/sample-sowing-calendar';
 import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import NurseryForecastSummary from '@/components/crops/NurseryForecastSummary';
@@ -2634,6 +2635,8 @@ function FacilitatorCropsPageInner() {
       source={growerWorkflow.source} sourceName={placeName || designTitle} sourceIssue={growerWorkflow.sourceIssue}
       checking={growerWorkflow.checking} contextRevision={growerWorkflow.contextRevision}
       targets={plan?.harvestTargets ?? []} targetSiteId={productionSiteId} profiles={plan?.growerPlanningProfiles ?? []}
+      practiceDraft={getSampleWorkspace() === 'green-horizon' && productionSiteId === buildGreenHorizonLettuceTarget().siteId
+        ? buildGreenHorizonPlanningDraft() : undefined}
       onRefresh={growerWorkflow.onRefresh} onReview={growerWorkflow.onReview}
       onAccept={growerWorkflow.onAccept} acceptance={growerWorkflow.acceptance}
       nurseryReview={review => growerWorkflow.source && <GrowerNurseryReviewPanel review={review}

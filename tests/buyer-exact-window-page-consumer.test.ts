@@ -5,6 +5,7 @@ import React from 'react';
 import ts from 'typescript';
 import { bindSiteContext, createSiteCountryContext } from '../lib/international/site-context.ts';
 import { resolvePlanningSupport } from '../lib/international/planning-policy.ts';
+import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft } from '../lib/green-horizon-demo.ts';
 
 // Execute actual route JSX availability and prop expressions without importing
 // the page's hooks/browser. Boundary components are markers, not mounted editors
@@ -93,6 +94,7 @@ function input(allowCataloguePlanning: boolean) {
     growerWorkflow: { source, sourceIssue: null, checking: false, contextRevision: 4, onReview, onRefresh() {}, onAccept() {},
       onCheckPreviewSource() { throw Error('Consumer mount must not read preview source automatically'); }, acceptance: { status: 'idle' }, savedNurseryReview: null },
     placeName: 'Engineering source', designTitle: 'Engineering design', growerSample: false, growerOwner: 'fixture-owner',
+    getSampleWorkspace: () => null, buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft,
     countryPlaces: [{ id: 'fictional-place', name: 'Engineering fixture' }],
     siteClimate: null, hasSiteCoords: false, siteLat: 0, siteSurvey: null, saved,
     growerConditions, exportSavedGrowerRecord,
@@ -167,6 +169,17 @@ test('the actual own-records mount retains its exact key, full rows, save contex
   assert.equal(history.props.wholeBookRows, fixture.plan.plantings);
   assert.equal(history.props.conditions, fixture.growerConditions);
   assert.equal(history.props.onExport, fixture.exportSavedGrowerRecord);
+});
+
+test('only the active Green Horizon workspace at its mapped site receives the practice inputs', () => {
+  const practiceSiteId = buildGreenHorizonLettuceTarget().siteId;
+  const draftFor = (workspace: string | null, productionSiteId: string) => elements(renderOwn({
+    ...input(false), getSampleWorkspace: () => workspace, productionSiteId,
+  })).find(element => element.type === boundaries.GrowerAutoPlanPanel)?.props.practiceDraft;
+  assert.deepEqual(draftFor('green-horizon', practiceSiteId), buildGreenHorizonPlanningDraft());
+  assert.equal(draftFor('green-horizon', siteId), undefined);
+  assert.equal(draftFor('ubhejane', practiceSiteId), undefined);
+  assert.equal(draftFor(null, practiceSiteId), undefined);
 });
 
 test('an absent current plan passes empty target rows rather than borrowing another source', () => {

@@ -7,6 +7,8 @@ import type { FacilitatorDesignState } from './facilitator-design';
 import type { JournalEntry } from './field-journal';
 import type { SellerLetterhead } from './invoice-seller';
 import type { SavedPlace } from './saved-places';
+import type { GrowerInput, GrowerPlanningProfile } from './international/grower-planning';
+import type { GrowerWorkflowDraft } from './international/grower-workflow';
 
 // The town point matches the fictional Green Horizon entry in /samples/gardens.
 // The plot, beds, crop dates and records are an exercise with no surveyed site.
@@ -28,6 +30,7 @@ const BED_WIDTH = 1.2;
 const BED_TOP = 5;
 
 const PRACTICE_BUYER = 'Weekly veg boxes (practice)';
+const PRACTICE_PROFILE_ID = 'green-horizon-practice-lettuce-estimate';
 
 export function buildGreenHorizonLettuceTarget(): DatedKgHarvestTarget {
   return {
@@ -36,8 +39,37 @@ export function buildGreenHorizonLettuceTarget(): DatedKgHarvestTarget {
     cropKey: 'lettuce',
     outlet: PRACTICE_BUYER,
     weeklyKg: 8,
+    marketablePercent: 80,
     timing: 'date-window',
     window: { start: DATE, endExclusive: '2026-11-09' },
+  };
+}
+
+/** These are fictional exercise inputs, with no authority for a real site. */
+function buildGreenHorizonLettuceEstimate(siteId: string): GrowerPlanningProfile {
+  const estimate = <T, U extends string>(value: T, unit: U): GrowerInput<T, U> => ({
+    state: 'provided', value, unit, provenance: {
+      kind: 'grower-estimate', recordedAt: TIMESTAMP, note: 'Fictional Green Horizon exercise input.',
+    },
+  });
+  return {
+    version: 1, profileId: PRACTICE_PROFILE_ID, cropKey: 'lettuce', scope: { kind: 'mapped-site', siteId },
+    inputs: {
+      plantsPerM2: estimate(10, 'plants/m2'), yieldKgPerM2: estimate(0.6, 'kg/m2/cycle'),
+      establishment: estimate('direct', 'method'), nurseryDays: { state: 'missing', reason: 'not-applicable' },
+      fieldEntryToFirstHarvestDays: estimate(32, 'days'), pickingDays: estimate(3, 'days'),
+      fieldOccupancyDays: estimate(36, 'days'), turnaroundDays: estimate(4, 'days'),
+      allowedEntryMonths: estimate([10], 'utc-months'),
+    },
+  };
+}
+
+export function buildGreenHorizonPlanningDraft(): GrowerWorkflowDraft {
+  return {
+    planningStart: '2026-10-01', planningEndExclusive: '2026-12-01', maxAssessments: '1000',
+    targetProfiles: [{ targetId: buildGreenHorizonLettuceTarget().id, profileId: PRACTICE_PROFILE_ID }],
+    available: [{ bedId: BEDS[0].id, start: '2026-10-01', endExclusive: '2026-11-10', confirmed: false }],
+    assumptionsConfirmed: false,
   };
 }
 
@@ -75,10 +107,13 @@ export function buildGreenHorizonLetterhead(): SellerLetterhead {
 }
 
 export function buildGreenHorizonCropPlan(): CropPlanState {
+  const target = buildGreenHorizonLettuceTarget();
   return {
     version: 1, updatedAt: RECORD_TIME,
-    harvestTargets: [buildGreenHorizonLettuceTarget()],
-    plantings: BEDS.map(bed => ({
+    harvestTargets: [target],
+    growerPlanningProfiles: [buildGreenHorizonLettuceEstimate(target.siteId)],
+    // A1 is the available bed that visitors plan for the lettuce request.
+    plantings: BEDS.slice(1).map(bed => ({
       id: `${bed.id}-planting`, bedId: bed.id, cropKey: bed.cropKey, sowMonth: 10,
     })),
   };

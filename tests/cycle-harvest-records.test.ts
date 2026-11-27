@@ -4,6 +4,7 @@ import test, { after, beforeEach } from 'node:test';
 import { bindMountedAccountLocalStorageUid } from '../lib/account-local-storage.ts';
 import { cycleHarvestDocumentId, makeCycleHarvestLink } from '../lib/cycle-harvest.ts';
 import type { GrowerJournalLink } from '../lib/field-journal.ts';
+import { buildGreenHorizonLettuceTarget } from '../lib/green-horizon-demo.ts';
 import {
   addSandboxProduction, deleteSandboxProduction, enterSampleMode, exitSampleMode, getSandboxProduction,
 } from '../lib/sample-mode.ts';
@@ -213,6 +214,42 @@ test('sample links use the existing sample harvest book and are withdrawn on del
   assert.equal((window.localStorage as unknown as TestStorage).data.size, 0);
   assert.equal(enterSampleMode(), true);
   assert.deepEqual((await captureCycleHarvestReport(plan, 'cabbage', current)).evidence, { status: 'ready', rows: [], incomplete: false });
+  exitSampleMode();
+});
+
+test('Green Horizon can link its own practice harvest, with no access after switching or restarting', async () => {
+  assert.equal(enterSampleMode('green-horizon'), true);
+  const { siteId, window: { start } } = buildGreenHorizonLettuceTarget();
+  const reference: GrowerJournalLink = {
+    version: 1, scope: { kind: 'mapped-site', siteId }, plantingId: 'green-horizon-bed-a1-planting',
+    bedId: 'green-horizon-bed-a1', eventKind: 'first-pick', plannedDate: start,
+  };
+  const options = await readCycleHarvestOptions('lettuce', current, reference);
+  assert.equal(options.status, 'ready');
+  const selected = options.options.find(option => option.recordId === 'green-horizon-example-harvest');
+  assert.ok(selected);
+  const link = makeCycleHarvestLink(reference, 'lettuce', { recordId: selected.recordId, observedOn: start });
+  assert.ok(link);
+  assert.deepEqual(await linkExistingCycleHarvest(link, selected, current), { status: 'saved' });
+  const report = await captureGardenCycleHarvest(reference, 'lettuce', current);
+  assert.deepEqual(report.evidence, {
+    status: 'ready', rows: [{ recordId: selected.recordId, observedOn: start, recordedOn: start, quantity: 6, unit: 'kg' }],
+    incomplete: false,
+  });
+  assert.equal(await report.checkCurrent(), true);
+
+  const pending = readCycleHarvestOptions('lettuce', current, reference);
+  assert.equal(enterSampleMode(), true);
+  assert.deepEqual(await pending, { status: 'held', options: [] });
+  assert.equal(await report.checkCurrent(), false);
+  assert.deepEqual(await linkExistingCycleHarvest(link, selected, current), { status: 'held' });
+  assert.equal(enterSampleMode('green-horizon'), true);
+  const restarted = await readCycleHarvestOptions('lettuce', current, reference);
+  assert.equal(restarted.status, 'ready');
+  assert.deepEqual(restarted.linked, []);
+  assert.ok(restarted.options.some(option => option.recordId === selected.recordId));
+  assert.equal(state.reads, 0);
+  assert.equal(state.writes, 0);
   exitSampleMode();
 });
 

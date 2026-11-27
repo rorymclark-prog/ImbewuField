@@ -26,6 +26,7 @@ export interface GrowerAutoPlanPanelProps {
   profiles: readonly GrowerPlanningProfile[];
   targets: readonly HarvestTarget[];
   targetSiteId: string | null;
+  practiceDraft?: GrowerWorkflowDraft;
   onRefresh: () => Promise<void>;
   onReview: (draft: GrowerWorkflowDraft) => Promise<GrowerWorkflowReview>;
   onAccept?: (review: Extract<GrowerWorkflowReview, { status: 'review' }>, displayedReviewIsCurrent: () => boolean) => Promise<GrowerWorkflowAcceptanceResult>;
@@ -298,7 +299,9 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
     ? `Buyer target · ${cropByKey(targets.find(target => target.id === row.targetId)?.cropKey ?? '')?.name ?? 'Unavailable target'}`
     : `${purposeLabel(row.purpose)} · ${cropByKey(row.cropKey)?.name ?? 'crop not chosen'}`;
   const enteredMeta = (demandId: string) => review?.status === 'review' ? review.enteredDemandMetadata?.find(row => row.demandId === demandId) : undefined;
-  return <details className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] text-[var(--text-primary)]">
+  const practice = props.practiceDraft;
+  return <details id={practice ? 'practice-crop-cycle' : undefined} open={practice ? true : undefined}
+    className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] text-[var(--text-primary)]">
     <summary className="min-h-12 cursor-pointer px-4 py-3 font-display font-semibold">Automatic plan from your estimates</summary>
     <section aria-label="Grower automatic plan review" className="space-y-4 px-4 pb-4 text-sm">
       <p>Match your saved buyer targets to whole beds or field plots using your own growing estimates. This does not choose a local crop calendar or promise weekly deliveries.</p>
@@ -309,6 +312,15 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
       }}>{props.checking ? 'Checking saved design…' : 'Check saved design'}</button>
       {props.sourceIssue && <p role="status">{props.sourceIssue}</p>}
       {!props.source && <p>No current design has been checked for this review.</p>}
+      {practice && <>
+        <p>Check the saved design, then load the fictional lettuce estimate and proposed dates for bed A1. Confirm its availability and the planning assumptions before reviewing the cycle.</p>
+        <button type="button" className={button} disabled={!props.source || props.checking || busy || saving}
+          onClick={() => change({
+            ...practice,
+            demands: practice.targetProfiles.map(({ targetId, profileId }) => ({ kind: 'buyer-target', targetId, profileId })),
+            available: practice.available.map(row => ({ ...row, rowKey: newRowKey() })),
+          })}>Load practice inputs</button>
+      </>}
       <fieldset className="space-y-3 rounded-xl border border-[var(--border)] p-3">
         <legend className="px-1 font-semibold">Buyer targets and priority</legend>
         <p>Save buyer targets and growing estimates above first. Select each target and its matching estimate profile. Earlier targets have priority.</p>

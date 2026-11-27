@@ -43,9 +43,14 @@ export default function MarketGardenSamplePage() {
               <>
                 <h2>Weekly veg box target</h2>
                 <p>Plan for {target.weeklyKg} kg of lettuce in the week of {targetWeek}. This is a fictional buyer’s requested quantity. The practice harvest and sale are recorded separately.</p>
-                <p>Open the crop plan and expand Harvest targets to review or edit the request.</p>
+                <ol className="my-4 list-decimal space-y-2 pl-5">
+                  <li>Open the crop plan to review the target or try planning lettuce in bed A1.</li>
+                  <li>Save the proposed cycle, then open the Task Planner to log a dated observation and link the 6 kg practice harvest.</li>
+                  <li>Check the separate 4 kg sale in Records, then download a private report from the Task Planner.</li>
+                </ol>
                 <nav aria-label="Market garden workspace" className={styles.actions}>
                   <Link className={`${styles.button} ${styles.primary}`} href={cropPlanHref}>Open crop plan</Link>
+                  <Link className={styles.button} href={`${cropPlanHref}#practice-crop-cycle`}>Try the lettuce cycle</Link>
                   <Link className={styles.button} href="/farmer">Open the map</Link>
                   <Link className={styles.button} href={designHref}>Edit the beds</Link>
                   <Link className={styles.button} href="/cropplan">Open the task planner</Link>

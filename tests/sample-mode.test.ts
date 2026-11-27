@@ -39,8 +39,11 @@ Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, value:
 
 const sample = await import('../lib/sample-mode.ts');
 const { DEMO_SITE, buildDemoStorageSeeds } = await import('../lib/demo-farm.ts');
-const { GREEN_HORIZON_SITE, buildGreenHorizonLettuceTarget, buildGreenHorizonStorageSeeds } = await import('../lib/green-horizon-demo.ts');
+const { GREEN_HORIZON_SITE, buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonStorageSeeds } = await import('../lib/green-horizon-demo.ts');
 const { loadCropPlan, saveCropPlanWithReceipt } = await import('../lib/crop-plan.ts');
+const { readCanvasSourceReceipt } = await import('../lib/design-canvas.ts');
+const { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } = await import('../lib/international/grower-workflow-source.ts');
+const { assembleGrowerWorkflowReview, prepareGrowerWorkflowAcceptance } = await import('../lib/international/grower-workflow.ts');
 const { designSiteIdFromLocation } = await import('../lib/design-studio.ts');
 const { loadPlaces } = await import('../lib/saved-places.ts');
 const { prepareSampleFarm } = await import('../lib/sample-farm-session.ts');
@@ -166,7 +169,9 @@ test('Green Horizon keeps its typed and raw edits apart from Ubhejane and real r
   const rawCanvas = JSON.parse(realLocal.getItem(canvasKey) ?? '');
   assert.equal(rawCanvas.baseMode, 'blank');
   assert.equal(rawCanvas.siteId, designSiteIdFromLocation(GREEN_HORIZON_SITE));
-  assert.deepEqual(rawCanvas.items.map((bed: { id: string }) => bed.id), sample.getSandboxCropPlan().plantings.map(planting => planting.bedId));
+  assert.deepEqual(rawCanvas.items.map((bed: { id: string }) => bed.id), [
+    'green-horizon-bed-a1', ...sample.getSandboxCropPlan().plantings.map(planting => planting.bedId),
+  ]);
   assert.equal(realLocal.getItem('imbewu_field_journal_v1'), seeds.imbewu_field_journal_v1);
   assert.equal(realLocal.getItem('fp-theme'), 'slate');
   assert.equal(realLocal.getItem(ubhejaneCanvasKey), null);
@@ -231,6 +236,42 @@ test('Green Horizon’s dated lettuce target survives the normal sample save and
   assert.ok(!loadCropPlan().harvestTargets?.some(row => row.id === target.id));
   assert.equal(sample.enterSampleMode('green-horizon'), true);
   assert.deepEqual(loadCropPlan().harvestTargets, [target]);
+});
+
+test('the Green Horizon practice inputs produce a saved cycle with an explicitly partial picking window', async () => {
+  reset();
+  assert.ok(sample.enterSampleMode('green-horizon'));
+  const { siteId } = buildGreenHorizonLettuceTarget();
+  const receipt = readCanvasSourceReceipt(siteId);
+  assert.equal(receipt.status, 'ready');
+  const source = await fingerprintGrowerWorkflowSource(inspectGrowerWorkflowSource({
+    kind: 'studio-canvas', sourceId: siteId, raw: receipt.raw, sourceRevision: receipt.revision,
+  }));
+  assert.equal(source.status, 'ready');
+  const book = loadCropPlan();
+  const practice = buildGreenHorizonPlanningDraft();
+  assert.equal(practice.assumptionsConfirmed, false);
+  assert.equal(practice.available[0].confirmed, false);
+  const draft = { ...practice, assumptionsConfirmed: true, available: practice.available.map(row => ({ ...row, confirmed: true })) };
+  const recordedAt = '2026-11-27T09:00:00.000Z';
+  const review = assembleGrowerWorkflowReview({ scope: source.scope, source, book, draft, recordedAt });
+  assert.equal(review.status, 'review', review.issues.join(', '));
+  assert.equal(review.proposal.status, 'ready');
+  assert.equal(review.targetMetadata[0].buyerTotalKg, 8);
+  assert.equal(review.targetMetadata[0].grossCapacityRequiredKg, 10);
+  assert.equal(review.targetMetadata[0].deliveryDistribution, 'not-established');
+  assert.equal(review.proposal.cycles.length, 1);
+  const [cycle] = review.proposal.cycles;
+  assert.equal(cycle.bedId, 'green-horizon-bed-a1');
+  assert.equal(cycle.assessment.schedule.firstHarvestDate, '2026-11-02');
+  assert.equal(cycle.assessment.schedule.harvestEndExclusiveDate, '2026-11-05');
+  const accepted = prepareGrowerWorkflowAcceptance({ scope: source.scope, source, book, review, binding: { draft, source, recordedAt },
+    acceptedAt: recordedAt, plantingIds: [{ cycleId: cycle.cycleId, plantingId: 'accepted-green-horizon-cycle' }] });
+  assert.equal(accepted.status, 'prepared');
+  assert.equal(saveCropPlanWithReceipt(accepted.book).saved, true);
+  assert.deepEqual(loadCropPlan().plantings.find(row => row.id === accepted.rows[0].id), accepted.rows[0]);
+  assert.equal(sample.getSandboxProduction()[0].kg, 6);
+  assert.equal(sample.getSandboxSales()[0].kg, 4);
 });
 
 test('a refused workspace switch preserves the active sample isolation and edits', () => {
