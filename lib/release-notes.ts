@@ -46,6 +46,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Plan lettuce for a weekly buyer and link a practice harvest in Green Horizon.',
     'See the Green Horizon production schedule with crops and dates by bed.',
   ] },
+  { when: '27 November 2026', sha: 'cf4ecc938', changes: [
+    'Watch roof rain fill a tank and a buried bottle water the roots in the manual.',
+    'Watch soil settle in a jar and see where a garden wall casts shade in winter and summer.',
+  ] },
   { when: '27 November 2026', sha: '9be7b761b', changes: [
     'Pin a correction to a saved AI map and choose which notes to send with one new render.',
     'See what moved, changed, was added or was removed since a saved map was rendered.',

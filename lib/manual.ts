@@ -271,17 +271,42 @@ export function figuresBySection(figures: ManualFigure[], chapter: ManualChapter
   return out;
 }
 
-export interface EarthworksFilmPlacement {
-  film: 'earth' | 'level' | 'walk' | 'drip';
+export interface ManualFilmPlacement {
+  film: 'earth' | 'level' | 'walk' | 'drip' | 'roof' | 'bottle' | 'jar' | 'shadow';
   anchor: string;
   blockIndex: number;
   /** One-based so the location agrees with the numbered instruction the learner sees. */
   afterStep?: number;
 }
 
-/** Like the figure slots, these use the shared heading structure. Paragraph counts can vary
- * between translations, so find the first matching block beneath each heading in this edition. */
-export function earthworksFilmPlacements(blocks: Block[]): EarthworksFilmPlacement[] {
+type FilmSlot = Omit<ManualFilmPlacement, 'blockIndex'> & {
+  section: number;
+  subsection: number;
+  block: 'p' | 'ol';
+};
+
+// Heading positions are shared across editions. A subsection of -1 is the text directly under an h2.
+const chapterFilmSlots: Partial<Record<ManualChapter, FilmSlot[]>> = {
+  '03-sector-planning': [
+    { film: 'shadow', anchor: 'seasonal-shadows-film', section: 4, subsection: 0, block: 'p' },
+  ],
+  '07-earthworks-and-water': [
+    { film: 'roof', anchor: 'roof-to-tank-film', section: 1, subsection: 1, block: 'ol', afterStep: 3 },
+    { film: 'earth', anchor: 'digging-the-swale-film', section: 5, subsection: 3, block: 'ol' },
+    { film: 'earth', anchor: 'double-reach-bed-film', section: 7, subsection: 0, block: 'p' },
+    { film: 'bottle', anchor: 'bottle-irrigation-film', section: 8, subsection: 1, block: 'ol', afterStep: 4 },
+    { film: 'drip', anchor: 'drip-irrigation-film', section: 8, subsection: 2, block: 'p' },
+    { film: 'level', anchor: 'check-a-frame', section: 10, subsection: -1, block: 'ol', afterStep: 4 },
+    { film: 'walk', anchor: 'peg-a-contour', section: 10, subsection: -1, block: 'ol', afterStep: 7 },
+  ],
+  '08-soil': [
+    { film: 'jar', anchor: 'soil-jar-test-film', section: 2, subsection: 1, block: 'ol', afterStep: 3 },
+  ],
+};
+
+export function manualFilmPlacements(chapter: ManualChapter, blocks: Block[]): ManualFilmPlacement[] {
+  const slots = chapterFilmSlots[chapter];
+  if (!slots) return [];
   let section = -1;
   let subsection = -1;
   const positions = blocks.map((block) => {
@@ -293,15 +318,8 @@ export function earthworksFilmPlacements(blocks: Block[]): EarthworksFilmPlaceme
     }
     return { section, subsection, type: block.type };
   });
-  const first = (section: number, subsection: number, type: 'p' | 'ol') =>
-    positions.findIndex((p) => p.section === section && p.subsection === subsection && p.type === type);
-  const exercise = first(10, -1, 'ol'); // Try it
-  const slots: EarthworksFilmPlacement[] = [
-    { film: 'earth', anchor: 'digging-the-swale-film', blockIndex: first(5, 3, 'ol') },
-    { film: 'earth', anchor: 'double-reach-bed-film', blockIndex: first(7, 0, 'p') },
-    { film: 'drip', anchor: 'drip-irrigation-film', blockIndex: first(8, 2, 'p') },
-    { film: 'level', anchor: 'check-a-frame', blockIndex: exercise, afterStep: 4 },
-    { film: 'walk', anchor: 'peg-a-contour', blockIndex: exercise, afterStep: 7 },
-  ];
-  return slots.filter((slot) => slot.blockIndex >= 0);
+  return slots.flatMap(({ section, subsection, block, ...slot }) => {
+    const blockIndex = positions.findIndex(p => p.section === section && p.subsection === subsection && p.type === block);
+    return blockIndex >= 0 ? [{ ...slot, blockIndex }] : [];
+  });
 }
