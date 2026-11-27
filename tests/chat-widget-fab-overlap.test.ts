@@ -357,6 +357,8 @@ test('inline help loads the photo composer only when opened and preserves the se
       const Deferred = React.lazy(load);
       return (props: Record<string, unknown>) => React.createElement(React.Suspense, { fallback: React.createElement(options.loading) }, React.createElement(Deferred, props));
     } };
+    // Layout-only classes (the landscape row, 27 Nov); no behaviour hangs on them.
+    if (name === './LimaBar.module.css') return { __esModule: true, default: { inner: 'inner', who: 'who', row: 'row' } };
     if (name === './ChatPanel') {
       state.chatImports++;
       return { default: (props: typeof photoProps[number]) => { photoProps.push(props); return React.createElement('div', { 'data-photo-composer': true }); } };
