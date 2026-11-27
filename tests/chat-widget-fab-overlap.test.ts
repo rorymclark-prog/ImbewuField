@@ -134,6 +134,7 @@ const FLOW_HELP_ROUTES: { route: string; page: string }[] = [
   { route: '/calendar', page: '../app/calendar/page.tsx' },
   { route: '/cropplan', page: '../app/cropplan/page.tsx' },
   { route: '/records', page: '../app/records/page.tsx' },
+  { route: '/mentor', page: '../app/mentor/page.tsx' },
   { route: '/facilitator/crops', page: '../app/facilitator/crops/page.tsx' },
   // Measured 23 November at 390px: the FAB over /example's sow-month labels and species chips,
   // /exchange's listing titles, /tour's stop cards and /prices' source note.

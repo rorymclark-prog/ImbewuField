@@ -214,7 +214,9 @@ export default function ChatWidget() {
     // listing title on /exchange, stop-card text on /tour and the source note on /prices. All four
     // are left-aligned reading pages that scroll under it, so they mount <LimaBar /> instead.
     pathname.startsWith('/example') || pathname.startsWith('/exchange') ||
-    pathname.startsWith('/tour') || pathname.startsWith('/prices')
+    pathname.startsWith('/tour') || pathname.startsWith('/prices') ||
+    // 27 Nov: on /mentor the floating launcher sat on the "Record a field visit" action at rest.
+    pathname.startsWith('/mentor')
   ) return null;
 
   // WHERE THE FAB PARKS WHEN NOBODY HAS MOVED IT.
@@ -393,6 +395,8 @@ function isLimaFabHiddenRoute(pathname: string): boolean {
     pathname.startsWith('/cropplan') || pathname.startsWith('/records') || pathname.startsWith('/invoice') ||
     pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops') ||
     pathname.startsWith('/example') || pathname.startsWith('/exchange') ||
-    pathname.startsWith('/tour') || pathname.startsWith('/prices')
+    pathname.startsWith('/tour') || pathname.startsWith('/prices') ||
+    // 27 Nov: on /mentor the floating launcher sat on the "Record a field visit" action at rest.
+    pathname.startsWith('/mentor')
   );
 }
