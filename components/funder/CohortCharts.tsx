@@ -543,7 +543,13 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
         </div>
 
         {/* ── the one month axis both panels are drawn against ── */}
-        <div className="px-4" style={{ display: 'grid', gridTemplateColumns: columns, gap: 2, marginTop: 5 }}>
+        {/* 27 Nov: at 320px twelve columns are 20px each and the 12px three-letter months lost their
+            last letter (Ma|, Au|). Under 310px of axis (styles.axisDense) a long window shows one
+            letter per month instead; the full label stays in the accessibility tree and the title. */}
+        <div
+          className={`px-4 ${styles.axis} ${months.length > 8 ? styles.axisDense : ''}`}
+          style={{ display: 'grid', gridTemplateColumns: columns, gap: 2, marginTop: 5 }}
+        >
           {months.map((m) => (
             <span
               key={m.key}
@@ -551,7 +557,8 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
               style={{ fontSize: MICRO, color: FAINT, whiteSpace: 'nowrap', overflow: 'hidden' }}
               title={m.longLabel}
             >
-              {m.label}
+              <span className={styles.monthFull}>{m.label}</span>
+              <span className={styles.monthInitial} aria-hidden="true">{m.label.charAt(0)}</span>
             </span>
           ))}
         </div>
