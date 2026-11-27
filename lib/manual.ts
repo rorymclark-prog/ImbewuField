@@ -19,6 +19,8 @@ import uiSt from '../content/manual/st/ui.json' with { type: 'json' };
 import uiVe from '../content/manual/ve/ui.json' with { type: 'json' };
 import uiTs from '../content/manual/ts/ui.json' with { type: 'json' };
 
+import type { FieldFilm } from './field-films';
+
 export const MANUAL_LANGS = ['en', 'zu', 'st', 've', 'ts'] as const;
 export type ManualLang = (typeof MANUAL_LANGS)[number];
 
@@ -272,7 +274,7 @@ export function figuresBySection(figures: ManualFigure[], chapter: ManualChapter
 }
 
 export interface ManualFilmPlacement {
-  film: 'earth' | 'level' | 'walk' | 'drip' | 'roof' | 'bottle' | 'jar' | 'shadow';
+  film: Exclude<FieldFilm, 'harvest'>;
   anchor: string;
   blockIndex: number;
   /** One-based so the location agrees with the numbered instruction the learner sees. */
@@ -287,8 +289,15 @@ type FilmSlot = Omit<ManualFilmPlacement, 'blockIndex'> & {
 
 // Heading positions are shared across editions. A subsection of -1 is the text directly under an h2.
 const chapterFilmSlots: Partial<Record<ManualChapter, FilmSlot[]>> = {
+  '02-planning-your-farm': [
+    { film: 'zones', anchor: 'farm-zones-film', section: 2, subsection: -1, block: 'p' },
+  ],
   '03-sector-planning': [
     { film: 'shadow', anchor: 'seasonal-shadows-film', section: 4, subsection: 0, block: 'p' },
+  ],
+  '06-tree-systems': [
+    { film: 'windbreak', anchor: 'windbreak-film', section: 5, subsection: 0, block: 'ol', afterStep: 4 },
+    { film: 'tree', anchor: 'planting-a-tree-film', section: 6, subsection: -1, block: 'p' },
   ],
   '07-earthworks-and-water': [
     { film: 'roof', anchor: 'roof-to-tank-film', section: 1, subsection: 1, block: 'ol', afterStep: 3 },
@@ -301,6 +310,13 @@ const chapterFilmSlots: Partial<Record<ManualChapter, FilmSlot[]>> = {
   ],
   '08-soil': [
     { film: 'jar', anchor: 'soil-jar-test-film', section: 2, subsection: 1, block: 'ol', afterStep: 3 },
+    { film: 'mulch', anchor: 'mulching-a-bed-film', section: 6, subsection: 0, block: 'ol', afterStep: 3 },
+  ],
+  '09-balanced-ecology': [
+    { film: 'succession', anchor: 'succession-film', section: 2, subsection: -1, block: 'p' },
+  ],
+  '10-natural-pest-control': [
+    { film: 'rotation', anchor: 'crop-rotation-film', section: 7, subsection: 0, block: 'ol' },
   ],
 };
 
