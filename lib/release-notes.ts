@@ -50,6 +50,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Watch roof rain fill a tank and a buried bottle water the roots in the manual.',
     'Watch soil settle in a jar and see where a garden wall casts shade in winter and summer.',
   ] },
+  { when: '27 November 2026', sha: '5b8ce6c03', changes: [
+    'Resize a correction pin to edit one area of your AI map and keep the rest as drawn.',
+  ] },
   { when: '27 November 2026', sha: '9be7b761b', changes: [
     'Pin a correction to a saved AI map and choose which notes to send with one new render.',
     'See what moved, changed, was added or was removed since a saved map was rendered.',
