@@ -1,0 +1,76 @@
+.icon {
+  display: block;
+  overflow: visible;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ice { stroke: var(--blue); fill: none; }
+.ice circle { fill: var(--blue); stroke: none; }
+.water { stroke: var(--blue); fill: none; }
+.air { stroke: var(--text-secondary); }
+.earth { stroke: var(--gold-dim); }
+.grain { fill: var(--gold); stroke: none; }
+.sun { fill: var(--gold); stroke: none; }
+.sunRay { stroke: var(--gold); }
+.fireShape { fill: var(--gold); stroke: none; }
+.neutral { fill: var(--text-secondary); stroke: none; opacity: 0.7; }
+.dropDot { fill: var(--blue); stroke: none; }
+
+.spin { transform-box: fill-box; transform-origin: center; animation: spin 6s linear infinite; }
+.fall { animation: fall 3s ease-in infinite; }
+.f1 { animation-delay: 0s; }
+.f2 { animation-delay: -1s; }
+.f3 { animation-delay: -2s; }
+.slide { animation: slide 4s ease-in infinite; }
+.s1 { animation-delay: 0s; }
+.s2 { animation-delay: -1.33s; }
+.s3 { animation-delay: -2.66s; }
+.ripple { transform-box: fill-box; transform-origin: center; animation: ripple 4s ease-out infinite; }
+.r1 { animation-delay: 0s; }
+.r2 { animation-delay: -2s; }
+.sunPulse { transform-box: fill-box; transform-origin: center; animation: pulse 5s ease-in-out infinite; }
+.shimmer { animation: shimmer 3s ease-in-out infinite; }
+.windG { animation: drift 4s ease-in-out infinite; }
+.flame { transform-box: fill-box; transform-origin: 50% 100%; animation: flicker 3s ease-in-out infinite; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fall {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(11px); opacity: 0; }
+}
+@keyframes slide {
+  0% { transform: translate(0, 0); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate(10px, 8px); opacity: 0; }
+}
+@keyframes ripple {
+  0% { transform: scale(0.4); opacity: 0.9; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+@keyframes shimmer {
+  0%, 100% { transform: translateX(-0.8px); opacity: 0.5; }
+  50% { transform: translateX(0.8px); opacity: 1; }
+}
+@keyframes drift {
+  0%, 100% { transform: translateX(-0.8px); }
+  50% { transform: translateX(1px); }
+}
+@keyframes flicker {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.1) scaleX(0.94); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin, .fall, .slide, .ripple, .sunPulse, .shimmer, .windG, .flame { animation: none; }
+  .ripple { opacity: 0.5; transform: scale(1.4); }
+}

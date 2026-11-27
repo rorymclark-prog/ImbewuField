@@ -1,0 +1,111 @@
+.route {
+  margin: 20px 0 8px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--bg-1);
+  color: var(--text-primary);
+}
+
+.total { display: flex; align-items: baseline; gap: 8px; margin: 0 0 12px; }
+.totalLabel { font-size: 13px; color: var(--text-secondary); }
+.totalValue { font-size: 20px; font-weight: 700; color: var(--emerald); font-variant-numeric: tabular-nums; }
+
+.stage { position: relative; }
+.path { display: none; }
+
+.stops { list-style: none; margin: 0; padding: 0; }
+
+/* ---------- Phone: a vertical line, dots on the left, labels to the right ---------- */
+.stop { position: relative; min-height: 56px; padding-left: 40px; }
+.dot {
+  position: absolute;
+  left: 0;
+  top: 13px;
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: var(--bg-1);
+  border: 3px solid var(--emerald);
+  transition: transform 0.35s ease, background-color 0.35s ease;
+}
+.stop::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 22px;
+  width: 2px;
+  height: 100%;
+  background: var(--emerald);
+  transform-origin: top;
+  transition: transform 0.5s linear;
+}
+.stop:last-child::after { display: none; }
+
+.label {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 2px 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.label:disabled { cursor: default; }
+.label:focus-visible { outline: 3px solid var(--gold-dim); outline-offset: 2px; border-radius: 6px; }
+.title { display: block; font-size: 15px; font-weight: 650; line-height: 1.3; }
+.min { display: block; font-size: 13px; color: var(--text-secondary); }
+
+/* ---------- Armed: collapsed until the stop's turn ---------- */
+.route:not([data-phase='final']) .label { transition: opacity 0.4s ease 0.35s, transform 0.4s ease 0.35s; }
+.route[data-phase='armed'] .label,
+.route[data-phase='go'] .stop[data-on='false'] .label { opacity: 0; transform: translateY(4px); }
+.route[data-phase='armed'] .dot,
+.route[data-phase='go'] .stop[data-on='false'] .dot { transform: scale(0); }
+.route[data-phase='armed'] .stop::after,
+.route[data-phase='go'] .stop[data-linked='false']::after { transform: scaleY(0); }
+.route[data-phase='armed'] .stop::after { transition: none; }
+.stop[data-on='true'] .dot { background: var(--emerald); }
+
+/* ---------- Wider: a winding path, labels alternating above and below ---------- */
+@media (min-width: 760px) {
+  .stage { height: 300px; }
+  .path { display: block; position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .seg {
+    fill: none;
+    stroke: var(--emerald);
+    stroke-width: 3;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.5s linear;
+  }
+  .route[data-phase='armed'] .seg,
+  .route[data-phase='go'] .seg[data-on='false'] { stroke-dashoffset: 1; }
+  .route[data-phase='armed'] .seg { transition: none; }
+
+  .stops { position: absolute; inset: 0; }
+  .stop { position: absolute; left: var(--x); top: var(--y); width: 18px; height: 18px; min-height: 0; padding: 0; margin: -9px 0 0 -9px; }
+  .stop::after { display: none; }
+  .dot { top: 0; left: 0; }
+  .label {
+    position: absolute;
+    left: 9px;
+    width: clamp(120px, 20vw, 190px);
+    transform: translateX(-50%);
+    text-align: center;
+  }
+  .stop[data-side='up'] .label { bottom: 28px; }
+  .stop[data-side='down'] .label { top: 28px; }
+  .route[data-phase='armed'] .label,
+  .route[data-phase='go'] .stop[data-on='false'] .label { transform: translateX(-50%) translateY(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot, .stop::after, .seg, .label { transition: none !important; }
+}

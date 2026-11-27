@@ -65,7 +65,7 @@ export interface CompletionScoreInputs {
 // prerequisites for everything else, so they're weighted lightly on their
 // own; survey + design + crop plan are the substantive planning work and
 // carry most of the score. Weights sum to 100.
-const WEIGHTS: Record<CompletionStepKey, number> = {
+export const COMPLETION_WEIGHTS: Record<CompletionStepKey, number> = {
   located: 10,
   boundary: 15,
   survey: 25,
@@ -135,8 +135,8 @@ export function computeCompletionScore(inputs: CompletionScoreInputs): Completio
     { key: 'cropPlan', label: LABELS.cropPlan, done: cropPlanPct === 100, pct: cropPlanPct },
   ];
 
-  const totalWeight = steps.reduce((sum, s) => sum + WEIGHTS[s.key], 0);
-  const weightedSum = steps.reduce((sum, s) => sum + WEIGHTS[s.key] * s.pct, 0);
+  const totalWeight = steps.reduce((sum, s) => sum + COMPLETION_WEIGHTS[s.key], 0);
+  const weightedSum = steps.reduce((sum, s) => sum + COMPLETION_WEIGHTS[s.key] * s.pct, 0);
   const overallPct = totalWeight > 0 ? clampPct(weightedSum / totalWeight) : 0;
 
   return { overallPct, steps };

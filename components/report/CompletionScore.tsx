@@ -10,9 +10,12 @@
 // a pre-computed score (from lib/completion-score.ts) or the raw inputs and
 // let this component compute it.
 
+import { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
-import { computeCompletionScore, type CompletionScoreInputs, type CompletionScoreResult } from '@/lib/completion-score';
+import { COMPLETION_WEIGHTS, computeCompletionScore, type CompletionScoreInputs, type CompletionScoreResult } from '@/lib/completion-score';
 import { useLanguage } from '@/lib/i18n';
+import { useInViewOnce } from '@/lib/use-in-view-once';
+import styles from './CompletionScore.module.css';
 
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
@@ -44,6 +47,11 @@ export interface CompletionScoreProps {
   title?: string;
   className?: string;
 }
+
+// Weights come from lib/completion-score.ts. Only used to pace the on-screen count;
+// the number always ends on result.overallPct.
+const STEP_WEIGHT: Record<string, number> = COMPLETION_WEIGHTS;
+const SEGMENT_MS = 350;
 
 const R = 54;
 const STROKE = 14;
@@ -96,16 +104,53 @@ function StepIcon({ done, pct, c }: { done: boolean; pct: number; c: Palette }) 
 
 export default function CompletionScore({ score, inputs, title, className, surface }: CompletionScoreProps) {
   const { t } = useLanguage();
+  const { ref, phase } = useInViewOnce<HTMLElement>();
+  const [drawn, setDrawn] = useState(0);
+  const [landed, setLanded] = useState(0);
   const c = surface ? SURFACE_PALETTE : DARK_PALETTE;
   const result = score ?? (inputs ? computeCompletionScore(inputs) : undefined);
+  // Steps that add to the score, in journey order; each gets one arc of the ring.
+  const segSteps = result ? result.steps.filter((s) => s.pct > 0) : [];
+  const segCount = segSteps.length;
+
+  useEffect(() => {
+    if (phase === 'armed') { setDrawn(0); setLanded(0); return; }
+    if (phase !== 'play' || segCount === 0) return;
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    for (let i = 0; i < segCount; i++) {
+      timers.push(setTimeout(() => setDrawn(i + 1), i * SEGMENT_MS));
+      timers.push(setTimeout(() => setLanded(i + 1), (i + 1) * SEGMENT_MS));
+    }
+    return () => timers.forEach(clearTimeout);
+  }, [phase, segCount]);
+
   if (!result) return null;
 
   const { overallPct, steps } = result;
-  const dashOffset = CIRCUMFERENCE * (1 - overallPct / 100);
   const doneCount = steps.filter((s) => s.done).length;
+
+  // Server render, no JS, reduced motion and the settled state all show the real result.
+  const animating = phase !== 'final' && landed < segCount;
+  const drawnCount = animating ? drawn : segCount;
+  const landedCount = animating ? landed : segCount;
+  const landedKeys = new Set(segSteps.slice(0, landedCount).map((s) => s.key));
+  const shownDone = animating ? steps.filter((s) => s.done && landedKeys.has(s.key)).length : doneCount;
+  const shownPct = !animating
+    ? overallPct
+    : Math.min(overallPct, Math.round(segSteps.slice(0, landedCount).reduce((sum, s) => sum + (STEP_WEIGHT[s.key] ?? 0) * s.pct / 100, 0)));
+
+  // One arc per contributing step, laid end to end around the ring.
+  let offsetPct = 0;
+  const arcs = segSteps.map((step, i) => {
+    const len = ((STEP_WEIGHT[step.key] ?? 0) * step.pct / 100) / 100 * CIRCUMFERENCE;
+    const start = offsetPct / 100 * 360 - 90;
+    offsetPct += (STEP_WEIGHT[step.key] ?? 0) * step.pct / 100;
+    return { key: step.key, len, start, on: i < drawnCount };
+  });
 
   return (
     <section
+      ref={ref}
       className={className}
       style={{
         background: c.bg,
@@ -139,17 +184,18 @@ export default function CompletionScore({ score, inputs, title, className, surfa
               stroke={c.track}
               strokeWidth={STROKE}
             />
-            <circle
-              cx={64} cy={64} r={R}
-              fill="none"
-              stroke={c.accent}
-              strokeWidth={STROKE}
-              strokeLinecap="round"
-              strokeDasharray={CIRCUMFERENCE}
-              strokeDashoffset={dashOffset}
-              transform="rotate(-90 64 64)"
-              style={{ transition: 'stroke-dashoffset 0.4s ease' }}
-            />
+            {arcs.map((arc) => (
+              <circle
+                key={arc.key}
+                className={phase === 'play' ? styles.segment : undefined}
+                cx={64} cy={64} r={R}
+                fill="none"
+                stroke={c.accent}
+                strokeWidth={STROKE}
+                strokeDasharray={`${arc.on ? arc.len : 0} ${CIRCUMFERENCE}`}
+                transform={`rotate(${arc.start} 64 64)`}
+              />
+            ))}
           </svg>
           <div
             style={{
@@ -157,16 +203,19 @@ export default function CompletionScore({ score, inputs, title, className, surfa
               alignItems: 'center', justifyContent: 'center',
             }}
           >
-            <span style={{ fontSize: 26, fontWeight: 800, lineHeight: 1, color: c.strong }}>{overallPct}%</span>
+            <span style={{ fontSize: 26, fontWeight: 800, lineHeight: 1, color: c.strong }}>{shownPct}%</span>
             <span style={{ fontSize: 12.5, color: c.mid, marginTop: 4 }}>
-              {t('completionScoreDoneCount').replace('{done}', String(doneCount)).replace('{total}', String(steps.length))}
+              {t('completionScoreDoneCount').replace('{done}', String(shownDone)).replace('{total}', String(steps.length))}
             </span>
           </div>
         </div>
 
         {/* Checklist */}
         <ul style={{ listStyle: 'none', margin: 0, padding: 0, flex: '1 1 180px', minWidth: 180 }}>
-          {steps.map((step) => (
+          {steps.map((rawStep) => {
+            // A row ticks as its ring segment lands.
+            const step = animating && rawStep.pct > 0 && !landedKeys.has(rawStep.key) ? { ...rawStep, done: false, pct: 0 } : rawStep;
+            return (
             <li
               key={step.key}
               style={{
@@ -188,7 +237,8 @@ export default function CompletionScore({ score, inputs, title, className, surfa
                 {step.done ? t('completionStatusDone') : step.pct > 0 ? t('completionStatusPartial') : t('completionStatusNotStarted')}
               </span>
             </li>
-          ))}
+            );
+          })}
         </ul>
       </div>
     </section>
