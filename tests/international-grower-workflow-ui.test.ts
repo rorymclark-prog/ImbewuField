@@ -43,6 +43,7 @@ test('the example opens with a worked lettuce cycle, saved sowings and explicit 
   assert.match(html, /B1 · Leafy greens.*Swiss [Cc]hard.*Picking dates and yield are unknown/);
   assert.match(html, /Delivery quantity is unknown/);
   assert.match(html, /Some requested dates fall outside this picking window/);
+  assert.match(html, /<button[^>]+>Review the practice crop cycle<\/button>/);
   assert.equal(JSON.stringify(plan), original, 'reading Production never accepts a cycle or writes to the sample');
   const { weeklyKg: _weeklyKg, timing: _timing, window, ...targetSeed } = buildGreenHorizonLettuceTarget();
   plan.harvestTargets = [{ ...targetSeed, weeklyQuantity: 4, unit: 'bunches', timing: 'date-window', window }];

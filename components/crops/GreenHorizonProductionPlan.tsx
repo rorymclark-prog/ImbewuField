@@ -90,7 +90,13 @@ export default function GreenHorizonProductionPlan({ siteId, beds, plan }: {
         })}
       </ul>
       {beds.length === 0 && <p className="mb-3">No mapped beds are available for this example.</p>}
-      <a className="inline-flex min-h-11 items-center underline" href="#practice-crop-cycle">Review the practice crop cycle</a>
+      <button type="button" className="inline-flex min-h-11 items-center underline" onClick={() => {
+        const panel = document.querySelector<HTMLDetailsElement>('details#practice-crop-cycle');
+        if (!panel) return;
+        panel.open = true;
+        panel.querySelector('summary')?.focus({ preventScroll: true });
+        panel.scrollIntoView({ block: 'start' });
+      }}>Review the practice crop cycle</button>
     </section>
   );
 }
