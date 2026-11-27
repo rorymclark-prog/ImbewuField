@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import WelcomeScene from '@/components/onboarding/WelcomeScene';
 import { APP_LANGS, useLanguage, translate, loadLocale } from '@/lib/i18n';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 
 export default function Onboarding() {
   const router = useRouter();
@@ -28,11 +29,18 @@ export default function Onboarding() {
     };
   }, []);
 
+  // It covers the whole app, so it is a modal: focus starts on the language buttons and Tab stays
+  // inside. Before this, Tab walked out to the Back button and Lima behind the scrim, which a
+  // keyboard or switch user could not see.
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(!onboarded, dialogRef);
+
   if (onboarded) return null;
   const tp = (key: string) => translate(picked, key); // preview in the picked language
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+    <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="onboarding-title"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
       style={{ background: 'rgba(4,10,6,0.92)', backdropFilter: 'blur(8px)' }}>
       <div className="w-full max-w-md rounded-2xl p-6"
         style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 4px 24px rgba(32,25,15,0.10)' }}>
@@ -50,7 +58,7 @@ export default function Onboarding() {
               </svg>
             </div>
           </div>
-          <div className="font-display font-bold text-xl mb-1" style={{ color: 'var(--text-primary)' }}>{tp('welcomeTitle')}</div>
+          <div id="onboarding-title" className="font-display font-bold text-xl mb-1" style={{ color: 'var(--text-primary)' }}>{tp('welcomeTitle')}</div>
           <div lang="en" className="font-display text-sm" style={{ color: 'var(--text-secondary)' }}>{tp('welcomeGrowerSub')}</div>
         </div>
 
@@ -69,7 +77,10 @@ export default function Onboarding() {
         </div>
         <div className="grid grid-cols-3 gap-2 mb-4">
           {APP_LANGS.map((l) => (
-            <button key={l.code} onClick={() => setPicked(l.code)}
+            <button key={l.code} type="button" onClick={() => setPicked(l.code)}
+              aria-pressed={picked === l.code}
+              lang={l.code}
+              {...(l.code === picked ? { 'data-autofocus': '' } : {})}
               className="py-2 px-2 rounded-lg font-display transition-all"
               style={picked === l.code
                 ? { fontSize: 15, background: 'color-mix(in srgb, var(--emerald) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--emerald) 30%, transparent)', color: 'var(--emerald)' }
@@ -92,7 +103,8 @@ export default function Onboarding() {
           {tp('tourOnboardingCta')}
         </button>
         {/* Reassurance — language is always changeable */}
-        <div className="text-xs font-display text-center" style={{ color: 'var(--text-secondary)', opacity: 0.65 }}>
+        <div className="text-xs font-display text-center" style={{ color: 'var(--text-secondary)' }}>
+          {/* Full strength: at opacity 0.65 this measured 3.2:1 in both themes. */}
           {tp('pickLangSub')}
         </div>
       </div>
