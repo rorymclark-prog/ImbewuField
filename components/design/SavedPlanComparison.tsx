@@ -43,7 +43,9 @@ export default function SavedPlanComparison({ load, review, loadIllustration }: 
     dialog.current?.showModal();
     setMessage('Opening the plan saved with this illustration…');
     try {
-      let result = await load(active);
+      // Older illustrations may have their original plan only in the cloud. The
+      // farmer can still mark the copy on this device when that request fails.
+      let result = await load(active).catch(() => null);
       if (!result && active()) {
         const illustration = await loadIllustration();
         if (illustration) result = {illustration,plan:null,oblique:false,changes:null};

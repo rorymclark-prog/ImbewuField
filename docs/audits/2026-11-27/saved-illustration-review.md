@@ -9,4 +9,6 @@ Codex reviewed the saved-map flow against main `08a1239bf`. This follows the [or
 
 Provider request tests inspect the OpenAI and Gemini inputs. The original design remains the primary reference. Numbered review pins are attached to the secondary illustration. App-owned schedule text is blanked from the Phasing reference. Account access, quotas, existing masks, and raw input/output checks still govern paid jobs.
 
-The browser and production release evidence is recorded on the PR and in issue #35. Test screenshots of the private site stay outside Git. The design geometry and plan version are unchanged.
+Browser checks used the archived Ubhejane Earthworks illustration at 390×844, 820×1180 and 1440×960. The changed test design accurately listed one moved JoJo tank and two added vegetable beds. Added, edited and deleted pins survived reopening as expected. On phones and tablets, both Chrome and WebKit retained the marker coordinates through zoom and pan. A separate offline regression reproduced a failed cloud lookup hiding the on-device illustration. The comparison now falls back to the local artwork and its correction pins. The paid confirmation test verified that cancellation submits nothing and double-clicking confirmation submits only the selected note once.
+
+Production release evidence is recorded on the PR and in issue #35. Test screenshots of the private site stay outside Git. The design geometry and plan version are unchanged.
