@@ -5,11 +5,15 @@ import Link from 'next/link';
 import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import styles from '@/components/SampleExperience.module.css';
-import { GREEN_HORIZON_SITE } from '@/lib/green-horizon-demo';
+import { GREEN_HORIZON_LETTUCE_TARGET, GREEN_HORIZON_SITE } from '@/lib/green-horizon-demo';
 import { enterSampleMode } from '@/lib/sample-mode';
 import { useSampleWorkspace } from '@/lib/use-role-navigation';
 
 const designHref = `/design?lat=${GREEN_HORIZON_SITE.lat}&lon=${GREEN_HORIZON_SITE.lon}`;
+const cropPlanHref = `/facilitator/crops?canvasSite=${encodeURIComponent(GREEN_HORIZON_LETTUCE_TARGET.siteId)}`;
+const targetWeek = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC',
+}).format(new Date(GREEN_HORIZON_LETTUCE_TARGET.window.start));
 
 export default function MarketGardenSamplePage() {
   const workspace = useSampleWorkspace();
@@ -34,14 +38,19 @@ export default function MarketGardenSamplePage() {
             <p>Explore a fictional market garden in Pietermaritzburg, KwaZulu-Natal. Use the schematic beds and practice records to try crop planning, field work and sales.</p>
             <p>Edits stay in this tab. Reloading or changing examples resets the practice records.</p>
             {workspace === 'green-horizon' ? (
-              <nav aria-label="Market garden workspace" className={styles.actions}>
-                <Link className={`${styles.button} ${styles.primary}`} href="/facilitator/crops">Plan crops</Link>
-                <Link className={styles.button} href="/farmer">Open the map</Link>
-                <Link className={styles.button} href={designHref}>Edit the beds</Link>
-                <Link className={styles.button} href="/cropplan">Open the task planner</Link>
-                <Link className={styles.button} href="/journal">Open the field journal</Link>
-                <Link className={styles.button} href="/records">View harvest and sales</Link>
-              </nav>
+              <>
+                <h2>Weekly veg box target</h2>
+                <p>Plan for {GREEN_HORIZON_LETTUCE_TARGET.weeklyKg} kg of lettuce in the week of {targetWeek}. This is a fictional buyer’s requested quantity. The practice harvest and sale are recorded separately.</p>
+                <p>Open the crop plan and expand Harvest targets to review or edit the request.</p>
+                <nav aria-label="Market garden workspace" className={styles.actions}>
+                  <Link className={`${styles.button} ${styles.primary}`} href={cropPlanHref}>Open crop plan</Link>
+                  <Link className={styles.button} href="/farmer">Open the map</Link>
+                  <Link className={styles.button} href={designHref}>Edit the beds</Link>
+                  <Link className={styles.button} href="/cropplan">Open the task planner</Link>
+                  <Link className={styles.button} href="/journal">Open the field journal</Link>
+                  <Link className={styles.button} href="/records">View harvest and sales</Link>
+                </nav>
+              </>
             ) : (
               <button type="button" className={styles.primary} onClick={openGarden}>Open market garden workspace</button>
             )}

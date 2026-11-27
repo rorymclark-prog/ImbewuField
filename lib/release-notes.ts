@@ -41,8 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 November 2026', sha: '5e1af0085', changes: [
+  { when: '27 November 2026', sha: '2861176e9', changes: [
     'Try crop planning, fieldwork and sales in the Green Horizon market garden example.',
+    'Start from a weekly lettuce buyer target in the Green Horizon example.',
   ] },
   { when: '27 November 2026', sha: '08a1239bf', changes: [
     'Record a dated Field Journal observation for a saved design phase and mapped feature.',
