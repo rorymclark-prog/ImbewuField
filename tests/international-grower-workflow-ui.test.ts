@@ -10,11 +10,11 @@ import ts from 'typescript';
 import { CROPS } from '../lib/crop-catalog.ts';
 import { buildDemoDesignCanvasState } from '../lib/demo-farm.ts';
 import { bedsFromDesignCanvas } from '../lib/design-beds-bridge.ts';
-import { buildGreenHorizonCropPlan, buildGreenHorizonLettuceTarget, buildGreenHorizonStorageSeeds } from '../lib/green-horizon-demo.ts';
+import { buildGreenHorizonCropPlan, buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonStorageSeeds } from '../lib/green-horizon-demo.ts';
 import type { CropPlanState, HarvestTarget } from '../lib/crop-plan.ts';
 import type { GrowerPlanningProfile, GrowerInput } from '../lib/international/grower-planning.ts';
 import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
-import { assembleGrowerWorkflowReview, type GrowerWorkflowDraft, type GrowerWorkflowReview } from '../lib/international/grower-workflow.ts';
+import { assembleGrowerWorkflowReview, prepareGrowerWorkflowAcceptance, type GrowerWorkflowDraft, type GrowerWorkflowReview } from '../lib/international/grower-workflow.ts';
 import type { GrowerAutoPlanPanelProps } from '../components/crops/GrowerAutoPlanPanel.tsx';
 
 const hooks = registerHooks({ load(url, context, next) {
@@ -36,15 +36,48 @@ test('the example opens with a worked lettuce cycle, saved sowings and explicit 
   const render = () => renderToStaticMarkup(React.createElement(ProductionPlan, { siteId, beds, plan }));
   const html = render();
   assert.match(html, /Green Horizon production plan/);
-  assert.match(html, /8 kg of Lettuce/);
-  assert.match(html, /sow 1 Oct 2026 · pick 2 Nov 2026 – 4 Nov 2026/);
+  assert.match(html, /8 kg\/week of Lettuce/);
+  assert.match(html, /field entry 1 Oct 2026 · pick 2 Nov 2026 – 4 Nov 2026/);
   assert.match(html, /Estimated 11\.52 kg for the cycle/);
   assert.match(html, /A2 · Roots.*Carrots.*Saved sowing month · October/);
   assert.match(html, /B1 · Leafy greens.*Swiss [Cc]hard.*Picking dates and yield are unknown/);
   assert.match(html, /Delivery quantity is unknown/);
+  assert.match(html, /Some requested dates fall outside this picking window/);
   assert.equal(JSON.stringify(plan), original, 'reading Production never accepts a cycle or writes to the sample');
+  const { weeklyKg: _weeklyKg, timing: _timing, window, ...targetSeed } = buildGreenHorizonLettuceTarget();
+  plan.harvestTargets = [{ ...targetSeed, weeklyQuantity: 4, unit: 'bunches', timing: 'date-window', window }];
+  assert.match(render(), /4 bunches\/week of Lettuce/);
+  plan.harvestTargets = [{ ...targetSeed, weeklyQuantity: 4, unit: 'bunches', startMonth: '2026-11', endMonth: '2026-12' }];
+  assert.match(render(), /4 bunches\/week of Lettuce from 1 Nov 2026 to before 1 Jan 2027/);
+  const [seedProfile] = plan.growerPlanningProfiles!;
+  plan.growerPlanningProfiles = [{ ...seedProfile, inputs: { ...seedProfile.inputs,
+    establishment: own('transplant', 'method'), nurseryDays: own(1, 'days'),
+  } }];
+  assert.match(render(), /Worked example · field entry 1 Oct 2026/);
+  assert.doesNotMatch(render(), /Worked example · sow/);
   plan.harvestTargets = [];
-  assert.doesNotMatch(render(), /Worked example|8 kg of Lettuce/);
+  assert.doesNotMatch(render(), /Worked example|4 bunches\/week/);
+});
+
+test('the production overview reads the accepted cycle from the plan after reopening', async () => {
+  const { siteId } = buildGreenHorizonLettuceTarget();
+  const raw = JSON.parse(buildGreenHorizonStorageSeeds()[`imbewu_design_canvas_${siteId}`]);
+  const source = await fingerprintGrowerWorkflowSource(inspectGrowerWorkflowSource({
+    kind: 'studio-canvas', sourceId: siteId, raw, sourceRevision: 'green-horizon-reviewed-plan-fixture',
+  }));
+  assert.equal(source.status, 'ready');
+  const book = buildGreenHorizonCropPlan();
+  const practice = buildGreenHorizonPlanningDraft();
+  const draft = { ...practice, assumptionsConfirmed: true, available: practice.available.map(row => ({ ...row, confirmed: true })) };
+  const review = assembleGrowerWorkflowReview({ scope: source.scope, source, book, draft, recordedAt });
+  assert.equal(review.status, 'review');
+  const accepted = prepareGrowerWorkflowAcceptance({ scope: source.scope, source, book, review,
+    binding: { draft, source, recordedAt }, acceptedAt: recordedAt,
+    plantingIds: [{ cycleId: review.proposal.cycles[0].cycleId, plantingId: 'accepted-green-horizon-preview' }] });
+  assert.equal(accepted.status, 'prepared');
+  const html = renderToStaticMarkup(React.createElement(ProductionPlan, { siteId, beds: source.beds, plan: accepted.book }));
+  assert.match(html, /Saved plan as accepted · field entry 1 Oct 2026 · picking 2 Nov 2026 – 4 Nov 2026/);
+  assert.doesNotMatch(html, /Worked example/);
 });
 
 // Synthetic review fixtures. These are neither crop instructions nor equipment defaults.

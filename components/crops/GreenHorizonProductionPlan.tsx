@@ -1,5 +1,5 @@
 import { cropByKey } from '@/lib/crop-catalog';
-import type { CropPlanState, PlanBed, Planting } from '@/lib/crop-plan';
+import { resolveHarvestTargetDateWindow, type CropPlanState, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { MONTH_NAMES } from '@/lib/crop-export-schedule';
 import { buildGreenHorizonPlanningDraft } from '@/lib/green-horizon-demo';
 import { hasGrowerCycleMarker, normaliseGrowerCycleAttachment } from '@/lib/international/grower-cycle';
@@ -34,6 +34,7 @@ export default function GreenHorizonProductionPlan({ siteId, beds, plan }: {
   const [reference] = practice.targetProfiles;
   const [availability] = practice.available;
   const target = plan?.harvestTargets?.find(row => row.id === reference.targetId && row.siteId === siteId);
+  const targetWindow = resolveHarvestTargetDateWindow(target);
   const profile = plan?.growerPlanningProfiles?.find(row => row.profileId === reference.profileId && row.cropKey === target?.cropKey);
   const practiceBed = beds.find(bed => bed.id === availability.bedId);
   const plantings = plan?.plantings ?? [];
@@ -52,8 +53,10 @@ export default function GreenHorizonProductionPlan({ siteId, beds, plan }: {
       className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] p-4 text-sm">
       <h1 id="green-horizon-production-title" className="font-display text-xl font-semibold">Green Horizon production plan</h1>
       <p className="mt-1 text-[var(--text-secondary)]">Fictional example for the mapped beds. Dates and quantities are planning estimates.</p>
-      {target?.timing === 'date-window' && (
-        <p className="mt-2"><strong>Buyer target</strong> · {target.weeklyKg} kg of {cropByKey(target.cropKey)?.name ?? 'the selected crop'} from {formatDate(target.window.start)} to before {formatDate(target.window.endExclusive)}. Delivery quantity is unknown.</p>
+      {target && targetWindow && (
+        <p className="mt-2"><strong>Buyer target</strong> · {target.weeklyKg !== undefined
+          ? `${target.weeklyKg} kg`
+          : `${target.weeklyQuantity} ${target.unit === 'each' ? 'items' : target.unit}`}/week of {cropByKey(target.cropKey)?.name ?? 'the selected crop'} from {formatDate(targetWindow.start)} to before {formatDate(targetWindow.endExclusive)}. Delivery quantity is unknown.</p>
       )}
       <ul className="my-3 grid gap-2 md:grid-cols-3">
         {beds.map(bed => {
@@ -68,15 +71,18 @@ export default function GreenHorizonProductionPlan({ siteId, beds, plan }: {
                 const schedule = dated ? savedSchedule(row, siteId) : null;
                 return <div key={row.id} className="mt-2">
                   <strong>{cropByKey(row.cropKey)?.name ?? 'Saved crop'}</strong>
-                  {schedule ? <p>Saved plan · field entry {formatDate(schedule.fieldEntryDate)} · picking {pickingDates(schedule)}</p>
+                  {schedule ? <p>Saved plan as accepted · field entry {formatDate(schedule.fieldEntryDate)} · picking {pickingDates(schedule)}</p>
                     : dated ? <p>Saved cycle · open the Task Planner to check its dates.</p>
                     : <p>Saved sowing month · {MONTH_NAMES[row.sowMonth - 1] ?? 'Unknown'}. Picking dates and yield are unknown.</p>}
                 </div>;
               })}
               {example && <div className="mt-2">
                 <strong>{cropByKey(profile?.cropKey ?? '')?.name ?? 'Practice crop'}</strong>
-                <p>Worked example · sow {formatDate(example.schedule.fieldEntryDate)} · pick {pickingDates(example.schedule)}</p>
+                <p>Worked example · field entry {formatDate(example.schedule.fieldEntryDate)} · pick {pickingDates(example.schedule)}</p>
                 <p>Estimated {example.capacity.estimatedYieldKg.toLocaleString('en-GB', { maximumFractionDigits: 2 })} kg for the cycle. Review before saving.</p>
+                {targetWindow && (example.schedule.firstHarvestDate > targetWindow.start
+                  || example.schedule.harvestEndExclusiveDate < targetWindow.endExclusive)
+                  && <p>Some requested dates fall outside this picking window.</p>}
               </div>}
               {rows.length === 0 && !example && <p className="mt-2">No crop planned for this bed yet.</p>}
             </li>
