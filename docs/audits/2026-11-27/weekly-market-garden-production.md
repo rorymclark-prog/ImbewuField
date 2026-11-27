@@ -13,6 +13,7 @@
 | WM-04 · Occupancy and declared availability | Accepted reservations and worked example dates show periods of occupancy. Real availability comes from the current checked planner review. An unverified period remains unknown. Weekly production and the saved-cycle view share the current checked context. The route test verifies that a saved design alias retains a valid provisional cycle and withholds it after its policy changes. |
 | WM-05 · Actuals | Linked harvest quantities come through the dated Task Planner evidence path. Sales show their own date, quantity and buyer label. The view establishes no delivered quantity from those rows. |
 | WM-06 · Workspaces | The weekly practice draft and practice sales are scoped to Green Horizon. Unit and mounted checks retain isolation from the real account and Ubhejane. |
+| WM-07 · Accept the two practice cycles | The original phone run reached the weekly save but found the staggered crop review had an aggregate capacity gap. The fictional chard pack weight now lets the existing planner save both cycles using the same dates and mapped beds. The weekly entries still include an explicit zero and an unknown. The heavier-pack regression retains the planner’s aggregate guard. |
 
 ## Verification
 

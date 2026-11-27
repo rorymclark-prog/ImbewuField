@@ -256,13 +256,18 @@ test('the staggered market-garden review keeps dated picking, an entered zero an
   assert.equal(source.status, 'ready');
   const practice = buildGreenHorizonWeeklyPracticeDraft();
   const draft = { ...practice, assumptionsConfirmed: true, available: practice.available.map(row => ({ ...row, confirmed: true })) };
-  const review = assembleGrowerWorkflowReview({
-    scope: source.scope, source, book: loadCropPlan(), draft, recordedAt: '2026-11-27T09:00:00.000Z',
-  });
+  const inputs = { scope: source.scope, source, book: loadCropPlan(), draft, recordedAt: '2026-11-27T09:00:00.000Z' };
+  const review = assembleGrowerWorkflowReview(inputs);
   assert.equal(review.status, 'review', review.issues.join(', '));
-  assert.equal(review.proposal.status, 'with-gaps');
+  assert.equal(review.proposal.status, 'ready', 'the opening practice draft can save both cycles despite its separate weekly gap');
   const chardDemand = review.proposal.demandResults.find(row => row.demandId === target.id);
-  assert.ok((chardDemand?.unmetKg ?? 0) > 0, 'one chard cycle cannot cover all three weeks of aggregate demand');
+  assert.ok(chardDemand);
+  assert.equal(chardDemand.unmetKg, 0);
+  const heavierPacks = assembleGrowerWorkflowReview({ ...inputs, book: { ...inputs.book,
+    harvestTargets: inputs.book.harvestTargets?.map(row => row.id === target.id ? { ...target, kgPerUnit: 0.35 } : row),
+  } });
+  assert.equal(heavierPacks.status, 'review');
+  assert.equal(heavierPacks.proposal.status, 'with-gaps', 'whole-cycle limits still hold with the heavier practice packs');
   const cycles = review.proposal.cycles.map(cycle => ({
     siteId: target.siteId, plantingId: null, targetId: cycle.demandId, bedId: cycle.bedId,
     cropKey: cycle.assessment.snapshot.profile.cropKey, schedule: cycle.assessment.schedule,

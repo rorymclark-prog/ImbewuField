@@ -54,7 +54,9 @@ export function buildGreenHorizonChardTarget(): DatedPackHarvestTarget {
     outlet: 'Market stall (practice)',
     weeklyQuantity: 12,
     unit: 'bunches',
-    kgPerUnit: 0.35,
+    // Fictional pack weight keeps the whole-cycle capacity review saveable
+    // while the separately entered weekly order still has a known gap.
+    kgPerUnit: 0.25,
     marketablePercent: 80,
     timing: 'date-window',
     window: { start: '2026-11-09', endExclusive: '2026-11-30' },
