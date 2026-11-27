@@ -42,7 +42,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '27 November 2026', sha: '5b8ce6c03', changes: [
-    'Set the width and height of a correction pin. A new AI correction edits that area and keeps the surrounding map as you saved it.',
+    'Resize a correction pin to edit one area of your AI map and keep the rest as drawn.',
   ] },
   { when: '27 November 2026', sha: '9be7b761b', changes: [
     'Pin a correction to a saved AI map and choose which notes to send with one new render.',
