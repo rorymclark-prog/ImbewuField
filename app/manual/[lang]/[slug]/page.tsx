@@ -9,7 +9,7 @@ import LanguageSwitch from '@/components/manual/LanguageSwitch';
 import ChapterLanguageLink from '@/components/manual/ChapterLanguageLink';
 import styles from '@/components/manual/ManualOutline.module.css';
 import {
-  MANUAL_CHAPTERS, MANUAL_LANGS, chapterTitle, earthworksFilmPlacements, figuresBySection, isManualChapter, isManualLang, manualUi, parseManual, readingMinutes,
+  MANUAL_CHAPTERS, MANUAL_LANGS, chapterTitle, manualFilmPlacements, figuresBySection, isManualChapter, isManualLang, manualUi, parseManual, readingMinutes,
 } from '@/lib/manual';
 import { manualFigures, readChapter } from '@/lib/manual-content';
 import { manualOutline } from '@/lib/manual-outline';
@@ -58,7 +58,7 @@ export default function ManualChapterPage({ params }: { params: { lang: string; 
   const prev = index > 0 ? MANUAL_CHAPTERS[index - 1] : null;
   const next = index < MANUAL_CHAPTERS.length - 1 ? MANUAL_CHAPTERS[index + 1] : null;
   const contentLang = translated ? lang : 'en';
-  const filmSlots = slug === '07-earthworks-and-water' ? earthworksFilmPlacements(body) : [];
+  const filmSlots = manualFilmPlacements(slug, body);
   function filmAt(blockIndex: number, afterStep?: number) {
     const slot = filmSlots.find((s) => s.blockIndex === blockIndex && s.afterStep === afterStep);
     return slot && (

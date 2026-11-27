@@ -10,7 +10,7 @@ import { manualSearchIndex } from '@/lib/manual-search-index';
 import { prepareManualSearch, searchManual, type ManualSearchSection } from '@/lib/manual-search';
 import { manualGlossaryAnchor, manualOutline } from '@/lib/manual-outline';
 import {
-  MANUAL_CHAPTERS, MANUAL_LANGS, MANUAL_LANG_NAMES, blockShape, chapterTitle, earthworksFilmPlacements, inlineText, isManualChapter, isManualLang, manualUi,
+  MANUAL_CHAPTERS, MANUAL_LANGS, MANUAL_LANG_NAMES, blockShape, chapterTitle, manualFilmPlacements, inlineText, isManualChapter, isManualLang, manualUi,
   parseInline, parseManual, type ManualFigure,
 } from '@/lib/manual';
 
@@ -50,6 +50,17 @@ test('each manual search entry opens a chapter, heading, glossary word or field 
         assert.ok(firstPage.some(hit => hit.section.anchor === 'drip-irrigation-film'), `${lang}: find the film using the subsection name`);
         anchors.push(...films.map(entry => entry.anchor));
         assert.ok(films.every(entry => entry.passages.length === 1));
+      }
+      if (slug === '03-sector-planning' || slug === '08-soil') {
+        const [film, anchor] = slug === '03-sector-planning'
+          ? ['shadow', 'seasonal-shadows-film'] as const : ['jar', 'soil-jar-test-film'] as const;
+        const entry = index.find(item => item.slug === slug && item.kind === 'film');
+        assert.ok(entry);
+        assert.equal(entry.anchor, anchor);
+        assert.equal(entry.titleLang, lang);
+        assert.equal(entry.title, fieldFilmTitle(film, lang));
+        assert.equal(searchManual(prepareManualSearch(index), entry.title)[0].section, entry);
+        anchors.push(anchor);
       }
       if (slug === '12-glossary') {
         const glossary = body.find(block => block.type === 'table');
@@ -217,7 +228,7 @@ test('each field film follows its own instruction in all five editions', () => {
   };
   for (const lang of MANUAL_LANGS) {
     const body = parseManual(read(lang, '07-earthworks-and-water')).filter((b) => b.type !== 'h1');
-    const slots = earthworksFilmPlacements(body);
+    const slots = manualFilmPlacements('07-earthworks-and-water', body);
     assert.equal(new Set(slots.map((slot) => slot.anchor)).size, 7, lang);
     const drip = slots.find(slot => slot.anchor === 'drip-irrigation-film');
     assert.ok(drip);
@@ -239,6 +250,33 @@ test('each field film follows its own instruction in all five editions', () => {
       ['level', exercise, 'ol', 4],
       ['walk', exercise, 'ol', 7],
     ], lang);
+  }
+});
+
+test('the shadow film appears with Sun angles and the jar film follows setting down the shaken jar', () => {
+  const headings = {
+    en: ['Sun angles', 'The jar test'],
+    zu: ['Ama-engeli elanga', 'Ukuhlola ngembiza'],
+    st: ['Dikhutlo tsa letsatsi', 'Teko ya nkgo'],
+    ve: ['U tsa ha ḓuvha', 'Ndingo ya khali'],
+    ts: ['Tiengela ta dyambu', 'Ku kambela hi xibya xa ngilazi (jar test)'],
+  };
+  for (const lang of MANUAL_LANGS) {
+    for (const [chapter, film, heading, block, step] of [
+      ['03-sector-planning', 'shadow', headings[lang][0], 'p', undefined],
+      ['08-soil', 'jar', headings[lang][1], 'ol', 3],
+    ] as const) {
+      const body = parseManual(read(lang, chapter)).filter(b => b.type !== 'h1');
+      const slots = manualFilmPlacements(chapter, body);
+      assert.equal(slots.length, 1);
+      const [slot] = slots;
+      assert.equal(slot.film, film);
+      assert.equal(slot.afterStep, step);
+      assert.equal(body[slot.blockIndex].type, block);
+      const preceding = body[slot.blockIndex - 1];
+      assert.ok(preceding?.type === 'h3');
+      assert.equal(inlineText(preceding.content), heading);
+    }
   }
 });
 
@@ -410,6 +448,8 @@ for (const [film, version, cueEnds] of [
   ['drip', 1, [6, 12, 19, 26, 34, 42]],
   ['roof', 1, [6, 12, 19, 26, 34, 42]],
   ['bottle', 3, [5, 11, 17, 23, 29, 36]],
+  ['jar', 1, [9, 17, 24, 32, 43, 50]],
+  ['shadow', 1, [6, 13, 21, 29, 36, 42]],
 ] as const) {
   test(`all five ${film} editions carry six timed stages and report the delivered media size`, () => {
     const english = filmEdition(film, 'en');
