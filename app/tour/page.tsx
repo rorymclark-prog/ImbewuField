@@ -43,7 +43,7 @@ export default function TourPage() {
   }
   const minutes = PRODUCT_TOUR.reduce((sum, step) => sum + step.minutes, 0);
   const tried = tour?.done.length ?? 0;
-  return <main lang={lang} className={styles.page}><AppHeader title={ui('Tour', 'Uhambo')} /><div className={styles.scroll}><div className={styles.wrap}>
+  return <main lang={lang} className={styles.page}><AppHeader title={ui('Tour', 'Uhambo')} /><div className={`${styles.scroll} ${styles.scrollInFlow}`}><div className={styles.wrap}>
     <section className={styles.hero}>
       <div><span className={styles.eyebrow}>{ui('FARMERS · MENTORS · ORGANISATIONS · FUNDERS', 'ABALIMI · ABELULEKI · IZINHLANGANO · ABAXHASI')}</span>
         <h1>{ui('See what ImbewuField can do.', 'Bona okungenziwa yi-ImbewuField.')}</h1>

@@ -49,3 +49,8 @@
   .notice { padding:10px 12px; margin:12px 0 20px; }
   .eyebrow { font-size:12px; letter-spacing:.05em; }
 }
+/* 27 Nov: /tour mounts LimaBar and the TabBar in the page flow after the scroller, so neither
+   the bottom-nav height nor the floating-launcher clearance belongs inside it; .scroll keeps
+   both for /tips, where Lima still floats. Last in the file so it beats the phone rule above. */
+.scrollInFlow { padding-bottom:24px; }
+@media(max-width:480px){ .scrollInFlow { padding-bottom:20px; } }
