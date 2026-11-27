@@ -95,6 +95,7 @@ export async function geminiEdit(
   imageConfig?: { aspectRatio?: string; imageSize?: string },
   // Set once we have proof this key/model rejects imageConfig — see the catch below.
   dropImageConfig = false,
+  review?: Buffer,
 ): Promise<string> {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), ATTEMPT_TIMEOUT_MS);
@@ -130,7 +131,8 @@ export async function geminiEdit(
           role: "user",
           parts: [
             { text: strictPrompt },
-            { inlineData: { mimeType: "image/png", data: imageB64 } }
+            { inlineData: { mimeType: "image/png", data: imageB64 } },
+            ...(review ? [{ inlineData: { mimeType: "image/jpeg", data: review.toString('base64') } }] : [])
           ]
         }],
         generationConfig: {
@@ -155,7 +157,7 @@ export async function geminiEdit(
     clearTimeout(timer);
     if (attempt < MAX_RETRIES) {
       await sleep(1500 * (attempt + 1));
-      return geminiEdit(key, imageB64, prompt, attempt + 1, model, imageConfig, dropImageConfig);
+      return geminiEdit(key, imageB64, prompt, attempt + 1, model, imageConfig, dropImageConfig, review);
     }
     throw new Error(`gemini network/abort: ${String(e)}`);
   }
@@ -167,11 +169,11 @@ export async function geminiEdit(
     await sleep(wait);
     // Transient failures must not silently change the sheet's aspect ratio or paid resolution,
     // nor reintroduce a config field this model has already rejected.
-    return geminiEdit(key, imageB64, prompt, attempt + 1, model, imageConfig, dropImageConfig);
+    return geminiEdit(key, imageB64, prompt, attempt + 1, model, imageConfig, dropImageConfig, review);
   }
   if (res.status >= 500 && attempt < MAX_RETRIES) {
     await sleep(2000 * (attempt + 1));
-    return geminiEdit(key, imageB64, prompt, attempt + 1, model, imageConfig, dropImageConfig);
+    return geminiEdit(key, imageB64, prompt, attempt + 1, model, imageConfig, dropImageConfig, review);
   }
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
@@ -179,7 +181,7 @@ export async function geminiEdit(
     // 400s naming it — retry once without, so asking for parity can never cost us the render
     // that already worked. Any other 400 is a real error and still throws.
     if (res.status === 400 && imageConfig && !dropImageConfig && /imageConfig|aspectRatio|imageSize|image_config/i.test(detail)) {
-      return geminiEdit(key, imageB64, prompt, attempt, model, imageConfig, true);
+      return geminiEdit(key, imageB64, prompt, attempt, model, imageConfig, true, review);
     }
     throw new Error(`Gemini ${res.status}: ${detail.slice(0, 200)}`);
   }

@@ -97,6 +97,18 @@ test('paid map edits use GPT Image 2.5 while preserving the chosen quality and p
     assert.ok(Math.abs(w / h - 1.6) < 0.02);
   }
   assert.equal(calls.length, 3);
+  const {correctionInstructions} = await import('../lib/map-correction-pins.ts');
+  const notes = ['Remove the fence across the vegetable beds'];
+  await edit('fake-key',png.toString('base64'),correctionInstructions(notes),undefined,
+    {review:Buffer.from('numbered previous illustration')},0,'medium');
+  const reviewed = calls.at(-1)!.body;
+  assert.equal(reviewed.get('quality'),'medium');
+  assert.equal(reviewed.getAll('image[]').length,2);
+  assert.equal(await (reviewed.getAll('image[]')[1] as Blob).text(),'numbered previous illustration');
+  assert.match(String(reviewed.get('prompt')),/Pin 1: "Remove the fence across the vegetable beds"/);
+  assert.equal(reviewed.has('mask'),false);
+  assert.throws(() => correctionInstructions([]));
+
   assert.match(source, /if \(job\.engine === 'openai'\) await ref\.update\(\{ model: OPENAI_MAP_MODEL \}\)/,
     'the worker must stamp the same actual model it sends to OpenAI');
 });

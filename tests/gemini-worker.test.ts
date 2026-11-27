@@ -169,3 +169,16 @@ test('a 400 unrelated to image configuration does not silently remove the chosen
   );
   assert.equal(calls, 1);
 });
+
+test('Gemini receives the reviewed illustration after the original plan', async () => {
+  const previous = globalThis.fetch;
+  let seen: unknown;
+  globalThis.fetch = async (_url, init) => {
+    seen = JSON.parse(String(init?.body)).contents[0].parts.map((p:{inlineData?:{data:string}})=>p.inlineData?.data).filter(Boolean);
+    return new Response(JSON.stringify({candidates:[{content:{parts:[{inlineData:{mimeType:'image/png',data:'done'}}]}}]}));
+  };
+  try {
+    assert.equal(await geminiEdit('test','original','guides',0,'flash',undefined,false,Buffer.from('review')),'done');
+    assert.deepEqual(seen,['original',Buffer.from('review').toString('base64')]);
+  } finally {globalThis.fetch=previous;}
+});

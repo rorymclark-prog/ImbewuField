@@ -760,3 +760,23 @@ test('an older paid illustration resolves only to its own completed output and a
   }
   assert.equal(originalJobSheet(job, id, 'another farm'), undefined);
 });
+
+test('design changes distinguish moved tanks, new beds and removed lines across map reframes', async () => {
+  const {savedDesignChanges} = await import('../lib/saved-design-changes.ts');
+  const {migrateStateToFrame,projectorForFrame} = await import('../lib/design-canvas.ts');
+  const frame = {centerLat:-27, centerLng:31,zoom:18,imgW:900,imgH:800,mPerPx:.5};
+  const state = {siteId:'site',frame,items:[{id:'t',defId:'tank',label:'Rain tank',x:.3,y:.6}],zones:[],
+    lines:[{id:'f',kind:'fence' as const,points:[[.1,.1],[.2,.2]] as [number,number][]}],step:'glossy' as const,updatedAt:'2026-11-26'};
+  const refLayers = {boundary:[],house:[],driveway:[]};
+  const baseline = {state,refLayers,frame};
+  const next = {...frame,centerLat:-27.00001,centerLng:31.00003,imgW:950};
+  const migrated = migrateStateToFrame(state,next,projectorForFrame(next));
+  assert.deepEqual(savedDesignChanges(baseline,{state:migrated,frame:next,refLayers}),[]);
+  const paper = {...state,baseMode:'blank' as const};
+  assert.deepEqual(savedDesignChanges({...baseline,state:paper},{refLayers,frame:next,state:{...paper,frame:next}}),[]);
+  const bed = {defId:'veg_bed',label:'Vegetable bed',x:.4,y:.7};
+  const edited = {...migrated,items:[{...migrated.items[0],x:.21},{...bed,id:'a'},{...bed,id:'b'}],lines:[]};
+  assert.deepEqual(savedDesignChanges(baseline,{state:edited,refLayers,frame:next}),[
+    {action:'Moved',name:'Rain tank',count:1},{action:'Added',name:'Vegetable bed',count:2},{action:'Removed',name:'fence',count:1}]);
+  assert.equal(savedDesignChanges(baseline,{...baseline,state:{...state,siteId:'other'}}),null);
+});

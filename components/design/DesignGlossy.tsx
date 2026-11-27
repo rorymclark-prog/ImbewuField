@@ -105,8 +105,10 @@ import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath, tra
 import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, recommendedSheetSettings, renderAuthorityFlagsForStyle, renderPolicyForStyle, type SheetPresentationSettings } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { drawExactBed, isExactSurfaceFinish, paintExactSurface } from '@/lib/exact-surface-finish';
+import { savedDesignChanges } from '@/lib/saved-design-changes';
+import { correctionReference } from '@/lib/correction-reference';
 import SavedPlanComparison from './SavedPlanComparison';
-import { comparisonSource, openComparisonSource, type ComparisonSource } from '@/lib/saved-plan-comparison';
+import { comparisonSource, originalRecipe, openComparisonSource, type ComparisonSource } from '@/lib/saved-plan-comparison';
 import MapFinishExamples from './MapFinishExamples';
 import { EXACT_PLANTING_FINISHES, canopyCentreMark, canopyLegendNote, drawExactCanopy, supportsExactCanopies, type ExactPlantingFinish, PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
@@ -185,7 +187,7 @@ import {
   styleSheetLegendWidth,
 } from '@/lib/reference-presentation';
 import { activeAccountUid } from '@/lib/account-local-storage';
-import { loadSheetMetas, loadSheetImage, loadSheetComparison, patchSheetThumb, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
+import { editSheetPins, loadSheetMetas, loadSheetImage, loadSheetComparison, patchSheetThumb, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
 import { backfillThumbnails } from '@/lib/gallery-thumbnails';
 import { basemapAttribution, fetchBasemapForFrame } from '@/lib/basemap-imagery';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
@@ -12960,6 +12962,7 @@ export default function DesignGlossy({
   // cleared) if the later polish pass is rejected, so the SAME saved sheet carries the explanation.
   const hybridGalleryIdRef = useRef<string | null>(null);
   /** The image the paid polish pass was handed, kept so its output can be scored against it. */
+  const startingCorrection = useRef(false);
   const polishInputRef = useRef<string | null>(null);
   // Both stages of one request share this identity; a later request must never borrow its audit.
   const renderAttemptRef = useRef<string | null>(null);
@@ -13608,6 +13611,7 @@ export default function DesignGlossy({
       const persisted = persist(originalPlan)
         .then(async ok => {
           // A full device should still keep the paid illustration if the aerial will not fit.
+          if (!ok && originalPlan?.recipe && stillOwner()) ok = await persist({...originalPlan,recipe:undefined});
           if (!ok && originalPlan && stillOwner()) ok = await persist();
           setStorageWarning(ok ? null : `Couldn't save “${label}” to this device (storage full or unavailable) — download it before you close this tab.`);
           return ok;
@@ -16189,10 +16193,10 @@ export default function DesignGlossy({
                   { aiArtwork: true, styleKey: obliqueStyle, obliqueArtwork: true, sheetNumber: 'VIEW', labelMode: 'names', includeLabelGutters: false });
                 if (!active) return;
                 lastAssembledGalleryId = pushGalleryRef.current(
-                  `Oblique design view · ${obliqueLabel} · ${validationStatus === 'unscored' ? 'comparison unavailable' : 'review against measured plan'}`,
+                  `Oblique design view · ${obliqueLabel}${sheet.correctionNotes?.length ? ' · Corrected illustration' : ''} · ${validationStatus === 'unscored' ? 'comparison unavailable' : 'review against measured plan'}`,
                   finalSheet, { resultKind: 'ai-illustrated', provider: attribution.gallery, model: job.model,
                     geometryLock: false, showcase: false, underlay: frozenScene.underlay, ...auditContext,
-                    validationStatus, rawOutputPath: sheet.outputPath }, comparisonSource(job, sheet, frozenScene.frame.satDataUrl));
+                    validationStatus, rawOutputPath: sheet.outputPath }, comparisonSource(job, sheet, frozenScene.frame.satDataUrl, originalRecipe(job,sheet,sourceImage,protectMask)));
                 assembled.add(sheet.key);
                 continue;
               }
@@ -16505,7 +16509,7 @@ export default function DesignGlossy({
               const finishLabel = styleDef?.label ? ` · ${styleDef.label}` : '';
               // Label text must track resultKind, not always say "AI polished" — a Hybrid-only save
               // (mode 2, stops there) is genuinely AI-touched but is not a paid polish pass (mode 3).
-              const finishKindLabel = isPolishedResult ? 'AI Polished + 2nd pass' : isHybridResult ? 'AI Polished' : 'AI (legacy)';
+              const finishKindLabel = sheet.correctionNotes?.length ? 'Corrected AI illustration' : isPolishedResult ? 'AI Polished + 2nd pass' : isHybridResult ? 'AI Polished' : 'AI (legacy)';
               lastAssembledGalleryId = pushGalleryRef.current(
                 `${sheet.label}${finishLabel} · ${finishKindLabel} · ${validationStatus === 'unscored' ? 'comparison unavailable' : 'review against exact map'}${sameDesignRevision ? '' : ' · earlier design'}`,
                 finalSheet,
@@ -16523,7 +16527,7 @@ export default function DesignGlossy({
                   validationStatus,
                   rawOutputPath: sheet.outputPath,
                 },
-                comparisonSource(job, sheet, frozenScene.frame.satDataUrl),
+                comparisonSource(job, sheet, frozenScene.frame.satDataUrl, originalRecipe(job,sheet,sourceImage,protectMask)),
               );
               // Only Full Treatment's own Hybrid stage can later need amending (see
               // hybridGalleryIdRef above) — a plain Hybrid-only save has no polish stage to reject.
@@ -16671,8 +16675,69 @@ export default function DesignGlossy({
     : selectedStyleLabel;
   const comparisonItem = galleryViewItem ?? (visibleResultImage && !isExactRender
     ? gallery.find(item => item.image === visibleResultImage && item.resultKind !== 'exact') : null);
+  const comparisonOwner = activeAccountUid();
+  const comparisonSample = isSampleMode();
+  const checkReviewOwner = () => {
+    if (activeAccountUid() !== comparisonOwner || isSampleMode() !== comparisonSample || gallerySiteIdRef.current !== gallerySiteId) {
+      throw new Error('Reopen the illustration for the active farm and account.');
+    }
+  };
   const compareButton = comparisonItem && ['hybrid', 'ai-polished', 'ai-illustrated'].includes(comparisonItem.resultKind) ? (
-    <SavedPlanComparison key={`${gallerySiteId}:${comparisonItem.id}`}
+    <SavedPlanComparison key={`${comparisonOwner}:${comparisonSample}:${gallerySiteId}:${comparisonItem.id}`}
+      loadIllustration={() => {checkReviewOwner(); return resolveGalleryImage(comparisonItem);}}
+      review={{
+        pins: () => {checkReviewOwner(); return editSheetPins(comparisonItem.id, gallerySiteId);},
+        save: change => {checkReviewOwner(); return editSheetPins(comparisonItem.id, gallerySiteId, change);},
+        renderLabel: !aiRenderOn || gallerySiteId !== state.siteId ? 'Open the farm with AI access to render a corrected illustration.' : `${queueEngine === 'gemini' ? 'Gemini' : OPENAI_MAP_MODEL_LABEL} · ${quality} quality`,
+        render: aiRenderOn && gallerySiteId === state.siteId ? async (selected, illustration) => {
+          if (startingCorrection.current || loading || queueJobId) throw new Error('Wait for the active render to finish.');
+          const item = comparisonItem, owner = renderUser?.uid;
+          const stillHere = () => !!owner && activeAccountUid() === owner && !isSampleMode() && gallerySiteIdRef.current === gallerySiteId;
+          if (!stillHere()) throw new Error('Reopen the saved map under its original account.');
+          startingCorrection.current = true;
+          setLoading('falgpt');
+          try {
+            const savedPins = await editSheetPins(item.id, gallerySiteId);
+            if (!selected.every(p => savedPins.some(q => q.id === p.id && q.note === p.note && q.x === p.x && q.y === p.y))) {
+              throw new Error('The selected pins changed. Reopen this illustration to review them.');
+            }
+            const {readOriginalPlan,readOriginalRecipe} = await import('@/lib/read-saved-plan');
+            const source = await loadSheetComparison(item.id, gallerySiteId) ?? await readOriginalPlan(item, gallerySiteId);
+            const frozen = source && item.designRevision ? await openComparisonSource(source,item,gallerySiteId) : null;
+            if (!source || !item.designRevision || !frozen) {
+              throw new Error('The original design is unavailable. Your notes are saved.');
+            }
+            const incompatible = savedArtworkSettingsMessage(frozen);
+            if (incompatible) throw new Error(incompatible);
+            const recipe = source.recipe ?? await readOriginalRecipe(item,gallerySiteId);
+            if (!recipe || recipe.sheet.key !== source.sheetKey || (recipe.sheet.protectMaskDataUrl && recipe.sheet.useProtectMaskForEdit !== false)) {
+              throw new Error('The original rendering inputs for this older sheet are unavailable or incompatible. Your notes are saved.');
+            }
+            const reviewImage = source.sheetKey === 'implementation'
+              ? await blankPhasingPanel(illustration, phasingSheetSize(frozen.frame,frozen.refLayers))
+              : illustration;
+            const marked = await correctionReference(reviewImage, selected);
+            if (!stillHere()) throw new Error('The active farm or account changed.');
+            // This is exactly one paid pass, even when the original was part of a two-pass job.
+            // Its stored input is also the baseline used by the normal difference and restoration checks.
+            polishAfterHybridRef.current = false;
+            setHybridHandoffReady(false); setLockedPolishStage(null);
+            polishInputRef.current = recipe.sheet.compositeDataUrl;
+            const id = await enqueueRenderJobCapped({siteId:gallerySiteId, style:recipe.style, engine:queueEngine, quality,
+              attemptId:crypto.randomUUID(), outputMode:'hybrid',
+              sceneSnapshot:{sceneJson:source.sceneJson,designRevision:item.designRevision,sourceDataUrl:source.sourceDataUrl},
+              sheets:[{...recipe.sheet,review:{image:marked,notes:selected.map(p => p.note)}}]});
+            if (stillHere()) {
+              persistJobId(gallerySiteId,id);
+              setQueueJobId(id); setNotice('Your corrected illustration is rendering. The original is in Saved maps.');
+              setGalleryOpen(false); setGalleryViewId(null);
+            }
+          } catch (err) {
+            if (stillHere()) setLoading(null);
+            throw err;
+          } finally { startingCorrection.current = false; }
+        } : undefined,
+      }}
       load={async (active) => {
         const item = comparisonItem;
         if (!item.jobId || !item.rawOutputPath || !item.designRevision) return null;
@@ -16686,16 +16751,17 @@ export default function DesignGlossy({
         if (!scene || !active()) return null;
         const illustration = await resolveGalleryImage(item);
         if (!illustration || !active()) return null;
-        const { state, frame, refLayers, site, placeName, labelMode } = scene;
-        const baseline = source.historical ? historicalBaselineForSite(state.siteId) : null;
+        const changes = savedDesignChanges(scene, {state, frame:frameProp, refLayers});
+        const frozen = scene.state;
+        const baseline = source.historical ? historicalBaselineForSite(frozen.siteId) : null;
         const plan = source.sheetKey === 'sector'
-          ? await buildBlueprintSectorMap(state, frame, refLayers, site, placeName, baseline)
+          ? await buildBlueprintSectorMap(frozen, scene.frame, scene.refLayers, scene.site, scene.placeName, baseline)
           : source.sheetKey === 'base'
-            ? await buildBlueprintBaseMap(state, frame, refLayers, placeName, baseline, labelMode)
+            ? await buildBlueprintBaseMap(frozen, scene.frame, scene.refLayers, scene.placeName, baseline, scene.labelMode)
             : source.sheetKey === 'implementation'
-              ? await buildImplementationMap(state, frame, refLayers, site, placeName)
-              : await buildReferenceBlueprintMap(state, frame, refLayers, source.sheetKey, placeName, site, labelMode);
-        return { illustration, plan, oblique: source.oblique };
+              ? await buildImplementationMap(frozen, scene.frame, scene.refLayers, scene.site, scene.placeName)
+              : await buildReferenceBlueprintMap(frozen, scene.frame, scene.refLayers, source.sheetKey, scene.placeName, scene.site, scene.labelMode);
+        return { illustration, plan, oblique: source.oblique, changes };
       }}
     />
   ) : null;
