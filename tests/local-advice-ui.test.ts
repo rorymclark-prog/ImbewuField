@@ -42,7 +42,7 @@ const virtual = new Map<string, string>([
   ['auth', 'export const useAuth=()=>({user:globalThis.__localAdviceUiProbe.user,loading:globalThis.__localAdviceUiProbe.authLoading});'],
   ['firebase', 'export const getFirebase=()=>({auth:{currentUser:globalThis.__localAdviceUiProbe.user}});export const isBackendConfigured=()=>true;'],
   ['account', 'export const activeAccountUid=()=>globalThis.__localAdviceUiProbe.owner;export const activeAccountLocalStorageKey=key=>key;'],
-  ['sample', 'export const isSampleMode=()=>globalThis.__localAdviceUiProbe.sample;export const enterSampleMode=()=>false;export const SAMPLE_MODE_EVENT="imbewu-sample-mode-changed";'],
+  ['sample', 'export const isSampleMode=()=>globalThis.__localAdviceUiProbe.sample;export const getSampleWorkspace=()=>isSampleMode()?"ubhejane":null;export const enterSampleMode=()=>false;export const SAMPLE_MODE_EVENT="imbewu-sample-mode-changed";'],
   ['places', 'export const loadPlaces=()=>globalThis.__localAdviceUiProbe.places;'],
   ['crop', 'export const loadCropPlan=()=>({workspaceReferences:[]});'],
   ['reports', 'export const loadReports=()=>globalThis.__localAdviceUiProbe.reports;'],

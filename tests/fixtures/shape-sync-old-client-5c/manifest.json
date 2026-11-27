@@ -21,7 +21,7 @@
     "lib/sample-mode.ts": {
       "bytes": 21484,
       "sha256": "97d38d04eb782bbbf56170ce9e5a54febb3523e2cc19789db7e864ed6f9b62d7",
-      "payload": "verified-current-core"
+      "payload": "sample-mode.ts.txt"
     },
     "lib/international/site-context.ts": {
       "bytes": 8252,

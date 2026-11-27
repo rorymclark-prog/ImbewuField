@@ -1923,7 +1923,7 @@ export default function RecordsPage() {
                   production={production}
                   expenses={expenses}
                   invoices={invoices}
-                  name={getSampleMapSite()?.name ?? user?.displayName ?? recordsText(lang, 'My farm', 'Ipulazi lami')}
+                  name={(sampling ? getSampleMapSite()?.name : user?.displayName) ?? recordsText(lang, 'My farm', 'Ipulazi lami')}
                   loading={dataLoading}
                   period={period}
                   setPeriod={setPeriod}
