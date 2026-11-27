@@ -24,6 +24,7 @@ import {
 import { reportMapType, type ReportMapType } from './report-map-selection';
 import type { SheetUnderlay } from './sheet-underlay';
 import { isComparisonSource, type ComparisonSource } from './saved-plan-comparison';
+import { correctionPins, validCorrectionPin, MAX_CORRECTION_PINS, type CorrectionPin } from './map-correction-pins';
 import { isMapModelId } from './ai-render/model';
 
 const DB_NAME = 'imbewu-sheets';
@@ -451,6 +452,48 @@ export async function patchSheetThumb(
   }
 }
 
+/** Each edit reads and writes the current owned row in one transaction. Two tabs adding pins
+ * keep both notes; a stale edit to the same note asks for a reload. */
+export async function editSheetPins(id: string, siteId: string, change?: {
+  previous?: CorrectionPin; next?: CorrectionPin;
+}, ownerUid?: string | null): Promise<CorrectionPin[]> {
+  const key = ownedKey(id, ownerUid), siteKey = ownedKey(siteId, ownerUid);
+  const db = await openDb();
+  if (!db) throw new Error('Device storage is unavailable.');
+  try {
+    return await new Promise<CorrectionPin[]>((resolve, reject) => {
+      const transaction = db.transaction(STORE, change ? 'readwrite' : 'readonly');
+      const store = transaction.objectStore(STORE);
+      let pins: CorrectionPin[] = [];
+      let failure = 'The saved illustration could not be opened on this device.';
+      const req = store.get(key);
+      req.onsuccess = () => {
+        const row = req.result;
+        if (!row || row.siteId !== siteKey || ownedKey(id, ownerUid) !== key) { reject(new Error(failure)); return; }
+        pins = correctionPins(row.correctionPins);
+        if (!change) { resolve(pins); return; }
+        const { previous, next } = change;
+        const pinId = (previous ?? next)?.id;
+        const current = pins.find(p => p.id === pinId);
+        if (!pinId || (next && (!validCorrectionPin(next) || next.id !== pinId)) ||
+          (!!current !== !!previous) || (current && previous && (current.note !== previous.note ||
+          current.x !== previous.x || current.y !== previous.y))) {
+          reject(new Error('This pin changed. Reopen the comparison to see the latest notes.')); return;
+        }
+        if (next && !previous && pins.length >= MAX_CORRECTION_PINS) {
+          reject(new Error('This illustration has reached its pin limit.')); return;
+        }
+        pins = previous ? pins.flatMap(p => p.id === pinId ? (next ? [next] : []) : [p]) : [...pins, next!];
+        failure = 'The correction could not be saved on this device.';
+        store.put({ ...row, correctionPins: pins });
+      };
+      transaction.oncomplete = () => resolve(pins);
+      transaction.onabort = transaction.onerror = () => reject(new Error(failure));
+      req.onerror = () => reject(new Error(failure));
+    });
+  } finally { db.close(); }
+}
+
 export async function saveSheet(
   sheet: StoredSheet,
   ownerUid?: string | null,
@@ -464,7 +507,15 @@ export async function saveSheet(
     return await new Promise((resolve) => {
       try {
         const transaction = db.transaction(STORE, 'readwrite');
-        transaction.objectStore(STORE).put(physicalRow);
+        const store = transaction.objectStore(STORE);
+        const existing = store.get(physicalRow.id);
+        existing.onsuccess = () => {
+          const prior = existing.result;
+          const sameArtwork = prior && prior.siteId === physicalRow.siteId && prior.rawOutputPath === physicalRow.rawOutputPath
+            && prior.designRevision === physicalRow.designRevision && prior.image === physicalRow.image;
+          store.put(sameArtwork ? { ...prior, ...physicalRow } : physicalRow);
+        };
+        existing.onerror = () => resolve(false);
         transaction.oncomplete = () => resolve(true);
         transaction.onabort = () => resolve(false);
         transaction.onerror = () => resolve(false); // QuotaExceeded lands here

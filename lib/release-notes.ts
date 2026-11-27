@@ -41,13 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 November 2026', sha: 'f27b78091', changes: [
+  { when: '27 November 2026', sha: '8bc54e4e3', changes: [
+    'Watch roof rain fill a tank and a buried bottle water the roots in the manual.',
     'Watch soil settle in a jar and see where a garden wall casts shade in winter and summer.',
   ] },
-  { when: '27 November 2026', sha: '680292b4b', changes: [
-    'Watch roof rain fill a tank and a buried bottle water the roots in the manual.',
-  ] },
-  { when: '27 November 2026', sha: '08a1239bf', changes: [
+  { when: '27 November 2026', sha: '9be7b761b', changes: [
+    'Pin a correction to a saved AI map and choose which notes to send with one new render.',
+    'See what moved, changed, was added or was removed since a saved map was rendered.',
     'Record a dated Field Journal observation for a saved design phase and mapped feature.',
   ] },
   { when: '26 November 2026', sha: 'b4119568e', changes: [

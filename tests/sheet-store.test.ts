@@ -573,3 +573,27 @@ test('a saved illustration keeps its own plan for offline comparison without loa
   await deleteSheet('art','farmer-a');
   assert.equal(await loadSheetComparison('art','farm','farmer-a'), null);
 });
+
+test('corrections remain with the original illustration, survive thumbnail updates and detect competing edits', async () => {
+  const { editSheetPins } = await import('../lib/sheet-store.ts');
+  install(new FakeIndexedDb());
+  const original = sheet('illustration','farm','2026-11-27T00:00:00Z');
+  await saveSheet(original,'farmer-a');
+  const first = {id:'one',x:0,y:1,note:'Remove the extra fence'};
+  const second = {id:'two',x:.45,y:.15,note:'Keep the canopy'};
+  await editSheetPins('illustration','farm',{next:first},'farmer-a');
+  await editSheetPins('illustration','farm',{next:second},'farmer-a');
+  await patchSheetThumb('illustration','data:image/jpeg;base64,DDDD','farmer-a');
+  await saveSheet(original,'farmer-a');
+  assert.deepEqual(await editSheetPins('illustration','farm',undefined,'farmer-a'),[first,second]);
+  await assert.rejects(editSheetPins('illustration','other',{previous:first},'farmer-a'));
+  await assert.rejects(editSheetPins('illustration','farm',{previous:first},'farmer-b'));
+  const edited = {...second,note:'Keep the tree crown over the northern boundary'};
+  await editSheetPins('illustration','farm',{previous:second,next:edited},'farmer-a');
+  await assert.rejects(editSheetPins('illustration','farm',{previous:second},'farmer-a'));
+  await assert.rejects(editSheetPins('illustration','farm',{next:{...first,id:'three',x:1.1}},'farmer-a'));
+  assert.deepEqual(await editSheetPins('illustration','farm',{previous:first},'farmer-a'),[edited]);
+  assert.equal('correctionPins' in (await loadSheetMetas('farm','farmer-a'))[0],false);
+  await deleteSheet('illustration','farmer-a');
+  await assert.rejects(editSheetPins('illustration','farm',{next:first},'farmer-a'));
+});
