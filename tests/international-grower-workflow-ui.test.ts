@@ -17,8 +17,13 @@ import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '..
 import { assembleGrowerWorkflowReview, prepareGrowerWorkflowAcceptance, type GrowerWorkflowDraft, type GrowerWorkflowReview } from '../lib/international/grower-workflow.ts';
 import type { GrowerAutoPlanPanelProps } from '../components/crops/GrowerAutoPlanPanel.tsx';
 
-const hooks = registerHooks({ load(url, context, next) {
-  if (/\/components\/crops\/(GrowerAutoPlanPanel|GreenHorizonProductionPlan)\.tsx$/.test(url)) return { format: 'module', shortCircuit: true,
+const hooks = registerHooks({ resolve(specifier, context, next) {
+  if (specifier === './auth' && context.parentURL?.endsWith('/lib/use-role-navigation.ts')) return {
+    shortCircuit: true, url: 'data:text/javascript,export%20function%20useAuth()%7Breturn%20%7Brole:null%7D%7D',
+  };
+  return next(specifier, context);
+}, load(url, context, next) {
+  if (/\/components\/crops\/(GrowerAutoPlanPanel|GreenHorizonProductionPlan|GrowerWeeklyProduction|GrowerWeeklyRecords)\.tsx$/.test(url)) return { format: 'module', shortCircuit: true,
     source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
       target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
     } }).outputText };

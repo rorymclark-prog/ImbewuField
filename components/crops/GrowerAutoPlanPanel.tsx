@@ -12,8 +12,15 @@ import type { GrowerWorkflowDemandDraft, GrowerWorkflowDraft, GrowerWorkflowRevi
 import { GROWER_DEMAND_SELECTION_MAX_ROWS, type GrowerEnteredDemandEntry, type GrowerEnteredDemandPurpose } from '@/lib/international/grower-entered-demand';
 import { GROWER_BUYER_PICKING_PERIOD_DAYS, projectGrowerBuyerPickingPeriods } from '@/lib/international/grower-harvest-demand';
 import type { MassQuantityEntry } from '@/lib/mass-units';
+import type { WeeklyProductionWindow } from '@/lib/international/grower-weekly-production';
 import GrowerEnteredMassField from './GrowerEnteredMassField';
 import type { GrowerWorkflowAcceptanceResult, GrowerWorkflowAcceptanceState } from './useGrowerWorkflow';
+
+export interface ReviewedBedAvailability {
+  readonly source: GrowerWorkflowSource;
+  readonly revision: number;
+  readonly periods: readonly (WeeklyProductionWindow & { bedId: string })[];
+}
 
 export interface GrowerAutoPlanPanelProps {
   scope: GrowerPlanningScope | null;
@@ -30,6 +37,7 @@ export interface GrowerAutoPlanPanelProps {
   weeklyPracticeDraft?: GrowerWorkflowDraft;
   onRefresh: () => Promise<void>;
   onReview: (draft: GrowerWorkflowDraft) => Promise<GrowerWorkflowReview>;
+  onReviewAvailability?: (value: ReviewedBedAvailability | null) => void;
   onAccept?: (review: Extract<GrowerWorkflowReview, { status: 'review' }>, displayedReviewIsCurrent: () => boolean) => Promise<GrowerWorkflowAcceptanceResult>;
   acceptance?: GrowerWorkflowAcceptanceState;
   nurseryReview?: (review: Extract<GrowerWorkflowReview, { status: 'review' }>) => ReactNode;
@@ -281,6 +289,18 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
   const saving = props.acceptance?.status === 'saving';
   const saved = props.acceptance?.status === 'confirmed';
   const usable = review?.status === 'review' && (review.proposal.status === 'ready' || review.proposal.status === 'with-gaps');
+  useEffect(() => {
+    const report = props.onReviewAvailability;
+    if (!report) return;
+    if (!usable || !reviewMatchesContext || review?.status !== 'review' || !props.source) {
+      report(null);
+      return;
+    }
+    const periods = review.request.availability.flatMap(({ bedId, window }) =>
+      window.state === 'provided' ? [{ bedId, ...window.value }] : []);
+    report({ source: props.source, revision: props.contextRevision, periods });
+    return () => report(null);
+  }, [props.onReviewAvailability, props.source, props.contextRevision, review, usable, reviewMatchesContext]);
   const needsProvisionalReview = review?.status === 'review' && review.proposal.cycles.some(cycle => !!cycle.assessment.snapshot.profile.provisionalOrigin);
   const provisionalEvidence = useMemo(() => usable && review?.status === 'review'
     ? review.proposal.cycles.filter(cycle => cycle.assessment.snapshot.profile.provisionalOrigin).map(cycle => ({

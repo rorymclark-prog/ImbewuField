@@ -40,7 +40,7 @@ Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, value:
 const sample = await import('../lib/sample-mode.ts');
 const { DEMO_SITE, buildDemoStorageSeeds } = await import('../lib/demo-farm.ts');
 const { GREEN_HORIZON_SITE, buildGreenHorizonLettuceTarget, buildGreenHorizonChardTarget, buildGreenHorizonPlanningDraft,
-  buildGreenHorizonWeeklyPracticeDraft, buildGreenHorizonWeeklyAllocations, buildGreenHorizonStorageSeeds } = await import('../lib/green-horizon-demo.ts');
+  buildGreenHorizonWeeklyPracticeDraft, buildGreenHorizonStorageSeeds } = await import('../lib/green-horizon-demo.ts');
 const { weeklyProductionOrders } = await import('../lib/international/grower-weekly-production.ts');
 const { loadCropPlan, saveCropPlanWithReceipt } = await import('../lib/crop-plan.ts');
 const { readCanvasSourceReceipt } = await import('../lib/design-canvas.ts');
@@ -262,7 +262,7 @@ test('the staggered market-garden review keeps dated picking, an entered zero an
   assert.equal(review.status, 'review', review.issues.join(', '));
   assert.equal(review.proposal.status, 'with-gaps');
   const chardDemand = review.proposal.demandResults.find(row => row.demandId === target.id);
-  assert.ok(chardDemand && chardDemand.unmetKg > 0, 'one chard cycle cannot cover all three weeks of aggregate demand');
+  assert.ok((chardDemand?.unmetKg ?? 0) > 0, 'one chard cycle cannot cover all three weeks of aggregate demand');
   const cycles = review.proposal.cycles.map(cycle => ({
     siteId: target.siteId, plantingId: null, targetId: cycle.demandId, bedId: cycle.bedId,
     cropKey: cycle.assessment.snapshot.profile.cropKey, schedule: cycle.assessment.schedule,
@@ -271,17 +271,25 @@ test('the staggered market-garden review keeps dated picking, an entered zero an
   assert.deepEqual(cycles.map(({ bedId, schedule }) => [bedId, schedule.firstHarvestDate]), [
     ['green-horizon-bed-a1', '2026-11-02'], ['green-horizon-bed-b1', '2026-11-09'],
   ]);
-  const sourceAllocations = buildGreenHorizonWeeklyAllocations();
-  const periods = weeklyProductionOrders(target, cycles, sourceAllocations);
+  const [first, second] = target.weeklyPlan!;
+  const periods = weeklyProductionOrders(target, cycles);
   assert.deepEqual(periods.map(row => [row.start, row.requested, row.planned, row.planningGap, row.daysWithoutPicking]), [
     ['2026-11-09', 12, 12, 0, 4],
     ['2026-11-16', 12, 0, 12, 7],
     ['2026-11-23', 12, null, null, 7],
   ]);
-  assert.equal(weeklyProductionOrders(target, cycles, [sourceAllocations[0], sourceAllocations[0]])[0].planned, null);
-  assert.equal(weeklyProductionOrders(target, cycles, [{ ...sourceAllocations[0], unit: 'kg' }])[0].planned, null);
+  assert.equal(weeklyProductionOrders({ ...target, weeklyPlan: [first, first] }, cycles)[0].planned, null);
+  assert.equal(weeklyProductionOrders({ ...target, weeklyPlan: [{ ...first, unit: 'kg' }] }, cycles)[0].planned, null);
   const shorter = { ...target, window: { ...target.window, endExclusive: '2026-11-25' } };
-  assert.equal(weeklyProductionOrders(shorter, cycles, sourceAllocations).at(-1)?.requested, null);
+  assert.equal(weeklyProductionOrders(shorter, cycles).at(-1)?.requested, null);
+  const book = loadCropPlan();
+  assert.ok(saveCropPlanWithReceipt({ ...book, harvestTargets: book.harvestTargets?.map(row => row.id === target.id
+    ? { ...target, weeklyPlan: [first, { ...second, quantity: 7 }] } : row) }).saved);
+  const saved = loadCropPlan().harvestTargets?.find(row => row.id === target.id);
+  assert.ok(saved);
+  assert.equal(weeklyProductionOrders(saved, cycles)[1].planningGap, 5);
+  assert.ok(sample.enterSampleMode('green-horizon'));
+  assert.equal(loadCropPlan().harvestTargets?.find(row => row.id === target.id)?.weeklyPlan?.[1].quantity, 0);
 });
 
 test('the Green Horizon practice inputs produce a saved cycle with an explicitly partial picking window', async () => {

@@ -31,8 +31,10 @@ import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySa
 import GrowerPlanningPanel from '@/components/crops/GrowerPlanningPanel';
 import ProvisionalCropPreview from '@/components/crops/ProvisionalCropPreview';
 import { provisionalSiteConditions, createProvisionalCycleContext, type ProvisionalSiteConditions, type ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
-import GrowerAutoPlanPanel from '@/components/crops/GrowerAutoPlanPanel';
+import GrowerAutoPlanPanel, { type ReviewedBedAvailability } from '@/components/crops/GrowerAutoPlanPanel';
 import GreenHorizonProductionPlan from '@/components/crops/GreenHorizonProductionPlan';
+import GrowerWeeklyProduction from '@/components/crops/GrowerWeeklyProduction';
+import { weeklyAcceptedCycles } from '@/lib/international/grower-weekly-production';
 import GrowerNurseryReviewPanel from '@/components/crops/GrowerNurseryReviewPanel';
 import SavedGrowerNurseryReviewPanel from '@/components/crops/SavedGrowerNurseryReviewPanel';
 import { useGrowerWorkflow, type GrowerWorkflowBookReceipt, type GrowerWorkflowAcceptanceCommit, type GrowerWorkflowAcceptanceResult,
@@ -1527,6 +1529,7 @@ function FacilitatorCropsPageInner() {
         : { kind: 'facilitator-local', sourceId: 'local' } : null,
     actorIsCurrent: growerActorIsCurrent, readCurrentBook: readCurrentGrowerBook,
     commitAcceptance: commitGrowerAcceptance, commitNurseryReferences: commitNurseryBatchReferences, createPlantingId: () => genId('grower') });
+  const [reviewedAvailability, setReviewedAvailability] = useState<ReviewedBedAvailability | null>(null);
   const selectedGrowerSource = growerWorkflow.source && growerWorkflow.source.resourceSiteId === productionSiteId
     && growerPlanningScopeKey(growerWorkflow.source.scope) === growerScopeKey
     && (canvasSite ? growerWorkflow.source.kind === 'studio-canvas' && growerWorkflow.source.sourceId === canvasSite
@@ -2610,7 +2613,15 @@ function FacilitatorCropsPageInner() {
   const greenHorizonProduction = getSampleWorkspace() === 'green-horizon'
     && productionSiteId === buildGreenHorizonLettuceTarget().siteId
     ? <GreenHorizonProductionPlan siteId={productionSiteId} beds={beds} plan={plan} source={selectedGrowerSource} /> : null;
+  const weeklyTargets = !growerSample && growerScope?.kind === 'mapped-site'
+    ? plan?.harvestTargets?.filter(target => target.siteId === productionSiteId) ?? [] : [];
+  const weeklyProduction = productionSiteId && growerScope?.kind === 'mapped-site' && weeklyTargets.length > 0 && plan
+    ? <GrowerWeeklyProduction siteId={growerScope.siteId} targetSiteId={productionSiteId} beds={beds} targets={weeklyTargets} plantings={plan.plantings}
+      availability={reviewedAvailability?.source === selectedGrowerSource
+        && reviewedAvailability.revision === growerWorkflow.contextRevision ? reviewedAvailability.periods : undefined}
+      cycles={weeklyAcceptedCycles(growerScope.siteId, plan.plantings, selectedGrowerSource, productionSiteId)} /> : null;
   const growerPlanningPanel = <>
+    {weeklyProduction}
     <SavedGrowerRows rows={markedPlantings} wholeBookRows={plan?.plantings ?? []} source={selectedGrowerSource} scope={growerScope} conditions={growerConditions} onExport={exportSavedGrowerRecord} />
     {productionSiteId && growerScope?.kind === 'mapped-site' && <HarvestTargetsPanel
       key={`own-targets:${productionSiteId}:${growerScopeKey}`} basis="own-records" siteId={productionSiteId}
@@ -2644,6 +2655,7 @@ function FacilitatorCropsPageInner() {
       weeklyPracticeDraft={getSampleWorkspace() === 'green-horizon' && productionSiteId === buildGreenHorizonLettuceTarget().siteId
         ? buildGreenHorizonWeeklyPracticeDraft() : undefined}
       onRefresh={growerWorkflow.onRefresh} onReview={growerWorkflow.onReview}
+      onReviewAvailability={setReviewedAvailability}
       onAccept={growerWorkflow.onAccept} acceptance={growerWorkflow.acceptance}
       nurseryReview={review => growerWorkflow.source && <GrowerNurseryReviewPanel review={review}
         source={growerWorkflow.source} settings={plan?.nursery} contextRevision={growerWorkflow.contextRevision}

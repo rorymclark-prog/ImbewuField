@@ -1,7 +1,9 @@
-import { resolveHarvestTargetDateWindow, type HarvestTarget } from '../crop-plan';
+import { HARVEST_TARGET_WEEK_DAYS, harvestTargetUnit, harvestTargetWeekWindows, validHarvestTargetWeekQuantity,
+  type HarvestTarget, type Planting } from '../crop-plan';
 import { validRecordQuantity, type RecordUnit } from '../farm-records';
-import { GROWER_BUYER_PICKING_PERIOD_DAYS } from './grower-harvest-demand';
 import { addGrowerUtcDays, type GrowerDateEstimate } from './grower-planning';
+import type { GrowerCycleContext } from './grower-cycle';
+import { projectGrowerCycles } from './grower-cycle-projection';
 
 export interface WeeklyProductionWindow {
   readonly start: string;
@@ -19,16 +21,6 @@ export interface WeeklyProductionCycle {
   readonly wholeCycleKg: number;
 }
 
-/** An entered plan for this buyer's exact period and unit. It is independent
- * of the crop-cycle estimate and says nothing about actual delivery. */
-export interface WeeklyProductionAllocation extends WeeklyProductionWindow {
-  readonly siteId: string;
-  readonly targetId: string;
-  readonly cropKey: string;
-  readonly unit: RecordUnit;
-  readonly quantity: number;
-}
-
 export interface WeeklyProductionOrder extends WeeklyProductionWindow {
   readonly fullWeek: boolean;
   readonly unit: RecordUnit;
@@ -39,33 +31,32 @@ export interface WeeklyProductionOrder extends WeeklyProductionWindow {
   readonly daysWithoutPicking: number;
 }
 
-export function weeklyOrderUnit(target: HarvestTarget): RecordUnit {
-  return target.weeklyKg !== undefined ? 'kg' : target.unit;
+export function weeklyAcceptedCycles(
+  siteId: string, plantings: readonly Planting[], context: GrowerCycleContext | null, targetSiteId = siteId,
+): WeeklyProductionCycle[] {
+  if (context?.scope?.kind !== 'mapped-site' || context.scope.siteId !== siteId) return [];
+  return projectGrowerCycles(plantings, context).ownCycles.map(cycle => ({
+    siteId: targetSiteId, bedId: cycle.bedId, cropKey: cycle.cropKey, plantingId: cycle.plantingId,
+    basis: 'accepted', schedule: cycle.assessment.schedule, wholeCycleKg: cycle.totalCycleKg,
+    targetId: cycle.origin?.status === 'recorded' && cycle.origin.origin.kind === 'buyer-target'
+      ? cycle.origin.origin.harvestTargetId : null,
+  }));
 }
 
 export function weeklyProductionOrders(
   target: HarvestTarget,
   cycles: readonly WeeklyProductionCycle[],
-  allocations: readonly WeeklyProductionAllocation[],
 ): WeeklyProductionOrder[] {
-  const window = resolveHarvestTargetDateWindow(target);
-  if (!window) return [];
-  const unit = weeklyOrderUnit(target);
+  const unit = harvestTargetUnit(target);
   const rate = target.weeklyKg ?? target.weeklyQuantity;
   if (!validRecordQuantity(rate, unit)) return [];
   const relevant = cycles.filter(cycle => cycle.targetId === target.id && cycle.siteId === target.siteId
     && cycle.cropKey === target.cropKey);
-  const orders: WeeklyProductionOrder[] = [];
-  for (let start = window.start; start < window.endExclusive;) {
-    const nextWeek = addGrowerUtcDays(start, GROWER_BUYER_PICKING_PERIOD_DAYS);
-    if (!nextWeek) return [];
-    const fullWeek = nextWeek <= window.endExclusive;
-    const endExclusive = fullWeek ? nextWeek : window.endExclusive;
-    const entries = allocations.filter(entry => entry.targetId === target.id && entry.siteId === target.siteId
-      && entry.cropKey === target.cropKey && entry.start === start && entry.endExclusive === endExclusive);
+  return harvestTargetWeekWindows(target).map(({ start, endExclusive, fullWeek }) => {
+    const entries = target.weeklyPlan?.filter(entry => entry.start === start && entry.endExclusive === endExclusive) ?? [];
     const [entry] = entries;
     const planned = entries.length === 1 && entry.unit === unit
-      && (entry.quantity === 0 || validRecordQuantity(entry.quantity, unit)) ? entry.quantity : null;
+      && validHarvestTargetWeekQuantity(entry.quantity, unit) ? entry.quantity : null;
     const picking = relevant.flatMap(cycle => {
       const schedule = cycle.schedule;
       const pickStart = schedule.firstHarvestDate > start ? schedule.firstHarvestDate : start;
@@ -74,17 +65,15 @@ export function weeklyProductionOrders(
         ? [{ start: pickStart, endExclusive: pickEnd, bedId: cycle.bedId, basis: cycle.basis }] : [];
     });
     let daysWithoutPicking = 0;
-    for (let offset = 0; offset < GROWER_BUYER_PICKING_PERIOD_DAYS; offset++) {
+    for (let offset = 0; offset < HARVEST_TARGET_WEEK_DAYS; offset++) {
       const day = addGrowerUtcDays(start, offset);
       if (!day || day >= endExclusive) break;
       if (!picking.some(interval => interval.start <= day && day < interval.endExclusive)) daysWithoutPicking++;
     }
-    orders.push({
+    return {
       start, endExclusive, fullWeek, unit, requested: fullWeek ? rate : null, planned,
       planningGap: fullWeek && planned !== null ? Math.max(0, rate - planned) : null,
       picking, daysWithoutPicking,
-    });
-    start = endExclusive;
-  }
-  return orders;
+    };
+  });
 }

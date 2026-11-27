@@ -48,7 +48,7 @@ const legacyExpression = `(${legacyCountry.condition.getText(page)}) ? (${contai
   : (${contains(legacyCountry.whenFalse, legacyNode) ? legacyAvailability.getText(page) : 'null'})`;
 // The shared section now also mounts the provisional preview. Keep it as a
 // boundary here; its actual UI/source lifecycle has its own mounted tests.
-const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel', 'GreenHorizonProductionPlan'];
+const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel', 'GreenHorizonProductionPlan', 'GrowerWeeklyProduction'];
 const boundaries = Object.fromEntries(names.map(name => [name, function Boundary() { return null; }]));
 function compile(expression: string): (input: Record<string, unknown>) => unknown {
   const compiled = ts.transpileModule(`function view(){return (${expression});}`, { compilerOptions: {
@@ -90,6 +90,7 @@ function input(allowCataloguePlanning: boolean) {
   return { allowCataloguePlanning, productionSiteId: siteId, growerScope: { kind: 'mapped-site', siteId }, growerScopeKey: 'current-scope-key',
     planningScopeKey: 'current-catalogue-key', markedPlantings: [], plan: { harvestTargets: targets, growerPlanningProfiles: [], plantings },
     selectedGrowerSource: null, beds, plantings, pattern: 'mild-frost', harvestSaveContext: saveContext, saveHarvestTargets,
+    weeklyProduction: null, setReviewedAvailability() {},
     canvasSite: null, design: null, designBeds: [], saveGrowerProfiles() {},
     growerActorIsCurrent: () => true, siteCountry: { status: 'unknown', context: null, siteId, placeIds: ['fictional-place'] }, planningSupport: { fingerprint: 'fixture-policy' },
     saveProvisionalProfile() { throw Error('Consumer mount must not save automatically'); },
@@ -195,6 +196,7 @@ test('the filled production overview uses the active Green Horizon mapped plan o
   assert.ok(overview);
   assert.equal(overview.props.plan, fixture.plan);
   assert.equal(overview.props.beds, fixture.beds);
+  assert.equal(overview.props.siteId, selected.productionSiteId);
   assert.equal(render({ ...selected, getSampleWorkspace: () => null }), null);
   assert.equal(render({ ...selected, getSampleWorkspace: () => 'ubhejane' }), null);
   assert.equal(render({ ...selected, productionSiteId: siteId }), null);

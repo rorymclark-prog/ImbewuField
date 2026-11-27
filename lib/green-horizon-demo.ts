@@ -9,7 +9,6 @@ import type { SellerLetterhead } from './invoice-seller';
 import type { SavedPlace } from './saved-places';
 import type { GrowerInput, GrowerPlanningProfile } from './international/grower-planning';
 import type { GrowerWorkflowDraft } from './international/grower-workflow';
-import type { WeeklyProductionAllocation } from './international/grower-weekly-production';
 
 // The town point matches the fictional Green Horizon entry in /samples/gardens.
 // The plot, beds, crop dates and records are an exercise with no surveyed site.
@@ -59,6 +58,10 @@ export function buildGreenHorizonChardTarget(): DatedPackHarvestTarget {
     marketablePercent: 80,
     timing: 'date-window',
     window: { start: '2026-11-09', endExclusive: '2026-11-30' },
+    weeklyPlan: [
+      { unit: 'bunches', start: '2026-11-09', endExclusive: '2026-11-16', quantity: 12 },
+      { unit: 'bunches', start: '2026-11-16', endExclusive: '2026-11-23', quantity: 0 },
+    ],
   };
 }
 
@@ -99,14 +102,6 @@ export function buildGreenHorizonWeeklyPracticeDraft(): GrowerWorkflowDraft {
     targetProfiles: [...lettuce.targetProfiles, { targetId: buildGreenHorizonChardTarget().id, profileId: CHARD_PROFILE_ID }],
     available: [...lettuce.available, { bedId: BEDS[2].id, start: '2026-10-08', endExclusive: '2026-11-30', confirmed: false }],
   };
-}
-
-export function buildGreenHorizonWeeklyAllocations(): WeeklyProductionAllocation[] {
-  const { id: targetId, siteId, cropKey, unit } = buildGreenHorizonChardTarget();
-  return [
-    { targetId, siteId, cropKey, unit, start: '2026-11-09', endExclusive: '2026-11-16', quantity: 12 },
-    { targetId, siteId, cropKey, unit, start: '2026-11-16', endExclusive: '2026-11-23', quantity: 0 },
-  ];
 }
 
 function samplePoint(xM: number, yM: number): [number, number] {

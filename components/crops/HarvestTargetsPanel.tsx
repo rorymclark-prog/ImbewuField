@@ -3,7 +3,11 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { Target, Trash2 } from 'lucide-react';
 import { CROPS, cropByKey, hasPlanningYield, MONTHS_SHORT, type RainPattern } from '@/lib/crop-catalog';
-import { HARVEST_TARGET_UNITS, sanitiseHarvestTargets, resolveHarvestTargetDateWindow, isMonthlyHarvestTarget, type MonthlyHarvestTiming, type DatedHarvestTiming, type HarvestTarget, type PlanBed, type Planting, type HarvestPackUnit } from '@/lib/crop-plan';
+import { HARVEST_TARGET_UNITS, sanitiseHarvestTargets, resolveHarvestTargetDateWindow, isMonthlyHarvestTarget,
+  harvestTargetUnit, harvestTargetWeekWindows, validHarvestTargetWeekQuantity,
+  type MonthlyHarvestTiming, type DatedHarvestTiming, type HarvestTarget, type PlanBed, type Planting, type HarvestPackUnit } from '@/lib/crop-plan';
+import { addGrowerUtcDays } from '@/lib/international/grower-planning';
+import { parseExactUnitDecimal } from '@/lib/length-units';
 import { suggestHarvestTargets, type AutoSuggestAnswers, type AutoSuggestResult } from '@/lib/crop-autosuggest';
 import { assessHarvestTarget, HARVEST_TARGET_BASIS, targetMonthStamp, type HarvestTargetAssessment } from '@/lib/harvest-targets';
 import { COVERAGE_TOLERANCE_KG, HARVEST_TARGET_COVERAGE_LABEL as COVERAGE_LABEL } from '@/lib/harvest-target-coverage';
@@ -71,12 +75,14 @@ function targetWindowLabel(target: HarvestTarget): string {
 type Editor = { sourceKey: string; context: HarvestMassUnitPreferenceContext | null; saveContext: HarvestSaveContext | null;
   massUnit: MassUnit; weekly: MassDraft<'weeklyKg'>; pack: MassDraft<'kgPerUnit'>;
   cropKey: string; weeklyQuantity: string; unit: typeof HARVEST_TARGET_UNITS[number]; marketablePercent: string; outlet: string;
-  timing: 'monthly' | 'date-window'; dateStart: string; dateEndExclusive: string; startMonth: string; endMonth: string; editingId: string | null; irrigated: boolean; sharing: boolean; vines: boolean; dirty: boolean; uncertain: boolean };
+  timing: 'monthly' | 'date-window'; dateStart: string; dateEndExclusive: string; startMonth: string; endMonth: string; editingId: string | null;
+  weeklyEdit: { targetId: string; quantities: Record<string, string> } | null;
+  irrigated: boolean; sharing: boolean; vines: boolean; dirty: boolean; uncertain: boolean };
 function freshEditor(sourceKey: string, massUnit: MassUnit, context: HarvestMassUnitPreferenceContext | null, saveContext: HarvestSaveContext | null, basis: 'catalogue' | 'own-records', currentMonth: number): Editor {
   return { sourceKey, massUnit, context, saveContext,
     weekly: createMassDraft({ sourceKey, unit: massUnit, kilograms: { weeklyKg: undefined } }),
     pack: createMassDraft({ sourceKey, unit: massUnit, kilograms: { kgPerUnit: undefined }, optionalFields: ['kgPerUnit'] }),
-    cropKey: '', weeklyQuantity: '', unit: 'kg', marketablePercent: '', outlet: '', editingId: null,
+    cropKey: '', weeklyQuantity: '', unit: 'kg', marketablePercent: '', outlet: '', editingId: null, weeklyEdit: null,
     timing: 'monthly', dateStart: '', dateEndExclusive: '',
     startMonth: basis === 'catalogue' ? targetMonthStamp(currentMonth) : '', endMonth: basis === 'catalogue' ? targetMonthStamp(currentMonth + 11) : '',
     irrigated: false, sharing: false, vines: false, dirty: false, uncertain: false };
@@ -260,11 +266,37 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
       marketablePercent: target.marketablePercent === undefined ? '' : String(target.marketablePercent), outlet: target.outlet ?? '', ...targetTiming, dirty: true }));
     setError(''); setSaveStatus('');
   }
+  function editWeeklyPlan(target: HarvestTarget) {
+    if (editor.dirty) return;
+    const quantities = Object.fromEntries((target.weeklyPlan ?? []).map(week => [week.start, String(week.quantity)]));
+    mutate(previous => ({ ...previous, weeklyEdit: { targetId: target.id, quantities }, dirty: true }));
+    setError(''); setSaveStatus('');
+  }
+  function saveWeeklyPlan(event: FormEvent, target: HarvestTarget) {
+    event.preventDefault();
+    const edit = editor.weeklyEdit;
+    if (!edit || edit.targetId !== target.id || !isCurrent(editor)) return;
+    const unit = harvestTargetUnit(target);
+    const weeklyPlan = [];
+    for (const { start, endExclusive } of harvestTargetWeekWindows(target)) {
+      const text = edit.quantities[start]?.trim();
+      if (!text) continue;
+      const quantity = parseExactUnitDecimal(text);
+      if (quantity.status !== 'ready' || !validHarvestTargetWeekQuantity(quantity.value, unit)) {
+        setError(`Check the period starting ${start}. Enter zero or a positive decimal number. Items need whole numbers.`);
+        return;
+      }
+      weeklyPlan.push({ start, endExclusive, unit, quantity: quantity.value === 0 ? 0 : quantity.value });
+    }
+    const updated = { ...target, weeklyPlan };
+    persist(targets.map(row => row === target ? updated : row), previous => clearForm(previous));
+  }
   function removeTarget(target: HarvestTarget) {
     persist(targets.filter(row => row.siteId !== siteId || row.id !== target.id), previous => previous.editingId === target.id ? clearForm(previous) : previous);
   }
   function saveTarget(event: FormEvent) {
     event.preventDefault(); setSaveStatus('');
+    if (editor.weeklyEdit) return;
     const targetTiming: MonthlyHarvestTiming | DatedHarvestTiming = timing === 'date-window'
       ? { timing: 'date-window', window: { start: dateStart, endExclusive: dateEndExclusive } } : { startMonth, endMonth };
     const base = { id: editingId ?? crypto.randomUUID(), siteId, cropKey, ...targetTiming,
@@ -274,8 +306,18 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
     const target: HarvestTarget = unit === 'kg' ? { ...base, weeklyKg: weekly.status === 'ready' ? weekly.kilograms.weeklyKg! : NaN }
       : { ...base, weeklyQuantity: Number(editor.weeklyQuantity), unit: unit as HarvestPackUnit,
         ...(pack.status === 'ready' && pack.kilograms.kgPerUnit !== undefined ? { kgPerUnit: pack.kilograms.kgPerUnit } : {}) };
+    const original = ownTargets.find(row => row.id === editingId);
     const saved = sanitiseHarvestTargets([target])[0];
     if (!saved) { setError(timing === 'date-window' ? 'Choose a crop and positive weekly quantity. Enter a valid UTC start and a later end-before date, within 2020–2100 and at most 366 days (a software limit). Items need whole numbers; check known pack weight and saleable share.' : 'Choose a crop, positive quantity and 1–12 harvest months. Items need whole numbers. Enter a positive pack weight when known and a saleable share from 0–100%.'); return; }
+    if (original?.weeklyPlan?.length) {
+      const revised = { ...saved, weeklyPlan: original.weeklyPlan };
+      if (original.cropKey !== saved.cropKey || original.outlet !== saved.outlet || !sanitiseHarvestTargets([revised]).length) {
+        setError('Clear the saved weekly quantities before changing their crop, buyer, unit or dates.');
+        return;
+      }
+      persist(targets.map(row => row === original ? revised : row), previous => clearForm(previous));
+      return;
+    }
     persist([...targets.filter(t => t.siteId !== siteId || t.id !== saved.id), saved], previous => clearForm(previous));
   }
   function catalogueCurrent() { return isCurrent(editor) && live.current.basis === 'catalogue' && live.current.key === key; }
@@ -304,7 +346,7 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
       }</p>}
       {sourceUnsettled ? <p role="alert">Saved harvest targets changed or a save outcome is unconfirmed. Your entries are retained. Reload saved targets before continuing.</p> : null}
       <button type="button" className={secondary} onClick={reload} disabled={!actorCurrent || pending.current}>Reload saved harvest targets</button>
-      <form onSubmit={saveTarget} onChange={() => setSaveStatus('')} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      {!editor.weeklyEdit && <form onSubmit={saveTarget} onChange={() => setSaveStatus('')} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         <label className="text-sm">Crop
           <select required value={cropKey} onChange={(e) => { const cropKey = e.target.value; mutate(previous => ({ ...previous, cropKey, pack: createMassDraft({ sourceKey: previous.sourceKey, unit: previous.massUnit, kilograms: { kgPerUnit: undefined }, optionalFields: ['kgPerUnit'] }), marketablePercent: '', dirty: true })); }} className={field} disabled={!current || pending.current}>
             <option value="">Choose a crop</option>
@@ -358,14 +400,35 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
           <span className="text-xs text-[var(--text-secondary)]">Targets are saved with this site’s crop plan on this device.</span>
         </div>
         {error && <p role="alert" className="sm:col-span-2 lg:col-span-4 text-sm text-[var(--gold)]">{error}</p>}
-      </form>
+      </form>}
       {saveStatus && <p role="status">{saveStatus}</p>}
       {recordTargets.map(target => <article key={target.id} className="space-y-2 rounded-xl border border-[var(--border)] p-3 text-sm">
         <h3 className="font-semibold">{cropByKey(target.cropKey)?.name ?? target.cropKey} · {weeklyLabel(target, massUnit)}</h3>
         <p>{targetWindowLabel(target)}. Saleable share: {target.marketablePercent === undefined ? 'unknown' : `${target.marketablePercent}%`}.</p>
         {basis === 'catalogue' && <p>Exact-date records require your own growing estimates. No catalogue month assessment or sowing plan is supplied for this target.</p>}
-        <div className="flex gap-2"><button type="button" className={secondary} disabled={basis === 'catalogue'} onClick={() => editTarget(target)}>Edit</button>
-          <button type="button" className={secondary} onClick={() => removeTarget(target)} aria-label={`Remove ${cropByKey(target.cropKey)?.name} target`}>Remove</button></div>
+        <div className="flex flex-wrap gap-2"><button type="button" className={secondary} disabled={basis === 'catalogue' || !!editor.weeklyEdit} onClick={() => editTarget(target)}>Edit</button>
+          {basis === 'own-records' && <button type="button" className={secondary} disabled={!current || editor.dirty || pending.current}
+            onClick={() => editWeeklyPlan(target)}>Plan weekly quantities</button>}
+          <button type="button" className={secondary} disabled={!!editor.weeklyEdit} onClick={() => removeTarget(target)} aria-label={`Remove ${cropByKey(target.cropKey)?.name} target`}>Remove</button></div>
+        {editor.weeklyEdit?.targetId === target.id && <form aria-label="Weekly planned quantities" className="space-y-3" onSubmit={event => saveWeeklyPlan(event, target)}>
+          <p>Enter quantities in {harvestTargetUnit(target) === 'each' ? 'items' : harvestTargetUnit(target)}. Leave an unknown quantity blank. Enter 0 when the planned quantity is zero.</p>
+          <div className="grid gap-2 sm:grid-cols-2">
+            {harvestTargetWeekWindows(target).map(week => <label key={week.start} className="text-sm">
+              {week.start} through {addGrowerUtcDays(week.endExclusive, -1)}
+              <input className={`${field} min-h-11`} inputMode="decimal" disabled={!current || pending.current}
+                value={editor.weeklyEdit?.quantities[week.start] ?? ''} onChange={event => {
+                  const value = event.target.value;
+                  mutate(previous => previous.weeklyEdit ? { ...previous, weeklyEdit: { targetId: target.id,
+                    quantities: { ...previous.weeklyEdit.quantities, [week.start]: value } } } : previous);
+                }} />
+            </label>)}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button type="submit" className={primary} disabled={!current || pending.current}>Save weekly quantities</button>
+            <button type="button" className={secondary} disabled={pending.current} onClick={resetForm}>Cancel weekly edit</button>
+          </div>
+          {error && <p role="alert">{error}</p>}
+        </form>}
       </article>)}
 
       {assessments.map((a) => <article key={a.target.id} className="rounded-xl border border-[var(--border)] p-3 space-y-2">
