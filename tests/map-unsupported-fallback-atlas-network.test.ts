@@ -30,6 +30,6 @@ test('staff-03: the legend moved off the FAB-collision corner instead of staying
   const legendAt = network.indexOf('Legend: says exactly what the pins encode');
   assert.ok(legendAt > 0);
   const legendBlock = network.slice(legendAt, legendAt + 1200);
-  assert.match(legendBlock, /top:\s*100/, 'the legend must anchor from the top so an expanded panel grows downward, never into a bottom-left FAB band');
+  assert.match(legendBlock, /top:\s*'var\(--legend-top, 100px\)'/, 'the legend must anchor from the top so an expanded panel grows downward, never into a bottom-left FAB band');
   assert.doesNotMatch(legendBlock, /bottom:\s*78/, 'the old bottom-anchored position (safe only while collapsed) must be gone');
 });

@@ -51,6 +51,8 @@
  * reads as the same app.
  */
 
+'use client';
+
 import { useMemo } from 'react';
 import { BarChart3, ChevronDown, GraduationCap } from 'lucide-react';
 import { cappedScale, type CappedScale } from '@/lib/chart-scale';
@@ -58,6 +60,8 @@ import { BreakTop } from '@/components/ChartBreakMark';
 import { kgLabel, kgTotalLabel, randLabel, randTick } from '@/lib/format-figures';
 import { soldBarParts, type CohortMonth, type CohortSeries, type SoldBarParts } from '@/lib/cohort-series';
 import type { CohortTraining } from '@/lib/cohort-report';
+import { useInViewOnce } from '@/lib/use-in-view-once';
+import styles from './CohortCharts.module.css';
 
 /* White programme cards and darker labels; preserve the harvest/sales colour meanings. */
 const CARD_STYLE: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
@@ -79,6 +83,26 @@ const PICKED = KEPT;
 // farming, and drawing it in the app's warning rust told the funder a fault had been found.
 const OVER = SOLD;
 const TRAIN = 'var(--gold)';  // ochre — the course, as on every other training readout in the app
+
+/* ── entrance animation ────────────────────────────────────────────────────────
+ * Produced bars grow first, then the sold portion overlays them. Server render and first client
+ * render draw the finished bars; after mount the group arms, and plays once when it scrolls into
+ * view. A later change of the series only transitions the bar heights (CohortCharts.module.css).
+ * The thin-data fallback (COHORT_MIN_MONTHS, see NoChart) never reaches this wrapper, so it stays
+ * static: animating a handful of months would make thin data look like a trend.
+ */
+const STAGGER_TOTAL_MS = 400;
+const STAGGER_STEP_MS = 30;
+function columnDelay(i: number, n: number): React.CSSProperties {
+  const ms = n <= 1 ? 0 : Math.round(i * Math.min(STAGGER_STEP_MS, STAGGER_TOTAL_MS / (n - 1)));
+  return { ['--d' as string]: `${ms}ms` };
+}
+
+function BarsPlay({ children }: { children: React.ReactNode }) {
+  const { ref, phase } = useInViewOnce<HTMLDivElement>({ threshold: 0.2 });
+  const cls = phase === 'armed' ? styles.armed : phase === 'play' ? styles.play : undefined;
+  return <div ref={ref} className={cls} style={{ ['--sold-fill' as string]: SOLD, ['--picked-fill' as string]: KEPT }}>{children}</div>;
+}
 
 /** Micro-label floor for this project. Nothing in this file goes under it. */
 const MICRO = 12;
@@ -237,10 +261,11 @@ function PairedKgColumn({ m, parts, scale, maxKg }: ColumnProps) {
   const overPct = parts.unbackedKg > 0 ? (scale.draw(parts.totalKg) / maxKg) * 100 : 0;
 
   return (
-    <>
+    <div className={styles.stack}>
       {overPct > 0 && (
         <div
           aria-hidden="true"
+          className={`${styles.h} ${styles.over}`}
           style={{
             position: 'absolute', left: '18%', right: '18%', bottom: 0,
             height: `${overPct}%`, border: `1px dashed ${OVER}`, borderRadius: 3,
@@ -249,7 +274,7 @@ function PairedKgColumn({ m, parts, scale, maxKg }: ColumnProps) {
       )}
       {keptPct > 0 && (
         <div
-          className="relative"
+          className={`relative ${styles.h}`}
           style={{
             margin: '0 18%', height: `${keptPct}%`, minHeight: 2,
             background: KEPT, borderRadius: '3px 3px 0 0',
@@ -260,7 +285,7 @@ function PairedKgColumn({ m, parts, scale, maxKg }: ColumnProps) {
       )}
       {soldPct > 0 && (
         <div
-          className="relative"
+          className={`relative ${styles.h} ${styles.soldSeg}`}
           style={{
             margin: '0 18%', height: `${soldPct}%`, minHeight: 2,
             background: SOLD, borderRadius: keptPct > 0 ? 0 : '3px 3px 0 0',
@@ -269,7 +294,7 @@ function PairedKgColumn({ m, parts, scale, maxKg }: ColumnProps) {
           {cut && keptPct === 0 && <BreakTop />}
         </div>
       )}
-    </>
+    </div>
   );
 }
 
@@ -295,6 +320,7 @@ function SplitKgColumn({ m, parts, scale, maxKg }: ColumnProps) {
       <div style={{ flex: 1, position: 'relative', height: '100%' }}>
         {pickedPct > 0 && (
           <div
+            className={`${styles.h} ${styles.grow}`}
             style={{
               position: 'absolute', left: 0, right: 0, bottom: 0,
               height: `${pickedPct}%`, minHeight: 2, background: PICKED, borderRadius: '3px 3px 0 0',
@@ -308,6 +334,7 @@ function SplitKgColumn({ m, parts, scale, maxKg }: ColumnProps) {
         {parts.unbackedKg > 0 && totalPct > 0 && (
           <div
             aria-hidden="true"
+            className={`${styles.h} ${styles.over}`}
             style={{
               position: 'absolute', left: 0, right: 0, bottom: 0,
               height: `${totalPct}%`, minHeight: 3, border: `1px dashed ${OVER}`, borderRadius: 3,
@@ -316,6 +343,7 @@ function SplitKgColumn({ m, parts, scale, maxKg }: ColumnProps) {
         )}
         {backedPct > 0 && (
           <div
+            className={`${styles.h} ${styles.growLate}`}
             style={{
               position: 'absolute', left: 0, right: 0, bottom: 0,
               height: `${backedPct}%`, minHeight: 2, background: SOLD, borderRadius: '3px 3px 0 0',
@@ -422,6 +450,7 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
           />
         </div>
 
+        <BarsPlay>
         {/* ── panel 1: kilograms ── */}
         <div className="px-4">
           <div className="flex items-baseline justify-between" style={{ marginBottom: 4 }}>
@@ -448,7 +477,7 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
               <div
                 key={m.key}
                 className="relative flex flex-col justify-end"
-                style={{ height: '100%' }}
+                style={{ height: '100%', ...columnDelay(i, months.length) }}
                 title={monthTooltip(m)}
               >
                 {paired
@@ -492,12 +521,12 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
                 <div
                   key={m.key}
                   className="flex flex-col justify-end"
-                  style={{ height: '100%' }}
+                  style={{ height: '100%', ...columnDelay(i, months.length) }}
                   title={monthTooltip(m)}
                 >
                   {pct > 0 && (
                     <div
-                      className="relative"
+                      className={`relative ${styles.h} ${styles.growLate}`}
                       style={{
                         margin: '0 18%', height: `${pct}%`, minHeight: 2,
                         background: SOLD, opacity: 0.85, borderRadius: '3px 3px 0 0',
@@ -514,7 +543,13 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
         </div>
 
         {/* ── the one month axis both panels are drawn against ── */}
-        <div className="px-4" style={{ display: 'grid', gridTemplateColumns: columns, gap: 2, marginTop: 5 }}>
+        {/* 27 Nov: at 320px twelve columns are 20px each and the 12px three-letter months lost their
+            last letter (Ma|, Au|). Under 310px of axis (styles.axisDense) a long window shows one
+            letter per month instead; the full label stays in the accessibility tree and the title. */}
+        <div
+          className={`px-4 ${styles.axis} ${months.length > 8 ? styles.axisDense : ''}`}
+          style={{ display: 'grid', gridTemplateColumns: columns, gap: 2, marginTop: 5 }}
+        >
           {months.map((m) => (
             <span
               key={m.key}
@@ -522,10 +557,13 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
               style={{ fontSize: MICRO, color: FAINT, whiteSpace: 'nowrap', overflow: 'hidden' }}
               title={m.longLabel}
             >
-              {m.label}
+              <span className={styles.monthFull}>{m.label}</span>
+              <span className={styles.monthInitial} aria-hidden="true">{m.label.charAt(0)}</span>
             </span>
           ))}
         </div>
+
+        </BarsPlay>
 
         <div className="px-4 pb-4" style={{ paddingTop: 11 }}>
           <div className="flex flex-wrap items-center" style={{ gap: '5px 14px' }}>

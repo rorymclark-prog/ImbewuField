@@ -49,7 +49,9 @@ export default function LanguageDraftNote({ lang, scope }: { lang: string; scope
           onClick={dismiss}
           aria-label={t('languageDraftNoticeDismiss')}
           className="flex items-center justify-center flex-shrink-0 rounded-md"
-          style={{ width: 24, height: 24, background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: 'var(--text-muted)' }}
+          // 44px hit area (the app's touch floor) around the same small X; the negative margin
+          // keeps the note's text block exactly where the old 24px button left it.
+          style={{ width: 44, height: 44, margin: -10, background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: 'var(--text-muted)' }}
         >
           <X size={14} />
         </button>

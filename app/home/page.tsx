@@ -492,7 +492,8 @@ function HomeLandingInner() {
         <button
           onClick={() => setSettingsOpen(true)}
           aria-label={t('settingsButtonAriaLabel')}
-          className="flex items-center justify-center rounded-xl flex-shrink-0"
+          // 36px tile, 44px tap area via the inset pseudo-element; 5px because it sits inside the 1px border (scan, 23 Nov).
+          className="relative flex items-center justify-center rounded-xl flex-shrink-0 before:absolute before:-inset-[5px] before:content-['']"
           style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--color-border)', color: 'var(--color-muted-strong)', cursor: 'pointer' }}
         >
           <Settings size={16} strokeWidth={1.6} />
@@ -785,7 +786,7 @@ function HomeLandingInner() {
           )}
         </section>}
 
-        <footer className="text-center font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', opacity: 0.7, paddingBottom: 8 }}>
+        <footer className="text-center font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', paddingBottom: 8 }}>
           {t('homeFooter')}
         </footer>
       </main>

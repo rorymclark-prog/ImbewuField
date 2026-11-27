@@ -208,7 +208,15 @@ export default function ChatWidget() {
     // LimaBar, or gains a LimaBar without being excluded here.
     pathname.startsWith('/journal') || pathname.startsWith('/calendar') ||
     pathname.startsWith('/cropplan') || pathname.startsWith('/records') || pathname.startsWith('/invoice') ||
-    pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops')
+    pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops') ||
+    // MEASURED COLLISIONS, 23 November, same class as the five above: at 390px the FAB sat on
+    // the "Oct" sow-month label and the "Key species" chips on /example, the first word of every
+    // listing title on /exchange, stop-card text on /tour and the source note on /prices. All four
+    // are left-aligned reading pages that scroll under it, so they mount <LimaBar /> instead.
+    pathname.startsWith('/example') || pathname.startsWith('/exchange') ||
+    pathname.startsWith('/tour') || pathname.startsWith('/prices') ||
+    // 27 Nov: on /mentor the floating launcher sat on the "Record a field visit" action at rest.
+    pathname.startsWith('/mentor')
   ) return null;
 
   // WHERE THE FAB PARKS WHEN NOBODY HAS MOVED IT.
@@ -385,6 +393,10 @@ function isLimaFabHiddenRoute(pathname: string): boolean {
     pathname === '/international/locales' || pathname.startsWith('/international/locales/') ||
     pathname.startsWith('/journal') || pathname.startsWith('/calendar') ||
     pathname.startsWith('/cropplan') || pathname.startsWith('/records') || pathname.startsWith('/invoice') ||
-    pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops')
+    pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops') ||
+    pathname.startsWith('/example') || pathname.startsWith('/exchange') ||
+    pathname.startsWith('/tour') || pathname.startsWith('/prices') ||
+    // 27 Nov: on /mentor the floating launcher sat on the "Record a field visit" action at rest.
+    pathname.startsWith('/mentor')
   );
 }

@@ -327,6 +327,9 @@ html[data-theme="earth"] {
   /* text on a --color-forest-800 fill (fill turns leaf in dark, so cream no longer works):
      #F7F2E9 on #1E4D33 = 8.70:1 */
   --on-forest-800: #F7F2E9;
+  /* Harvest chart "sold" bar: stacked under the "kept" gold, so it must stay well darker than the gold
+     (the split has to survive greyscale) yet clear 3:1 on the card. the fixed forest fill, unchanged. */
+  --chart-sold: #1F4D2B;
   /* a11y-01: text inputs hardcoded a literal #fff background against the themed
      --text-primary colour, so typed text went pale-on-white once dark mode made
      --text-primary light. #FFFFFF here keeps earth light pixel-identical to the
@@ -412,6 +415,9 @@ html[data-theme="earth"].dark {
   --on-forest: #F7F2E9;
   /* text on a --color-forest-800 fill: #0D0A06 on #82C844 = 9.68:1 */
   --on-forest-800: #0D0A06;
+  /* Harvest chart "sold" bar: stacked under the "kept" gold, so it must stay well darker than the gold
+     (the split has to survive greyscale) yet clear 3:1 on the card. 4.0:1 on #181208; L* ~50 against the #C4A46A kept gold at ~69. */
+  --chart-sold: #548229;
   /* One step lighter than --bg-1 so a text input reads as its own control inside
      a --bg-1 sheet/panel, instead of disappearing into it. */
   --input-bg: #22190E;
@@ -492,6 +498,9 @@ html[data-theme="slate"] {
   --on-forest: #F7F2E9;
   /* text on a --color-forest-800 fill: #F7F2E9 on #0D6B52 = 5.81:1 */
   --on-forest-800: #F7F2E9;
+  /* Harvest chart "sold" bar: stacked under the "kept" gold, so it must stay well darker than the gold
+     (the split has to survive greyscale) yet clear 3:1 on the card. the fixed forest fill, unchanged. */
+  --chart-sold: #1F4D2B;
   --input-bg: #FFFFFF;
 }
 
@@ -573,6 +582,9 @@ html[data-theme="slate"].dark {
   --on-forest: #F7F2E9;
   /* text on a --color-forest-800 fill: #060A12 on #18A878 = 6.52:1 */
   --on-forest-800: #060A12;
+  /* Harvest chart "sold" bar: stacked under the "kept" gold, so it must stay well darker than the gold
+     (the split has to survive greyscale) yet clear 3:1 on the card. 4.2:1 on #0C1526; L* ~51 against the #C4A46A kept gold at ~69. */
+  --chart-sold: #148A62;
   --input-bg: #1A2540;
 }
 

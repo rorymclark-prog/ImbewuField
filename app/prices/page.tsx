@@ -8,6 +8,7 @@ import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import LessonLink from '@/components/design/LessonLink';
 import TabBar from '@/components/TabBar';
+import LimaBar from '@/components/LimaBar';
 import AppHeader from '@/components/layout/AppHeader';
 import { CropPriceDetail } from '@/components/prices/CropPriceGuide';
 import { pricedCropList } from '@/components/prices/CropPriceGuide.format';
@@ -144,6 +145,9 @@ export default function PricesPage() {
           )}
         </div>
       </main>
+
+      {/* Lima in the document flow, not floating over the page: components/ChatWidget.tsx excludes this route because the FAB was measured covering its text at 390px. */}
+      <LimaBar />
 
       <TabBar hideAtDesktop />
     </div>

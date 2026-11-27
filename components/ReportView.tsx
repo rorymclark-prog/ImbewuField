@@ -1,6 +1,7 @@
 'use client';
 import { annualRainfallMm, monthlyTemperatureStatus, reportClimateEvidence, reportClimateLabels } from '@/lib/climate-temperature';
 
+import Skeleton from '@/components/Skeleton';
 import { coordinateSiteIdForPlace } from '@/lib/international/site-context';
 import { currentPlanningSupport } from '@/lib/international/planning-support';
 import { currentReportCropSupport, projectReportPlanningFacts } from '@/lib/report-crop-plan';
@@ -1340,21 +1341,17 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
              ref={reportRef}
              style={{ display: showReportColumn ? 'block' : 'none' }}>
           <ReportReadingGuide preparedExample={preparedExample} reading={reading} onChange={value => { setReading(value); setPanelOpen(false); }} language={language} chapters={chapters} onChapter={jumpToChapter} />
-          {/* Progress while the report is being written. It used to stay pinned at full width
-              afterwards, a green rule drawn through whatever line of the report scrolled under it. */}
+          {/* Progress while the report is being written. The report arrives as one stream of text
+              with no section events, so there is no honest percentage: this is an indeterminate
+              bar (no aria-valuenow) with a highlight sliding across it. It unmounts when the
+              report is done, so it never stays drawn through the text as a pinned green rule. */}
           {report && loading && (
             <div
-              style={{
-                position: 'sticky', top: 0, left: 0, right: 0, height: 2,
-                background: 'var(--report-border)', zIndex: 10,
-              }}
+              role="progressbar"
+              aria-label={tr('Generating…', 'Kuyakhiwa…')}
+              className={`${styles.writingBar} no-print`}
             >
-              <div style={{
-                height: '100%',
-                background: 'linear-gradient(90deg, var(--report-green), var(--report-green))',
-                width: loading ? '60%' : '100%',
-                transition: 'width 1s ease',
-              }} />
+              <div className={styles.writingBarFill} />
             </div>
           )}
           <ReportPurposeGuide language={language} />
@@ -1545,9 +1542,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
             {/* Loading shimmer */}
             {loading && !report && (
-              <div className="space-y-3 animate-pulse">
+              <div className="space-y-3" role="status" aria-busy="true">
                 {[60,90,75,50,85,70,40,95,65].map((w, i) => (
-                  <div key={i} className="h-3 rounded" style={{ width: `${w}%`, background: 'rgba(226,216,196,0.6)', animationDelay: `${i*50}ms` }} />
+                  <Skeleton key={i} height={12} width={`${w}%`} radius="sm" index={i} />
                 ))}
               </div>
             )}

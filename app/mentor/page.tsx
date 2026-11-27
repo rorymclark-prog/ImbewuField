@@ -24,6 +24,7 @@ import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import LimaBar from '@/components/LimaBar';
 import { sampleRead, sampleWrite } from '@/lib/sample-operations';
 import { freshFieldWorkspace } from '@/lib/field-teams';
 import ProgrammeEvidence from '@/components/ProgrammeEvidence';
@@ -667,9 +668,10 @@ export default function MentorPage() {
           workspace.workspace caps it at 90rem like the rest of the app's framed pages, and
           md:/lg: let the stat row breathe instead of just stretching three narrow cards wide. */}
       {/* ux-01: a fixed 80px left the Lima launcher (56px, fixed bottom-left, 130px up) sitting on
-          top of the last card/button on this page once scrolled to the end — --lima-fab-clearance
-          (published by components/ChatWidget.tsx) is the shared clearance every such page uses. */}
-      <main className={`workspace-main flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-4 ${workspace.workspace}`} style={{ paddingBottom: 'var(--lima-fab-clearance, 96px)' }}>
+          top of the last card/button on this page once scrolled to the end. 27 Nov: Lima now sits in
+          the page flow here (LimaBar below), so ChatWidget publishes a zero clearance; the max()
+          keeps the ordinary 16px end padding instead of letting the last card touch the strip. */}
+      <main className={`workspace-main flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-4 ${workspace.workspace}`} style={{ paddingBottom: 'max(16px, var(--lima-fab-clearance, 96px))' }}>
 
         {view === 'evidence' ? <ProgrammeEvidence mentor initialTab="training" /> : view === 'field' ? <FieldTeams organisation={isLive&&['ngo','admin'].includes(role??'')} initialFarmerId={visitPerson} onStartTraining={()=>setView('evidence')}/> : view === 'messages' ? (
           <ContactInbox recipient="mentor" onUnreadCount={setMsgUnread} />
@@ -786,6 +788,8 @@ export default function MentorPage() {
         )}
         </>)}
       </main>
+      {/* Lima in the page flow, not floating over the visit actions (27 Nov). */}
+      <div className="no-print"><LimaBar /></div>
       <TabBar hideAtDesktop />
     </div>
   );

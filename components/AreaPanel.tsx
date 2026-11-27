@@ -5,6 +5,7 @@ import { Loader2, RefreshCw } from 'lucide-react';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { networkFailureMessage } from '@/lib/network-failure';
 import { useLanguage } from '@/lib/i18n';
+import Skeleton from '@/components/Skeleton';
 
 interface Props { coords: { lat: number; lon: number } | null }
 
@@ -158,9 +159,9 @@ export default function AreaPanel({ coords }: Props) {
       )}
 
       {loading && !profile && (
-        <div className="space-y-2.5 animate-pulse">
+        <div className="space-y-2.5" aria-busy="true">
           {[60, 95, 80, 100, 70, 90, 55].map((w, i) => (
-            <div key={i} className="h-3 rounded" style={{ width: `${w}%`, background: 'var(--bg-1)' }} />
+            <Skeleton key={i} height={12} width={`${w}%`} radius="sm" index={i} />
           ))}
         </div>
       )}

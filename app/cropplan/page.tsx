@@ -335,13 +335,6 @@ export default function CropPlanPage() {
         <SettingsButton />
       </header>
 
-      {lang === 'zu' && (
-        <p role="note" className="flex-shrink-0 px-4 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
-          Amagama emisebenzi nezifinyezo zesizini abonisa uhlaka lwesiZulu nomthombo wesiNgisi. Eminye imiyalo yokulima isalindele ukubuyekezwa.
-          <span lang="en" style={{ display: 'block', marginTop: 4 }}>Unreviewed isiZulu drafts with English sources; some farming instructions remain in English for review.</span>
-        </p>
-      )}
-
       {/* No-plan notice — pinned outside the scroll area so it can't be scrolled past.
           Gated on the SAME source the jobs come from (lib/task-board.ts's
           loadCropBoardYear, which reads imbewu_crop_plan_v1): savedPlantings is the
@@ -368,6 +361,15 @@ export default function CropPlanPage() {
       )}
 
       <div className="flex-1 overflow-y-auto">
+        {/* 27 Nov: this note used to sit pinned above the scroll area with the no-plan banner. On a
+            phone turned sideways the two plus the header, Lima strip and tab bar left 134px for the
+            plan. It is read once, so it now heads the scroll area; the no-plan banner stays pinned. */}
+        {lang === 'zu' && (
+          <p role="note" className="px-4 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+            Amagama emisebenzi nezifinyezo zesizini abonisa uhlaka lwesiZulu nomthombo wesiNgisi. Eminye imiyalo yokulima isalindele ukubuyekezwa.
+            <span lang="en" style={{ display: 'block', marginTop: 4 }}>Unreviewed isiZulu drafts with English sources; some farming instructions remain in English for review.</span>
+          </p>
+        )}
         <div className={`${workspace.workspace} px-4 py-5 sm:px-6 sm:py-6`}>
           <CropPlanStorageNotice />
           <JournalStorageNotice />
@@ -401,9 +403,10 @@ export default function CropPlanPage() {
               </h1>
             </div>
             {effectiveView === 'month' && (
+              // 44px: the month arrows were 34x34, under the app's touch floor (scan, 23 Nov).
               <div className="flex items-center gap-1 flex-shrink-0">
-                <button onClick={() => stepMonth(-1)} aria-label={ui('Previous month', 'Inyanga edlule')} className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}><ChevronLeft size={16} /></button>
-                <button onClick={() => stepMonth(1)} aria-label={ui('Next month', 'Inyanga elandelayo')} className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}><ChevronRight size={16} /></button>
+                <button onClick={() => stepMonth(-1)} aria-label={ui('Previous month', 'Inyanga edlule')} className="flex items-center justify-center rounded-full" style={{ width: 44, height: 44, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}><ChevronLeft size={16} /></button>
+                <button onClick={() => stepMonth(1)} aria-label={ui('Next month', 'Inyanga elandelayo')} className="flex items-center justify-center rounded-full" style={{ width: 44, height: 44, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}><ChevronRight size={16} /></button>
               </div>
             )}
           </div>

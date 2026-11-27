@@ -1,5 +1,6 @@
 'use client';
 
+import Skeleton from '@/components/Skeleton';
 import { randCentsLabel } from '@/lib/format-figures';
 import { sampleProducePhoto } from '@/lib/sample-media';
 import { resizeFileForUpload } from '@/lib/site-evidence';
@@ -1317,14 +1318,8 @@ export default function MyRecords({
   if (user === 'loading') {
     return (
       <div className="p-5 space-y-3">
-        <div className="h-5 w-32 rounded-lg animate-pulse" style={{ background: '#E2D8CB' }} />
-        {[1, 2].map((i) => (
-          <div
-            key={i}
-            className="h-24 rounded-xl animate-pulse"
-            style={{ background: 'var(--bg-2)', animationDelay: `${i * 80}ms` }}
-          />
-        ))}
+        <Skeleton width={128} height={20} />
+        {[1, 2].map((i) => <Skeleton key={i} height={96} radius="lg" tone="inset" index={i} />)}
       </div>
     );
   }

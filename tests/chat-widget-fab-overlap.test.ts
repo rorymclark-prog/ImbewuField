@@ -134,7 +134,14 @@ const FLOW_HELP_ROUTES: { route: string; page: string }[] = [
   { route: '/calendar', page: '../app/calendar/page.tsx' },
   { route: '/cropplan', page: '../app/cropplan/page.tsx' },
   { route: '/records', page: '../app/records/page.tsx' },
+  { route: '/mentor', page: '../app/mentor/page.tsx' },
   { route: '/facilitator/crops', page: '../app/facilitator/crops/page.tsx' },
+  // Measured 23 November at 390px: the FAB over /example's sow-month labels and species chips,
+  // /exchange's listing titles, /tour's stop cards and /prices' source note.
+  { route: '/example', page: '../app/example/page.tsx' },
+  { route: '/exchange', page: '../app/exchange/page.tsx' },
+  { route: '/tour', page: '../app/tour/page.tsx' },
+  { route: '/prices', page: '../app/prices/page.tsx' },
 ];
 
 test('every route that drops the floating FAB mounts LimaBar in its place', () => {
@@ -350,6 +357,8 @@ test('inline help loads the photo composer only when opened and preserves the se
       const Deferred = React.lazy(load);
       return (props: Record<string, unknown>) => React.createElement(React.Suspense, { fallback: React.createElement(options.loading) }, React.createElement(Deferred, props));
     } };
+    // Layout-only classes (the landscape row, 27 Nov); no behaviour hangs on them.
+    if (name === './LimaBar.module.css') return { __esModule: true, default: { inner: 'inner', who: 'who', row: 'row' } };
     if (name === './ChatPanel') {
       state.chatImports++;
       return { default: (props: typeof photoProps[number]) => { photoProps.push(props); return React.createElement('div', { 'data-photo-composer': true }); } };

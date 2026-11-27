@@ -38,6 +38,7 @@ import { kgLabel } from '@/lib/format-figures';
 import { invoiceRandReviewMessage } from '@/lib/invoice-sales';
 import { cappedScale } from '@/lib/chart-scale';
 import { BreakMark, BreakEdge } from '@/components/ChartBreakMark';
+import { HarvestBarsGroup, HarvestBar, HarvestFlag } from '@/components/HarvestBars';
 import {
   countsWithScope,
   loadIncludePerennials,
@@ -65,6 +66,14 @@ const SHORT = '#B33A3A';   // sold beyond what the picking log accounts for
 const BENCH = '#E3D8C0';   // the plan's benchmark: present, recessive, never the hero
 // SOLD as TEXT: the raw fill measures ~1.9:1 on a dark card, so text follows the theme instead.
 const SOLD_TEXT = 'var(--color-forest-800)';
+// The bar and its legend dot follow the theme through --chart-sold: the fixed SOLD forest read
+// ~1.9:1 on a dark card. It cannot simply be --color-forest-800, which goes leaf in dark and
+// would sit as light as the kept gold stacked on top of it. SOLD stays for the toggles, whose
+// white label is fixed.
+const SOLD_FILL = 'var(--chart-sold)';
+// Plan-vs-actual bar layers, as theme tokens (same set HarvestReconciliation uses) so the bars and
+// their legend dots follow the theme in dark mode instead of staying a fixed light-card palette.
+const BAR_COLORS = { bench: 'var(--border)', picked: 'var(--color-forest-800)', short: 'var(--danger)', mark: 'var(--gold)', sold: 'var(--bg-1)' };
 
 type View = 'measured' | 'plan';
 const WINDOWS = [6, 12, 24];
@@ -368,7 +377,7 @@ function MeasuredView({
             const keptH = Math.max(0, soldTop - producedTop - (m.keptKg && m.keptKg > 0 ? 2 : 0));
             return (
               <g key={m.key}>
-                {soldH > 0 && <rect x={x} y={soldTop} width={barW} height={soldH} fill={SOLD} rx="2" />}
+                {soldH > 0 && <rect x={x} y={soldTop} width={barW} height={soldH} fill={SOLD_FILL} rx="2" />}
                 {m.keptKg !== null && m.keptKg > 0 && keptH > 0 && (
                   <rect x={x} y={producedTop} width={barW} height={keptH} fill={KEPT} rx="2" />
                 )}
@@ -397,7 +406,10 @@ function MeasuredView({
           {months.map((m, i) => (
             <g key={`hit-${m.key}`}>
               {m.key === selected.key && (
-                <rect x={cx(i) - colW / 2} y={PAD.top - 6} width={colW} height={PLOT_H + 10} fill="rgba(32,25,15,0.05)" rx="2" />
+                <rect x={cx(i) - colW / 2} y={PAD.top - 6} width={colW} height={PLOT_H + 10} rx="2"
+                  // A wash of the theme's ink: the fixed dark-ink 5% vanished on a dark card, so the
+                  // selected month had no column in dark mode.
+                  style={{ fill: 'color-mix(in srgb, var(--text-primary) 6%, transparent)' }} />
               )}
               <rect x={cx(i) - colW / 2} y={0} width={colW} height={totalH} fill="transparent"
                 style={{ cursor: 'pointer' }} onClick={() => onPick(m.key)}>
@@ -412,7 +424,7 @@ function MeasuredView({
         <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{recordsMonthYear(lang, selected.month, selected.year)}</span>
         {selected.hasRecords ? (
           <>
-        <Chip dot={SOLD} label={tx('sold', 'kudayisiwe')} value={kgLabel(selected.soldKg)} />
+        <Chip dot={SOLD_FILL} label={tx('sold', 'kudayisiwe')} value={kgLabel(selected.soldKg)} />
             {selected.keptKg === null
               ? <span className="font-sans" style={{ fontSize: 12, color: SHORT }}>{tx('sold more than was logged picked', 'Kudayiswe okungaphezu kokurekhodiwe njengokuvuniwe')}</span>
               : <Chip dot={KEPT} label={tx('kept', 'okusele')} value={kgLabel(selected.keptKg)} />}
@@ -517,18 +529,19 @@ function PlanView({ plan, source, wide, orchard, lang }: {
         english="Each crop’s plan benchmark, with what you have logged picking this year on top of it."
         zulu="Isilinganiso sohlelo sesitshalo ngasinye, kanye nesivuno osirekhodile salo nyaka esiboniswe phezu kwaso." />
 
-      <div className="px-4 py-3 flex flex-col" style={{ gap: 14, maxWidth: wide ? 760 : undefined }}>
+      <HarvestBarsGroup className="px-4 py-3 flex flex-col" style={{ gap: 14, maxWidth: wide ? 760 : undefined }}>
         {plan.rows.map((row, i) => (
-          <PlanRow key={row.cropKey} row={row} pct={pct} lossPercent={plan.lossPercent}
-            clipped={rowScale.isClipped(rowTotals[i])} lang={lang} />
+          <PlanRow key={row.cropKey} row={row} max={max} lossPercent={plan.lossPercent}
+            clipped={rowScale.isClipped(rowTotals[i])} lang={lang} index={i} count={plan.rows.length} />
         ))}
-      </div>
+      </HarvestBarsGroup>
 
       <div className="px-4 pb-3 flex flex-wrap items-center" style={{ gap: '4px 14px' }}>
-        <Chip dot={BENCH} title={lang === 'zu' ? 'English source: plan benchmark' : undefined} label={tx('plan benchmark', 'isilinganiso sohlelo')} value="" />
-        <Chip dot={SOLD} title={lang === 'zu' ? 'English source: logged picked' : undefined} label={tx('logged picked', 'okuvuniwe okurekhodiwe')} value="" />
+        <Chip dot={BAR_COLORS.bench} title={lang === 'zu' ? 'English source: plan benchmark' : undefined} label={tx('plan benchmark', 'isilinganiso sohlelo')} value="" />
+        <Chip dot={BAR_COLORS.picked} title={lang === 'zu' ? 'English source: logged picked' : undefined} label={tx('logged picked', 'okuvuniwe okurekhodiwe')} value="" />
+        <Chip dot="transparent" label={tx('sold', 'kudayisiwe')} value="" />
         {plan.lossConfirmed
-          ? <Chip dot="#C07A1E"
+          ? <Chip dot={BAR_COLORS.mark}
               title={lang === 'zu' ? `English source: after your ${Math.round(plan.lossPercent)}% loss allowance` : undefined}
               label={recordsTemplate(lang, 'after your {pct}% loss allowance', 'ngemva kwesilinganiso sokulahleka esingu-{pct}%', { pct: Math.round(plan.lossPercent) })} value="" />
           : (
@@ -574,9 +587,9 @@ function PlanView({ plan, source, wide, orchard, lang }: {
   );
 }
 
-function PlanRow({ row, pct, lossPercent, clipped, lang }: {
-  row: PlanVsActualRow; pct: (kg: number) => string; lossPercent: number; clipped: boolean;
-  lang: string;
+function PlanRow({ row, max, lossPercent, clipped, lang, index, count }: {
+  row: PlanVsActualRow; max: number; lossPercent: number; clipped: boolean;
+  lang: string; index: number; count: number;
 }) {
   return (
     <div>
@@ -596,23 +609,23 @@ function PlanRow({ row, pct, lossPercent, clipped, lang }: {
           inside it, the loss allowance is the target mark. One shared scale across
           every crop, so the rows are comparable to each other and not just to
           themselves. */}
-      <div className="mt-1.5 relative" style={{ height: 14, background: 'var(--bg-2)', borderRadius: 3 }}>
-        <div style={{ position: 'absolute', inset: 0, width: pct(row.benchmarkKg), background: BENCH, borderRadius: 3 }} />
-        <div style={{ position: 'absolute', top: 3.5, left: 0, height: 7, width: pct(row.harvestedKg), background: SOLD, borderRadius: 2 }} />
-        {row.afterLossKg !== null && (
-          <div
-            title={recordsLabel(lang, 'After your {pct}% loss allowance: {kg}', 'Ngemva kwesilinganiso sakho sokulahleka esingu-{pct}%: {kg}', { pct: Math.round(lossPercent), kg: kgLabel(row.afterLossKg) })}
-            style={{ position: 'absolute', top: -1, height: 16, left: pct(row.afterLossKg), width: 2, background: '#C07A1E', borderRadius: 1 }}
-          />
-        )}
-        {clipped && <BreakEdge />}
+      <div className="mt-1.5">
+        <HarvestBar max={max} benchmarkKg={row.benchmarkKg} harvestedKg={row.harvestedKg} soldKg={row.soldKg}
+          soldExceedsHarvested={row.soldExceedsHarvested} index={index} count={count}
+          colors={BAR_COLORS}
+          markKg={row.afterLossKg}
+          markTitle={row.afterLossKg !== null ? recordsLabel(lang, 'After your {pct}% loss allowance: {kg}', 'Ngemva kwesilinganiso sakho sokulahleka esingu-{pct}%: {kg}', { pct: Math.round(lossPercent), kg: kgLabel(row.afterLossKg) }) : undefined}>
+          {clipped && <BreakEdge />}
+        </HarvestBar>
       </div>
 
       {row.soldExceedsHarvested && (
+        <HarvestFlag index={index} count={count}>
         <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: SHORT }} lang={lang}
           template="Sold {kg} — more than was logged picked, so the green bar is short of what really came off." vars={{ kg: kgLabel(row.soldKg) }}
           english={`Sold ${kgLabel(row.soldKg)} — more than was logged picked, so the green bar is short of what really came off.`}
           zulu={`Kudayiswe ${kgLabel(row.soldKg)} — kungaphezu kwalokho okurekhodwe njengokuvuniwe, ngakho umugqa oluhlaza mfushane kunesivuno sangempela.`} />
+        </HarvestFlag>
       )}
     </div>
   );
@@ -634,7 +647,7 @@ function Chip({ dot, label, value, title }: { dot: string; label: string; value:
     <span className="flex items-baseline gap-1.5" title={title}>
       <span aria-hidden="true" style={{
         width: 7, height: 7, borderRadius: 2, display: 'inline-block',
-        background: dot, border: dot === 'transparent' ? `1px solid ${HAIRLINE}` : undefined,
+        background: dot, border: dot === 'transparent' ? `1px solid ${FAINT}` : undefined, // the whole bar: an outline that shows in dark too
       }} />
       {value && <span className="font-display tabular-nums" style={{ fontSize: 12, color: INK }}>{value}</span>}
       <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>{label}</span>

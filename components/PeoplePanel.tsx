@@ -3,6 +3,7 @@
 import { MapPin, User } from 'lucide-react';
 import type { Profile } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n-context';
+import Skeleton from '@/components/Skeleton';
 
 const ROLE_LABEL_KEYS: Record<string, string> = {
   farmer: 'mentorRoleFarmer',
@@ -114,23 +115,11 @@ function SkeletonCard() {
         border: '1px solid var(--border)',
       }}
     >
-      <div
-        className="animate-pulse"
-        style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(226,216,196,0.5)', flexShrink: 0 }}
-      />
+      <Skeleton width={48} height={48} radius="full" style={{ flexShrink: 0 }} />
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div
-          className="animate-pulse"
-          style={{ height: 13, width: '55%', borderRadius: 6, background: 'rgba(226,216,196,0.5)', marginBottom: 7 }}
-        />
-        <div
-          className="animate-pulse"
-          style={{ height: 10, width: '35%', borderRadius: 6, background: 'rgba(226,216,196,0.5)', marginBottom: 6 }}
-        />
-        <div
-          className="animate-pulse"
-          style={{ height: 9, width: '75%', borderRadius: 6, background: 'rgba(226,216,196,0.5)' }}
-        />
+        <Skeleton width="55%" height={13} radius="sm" index={1} style={{ borderRadius: 6, marginBottom: 7 }} />
+        <Skeleton width="35%" height={10} radius="sm" index={2} style={{ borderRadius: 6, marginBottom: 6 }} />
+        <Skeleton width="75%" height={9} radius="sm" index={3} style={{ borderRadius: 6 }} />
       </div>
     </div>
   );

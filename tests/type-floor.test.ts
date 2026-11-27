@@ -98,6 +98,8 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'components/HarvestBars.tsx': 'farmers read the plan-vs-actual and harvest reconciliation bars and their sold-exceeds-harvested flag; zero-debt 12px floor',
+  'components/Skeleton.tsx': 'shared loading placeholder blocks shown on farmer screens; carries no text; zero-debt 12px floor',
   'app/invoice/page.tsx': 'farmers enter and read their own saved invoice amounts; zero-debt 12px floor',
   'components/invoice/InvoiceCurrencyChoice.tsx': 'farmers explicitly choose and review the recorded invoice currency; zero-debt 12px floor',
   'components/invoice/QuickSaleCurrencyNotice.tsx': 'growers distinguish rand quick entry from other invoice currencies before recording money; zero-debt 12px floor',
@@ -173,6 +175,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/FieldDataStatus.tsx': 'cached and unconfirmed data need readable status',
   'components/FieldDraft.tsx': 'draft preservation and restore controls are used in the field',
   'components/FieldSyncBadge.tsx': 'offline and waiting counts must stay legible',
+  'components/SavedTick.tsx': 'the saved check and its outcome sentence; 14px type',
   'components/ProfileAvatar.tsx': 'names and profile fallbacks must remain readable on phones',
   'components/FieldVisitGuide.tsx': 'visual visit prompts are used outdoors on phones',
   'components/TourDiscovery.tsx': 'tour menu reminder is read on phones',

@@ -42,7 +42,7 @@ const scope:Record<string,unknown>={
  recordsTemplate:(_lang:string,en:string,_zu:string,values:Record<string,unknown>)=>en.replace(/\{(\w+)\}/g,(_,key)=>String(values[key])),
  DEFAULT_INCLUDE_PERENNIALS:true,loadIncludePerennials:()=>true,countsWithScope:()=>true,produceDisplayName:(name:string)=>name,
  RecordQuantitySummary:({totals}:{totals:Array<{unit:string;quantity:number}>})=>createElement('span',null,totals.map(row=>`${row.quantity} ${row.unit}`).join(', ')),
- CropIcon:icon,ReceiptPreview:()=>null,RecordZuluDraft:({english}:{english:string})=>english,
+ CropIcon:icon,Skeleton:()=>createElement('span',{'aria-hidden':true}),ReceiptPreview:()=>null,RecordZuluDraft:({english}:{english:string})=>english,
  Link:({children,href}:{children:React.ReactNode;href:string})=>createElement('a',{href},children),
  styles:{},isSampleMode:()=>false,loadInvoices:()=>[],harvestCropLabel:(name:string)=>name,
  paymentMethodLabel:(value:string)=>value,
@@ -60,7 +60,7 @@ for(const name of ['TrendingUp','Scale','Receipt','Plus','Sprout','FileText','Do
 function selected(tree:ts.SourceFile,names:string[]):string {
  return tree.statements.filter(node=>ts.isFunctionDeclaration(node)?names.includes(node.name?.text??''):ts.isVariableStatement(node)&&node.declarationList.declarations.some(d=>ts.isIdentifier(d.name)&&names.includes(d.name.text))).map(n=>n.getText(tree)).join('\n');
 }
-const pageNames=['fmtZAR','nullableRand','CurrencyReviewNotice','invoiceMoneyLabel','fmtDate','isThisMonth','categoryLabel','recordsText','recordsInstruction','Skeleton','useIncludePerennials','scopeKg','SummaryCards','SimpleMoneySummary','RecordDocument','toPhoneRows','SalesLedger','buildLedgerRows','filterLedgerRows','csvLang','exportLedgerCsv','FinancialSheet','metricNumber','FarmMetrics'];
+const pageNames=['fmtZAR','nullableRand','CurrencyReviewNotice','invoiceMoneyLabel','fmtDate','isThisMonth','categoryLabel','recordsText','recordsInstruction','useIncludePerennials','scopeKg','SummaryCards','SimpleMoneySummary','RecordDocument','toPhoneRows','SalesLedger','buildLedgerRows','filterLedgerRows','csvLang','exportLedgerCsv','FinancialSheet','metricNumber','FarmMetrics'];
 const myNames=['Card','CreditPackCard','SalesList'];
 const code=ts.transpileModule(selected(pageTree,pageNames)+'\n'+selected(myTree,myNames)+'\nreturn {'+[...pageNames,...myNames].join(',')+'};',{compilerOptions:{jsx:ts.JsxEmit.React,target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;
 const actual=new Function('scope',`with(scope){${code}}`)(scope) as Record<string,any>;

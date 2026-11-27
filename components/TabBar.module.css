@@ -1,5 +1,5 @@
 .link { -webkit-tap-highlight-color: transparent; }
-.pill { transform-origin: center bottom; transition: transform 180ms cubic-bezier(.16,1,.3,1), background 180ms ease, box-shadow 180ms ease; }
+.pill { padding: 4px 14px; transform-origin: center bottom; transition: transform 180ms cubic-bezier(.16,1,.3,1), background 180ms ease, box-shadow 180ms ease; }
 .icon { transition: transform 220ms cubic-bezier(.16,1,.3,1), color 180ms ease; }
 .active { box-shadow: inset 0 0 0 1px rgba(31,77,43,.08); }
 .active .icon { animation: tabIconArrive 300ms cubic-bezier(.175,.885,.32,1.1) both; }
@@ -8,6 +8,22 @@
 @media (hover: hover) {
   .link:hover .pill:not(.active) { transform: translateY(-2px); background: rgba(31,77,43,.06) !important; }
   .link:hover .pill:not(.active) .icon { transform: translateY(-2px) scale(1.08); }
+}
+/* 27 Nov: at 320px the isiZulu labels ("Amarekhodi", "I-akhawunti") plus 14px a side came to
+   332px, so the bar pushed the whole page wider and the phone zoomed it out. The Appearance
+   "Larger" setting (html zoom 1.3) does the same on a 390px phone, whose layout is then 300px
+   wide while a viewport media query still sees 390 — so the padding follows the BAR's width
+   (container units), not the screen's: 14px a side at 390px of bar, 4px from about 300px down.
+   The labels stay 12px and on one line. */
+.bar { container-type: inline-size; }
+.pill { padding-inline: clamp(4px, calc(11.43cqw - 30.6px), 14px); }
+/* 27 Nov: a phone turned sideways is ~390px tall, and the stacked icon-over-label tabs took
+   ~66px of it. There the width is plentiful, so the label sits beside the icon (~44px tall).
+   Doubled classes outrank the py-2 / flex-col utilities on the same elements. The bar's
+   height is measured at runtime (--bottom-nav-height), so pages that pad for it follow. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .link.link { padding-top: 3px; padding-bottom: 3px; }
+  .pill.pill { flex-direction: row; gap: 8px; }
 }
 @keyframes tabIconArrive {
   from { opacity: .7; transform: translateY(5px) scale(.88); }

@@ -35,6 +35,8 @@ import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 import { recordsFill, recordsTemplate, recordsLabel, isRecordsRegionalLang } from '@/lib/records-regional-drafts';
 import { recordsMonthShort, recordsMonthYear } from '@/lib/records-months';
+import { useInViewOnce } from '@/lib/use-in-view-once';
+import styles from './CashflowChart.module.css';
 
 const CARD: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
 
@@ -50,6 +52,11 @@ const RUN = '#235E86';     // the running total: a third hue, so it is never rea
 // (CLAUDE.md: "ochre text is #7A4408"), and the raw forest green measures ~1.9:1 on a dark
 // card. These follow the theme instead of the fixed fill colours above.
 const IN_TEXT = 'var(--color-forest-800)';
+// The bars and the legend dot follow the theme too: the fixed forest fill measured ~1.9:1
+// against a dark card, under the 3:1 a chart mark needs. --color-forest-800 is the same
+// forest in light (#1E4D33) and turns leaf in dark (#82C844, ~9:1 on #181208). IN itself
+// stays for the 6m/12m/24m toggle, whose white label is fixed.
+const IN_FILL = 'var(--color-forest-800)';
 const OUT_TEXT = 'var(--gold-dim)';
 
 const WINDOWS = [6, 12, 24];
@@ -220,8 +227,11 @@ function Figure({ label, value, tone }: { label: string; value: string; tone: st
    same month, and two separate <svg>s with independent padding would not
    guarantee that at every container width. */
 
-const PHONE = { W: 320, PAD: { left: 34, right: 8, top: 12, bottom: 16 }, BARS_H: 118, GAP_H: 10, RUN_H: 44, barCap: 15 };
-const DESK  = { W: 760, PAD: { left: 52, right: 12, top: 14, bottom: 18 }, BARS_H: 150, GAP_H: 14, RUN_H: 56, barCap: 22 };
+// GAP_H is the clear band between the two panels. The bars panel's lower axis label (money-out
+// minimum) and the running band's upper label (its maximum) both sit in it, so it has to hold two
+// lines of 7px text with air between them; at 10 on a phone they touched.
+const PHONE = { W: 320, PAD: { left: 34, right: 8, top: 12, bottom: 24 }, BARS_H: 118, GAP_H: 24, RUN_H: 44, barCap: 15 };
+const DESK  = { W: 760, PAD: { left: 52, right: 12, top: 14, bottom: 26 }, BARS_H: 150, GAP_H: 22, RUN_H: 56, barCap: 22 };
 
 type DrawableMoneyMonth = Omit<FinanceMonthPoint, 'moneyInZar' | 'netZar' | 'runningZar'> & {
   moneyInZar: number; netZar: number; runningZar: number;
@@ -245,6 +255,12 @@ function Panels({
 }) {
   const { W, PAD, BARS_H, GAP_H, RUN_H, barCap } = wide ? DESK : PHONE;
   const n = months.length;
+  // Plays once when the chart first scrolls into view. The <svg> is keyed on the window length
+  // below, so switching 6m / 12m / 24m remounts it and the bars and line draw again; clicking a
+  // month or any other re-render does not.
+  const { ref, phase } = useInViewOnce<HTMLDivElement>();
+  // The bar stagger is capped at about 400 ms in total however many months are on screen.
+  const step = Math.min(60, 400 / Math.max(1, n - 1));
   const plotW = W - PAD.left - PAD.right;
   const colW = plotW / n;
   const barW = Math.min(colW * 0.52, barCap);
@@ -278,8 +294,8 @@ function Panels({
   const showLabel = (i: number) => n <= 12 || i === 0 || i === n - 1 || i % 2 === 0;
 
   return (
-    <div className="px-2">
-      <svg viewBox={`0 0 ${W} ${totalH}`} width="100%" style={{ display: 'block' }} role="img"
+    <div ref={ref} className={`px-2 ${phase === 'armed' ? styles.armed : phase === 'play' ? styles.play : ''}`}>
+      <svg key={n} viewBox={`0 0 ${W} ${totalH}`} width="100%" style={{ display: 'block', ['--step' as string]: `${step.toFixed(1)}ms` }} role="img"
           aria-label={recordsLabel(lang, 'Money in and money out for each of the last {n} months, with a running total below.', 'Imali engenayo nephumayo enyangeni ngayinye kwezingu-{n} ezedlule, nesamba esiqhubekayo ngezansi.', { n })}>
         {/* Zero line for the bars, and the two extents of the shared scale. */}
         <line x1={PAD.left} x2={W - PAD.right} y1={zeroY} y2={zeroY} stroke="rgba(140,122,98,0.45)" strokeWidth="0.8" />
@@ -302,14 +318,23 @@ function Panels({
           const outH = (outScale.draw(m.moneyOutZar) / span) * BARS_H;
           const x = cx(i) - barW / 2;
           return (
-            <g key={m.key}>
+            <g key={m.key} style={{ ['--i' as string]: i }}>
               {/* Money in grows up from zero, money out grows down. Position, not
                   only colour, tells the two apart — which is what keeps the chart
-                  readable in greyscale and to a colourblind reader. */}
-              {m.moneyInZar > 0 && <rect x={x} y={zeroY - inH} width={barW} height={inH} fill={IN} rx="2" />}
-              {m.moneyOutZar > 0 && <rect x={x} y={zeroY} width={barW} height={outH} fill={OUT} rx="2" />}
-              {inScale.isClipped(m.moneyInZar) && <BreakMark x={x} y={zeroY - inH} w={barW} down />}
-              {outScale.isClipped(m.moneyOutZar) && <BreakMark x={x} y={zeroY + outH} w={barW} />}
+                  readable in greyscale and to a colourblind reader. A month with
+                  nothing in (or out) draws no bar, so it has nothing to animate. */}
+              {m.moneyInZar > 0 && (
+                <g className={`${styles.bar} ${styles.barIn}`}>
+                  <rect x={x} y={zeroY - inH} width={barW} height={inH} fill={IN_FILL} rx="2" />
+                  {inScale.isClipped(m.moneyInZar) && <BreakMark x={x} y={zeroY - inH} w={barW} down />}
+                </g>
+              )}
+              {m.moneyOutZar > 0 && (
+                <g className={`${styles.bar} ${styles.barOut}`}>
+                  <rect x={x} y={zeroY} width={barW} height={outH} fill={OUT} rx="2" />
+                  {outScale.isClipped(m.moneyOutZar) && <BreakMark x={x} y={zeroY + outH} w={barW} />}
+                </g>
+              )}
             </g>
           );
         })}
@@ -317,9 +342,9 @@ function Panels({
         {/* The running band, drawn after the bars so its line is never buried. */}
         <rect x={PAD.left} y={runTop} width={plotW} height={RUN_H} fill="rgba(35,94,134,0.045)" />
         <line x1={PAD.left} x2={W - PAD.right} y1={runZeroY} y2={runZeroY} stroke="rgba(140,122,98,0.4)" strokeWidth="0.7" strokeDasharray="2,2" />
-        <path d={runArea} fill="rgba(35,94,134,0.14)" />
-        <path d={runPath} fill="none" stroke={RUN} strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
-        <circle cx={cx(n - 1)} cy={runY(months[n - 1].runningZar)} r="2.4" fill={RUN} />
+        <path className={styles.runArea} d={runArea} fill="rgba(35,94,134,0.14)" />
+        <path className={styles.runLine} d={runPath} pathLength={1} fill="none" stroke={RUN} strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
+        <circle className={styles.runDot} cx={cx(n - 1)} cy={runY(months[n - 1].runningZar)} r="2.4" fill={RUN} />
         {runMax > 0 && (
           <text x={PAD.left - 4} y={runTop + 4} textAnchor="end" fontSize="6.5" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{randTick(runMax)}</text>
         )}
@@ -334,7 +359,7 @@ function Panels({
               <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{recordsMonthShort(lang, m.month)}</text>
             )}
             {(m.month === 1 || i === 0) && (
-              <text x={cx(i)} y={totalH - 12} textAnchor="middle" fontSize="6" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{m.year}</text>
+              <text x={cx(i)} y={totalH - 14} textAnchor="middle" fontSize="6" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{m.year}</text>
             )}
           </g>
         ))}
@@ -345,7 +370,8 @@ function Panels({
           <g key={`hit-${m.key}`}>
             {m.key === selectedKey && (
               <rect x={cx(i) - colW / 2} y={PAD.top - 4} width={colW} height={BARS_H + GAP_H + RUN_H + 8}
-                fill="rgba(32,25,15,0.05)" rx="2" />
+                rx="2"
+                style={{ fill: 'color-mix(in srgb, var(--text-primary) 6%, transparent)' }} /* the fixed dark-ink 5% vanished on a dark card */ />
             )}
             <rect
               x={cx(i) - colW / 2} y={0} width={colW} height={totalH}
@@ -409,7 +435,7 @@ function Readout({ month, lang }: { month: DrawableMoneyMonth; lang: string }) {
       <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{recordsMonthYear(lang, month.month, month.year)}</span>
       {month.hasRecords ? (
         <>
-          <Chip dot={IN} label={text('in', 'ingenayo')} value={randLabel(month.moneyInZar)} />
+          <Chip dot={IN_FILL} label={text('in', 'ingenayo')} value={randLabel(month.moneyInZar)} />
           <Chip dot={OUT} label={text('out', 'ephumayo')} value={randLabel(month.moneyOutZar)} />
           <Chip dot={RUN} label={text('running total', 'isamba esiqhubekayo')} value={randLabel(month.runningZar)} />
         </>

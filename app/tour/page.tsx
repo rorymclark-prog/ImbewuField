@@ -6,6 +6,7 @@ import { ArrowRight, Sprout, Map, BookOpen, ReceiptText, Users, Building2, BarCh
 import TourRoute from '@/components/tour/TourRoute';
 import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
+import LimaBar from '@/components/LimaBar';
 import { useProductTour } from '@/components/ProductTourProvider';
 import { PRODUCT_TOUR } from '@/lib/sample-tour';
 import { sampleWorkspaceText, productTourDuration, productTourError, productTourStepCopy, productTourUi } from '@/lib/sample-tour-localization';
@@ -42,7 +43,7 @@ export default function TourPage() {
   }
   const minutes = PRODUCT_TOUR.reduce((sum, step) => sum + step.minutes, 0);
   const tried = tour?.done.length ?? 0;
-  return <main lang={lang} className={styles.page}><AppHeader title={ui('Tour', 'Uhambo')} /><div className={styles.scroll}><div className={styles.wrap}>
+  return <main lang={lang} className={styles.page}><AppHeader title={ui('Tour', 'Uhambo')} /><div className={`${styles.scroll} ${styles.scrollInFlow}`}><div className={styles.wrap}>
     <section className={styles.hero}>
       <div><span className={styles.eyebrow}>{ui('FARMERS · MENTORS · ORGANISATIONS · FUNDERS', 'ABALIMI · ABELULEKI · IZINHLANGANO · ABAXHASI')}</span>
         <h1>{ui('See what ImbewuField can do.', 'Bona okungenziwa yi-ImbewuField.')}</h1>
@@ -77,6 +78,8 @@ export default function TourPage() {
     })}</div>
     <div className={styles.controls}><Link href="/samples/farm">{ui('Full farm evidence pack', 'Iphakethe eligcwele lobufakazi bepulazi')}</Link><Link href="/samples">{ui('All role workspaces', 'Zonke izindawo zokusebenza')}</Link><Link href="/feedback">{ui('Feature requests & programme customisation', 'Izicelo zezici nokwenza uhlelo lufaneleke')}</Link></div>
   </div></div>
+  {/* Lima in the document flow, not floating over the page: components/ChatWidget.tsx excludes this route because the FAB was measured covering its text at 390px. */}
+  <div className="no-print"><LimaBar /></div>
   {/* nav-03: without this, /tour was one of the secondary pages that lost the farmer's way home. */}
   <div className="no-print"><TabBar hideAtDesktop/></div>
   </main>;

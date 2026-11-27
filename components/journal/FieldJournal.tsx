@@ -475,7 +475,7 @@ export default function FieldJournal() {
           </div>
 
           {/* Example entries — fixture data only, see EXAMPLE_JOURNAL_ENTRIES above.
-              Dashed borders + reduced opacity + a per-card "Example" badge (all in the
+              Dashed borders + a per-card "Example" badge (all in the
               app's existing amber "this is a demo" colour, the same #C07A1E app/cropplan/
               page.tsx uses for its own no-crop-plan-yet notice) so these can never
               read as the farmer's own history — no edit button, no delete, not clickable. */}
@@ -483,7 +483,8 @@ export default function FieldJournal() {
             <div style={{
               display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10, padding: '0 2px',
               font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em',
-              textTransform: 'uppercase', color: 'var(--gold)',
+              // --gold measured 3.85:1 as 12px text on the light page; --gold-dim is the text tone.
+              textTransform: 'uppercase', color: 'var(--gold-dim)',
             }}>
               <Sparkles size={12} />
               {ui('Example — what an entry looks like', 'Isibonelo — indlela okufakwa ngayo')}
@@ -498,7 +499,10 @@ export default function FieldJournal() {
                     key={ex.id}
                     aria-label={`${ui('Example entry (not a real record)', 'Isibonelo, akulona irekhodi langempela')}: ${ex.title}`}
                     style={{
-                      position: 'relative', marginBottom: 10, borderRadius: 14, opacity: 0.82,
+                      // No opacity fade: 0.82 dragged every date, tag and line of body text under
+                      // 4.5:1 (Harvest 3.32, Pest / disease 3.58 light; dates 3.98 dark — 23 Nov).
+                      // The dashed borders and the Example badge already say "not yours".
+                      position: 'relative', marginBottom: 10, borderRadius: 14,
                       background: 'var(--bg-1)', border: '1.5px dashed var(--border)',
                       borderLeft: `3px dashed ${cat.ink}`, padding: '12px 40px 12px 13px',
                     }}

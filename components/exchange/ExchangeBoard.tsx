@@ -130,6 +130,14 @@ export default function ExchangeBoard() {
   const [cropKeys, setCropKeys] = useState<string[]>([]);
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<ListingSort>('newest');
+  // The listing the farmer has just posted. It gets a one-off lift and ring on the board, then
+  // this lets go so a later re-mount (a filter change) does not replay it.
+  const [freshListingId, setFreshListingId] = useState<string | null>(null);
+  useEffect(() => {
+    if (!freshListingId) return;
+    const timer = window.setTimeout(() => setFreshListingId(null), 6000);
+    return () => window.clearTimeout(timer);
+  }, [freshListingId]);
   const [withinKm, setWithinKm] = useState('');
   const [includeClosed, setIncludeClosed] = useState(false);
   const [viewpointId, setViewpointId] = useState('none');
@@ -279,7 +287,7 @@ export default function ExchangeBoard() {
       {showForm && (
         <NewListingForm
           mySite={mySite}
-          onPosted={(listings) => { setLocalListings(listings); setShowForm(false); setSort('newest'); }}
+          onPosted={(listings, postedId) => { setLocalListings(listings); setShowForm(false); setSort('newest'); setFreshListingId(postedId); }}
           onCancel={() => setShowForm(false)}
         />
       )}
@@ -317,7 +325,7 @@ export default function ExchangeBoard() {
             const on = categories.includes(c);
             return (
               <Chip key={c} on={on} disabled={count === 0} onClick={() => setCategories((v) => toggle(v, c))}>
-                {zu ? ZU_CATEGORY_LABEL[c] : CATEGORY_LABEL[c]} <span style={{ opacity: 0.65 }}>{count}</span>
+                {zu ? ZU_CATEGORY_LABEL[c] : CATEGORY_LABEL[c]} <span style={{ fontWeight: 400 }}>{count}</span>
               </Chip>
             );
           })}
@@ -338,7 +346,7 @@ export default function ExchangeBoard() {
               ) : (
                 c.icon
               )}{' '}
-              {produceLabel(c.cropKey, lang)} <span style={{ opacity: 0.65 }}>{c.count}</span>
+              {produceLabel(c.cropKey, lang)} <span style={{ fontWeight: 400 }}>{c.count}</span>
             </Chip>
           ))}
         </ChipRow>
@@ -489,6 +497,7 @@ export default function ExchangeBoard() {
                 nowMs={nowMs}
                 mine={isLocalListing(row.listing)}
                 hasOrigin={origin !== null}
+                fresh={row.listing.id === freshListingId}
                 onClose={(id) => setLocalListings(setLocalListingStatus(id, 'closed'))}
                 onDelete={(id) => setLocalListings(deleteLocalListing(id))}
               />
@@ -547,7 +556,7 @@ function ChipRow({ label, children }: { label: string; children: React.ReactNode
       >
         {label}
       </div>
-      <div className="flex gap-1.5 flex-wrap">{children}</div>
+      <div className="flex gap-x-1.5 gap-y-2.5 flex-wrap">{children}</div>
     </div>
   );
 }
@@ -568,12 +577,16 @@ function Chip({
       onClick={onClick}
       disabled={disabled}
       aria-pressed={on}
-      className="font-sans font-semibold"
+      // 36px chip, 44px tap area: the pseudo-element reaches 5px above and below (it sits inside
+      // the 1px border), and ChipRow's 10px row gap keeps neighbouring rows from overlapping
+      // (phone scan, 23 Nov: chips measured 32-37px tall).
+      className="relative font-sans font-semibold before:absolute before:inset-x-0 before:-inset-y-[5px] before:content-['']"
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         gap: 4,
         padding: '6px 11px',
+        minHeight: 36,
         borderRadius: 100,
         fontSize: 12,
         cursor: disabled ? 'default' : 'pointer',
