@@ -11,4 +11,6 @@ Provider request tests inspect the OpenAI and Gemini inputs. The original design
 
 Browser checks used the archived Ubhejane Earthworks illustration at 390×844, 820×1180 and 1440×960. The changed test design accurately listed one moved JoJo tank and two added vegetable beds. Added, edited and deleted pins survived reopening as expected. On phones and tablets, both Chrome and WebKit retained the marker coordinates through zoom and pan. A separate offline regression reproduced a failed cloud lookup hiding the on-device illustration. The comparison now falls back to the local artwork and its correction pins. The paid confirmation test verified that cancellation submits nothing and double-clicking confirmation submits only the selected note once.
 
+The full suite caught the correction call bypassing the queue's existing image-size cap. Corrections now use the same capped upload as other sheets. Existing input and mask bytes within the limit are retained.
+
 Production release evidence is recorded on the PR and in issue #35. Test screenshots of the private site stay outside Git. The design geometry and plan version are unchanged.

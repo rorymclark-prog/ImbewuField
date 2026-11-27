@@ -16723,7 +16723,7 @@ export default function DesignGlossy({
             polishAfterHybridRef.current = false;
             setHybridHandoffReady(false); setLockedPolishStage(null);
             polishInputRef.current = recipe.sheet.compositeDataUrl;
-            const id = await enqueueRenderJob({siteId:gallerySiteId, style:recipe.style, engine:queueEngine, quality,
+            const id = await enqueueRenderJobCapped({siteId:gallerySiteId, style:recipe.style, engine:queueEngine, quality,
               attemptId:crypto.randomUUID(), outputMode:'hybrid',
               sceneSnapshot:{sceneJson:source.sceneJson,designRevision:item.designRevision,sourceDataUrl:source.sourceDataUrl},
               sheets:[{...recipe.sheet,review:{image:marked,notes:selected.map(p => p.note)}}]});

@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 November 2026', sha: 'c9922ba89', changes: [
+  { when: '27 November 2026', sha: '9be7b761b', changes: [
     'Pin a correction to a saved AI map and choose which notes to send with one new render.',
     'See what moved, changed, was added or was removed since a saved map was rendered.',
     'Record a dated Field Journal observation for a saved design phase and mapped feature.',
