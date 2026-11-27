@@ -1,0 +1,25 @@
+.action,.dialog button,.dialog select { min-height:44px; border:1px solid #8a9f8b; border-radius:8px; padding:6px 12px; font:inherit; color:#23482e; background:white; }
+.action { align-self:flex-start; cursor:pointer; font-weight:700; }
+.dialog { box-sizing:border-box; width:min(96vw, 92rem); max-height:92dvh; overflow:auto; padding:1rem; margin:auto; border:1px solid #99a999; border-radius:14px; background:white; color:#202c23; }
+.dialog::backdrop { background:rgb(12 23 15 / 72%); }
+.dialog header,.toolbar { display:flex; gap:.75rem; align-items:center; justify-content:space-between; }
+.dialog h2 { margin:0; font-size:1.4rem; }
+.dialog h3 { margin:.4rem 0; font-size:1rem; }
+.dialog p { margin:.7rem 0; }
+.toolbar { margin:.6rem 0; justify-content:flex-end; flex-wrap:wrap; }
+.toolbar label { display:flex; gap:.4rem; align-items:center; }
+.panes { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+.viewport { width:100%; height:min(66dvh, 34vw); overflow:auto; overscroll-behavior:contain; border:1px solid #cbd3ca; box-sizing:border-box; background:white; }
+.viewport img { display:block; width:100%; height:100%; object-fit:contain; }
+.tabs { display:none; }
+@media(max-width: 639px) {
+  .dialog { padding:.65rem; }
+  .dialog h2 { font-size:1.15rem; }
+  .panes { grid-template-columns:minmax(0,1fr); }
+  .panes section[data-selected="false"],.panes h3 { display:none; }
+  .viewport { height:min(55dvh, 78vw); }
+  .toolbar { justify-content:space-between; }
+  .tabs { display:flex; gap:.25rem; }
+  .tabs button[aria-pressed="true"] { color:white; background:#284d34; }
+  .toolbar button,.toolbar select { padding:5px 8px; }
+}

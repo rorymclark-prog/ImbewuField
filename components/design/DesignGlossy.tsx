@@ -103,6 +103,8 @@ import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath, tra
 import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, recommendedSheetSettings, renderAuthorityFlagsForStyle, renderPolicyForStyle, type SheetPresentationSettings } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { drawExactBed, isExactSurfaceFinish, paintExactSurface } from '@/lib/exact-surface-finish';
+import SavedPlanComparison from './SavedPlanComparison';
+import { comparisonSource, openComparisonSource, type ComparisonSource } from '@/lib/saved-plan-comparison';
 import MapFinishExamples from './MapFinishExamples';
 import { EXACT_PLANTING_FINISHES, canopyCentreMark, canopyLegendNote, drawExactCanopy, supportsExactCanopies, type ExactPlantingFinish, PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
@@ -180,7 +182,8 @@ import {
   paperSheetCanvas,
   styleSheetLegendWidth,
 } from '@/lib/reference-presentation';
-import { loadSheetMetas, loadSheetImage, patchSheetThumb, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
+import { activeAccountUid } from '@/lib/account-local-storage';
+import { loadSheetMetas, loadSheetImage, loadSheetComparison, patchSheetThumb, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
 import { backfillThumbnails } from '@/lib/gallery-thumbnails';
 import { basemapAttribution, fetchBasemapForFrame } from '@/lib/basemap-imagery';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
@@ -3701,6 +3704,7 @@ function drawBlueprintGround(
   /** Canvas px per real-world metre — anchors the staple field tiles to the ground. Optional:
    *  a caller without it gets the glyph-row fallback, never a mis-scaled pattern. */
   pxPerM?: number,
+  exactFinish: ExactPlantingFinish = 'detailed',
 ): void {
   // Skip only what a dedicated draw will genuinely cover. refLayers comes from the MAIN MAP, so an
   // empty one means the farmer traced this in the Studio and nothing else will draw it. The
@@ -3896,6 +3900,12 @@ function drawBlueprintGround(
           ctx.restore();
         }
       }
+    }
+    if (exactFinish === 'hatch' && z.feature === 'staple_garden' && isContent && !isBedField) {
+      // Dark field textures swallowed the black canopy edges and pipe crossings on A4.
+      blueprintRing(ctx, z.points, px, py);
+      ctx.fillStyle = 'rgba(255,255,255,0.64)';
+      ctx.fill();
     }
     ctx.restore();
     blueprintRing(ctx, z.points, px, py);
@@ -7057,7 +7067,8 @@ function drawPlantMarks(
     //
     // Sized off the SHORT side so a code stays proportionate to the plant, floored so it stays
     // readable — a long bed does not want a code as tall as it is wide.
-    const fs = Math.max(9, Math.min(Math.max(shortSide, 22) * 0.3, ctx.canvas.width * 0.0115));
+    const printFloor = exactFinish === 'hatch' ? ctx.canvas.width * 0.012 : 9;
+    const fs = Math.max(printFloor, Math.min(Math.max(shortSide, 22) * 0.3, ctx.canvas.width * 0.0115));
     ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
     const chipW = ctx.measureText(text).width + fs * 0.84;
     const chipH = fs * 1.5;
@@ -7066,7 +7077,7 @@ function drawPlantMarks(
     const showTrunk = exactFinish !== 'detailed' && plantingLegendSectionForFeature(def.id) === 'PERENNIAL GUILDS';
     const offset = showTrunk
       ? Math.max(lift, chipH / 2 + canopyCentreMark(shortSide, statusOf(it)).extent + 1)
-      : lift;
+      : exactFinish === 'hatch' && PRODUCTION_BED_IDS.has(def.id) ? 0 : lift;
     paintChip(text, fs, px(it.x), py(it.y) - offset, chipW, chipH);
   }
   ctx.restore();
@@ -7244,7 +7255,7 @@ async function buildExactLayerOverlay(
   const pxPerM = W / (frame.imgW * frame.mPerPx);
 
   if (phase === 'ground') {
-    drawBlueprintGround(ctx, state, px, py, W, refLayers, filter, groundPresentation, siteRecord, pxPerM);
+    drawBlueprintGround(ctx, state, px, py, W, refLayers, filter, groundPresentation, siteRecord, pxPerM, exactFinish);
     return drainCanvasToDataUrl(canvas, 'image/png');
   }
 
@@ -7964,7 +7975,7 @@ async function buildReferenceBlueprintMap(
   if (!ctx) throw new Error('Canvas unavailable');
 
   await drawBlueprintBase(ctx, renderFrame, W, H);
-  const groundOverlay = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'ground');
+  const groundOverlay = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'ground', 'standard', 'solid', false, undefined, exactFinish);
   if (groundOverlay) {
     const groundImage = await loadImage(groundOverlay);
     try {
@@ -13565,6 +13576,7 @@ export default function DesignGlossy({
       label: string,
       image: string,
       provenance: Partial<Pick<GalleryItem, 'resultKind' | 'provider' | 'model' | 'geometryLock' | 'showcase' | 'underlay' | 'jobId' | 'attemptId' | 'designRevision' | 'validationStatus' | 'rawOutputPath'>> & { siteId?: string } = {},
+      originalPlan?: ComparisonSource,
     ) => {
       const targetSiteId = provenance.siteId ?? state.siteId;
       // GalleryItem & {image: string}: fresh renders are the one case that always carries the
@@ -13585,22 +13597,24 @@ export default function DesignGlossy({
       setGallery((prev) => (gallerySiteIdRef.current === targetSiteId ? [...prev, item] : prev));
       // Persist alongside the state update, never instead of it — a sheet that fails to save must
       // still be on screen and downloadable.
-      void saveSheet({ ...item, siteId: targetSiteId, at: new Date().toISOString(), planVersion: PLAN_VERSION, renderRecipe: SHEET_RENDER_RECIPE }).then((ok) => {
-        setStorageWarning(
-          ok
-            ? null
-            : `Couldn't save “${label}” to this device (storage full or unavailable) — download it before you close this tab.`,
-        );
-      });
-      // Thumbnail generation is separate and best-effort: the sheet is already on screen and saved
-      // above, so a slow or failed thumbnail must never delay or block that. Once ready, patch it
-      // onto both the visible gallery item and the persisted record.
-      void makeGalleryThumbnail(image).then((thumb) => {
+      const ownerAtSave = activeAccountUid();
+      const sampleAtSave = isSampleMode();
+      const stillOwner = () => activeAccountUid() === ownerAtSave && isSampleMode() === sampleAtSave;
+      const at = new Date().toISOString();
+      const persist = (source?: ComparisonSource) => saveSheet({ ...item, siteId: targetSiteId, at,
+        planVersion: PLAN_VERSION, renderRecipe: SHEET_RENDER_RECIPE, comparisonSource: source });
+      const persisted = persist(originalPlan)
+        .then(async ok => {
+          // A full device should still keep the paid illustration if the aerial will not fit.
+          if (!ok && originalPlan && stillOwner()) ok = await persist();
+          setStorageWarning(ok ? null : `Couldn't save “${label}” to this device (storage full or unavailable) — download it before you close this tab.`);
+          return ok;
+        });
+      void makeGalleryThumbnail(image).then(async thumb => {
         if (!thumb) return;
-        setGallery((prev) => (gallerySiteIdRef.current === targetSiteId
-          ? prev.map((g) => (g.id === item.id ? { ...g, thumb } : g))
-          : prev));
-        void saveSheet({ ...item, thumb, siteId: targetSiteId, at: new Date().toISOString(), planVersion: PLAN_VERSION, renderRecipe: SHEET_RENDER_RECIPE });
+        setGallery(prev => gallerySiteIdRef.current === targetSiteId
+          ? prev.map(g => g.id === item.id ? { ...g, thumb } : g) : prev);
+        if (await persisted && stillOwner()) void patchSheetThumb(item.id, thumb);
       });
       return item.id;
     },
@@ -16176,7 +16190,7 @@ export default function DesignGlossy({
                   `Oblique design view · ${obliqueLabel} · ${validationStatus === 'unscored' ? 'comparison unavailable' : 'review against measured plan'}`,
                   finalSheet, { resultKind: 'ai-illustrated', provider: attribution.gallery, model: job.model,
                     geometryLock: false, showcase: false, underlay: frozenScene.underlay, ...auditContext,
-                    validationStatus, rawOutputPath: sheet.outputPath });
+                    validationStatus, rawOutputPath: sheet.outputPath }, comparisonSource(job, sheet, frozenScene.frame.satDataUrl));
                 assembled.add(sheet.key);
                 continue;
               }
@@ -16507,6 +16521,7 @@ export default function DesignGlossy({
                   validationStatus,
                   rawOutputPath: sheet.outputPath,
                 },
+                comparisonSource(job, sheet, frozenScene.frame.satDataUrl),
               );
               // Only Full Treatment's own Hybrid stage can later need amending (see
               // hybridGalleryIdRef above) — a plain Hybrid-only save has no polish stage to reject.
@@ -16652,6 +16667,36 @@ export default function DesignGlossy({
       : PRODUCER_STYLES.find((style) => galleryViewItem.label.includes(style.label))?.label
         ?? t('designGlossyAiHybrid'))
     : selectedStyleLabel;
+  const comparisonItem = galleryViewItem ?? (visibleResultImage && !isExactRender
+    ? gallery.find(item => item.image === visibleResultImage && item.resultKind !== 'exact') : null);
+  const compareButton = comparisonItem && ['hybrid', 'ai-polished', 'ai-illustrated'].includes(comparisonItem.resultKind) ? (
+    <SavedPlanComparison key={`${gallerySiteId}:${comparisonItem.id}`}
+      load={async (active) => {
+        const item = comparisonItem;
+        if (!item.jobId || !item.rawOutputPath || !item.designRevision) return null;
+        let source = await loadSheetComparison(item.id, gallerySiteId);
+        if (!source && active() && !isSampleMode()) {
+          const { readOriginalPlan } = await import('@/lib/read-saved-plan');
+          source = await readOriginalPlan(item, gallerySiteId);
+        }
+        if (!source || !active()) return null;
+        const scene = await openComparisonSource(source, item, gallerySiteId);
+        if (!scene || !active()) return null;
+        const illustration = await resolveGalleryImage(item);
+        if (!illustration || !active()) return null;
+        const { state, frame, refLayers, site, placeName, labelMode } = scene;
+        const baseline = source.historical ? historicalBaselineForSite(state.siteId) : null;
+        const plan = source.sheetKey === 'sector'
+          ? await buildBlueprintSectorMap(state, frame, refLayers, site, placeName, baseline)
+          : source.sheetKey === 'base'
+            ? await buildBlueprintBaseMap(state, frame, refLayers, placeName, baseline, labelMode)
+            : source.sheetKey === 'implementation'
+              ? await buildImplementationMap(state, frame, refLayers, site, placeName)
+              : await buildReferenceBlueprintMap(state, frame, refLayers, source.sheetKey, placeName, site, labelMode);
+        return { illustration, plan, oblique: source.oblique };
+      }}
+    />
+  ) : null;
   // Reuse the paid job's own snapshot/output. This action never enters a generation flow;
   // clear every staged handoff so a recovered Hybrid cannot accidentally buy a polish pass.
   const reassembleSavedArtwork = useCallback((item: GalleryItem) => {
@@ -17357,6 +17402,7 @@ export default function DesignGlossy({
               })}
             </div>
           )}
+          {!galleryOpen && compareButton}
           {/* Flip the SAME sheet between its AI and exact renders. From an exact result this is a
               true one-tap polish: switch modes and immediately start the geometry-locked queue.
               It spends ONE render, matching both the offered finish and the label on this button —
@@ -17392,7 +17438,7 @@ export default function DesignGlossy({
                 textUnderlineOffset: 3,
               }}
             >
-              {mode === 'ai' ? 'View the saved exact master →' : (
+              {mode === 'ai' ? 'Open current exact map →' : (
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
                   <Sparkles size={13} style={{ flexShrink: 0 }} /> AI-polish this exact map · 1 AI render →
                 </span>
@@ -18016,6 +18062,7 @@ export default function DesignGlossy({
                   >
                     {galleryResultBadge(galleryViewItem)}
                   </div>
+                  {compareButton}
                   {galleryViewItem.jobId && galleryViewItem.rawOutputPath && galleryViewItem.resultKind !== 'exact' && (
                     <div lang="en" style={{ display: 'grid', gap: 6 }}>
                       <button type="button"
