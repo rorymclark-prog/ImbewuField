@@ -1,0 +1,11 @@
+/* LimaBar layout. Phone portrait (the default) stacks the "who Lima is" line above the two
+   buttons. A phone turned sideways is only ~390px tall: header, this strip and the TabBar
+   left /home 175px of content. There the width is plentiful, so the line moves beside the
+   buttons instead of above them, saving a row. It is still said every time. */
+.who { margin-bottom: 6px; }
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .inner { display: flex; align-items: center; gap: 12px; }
+  .who { margin-bottom: 0; flex: 0 1 auto; min-width: 0; }
+  .row { flex: 1 1 auto; }
+}

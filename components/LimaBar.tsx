@@ -6,6 +6,7 @@ import { useSampleRole } from '@/lib/use-role-navigation';
 import { Camera, Loader2, MessageCircleQuestion, X } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n';
+import styles from './LimaBar.module.css';
 
 // Reading a worksheet should not fetch the full chat panel. Like the floating launcher,
 // load it only when someone opens photo help; keep the native picker in its tap handler.
@@ -75,12 +76,12 @@ export default function LimaBar({ chatHref = '/farmer?chat=1', staff = false, in
       className="px-4 pt-2 pb-2.5"
       style={{ background: 'var(--bg-1)', borderTop: '1px solid var(--border)', flexShrink: 0 }}
     >
-      <div className={`w-full max-w-5xl mx-auto${staff ? ' px-4' : ''}`}>
+      <div className={`w-full max-w-5xl mx-auto ${styles.inner}${staff ? ' px-4' : ''}`}>
         {/* Who Lima is — said every time rather than once, because it costs one short line and a
             farmer who opens the app twice a season should not have to remember. */}
         <div
-          className="flex items-center gap-1.5 font-sans"
-          style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 6, paddingLeft: 2 }}
+          className={`flex items-center gap-1.5 font-sans ${styles.who}`}
+          style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', paddingLeft: 2 }}
         >
           <span
             className="inline-flex items-center justify-center flex-shrink-0"
@@ -95,7 +96,7 @@ export default function LimaBar({ chatHref = '/farmer?chat=1', staff = false, in
           {t(staff ? 'limaWhoIsStaff' : 'limaWhoIs')}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className={`flex items-center gap-2 ${styles.row}`}>
           {inPlace
             ? <button type="button" onClick={() => openPhotoChat(null)} className={askClass} style={askStyle}>{askContent}</button>
             : <Link href={chatHref} className={askClass} style={askStyle}>{askContent}</Link>}

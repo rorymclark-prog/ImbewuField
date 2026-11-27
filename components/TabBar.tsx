@@ -140,7 +140,7 @@ export default function TabBar({ hideAtDesktop = false }: { hideAtDesktop?: bool
       // stretched edge to edge with its labels spread thin. AppHeader shows the same four
       // destinations as proper desktop nav links at lg+ on the pages that use it, so this bar can
       // step aside there instead of doubling as a second, wrong-shaped nav.
-      className={hideAtDesktop ? 'flex lg:hidden' : 'flex'}
+      className={`${hideAtDesktop ? 'flex lg:hidden' : 'flex'} ${styles.bar}`}
       style={{
         // var(--bg-1), not the '#FFFEFA' this used to carry: that hex matches earth LIGHT
         // exactly but never changes, so this bar — present on almost every screen — stayed a
