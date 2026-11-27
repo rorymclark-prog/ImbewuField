@@ -133,7 +133,7 @@ test('a journal entry that fails to save when storage is full keeps the sheet op
   // bug-03: handleSave used to call setSheet({ open: false, entry: null }) unconditionally,
   // closing the sheet (and discarding its typed draft) even when saveJournal() reported !ok —
   // a storage-full failure that looked, to the farmer, exactly like a successful save.
-  assert.match(field, /function persist\(next: JournalEntry\[\]\): boolean \{/,
+  assert.match(field, /function persist\(next: JournalEntry\[\], phaseWrite\?: \(\) => ReturnType<typeof saveJournal>\): boolean \{/,
     'persist must report whether the save actually landed, so callers can decide whether to close the sheet');
   assert.match(field, /const ok = persist\(upsertJournalEntry\(entries, entry\)\);[\s\S]*?if \(ok\) setSheet\(\{ open: false, entry: null \}\);/,
     'handleSave must only close the sheet when persist() succeeded');

@@ -25,12 +25,14 @@ import {
   editJournalEntry,
   formatJournalDate,
   groupJournalByMonth,
+  inspectJournalPhaseLink,
   journalCategory,
   journalSummary,
   loadJournal,
   releaseJournalRead,
   removeJournalEntry,
   saveJournal,
+  savePhaseJournalObservation,
   todayISODate,
   upsertJournalEntry,
   type JournalCategory,
@@ -38,6 +40,10 @@ import {
   type JournalEntryInput,
 } from '@/lib/field-journal';
 import JournalEntrySheet, { type BedOption } from './JournalEntrySheet';
+import PhaseObservationPicker from './PhaseObservationPicker';
+import PhaseObservationContext from './PhaseObservationContext';
+import phaseStyles from './PhaseObservationPicker.module.css';
+import { currentPhaseJournalLink, releasePhaseJournalDraft, type PhaseJournalDraft } from '@/lib/phase-journal-source';
 import JournalNurserySowingSummary from './JournalNurserySowingSummary';
 import JournalNurseryProgressSummary from './JournalNurseryProgressSummary';
 import JournalNurseryFieldPlantingSummary from './JournalNurseryFieldPlantingSummary';
@@ -134,7 +140,11 @@ export default function FieldJournal() {
   const [exporting, setExporting] = useState(false);
   const [includePhotos, setIncludePhotos] = useState(true);
   const [exportNotice, setExportNotice] = useState<FarmMemoryKey | null>(null);
-  const [sheet, setSheet] = useState<{ open: boolean; entry: JournalEntry | null; draft?: Partial<JournalEntryInput> }>({ open: false, entry: null });
+  const [sheet, setSheet] = useState<{
+    open: boolean; entry: JournalEntry | null; draft?: Partial<JournalEntryInput>; phase?: PhaseJournalDraft;
+  }>({ open: false, entry: null });
+  const [phasePickerOpen, setPhasePickerOpen] = useState(false);
+  useEffect(() => () => releasePhaseJournalDraft(sheet.phase), [sheet.phase]);
   const [notice, setNotice] = useState<string | null>(null);
   // bug-03: shown INSIDE the sheet (which overlays everything below it), because a storage-full
   // failure used to close the sheet on the farmer, taking the typed note with it. Kept separate
@@ -157,6 +167,7 @@ export default function FieldJournal() {
   useEffect(() => {
     refresh();
     setSheet({ open: false, entry: null }); setSheetError(null);
+    setPhasePickerOpen(false);
     setReady(true);
     const onChanged = () => refresh();
     window.addEventListener(JOURNAL_CHANGED_EVENT, onChanged);
@@ -168,6 +179,7 @@ export default function FieldJournal() {
   useEffect(() => {
     if (!ready) return;
     const url = new URL(window.location.href);
+    if (url.hash === '#design-observation') setPhasePickerOpen(true);
     const draft = parseTaskJournalQuery(url.searchParams);
     if (!draft) return;
     // The plan gives context, not proof that work happened. Only saving the
@@ -277,11 +289,11 @@ export default function FieldJournal() {
     }
   }
 
-  function persist(next: JournalEntry[]): boolean {
+  function persist(next: JournalEntry[], phaseWrite?: () => ReturnType<typeof saveJournal>): boolean {
     if (unconfirmedWrite.current) { setSheetError('A previous write could not be confirmed. Check the journal before recording or changing this note again.'); return false; }
     writeInProgress.current = true;
     let result: ReturnType<typeof saveJournal>;
-    try { result = saveJournal(next, entries); } finally { writeInProgress.current = false; }
+    try { result = phaseWrite ? phaseWrite() : saveJournal(next, entries); } finally { writeInProgress.current = false; }
     if (result.ok) {
       releaseJournalRead(loadedEntries.current); loadedEntries.current = result.entries;
       setEntries(result.entries);
@@ -305,6 +317,15 @@ export default function FieldJournal() {
   }
 
   function handleSave(input: JournalEntryInput) {
+    if (sheet.phase) {
+      const phase = sheet.phase;
+      if (!currentPhaseJournalLink(phase)) {
+        setSheetError('The saved site, design or account changed. Keep a copy of your note and select the feature again.');
+        return;
+      }
+      if (persist(entries, () => savePhaseJournalObservation(input, phase, entries))) setSheet({ open: false, entry: null });
+      return;
+    }
     const entry = sheet.entry ? editJournalEntry(sheet.entry, input) : createJournalEntry(input);
     const ok = persist(upsertJournalEntry(entries, entry));
     // bug-03: only close (and so only discard the sheet's own draft state) once the save actually
@@ -384,6 +405,25 @@ export default function FieldJournal() {
           </p>
         )}
       </div>
+
+      {ready && !authLoading && readOwner === owner && (
+        <div id="design-observation" style={{ scrollMarginTop: 72 }}>
+          {phasePickerOpen ? (
+            <PhaseObservationPicker
+              onClose={() => setPhasePickerOpen(false)}
+              onConfirm={phase => {
+                setPhasePickerOpen(false);
+                setSheetError(null);
+                setSheet({ open: true, entry: null, phase });
+              }}
+            />
+          ) : (
+            <button type="button" onClick={() => setPhasePickerOpen(true)} className={phaseStyles.launch} lang="en">
+              Record a design observation
+            </button>
+          )}
+        </div>
+      )}
 
       {notice && (
         <div style={{
@@ -583,6 +623,7 @@ export default function FieldJournal() {
             {group.entries.map((entry) => {
               const cat = journalCategory(entry.category);
               const planningReference = journalPlanningReferenceText(entry);
+              const implementation = inspectJournalPhaseLink(entry);
               return (
                 <article
                   key={entry.id}
@@ -628,6 +669,10 @@ export default function FieldJournal() {
 
                       {planningReference && <p lang="en" style={{ marginTop: 8, fontSize: 13, color: 'var(--text-secondary)' }}>
                         {planningReference}
+                      </p>}
+                      {implementation.status === 'recorded' && <PhaseObservationContext link={implementation.link} recorded />}
+                      {implementation.status === 'held' && <p className={phaseStyles.context} lang="en">
+                        The original design reference could not be read. The observation remains available.
                       </p>}
                       <JournalNurserySowingSummary entry={entry} />
                       <JournalNurseryProgressSummary entry={entry} />
@@ -680,6 +725,7 @@ export default function FieldJournal() {
         <JournalEntrySheet
           entry={sheet.entry}
           initialDraft={sheet.draft}
+          phaseLink={sheet.phase?.link}
           beds={beds}
           crops={crops}
           error={sheetError}

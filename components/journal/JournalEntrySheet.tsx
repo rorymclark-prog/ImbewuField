@@ -10,6 +10,8 @@ import {
   MAX_NOTES_LEN,
   MAX_PHOTOS_PER_ENTRY,
   MAX_TITLE_LEN,
+  inspectJournalPhaseLink,
+  isJournalDate,
   todayISODate,
   type JournalCategory,
   type JournalEntry,
@@ -24,6 +26,8 @@ import { farmMemoryText } from '@/lib/farm-memory-copy';
 import JournalNurserySowingSummary from './JournalNurserySowingSummary';
 import JournalNurseryProgressSummary from './JournalNurseryProgressSummary';
 import JournalNurseryFieldPlantingSummary from './JournalNurseryFieldPlantingSummary';
+import PhaseObservationContext from './PhaseObservationContext';
+import type { PhaseJournalLink } from '@/lib/phase-journal-source';
 
 export interface BedOption {
   id: string;
@@ -35,6 +39,7 @@ interface Props {
   entry: JournalEntry | null;
   /** A plan is a prompt to write, never proof that the work happened. */
   initialDraft?: Partial<JournalEntryInput>;
+  phaseLink?: PhaseJournalLink;
   beds: BedOption[];
   crops: string[];
   onSave: (input: JournalEntryInput) => void;
@@ -48,15 +53,15 @@ interface Props {
 /* Bottom sheet, phone-first: 92dvh cap, 22px top radius, safe-area padding —
    the same chrome components/EvidenceSheet.tsx uses, so the journal does not
    introduce a second modal idiom. */
-export default function JournalEntrySheet({ entry, initialDraft, beds, crops, onSave, onDelete, onClose, error, readOnly = false }: Props) {
+export default function JournalEntrySheet({ entry, initialDraft, phaseLink, beds, crops, onSave, onDelete, onClose, error, readOnly = false }: Props) {
   const { lang } = useLanguage();
   const isZulu = lang === 'zu';
   const ui = (english: string, zulu: string) => isZulu ? zulu : english;
   const simple = useAppLevel() === 'simple';
-  const [date, setDate] = useState(entry?.date ?? initialDraft?.date ?? todayISODate());
+  const [date, setDate] = useState(entry?.date ?? initialDraft?.date ?? (phaseLink ? '' : todayISODate()));
   const [title, setTitle] = useState(entry?.title ?? initialDraft?.title ?? '');
   const [notes, setNotes] = useState(entry?.notes ?? initialDraft?.notes ?? '');
-  const [category, setCategory] = useState<JournalCategory>(entry?.category ?? initialDraft?.category ?? 'planting');
+  const [category, setCategory] = useState<JournalCategory>(entry?.category ?? initialDraft?.category ?? (phaseLink ? 'other' : 'planting'));
   const [bedId, setBedId] = useState<string>(entry?.bedId ?? initialDraft?.bedId ?? '');
   const [bedLabel, setBedLabel] = useState<string>(entry?.bedLabel ?? initialDraft?.bedLabel ?? '');
   const [cropName, setCropName] = useState<string>(entry?.cropName ?? initialDraft?.cropName ?? '');
@@ -65,6 +70,8 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
   const [photoError, setPhotoError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLFormElement>(null);
+  const savedPhase = entry && inspectJournalPhaseLink(entry);
+  const phaseDated = Boolean(phaseLink) || savedPhase?.status === 'recorded';
   useDialogFocus(true, dialogRef);
   // bug-12: two-tap delete, same pattern as app/records/page.tsx's SalesLedger — first tap
   // arms a confirm (reverting on its own after 3.5s), second tap within that window deletes.
@@ -110,7 +117,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (readOnly || !title.trim() && !notes.trim()) return;
+    if (readOnly || !canSave) return;
     const bed = beds.find((b) => b.id === bedId);
     onSave({
       date,
@@ -126,7 +133,8 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
     });
   }
 
-  const canSave = Boolean(title.trim() || notes.trim());
+  const canSave = (!phaseDated || isJournalDate(date)) && (phaseLink ? Boolean(notes.trim()) : Boolean(title.trim() || notes.trim()));
+  const dateLabel = phaseDated ? ui('Observed on', 'Usuku lokubona') : ui('Date', 'Usuku');
 
   return (
     <div
@@ -181,6 +189,8 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
           {entry && <JournalNurserySowingSummary entry={entry} />}
           {entry && <JournalNurseryProgressSummary entry={entry} />}
           {entry && <JournalNurseryFieldPlantingSummary entry={entry} />}
+          {phaseLink && <PhaseObservationContext link={phaseLink} />}
+          {savedPhase?.status === 'recorded' && <PhaseObservationContext link={savedPhase.link} recorded />}
           {initialDraft && !entry && (
             <p role="note" lang={isZulu ? 'zu' : 'en'} style={{ margin: 0, padding: 12, borderRadius: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.5 }}>
               {farmMemoryText(lang, 'taskDraftNotice')}
@@ -225,12 +235,13 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
 
           {/* Date defaults to today (or the entry's own date on edit) whether or not this
               field is shown — Simple keeps that default instead of asking for it. */}
-          {(!simple || initialDraft) && (
+          {(!simple || initialDraft || phaseDated) && (
             <div>
-              <Label>{ui('Date', 'Usuku')}</Label>
+              <Label>{dateLabel}</Label>
               <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                 type="date"
-                aria-label={ui('Date', 'Usuku')}
+                aria-label={dateLabel}
+                required={phaseDated}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
                 style={inputStyle}
@@ -266,7 +277,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
 
           {/* Bed/plot and crop — extra fields, left unlinked/blank by default in both modes,
               so collapsing them in Simple never changes what gets saved. */}
-          {(!simple || initialDraft) && (
+          {!phaseLink && (!simple || initialDraft) && (
             <div style={{ display: 'flex', gap: 10 }}>
               <div style={{ flex: 1 }}>
                 <Label>{ui('Bed / plot', 'Umbhede / isiqephu')}</Label>
