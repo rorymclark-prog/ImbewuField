@@ -1,5 +1,5 @@
 import {
-  MANUAL_CHAPTERS, chapterTitle, earthworksFilmPlacements, inlineText, parseManual, type Block, type ManualLang,
+  MANUAL_CHAPTERS, chapterTitle, manualFilmPlacements, inlineText, parseManual, type Block, type ManualLang,
 } from '@/lib/manual';
 import { fieldFilmTitle, filmEdition, type FieldFilm } from '@/lib/field-films';
 import { readChapter } from '@/lib/manual-content';
@@ -48,19 +48,17 @@ export function manualSearchIndex(lang: ManualLang): ManualSearchSection[] {
         current.passages.push(...blockPassages(block));
       }
     });
-    if (slug === '07-earthworks-and-water') {
-      const indexed = new Set<FieldFilm>();
-      for (const slot of earthworksFilmPlacements(body)) {
-        if (indexed.has(slot.film)) continue;
-        indexed.add(slot.film);
-        const passages = blockPassages(body[slot.blockIndex]);
-        const passage = passages[(slot.afterStep ?? passages.length) - 1];
-        const titleLang = filmEdition(slot.film, lang).lang;
-        sections.push({
-          ...source, kind: 'film', title: fieldFilmTitle(slot.film, titleLang),
-          titleLang, anchor: slot.anchor, passages: passage ? [passage] : [],
-        });
-      }
+    const indexed = new Set<FieldFilm>();
+    for (const slot of manualFilmPlacements(slug, body)) {
+      if (indexed.has(slot.film)) continue;
+      indexed.add(slot.film);
+      const passages = blockPassages(body[slot.blockIndex]);
+      const passage = passages[(slot.afterStep ?? passages.length) - 1];
+      const titleLang = filmEdition(slot.film, lang).lang;
+      sections.push({
+        ...source, kind: 'film', title: fieldFilmTitle(slot.film, titleLang),
+        titleLang, anchor: slot.anchor, passages: passage ? [passage] : [],
+      });
     }
   }
   return sections;
