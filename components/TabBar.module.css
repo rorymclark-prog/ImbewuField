@@ -1,5 +1,5 @@
 .link { -webkit-tap-highlight-color: transparent; }
-.pill { transform-origin: center bottom; transition: transform 180ms cubic-bezier(.16,1,.3,1), background 180ms ease, box-shadow 180ms ease; }
+.pill { padding: 4px 14px; transform-origin: center bottom; transition: transform 180ms cubic-bezier(.16,1,.3,1), background 180ms ease, box-shadow 180ms ease; }
 .icon { transition: transform 220ms cubic-bezier(.16,1,.3,1), color 180ms ease; }
 .active { box-shadow: inset 0 0 0 1px rgba(31,77,43,.08); }
 .active .icon { animation: tabIconArrive 300ms cubic-bezier(.175,.885,.32,1.1) both; }
@@ -9,6 +9,10 @@
   .link:hover .pill:not(.active) { transform: translateY(-2px); background: rgba(31,77,43,.06) !important; }
   .link:hover .pill:not(.active) .icon { transform: translateY(-2px) scale(1.08); }
 }
+/* 27 Nov: at 320px the isiZulu labels ("Amarekhodi", "I-akhawunti") plus 14px a side came to
+   332px, so the bar pushed the whole page 12px wider and the phone zoomed it out. 6px a side
+   fits all four tabs in 268px; the labels stay 12px and on one line. */
+@media (max-width: 359px) { .pill { padding: 4px 6px; } }
 @keyframes tabIconArrive {
   from { opacity: .7; transform: translateY(5px) scale(.88); }
   to { opacity: 1; transform: translateY(0) scale(1); }

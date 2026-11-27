@@ -163,7 +163,7 @@ export default function TabBar({ hideAtDesktop = false }: { hideAtDesktop?: bool
             <div
               className={`flex flex-col items-center gap-1 ${styles.pill} ${active ? styles.active : ''}`}
               style={{
-                padding: '4px 14px',
+                // Padding lives in TabBar.module.css (.pill) so it can narrow on 320px phones.
                 borderRadius: 12,
                 // w18-33: a tint of the theme's --emerald, not a fixed light pill (it was the only
                 // light surface in the dark chrome).

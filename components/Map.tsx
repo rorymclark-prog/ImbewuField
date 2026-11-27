@@ -4125,12 +4125,16 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
           className="absolute left-1/2 -translate-x-1/2 pointer-events-none flex items-center gap-2.5 rounded-full"
           style={{
             zIndex: 15,
-            bottom: 72, padding: '11px 18px',
+            bottom: 72, padding: '11px clamp(12px, 4vw, 18px)',
             background: 'rgba(22,30,18,0.86)',
             border: '1px solid rgba(234,243,226,0.16)',
             backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
             boxShadow: '0 8px 24px -10px rgba(0,0,0,0.5)',
+            // 27 Nov: on a 320px phone the isiZulu hint ran 3px past both edges, cutting off its
+            // rounded ends. The padding and the text below narrow with the screen so it stays one
+            // line (wrapping made it taller, up under the Lima button); the cap is a backstop.
             whiteSpace: 'nowrap',
+            maxWidth: 'calc(100% - 16px)',
           }}
         >
           <span className="relative flex h-2 w-2 flex-shrink-0">
@@ -4140,7 +4144,7 @@ export default function PermaMap({ onLocationSelect: onSelectLocation, selectedL
             />
             <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: MAP_COLOR_BOUNDARY_FILL }} />
           </span>
-          <span className="font-display italic" style={{ fontSize: 15, fontWeight: 500, color: '#EAF3E2' }}>
+          <span className="font-display italic" style={{ fontSize: 'clamp(13px, 4.1vw, 15px)', fontWeight: 500, color: '#EAF3E2', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {t('firstTapHint')}
           </span>
         </div>
