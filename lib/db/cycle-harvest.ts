@@ -12,7 +12,7 @@ import { isJournalDate, todayISODate, type GrowerJournalLink } from '../field-jo
 import { recordUnit, type RecordUnit } from '../farm-records';
 import { getFirebase } from '../firebase/init';
 import type { GrowerReportHarvest } from '../grower-progress-report';
-import { getSandboxProduction, SAMPLE_MODE_EVENT } from '../sample-mode';
+import { getSandboxProduction, getSandboxProfile, SAMPLE_MODE_EVENT } from '../sample-mode';
 import type { ProductionLog } from './types';
 
 export type CycleHarvestOptions =
@@ -39,13 +39,15 @@ function readSampleModeFlag(): boolean | null {
 
 // The association contains no harvest values. Bind it to the existing demo
 // lifecycle without changing the historical sample module or device storage.
-const sampleScopes = new WeakMap<Window, { links: ReadonlyMap<string, CycleHarvestLink> }>();
+type SampleScope = { links: ReadonlyMap<string, CycleHarvestLink> };
+const sampleScopes = new WeakMap<Window, SampleScope>();
 function sampleScope() {
   const existing = sampleScopes.get(window);
   if (existing) return existing;
-  const scope: { links: ReadonlyMap<string, CycleHarvestLink> } = { links: new Map() };
-  sampleScopes.set(window, scope);
-  window.addEventListener(SAMPLE_MODE_EVENT, () => { scope.links = new Map(); });
+  const target = window;
+  const scope: SampleScope = { links: new Map() };
+  sampleScopes.set(target, scope);
+  target.addEventListener(SAMPLE_MODE_EVENT, () => { sampleScopes.set(target, { links: new Map() }); });
   return scope;
 }
 
@@ -53,10 +55,12 @@ function captureActor(sourceIsCurrent: Current) {
   const sample = readSampleModeFlag();
   if (sample === null || !sourceIsCurrent()) return null;
   const firebase = sample ? null : getFirebase();
-  const owner = sample ? 'demo' : firebase?.auth.currentUser?.uid;
+  const scope = sample ? sampleScope() : null;
+  const owner = sample ? getSandboxProfile().id : firebase?.auth.currentUser?.uid;
   if (!owner) return null;
   const isCurrent = () => sourceIsCurrent() && readSampleModeFlag() === sample
-    && (sample || activeAccountUid() === owner && getFirebase()?.auth.currentUser?.uid === owner);
+    && (scope ? sampleScope() === scope && getSandboxProfile().id === owner
+      : activeAccountUid() === owner && getFirebase()?.auth.currentUser?.uid === owner);
   return isCurrent() ? { owner, sample, db: firebase?.db ?? null, isCurrent } : null;
 }
 type Actor = NonNullable<ReturnType<typeof captureActor>>;

@@ -41,7 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 November 2026', sha: 'f72224374', changes: [
+  { when: '27 November 2026', sha: 'f1d955c99', changes: [
+    'Try crop planning, fieldwork and sales in the Green Horizon market garden example.',
+    'Plan lettuce for a weekly buyer and link a practice harvest in Green Horizon.',
+    'See the Green Horizon production schedule with crops and dates by bed.',
     'Watch how to plan farm zones, plant a tree and shelter crops from wind.',
     'See what mulch does, how bare ground recovers and where to rotate crops.',
   ] },

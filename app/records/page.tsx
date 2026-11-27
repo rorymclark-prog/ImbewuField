@@ -22,7 +22,7 @@ import { loadInvoices, paymentMethodLabel, invoiceBookIsCurrent, type SavedInvoi
 // The ledger must use the same exact-money formatter as the buyer's document.
 import { formatInvoiceZar } from '@/lib/invoice-document';
 import {
-  isSampleMode, enterSampleMode,
+  isSampleMode, enterSampleMode, getSampleMapSite,
   getSandboxSales, addSandboxSale, updateSandboxSale, deleteSandboxSale,
   getSandboxExpenses, addSandboxExpense, updateSandboxExpense, deleteSandboxExpense,
   getSandboxProduction,
@@ -1923,7 +1923,7 @@ export default function RecordsPage() {
                   production={production}
                   expenses={expenses}
                   invoices={invoices}
-                  name={sampling ? 'Ubhejane Crèche' : (user ? (user.displayName ?? recordsText(lang, 'My farm', 'Ipulazi lami')) : recordsText(lang, 'My farm', 'Ipulazi lami'))}
+                  name={(sampling ? getSampleMapSite()?.name : user?.displayName) ?? recordsText(lang, 'My farm', 'Ipulazi lami')}
                   loading={dataLoading}
                   period={period}
                   setPeriod={setPeriod}

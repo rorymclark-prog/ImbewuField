@@ -61,6 +61,8 @@ export const PAGE_TITLE_DRAFTS:readonly PageTitleDraft[]=[
  {english:'Farm-gate prices — ImbewuField',st:'Ditheko hekeng ya polasi — ImbewuField',ts:'Minxavo ya le nyangweni wa purasi — ImbewuField',ve:'Mitengo ya khoroni ya bulasi — ImbewuField'},
  // Account-linking metadata is source-bound too; these are unreviewed machine drafts.
  {english:'Assistant connections — ImbewuField',zu:'Ukuxhuma kubasizi — ImbewuField',st:'Dikgokahano le bathusi — ImbewuField',ts:'Vuhlanganisi ni vapfuni — ImbewuField',ve:'Vhuṱumanyi ha vhathusi — ImbewuField'},
+ // These are the names of the fictional farm and the app in every language.
+ {english:'Green Horizon Market Garden — ImbewuField'},
 ];
 const drafts=new Map(PAGE_TITLE_DRAFTS.map(row=>[row.english,row]));
 export const PAGE_TITLE_SOURCES=Array.from(new Set([...Object.keys(PAGE_TITLE_CONTROLS),...drafts.keys()]));

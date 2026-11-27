@@ -36,17 +36,21 @@ test('every inventoried workspace control has a separate source-bound regional d
  assert.equal(new Set(SAMPLE_WORKSPACE_ROWS.map(r=>r[0])).size,SAMPLE_WORKSPACE_ROWS.length);
  for(const row of packet.workspace.originalRawSources)assert.ok(SAMPLE_WORKSPACE_ROWS.some(r=>r[0]===row.english),row.english);
  for(const row of packet.workspace.entries)for(const lang of langs){assert.equal(sampleWorkspaceDraft(row.english,lang),row[lang]);assert.notEqual(row[lang],row.english);assert.deepEqual(tokens(row[lang]),tokens(row.english));}
- for(const file of ['lib/sample-chooser-translation-draft-st.ts','lib/sample-chooser-translation-draft-ve.ts','lib/sample-mode.ts','lib/use-role-navigation.ts'])assert.equal(createHash('sha256').update(read(file)).digest('hex'),packet.originalSourceSha256[file],file);
+ for(const file of ['lib/sample-chooser-translation-draft-st.ts','lib/sample-chooser-translation-draft-ve.ts'])assert.equal(createHash('sha256').update(read(file)).digest('hex'),packet.originalSourceSha256[file],file);
+ // Storage and role navigation now support additional samples. Their
+ // isolation and transition contracts are exercised in sample-mode.test.ts.
  const name='QA $& {role}';for(const lang of ['en',...allDrafts,'fr','constructor']){const text=local(lang,'Open {label}','Vula: {label}',{label:name});assert.ok(text.includes(name));assert.equal(text.split(name).length,2);}
  for(const raw of ['__proto__','constructor','toString','Unlisted {raw} $&'])for(const lang of langs)assert.equal(local(lang,raw,raw),raw);
  for(const hold of packet.workspace.technicalHolds)for(const lang of hold.languages)assert.ok(packet.workspace.entries.find((r:any)=>r.english.startsWith('A fictional warm KZN farm'))[lang].includes(hold.source));
 });
 for(const lang of allDrafts)test(`${lang}: the actual chooser pairs role drafts and source, discloses review status and preserves all anonymous destinations`,async()=>{
  const h=await actualPracticeUi(lang);try{
-  assert.ok(h.text().includes(controlT(lang)('languageDraftNoticeText')));assert.equal(h.renderer.root.findAllByType('h1').length,1);assert.equal(h.renderer.root.findAllByType('h2').length,3);assert.equal(h.renderer.root.findByType('header').props['data-back-fallback'],'/account');
+  assert.ok(h.text().includes(controlT(lang)('languageDraftNoticeText')));assert.equal(h.renderer.root.findAllByType('h1').length,1);assert.equal(h.renderer.root.findAllByType('h2').length,4);assert.equal(h.renderer.root.findByType('header').props['data-back-fallback'],'/account');
   for(const[i,row]of packet.workspace.sourceRoleCards.entries()){const card=h.renderer.root.findByProps({id:'sample-'+row[0]});for(let field=1;field<4;field++){const native=local(lang,row[field],packet.workspace.existingZuluRoleCards[i][field]);assert.ok(practiceNodeText(card).includes(native));assert.ok(card.findAllByProps({lang:'en'}).some(n=>practiceNodeText(n).includes(row[field])));}assert.equal(card.findByType('button').props.disabled,false);await h.choose(row[0]);}
   assert.deepEqual(h.calls.routes,packet.workspace.sourceRoleCards.map((r:string[])=>'/'+r[0]));assert.deepEqual(h.calls.previews,packet.workspace.sourceRoleCards.map((r:string[])=>r[0]));assert.equal(h.calls.reads.length,0);assert.equal(h.calls.signOut,0);
-  const links=h.renderer.root.findAllByType('a').map(n=>n.props.href);assert.deepEqual(links,['/samples/gardens','/tour','/samples/farm','/samples/production']);
+  const links=h.renderer.root.findAllByType('a').map(n=>n.props.href);assert.deepEqual(links,['/samples/gardens','/tour','/samples/farm','/samples/market-garden','/samples/production']);
+  const marketGarden=h.renderer.root.findAllByType('h2').find(node=>practiceNodeText(node)==='Green Horizon Market Garden');
+  assert.equal(marketGarden?.parent?.props.lang,'en','new sample copy must be identified as English');
  }finally{await h.dispose();}
 });
 for(const lang of allDrafts)test(`${lang}: language changes cannot widen confirmed account roles or execute a disabled practice action`,async()=>{

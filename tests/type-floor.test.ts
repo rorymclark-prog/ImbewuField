@@ -49,6 +49,7 @@ const ROUTES = [
   'app/invoice/page.tsx',
   'app/finances/page.tsx',
   'app/farmer/page.tsx',
+  'app/samples/market-garden/page.tsx',
   'app/reports/page.tsx',
   // Added 24 September. The audit measured the rendered pages at 390x844 and found 46 sub-12px
   // text nodes on /journal (the smallest at 10.5px), 19 on /calendar (every month chip at 10px)
@@ -98,6 +99,7 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'app/samples/market-garden/page.tsx': 'growers explore their way into the market-garden example from a phone',
   'app/invoice/page.tsx': 'farmers enter and read their own saved invoice amounts; zero-debt 12px floor',
   'components/invoice/InvoiceCurrencyChoice.tsx': 'farmers explicitly choose and review the recorded invoice currency; zero-debt 12px floor',
   'components/invoice/QuickSaleCurrencyNotice.tsx': 'growers distinguish rand quick entry from other invoice currencies before recording money; zero-debt 12px floor',
@@ -125,6 +127,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/crops/EcccObservationPanel.tsx': 'growers read station rows and quality flags on phones; zero-debt 12px floor',
   'components/crops/DwdKlObservationPanel.tsx': 'growers read DWD station intervals and source quality on phones; zero-debt 12px floor',
   'components/crops/GrowerAutoPlanPanel.tsx': 'growers review buyer priorities and dated whole-bed proposals before acting; no small-print exemption',
+  'components/crops/GreenHorizonProductionPlan.tsx': 'growers read mapped crops, buyer quantities, picking dates and planning gaps on phones; zero-debt 12px floor',
   'components/crops/GrowerNurseryReviewPanel.tsx': 'growers review seed, tray and surface requirements and incomplete budgets; no small-print exemption',
   'components/crops/GrowerFieldSeedSourcingSection.tsx': 'growers enter gross field seed counts and review held requirements on phones; zero-debt 12px floor',
   'components/crops/GrowerSeedPackBudget.tsx': 'growers enter prices and read unknown costs and incomplete budgets on phones; zero-debt 12px floor',

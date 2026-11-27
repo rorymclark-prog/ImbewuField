@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { registerHooks } from 'node:module';
+import type { SampleWorkspace } from '../lib/sample-mode';
 
 class MemoryStorage {
   readonly rows = new Map<string, string>();
@@ -36,7 +38,28 @@ Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: r
 Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, value: session });
 
 const sample = await import('../lib/sample-mode.ts');
-const { buildDemoStorageSeeds } = await import('../lib/demo-farm.ts');
+const { DEMO_SITE, buildDemoStorageSeeds } = await import('../lib/demo-farm.ts');
+const { GREEN_HORIZON_SITE, buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonStorageSeeds } = await import('../lib/green-horizon-demo.ts');
+const { loadCropPlan, saveCropPlanWithReceipt } = await import('../lib/crop-plan.ts');
+const { readCanvasSourceReceipt } = await import('../lib/design-canvas.ts');
+const { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } = await import('../lib/international/grower-workflow-source.ts');
+const { assembleGrowerWorkflowReview, prepareGrowerWorkflowAcceptance } = await import('../lib/international/grower-workflow.ts');
+const { designSiteIdFromLocation } = await import('../lib/design-studio.ts');
+const { loadPlaces } = await import('../lib/saved-places.ts');
+const { prepareSampleFarm } = await import('../lib/sample-farm-session.ts');
+// The role action itself never uses React auth. Keep the provider's TSX out
+// of the Node-only session/storage test so the action can execute directly.
+const roleNavigationUrl = new URL('../lib/use-role-navigation.ts', import.meta.url).href;
+const mockAuth = registerHooks({
+  resolve(specifier, context, nextResolve) {
+    if (specifier === './auth' && context.parentURL === roleNavigationUrl) {
+      return { url: 'data:text/javascript,export%20function%20useAuth()%20%7B%7D', shortCircuit: true };
+    }
+    return nextResolve(specifier, context);
+  },
+});
+const { openRolePreview } = await import('../lib/use-role-navigation.ts');
+mockAuth.deregister();
 
 function reset(): void {
   session.refuseWrites = false;
@@ -123,6 +146,169 @@ test('entering again starts from clean seeded storage and clean typed data', () 
   assert.equal(sample.getSandboxSales().length, originalSales);
 });
 
+test('Green Horizon keeps its typed and raw edits apart from Ubhejane and real records', () => {
+  reset();
+  realLocal.setItem('imbewu_field_journal_v1', 'private journal');
+  realLocal.setItem('permamap_saved_places', 'private places');
+  realLocal.setItem('fp-theme', 'slate');
+  assert.equal(sample.enterSampleMode('ubhejane'), true);
+  realLocal.setItem('example-edit', 'Ubhejane');
+  sample.addSandboxSale({ crop: 'Ubhejane only' });
+  const ubhejaneCanvasKey = `imbewu_design_canvas_${designSiteIdFromLocation(DEMO_SITE)}`;
+  assert.ok(realLocal.getItem(ubhejaneCanvasKey));
+
+  assert.equal(sample.enterSampleMode('green-horizon'), true);
+  assert.deepEqual(sample.getSampleMapSite(), GREEN_HORIZON_SITE);
+  const { lat, lon } = GREEN_HORIZON_SITE;
+  assert.equal(sample.isFictionalSampleLocation(lat, lon), true);
+  assert.equal(sample.isFictionalSampleLocation(lat + 0.00001, lon), false);
+  assert.deepEqual(loadPlaces().map(({ name, elevation }) => ({ name, elevation })), [{ name: GREEN_HORIZON_SITE.name, elevation: null }]);
+  const seeds = buildGreenHorizonStorageSeeds();
+  assert.deepEqual(seeds, buildGreenHorizonStorageSeeds(), 'the sample records and geometry are reproducible');
+  const canvasKey = `imbewu_design_canvas_${designSiteIdFromLocation(GREEN_HORIZON_SITE)}`;
+  const rawCanvas = JSON.parse(realLocal.getItem(canvasKey) ?? '');
+  assert.equal(rawCanvas.baseMode, 'blank');
+  assert.equal(rawCanvas.siteId, designSiteIdFromLocation(GREEN_HORIZON_SITE));
+  assert.deepEqual(rawCanvas.items.map((bed: { id: string }) => bed.id), [
+    'green-horizon-bed-a1', ...sample.getSandboxCropPlan().plantings.map(planting => planting.bedId),
+  ]);
+  assert.equal(realLocal.getItem('imbewu_field_journal_v1'), seeds.imbewu_field_journal_v1);
+  assert.equal(realLocal.getItem('fp-theme'), 'slate');
+  assert.equal(realLocal.getItem(ubhejaneCanvasKey), null);
+  assert.equal(realLocal.getItem('example-edit'), null);
+  assert.deepEqual(sample.getSandboxSales().map(row => row.crop), ['Lettuce']);
+  assert.equal(sample.getSandboxProfile().farm_name, GREEN_HORIZON_SITE.name);
+  assert.throws(() => prepareSampleFarm(), /Ubhejane/);
+
+  realLocal.setItem('imbewu_field_journal_v1', 'Green Horizon journal edit');
+  sample.addSandboxSale({ crop: 'Green Horizon only' });
+  assert.equal(sample.enterSampleMode(), true);
+  assert.deepEqual(sample.getSampleMapSite(), DEMO_SITE);
+  assert.equal(sample.isFictionalSampleLocation(lat, lon), false);
+  assert.ok(!sample.getSandboxSales().some(row => row.crop.includes('only')));
+  assert.equal(realLocal.getItem(canvasKey), null);
+  assert.ok(realLocal.getItem(ubhejaneCanvasKey));
+  assert.notEqual(realLocal.getItem('imbewu_field_journal_v1'), 'Green Horizon journal edit');
+
+  sample.exitSampleMode();
+  assert.equal(sample.isFictionalSampleLocation(lat, lon), false);
+  assert.equal(sample.getSampleWorkspace(), null);
+  assert.equal(sample.getSampleMapSite(), null);
+  assert.equal(session.getItem('imbewu_sample_workspace'), null);
+  assert.equal(realLocal.getItem('imbewu_field_journal_v1'), 'private journal');
+  assert.equal(realLocal.getItem('permamap_saved_places'), 'private places');
+});
+
+test('sample profile keys are allowlisted and ignored until the isolation flag is present', () => {
+  reset();
+  session.setItem('imbewu_sample_workspace', 'green-horizon');
+  assert.equal(sample.getSampleWorkspace(), null);
+  assert.equal(sample.enterSampleMode('invalid' as SampleWorkspace), false);
+  assert.equal(sample.isSampleMode(), false);
+
+  session.setItem('imbewu_sample_mode', '1');
+  assert.equal(sample.getSampleWorkspace(), 'green-horizon');
+  assert.equal(sample.getSandboxProfile().farm_name, GREEN_HORIZON_SITE.name);
+  assert.match(realLocal.getItem('imbewu_farm_shapes') ?? '', /green-horizon/);
+  session.setItem('imbewu_sample_workspace', 'invalid');
+  assert.equal(sample.getSampleWorkspace(), 'ubhejane');
+  assert.equal(sample.getSandboxProfile().farm_name, 'Ubhejane Crèche garden');
+  assert.doesNotMatch(realLocal.getItem('imbewu_farm_shapes') ?? '', /green-horizon/);
+  session.removeItem('imbewu_sample_workspace');
+  assert.equal(sample.getSampleWorkspace(), 'ubhejane');
+});
+
+test('Green Horizon’s dated lettuce target survives the normal sample save and resets on changing examples', () => {
+  reset();
+  assert.equal(sample.enterSampleMode('green-horizon'), true);
+  const plan = loadCropPlan();
+  const target = buildGreenHorizonLettuceTarget();
+  assert.deepEqual(plan.harvestTargets, [target]);
+  assert.equal(target.siteId, designSiteIdFromLocation(GREEN_HORIZON_SITE));
+  assert.equal(saveCropPlanWithReceipt({
+    ...plan,
+    harvestTargets: [{ ...target, weeklyKg: 9 }],
+  }).saved, true);
+  assert.equal(loadCropPlan().harvestTargets?.[0]?.weeklyKg, 9);
+  assert.equal(sample.getSandboxProduction()[0]?.kg, 6);
+  assert.equal(sample.getSandboxSales()[0]?.kg, 4);
+  assert.equal(sample.enterSampleMode('ubhejane'), true);
+  assert.ok(!loadCropPlan().harvestTargets?.some(row => row.id === target.id));
+  assert.equal(sample.enterSampleMode('green-horizon'), true);
+  assert.deepEqual(loadCropPlan().harvestTargets, [target]);
+});
+
+test('the Green Horizon practice inputs produce a saved cycle with an explicitly partial picking window', async () => {
+  reset();
+  assert.ok(sample.enterSampleMode('green-horizon'));
+  const { siteId } = buildGreenHorizonLettuceTarget();
+  const receipt = readCanvasSourceReceipt(siteId);
+  assert.equal(receipt.status, 'ready');
+  const source = await fingerprintGrowerWorkflowSource(inspectGrowerWorkflowSource({
+    kind: 'studio-canvas', sourceId: siteId, raw: receipt.raw, sourceRevision: receipt.revision,
+  }));
+  assert.equal(source.status, 'ready');
+  const book = loadCropPlan();
+  const practice = buildGreenHorizonPlanningDraft();
+  assert.equal(practice.assumptionsConfirmed, false);
+  assert.equal(practice.available[0].confirmed, false);
+  const draft = { ...practice, assumptionsConfirmed: true, available: practice.available.map(row => ({ ...row, confirmed: true })) };
+  const recordedAt = '2026-11-27T09:00:00.000Z';
+  const review = assembleGrowerWorkflowReview({ scope: source.scope, source, book, draft, recordedAt });
+  assert.equal(review.status, 'review', review.issues.join(', '));
+  assert.equal(review.proposal.status, 'ready');
+  assert.equal(review.targetMetadata[0].buyerTotalKg, 8);
+  assert.equal(review.targetMetadata[0].grossCapacityRequiredKg, 10);
+  assert.equal(review.targetMetadata[0].deliveryDistribution, 'not-established');
+  assert.equal(review.proposal.cycles.length, 1);
+  const [cycle] = review.proposal.cycles;
+  assert.equal(cycle.bedId, 'green-horizon-bed-a1');
+  assert.equal(cycle.assessment.schedule.firstHarvestDate, '2026-11-02');
+  assert.equal(cycle.assessment.schedule.harvestEndExclusiveDate, '2026-11-05');
+  const accepted = prepareGrowerWorkflowAcceptance({ scope: source.scope, source, book, review, binding: { draft, source, recordedAt },
+    acceptedAt: recordedAt, plantingIds: [{ cycleId: cycle.cycleId, plantingId: 'accepted-green-horizon-cycle' }] });
+  assert.equal(accepted.status, 'prepared');
+  assert.equal(saveCropPlanWithReceipt(accepted.book).saved, true);
+  assert.deepEqual(loadCropPlan().plantings.find(row => row.id === accepted.rows[0].id), accepted.rows[0]);
+  assert.equal(sample.getSandboxProduction()[0].kg, 6);
+  assert.equal(sample.getSandboxSales()[0].kg, 4);
+});
+
+test('a refused workspace switch preserves the active sample isolation and edits', () => {
+  reset();
+  realLocal.setItem('private', 'real record');
+  assert.equal(sample.enterSampleMode('green-horizon'), true);
+  realLocal.setItem('example-edit', 'practice edit');
+  session.refuseWrites = true;
+  assert.equal(sample.enterSampleMode('ubhejane'), false);
+  assert.equal(sample.getSampleWorkspace(), 'green-horizon');
+  assert.equal(realLocal.getItem('private'), null);
+  assert.equal(realLocal.getItem('example-edit'), 'practice edit');
+});
+
+test('a role preview leaves the market garden with a hard remount before continuing in Ubhejane', () => {
+  reset();
+  assert.equal(sample.enterSampleMode('green-horizon'), true);
+  const remounts: string[] = [];
+  const clientRoutes: string[] = [];
+  Object.defineProperty(browser, 'location', {
+    configurable: true,
+    value: { assign: (target: string) => remounts.push(target) },
+  });
+  try {
+    assert.equal(openRolePreview('funder', '/funder', target => clientRoutes.push(target)), true);
+    assert.equal(sample.getSampleWorkspace(), 'ubhejane');
+    assert.deepEqual(remounts, ['/funder']);
+    assert.equal(clientRoutes.length, 0);
+    assert.equal(openRolePreview('mentor', '/mentor', target => clientRoutes.push(target)), true);
+    assert.deepEqual(clientRoutes, ['/mentor']);
+    assert.equal(openRolePreview('admin', '/admin', target => clientRoutes.push(target)), false);
+    assert.deepEqual(clientRoutes, ['/mentor']);
+  } finally {
+    Reflect.deleteProperty(browser, 'location');
+  }
+});
+
 test('sample-mode entry fails closed when sessionStorage throws or silently refuses the flag', () => {
   reset();
   realLocal.setItem('real-only', 'farmer');
@@ -160,5 +346,5 @@ test('the home invitation opens the tour chooser before entering the isolated wo
   assert.match(source, /showTourInvitation && <button/);
   assert.ok(source.includes("router.push('/tour')"));
   const provider = readFileSync(new URL('../components/ProductTourProvider.tsx', import.meta.url), 'utf8');
-  assert.ok(provider.includes('!isSampleMode() && !enterSampleMode()'), 'the tour must still verify isolation before preparing practice records');
+  assert.ok(provider.includes("previousWorkspace !== 'ubhejane' && !enterSampleMode()"), 'the tour must still verify the right isolated workspace before preparing practice records');
 });

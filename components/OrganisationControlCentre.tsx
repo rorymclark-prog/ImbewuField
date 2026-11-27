@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { startRolePreview } from '@/lib/use-role-navigation';
+import { openRolePreview } from '@/lib/use-role-navigation';
 import { useState } from 'react';
 import MelDashboard from './MelDashboard';
 import ProgrammeEvidence from './ProgrammeEvidence';
@@ -22,6 +22,6 @@ export default function OrganisationControlCentre() {
     {tab === 'branding' && <ProgrammeEvidence initialTab="branding" />}
     {tab === 'teams' && <FieldTeams organisation />}
     {tab === 'preview' && <MemberAccessPreview />}
-    {tab === 'preview' && <><p className={styles.notice}>{ui('Explore each role’s workspace. Your account permissions stay unchanged.','Hlola indawo yokusebenza yendima ngayinye. Izimvume ze-akhawunti yakho azishintshi.')}</p><div className={styles.grid}>{([['farmer', ui('Farmer','Umlimi')], ['mentor', ui('Mentor / extension officer','Umeluleki / isikhulu sezolimo')], ['student', ui('Student','Umfundi')], ['ngo', ui('Organisation','Inhlangano')], ['funder', ui('Funder','Umxhasi')]] as const).map(([role, label]) => <button key={role} className={styles.card} onClick={() => { if (startRolePreview(role)) router.push(`/${role}`); else setError(ui('The practice workspace could not open. Please try again.','Indawo yokuzijwayeza ayivulekanga. Zama futhi.')); }}><h2>{label}</h2><p>{ui('Open workspace →','Vula indawo yokusebenza →')}</p></button>)}</div>{error && <p role="alert">{error}</p>}</>}
+    {tab === 'preview' && <><p className={styles.notice}>{ui('Explore each role’s workspace. Your account permissions stay unchanged.','Hlola indawo yokusebenza yendima ngayinye. Izimvume ze-akhawunti yakho azishintshi.')}</p><div className={styles.grid}>{([['farmer', ui('Farmer','Umlimi')], ['mentor', ui('Mentor / extension officer','Umeluleki / isikhulu sezolimo')], ['student', ui('Student','Umfundi')], ['ngo', ui('Organisation','Inhlangano')], ['funder', ui('Funder','Umxhasi')]] as const).map(([role, label]) => <button key={role} className={styles.card} onClick={() => { if (!openRolePreview(role, `/${role}`, router.push)) setError(ui('The practice workspace could not open. Please try again.','Indawo yokuzijwayeza ayivulekanga. Zama futhi.')); }}><h2>{label}</h2><p>{ui('Open workspace →','Vula indawo yokusebenza →')}</p></button>)}</div>{error && <p role="alert">{error}</p>}</>}
   </div></section>;
 }

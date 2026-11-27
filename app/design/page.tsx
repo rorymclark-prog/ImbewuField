@@ -15,7 +15,7 @@ import { deliverFieldLayoutExport } from '@/lib/field-layout-delivery';
 import { readFieldLayoutImportFile, beginFieldLayoutImportAppend, discardFieldLayoutImport } from '@/lib/field-layout-import-delivery';
 import { readFieldBlockAllocations, fieldBlockAllocatedIds, assertFieldBlockAllocationsCurrent,
   assertFieldBlockLayoutReadable, fieldBlockSourceKey } from '@/lib/field-block-allocations';
-import { isSampleMode } from '@/lib/sample-mode';
+import { isFictionalSampleLocation, isSampleMode } from '@/lib/sample-mode';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
 import { ArrowLeft, ArrowRight, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock, AlertTriangle, Droplets } from 'lucide-react';
@@ -1311,6 +1311,10 @@ function DesignStudioInner() {
   // refresh it in the background so every property's sun, terrain and climate evidence is its own.
   useEffect(() => {
     if (!hasSite) return;
+    if (isFictionalSampleLocation(lat, lon)) {
+      setLocationData(null);
+      return;
+    }
     let cancelled = false;
     const controller = new AbortController();
     setLocationData(readCachedLocationData(lat, lon));

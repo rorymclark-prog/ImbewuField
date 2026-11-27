@@ -213,10 +213,10 @@ test('the finances page offers its sample through sample mode, never by writing 
   assert.doesNotMatch(page, /!hasAnyData && online/,
     'the sample offer must not be hidden once the farmer has logged anything');
 
-  // A signed-in farmer inside sample mode must never see her own name over demo books.
-  // (w20-26 restored the accent in the demo farm's name: lib/demo-farm.ts says "Crèche".)
-  assert.match(page, /name=\{sampling \? 'Ubhejane Crèche'/,
-    "the sheet's farm name must follow sample mode, not the signed-in user");
+  // The active sample now owns the name. Choosing either demo must keep the
+  // signed-in farmer's name out of the sample sheet, even without a sample name.
+  assert.match(page, /name=\{\(sampling \? getSampleMapSite\(\)\?\.name : user\?\.displayName\) \?\? recordsText\(/,
+    "the sheet's farm name must follow the active sample, with a neutral fallback");
 });
 
 test('sample returns use the mapped beds and plots without losing or duplicating money', () => {

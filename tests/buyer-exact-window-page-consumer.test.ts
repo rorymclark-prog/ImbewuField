@@ -5,6 +5,7 @@ import React from 'react';
 import ts from 'typescript';
 import { bindSiteContext, createSiteCountryContext } from '../lib/international/site-context.ts';
 import { resolvePlanningSupport } from '../lib/international/planning-policy.ts';
+import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft } from '../lib/green-horizon-demo.ts';
 
 // Execute actual route JSX availability and prop expressions without importing
 // the page's hooks/browser. Boundary components are markers, not mounted editors
@@ -12,10 +13,12 @@ import { resolvePlanningSupport } from '../lib/international/planning-policy.ts'
 const source = readFileSync(new URL('../app/facilitator/crops/page.tsx', import.meta.url), 'utf8');
 const page = ts.createSourceFile('page.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 let ownSection: ts.Expression | undefined;
+let productionOverview: ts.Expression | undefined;
 const targetNodes: ts.JsxSelfClosingElement[] = [];
 const ownReferences: ts.JsxExpression[] = [];
 function visit(node: ts.Node) {
   if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === 'growerPlanningPanel') ownSection = node.initializer;
+  if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === 'greenHorizonProduction') productionOverview = node.initializer;
   if (ts.isJsxSelfClosingElement(node) && node.tagName.getText(page) === 'HarvestTargetsPanel') targetNodes.push(node);
   if (ts.isJsxExpression(node) && node.expression && ts.isIdentifier(node.expression) && node.expression.text === 'growerPlanningPanel') ownReferences.push(node);
   ts.forEachChild(node, visit);
@@ -45,7 +48,7 @@ const legacyExpression = `(${legacyCountry.condition.getText(page)}) ? (${contai
   : (${contains(legacyCountry.whenFalse, legacyNode) ? legacyAvailability.getText(page) : 'null'})`;
 // The shared section now also mounts the provisional preview. Keep it as a
 // boundary here; its actual UI/source lifecycle has its own mounted tests.
-const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel'];
+const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel', 'GreenHorizonProductionPlan'];
 const boundaries = Object.fromEntries(names.map(name => [name, function Boundary() { return null; }]));
 function compile(expression: string): (input: Record<string, unknown>) => unknown {
   const compiled = ts.transpileModule(`function view(){return (${expression});}`, { compilerOptions: {
@@ -93,6 +96,7 @@ function input(allowCataloguePlanning: boolean) {
     growerWorkflow: { source, sourceIssue: null, checking: false, contextRevision: 4, onReview, onRefresh() {}, onAccept() {},
       onCheckPreviewSource() { throw Error('Consumer mount must not read preview source automatically'); }, acceptance: { status: 'idle' }, savedNurseryReview: null },
     placeName: 'Engineering source', designTitle: 'Engineering design', growerSample: false, growerOwner: 'fixture-owner',
+    getSampleWorkspace: () => null, buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft,
     countryPlaces: [{ id: 'fictional-place', name: 'Engineering fixture' }],
     siteClimate: null, hasSiteCoords: false, siteLat: 0, siteSurvey: null, saved,
     growerConditions, exportSavedGrowerRecord,
@@ -167,6 +171,31 @@ test('the actual own-records mount retains its exact key, full rows, save contex
   assert.equal(history.props.wholeBookRows, fixture.plan.plantings);
   assert.equal(history.props.conditions, fixture.growerConditions);
   assert.equal(history.props.onExport, fixture.exportSavedGrowerRecord);
+});
+
+test('only the active Green Horizon workspace at its mapped site receives the practice inputs', () => {
+  const practiceSiteId = buildGreenHorizonLettuceTarget().siteId;
+  const draftFor = (workspace: string | null, productionSiteId: string) => elements(renderOwn({
+    ...input(false), getSampleWorkspace: () => workspace, productionSiteId,
+  })).find(element => element.type === boundaries.GrowerAutoPlanPanel)?.props.practiceDraft;
+  assert.deepEqual(draftFor('green-horizon', practiceSiteId), buildGreenHorizonPlanningDraft());
+  assert.equal(draftFor('green-horizon', siteId), undefined);
+  assert.equal(draftFor('ubhejane', practiceSiteId), undefined);
+  assert.equal(draftFor(null, practiceSiteId), undefined);
+});
+
+test('the filled production overview uses the active Green Horizon mapped plan only', () => {
+  assert.ok(productionOverview);
+  const render = compile(productionOverview.getText(page));
+  const fixture = input(false);
+  const selected = { ...fixture, productionSiteId: buildGreenHorizonLettuceTarget().siteId, getSampleWorkspace: () => 'green-horizon' };
+  const overview = elements(render(selected)).find(element => element.type === boundaries.GreenHorizonProductionPlan);
+  assert.ok(overview);
+  assert.equal(overview.props.plan, fixture.plan);
+  assert.equal(overview.props.beds, fixture.beds);
+  assert.equal(render({ ...selected, getSampleWorkspace: () => null }), null);
+  assert.equal(render({ ...selected, getSampleWorkspace: () => 'ubhejane' }), null);
+  assert.equal(render({ ...selected, productionSiteId: siteId }), null);
 });
 
 test('an absent current plan passes empty target rows rather than borrowing another source', () => {

@@ -32,6 +32,7 @@ import GrowerPlanningPanel from '@/components/crops/GrowerPlanningPanel';
 import ProvisionalCropPreview from '@/components/crops/ProvisionalCropPreview';
 import { provisionalSiteConditions, createProvisionalCycleContext, type ProvisionalSiteConditions, type ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
 import GrowerAutoPlanPanel from '@/components/crops/GrowerAutoPlanPanel';
+import GreenHorizonProductionPlan from '@/components/crops/GreenHorizonProductionPlan';
 import GrowerNurseryReviewPanel from '@/components/crops/GrowerNurseryReviewPanel';
 import SavedGrowerNurseryReviewPanel from '@/components/crops/SavedGrowerNurseryReviewPanel';
 import { useGrowerWorkflow, type GrowerWorkflowBookReceipt, type GrowerWorkflowAcceptanceCommit, type GrowerWorkflowAcceptanceResult,
@@ -46,7 +47,8 @@ import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-s
 import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-workflow';
 import { activeAccountLocalStorageKey, activeAccountUid } from '@/lib/account-local-storage';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
-import { isSampleMode } from '@/lib/sample-mode';
+import { getSampleWorkspace, isFictionalSampleLocation, isSampleMode } from '@/lib/sample-mode';
+import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft } from '@/lib/green-horizon-demo';
 import { sampleSowingCalendarFor } from '@/lib/sample-sowing-calendar';
 import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import NurseryForecastSummary from '@/components/crops/NurseryForecastSummary';
@@ -1700,6 +1702,10 @@ function FacilitatorCropsPageInner() {
   const climateMissing: SiteClimateMissingReason | 'loading' = climateAnswered ? climateSnapshot?.missing ?? 'unavailable' : 'loading';
   useEffect(() => {
     if (!allowCataloguePlanning || !climateSiteKey) { setClimateSnapshot(null); return; }
+    if (isFictionalSampleLocation(siteLat!, siteLon!)) {
+      setClimateSnapshot({ siteKey: climateSiteKey, climate: null, missing: 'unavailable' });
+      return;
+    }
     let cancelled = false;
     // The render guard also blocks the old site's climate before this effect runs.
     setClimateSnapshot(null);
@@ -2601,6 +2607,9 @@ function FacilitatorCropsPageInner() {
   [pickerBedId, plantings, editingPlantingId]);
 
   const loading = design === undefined || plan === null || !mounted;
+  const greenHorizonProduction = getSampleWorkspace() === 'green-horizon'
+    && productionSiteId === buildGreenHorizonLettuceTarget().siteId
+    ? <GreenHorizonProductionPlan siteId={productionSiteId} beds={beds} plan={plan} /> : null;
   const growerPlanningPanel = <>
     <SavedGrowerRows rows={markedPlantings} wholeBookRows={plan?.plantings ?? []} source={selectedGrowerSource} scope={growerScope} conditions={growerConditions} onExport={exportSavedGrowerRecord} />
     {productionSiteId && growerScope?.kind === 'mapped-site' && <HarvestTargetsPanel
@@ -2630,6 +2639,8 @@ function FacilitatorCropsPageInner() {
       source={growerWorkflow.source} sourceName={placeName || designTitle} sourceIssue={growerWorkflow.sourceIssue}
       checking={growerWorkflow.checking} contextRevision={growerWorkflow.contextRevision}
       targets={plan?.harvestTargets ?? []} targetSiteId={productionSiteId} profiles={plan?.growerPlanningProfiles ?? []}
+      practiceDraft={getSampleWorkspace() === 'green-horizon' && productionSiteId === buildGreenHorizonLettuceTarget().siteId
+        ? buildGreenHorizonPlanningDraft() : undefined}
       onRefresh={growerWorkflow.onRefresh} onReview={growerWorkflow.onReview}
       onAccept={growerWorkflow.onAccept} acceptance={growerWorkflow.acceptance}
       nurseryReview={review => growerWorkflow.source && <GrowerNurseryReviewPanel review={review}
@@ -2931,6 +2942,7 @@ function FacilitatorCropsPageInner() {
         <div className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
             <CropPlanStorageNotice />
+            {greenHorizonProduction}
             {surveySiteId ? <SiteCountryPanel key={planningScopeKey} resolution={siteCountry} onSaved={refreshCountryPlaces} onDelivery={receiveCountrySaveNotice} />
               : <WorkspaceReferencePanel key={`reference:${planningWorkspaceId}`} workspaceId={planningWorkspaceId} reference={workspaceReference} onReference={saveWorkspaceReference} />}
             {!surveySiteId && !planningWorkspaceId && <button type="button" onClick={() => setUseVirtual(true)} className="mb-4 min-h-11 rounded-xl border border-[var(--border)] bg-[var(--bg-1)] px-4 py-2 font-sans">Try a virtual reference bed</button>}
@@ -2948,12 +2960,14 @@ function FacilitatorCropsPageInner() {
       ) : beds.length === 0 && canvasTrees.length === 0 && unidentifiedPlants.length === 0 && canvasAnimals.length === 0 ? (
         <div className="flex-1 overflow-y-auto"><div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
           <CropPlanStorageNotice />
+          {greenHorizonProduction}
           {growerPlanningPanel}<EmptyState onVirtual={() => setUseVirtual(true)} designHref={designHref} />
         </div></div>
       ) : (
         <div className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
             <CropPlanStorageNotice />
+            {greenHorizonProduction}
             {growerPlanningPanel}
             {surveySiteId ? <SiteCountryPanel key={planningScopeKey} resolution={siteCountry} onSaved={refreshCountryPlaces} onDelivery={receiveCountrySaveNotice} />
               : <WorkspaceReferencePanel key={`reference:${planningWorkspaceId}`} workspaceId={planningWorkspaceId} reference={workspaceReference} onReference={saveWorkspaceReference} />}

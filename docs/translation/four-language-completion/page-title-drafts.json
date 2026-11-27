@@ -171,6 +171,10 @@
       "english": "Your design learning folder — ImbewuField"
     },
     {
+      "file": "app/samples/market-garden/layout.tsx",
+      "english": "Green Horizon Market Garden — ImbewuField"
+    },
+    {
       "file": "app/samples/production/layout.tsx",
       "english": "Example production — ImbewuField"
     },
@@ -284,6 +288,7 @@
     "app/journal/layout.tsx": "08cf3b6a70ed8fb358b6727f1256a0ed24b2428429396e0118a827843573b98b",
     "app/samples/gardens/layout.tsx": "2dbdb0b7f113524d2adfa1bc7b05943d362de97195eb3c639e207d68f385365e",
     "app/student/design/folder/page.tsx": "17c4e099a435c5c9df195693f70330410e762b9021f0c86b36fbd63e6b56d3f5",
+    "app/samples/market-garden/layout.tsx": "7dd52011d86ff6f863943eaa3a3c7fc6cf21dc7da8a97bbeb73a70ef1222c698",
     "app/samples/production/layout.tsx": "a5c98e0dd405fc7dbadda72f0c50912f4782a31fad1a2acca93bc39d818ec27f",
     "app/student/design/worked/page.tsx": "f447887307ec1ab6b31fdb5aa04e500e0f2e9c9338fea8427606f7067ec29ec8",
     "app/manual/[lang]/page.tsx": "4e2a9ff3417e8fb518e0e3f5387cd14e8c2d9463e220635d75c0600b1a1024d1",
@@ -729,9 +734,22 @@
       "st": "Dikgokahano le bathusi — ImbewuField",
       "ts": "Vuhlanganisi ni vapfuni — ImbewuField",
       "ve": "Vhuṱumanyi ha vhathusi — ImbewuField"
+    },
+    {
+      "english": "Green Horizon Market Garden — ImbewuField"
     }
   ],
   "identityHolds": [
+    {
+      "source": "Green Horizon Market Garden — ImbewuField",
+      "languages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ],
+      "reason": "Green Horizon Market Garden and ImbewuField are the names of the fictional farm and the app."
+    },
     {
       "source": "Lima Vision — ImbewuField",
       "languages": [
@@ -779,6 +797,7 @@
   },
   "protectedNames": [
     "ImbewuField",
+    "Green Horizon Market Garden",
     "ACT Teach the Teachers",
     "NGO"
   ],

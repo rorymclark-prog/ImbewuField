@@ -4,8 +4,8 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
-import { enterSampleMode, isSampleMode } from '@/lib/sample-mode';
-import { startRolePreview, useSampleRole } from '@/lib/use-role-navigation';
+import { enterSampleMode, getSampleWorkspace } from '@/lib/sample-mode';
+import { startRolePreview, useSampleWorkspace } from '@/lib/use-role-navigation';
 import { readSampleChooserAccountRole } from '@/lib/sample-choice-access';
 import { prepareSampleFarm } from '@/lib/sample-farm-session';
 import { PRODUCT_TOUR, PRODUCT_TOUR_FEATURES, cleanProductTourProgress, sampleChoicesForAccount } from '@/lib/sample-tour';
@@ -32,7 +32,7 @@ export default function ProductTourProvider({ children }: { children: React.Reac
     productTourUi(key, lang, values) ?? fallback;
   const router = useRouter();
   const pathname = usePathname();
-  const sample = useSampleRole();
+  const sample = useSampleWorkspace() === 'ubhejane';
   const { user, role, loading } = useAuth();
   const [verified, setVerified] = useState<{ uid: string | null; role: UserRole | null } | null>(null);
   const [state, setState] = useState<TourState>(empty);
@@ -92,13 +92,13 @@ export default function ProductTourProvider({ children }: { children: React.Reac
 
   function save(next: TourState) {
     // No farm records are persisted here: only the visitor's checklist and current stop.
-    if (!isSampleMode()) return false;
+    if (getSampleWorkspace() !== 'ubhejane') return false;
     try { sessionStorage.setItem(KEY, JSON.stringify(next)); }
     catch { setError("Your browser could not save tour progress. You can still explore the views."); return false; }
     setState(next); setError(''); return true;
   }
   function go(index: number) {
-    if (!allowed(index) || !isSampleMode()) return;
+    if (!allowed(index) || getSampleWorkspace() !== 'ubhejane') return;
     const step = PRODUCT_TOUR[index];
     // Farm stops remain available in the original sandbox. Reset its navigation too,
     // so leaving the funder view does not hide farm tools on the next screen.
@@ -111,13 +111,17 @@ export default function ProductTourProvider({ children }: { children: React.Reac
   }
   function start() {
     if (!ready) return;
-    if (!isSampleMode() && !enterSampleMode()) { setError("Could not start the tour. Please allow session storage."); return; }
+    const previousWorkspace = getSampleWorkspace();
+    if (previousWorkspace !== 'ubhejane' && !enterSampleMode()) { setError("Could not start the tour. Please allow session storage."); return; }
     try { prepareSampleFarm(); }
     catch { setError('The example farm could not load. Please try again.'); return; }
-    if (save({ ...empty, active: true })) setExpanded(true);
+    if (save({ ...empty, active: true })) {
+      if (previousWorkspace === 'green-horizon' && pathname !== '/tour') window.location.assign('/tour');
+      else setExpanded(true);
+    }
   }
   function next(mark: boolean) {
-    if (!state.active || !ready || !isSampleMode()) return;
+    if (!state.active || !ready || getSampleWorkspace() !== 'ubhejane') return;
     const done = mark && allowed(state.current) ? cleanProductTourProgress([...state.done, PRODUCT_TOUR[state.current].id]) : state.done;
     const nextIndex = PRODUCT_TOUR.findIndex((_,i) => i > state.current && allowed(i));
     if (nextIndex < 0) {
@@ -134,7 +138,7 @@ export default function ProductTourProvider({ children }: { children: React.Reac
   const stepCopy = productTourStepCopy(step, lang);
   const inView = pathname === step.href.split(/[?#]/)[0];
   const previous = PRODUCT_TOUR.map((_,i)=>i).filter(i=>i<state.current && allowed(i)).pop();
-  return <TourDiscoveryProvider><Context.Provider value={{ ...state, ready, error, allowed, start, open:()=>{if(state.active && isSampleMode())setExpanded(true);}, go }}>
+  return <TourDiscoveryProvider><Context.Provider value={{ ...state, ready, error, allowed, start, open:()=>{if(state.active && getSampleWorkspace() === 'ubhejane')setExpanded(true);}, go }}>
     {children}
     <dialog ref={dialog} className={styles.dialog} lang={lang} aria-labelledby="product-tour-title" onCancel={()=>setExpanded(false)} onClose={()=>setExpanded(false)}>
       <div className={styles.dialogHead}><span>{tourUi('tour', 'TOUR')} · {state.current + 1} / {PRODUCT_TOUR.length}</span><button type="button" onClick={()=>setExpanded(false)} aria-label={tourUi('close', 'Close tour guide')}>×</button></div>
@@ -154,7 +158,7 @@ export default function ProductTourProvider({ children }: { children: React.Reac
       {inView && featureIndex < features.length - 1 && <button type="button" className={styles.primary} onClick={() => setFeatureIndex(i => i + 1)}>{tourUi('nextTip', 'Next tip')}</button>}
       <button type="button" className={inView && featureIndex < features.length - 1 ? undefined : styles.primary} onClick={()=>inView ? setExpanded(false) : go(state.current)} disabled={!allowed(state.current)}>{inView ? tourUi('tryNow', 'Try it now') : tourUi('openView', 'Open this view')}</button>
       {step.secondaryHref && <Link href={step.secondaryHref} onClick={event=>{
-        if (!state.active || !allowed(state.current) || !isSampleMode()) { event.preventDefault(); return; }
+        if (!state.active || !allowed(state.current) || getSampleWorkspace() !== 'ubhejane') { event.preventDefault(); return; }
         // The optional crop, invoice, Lima and site-report actions are farm tools.
         if (!startRolePreview('farmer')) { event.preventDefault(); setError("The view could not open. Please try again."); return; }
         setExpanded(false);

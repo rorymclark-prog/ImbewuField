@@ -15,6 +15,12 @@ const fixtureRoot = fileURLToPath(new URL('./fixtures/shape-sync-old-client-5c/'
 const manifest = JSON.parse(readFileSync(path.join(fixtureRoot, 'manifest.json'), 'utf8'));
 const historicalPaths = ['lib/user-sync.ts', 'lib/account-local-storage.ts', 'lib/local-tombstones.ts',
   'lib/sample-mode.ts', 'lib/international/site-context.ts', 'lib/international/place-context-merge.ts', 'lib/site-id.ts'];
+// The live sample now supports multiple workspaces. Keep the actual v1 source
+// in the old-client graph even as the application evolves.
+const archivedPayloads = new Map([
+  ['lib/user-sync.ts', 'user-sync.ts.txt'],
+  ['lib/sample-mode.ts', 'sample-mode.ts.txt'],
+]);
 assert.equal(manifest.version, 1);
 assert.equal(manifest.baseline, baseline);
 assert.deepEqual(Object.keys(manifest.files).sort(), [...historicalPaths].sort());
@@ -41,11 +47,12 @@ for (const rel of historicalPaths) {
   const pin = manifest.files[rel];
   assert.ok(Number.isSafeInteger(pin.bytes) && pin.bytes > 0, `Missing historical byte pin: ${rel}`);
   assert.match(pin.sha256, /^[a-f0-9]{64}$/);
-  assert.equal(pin.payload, rel === 'lib/user-sync.ts' ? 'user-sync.ts.txt' : 'verified-current-core');
+  const archived = archivedPayloads.get(rel);
+  assert.equal(pin.payload, archived ?? 'verified-current-core');
   // Verify the committed historical payload even when an explicit checkout is
   // requested. An override must itself contain all seven authentic old files.
-  const committed = rel === 'lib/user-sync.ts'
-    ? readFileSync(path.join(fixtureRoot, 'user-sync.ts.txt'))
+  const committed = archived
+    ? readFileSync(path.join(fixtureRoot, archived))
     : readFileSync(path.join(repositoryRoot, rel));
   assert.equal(committed.byteLength, pin.bytes, `Historical source size drift: ${rel}`);
   assert.equal(digest(committed), pin.sha256, `Historical source hash drift: ${rel}`);

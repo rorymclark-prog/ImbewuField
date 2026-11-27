@@ -37,7 +37,7 @@ function inspect(node: ts.Node) {
   if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'useEffect') {
     const callback = node.arguments[0];
     if (callback && (ts.isArrowFunction(callback) || ts.isFunctionExpression(callback))) {
-      if (uses(callback, 'DEMO_SITE') && uses(callback, 'handleLocationSelect') && uses(callback, 'isSampleMode')) effects.sample.push(callback.getText(page));
+      if (uses(callback, 'getSampleMapSite') && uses(callback, 'handleLocationSelect')) effects.sample.push(callback.getText(page));
       if (uses(callback, 'siteParamHandled')) effects.savedSite.push(callback.getText(page));
       if (uses(callback, 'setInitialChatQuery') && uses(callback, 'setForcedTab') && uses(callback, 'setSheetOpen')) effects.panel.push(callback.getText(page));
     }
@@ -83,7 +83,7 @@ function deferred<T>() {
   let resolve!: (value: T) => void;
   const promise = new Promise<T>(done => { resolve = done; }); return { promise, resolve };
 }
-function harness(options: { sample?: boolean; params?: string; sheetOpen?: boolean; selected?: Point | null; reportSiteFlow?: boolean } = {}) {
+function harness(options: { sample?: boolean; sampleSite?: Point; sampleWorkspace?: string; params?: string; sheetOpen?: boolean; selected?: Point | null; reportSiteFlow?: boolean } = {}) {
   const state: State = { selected: options.selected ?? null, data: null, siteData: { stale: true }, waterData: { stale: true },
     loading: false, error: 'Earlier error', sheetOpen: options.sheetOpen ?? false, mapCapture: 'earlier capture',
     reportPhotoAnalysis: 'earlier analysis', activePlaceId: null, activePlaceName: null, jumpTo: null,
@@ -106,7 +106,11 @@ function harness(options: { sample?: boolean; params?: string; sheetOpen?: boole
       const result = callback(...args); if (result instanceof Promise) pending.push(result); return result;
     },
     locationRequest: { current: 0 }, siteParamHandled: { current: '' },
-    loadPlaces: () => places, DEMO_SITE: demo, isSampleMode: () => settings.sample,
+    loadPlaces: () => places, getSampleMapSite: () => settings.sample ? options.sampleSite ?? demo : null,
+    isSampleMode: () => settings.sample,
+    isFictionalSampleLocation: (lat: number, lon: number) => settings.sample
+      && options.sampleWorkspace === 'green-horizon'
+      && lat === options.sampleSite?.lat && lon === options.sampleSite?.lon,
     monthlyTemperatureStatus, withLocalRainfallSeason,
     // The comparison boundary distinguishes fixture sites. Five-decimal cache
     // spelling comes from the extracted cache expression, not a copied rule.
@@ -156,6 +160,37 @@ test('automatic DEMO initialization loads the actual selection path and camera w
   assert.equal(h.state.jumpTo, null); h.advance(799); assert.equal(h.state.jumpTo, null);
   h.advance(1); assert.deepEqual(h.state.jumpTo, { lat: demo.lat, lon: demo.lon });
   assert.equal(h.state.loading, false); assert.equal(h.state.error, ''); cleanup?.();
+});
+
+test('the fictional market garden opens its saved map without looking up real site conditions', async () => {
+  const h = harness({ sampleSite: other, sampleWorkspace: 'green-horizon' });
+  h.automaticSample();
+  await h.settle();
+  assert.deepEqual(h.state.selected, other);
+  assert.equal(h.state.activePlaceId, 'other-place');
+  assert.equal(h.state.sheetOpen, false);
+  assert.equal(h.state.loading, false);
+  assert.equal(h.state.data, null);
+  assert.equal(h.requests.length, 0);
+  assert.equal(h.headerCalls, 0);
+  h.advance(800);
+  assert.deepEqual(h.state.jumpTo, other);
+});
+
+test('explicit selection and a saved-site link leave the fictional market garden without location data', async () => {
+  const h = harness({ sampleSite: other, sampleWorkspace: 'green-horizon', params: 'site=other-place' });
+  h.seed(other);
+  h.savedSite();
+  await h.settle();
+  assert.equal(h.state.sheetOpen, true);
+  assert.equal(h.state.activePlaceId, 'other-place');
+  assert.equal(h.state.data, null);
+  await h.handleLocationSelect(other.lat, other.lon);
+  assert.equal(h.state.data, null);
+  assert.equal(h.requests.length, 0);
+  assert.equal(h.headerCalls, 0);
+  await h.handleLocationSelect(demo.lat, demo.lon);
+  assert.equal(h.requests.length, 1, 'other coordinates retain the explicitly requested lookup');
 });
 
 for (const initiallyOpen of [false, true]) test(`automatic cached DEMO data preserves the ${initiallyOpen ? 'open' : 'closed'} sheet and does not refetch`, async () => {

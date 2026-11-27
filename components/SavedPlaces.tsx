@@ -203,7 +203,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
                       </span>
                     </div>
                     <div className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
-                      {place.biome} · {place.elevation}m · {place.rainfall === undefined ? 'Rainfall not known' : `${place.rainfall}mm`}
+                      {place.biome} · {place.elevation === null ? 'Elevation not known' : `${place.elevation}m`} · {place.rainfall === undefined ? 'Rainfall not known' : `${place.rainfall}mm`}
                     </div>
                     {place.notes && (
                       <div className="text-xs font-display mt-1 leading-relaxed" style={{ color: 'var(--text-secondary)', opacity: 0.8 }}>

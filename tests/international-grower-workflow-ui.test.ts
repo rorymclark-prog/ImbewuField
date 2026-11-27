@@ -3,26 +3,83 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
 import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'react-test-renderer';
 import { AppRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime.js';
 import ts from 'typescript';
 import { CROPS } from '../lib/crop-catalog.ts';
 import { buildDemoDesignCanvasState } from '../lib/demo-farm.ts';
+import { bedsFromDesignCanvas } from '../lib/design-beds-bridge.ts';
+import { buildGreenHorizonCropPlan, buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonStorageSeeds } from '../lib/green-horizon-demo.ts';
 import type { CropPlanState, HarvestTarget } from '../lib/crop-plan.ts';
 import type { GrowerPlanningProfile, GrowerInput } from '../lib/international/grower-planning.ts';
 import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
-import { assembleGrowerWorkflowReview, type GrowerWorkflowDraft, type GrowerWorkflowReview } from '../lib/international/grower-workflow.ts';
+import { assembleGrowerWorkflowReview, prepareGrowerWorkflowAcceptance, type GrowerWorkflowDraft, type GrowerWorkflowReview } from '../lib/international/grower-workflow.ts';
 import type { GrowerAutoPlanPanelProps } from '../components/crops/GrowerAutoPlanPanel.tsx';
 
 const hooks = registerHooks({ load(url, context, next) {
-  if (url.endsWith('/components/crops/GrowerAutoPlanPanel.tsx')) return { format: 'module', shortCircuit: true,
+  if (/\/components\/crops\/(GrowerAutoPlanPanel|GreenHorizonProductionPlan)\.tsx$/.test(url)) return { format: 'module', shortCircuit: true,
     source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
       target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
     } }).outputText };
   return next(url, context);
 } });
 const { default: Panel } = await import('../components/crops/GrowerAutoPlanPanel.tsx');
+const { default: ProductionPlan } = await import('../components/crops/GreenHorizonProductionPlan.tsx');
 after(() => hooks.deregister());
+
+test('the example opens with a worked lettuce cycle, saved sowings and explicit missing forecasts', () => {
+  const { siteId } = buildGreenHorizonLettuceTarget();
+  const beds = bedsFromDesignCanvas(JSON.parse(buildGreenHorizonStorageSeeds()[`imbewu_design_canvas_${siteId}`]));
+  const plan = buildGreenHorizonCropPlan();
+  const original = JSON.stringify(plan);
+  const render = () => renderToStaticMarkup(React.createElement(ProductionPlan, { siteId, beds, plan }));
+  const html = render();
+  assert.match(html, /Green Horizon production plan/);
+  assert.match(html, /8 kg\/week of Lettuce/);
+  assert.match(html, /field entry 1 Oct 2026 · pick 2 Nov 2026 – 4 Nov 2026/);
+  assert.match(html, /Estimated 11\.52 kg for the cycle/);
+  assert.match(html, /A2 · Roots.*Carrots.*Saved sowing month · October/);
+  assert.match(html, /B1 · Leafy greens.*Swiss [Cc]hard.*Picking dates and yield are unknown/);
+  assert.match(html, /Delivery quantity is unknown/);
+  assert.match(html, /Some requested dates fall outside this picking window/);
+  assert.match(html, /<button[^>]+>Review the practice crop cycle<\/button>/);
+  assert.equal(JSON.stringify(plan), original, 'reading Production never accepts a cycle or writes to the sample');
+  const { weeklyKg: _weeklyKg, timing: _timing, window, ...targetSeed } = buildGreenHorizonLettuceTarget();
+  plan.harvestTargets = [{ ...targetSeed, weeklyQuantity: 4, unit: 'bunches', timing: 'date-window', window }];
+  assert.match(render(), /4 bunches\/week of Lettuce/);
+  plan.harvestTargets = [{ ...targetSeed, weeklyQuantity: 4, unit: 'bunches', startMonth: '2026-11', endMonth: '2026-12' }];
+  assert.match(render(), /4 bunches\/week of Lettuce from 1 Nov 2026 to before 1 Jan 2027/);
+  const [seedProfile] = plan.growerPlanningProfiles!;
+  plan.growerPlanningProfiles = [{ ...seedProfile, inputs: { ...seedProfile.inputs,
+    establishment: own('transplant', 'method'), nurseryDays: own(1, 'days'),
+  } }];
+  assert.match(render(), /Worked example · field entry 1 Oct 2026/);
+  assert.doesNotMatch(render(), /Worked example · sow/);
+  plan.harvestTargets = [];
+  assert.doesNotMatch(render(), /Worked example|4 bunches\/week/);
+});
+
+test('the production overview reads the accepted cycle from the plan after reopening', async () => {
+  const { siteId } = buildGreenHorizonLettuceTarget();
+  const raw = JSON.parse(buildGreenHorizonStorageSeeds()[`imbewu_design_canvas_${siteId}`]);
+  const source = await fingerprintGrowerWorkflowSource(inspectGrowerWorkflowSource({
+    kind: 'studio-canvas', sourceId: siteId, raw, sourceRevision: 'green-horizon-reviewed-plan-fixture',
+  }));
+  assert.equal(source.status, 'ready');
+  const book = buildGreenHorizonCropPlan();
+  const practice = buildGreenHorizonPlanningDraft();
+  const draft = { ...practice, assumptionsConfirmed: true, available: practice.available.map(row => ({ ...row, confirmed: true })) };
+  const review = assembleGrowerWorkflowReview({ scope: source.scope, source, book, draft, recordedAt });
+  assert.equal(review.status, 'review');
+  const accepted = prepareGrowerWorkflowAcceptance({ scope: source.scope, source, book, review,
+    binding: { draft, source, recordedAt }, acceptedAt: recordedAt,
+    plantingIds: [{ cycleId: review.proposal.cycles[0].cycleId, plantingId: 'accepted-green-horizon-preview' }] });
+  assert.equal(accepted.status, 'prepared');
+  const html = renderToStaticMarkup(React.createElement(ProductionPlan, { siteId, beds: source.beds, plan: accepted.book }));
+  assert.match(html, /Saved plan as accepted · field entry 1 Oct 2026 · picking 2 Nov 2026 – 4 Nov 2026/);
+  assert.doesNotMatch(html, /Worked example/);
+});
 
 // Synthetic review fixtures. These are neither crop instructions nor equipment defaults.
 const recordedAt = '2026-11-03T12:00:00.000Z';
@@ -78,6 +135,39 @@ function fill(screen: ReturnType<typeof mount>) {
   screen.check(`I confirm availability for ${source.beds[0].label}`); screen.change('Available from', '2028-02-01'); screen.change('Available until', '2028-03-01');
   screen.check('I supply these planning dates and availability as my estimates.');
 }
+
+test('practice input loading uses current matching target, estimate and bed without confirming choices', async () => {
+  const originalSelf = Object.getOwnPropertyDescriptor(globalThis, 'self');
+  Object.defineProperty(globalThis, 'self', { configurable: true, value: globalThis });
+  const screen = mount();
+  try {
+    screen.update({ practiceDraft: {
+      planningStart: '2028-02-01', planningEndExclusive: '2028-03-01', maxAssessments: '1000',
+      targetProfiles: [{ targetId: target.id, profileId: profile.profileId }],
+      available: [{ bedId: source.beds[0].id, start: '2028-02-01', endExclusive: '2028-03-01', confirmed: false }],
+      assumptionsConfirmed: false,
+    } });
+    const load = () => screen.renderer.root.findAllByType('button').find(item => text(item) === 'Load practice inputs');
+    assert.equal(load()?.props.disabled, false);
+    screen.update({ targets: [] });
+    assert.equal(load()?.props.disabled, true);
+    await screen.click('Load practice inputs');
+    assert.equal(screen.field('First planning date').props.value, '');
+    screen.update({ targets: [target], profiles: [{ ...profile, cropKey: 'other-crop' }] });
+    assert.equal(load()?.props.disabled, true);
+    screen.update({ profiles: [profile] });
+    await screen.click('Load practice inputs');
+    assert.equal(screen.field('First planning date').props.value, '2028-02-01');
+    assert.equal(screen.field('Growing estimate for this target').props.value, profile.profileId);
+    assert.equal(screen.field('I confirm availability').props.checked, false);
+    assert.equal(screen.field('I supply these planning dates').props.checked, false);
+    assert.deepEqual(screen.attempts, []);
+  } finally {
+    screen.dispose();
+    if (originalSelf) Object.defineProperty(globalThis, 'self', originalSelf);
+    else Reflect.deleteProperty(globalThis, 'self');
+  }
+});
 
 // Locate the actual rendered row, so ordinary edits never reuse a callback
 // captured before a sibling was inserted or removed.

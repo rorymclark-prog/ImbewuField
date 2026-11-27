@@ -40,10 +40,10 @@ export async function actualPracticeUi(initial:ControlLanguage,options:PracticeU
   useLanguage:()=>({lang,t:controlT(lang),setLang:(next:ControlLanguage)=>{lang=next;renderer.update(React.createElement(Component));}}),
   useAuth:()=>({user,role:authRole,loading,signOutUser:()=>calls.signOut++}),isBackendConfigured:()=>options.backend??true,
   useRouter:()=>({push:(route:string)=>calls.routes.push(route)}),usePathname:()=>options.path??'/samples',
-  useSampleRole:()=>options.sample?'farmer':null,isSampleMode:()=>!!options.sample,
+  useSampleRole:()=>options.sample?'farmer':null,isSampleMode:()=>!!options.sample,getSampleWorkspace:()=>options.sample?'ubhejane':null,
   useRoleNavigation:()=>({accountRole:authRole,sample:!!options.sample,navigationRole:options.navigationRole??authRole??'farmer'}),useAppLevel:()=>options.simple?'simple':'full',useDialogFocus:()=>{},useEscapeClose:()=>{},communityEnabled:()=>true,
   readSampleChooserAccountRole:(uid:string)=>{calls.reads.push(uid);if(options.deferRole)return new Promise((resolve,reject)=>pending.push({uid,resolve,reject}));return options.readFails?Promise.reject(Error('role read unavailable')):Promise.resolve(authRole);},
-  startRolePreview:(role:string)=>{calls.previews.push(role);return!options.previewFails;},enterSampleMode:()=>{calls.resets++;return!options.storageFails;},exitSampleMode:()=>calls.exits++,
+  openRolePreview:(role:string,href:string,navigate:(href:string)=>void)=>{calls.previews.push(role);if(options.previewFails)return false;navigate(href);return true;},enterSampleMode:()=>{calls.resets++;return!options.storageFails;},exitSampleMode:()=>calls.exits++,
   Link:({children,...props}:any)=>React.createElement('a',props,children),AppHeader:({title,backFallback}:any)=>React.createElement('header',{'data-back-fallback':backFallback},title),TabBar:()=>null,
   FieldSyncBadge:()=>null,ProductTourButton:()=>null,SettingsButton:()=>null,LessonLink:()=>null,RoleSwitcher:()=>null,styles:{},chooser:{},
  };

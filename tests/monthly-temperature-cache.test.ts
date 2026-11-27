@@ -50,6 +50,7 @@ function extract(file: string, functionNames: string[], callbackNames: string[],
 }
 const farmerExecutable = compile(extract('../app/farmer/page.tsx', [], ['SITE_MISMATCH', 'handleLocationSelect']));
 const designExecutable = compile(extract('../app/design/page.tsx', ['locationDataCacheKey', 'readCachedLocationData', 'cacheLocationData'], [], 'readCachedLocationData'));
+const plannerExecutable = compile(extract('../app/facilitator/crops/page.tsx', [], [], 'resolveSiteClimate'));
 const sectorExecutable = compile(extract('../components/design/SectorSummary.tsx', ['resolveSectorContext'], []));
 const tankExecutable = compile(extract('../components/design/TankCalculator.tsx', ['resolveCachedRainfall'], []));
 
@@ -99,7 +100,7 @@ function farmer() {
   const state: { data: ReturnType<typeof location> | null; loading: boolean; error: string; sheetOpen: boolean } = { data: null, loading: false, error: '', sheetOpen: false };
   const context = { monthlyTemperatureStatus, withLocalRainfallSeason, localStorage: storage, locationRequest: { current: 0 }, loadPlaces: () => [],
     designSiteIdFromLocation: (value: { lat: number; lon: number }) => JSON.stringify([value?.lat, value?.lon]),
-    useCallback: (callback: unknown) => callback, paidApiHeaders: async () => ({}),
+    useCallback: (callback: unknown) => callback, paidApiHeaders: async () => ({}), isFictionalSampleLocation: () => false,
     fetch: (...args: Parameters<typeof fetch>) => globalThis.fetch(...args), networkFailureMessage: () => 'Reload unavailable', t: (key: string) => key,
     setData: (value: ReturnType<typeof location> | null) => { state.data = value; }, setLoading: (value: boolean) => { state.loading = value; },
     setError: (value: string) => { state.error = value; }, setSheetOpen: (value: boolean) => { state.sheetOpen = value; },
@@ -108,15 +109,43 @@ function farmer() {
   const select = new Function('context', 'with(context){' + farmerExecutable + ';return handleLocationSelect;}')(context) as (lat: number, lon: number, options?: { openDetails?: boolean }) => Promise<void>;
   return { state, select, currentData: (): ReturnType<typeof location> | null => state.data };
 }
-function design() {
+function design(fictional = false) {
   const state: { data: ReturnType<typeof location> | null } = { data: null };
   const context = { window: globalThis.window, localStorage: storage, monthlyTemperatureStatus, withLocalRainfallSeason, hasSite: true, ...point,
     paidApiHeaders: async () => ({}), fetch: (...args: Parameters<typeof fetch>) => globalThis.fetch(...args),
+    isFictionalSampleLocation: () => fictional,
     setLocationData(value: ReturnType<typeof location> | null) { state.data = value; }, AbortController,
   };
   const refresh = new Function('context', 'with(context){' + designExecutable + ';return refresh;}')(context) as () => () => void;
   return { state, refresh, currentData: (): ReturnType<typeof location> | null => state.data };
 }
+
+test('opening the fictional market garden in Design Studio clears prior data without loading live or cached evidence', async () => {
+  const cached = seed(location());
+  const h = design(true);
+  h.state.data = location();
+  assert.equal(h.refresh(), undefined);
+  await settle();
+  assert.equal(h.currentData(), null);
+  assert.deepEqual(requests, []);
+  assert.deepEqual(storage.writes, []);
+  assert.equal(storage.rows.get(cached.key), cached.bytes);
+});
+
+test('the crop planner reports missing climate for the fictional market garden without asking the provider', async () => {
+  const snapshots: unknown[] = [];
+  const readClimate = (lat: number, lon: number) => climate.resolveSiteClimate(lat, lon);
+  const context = {
+    allowCataloguePlanning: true, climateSiteKey: 'demo-site', siteLat: point.lat, siteLon: point.lon,
+    isFictionalSampleLocation: () => true, resolveSiteClimate: readClimate,
+    setClimateSnapshot: (snapshot: unknown) => snapshots.push(snapshot),
+  };
+  const refresh = new Function('context', 'with(context){' + plannerExecutable + ';return refresh;}')(context) as () => void;
+  refresh();
+  await settle();
+  assert.deepEqual(snapshots, [{ siteKey: 'demo-site', climate: null, missing: 'unavailable' }]);
+  assert.deepEqual(requests, []);
+});
 
 for (const consumer of ['planner', 'farmer'] as const) test(consumer + ' reuses provider-complete v7 evidence without an automatic request', async () => {
   seed(location());
