@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '28 November 2026', sha: '08e1fae17', changes: [
+  { when: '28 November 2026', sha: '44a725165', changes: [
     'Allocate part of a checked harvest to a buyer and confirm actual handovers.',
     'Print weekly work and checked buyer quantities from the production plan.',
   ] },
