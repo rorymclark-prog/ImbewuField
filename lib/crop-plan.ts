@@ -1,6 +1,7 @@
 import type { CropDef, RainPattern } from './crop-catalog';
 import { cropByKey, CROPS, hasPlanningYield, MONTHS_SHORT, plantsPerM2, plantsPerM2Range } from './crop-catalog';
 import { normaliseRecordUnit, validRecordQuantity, type RecordUnit } from './farm-records';
+import { normaliseBuyerFulfilment, type BuyerFulfilmentEntry } from './international/buyer-fulfilment';
 import { sanitiseNurserySettings, type NurserySettings } from './nursery-settings';
 import { detachJsonData } from './lossless-json';
 import { sanitiseWorkspacePlanningReferences, type WorkspacePlanningReference } from './international/workspace-context';
@@ -191,6 +192,7 @@ interface HarvestTargetShared {
   marketablePercent?: number;
   /** Explicit planned quantity in the target unit for this exact period. */
   weeklyPlan?: readonly HarvestTargetWeekQuantity[];
+  fulfilment?: readonly BuyerFulfilmentEntry[];
 }
 
 export const HARVEST_TARGET_UNITS = ['kg', 'bunches', 'bags', 'crates', 'trays', 'each'] as const satisfies readonly RecordUnit[];
@@ -449,6 +451,11 @@ export function sanitiseHarvestTargets(value: unknown): HarvestTarget[] {
       const weeklyPlan = normaliseHarvestTargetWeeklyPlan(target, t.weeklyPlan);
       if (weeklyPlan === null) return [];
       target = { ...target, weeklyPlan };
+    }
+    if (Object.hasOwn(raw, 'fulfilment')) {
+      const fulfilment = normaliseBuyerFulfilment(t.fulfilment, harvestTargetUnit(target), harvestTargetWeekWindows(target));
+      if (fulfilment === null) return [];
+      target = { ...target, fulfilment };
     }
     seen.add(t.id);
     return [target];

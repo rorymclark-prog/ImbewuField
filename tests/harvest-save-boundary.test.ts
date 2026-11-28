@@ -299,3 +299,30 @@ test('actual mounted shared parent effects deliver cold contexts after asynchron
     assert.equal(renderer.root.findAllByType('button')[0].props.disabled,true);assert.equal(local.writes,writes);assert.equal(readBook().harvestTargets?.find(row=>row.siteId===siteId)?.weeklyKg,6);
   }finally{if(renderer)act(()=>renderer.unmount());c.dispose();}assert.equal(probe.auth.size,observers);
 });
+
+test('the existing harvest-target save preserves allocations and holds a superseded buyer edit', () => {
+  const allocation = {
+    kind: 'delivery' as const, sourceId: 'practice-sale', sourceFingerprint: 'e'.repeat(64),
+    start: '2028-12-01', endExclusive: '2028-12-08', on: '2028-12-03', unit: 'kg' as const, quantity: 0,
+  };
+  const active = parent();
+  try {
+    const next = nextTargets(active).map(row => row.siteId === siteId ? { ...row, fulfilment: [allocation] } : row);
+    const bound = request(active, next);
+    assert.equal(api.harvestSaveResultMatches(active.submit(next, bound), bound), 'device');
+    assert.deepEqual(crop.loadCropPlan().harvestTargets?.find(row => row.siteId === siteId)?.fulfilment, [allocation]);
+    assert.equal(crop.loadCropPlan().harvestTargets?.find(row => row.siteId === otherSite)?.fulfilment, undefined);
+  } finally { active.dispose(); }
+
+  const superseded = parent();
+  try {
+    const next = nextTargets(superseded).map(row => row.siteId === siteId ? { ...row, fulfilment: [allocation] } : row);
+    const bound = request(superseded, next);
+    const fresh = book();
+    fresh.harvestTargets![0].fulfilment = [{ ...allocation, quantity: 1 }];
+    fresh.updatedAt = Date.now();
+    assert.equal(crop.saveCropPlan(fresh), true);
+    assert.equal(api.harvestSaveResultMatches(superseded.submit(next, bound), bound), null);
+    assert.equal(crop.loadCropPlan().harvestTargets?.find(row => row.siteId === siteId)?.fulfilment?.[0].quantity, 1);
+  } finally { superseded.dispose(); }
+});

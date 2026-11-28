@@ -292,6 +292,10 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
     persist(targets.map(row => row === target ? updated : row), previous => clearForm(previous));
   }
   function removeTarget(target: HarvestTarget) {
+    if (target.fulfilment?.length) {
+      setError('Remove the allocations and deliveries before removing this target.');
+      return;
+    }
     persist(targets.filter(row => row.siteId !== siteId || row.id !== target.id), previous => previous.editingId === target.id ? clearForm(previous) : previous);
   }
   function saveTarget(event: FormEvent) {
@@ -309,10 +313,13 @@ function HarvestTargetEditor({ siteId, targets, beds, plantings, pattern, climat
     const original = ownTargets.find(row => row.id === editingId);
     const saved = sanitiseHarvestTargets([target])[0];
     if (!saved) { setError(timing === 'date-window' ? 'Choose a crop and positive weekly quantity. Enter a valid UTC start and a later end-before date, within 2020–2100 and at most 366 days (a software limit). Items need whole numbers; check known pack weight and saleable share.' : 'Choose a crop, positive quantity and 1–12 harvest months. Items need whole numbers. Enter a positive pack weight when known and a saleable share from 0–100%.'); return; }
-    if (original?.weeklyPlan?.length) {
-      const revised = { ...saved, weeklyPlan: original.weeklyPlan };
+    if (original?.weeklyPlan?.length || original?.fulfilment?.length) {
+      const revised = { ...saved, ...(original.weeklyPlan ? { weeklyPlan: original.weeklyPlan } : {}),
+        ...(original.fulfilment ? { fulfilment: original.fulfilment } : {}) };
       if (original.cropKey !== saved.cropKey || original.outlet !== saved.outlet || !sanitiseHarvestTargets([revised]).length) {
-        setError('Clear the saved weekly quantities before changing their crop, buyer, unit or dates.');
+        setError(original.fulfilment?.length
+          ? 'Review the saved allocations and deliveries before changing their crop, buyer, unit or dates.'
+          : 'Clear the saved weekly quantities before changing their crop, buyer, unit or dates.');
         return;
       }
       persist(targets.map(row => row === original ? revised : row), previous => clearForm(previous));

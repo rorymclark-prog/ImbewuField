@@ -15,6 +15,7 @@ import {
 } from '../lib/international/grower-workflow.ts';
 import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import { growerDemandFromEnteredEntry } from '../lib/international/grower-entered-demand.ts';
+import { normaliseBuyerFulfilment, projectBuyerFulfilment, type BuyerFulfilmentEntry, type CheckedFulfilmentSource } from '../lib/international/buyer-fulfilment.ts';
 import {
   projectGrowerBuyerPickingPeriods, growerDemandFromHarvestTarget,
   GROWER_BUYER_PICKING_PERIOD_DAYS, GROWER_BUYER_PICKING_MAX_OPERATIONS,
@@ -432,4 +433,67 @@ test('the existing saved-target adapter keeps whole-window demand and its explic
   assert.equal(result.deliveryDistribution, 'not-established'); assert.equal(result.sourceVerification, 'not-verified');
   assert.deepEqual(result.demand.harvestWindow.state === 'provided' && result.demand.harvestWindow.value,
     { start: '2028-02-01', endExclusive: '2028-03-01' });
+});
+
+const fulfilmentWeek = { start: '2028-02-01', endExclusive: '2028-02-08' };
+const checkedOn = '2028-02-12';
+const evidence = (patch: Partial<CheckedFulfilmentSource> = {}): CheckedFulfilmentSource => ({
+  kind: 'sale', id: 'sale-id', canonicalId: 'invoice-line-1', fingerprint: 'b'.repeat(64),
+  siteId: scope.siteId, cropKey: CROPS[0].key, unit: 'kg', quantity: 4, sourceOn: '2028-02-10', ...patch,
+});
+const delivery = (patch: Partial<BuyerFulfilmentEntry> = {}): BuyerFulfilmentEntry => ({
+  kind: 'delivery', sourceId: 'sale-id', sourceFingerprint: 'b'.repeat(64), ...fulfilmentWeek,
+  on: '2028-02-06', unit: 'kg', quantity: 1, ...patch,
+});
+const fulfilmentTarget = (id: string, fulfilment: BuyerFulfilmentEntry[]) => ({
+  id, siteId: scope.siteId, cropKey: CROPS[0].key, fulfilment,
+});
+
+test('saved allocations keep explicit zero, short period edges and the original unit', () => {
+  const blank = normaliseBuyerFulfilment([], 'kg', [fulfilmentWeek]);
+  const zero = delivery({ quantity: 0 });
+  assert.deepEqual(blank, []);
+  assert.deepEqual(normaliseBuyerFulfilment([zero], 'kg', [fulfilmentWeek]), [zero]);
+  assert.equal(normaliseBuyerFulfilment([zero, zero], 'kg', [fulfilmentWeek]), null);
+  assert.equal(normaliseBuyerFulfilment([delivery({ on: fulfilmentWeek.endExclusive })], 'kg', [fulfilmentWeek]), null);
+  assert.equal(normaliseBuyerFulfilment([delivery({ endExclusive: '2028-02-06' })], 'kg', [fulfilmentWeek]), null);
+  assert.equal(normaliseBuyerFulfilment([delivery({ unit: 'bunches' })], 'kg', [fulfilmentWeek]), null);
+  assert.equal(normaliseBuyerFulfilment([{ ...delivery(), quantity: undefined }], 'kg', [fulfilmentWeek]), null);
+  assert.equal(normaliseBuyerFulfilment([delivery({ unit: 'each', quantity: 0.5 })], 'each', [fulfilmentWeek]), null);
+});
+
+test('a selected sale can be split across buyers within one exact source quantity', () => {
+  const targetA = fulfilmentTarget('buyer-one', [delivery({ quantity: 0.1 })]);
+  const targetB = fulfilmentTarget('buyer-two', [delivery({ quantity: 0.2 })]);
+  const selected = evidence({ quantity: 0.3 });
+  assert.deepEqual(projectBuyerFulfilment([targetA, targetB], [selected], checkedOn).map(line => line.status), ['checked','checked']);
+  const extra = fulfilmentTarget('buyer-three', [delivery({ quantity: 1e-20 })]);
+  const over = projectBuyerFulfilment([targetA, targetB, extra], [selected], checkedOn);
+  assert.deepEqual(over.map(line => line.status === 'held' && line.reason),
+    ['outside-quantity', 'outside-quantity', 'outside-quantity']);
+});
+
+test('changed, missing or mirrored evidence cannot contribute to a buyer delivery', () => {
+  const target = fulfilmentTarget('buyer-one', [delivery()]);
+  const oldTarget = fulfilmentTarget('buyer-previous', [delivery({ sourceFingerprint: 'c'.repeat(64) })]);
+  const selection = evidence();
+  const reason = (source: CheckedFulfilmentSource[]) => projectBuyerFulfilment([target], source, checkedOn)[0];
+  assert.deepEqual(reason([]), { targetId: target.id, entry: delivery(), status: 'held', reason: 'source-unavailable' });
+  assert.match(JSON.stringify(reason([selection, evidence({ id: 'duplicate-invoice-sale' })])), /source-ambiguous/);
+  assert.match(JSON.stringify(reason([evidence({ unit: 'bunches' })])), /source-changed/);
+  assert.match(JSON.stringify(reason([evidence({ siteId: 'site:1.00000,1.00000' })])), /source-changed/);
+  assert.deepEqual(projectBuyerFulfilment([target, oldTarget], [selection], checkedOn)
+    .map(line => line.status === 'held' && line.reason), ['source-needs-reconciliation','source-changed']);
+});
+
+test('observed harvest, actual handover and ledger dates remain distinct', () => {
+  const harvest = evidence({ kind: 'harvest', id: 'harvest-id', canonicalId: 'harvest-id', sourceOn: '2028-02-07' });
+  const allocated = delivery({ kind: 'harvest-allocation', sourceId: 'harvest-id' });
+  const early = fulfilmentTarget('buyer-one', [allocated, delivery()]);
+  const first = projectBuyerFulfilment([early], [harvest, evidence({ quantity: 1 })], checkedOn);
+  assert.deepEqual(first.map(line => line.status === 'held' ? line.reason : line.status), ['invalid-evidence-date','checked']);
+  const actual = fulfilmentTarget('buyer-two', [{ ...allocated, on: '2028-02-07' }, delivery({ quantity: 0 })]);
+  const accepted = projectBuyerFulfilment([actual], [harvest, evidence({ quantity: 0 })], checkedOn);
+  assert.deepEqual(accepted.map(line => [line.status, line.entry.kind, line.entry.quantity]),
+    [['checked', 'harvest-allocation', 1], ['checked', 'delivery', 0]]);
 });
