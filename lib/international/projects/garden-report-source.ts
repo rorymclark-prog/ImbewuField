@@ -2,6 +2,8 @@ import { captureGardenCycleHarvest } from '@/lib/db/cycle-harvest';
 import { inspectJournalGrowerLink } from '@/lib/field-journal';
 import { captureGrowerReportJournal } from '@/lib/grower-progress-report';
 import { checkGrowerOperationsCurrent, isGrowerOperationsCurrent, type GrowerOperationsSources } from '@/lib/international/grower-operations-source';
+import { fingerprintFulfilmentSource } from '@/lib/international/buyer-fulfilment-source';
+import type { CheckedFulfilmentSource } from '@/lib/international/buyer-fulfilment';
 import { growerPlanningScopeKey } from '@/lib/international/grower-planning';
 import { isSampleMode } from '@/lib/sample-mode';
 import { loadPlaces } from '@/lib/saved-places';
@@ -15,6 +17,7 @@ export interface GardenReportRead {
   isCurrent: () => boolean;
   checkCurrent: () => Promise<boolean>;
   release: () => void;
+  readLinkedHarvestSources: () => Promise<readonly CheckedFulfilmentSource[] | null>;
 }
 
 export function gardenReportSites(source: GrowerOperationsSources): GardenReportSite[] {
@@ -50,27 +53,41 @@ export async function openGardenReport(
   if (!site || !await checkGrowerOperationsCurrent(source, { isCurrent: current }) || !current()) return null;
   const tasks = buildGrowerBoardTasks(source.book.plantings, source.contexts, new Date(), new Set()).tasks
     .filter(task => task.growerJournalLink?.scope.kind === 'mapped-site' && task.growerJournalLink.scope.siteId === siteId);
-  const checks = await Promise.all(tasks.filter(task => task.growerEventKind === 'first-pick').map(task => {
+  const checks = await Promise.all(tasks.filter(task => task.growerEventKind === 'first-pick').map(async task => {
     const resolved = resolveGrowerJournalLink(source.book.plantings, source.contexts, task.growerJournalLink);
-    return resolved.status === 'ready' ? captureGardenCycleHarvest(resolved.link, resolved.cropKey, current) : null;
+    return resolved.status === 'ready' ? {
+      plantingId: resolved.link.plantingId, cropKey: resolved.cropKey,
+      read: await captureGardenCycleHarvest(resolved.link, resolved.cropKey, current),
+    } : null;
   }));
   if (!current()) return null;
   const referencedScope = growerPlanningScopeKey({ kind: 'mapped-site', siteId });
   const incomplete = source.heldSources.some(item => !item.scopeKey || item.scopeKey === referencedScope)
-    || checks.some(check => check?.evidence.status !== 'ready' || check.evidence.incomplete);
-  const harvest = checks.flatMap(check => check?.evidence.status === 'ready' ? check.evidence.rows : []);
+    || checks.some(check => check?.read.evidence.status !== 'ready' || check.read.evidence.incomplete);
+  const harvest = checks.flatMap(check => check?.read.evidence.status === 'ready' ? check.read.evidence.rows : []);
   const journal = captureGrowerReportJournal(sample);
   const notesHeld = !journal?.rows;
   const notes = journal ? readGardenNotes(journal, tasks) : [];
-  const isCurrent = () => current() && checks.every(check => check?.isCurrent() ?? true)
+  const isCurrent = () => current() && checks.every(check => check?.read.isCurrent() ?? true)
     && (!journal || journal.isCurrent()) && current();
   return {
     records: { siteId, siteLabel: site.label, sample, harvest, notes, incomplete }, notesHeld,
     isCurrent,
     async checkCurrent() {
       return isCurrent() && await checkGrowerOperationsCurrent(source, { isCurrent })
-        && (await Promise.all(checks.map(check => check?.checkCurrent() ?? true))).every(Boolean)
+        && (await Promise.all(checks.map(check => check?.read.checkCurrent() ?? true))).every(Boolean)
         && isCurrent();
+    },
+    async readLinkedHarvestSources() {
+      if (!isCurrent()) return null;
+      try {
+        const sources = await Promise.all(checks.flatMap(check => check?.read.evidence.status === 'ready'
+          ? check.read.evidence.rows.map(row => fingerprintFulfilmentSource({
+            kind: 'harvest', id: row.recordId, canonicalId: row.recordId, siteId,
+            cropKey: check.cropKey, sourceOn: row.observedOn, unit: row.unit, quantity: row.quantity,
+          }, [check.plantingId, row.recordedOn])) : []));
+        return isCurrent() ? Object.freeze(sources) : null;
+      } catch { return null; }
     },
     release() { journal?.release(); },
   };

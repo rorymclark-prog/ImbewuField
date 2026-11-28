@@ -12,8 +12,10 @@ import { isJournalDate, todayISODate, type GrowerJournalLink } from '../field-jo
 import { recordUnit, type RecordUnit } from '../farm-records';
 import { getFirebase } from '../firebase/init';
 import type { GrowerReportHarvest } from '../grower-progress-report';
-import { getSandboxProduction, getSandboxProfile, SAMPLE_MODE_EVENT } from '../sample-mode';
-import type { ProductionLog } from './types';
+import { getSandboxProduction, getSandboxProfile, getSandboxSales, SAMPLE_MODE_EVENT } from '../sample-mode';
+import { checkBuyerSaleRows } from '../international/buyer-fulfilment-source';
+import type { CheckedFulfilmentSource } from '../international/buyer-fulfilment';
+import type { ProductionLog, SalesLog } from './types';
 
 export type CycleHarvestOptions =
   | { status: 'ready'; options: readonly CycleHarvestOption[]; linked?: readonly CycleHarvestSelection[] }
@@ -279,4 +281,43 @@ export function captureGardenCycleHarvest(
   reference: GrowerJournalLink, cropKey: string, isCurrent: Current,
 ): Promise<GardenCycleHarvestRead> {
   return captureLinkedHarvests(reference, cropKey, isCurrent, true);
+}
+
+export interface BuyerSaleRead {
+  readonly sources: readonly CheckedFulfilmentSource[];
+  readonly incomplete: boolean;
+  readonly isCurrent: Current;
+  readonly checkCurrent: () => Promise<boolean>;
+}
+
+/** Sales evidence uses the same captured account and sample lifetime as the
+ * harvest links. The normal cached sales list is for display only. */
+export async function captureBuyerSaleEvidence(viewCurrent: Current): Promise<BuyerSaleRead | null> {
+  try {
+    const actor = captureActor(viewCurrent);
+    if (!actor) return null;
+    const sampleSales = actor.sample ? getSandboxSales() : null;
+    const isCurrent = () => actor.isCurrent() && (!actor.sample || getSandboxSales() === sampleSales);
+    const read = async () => {
+      if (!isCurrent()) return null;
+      if (sampleSales) {
+        const result = await checkBuyerSaleRows(sampleSales.map(value => ({ id: value.id, value })), actor.owner);
+        return isCurrent() ? result : null;
+      }
+      const snapshot = await getDocsFromServer(query(collection(actor.db!, 'sales_logs'), where('profile_id', '==', actor.owner)));
+      if (!isCurrent() || snapshot.metadata.fromCache) return null;
+      const result = await checkBuyerSaleRows(snapshot.docs.map(row => ({
+        id: row.id, value: row.data() as SalesLog, pending: row.metadata.fromCache || row.metadata.hasPendingWrites,
+      })), actor.owner);
+      return isCurrent() ? result : null;
+    };
+    const result = await read();
+    if (!result) return null;
+    const signature = JSON.stringify(result);
+    const checkCurrent = async () => {
+      try { return isCurrent() && JSON.stringify(await read()) === signature && isCurrent(); }
+      catch { return false; }
+    };
+    return Object.freeze({ ...result, isCurrent, checkCurrent });
+  } catch { return null; }
 }

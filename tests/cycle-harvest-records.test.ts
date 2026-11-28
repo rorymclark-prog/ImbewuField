@@ -6,7 +6,7 @@ import { cycleHarvestDocumentId, makeCycleHarvestLink } from '../lib/cycle-harve
 import type { GrowerJournalLink } from '../lib/field-journal.ts';
 import { buildGreenHorizonLettuceTarget } from '../lib/green-horizon-demo.ts';
 import {
-  addSandboxProduction, deleteSandboxProduction, enterSampleMode, exitSampleMode, getSandboxProduction,
+  addSandboxProduction, deleteSandboxProduction, enterSampleMode, exitSampleMode, getSandboxProduction, updateSandboxSale,
 } from '../lib/sample-mode.ts';
 
 const user = 'owner';
@@ -45,7 +45,7 @@ export async function getDocsFromServer({path,condition}){
   s.reads++;
   const docs=[...s.documents].filter(([key,value])=>key.slice(0,key.lastIndexOf('/'))===path
     && value[condition.field]===condition.value).map(([key])=>snapshot(key));
-  return {docs};
+  return {docs,metadata:{fromCache:false}};
 }
 export async function runTransaction(db, action){
   const staged=[];
@@ -69,7 +69,7 @@ const hooks = registerHooks({
     return next(specifier, context);
   },
 });
-const { captureCycleHarvestReport, captureGardenCycleHarvest, linkExistingCycleHarvest, readCycleHarvestOptions, unlinkExistingCycleHarvest } = await import('../lib/db/cycle-harvest.ts');
+const { captureBuyerSaleEvidence, captureCycleHarvestReport, captureGardenCycleHarvest, linkExistingCycleHarvest, readCycleHarvestOptions, unlinkExistingCycleHarvest } = await import('../lib/db/cycle-harvest.ts');
 after(() => hooks.deregister());
 
 class TestStorage {
@@ -288,4 +288,57 @@ test('an unreadable sample flag holds the operation even with a signed-in Fireba
   assert.deepEqual(report.evidence, { status: 'held' });
   assert.equal(state.reads, 0);
   assert.equal(state.writes, 0);
+});
+
+const salePath = 'sales_logs/sale-a';
+const sale = { profile_id: user, crop: 'Lettuce', kg: 4, sold_at: '2026-08-10T00:10:00+02:00' };
+
+test('sale evidence reads the current owner and withdraws a changed ledger quantity', async () => {
+  state.documents.set(salePath, sale);
+  state.documents.set('sales_logs/foreign', { ...sale, profile_id: 'another-owner' });
+  const read = await captureBuyerSaleEvidence(current);
+  assert.ok(read);
+  assert.deepEqual(read.sources.map(source => ({ id: source.id, quantity: source.quantity, unit: source.unit,
+    day: source.sourceOn, site: source.siteId, crop: source.cropKey })),
+  [{ id: 'sale-a', quantity: 4, unit: 'kg', day: '2026-08-09', site: null, crop: 'lettuce' }]);
+  assert.equal(read.incomplete, false);
+  assert.equal(await read.checkCurrent(), true);
+  state.documents.set(salePath, { ...sale, kg: 3 });
+  assert.equal(await read.checkCurrent(), false);
+  assert.equal(state.writes, 0);
+  state.auth.currentUser = { uid: 'another-owner' };
+  assert.equal(read.isCurrent(), false);
+});
+
+test('an invoice mirror is held even if its duplicate is waiting for server confirmation', async () => {
+  const invoice = { invoice_id: 'invoice-one', invoice_line: 0 };
+  state.documents.set(salePath, { ...sale, ...invoice, invoice_source_sale: true });
+  state.documents.set('sales_logs/generated', { ...sale, ...invoice });
+  state.pending.add('sales_logs/generated');
+  const read = await captureBuyerSaleEvidence(current);
+  assert.ok(read);
+  assert.deepEqual(read.sources, []);
+  assert.equal(read.incomplete, true);
+  state.documents.delete('sales_logs/generated');
+  assert.equal(await read.checkCurrent(), false);
+  const confirmed = await captureBuyerSaleEvidence(current);
+  assert.ok(confirmed);
+  assert.deepEqual(confirmed.sources.map(source => source.id), ['sale-a']);
+});
+
+test('sample sale evidence is withdrawn after an edit and cannot cross a reset', async () => {
+  enterSampleMode('green-horizon');
+  const before = await captureBuyerSaleEvidence(current);
+  assert.ok(before);
+  assert.equal(before.sources[0]?.quantity, 4);
+  updateSandboxSale(before.sources[0].id, { kg: 5 });
+  assert.equal(before.isCurrent(), false);
+  const edited = await captureBuyerSaleEvidence(current);
+  assert.ok(edited);
+  assert.equal(edited.sources[0]?.quantity, 5);
+  assert.notEqual(edited.sources[0]?.fingerprint, before.sources[0]?.fingerprint);
+  exitSampleMode();
+  enterSampleMode('green-horizon');
+  assert.equal(edited.isCurrent(), false);
+  assert.equal(state.reads, 0);
 });

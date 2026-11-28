@@ -18,7 +18,7 @@ export interface CheckedFulfilmentSource {
   /** An invoice line and its sale mirror must resolve to the same source. */
   readonly canonicalId: string;
   readonly fingerprint: string;
-  readonly siteId: string;
+  readonly siteId: string | null;
   readonly cropKey: string;
   /** Checked picking date or ledger date. A ledger date does not attest handover. */
   readonly sourceOn: string;
@@ -30,6 +30,7 @@ interface FulfilmentTarget {
   readonly id: string;
   readonly siteId: string;
   readonly cropKey: string;
+  readonly mappedSiteId?: string;
   readonly fulfilment?: readonly BuyerFulfilmentEntry[];
 }
 
@@ -109,7 +110,8 @@ export function projectBuyerFulfilment(
         line.reason = 'source-ambiguous';
         continue;
       }
-      if (source.fingerprint !== entry.sourceFingerprint || source.siteId !== target.siteId
+      if (source.fingerprint !== entry.sourceFingerprint
+        || (source.kind === 'harvest' || source.siteId !== null) && source.siteId !== (target.mappedSiteId ?? target.siteId)
         || source.cropKey !== target.cropKey || source.unit !== entry.unit
         || source.quantity !== 0 && !validRecordQuantity(source.quantity, source.unit)) line.reason = 'source-changed';
       else if (!isGrowerUtcDate(checkedOn) || !isGrowerUtcDate(source.sourceOn) || source.sourceOn > checkedOn
