@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 November 2026', sha: '1950e45cf', changes: [
+    'Allocate part of a checked harvest to a buyer and confirm actual handovers.',
+    'Print weekly work and checked buyer quantities from the production plan.',
+  ] },
   { when: '27 November 2026', sha: '1131f81c2', changes: [
     'Open weekly buyer orders with saved quantities, picking dates and known gaps.',
     'Try staggered crops and linked harvests in the Green Horizon example.',
