@@ -79,7 +79,7 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
   const [quantity, setQuantity] = useState('');
   const [on, setOn] = useState('');
   const [editing, setEditing] = useState<string | null>(null);
-  const [draftBinding, setDraftBinding] = useState<string | null>(null);
+  const [draft, setDraft] = useState<{ binding: string; context: HarvestSaveContext } | null>(null);
   const [busy, setBusy] = useState(false);
   const pending = useRef(false);
   const [message, setMessage] = useState('');
@@ -105,12 +105,13 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
   const target = targets.find(row => row.id === selectedTarget) ?? targets[0];
   const periods = target ? harvestTargetWeekWindows(target) : [];
   const period = periods.find(row => row.start === selectedPeriod) ?? periods[0];
-  const binding = JSON.stringify([targetSiteId, operations.gardenRevision, target?.id, period?.start, period?.endExclusive]);
+  const binding = JSON.stringify([targetSiteId, target?.id, period?.start, period?.endExclusive]);
   useEffect(() => {
-    if (draftBinding !== null && draftBinding !== binding) {
-      setDraftBinding(null); setEditing(null); setSourceId(''); setSourceFingerprint(null); setQuantity(''); setOn('');
+    if (draft && (draft.binding !== binding || !harvestSaveContextIsCurrent(draft.context))) {
+      setDraft(null); setEditing(null); setSourceId(''); setSourceFingerprint(null); setQuantity(''); setOn('');
+      setMessage('The saved plan changed. Enter the buyer details again.');
     }
-  }, [binding, draftBinding]);
+  }, [binding, draft, save.context, operations.gardenRevision]);
 
   const checkedOn = new Date().toISOString().slice(0, 10);
   const mapped = (rows: readonly HarvestTarget[]) => rows.map(row => row.siteId === targetSiteId ? { ...row, mappedSiteId: siteId } : row);
@@ -121,12 +122,20 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
     && (source.kind === 'sale' ? kind === 'delivery' : kind === 'harvest-allocation')) : [];
   const selectedSource = available.find(source => source.id === sourceId && source.fingerprint === sourceFingerprint);
 
-  function clearDraft() { setDraftBinding(null); setEditing(null); setSourceId(''); setSourceFingerprint(null); setQuantity(''); setOn(''); }
+  function clearDraft() { setDraft(null); setEditing(null); setSourceId(''); setSourceFingerprint(null); setQuantity(''); setOn(''); }
+  function beginDraft() {
+    const context = save.context;
+    if (context && harvestSaveContextIsCurrent(context)) setDraft(previous => previous ?? { binding, context });
+  }
   function checkRecords() {
     clearDraft(); onRecheckHarvest();
   }
   function chooseEntry(entry: BuyerFulfilmentEntry) {
-    setDraftBinding(binding); setEditing(entryKey(entry)); setKind(entry.kind);
+    const context = save.context;
+    if (!context || !harvestSaveContextIsCurrent(context)) {
+      setMessage('Reopen the current buyer records before editing.'); return;
+    }
+    setDraft({ binding, context }); setEditing(entryKey(entry)); setKind(entry.kind);
     const unchanged = sources.some(source => source.id === entry.sourceId && source.fingerprint === entry.sourceFingerprint
       && source.kind === (entry.kind === 'delivery' ? 'sale' : 'harvest'));
     setSourceId(unchanged ? entry.sourceId : '');
@@ -188,7 +197,7 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
 
   function submit(event: FormEvent) {
     event.preventDefault();
-    if (draftBinding !== binding) {
+    if (!draft || draft.binding !== binding || !harvestSaveContextIsCurrent(draft.context)) {
       clearDraft(); setMessage('This buyer draft belongs to an earlier plan. Enter the current details again.'); return;
     }
     const parsed = parseExactUnitDecimal(quantity);
@@ -290,7 +299,7 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
       </div>
     </li>)}</ul>}
     <button type="button" className={button} disabled={busy || checkingHarvest} onClick={checkRecords}>Check harvest and sales</button>
-    <form onSubmit={submit} onChange={() => setDraftBinding(binding)} className="grid gap-2" aria-label="Buyer entry">
+    <form onSubmit={submit} onChange={beginDraft} className="grid gap-2" aria-label="Buyer entry">
       <label className="grid">Entry type<select className={field} value={kind} disabled={busy} onChange={event => {
         setKind(event.target.value as BuyerFulfilmentEntry['kind']); setSourceId(''); setSourceFingerprint(null);
       }}><option value="delivery">Delivery against a recorded sale</option><option value="harvest-allocation">Allocate linked harvest</option></select></label>
