@@ -42,7 +42,7 @@ test('a completed Sector job uses its frozen style even after the picker changes
   assert.match(source,/finishSectorRef\.current\(factualModelImage, frozenScene, historicalSource, styleKey\)/);
 });
 function helper(name: string, scope: Record<string, unknown>): any {
-  scope = { authoritativeHouseFootprints, terrainFallVector, swaleBankSide, exactSheetElementRegister, EXACT_CONTEXT_ALPHA, ...scope };
+  scope = { authoritativeHouseFootprints, terrainFallVector, swaleBankSide, exactSheetElementRegister, EXACT_CONTEXT_ALPHA, getSampleWorkspace: () => null, ...scope };
   let code = '';
   function visit(n: ts.Node) {
     if (ts.isFunctionDeclaration(n) && n.name?.text === name) code = n.getText(tree).replace(/^export\s+/, '');
@@ -964,6 +964,22 @@ test('regional profile plots actual contour crossings and never invents north or
   assert.deepEqual(p.points,[{distanceM:30,elevationM:110},{distanceM:130,elevationM:105}]);assert.equal(JSON.stringify({result,boundary,frame}),before);
   assert.equal(sectorTerrainProfile({...result,lines:result.lines.slice(0,1)},boundary,frame),null,'a lone level cannot describe a hillside');
   assert.equal(sectorTerrainProfile({...result,source:null},boundary,frame),null);
+});
+
+test('Rivier contour and terrain exports make no geographic requests at the practice anchor', async () => {
+  const rejectRequest = () => assert.fail('the Rivier exercise has no measured elevations');
+  const practiceScope = {
+    getSampleWorkspace: () => 'rivier-uitsig',
+    fetchSheetContours: rejectRequest,
+    fetchProfileTerrain: rejectRequest,
+    paidApiHeaders: rejectRequest,
+  };
+  const contours = helper('fetchSectorPresentationContours', practiceScope);
+  const terrain = helper('buildSectorTerrainProfileSheet', practiceScope);
+  assert.deepEqual(await contours(state, frame, refs, null, true), {
+    lines: [], intervalM: 0, tooFlat: false, status: 'unavailable', source: null,
+  });
+  assert.equal(await terrain(state, frame, refs, 'Rivier Uitsig'), null);
 });
 
 test('Sector contour geography uses the original saved frame and only crops the paint coordinates', async () => {
