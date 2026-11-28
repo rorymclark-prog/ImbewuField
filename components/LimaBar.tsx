@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { useSampleRole } from '@/lib/use-role-navigation';
+import { useSampleRole, useSampleWorkspace } from '@/lib/use-role-navigation';
 import { Camera, Loader2, MessageCircleQuestion, X } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n';
@@ -49,10 +49,13 @@ interface LimaBarProps {
 export default function LimaBar({ chatHref = '/farmer?chat=1', staff = false, inPlace = false }: LimaBarProps) {
   const { t, lang } = useLanguage();
   const sampleRole = useSampleRole();
+  const workspace = useSampleWorkspace();
   const fileRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [photo, setPhoto] = useState<File | null>(null);
   const [photoOpen, setPhotoOpen] = useState(false);
+
+  if (workspace === 'rivier-uitsig') return null;
 
   function openPhotoChat(file: File | null) {
     setPhoto(file);

@@ -100,7 +100,8 @@ function farmer() {
   const state: { data: ReturnType<typeof location> | null; loading: boolean; error: string; sheetOpen: boolean } = { data: null, loading: false, error: '', sheetOpen: false };
   const context = { monthlyTemperatureStatus, withLocalRainfallSeason, localStorage: storage, locationRequest: { current: 0 }, loadPlaces: () => [],
     designSiteIdFromLocation: (value: { lat: number; lon: number }) => JSON.stringify([value?.lat, value?.lon]),
-    useCallback: (callback: unknown) => callback, paidApiHeaders: async () => ({}), isFictionalSampleLocation: () => false,
+    useCallback: (callback: unknown) => callback, paidApiHeaders: async () => ({}),
+    getSampleWorkspace: () => null, isFictionalSampleLocation: () => false,
     fetch: (...args: Parameters<typeof fetch>) => globalThis.fetch(...args), networkFailureMessage: () => 'Reload unavailable', t: (key: string) => key,
     setData: (value: ReturnType<typeof location> | null) => { state.data = value; }, setLoading: (value: boolean) => { state.loading = value; },
     setError: (value: string) => { state.error = value; }, setSheetOpen: (value: boolean) => { state.sheetOpen = value; },
@@ -109,11 +110,11 @@ function farmer() {
   const select = new Function('context', 'with(context){' + farmerExecutable + ';return handleLocationSelect;}')(context) as (lat: number, lon: number, options?: { openDetails?: boolean }) => Promise<void>;
   return { state, select, currentData: (): ReturnType<typeof location> | null => state.data };
 }
-function design(fictional = false) {
+function design(fictional = false, workspace: string | null = null) {
   const state: { data: ReturnType<typeof location> | null } = { data: null };
   const context = { window: globalThis.window, localStorage: storage, monthlyTemperatureStatus, withLocalRainfallSeason, hasSite: true, ...point,
     paidApiHeaders: async () => ({}), fetch: (...args: Parameters<typeof fetch>) => globalThis.fetch(...args),
-    isFictionalSampleLocation: () => fictional,
+    getSampleWorkspace: () => workspace, isFictionalSampleLocation: () => fictional,
     setLocationData(value: ReturnType<typeof location> | null) { state.data = value; }, AbortController,
   };
   const refresh = new Function('context', 'with(context){' + designExecutable + ';return refresh;}')(context) as () => () => void;
@@ -132,12 +133,25 @@ test('opening the fictional market garden in Design Studio clears prior data wit
   assert.equal(storage.rows.get(cached.key), cached.bytes);
 });
 
-test('the crop planner reports missing climate for the fictional market garden without asking the provider', async () => {
+test('opening Rivier Uitsig Design Studio does not reuse or request evidence for an arbitrary anchor', async () => {
+  const cached = seed(location());
+  const h = design(false, 'rivier-uitsig');
+  h.state.data = location();
+  assert.equal(h.refresh(), undefined);
+  await settle();
+  assert.equal(h.currentData(), null);
+  assert.deepEqual(requests, []);
+  assert.deepEqual(storage.writes, []);
+  assert.equal(storage.rows.get(cached.key), cached.bytes);
+});
+
+for (const workspace of ['green-horizon', 'rivier-uitsig'] as const) test('the crop planner holds live climate for ' + workspace, async () => {
   const snapshots: unknown[] = [];
   const readClimate = (lat: number, lon: number) => climate.resolveSiteClimate(lat, lon);
   const context = {
     allowCataloguePlanning: true, climateSiteKey: 'demo-site', siteLat: point.lat, siteLon: point.lon,
-    isFictionalSampleLocation: () => true, resolveSiteClimate: readClimate,
+    getSampleWorkspace: () => workspace,
+    isFictionalSampleLocation: () => workspace === 'green-horizon', resolveSiteClimate: readClimate,
     setClimateSnapshot: (snapshot: unknown) => snapshots.push(snapshot),
   };
   const refresh = new Function('context', 'with(context){' + plannerExecutable + ';return refresh;}')(context) as () => void;

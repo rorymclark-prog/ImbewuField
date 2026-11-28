@@ -333,7 +333,7 @@ test('inline help loads the photo composer only when opened and preserves the se
   const compiled = ts.transpileModule(source('../components/LimaBar.tsx'), { compilerOptions: {
     target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX,
   } }).outputText;
-  const state = { chatImports: 0, pickerClicks: 0, dialogOpens: 0, sample: true, lang: 'en' };
+  const state = { chatImports: 0, pickerClicks: 0, dialogOpens: 0, sample: true, lang: 'en', workspace: null as string | null };
   const photoProps: Array<{ initialFile: unknown; appLang: string; locationData: unknown }> = [];
   const icon = () => null;
   const output: { exports: { default?: React.ComponentType<{ inPlace?: boolean }> } } = { exports: {} };
@@ -344,7 +344,7 @@ test('inline help loads the photo composer only when opened and preserves the se
     if (name === 'react/jsx-runtime') return jsxRuntime;
     if (name === 'lucide-react') return { Camera: icon, Loader2: icon, MessageCircleQuestion: icon, X: icon };
     if (name === '@/lib/i18n') return { useLanguage: () => ({ t: (key: string) => key, lang: state.lang }) };
-    if (name === '@/lib/use-role-navigation') return { useSampleRole: () => state.sample };
+    if (name === '@/lib/use-role-navigation') return { useSampleRole: () => state.sample, useSampleWorkspace: () => state.workspace };
     if (name === 'next/link') return { default: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => React.createElement('a', props, children) };
     if (name === 'next/dynamic') return { default: (load: () => Promise<{ default: React.ComponentType }>, options: { loading: React.ComponentType }) => {
       const Deferred = React.lazy(load);
@@ -369,6 +369,12 @@ test('inline help loads the photo composer only when opened and preserves the se
       } });
     });
     const photoButton = () => renderer!.root.findAllByType('button').find(button => button.children.includes('limaPhotoButton'))!;
+    state.workspace = 'rivier-uitsig';
+    mount();
+    assert.equal(renderer!.toJSON(), null);
+    assert.equal(state.chatImports, 0);
+    act(() => renderer!.unmount()); renderer = undefined;
+    state.workspace = null;
     mount();
     assert.equal(renderer!.root.findByType('a').props.href, '/farmer?chat=1', 'existing callers keep their navigation link');
     assert.equal(state.chatImports, 0, 'reading the page must not import the full composer');

@@ -41,6 +41,8 @@ const sample = await import('../lib/sample-mode.ts');
 const { DEMO_SITE, buildDemoStorageSeeds } = await import('../lib/demo-farm.ts');
 const { GREEN_HORIZON_SITE, buildGreenHorizonLettuceTarget, buildGreenHorizonChardTarget, buildGreenHorizonPlanningDraft,
   buildGreenHorizonWeeklyPracticeDraft, buildGreenHorizonStorageSeeds } = await import('../lib/green-horizon-demo.ts');
+const { RIVIER_UITSIG_SITE, RIVIER_UITSIG_SITE_ID } = await import('../lib/rivier-uitsig-layout.ts');
+const { buildRivierUitsigPlanningDraft } = await import('../lib/rivier-uitsig-demo.ts');
 const { weeklyProductionOrders } = await import('../lib/international/grower-weekly-production.ts');
 const { loadCropPlan, saveCropPlanWithReceipt } = await import('../lib/crop-plan.ts');
 const { readCanvasSourceReceipt } = await import('../lib/design-canvas.ts');
@@ -331,6 +333,65 @@ test('the Green Horizon practice inputs produce a saved cycle with an explicitly
   assert.deepEqual(loadCropPlan().plantings.find(row => row.id === accepted.rows[0].id), accepted.rows[0]);
   assert.equal(sample.getSandboxProduction()[0].kg, 6);
   assert.equal(sample.getSandboxSales()[0].kg, 4);
+});
+
+test('Rivier Uitsig checks all 16 mapped beds and reopens both saved practice cycles in its own workspace', async () => {
+  reset();
+  realLocal.setItem('private-rivier-canary', 'personal bytes');
+  const personal = [...realLocal.rows];
+  assert.ok(sample.enterSampleMode('rivier-uitsig'));
+  assert.deepEqual(sample.getSampleMapSite(), RIVIER_UITSIG_SITE);
+  assert.equal(sample.isFictionalSampleLocation(RIVIER_UITSIG_SITE.lat, RIVIER_UITSIG_SITE.lon), true);
+  assert.equal(sample.isFictionalSampleLocation(GREEN_HORIZON_SITE.lat, GREEN_HORIZON_SITE.lon), false);
+  assert.equal(sample.getSandboxProfile().farm_name, 'Rivier Uitsig');
+  assert.equal(realLocal.getItem('private-rivier-canary'), null);
+  assert.deepEqual(sample.getSandboxProduction(), []);
+  assert.deepEqual(sample.getSandboxSales(), []);
+  const book = loadCropPlan();
+  assert.deepEqual(book.plantings, []);
+  assert.equal(book.harvestTargets?.every(row => row.siteId === RIVIER_UITSIG_SITE_ID), true);
+  const practice = buildRivierUitsigPlanningDraft();
+  assert.equal(practice.assumptionsConfirmed, false);
+  assert.deepEqual(practice.available.map(row => [row.bedId, row.confirmed]), [
+    ['rivier-uitsig-bed-a01', false], ['rivier-uitsig-bed-b01', false],
+  ]);
+
+  const receipt = readCanvasSourceReceipt(RIVIER_UITSIG_SITE_ID);
+  assert.equal(receipt.status, 'ready');
+  const source = await fingerprintGrowerWorkflowSource(inspectGrowerWorkflowSource({
+    kind: 'studio-canvas', sourceId: RIVIER_UITSIG_SITE_ID, raw: receipt.raw, sourceRevision: receipt.revision,
+  }));
+  assert.equal(source.status, 'ready');
+  assert.equal(source.beds.length, 16);
+  assert.ok(Math.abs(source.beds.reduce((sum, bed) => sum + bed.areaM2, 0) - 460.8) < 0.001);
+  const draft = { ...practice, assumptionsConfirmed: true, available: practice.available.map(row => ({ ...row, confirmed: true })) };
+  const recordedAt = '2026-11-28T10:00:00.000Z';
+  const review = assembleGrowerWorkflowReview({ scope: source.scope, source, book, draft, recordedAt });
+  assert.equal(review.status, 'review', review.issues.join(', '));
+  assert.equal(review.proposal.status, 'ready');
+  assert.deepEqual(review.proposal.cycles.map(row => [row.bedId, row.assessment.schedule.firstHarvestDate]), [
+    ['rivier-uitsig-bed-a01', '2026-11-02'], ['rivier-uitsig-bed-b01', '2026-11-09'],
+  ]);
+  const accepted = prepareGrowerWorkflowAcceptance({ scope: source.scope, source, book, review,
+    binding: { draft, source, recordedAt }, acceptedAt: recordedAt,
+    plantingIds: review.proposal.cycles.map((row, index) => ({ cycleId: row.cycleId, plantingId: `rivier-practice-accepted-${index}` })),
+  });
+  assert.equal(accepted.status, 'prepared');
+  assert.ok(saveCropPlanWithReceipt(accepted.book).saved);
+  assert.deepEqual(loadCropPlan().plantings, accepted.rows);
+  assert.deepEqual(sample.getSandboxProduction(), []);
+
+  assert.ok(sample.enterSampleMode('green-horizon'));
+  assert.equal(sample.getSandboxProduction()[0].kg, 6);
+  assert.equal(sample.getSandboxSales()[0].kg, 4);
+  assert.equal(realLocal.getItem(`imbewu_design_canvas_${RIVIER_UITSIG_SITE_ID}`), null);
+  assert.ok(sample.enterSampleMode('ubhejane'));
+  assert.deepEqual(sample.getSampleMapSite(), DEMO_SITE);
+  assert.ok(sample.enterSampleMode('rivier-uitsig'));
+  assert.deepEqual(loadCropPlan().plantings, []);
+  assert.deepEqual(sample.getSandboxSales(), []);
+  sample.exitSampleMode();
+  assert.deepEqual([...realLocal.rows], personal);
 });
 
 test('a refused workspace switch preserves the active sample isolation and edits', () => {

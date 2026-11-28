@@ -25,7 +25,8 @@ import { useLanguage, translate } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
-import { getSampleMapSite, isFictionalSampleLocation, isSampleMode } from '@/lib/sample-mode';
+import { getSampleMapSite, getSampleWorkspace, isFictionalSampleLocation, isSampleMode } from '@/lib/sample-mode';
+import { useSampleWorkspace } from '@/lib/use-role-navigation';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { monthlyTemperatureStatus } from '@/lib/climate-temperature';
@@ -55,11 +56,21 @@ const PermaMap = dynamic(() => import('@/components/Map'), { ssr: false });
 const ReportView = dynamic(() => import('@/components/ReportView'), { ssr: false });
 
 export default function Home() {
+  const workspace = useSampleWorkspace();
+  if (workspace === 'rivier-uitsig') return <RivierPracticeMap />;
   return (
     <Suspense>
       <HomeInner />
     </Suspense>
   );
+}
+
+function RivierPracticeMap() {
+  const router = useRouter();
+  useEffect(() => { router.replace('/samples/rivier-uitsig'); }, [router]);
+  return <main className="p-4">
+    <Link href="/samples/rivier-uitsig" prefetch={false} className="inline-flex min-h-11 items-center underline">Open Rivier Uitsig field layout</Link>
+  </main>;
 }
 
 function HomeInner() {
@@ -274,7 +285,7 @@ function HomeInner() {
     if (options?.openDetails !== false) {
       setSheetOpen(true);
     }
-    if (isFictionalSampleLocation(lat, lon)) {
+    if (getSampleWorkspace() === 'rivier-uitsig' || isFictionalSampleLocation(lat, lon)) {
       // A fictional farm opens on its saved map without looking up or
       // attributing real terrain, soil or weather to the schematic town marker.
       setLoading(false);
@@ -553,6 +564,7 @@ function HomeInner() {
 
   // Render nothing while auth resolves (or while redirecting to /login) —
   // except in sample mode, where there's no real user to wait for.
+  if (getSampleWorkspace() === 'rivier-uitsig') return null; // Hydration may mount this before the sample redirect.
   if (isBackendConfigured() && (authLoading || !user) && !isSampleMode()) return null;
 
   return (

@@ -35,6 +35,7 @@ export interface GrowerAutoPlanPanelProps {
   targetSiteId: string | null;
   practiceDraft?: GrowerWorkflowDraft;
   weeklyPracticeDraft?: GrowerWorkflowDraft;
+  rivierPractice?: boolean;
   onRefresh: () => Promise<void>;
   onReview: (draft: GrowerWorkflowDraft) => Promise<GrowerWorkflowReview>;
   onReviewAvailability?: (value: ReviewedBedAvailability | null) => void;
@@ -348,8 +349,10 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
       {props.sourceIssue && <p role="status">{props.sourceIssue}</p>}
       {!props.source && <p>No current design has been checked for this review.</p>}
       {practice && <>
-        <p>Check the saved design, then load the fictional lettuce estimate and proposed dates for bed A1. Confirm its availability and the planning assumptions before reviewing the cycle.</p>
-        {props.source && !practiceReady && <p>The original target, estimate or bed has changed. Choose current inputs below or <Link className="underline" href="/samples/market-garden">return to the example to reset it</Link>.</p>}
+        <p>{props.rivierPractice
+          ? 'Check the saved design, then load the fictional crop estimates and proposed dates for the two practice beds. Confirm their availability and the planning assumptions before reviewing the cycles.'
+          : 'Check the saved design, then load the fictional lettuce estimate and proposed dates for bed A1. Confirm its availability and the planning assumptions before reviewing the cycle.'}</p>
+        {props.source && !practiceReady && <p>The original target, estimate or bed has changed. Choose current inputs below or <Link className="underline" href={props.rivierPractice ? '/samples/rivier-uitsig' : '/samples/market-garden'}>return to the example to reset it</Link>.</p>}
         <button type="button" className={button} disabled={!practiceReady || props.checking || busy || saving}
           onClick={() => loadPractice(practice)}>Load practice inputs</button>
         {weeklyPractice && <button type="button" className={button} disabled={!practiceIsReady(weeklyPractice) || props.checking || busy || saving}

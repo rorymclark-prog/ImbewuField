@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useId } from 'react';
 import { usePathname } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import { useSampleWorkspace } from '@/lib/use-role-navigation';
 import { listenForOverlay } from '@/lib/overlay-signal';
 import { Sprout, X, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
@@ -44,6 +45,7 @@ const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), textarea:not([disab
  */
 export default function ChatWidget() {
   const pathname = usePathname() || '';
+  const hideForPractice = useSampleWorkspace() === 'rivier-uitsig' || pathname === '/samples/rivier-uitsig';
   const { t, lang } = useLanguage();
   const [open, setOpen] = useState(false);
   const titleId = useId();
@@ -156,7 +158,7 @@ export default function ChatWidget() {
   // sheet/overlay — nothing to clear then. A page that never reads the variable is unaffected.
   useEffect(() => {
     const root = document.documentElement;
-    if (isLimaFabHiddenRoute(pathname) || open || drawing || overlay || fabPos) {
+    if (hideForPractice || isLimaFabHiddenRoute(pathname) || open || drawing || overlay || fabPos) {
       root.style.setProperty('--lima-fab-clearance', '0px');
       return;
     }
@@ -171,7 +173,7 @@ export default function ChatWidget() {
     update();
     window.addEventListener('resize', update);
     return () => window.removeEventListener('resize', update);
-  }, [pathname, open, drawing, overlay, fabPos]);
+  }, [pathname, hideForPractice, open, drawing, overlay, fabPos]);
 
   // Skip on auth pages, home (which has LimaBar), the Design Studio (its
   // bottom-docked tool palette owns the bottom-left corner — the FAB covered Select), the
@@ -180,6 +182,7 @@ export default function ChatWidget() {
   // why no repositioning fixes those two (a permanently-parked map legend, and a farmer list that
   // fills the whole scrollable area) — and the /pitch projector deck (a chat FAB floating over a
   // presentation slide, and over the live app already embedded inside it, helps nobody).
+  if (hideForPractice) return null;
   if (
     // Studies and its task guides use inline help so the floating launcher cannot cover reading.
     pathname === '/student' || pathname.startsWith('/student/guides/') ||

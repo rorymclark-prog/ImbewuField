@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
 import test, { after, beforeEach } from 'node:test';
+import { setTimeout as delay } from 'node:timers/promises';
 import ts from 'typescript';
 import React from 'react';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
@@ -363,7 +364,12 @@ test('a retained actual operations-hook callback cannot adopt a newer ready sour
   let renderer!: ReactTestRenderer;
   try {
     await act(async () => { renderer = create(React.createElement(Harness)); });
-    for (let i = 0; i < 20 && view.status === 'loading'; i++) await act(async () => { await new Promise<void>(done => setImmediate(done)); });
+    // The actual source uses asynchronous Web Crypto. Event-loop ticks can
+    // finish before its worker has run, especially during parallel CI.
+    const initialReadDeadline = performance.now() + 5_000;
+    while (view.status === 'loading' && performance.now() < initialReadDeadline) {
+      await act(async () => { await delay(10); });
+    }
     const first = view; assert.equal(first.status, 'ready'); if (first.status !== 'ready') throw Error('Actual hook did not finish source check');
     const task = buildGrowerBoardTasks(first.book.plantings, first.contexts, new Date(), new Set()).tasks[0]; assert.ok(task?.growerJournalLink);
     const retained = first.onRecordObservation;

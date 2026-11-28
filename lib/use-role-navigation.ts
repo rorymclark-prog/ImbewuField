@@ -17,7 +17,7 @@ export function useSampleRole() {
   return useSyncExternalStore(subscribe, () => {
     const workspace = getSampleWorkspace();
     if (!workspace) return '';
-    if (workspace === 'green-horizon') return 'farmer';
+    if (workspace !== 'ubhejane') return 'farmer';
     try { const role = sessionStorage.getItem(KEY); return role && ROLES.includes(role) ? role : 'sample'; } catch { return 'sample'; }
   }, () => '');
 }
@@ -38,7 +38,8 @@ export function startRolePreview(role: string): boolean {
 }
 
 export function openRolePreview(role: string, href: string, navigate: (href: string) => void): boolean {
-  const switchingWorkspace = getSampleWorkspace() === 'green-horizon';
+  const workspace = getSampleWorkspace();
+  const switchingWorkspace = workspace !== null && workspace !== 'ubhejane';
   if (!startRolePreview(role)) return false;
   if (switchingWorkspace) window.location.assign(href);
   else navigate(href);

@@ -11,6 +11,8 @@ import { CROPS } from '../lib/crop-catalog.ts';
 import { buildDemoDesignCanvasState } from '../lib/demo-farm.ts';
 import { bedsFromDesignCanvas } from '../lib/design-beds-bridge.ts';
 import { buildGreenHorizonCropPlan, buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonStorageSeeds } from '../lib/green-horizon-demo.ts';
+import { buildRivierUitsigCropPlan, buildRivierUitsigPlanningDraft } from '../lib/rivier-uitsig-demo.ts';
+import { buildRivierUitsigStorageSeeds, RIVIER_UITSIG_SITE_ID } from '../lib/rivier-uitsig-layout.ts';
 import type { CropPlanState, HarvestTarget } from '../lib/crop-plan.ts';
 import type { GrowerPlanningProfile, GrowerInput } from '../lib/international/grower-planning.ts';
 import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
@@ -90,6 +92,51 @@ test('the production overview reads the accepted cycle from the plan after reope
   assert.match(html, /Saved plan as accepted · field entry 1 Oct 2026 · picking 2 Nov 2026 – 4 Nov 2026/);
   assert.doesNotMatch(html, /Worked example · field entry 1 Oct 2026/);
   assert.match(html, /A1 · Salad greens · 2 Nov 2026 – 4 Nov 2026 · accepted plan/);
+});
+
+test('Rivier Uitsig shows two fictional sow and pick cycles on the mapped beds before explicit acceptance', async () => {
+  const siteId = RIVIER_UITSIG_SITE_ID;
+  const raw = JSON.parse(buildRivierUitsigStorageSeeds()[`imbewu_design_canvas_${siteId}`]);
+  const source = await fingerprintGrowerWorkflowSource(inspectGrowerWorkflowSource({
+    kind: 'studio-canvas', sourceId: siteId, raw, sourceRevision: 'rivier-uitsig-practice-render-fixture',
+  }));
+  assert.equal(source.status, 'ready');
+  if (source.status !== 'ready') assert.fail('Practice bed geometry must pass the native planner source checks');
+  const plan = buildRivierUitsigCropPlan();
+  const practice = buildRivierUitsigPlanningDraft();
+  const render = (book: CropPlanState) => renderToStaticMarkup(React.createElement(ProductionPlan, {
+    siteId, beds: source.beds, plan: book, source, rivierPractice: practice,
+  }));
+  const first = render(plan);
+  assert.match(first, /Rivier Uitsig production plan/);
+  assert.match(first, /16 mapped beds · 460\.8 m²/);
+  assert.match(first, /14 other mapped beds/);
+  assert.match(first, /Crop, sowing and picking dates are unknown/);
+  assert.match(first, /Actual harvest, sales and deliveries are unknown/);
+  assert.match(first, /Worked example · direct sowing 1 Oct 2026 · pick 2 Nov 2026 – 4 Nov 2026/);
+  assert.match(first, /Worked example · direct sowing 8 Oct 2026 · pick 9 Nov 2026 – 11 Nov 2026/);
+  assert.match(first, /Estimated 17\.28 kg for the cycle/);
+  assert.doesNotMatch(first, /Saved plan as accepted/);
+  assert.deepEqual(plan.plantings, [], 'viewing the practice plan does not save an accepted cycle');
+  assert.equal(practice.assumptionsConfirmed, false);
+  assert.ok(practice.available.every(bed => !bed.confirmed));
+
+  const draft = { ...practice, assumptionsConfirmed: true, available: practice.available.map(row => ({ ...row, confirmed: true })) };
+  const review = assembleGrowerWorkflowReview({ scope: source.scope, source, book: plan, draft, recordedAt });
+  assert.equal(review.status, 'review');
+  if (review.status !== 'review') assert.fail('Both practice cycles must be reviewable');
+  assert.deepEqual(review.proposal.cycles.map(cycle => cycle.bedId), [
+    'rivier-uitsig-bed-a01', 'rivier-uitsig-bed-b01',
+  ]);
+  const accepted = prepareGrowerWorkflowAcceptance({ scope: source.scope, source, book: plan, review,
+    binding: { draft, source, recordedAt }, acceptedAt: recordedAt,
+    plantingIds: review.proposal.cycles.map((cycle, index) => ({ cycleId: cycle.cycleId, plantingId: `rivier-uitsig-practice-${index}` })) });
+  assert.equal(accepted.status, 'prepared');
+  if (accepted.status !== 'prepared') assert.fail('The confirmed review must prepare both sample cycles for saving');
+  const reopened = render(accepted.book);
+  assert.equal(reopened.match(/Saved plan as accepted · direct sowing/g)?.length, 2);
+  assert.doesNotMatch(reopened, /Worked example · direct sowing/);
+  assert.match(reopened, /Actual harvest, sales and deliveries are unknown/);
 });
 
 // Synthetic review fixtures. These are neither crop instructions nor equipment defaults.

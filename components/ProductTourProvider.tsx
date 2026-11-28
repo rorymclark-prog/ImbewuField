@@ -116,7 +116,7 @@ export default function ProductTourProvider({ children }: { children: React.Reac
     try { prepareSampleFarm(); }
     catch { setError('The example farm could not load. Please try again.'); return; }
     if (save({ ...empty, active: true })) {
-      if (previousWorkspace === 'green-horizon' && pathname !== '/tour') window.location.assign('/tour');
+      if (previousWorkspace && previousWorkspace !== 'ubhejane' && pathname !== '/tour') window.location.assign('/tour');
       else setExpanded(true);
     }
   }

@@ -6,6 +6,8 @@ import ts from 'typescript';
 import { bindSiteContext, createSiteCountryContext } from '../lib/international/site-context.ts';
 import { resolvePlanningSupport } from '../lib/international/planning-policy.ts';
 import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonWeeklyPracticeDraft } from '../lib/green-horizon-demo.ts';
+import { buildRivierUitsigPlanningDraft } from '../lib/rivier-uitsig-demo.ts';
+import { RIVIER_UITSIG_SITE_ID } from '../lib/rivier-uitsig-layout.ts';
 
 import { createProvisionalCycleContext } from '../lib/international/provisional-profile.ts';
 import { weeklyAcceptedCycles } from '../lib/international/grower-weekly-production.ts';
@@ -18,23 +20,28 @@ const source = readFileSync(new URL('../app/facilitator/crops/page.tsx', import.
 const page = ts.createSourceFile('page.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 let ownSection: ts.Expression | undefined;
 let productionOverview: ts.Expression | undefined;
+let rivierPracticeDeclaration: ts.VariableStatement | undefined;
+let rivierProductionOverview: ts.Expression | undefined;
 const weeklyDeclarations = new Map<string, ts.VariableStatement>();
 const targetNodes: ts.JsxSelfClosingElement[] = [];
 const ownReferences: ts.JsxExpression[] = [];
 function visit(node: ts.Node) {
   if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === 'growerPlanningPanel') ownSection = node.initializer;
   if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === 'greenHorizonProduction') productionOverview = node.initializer;
+  if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === 'rivierUitsigProduction') rivierProductionOverview = node.initializer;
   if (ts.isVariableStatement(node)) {
     const name = node.declarationList.declarations[0]?.name;
     if (name && ts.isIdentifier(name) && ['checkedGrowerCycleContext', 'weeklyTargets', 'weeklyProduction'].includes(name.text)) {
       weeklyDeclarations.set(name.text, node);
     }
+    if (name && ts.isIdentifier(name) && name.text === 'rivierUitsigPractice') rivierPracticeDeclaration = node;
   }
   if (ts.isJsxSelfClosingElement(node) && node.tagName.getText(page) === 'HarvestTargetsPanel') targetNodes.push(node);
   if (ts.isJsxExpression(node) && node.expression && ts.isIdentifier(node.expression) && node.expression.text === 'growerPlanningPanel') ownReferences.push(node);
   ts.forEachChild(node, visit);
 }
 visit(page); assert.ok(ownSection, 'Actual route own-planning section must be inspectable');
+assert.ok(rivierPracticeDeclaration, 'Actual Rivier Uitsig practice binding must be inspectable');
 function explicitOwn(node: ts.JsxSelfClosingElement) {
   return node.attributes.properties.some(attribute => ts.isJsxAttribute(attribute) && attribute.name.getText(page) === 'basis'
     && attribute.initializer && ts.isStringLiteral(attribute.initializer) && attribute.initializer.text === 'own-records');
@@ -61,13 +68,14 @@ const legacyExpression = `(${legacyCountry.condition.getText(page)}) ? (${contai
 // boundary here; its actual UI/source lifecycle has its own mounted tests.
 const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel', 'GreenHorizonProductionPlan', 'GrowerWeeklyProduction'];
 const boundaries = Object.fromEntries(names.map(name => [name, function Boundary() { return null; }]));
-function compile(expression: string): (input: Record<string, unknown>) => unknown {
-  const compiled = ts.transpileModule(`function view(){return (${expression});}`, { compilerOptions: {
+function compile(expression: string, declarations = ''): (input: Record<string, unknown>) => unknown {
+  const compiled = ts.transpileModule(`function view(){${declarations} return (${expression});}`, { compilerOptions: {
     target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None, jsx: ts.JsxEmit.React,
   } }).outputText;
   return Function('React', 'boundaries', `const {${names.join(',')}}=boundaries;return input=>{with(input){${compiled};return view();}}`)(React, boundaries);
 }
-const renderOwn = compile(ownSection.getText(page)), renderLegacy = compile(`<>{${legacyExpression}}</>`);
+const rivierPracticeBinding = rivierPracticeDeclaration.getText(page);
+const renderOwn = compile(ownSection.getText(page), rivierPracticeBinding), renderLegacy = compile(`<>{${legacyExpression}}</>`);
 function elements(value: unknown): React.ReactElement<Record<string, unknown>>[] {
   if (!React.isValidElement<Record<string, unknown>>(value)) return [];
   const children = value.props.children;
@@ -107,6 +115,7 @@ function input(allowCataloguePlanning: boolean) {
       onCheckPreviewSource() { throw Error('Consumer mount must not read preview source automatically'); }, acceptance: { status: 'idle' }, savedNurseryReview: null },
     placeName: 'Engineering source', designTitle: 'Engineering design', growerSample: false, growerOwner: 'fixture-owner',
     getSampleWorkspace: () => null, buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonWeeklyPracticeDraft,
+    buildRivierUitsigPlanningDraft, RIVIER_UITSIG_SITE_ID,
     countryPlaces: [{ id: 'fictional-place', name: 'Engineering fixture' }],
     siteClimate: null, hasSiteCoords: false, siteLat: 0, siteSurvey: null, saved,
     exportSavedGrowerRecord,
@@ -208,7 +217,50 @@ test('the filled production overview uses the active Green Horizon mapped plan o
   assert.equal(overview.props.siteId, selected.productionSiteId);
   assert.equal(render({ ...selected, getSampleWorkspace: () => null }), null);
   assert.equal(render({ ...selected, getSampleWorkspace: () => 'ubhejane' }), null);
+  assert.equal(render({ ...selected, getSampleWorkspace: () => 'rivier-uitsig' }), null);
   assert.equal(render({ ...selected, productionSiteId: siteId }), null);
+});
+
+test('Rivier Uitsig opens the filled overview and both draft cycles only at its own mapped sample site', () => {
+  assert.ok(rivierProductionOverview);
+  const render = compile(rivierProductionOverview.getText(page), rivierPracticeBinding);
+  const fixture = input(false);
+  const selected = {
+    ...fixture, productionSiteId: RIVIER_UITSIG_SITE_ID, growerSample: true,
+    getSampleWorkspace: () => 'rivier-uitsig',
+  };
+  const overview = elements(render(selected)).find(element => element.type === boundaries.GreenHorizonProductionPlan);
+  assert.ok(overview);
+  assert.equal(overview.props.plan, fixture.plan);
+  assert.equal(overview.props.beds, fixture.beds);
+  assert.equal(overview.props.siteId, RIVIER_UITSIG_SITE_ID);
+  assert.deepEqual(overview.props.rivierPractice, buildRivierUitsigPlanningDraft());
+  const panel = (args: Record<string, unknown>) => elements(renderOwn(args))
+    .find(element => element.type === boundaries.GrowerAutoPlanPanel)?.props;
+  const practice = panel(selected);
+  assert.equal(practice?.rivierPractice, true);
+  assert.equal(practice?.weeklyPracticeDraft, undefined);
+  assert.deepEqual(practice?.practiceDraft, buildRivierUitsigPlanningDraft());
+  assert.equal(fixture.saved.length, 0);
+  for (const other of [
+    { ...selected, getSampleWorkspace: () => null, growerSample: false },
+    { ...selected, getSampleWorkspace: () => 'ubhejane' },
+    { ...selected, getSampleWorkspace: () => 'green-horizon' },
+    { ...selected, productionSiteId: siteId },
+    { ...selected, productionSiteId: buildGreenHorizonLettuceTarget().siteId },
+  ]) {
+    assert.equal(render(other), null);
+    assert.equal(panel(other)?.practiceDraft, undefined);
+  }
+});
+
+test('the Rivier Uitsig practice anchor never enables a modelled-climate request', () => {
+  const preview = (workspace: string | null) => elements(renderOwn({
+    ...input(false), productionSiteId: RIVIER_UITSIG_SITE_ID, hasSiteCoords: true, siteLat: 0.5, siteLon: 0.5,
+    getSampleWorkspace: () => workspace,
+  })).find(element => element.type === boundaries.ProvisionalCropPreview)?.props;
+  assert.equal(preview('rivier-uitsig')?.sitePoint, null);
+  assert.deepEqual(preview(null)?.sitePoint, { latitude: 0.5, longitude: 0.5 });
 });
 
 test('an absent current plan passes empty target rows rather than borrowing another source', () => {

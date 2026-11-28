@@ -15,7 +15,8 @@ import { deliverFieldLayoutExport } from '@/lib/field-layout-delivery';
 import { readFieldLayoutImportFile, beginFieldLayoutImportAppend, discardFieldLayoutImport } from '@/lib/field-layout-import-delivery';
 import { readFieldBlockAllocations, fieldBlockAllocatedIds, assertFieldBlockAllocationsCurrent,
   assertFieldBlockLayoutReadable, fieldBlockSourceKey } from '@/lib/field-block-allocations';
-import { isFictionalSampleLocation, isSampleMode } from '@/lib/sample-mode';
+import { getSampleWorkspace, isFictionalSampleLocation, isSampleMode } from '@/lib/sample-mode';
+import { useSampleWorkspace } from '@/lib/use-role-navigation';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
 import { ArrowLeft, ArrowRight, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock, AlertTriangle, Droplets } from 'lucide-react';
@@ -612,6 +613,7 @@ function EmptyState() {
 
 function DesignStudioInner() {
   const { lang, t } = useLanguage();
+  const rivierPractice = useSampleWorkspace() === 'rivier-uitsig';
   const isZulu = lang === 'zu';
   const tr = (en: string, zu: string) => isZulu ? zu : en;
   // Simple / All tools (lib/app-level.ts). Farmers default to Simple: one fixed layout, the
@@ -1311,7 +1313,7 @@ function DesignStudioInner() {
   // refresh it in the background so every property's sun, terrain and climate evidence is its own.
   useEffect(() => {
     if (!hasSite) return;
-    if (isFictionalSampleLocation(lat, lon)) {
+    if (getSampleWorkspace() === 'rivier-uitsig' || isFictionalSampleLocation(lat, lon)) {
       setLocationData(null);
       return;
     }
@@ -1361,6 +1363,7 @@ function DesignStudioInner() {
       // self-inflicted flicker.
       if (evt?.type === DESIGN_CANVAS_CHANGED_EVENT && selfSaveInProgress) return;
 
+      const practiceBlankBase = getSampleWorkspace() === 'rivier-uitsig';
       const saved0 = loadDesignStudioState(siteId);
       const mergedAll = mergeFarmShapesIntoDesignState(readLocalFarmShapes(), saved0, siteId);
       // The main map stores traced shapes GLOBALLY, so mergedAll can contain another
@@ -1378,7 +1381,7 @@ function DesignStudioInner() {
       let boundaryLayer =
         merged.layers.find((l) => l.layerType === 'property_boundary' && l.approved) ??
         merged.layers.find((l) => l.layerType === 'property_boundary');
-      if (!boundaryLayer) {
+      if (!boundaryLayer && !practiceBlankBase) {
         // The merge classifies the GLOBALLY-largest shape as property_boundary — which may
         // belong to another site and get dropped by the near-site filter above. Promote the
         // largest NEAR land polygon so this site still has a working boundary (fit, refs,
@@ -1462,13 +1465,17 @@ function DesignStudioInner() {
       // satellite tile in first. A farmer who never uploads a photo gets undefined/null here and
       // every branch below behaves exactly as it did before this feature existed.
       const savedForBase = loadCanvasState(siteId);
-      const savedBaseMode = designBaseMode(savedForBase);
+      const savedBaseMode = practiceBlankBase ? 'blank' : designBaseMode(savedForBase);
       const customBase = savedBaseMode === 'photo' ? (savedForBase?.customBase ?? null) : null;
       // The farmer's own scale correction rides on top of whichever base is in play, so it must be
       // re-applied every time the frame is rebuilt — otherwise a reload silently reverts him to the
       // projection's metres, which is the very number he corrected.
       const savedScale = savedForBase?.scaleFactor;
       const withScale = <T extends { mPerPx: number }>(f: T): T => ({ ...f, mPerPx: scaledMPerPx(f.mPerPx, savedScale) });
+      const practiceBase = (state: DesignCanvasState): DesignCanvasState => {
+        if (!practiceBlankBase || designBaseMode(state) === 'blank') return state;
+        return setDesignBaseMode(state, 'blank', activeBaseMPerPx(state, withScale(frameNoImg).mPerPx));
+      };
       // A CUSTOM BASE CARRIES ITS OWN SCALE AND MUST NOT INHERIT THE SATELLITE'S CORRECTION.
       // scaleFactor is the farmer's correction to the SATELLITE's metres — measured against
       // satellite pixels. customBase.mPerPx comes from their two-point calibration on the drone
@@ -1565,7 +1572,9 @@ function DesignStudioInner() {
       // migration and the setCanvasState that loads the farmer's zones, items and lines — must
       // still run. Returning here would open safe mode on an EMPTY design, which reads as "the
       // app lost my farm" and would be a far worse bug than the crash it is trying to survive.
-      if (safeMode.active) {
+      // Rivier's synthetic anchor gives the traced rings a shared frame. Querying
+      // imagery at that point would show unrelated land under the practice beds.
+      if (safeMode.active || practiceBlankBase) {
         lastFetchedFrame = { centerLng: frameNoImg.centerLng, centerLat: frameNoImg.centerLat, zoom: frameNoImg.zoom };
         const metres = activeBaseMPerPx(savedForBase, withScale(frameNoImg).mPerPx);
         setFrame({ ...frameNoImg, mPerPx: metres, satDataUrl: null, underlayDataUrl: null });
@@ -1645,7 +1654,8 @@ function DesignStudioInner() {
       setCanvasState((prev) => {
         const existing = loadCanvasState(siteId);
         if (existing) {
-          const migrated = migrateStateToFrame(existing, frameNoImg, project);
+          const base = practiceBase(existing);
+          const migrated = migrateStateToFrame(base, frameNoImg, project);
           // resolveBaseLayers reads migrated.zones — the Studio's own ZoneShape rings, already
           // re-normalised into this frame — so a Studio boundary/house/driveway wins here exactly
           // as it will later when DesignGlossy/DesignPrint/phasing/water-system/producer-labels
@@ -1656,19 +1666,20 @@ function DesignStudioInner() {
           // Keep the stamped copy (bumped rev) when a migration was actually persisted; fall back
           // to the unstamped one if the save failed or was declined above, so the page still
           // shows the design either way.
-          if (migrated !== existing) return persistMigration(migrated);
+          if (migrated !== base) return persistMigration(migrated);
           return migrated;
         }
         if (prev && prev.siteId === siteId) {
-          const migratedPrev = migrateStateToFrame(prev, frameNoImg, project);
+          const base = practiceBase(prev);
+          const migratedPrev = migrateStateToFrame(base, frameNoImg, project);
           const resolved = resolveBaseLayers(migratedPrev, mapRefLayers);
           setRefLayers(resolved);
           setHouseXY(centroidOf(resolved.house));
-          if (migratedPrev !== prev) return persistMigration(migratedPrev);
+          if (migratedPrev !== base) return persistMigration(migratedPrev);
           return migratedPrev;
         }
 
-        const fresh = freshState(siteId, frameNoImg);
+        const fresh = practiceBase(freshState(siteId, frameNoImg));
         const siteElements = loadSiteElements(siteId);
         const items: PlacedItem[] = [];
         for (const el of siteElements) {
@@ -1829,6 +1840,7 @@ function DesignStudioInner() {
   // needs to change for this to "just work" as the new base.
   const applyCustomBase = useCallback(
     (result: BasePhotoApplyResult) => {
+      if (getSampleWorkspace() === 'rivier-uitsig') return;
       loadedCustomBaseUrlRef.current = result.url;
       loadedUnderlayKeyRef.current = null; // refetch the satellite to line the new photo up against
       // A freshly-imported photo arrives already aligned by the aligner itself, so its in-place
@@ -2097,6 +2109,7 @@ function DesignStudioInner() {
   // (customBase is left untouched; only the useCustomBase flag flips), so switching back to
   // "your photo" later needs no re-upload or re-calibration.
   const revertToSatellite = useCallback(() => {
+    if (getSampleWorkspace() === 'rivier-uitsig') return;
     // Claim the base: any photo fetch already in flight now belongs to a base the farmer has
     // moved on from, and must not write its image (or its scale) when it lands.
     const token = baseRequestRef.current + 1;
@@ -2163,6 +2176,7 @@ function DesignStudioInner() {
   // Toggling normally costs no download: the satellite currently painted as the base IS the
   // underlay the photo wants behind it, so it moves across in memory instead of being refetched.
   const restoreCustomBase = useCallback(() => {
+    if (getSampleWorkspace() === 'rivier-uitsig') return;
     const saved = canvasState?.customBase;
     if (!saved) return;
     // Claim the base, so a satellite fetch still in flight from a just-tapped "Satellite" cannot
@@ -2208,12 +2222,13 @@ function DesignStudioInner() {
   // line or metre — because the frame's ground scale never belonged to the photo in the first
   // place (see applyCustomBase), so the farm keeps its size on the satellite exactly as drawn.
   const deleteCustomBase = useCallback(async () => {
+    if (getSampleWorkspace() === 'rivier-uitsig') return;
     const proceed = await appConfirm({
       message: t('designPhotoRemoveConfirm'),
       confirmLabel: t('designPhotoRemove'),
       destructive: true,
     });
-    if (!proceed) return;
+    if (!proceed || getSampleWorkspace() === 'rivier-uitsig') return;
     customBaseSourceRef.current = null;
     revertToSatellite();
     handleChange((prev) => ({ ...prev, customBase: null }));
@@ -3633,7 +3648,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             placeName={siteName}
             geometryLock={geometryLock}
             onGeometryLockChange={setGeometryLock}
-            onImportPhoto={() => setShowPhotoImport(true)}
+            onImportPhoto={rivierPractice ? undefined : () => setShowPhotoImport(true)}
           />
         ) : canvasState && frame ? (
           <>
@@ -3662,7 +3677,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               // Satellite → drone photo → blank, on the canvas itself. These are the same three
               // handlers as the Base step, so blank cannot acquire a second, divergent scale rule.
               basePhoto={
-                basePhotoControls(canvasState).canToggle
+                !rivierPractice && basePhotoControls(canvasState).canToggle
                   ? {
                       mode: designBaseMode(canvasState),
                       hasPhoto: basePhotoControls(canvasState).hasPhoto,
@@ -3677,7 +3692,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               slopeDeg={locationData?.elevation?.slopeDeg}
               aspectDeg={locationData?.elevation?.aspectDeg}
               sectorSite={glossySite}
-              lat={lat}
+              lat={rivierPractice ? undefined : lat}
               refLayers={refLayers}
               selectedId={selectedId}
               selectedIds={selectedIds}
@@ -3776,7 +3791,12 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       {/* Import your own photo — Base step only. Lets a farmer use a drone/aerial photo of their
           own land as the base to draw on, instead of the fetched satellite tile. See
           components/design/BasePhotoImport.tsx and CustomBaseImage (lib/design-canvas.ts). */}
-      {(bottomShow.droneTools || bottomShow.droneEntry) && canvasState && canvasState.step === 'base' && (
+      {rivierPractice && canvasState?.step === 'base' && (
+        <p lang="en" className="px-3 pt-2 text-sm text-[var(--text-secondary)]">
+          This practice layout uses a scaled drawing of approximate field outlines and example beds.
+        </p>
+      )}
+      {!rivierPractice && (bottomShow.droneTools || bottomShow.droneEntry) && canvasState && canvasState.step === 'base' && (
         <div style={{ padding: '6px 12px 0' }}>
           {basePhotoControls(canvasState).canToggle ? (
             <div
@@ -3986,7 +4006,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         </div>
       )}
 
-      {showPhotoImport && (
+      {!rivierPractice && showPhotoImport && (
         <BasePhotoImportLazy
           onApply={applyCustomBase}
           onClose={() => setShowPhotoImport(false)}
@@ -4432,7 +4452,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               geometryLock={geometryLock}
               onGeometryLockChange={setGeometryLock}
               initialFilter={previewFilter}
-              onImportPhoto={() => setShowPhotoImport(true)}
+              onImportPhoto={rivierPractice ? undefined : () => setShowPhotoImport(true)}
             />
           </div>
         </div>

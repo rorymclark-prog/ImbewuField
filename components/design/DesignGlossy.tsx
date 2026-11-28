@@ -63,7 +63,7 @@ import { createRenderSceneSnapshot, decodeRenderSceneSnapshot, type RenderSceneS
 import { buildObliquePrompt, obliqueAnchors, obliqueAnchorBrief, obliqueRoofGuides, obliqueRoofBrief, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueStyleDescription, obliqueTerrainEvidence, paintObliqueReferenceBoard, OBLIQUE_BOARD, OBLIQUE_REVIEW_NOTICE, type AiMapView } from '@/lib/oblique-render';
 import type { RenderEngine } from '@/lib/render-job-contract';
 import { authoritativeHouseFootprints, sameFootprint } from '@/lib/house-footprints';
-import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
+import { getSampleWorkspace, isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
 // components/design/DesignPrint.tsx) keep importing them from this module unchanged.
@@ -9862,6 +9862,10 @@ function drawSectorContextLabels(
 }
 
 async function fetchSectorPresentationContours(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],site:SectorSite|null,illustrated=false):Promise<SheetContourResult> {
+  // Rivier uses a synthetic map anchor. Its layout supplies no surveyed heights.
+  if (getSampleWorkspace() === 'rivier-uitsig') {
+    return { lines: [], intervalM: 0, tooFlat: false, status: 'unavailable', source: null };
+  }
   const elevation=site?.elevation;
   // A presentation crop changes image coordinates but intentionally keeps the saved geographic
   // frame intact. Query the original frame; otherwise resized dimensions move the DEM lookup.
@@ -9893,6 +9897,7 @@ function drawOverviewContourCaption(ctx:CanvasRenderingContext2D,label:string,x:
 
 const TERRAIN_SHEET_LABEL = 'Terrain & Sections';
 async function buildSectorTerrainProfileSheet(state:DesignCanvasState,frame:CanvasFrame,refs:DesignGlossyProps['refLayers'],placeName?:string):Promise<string|null>{
+  if (getSampleWorkspace() === 'rivier-uitsig') return null;
   // Fetch and intersect in the original saved coordinate system. Cropping is paint-time only.
   const raster=await fetchProfileTerrain(frame,refs.boundary,async url=>fetch(url,{headers:await paidApiHeaders(),signal:AbortSignal.timeout(15_000)}));
   if(!raster)return null;

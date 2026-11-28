@@ -50,6 +50,8 @@ import { activeAccountLocalStorageKey, activeAccountUid } from '@/lib/account-lo
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 import { getSampleWorkspace, isFictionalSampleLocation, isSampleMode } from '@/lib/sample-mode';
 import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonWeeklyPracticeDraft } from '@/lib/green-horizon-demo';
+import { buildRivierUitsigPlanningDraft } from '@/lib/rivier-uitsig-demo';
+import { RIVIER_UITSIG_SITE_ID } from '@/lib/rivier-uitsig-layout';
 import { sampleSowingCalendarFor } from '@/lib/sample-sowing-calendar';
 import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import NurseryForecastSummary from '@/components/crops/NurseryForecastSummary';
@@ -1704,7 +1706,7 @@ function FacilitatorCropsPageInner() {
   const climateMissing: SiteClimateMissingReason | 'loading' = climateAnswered ? climateSnapshot?.missing ?? 'unavailable' : 'loading';
   useEffect(() => {
     if (!allowCataloguePlanning || !climateSiteKey) { setClimateSnapshot(null); return; }
-    if (isFictionalSampleLocation(siteLat!, siteLon!)) {
+    if (getSampleWorkspace() === 'rivier-uitsig' || isFictionalSampleLocation(siteLat!, siteLon!)) {
       setClimateSnapshot({ siteKey: climateSiteKey, climate: null, missing: 'unavailable' });
       return;
     }
@@ -2612,6 +2614,11 @@ function FacilitatorCropsPageInner() {
   const greenHorizonProduction = getSampleWorkspace() === 'green-horizon'
     && productionSiteId === buildGreenHorizonLettuceTarget().siteId
     ? <GreenHorizonProductionPlan siteId={productionSiteId} beds={beds} plan={plan} source={selectedGrowerSource} /> : null;
+  const rivierUitsigPractice = getSampleWorkspace() === 'rivier-uitsig' && productionSiteId === RIVIER_UITSIG_SITE_ID
+    ? buildRivierUitsigPlanningDraft() : undefined;
+  const rivierUitsigProduction = productionSiteId && rivierUitsigPractice
+    ? <GreenHorizonProductionPlan siteId={productionSiteId} beds={beds} plan={plan} source={selectedGrowerSource}
+      rivierPractice={rivierUitsigPractice} /> : null;
   const checkedGrowerCycleContext: GrowerCycleContext | null = selectedGrowerSource ? {
     scope: growerScope,
     beds: selectedGrowerSource.beds,
@@ -2634,7 +2641,8 @@ function FacilitatorCropsPageInner() {
       saveContext={harvestSaveContext} onTargets={saveHarvestTargets}
       onSaveTargets={saveHarvestTargets} onAccept={() => {}} />}
     <ProvisionalCropPreview sample={growerSample} ownerKey={`${growerOwner}:${growerSample}`} scope={growerScope}
-      sitePoint={hasSiteCoords ? { latitude: siteLat!, longitude: siteLon! } : null} policyFingerprint={planningSupport.fingerprint}
+      sitePoint={hasSiteCoords && getSampleWorkspace() !== 'rivier-uitsig' ? { latitude: siteLat!, longitude: siteLon! } : null}
+      policyFingerprint={planningSupport.fingerprint}
       onClimateChanged={() => setProvisionalClimateRevision(value => value + 1)}
       source={selectedGrowerSource} actorIsCurrent={growerActorIsCurrent}
       sourceName={growerScope?.kind === 'mapped-site'
@@ -2655,8 +2663,9 @@ function FacilitatorCropsPageInner() {
       source={growerWorkflow.source} sourceName={placeName || designTitle} sourceIssue={growerWorkflow.sourceIssue}
       checking={growerWorkflow.checking} contextRevision={growerWorkflow.contextRevision}
       targets={plan?.harvestTargets ?? []} targetSiteId={productionSiteId} profiles={plan?.growerPlanningProfiles ?? []}
-      practiceDraft={getSampleWorkspace() === 'green-horizon' && productionSiteId === buildGreenHorizonLettuceTarget().siteId
-        ? buildGreenHorizonPlanningDraft() : undefined}
+      rivierPractice={!!rivierUitsigPractice}
+      practiceDraft={rivierUitsigPractice ?? (getSampleWorkspace() === 'green-horizon' && productionSiteId === buildGreenHorizonLettuceTarget().siteId
+        ? buildGreenHorizonPlanningDraft() : undefined)}
       weeklyPracticeDraft={getSampleWorkspace() === 'green-horizon' && productionSiteId === buildGreenHorizonLettuceTarget().siteId
         ? buildGreenHorizonWeeklyPracticeDraft() : undefined}
       onRefresh={growerWorkflow.onRefresh} onReview={growerWorkflow.onReview}
@@ -2962,6 +2971,7 @@ function FacilitatorCropsPageInner() {
           <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
             <CropPlanStorageNotice />
             {greenHorizonProduction}
+            {rivierUitsigProduction}
             {surveySiteId ? <SiteCountryPanel key={planningScopeKey} resolution={siteCountry} onSaved={refreshCountryPlaces} onDelivery={receiveCountrySaveNotice} />
               : <WorkspaceReferencePanel key={`reference:${planningWorkspaceId}`} workspaceId={planningWorkspaceId} reference={workspaceReference} onReference={saveWorkspaceReference} />}
             {!surveySiteId && !planningWorkspaceId && <button type="button" onClick={() => setUseVirtual(true)} className="mb-4 min-h-11 rounded-xl border border-[var(--border)] bg-[var(--bg-1)] px-4 py-2 font-sans">Try a virtual reference bed</button>}
@@ -2980,6 +2990,7 @@ function FacilitatorCropsPageInner() {
         <div className="flex-1 overflow-y-auto"><div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
           <CropPlanStorageNotice />
           {greenHorizonProduction}
+          {rivierUitsigProduction}
           {growerPlanningPanel}<EmptyState onVirtual={() => setUseVirtual(true)} designHref={designHref} />
         </div></div>
       ) : (
@@ -2987,6 +2998,7 @@ function FacilitatorCropsPageInner() {
           <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
             <CropPlanStorageNotice />
             {greenHorizonProduction}
+            {rivierUitsigProduction}
             {growerPlanningPanel}
             {surveySiteId ? <SiteCountryPanel key={planningScopeKey} resolution={siteCountry} onSaved={refreshCountryPlaces} onDelivery={receiveCountrySaveNotice} />
               : <WorkspaceReferencePanel key={`reference:${planningWorkspaceId}`} workspaceId={planningWorkspaceId} reference={workspaceReference} onReference={saveWorkspaceReference} />}

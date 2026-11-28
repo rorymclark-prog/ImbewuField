@@ -97,6 +97,11 @@ export default function SamplesPage() {
     <p>Try crop planning, work and harvest records in a fictional market garden.</p>
     <Link className={styles.primary} href="/samples/market-garden">Open the market garden <ArrowRight size={16} aria-hidden="true" /></Link>
   </div>
+  <div className={styles.card} lang="en">
+    <h2>Rivier Uitsig</h2>
+    <p>Explore traced field outlines, 16 editable beds and a pre-filled practice production plan.</p>
+    <Link className={styles.primary} href="/samples/rivier-uitsig" prefetch={false}>Open Rivier Uitsig <ArrowRight size={16} aria-hidden="true" /></Link>
+  </div>
   <div className={styles.card}><h2>{ui('Complete production example', 'Isibonelo sohlelo oluphelele lokukhiqiza')}</h2><p style={{margin:'0 0 16px'}}>{ui('A fictional warm KZN farm with vegetables, staples, fruit, nuts, berries, eggs, milk, honey and fish. View its monthly calendar, young trees and printable plan. Shown in English.', 'Ipulazi lesibonelo endaweni efudumele e-KZN elinemifino, izitshalo eziyisisekelo, izithelo, amantongomane, amajikijolo, amaqanda, ubisi, uju nezinhlanzi. Buka ikhalenda lanyanga zonke, izihlahla ezisencane nohlelo oluphrintekayo. Kuboniswa ngesiNgisi.')}</p><Link className={styles.primary} href="/samples/production">{ui('Open the complete example', 'Vula isibonelo esiphelele')}<ArrowRight size={16} aria-hidden="true" style={{marginLeft:8}} /></Link></div>
   </div>
   <button type="button" className={styles.secondary} onClick={() => { if (enterSampleMode(getSampleWorkspace() ?? 'ubhejane'))

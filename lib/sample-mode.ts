@@ -40,11 +40,15 @@ import {
   GREEN_HORIZON_SITE, buildGreenHorizonCropPlan, buildGreenHorizonFacilitatorState, buildGreenHorizonLetterhead,
   buildGreenHorizonProfile, buildGreenHorizonRecords, buildGreenHorizonSavedPlace, buildGreenHorizonStorageSeeds,
 } from './green-horizon-demo';
+import { buildRivierUitsigCropPlan, buildRivierUitsigLetterhead, buildRivierUitsigProfile, buildRivierUitsigSavedPlace } from './rivier-uitsig-demo';
+import { buildRivierUitsigStorageSeeds, RIVIER_UITSIG_SITE } from './rivier-uitsig-layout';
 import { emptyConsent, revokeAll, setScope, type ConsentScope, type FarmerConsent } from './consent';
 
 const FLAG_KEY = 'imbewu_sample_mode';
 const WORKSPACE_KEY = 'imbewu_sample_workspace';
-export type SampleWorkspace = 'ubhejane' | 'green-horizon';
+const SAMPLE_WORKSPACES = ['ubhejane', 'green-horizon', 'rivier-uitsig'] as const;
+export type SampleWorkspace = typeof SAMPLE_WORKSPACES[number];
+const isSampleWorkspace = (value: unknown): value is SampleWorkspace => SAMPLE_WORKSPACES.some(workspace => value === workspace);
 // Language is a harmless interface preference, not farm data. Keep it inside the sample tab
 // across hard reloads while the storage shim hides the real account's localStorage.
 const SAMPLE_LANG_KEY = 'imbewu_sample_lang';
@@ -76,19 +80,21 @@ let sandbox: { workspace: SampleWorkspace; data: SampleSandbox } | null = null;
 // without the evaluator having to find and flip a settings toggle first.
 function freshSandbox(workspace: SampleWorkspace): SampleSandbox {
   const marketGarden = workspace === 'green-horizon';
-  const finance = marketGarden
-    ? { expenses: [], invoices: [], customers: [], products: [], ...buildGreenHorizonRecords() }
-    : buildDemoFinance();
-  const profile = marketGarden ? buildGreenHorizonProfile() : buildDemoProfile();
+  const rivier = workspace === 'rivier-uitsig';
+  const finance = workspace === 'ubhejane' ? buildDemoFinance() : {
+    expenses: [], invoices: [], customers: [], products: [],
+    ...(marketGarden ? buildGreenHorizonRecords() : { sales: [], production: [] }),
+  };
+  const profile = rivier ? buildRivierUitsigProfile() : marketGarden ? buildGreenHorizonProfile() : buildDemoProfile();
   return {
-    cropPlan: marketGarden ? buildGreenHorizonCropPlan() : buildDemoCropPlan(),
+    cropPlan: rivier ? buildRivierUitsigCropPlan() : marketGarden ? buildGreenHorizonCropPlan() : buildDemoCropPlan(),
     favouriteCropKeys: new Set(),
-    allowBedSharing: !marketGarden,
+    allowBedSharing: workspace === 'ubhejane',
     // Keep in lockstep with DEFAULT_CASHFLOW_SETTINGS in crop-plan.ts (a value
     // import here would be circular — crop-plan imports this module). The
     // cashflow-loss-default test asserts the two stay equal.
     cashflowSettings: { sellPercent: 100, lossPercent: 25, confirmed: false },
-    facilitatorDesign: marketGarden ? buildGreenHorizonFacilitatorState() : buildDemoFacilitatorState(),
+    facilitatorDesign: rivier ? null : marketGarden ? buildGreenHorizonFacilitatorState() : buildDemoFacilitatorState(),
     sales: finance.sales,
     expenses: finance.expenses,
     production: finance.production,
@@ -97,7 +103,7 @@ function freshSandbox(workspace: SampleWorkspace): SampleSandbox {
     // transiently between a farmer staging a link and the ledger write confirming it.
     pendingInvoiceLinks: [],
     customers: finance.customers,
-    letterhead: marketGarden ? buildGreenHorizonLetterhead() : buildDemoLetterhead(),
+    letterhead: rivier ? buildRivierUitsigLetterhead() : marketGarden ? buildGreenHorizonLetterhead() : buildDemoLetterhead(),
     products: finance.products,
     profile,
     // Consent (POPIA) starts EMPTY here too — unlike allowBedSharing above, this is not a
@@ -113,7 +119,7 @@ function freshSandbox(workspace: SampleWorkspace): SampleSandbox {
     // The crèche arrives pre-saved so the saved-places list, the farmer map and the Design
     // entry point all light up immediately (loadPlaces() serves THIS list in sample mode —
     // the localStorage seed alone never reaches it).
-    places: [marketGarden ? buildGreenHorizonSavedPlace() : buildDemoSavedPlace()],
+    places: [rivier ? buildRivierUitsigSavedPlace() : marketGarden ? buildGreenHorizonSavedPlace() : buildDemoSavedPlace()],
   };
 }
 
@@ -135,7 +141,8 @@ export function isSampleMode(): boolean {
 export function getSampleWorkspace(): SampleWorkspace | null {
   if (!isSampleMode()) return null;
   try {
-    if (window.sessionStorage.getItem(WORKSPACE_KEY) === 'green-horizon') return 'green-horizon';
+    const workspace = window.sessionStorage.getItem(WORKSPACE_KEY);
+    if (isSampleWorkspace(workspace)) return workspace;
   } catch { /* Keep compatibility with legacy tabs that have only the sample flag. */ }
   return 'ubhejane';
 }
@@ -143,12 +150,14 @@ export function getSampleWorkspace(): SampleWorkspace | null {
 export function getSampleMapSite() {
   const workspace = getSampleWorkspace();
   if (!workspace) return null;
+  if (workspace === 'rivier-uitsig') return RIVIER_UITSIG_SITE;
   return workspace === 'green-horizon' ? GREEN_HORIZON_SITE : DEMO_SITE;
 }
 
 export function isFictionalSampleLocation(lat: number, lon: number): boolean {
-  return getSampleWorkspace() === 'green-horizon'
-    && lat === GREEN_HORIZON_SITE.lat && lon === GREEN_HORIZON_SITE.lon;
+  const workspace = getSampleWorkspace();
+  const site = workspace === 'rivier-uitsig' ? RIVIER_UITSIG_SITE : workspace === 'green-horizon' ? GREEN_HORIZON_SITE : null;
+  return !!site && lat === site.lat && lon === site.lon;
 }
 
 /**
@@ -164,7 +173,7 @@ export const SAMPLE_MODE_RENDER_REFUSAL =
 
 export function enterSampleMode(workspace: SampleWorkspace = 'ubhejane'): boolean {
   if (typeof window === 'undefined') return false;
-  if (workspace !== 'ubhejane' && workspace !== 'green-horizon') return false;
+  if (!isSampleWorkspace(workspace)) return false;
   const previousWorkspace = getSampleWorkspace();
   let selectedLanguage: string | null = null;
   try { selectedLanguage = window.localStorage.getItem('permamap_lang'); } catch { /* use the default */ }
@@ -269,7 +278,8 @@ function shimStoreEnsured(): Map<string, string> {
   const workspace = getSampleWorkspace() ?? 'ubhejane';
   if (shimStore?.workspace !== workspace) {
     // The seed builders do not read storage, so they can safely run in the shim.
-    const seeds = workspace === 'green-horizon' ? buildGreenHorizonStorageSeeds() : buildDemoStorageSeeds();
+    const seeds = workspace === 'rivier-uitsig' ? buildRivierUitsigStorageSeeds()
+      : workspace === 'green-horizon' ? buildGreenHorizonStorageSeeds() : buildDemoStorageSeeds();
     const data = new Map(Object.entries(seeds));
     try {
       const selectedLanguage = window.sessionStorage.getItem(SAMPLE_LANG_KEY);
