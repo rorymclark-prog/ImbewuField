@@ -24,6 +24,8 @@ export interface CheckedFulfilmentSource {
   readonly sourceOn: string;
   readonly unit: RecordUnit;
   readonly quantity: number;
+  /** Private picker label from a checked sale. Never copied to a buyer entry. */
+  readonly recordedBuyer?: string | null;
 }
 
 interface FulfilmentTarget {

@@ -21,6 +21,7 @@ export default function GrowerWeeklyRecords({ siteId, operations, fulfilment }: 
   fulfilment?: { targetSiteId: string; targets: readonly HarvestTarget[]; save: BuyerFulfilmentSave; beds: readonly PlanBed[]; cycles: readonly WeeklyProductionCycle[] };
 }) {
   const workspace = useSampleWorkspace();
+  const [checkRevision, setCheckRevision] = useState(0);
   const [snapshot, setSnapshot] = useState<{
     siteId: string; workspace: typeof workspace; revision: number; result: GardenReportRead | null;
   } | null>(null);
@@ -44,7 +45,7 @@ export default function GrowerWeeklyRecords({ siteId, operations, fulfilment }: 
       active = false;
       receipt?.release();
     };
-  }, [siteId, workspace, operations.gardenRevision, operations.status]);
+  }, [siteId, workspace, operations.gardenRevision, operations.status, checkRevision]);
 
   const matches = snapshot?.siteId === siteId && snapshot.workspace === workspace
     && snapshot.revision === operations.gardenRevision && operations.status === 'ready';
@@ -78,6 +79,7 @@ export default function GrowerWeeklyRecords({ siteId, operations, fulfilment }: 
       <Link href="/records" prefetch={false} className="inline-flex min-h-11 items-center underline">View sales in Records</Link>
     </div>
   </section>
-    {fulfilment && <BuyerFulfilmentPanel siteId={siteId} {...fulfilment} operations={operations} harvest={current} practice={practice} />}
+    {fulfilment && <BuyerFulfilmentPanel siteId={siteId} {...fulfilment} operations={operations} harvest={current} practice={practice}
+      onRecheckHarvest={() => { setSnapshot(null); setCheckRevision(value => value + 1); }} />}
   </>;
 }

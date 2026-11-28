@@ -326,6 +326,19 @@ test('an invoice mirror is held even if its duplicate is waiting for server conf
   assert.deepEqual(confirmed.sources.map(source => source.id), ['sale-a']);
 });
 
+test('same-day sales retain each recorded buyer for selection and detect buyer changes', async () => {
+  state.documents.set(salePath, { ...sale, buyer: '  North Market  ' });
+  state.documents.set('sales_logs/sale-b', { ...sale, buyer: 'Western Café' });
+  state.documents.set('sales_logs/sale-c', { ...sale, buyer: ' ' });
+  const read = await captureBuyerSaleEvidence(current);
+  assert.ok(read);
+  assert.deepEqual(read.sources.map(source => [source.id, source.recordedBuyer]), [
+    ['sale-a', 'North Market'], ['sale-b', 'Western Café'], ['sale-c', null],
+  ]);
+  state.documents.set(salePath, { ...sale, buyer: 'Another Market' });
+  assert.equal(await read.checkCurrent(), false);
+});
+
 test('sample sale evidence is withdrawn after an edit and cannot cross a reset', async () => {
   enterSampleMode('green-horizon');
   const before = await captureBuyerSaleEvidence(current);

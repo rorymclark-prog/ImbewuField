@@ -66,6 +66,7 @@ export async function checkBuyerSaleRows(rows: readonly SaleEvidenceRow[], owner
       kind: 'sale', id, canonicalId: identity.canonicalId,
       // Sales garden membership is independent of the Design Studio's mapped site.
       siteId: null, cropKey: crop.key, sourceOn, unit, quantity,
+      recordedBuyer: typeof value.buyer === 'string' ? value.buyer.trim() || null : null,
     }, [value.sold_at, value.garden_id ?? null, value.invoice_source_sale === true, value.buyer ?? null]);
   }));
   const sources = Object.freeze(results.flatMap(source => source ? [source] : []).sort((a, b) => a.id.localeCompare(b.id)));

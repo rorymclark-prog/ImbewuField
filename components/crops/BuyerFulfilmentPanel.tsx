@@ -54,7 +54,7 @@ const heldLabels = {
 const field = 'min-h-11 min-w-0 rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-2';
 const button = 'inline-flex min-h-11 items-center rounded-lg border border-[var(--border)] px-3 disabled:opacity-50';
 
-export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, operations, harvest, save, practice, beds, cycles }: {
+export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, operations, harvest, save, practice, beds, cycles, onRecheckHarvest }: {
   siteId: string;
   targetSiteId: string;
   targets: readonly HarvestTarget[];
@@ -64,6 +64,7 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
   practice: boolean;
   beds: readonly PlanBed[];
   cycles: readonly WeeklyProductionCycle[];
+  onRecheckHarvest: () => void;
 }) {
   const [snapshot, setSnapshot] = useState<SourceSnapshot | null>(null);
   const [refresh, setRefresh] = useState(0);
@@ -71,6 +72,7 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
   const [selectedPeriod, setSelectedPeriod] = useState('');
   const [kind, setKind] = useState<BuyerFulfilmentEntry['kind']>('delivery');
   const [sourceId, setSourceId] = useState('');
+  const [sourceFingerprint, setSourceFingerprint] = useState<string | null>(null);
   const [quantity, setQuantity] = useState('');
   const [on, setOn] = useState('');
   const [editing, setEditing] = useState<string | null>(null);
@@ -96,14 +98,14 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
     && snapshot.harvest === harvest && snapshot.current() ? snapshot : null;
   const sources = current?.sources.filter(source => source.kind === 'sale'
     ? current.sales?.isCurrent() : current.harvest?.isCurrent()) ?? [];
-  const allTargets = operations.status === 'ready' ? sanitiseHarvestTargets(operations.book.harvestTargets ?? []) : [];
+  const allTargets = operations.status === 'ready' && operations.isCurrent() ? sanitiseHarvestTargets(operations.book.harvestTargets ?? []) : [];
   const target = targets.find(row => row.id === selectedTarget) ?? targets[0];
   const periods = target ? harvestTargetWeekWindows(target) : [];
   const period = periods.find(row => row.start === selectedPeriod) ?? periods[0];
-  const binding = JSON.stringify([targetSiteId, operations.gardenRevision, target?.id, period?.start]);
+  const binding = JSON.stringify([targetSiteId, operations.gardenRevision, target?.id, period?.start, period?.endExclusive]);
   useEffect(() => {
     if (draftBinding !== null && draftBinding !== binding) {
-      setDraftBinding(null); setEditing(null); setSourceId(''); setQuantity(''); setOn('');
+      setDraftBinding(null); setEditing(null); setSourceId(''); setSourceFingerprint(null); setQuantity(''); setOn('');
     }
   }, [binding, draftBinding]);
 
@@ -114,12 +116,20 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
   const unit = target ? harvestTargetUnit(target) : 'kg';
   const available = target ? sources.filter(source => source.cropKey === target.cropKey && source.unit === unit
     && (source.kind === 'sale' ? kind === 'delivery' : kind === 'harvest-allocation')) : [];
-  const selectedSource = available.find(source => source.id === sourceId);
+  const selectedSource = available.find(source => source.id === sourceId && source.fingerprint === sourceFingerprint);
 
-  function clearDraft() { setDraftBinding(null); setEditing(null); setSourceId(''); setQuantity(''); setOn(''); }
+  function clearDraft() { setDraftBinding(null); setEditing(null); setSourceId(''); setSourceFingerprint(null); setQuantity(''); setOn(''); }
+  function checkRecords() {
+    clearDraft(); setSnapshot(null); setRefresh(value => value + 1); onRecheckHarvest();
+  }
   function chooseEntry(entry: BuyerFulfilmentEntry) {
-    setDraftBinding(binding); setEditing(entryKey(entry)); setKind(entry.kind); setSourceId(entry.sourceId);
-    setQuantity(formatExactUnitDecimal(entry.quantity)); setOn(entry.on); setMessage('');
+    setDraftBinding(binding); setEditing(entryKey(entry)); setKind(entry.kind);
+    const unchanged = sources.some(source => source.id === entry.sourceId && source.fingerprint === entry.sourceFingerprint
+      && source.kind === (entry.kind === 'delivery' ? 'sale' : 'harvest'));
+    setSourceId(unchanged ? entry.sourceId : '');
+    setSourceFingerprint(unchanged ? entry.sourceFingerprint : null);
+    setQuantity(formatExactUnitDecimal(entry.quantity)); setOn(entry.on);
+    setMessage(unchanged ? '' : 'Select the checked record again to confirm this correction.');
   }
 
   async function persist(entry: BuyerFulfilmentEntry | null, removeKey: string | null) {
@@ -160,7 +170,7 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
         : entry?.kind === 'harvest-allocation' ? await current.harvest?.checkCurrent() : true;
       if (!confirmed || !current.current() || !harvestSaveContextIsCurrent(save.context)) {
         setMessage('The selected record or workspace changed. Check the records again.');
-        setRefresh(value => value + 1); return;
+        checkRecords(); return;
       }
       const result = save.onSave(next, request);
       if (!harvestSaveResultMatches(result, request)) {
@@ -220,7 +230,7 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
     try {
       if (!await check()) {
         setMessage('The records changed. Check the current records before printing.');
-        setRefresh(value => value + 1); return;
+        checkRecords(); return;
       }
       const work = cycles.flatMap(cycle => {
         const bed = beds.find(row => row.id === cycle.bedId)?.label ?? 'Mapped bed';
@@ -276,14 +286,20 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
         <button type="button" className={button} disabled={busy} onClick={() => void persist(null, entryKey(line.entry))}>Remove buyer entry</button>
       </div>
     </li>)}</ul>}
-    <button type="button" className={button} disabled={busy} onClick={() => { setSnapshot(null); setRefresh(value => value + 1); }}>Check harvest and sales</button>
+    <button type="button" className={button} disabled={busy} onClick={checkRecords}>Check harvest and sales</button>
     <form onSubmit={submit} onChange={() => setDraftBinding(binding)} className="grid gap-2" aria-label="Buyer entry">
       <label className="grid">Entry type<select className={field} value={kind} disabled={busy} onChange={event => {
-        setKind(event.target.value as BuyerFulfilmentEntry['kind']); setSourceId('');
+        setKind(event.target.value as BuyerFulfilmentEntry['kind']); setSourceId(''); setSourceFingerprint(null);
       }}><option value="delivery">Delivery against a recorded sale</option><option value="harvest-allocation">Allocate linked harvest</option></select></label>
-      <label className="grid">Checked record<select className={field} value={sourceId} disabled={busy} onChange={event => setSourceId(event.target.value)}>
+      <label className="grid min-w-0">Checked record<select className={field} value={selectedSource?.id ?? ''} disabled={busy} onChange={event => {
+        const checked = available.find(source => source.id === event.target.value);
+        setSourceId(checked?.id ?? ''); setSourceFingerprint(checked?.fingerprint ?? null);
+      }}>
         <option value="">Choose a checked record</option>{available.map(source => (
-          <option key={source.id} value={source.id}>{source.sourceOn} · {show(source.quantity)} · {source.id.slice(-12)}</option>
+          <option key={source.id} value={source.id}>
+            {source.kind === 'sale' && `${source.recordedBuyer ?? 'Buyer not recorded'} · `}
+            {source.sourceOn} · {show(source.quantity)} · {source.id}
+          </option>
         ))}
       </select></label>
       <label className="grid">{kind === 'delivery' ? 'Actual handover date' : 'Allocation date'}<input className={field} type="date" value={on} disabled={busy} onChange={event => setOn(event.target.value)} /></label>
