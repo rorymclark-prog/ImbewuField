@@ -3,7 +3,7 @@ import test from 'node:test';
 import type { FeatureCollection, Polygon } from 'geojson';
 import { fieldBlockRectangleFootprint } from '../lib/bed-block.ts';
 import { computeCanvasFrame, normaliseCanvasState, projectorForFrame, type PlacedItem, type ZoneShape } from '../lib/design-canvas.ts';
-import { mergeFarmShapesIntoDesignState } from '../lib/design-studio.ts';
+import { designSiteIdFromLocation, mergeFarmShapesIntoDesignState } from '../lib/design-studio.ts';
 import { fingerprintGrowerWorkflowSource, inspectGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import {
   buildRivierUitsigStorageSeeds, RIVIER_UITSIG_BANKS, RIVIER_UITSIG_BEDS,
@@ -16,6 +16,7 @@ const canvas = normaliseCanvasState(raw, RIVIER_UITSIG_SITE_ID);
 assert.ok(canvas);
 
 test('the four approximate fields produce the same blank frame at readback', () => {
+  assert.equal(designSiteIdFromLocation(RIVIER_UITSIG_SITE), RIVIER_UITSIG_SITE_ID);
   const shapes: FeatureCollection<Polygon> = JSON.parse(seeds.imbewu_farm_shapes);
   assert.equal(shapes.features.length, 4);
   assert.deepEqual(RIVIER_UITSIG_FIELDS.map(field => [field.id, field.approximateAreaHa]),

@@ -1,11 +1,14 @@
 import type { FeatureCollection, Polygon } from 'geojson';
 import { computeCanvasFrame, normaliseRotation, type DesignCanvasState, type ZoneShape } from './design-canvas';
-import { designSiteIdFromLocation, type DesignLayer } from './design-studio';
+import type { DesignLayer } from './design-studio';
+import { coordinateSiteIdParts } from './site-id';
 
 // The layout uses a fictional anchor. The original geographic origin and imagery
 // are deliberately absent; these offsets retain the source drawing's scale.
-export const RIVIER_UITSIG_SITE = Object.freeze({ name: 'Rivier Uitsig', lat: 0.5, lon: 0.5 });
-export const RIVIER_UITSIG_SITE_ID = designSiteIdFromLocation(RIVIER_UITSIG_SITE);
+export const RIVIER_UITSIG_SITE_ID = 'site:0.50000,0.50000';
+// Keep the anchor independent of Design Studio initialization. Server routes
+// can reach sample mode while the shared design modules are still loading.
+export const RIVIER_UITSIG_SITE = Object.freeze({ name: 'Rivier Uitsig', ...coordinateSiteIdParts(RIVIER_UITSIG_SITE_ID)! });
 export const RIVIER_UITSIG_LAYOUT_PROVENANCE = Object.freeze({
   imageryDate: '2026-10-05',
   attribution: 'Google Earth imagery, Airbus and AfriGIS',
