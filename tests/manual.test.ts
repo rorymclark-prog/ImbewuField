@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import './manual-outline-checks.ts';
+import { framePose, initialPeg, nextPracticePeg, pegBesideFoot, practiceHeight, startingTurn, FRAME_SPAN, TOTAL_PEGS, TURN_LIMIT, TURN_STEP } from '@/lib/contour-practice';
 import { fieldFilmTitle, filmEdition, matchingFilmTime } from '@/lib/field-films';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 import { manualSearchIndex } from '@/lib/manual-search-index';
@@ -535,3 +536,36 @@ for (const [film, version, cueEnds] of [
     assert.equal(titles.size, MANUAL_LANGS.length, 'each edition has its own film title');
   });
 }
+
+test('the A-frame keeps its planted foot and physical span throughout a turn', () => {
+  const start = initialPeg();
+  for (const turn of [-TURN_LIMIT, -19, 0, 20, TURN_LIMIT]) {
+    const pose = framePose(start, turn);
+    assert.ok(Math.abs(pose.free.y - practiceHeight(pose.free.x, pose.free.z)) < 1e-10);
+    assert.ok(Math.abs(FRAME_SPAN - Math.hypot(pose.free.x - start.x, pose.rise, pose.free.z - start.z)) < 1e-7);
+    assert.equal(Math.sign(pose.reading), -Math.sign(pose.rise));
+  }
+  assert.deepEqual(initialPeg(), start, 'turning cannot move the planted foot');
+});
+
+test('every station begins off level and a placed peg is exactly level with the previous one', () => {
+  let anchor = initialPeg();
+  for (let peg = 1; peg < TOTAL_PEGS; peg++) {
+    assert.equal(nextPracticePeg(anchor, startingTurn(peg)), null);
+    assert.equal(nextPracticePeg(anchor, -TURN_LIMIT), null);
+    assert.equal(nextPracticePeg(anchor, TURN_LIMIT), null);
+    const possible = Array.from({ length: (TURN_LIMIT * 2) / TURN_STEP + 1 }, (_, i) => -TURN_LIMIT + i * TURN_STEP)
+      .filter(turn => framePose(anchor, turn).aligned);
+    assert.ok(possible.length >= 2, 'keyboard and drag each have a reachable level reading');
+    const first = nextPracticePeg(anchor, possible[0]);
+    assert.ok(first);
+    assert.ok(first.x > anchor.x);
+    assert.ok(Math.abs(first.y - anchor.y) < 1e-8);
+    const marker = pegBesideFoot(first);
+    assert.ok(Math.abs(practiceHeight(marker.x, marker.z) - marker.y) < 1e-8);
+    assert.deepEqual(nextPracticePeg(anchor, possible[possible.length - 1]), first,
+      'the exercise tolerance does not compound height errors as pegs advance');
+    anchor = first;
+  }
+  assert.ok(Math.abs(anchor.y - initialPeg().y) < 1e-8);
+});
