@@ -2963,6 +2963,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
   // between wizard steps instead of reverting their last content edit (item/zone/line
   // change). It must ALSO not count as an edit: see saveCanvasNavigation below.
   const setStep = useCallback((step: WizardStep) => {
+    if (step === 'review' && getSampleWorkspace() === 'rivier-uitsig') handleSetTool('select');
     // The farmer just navigated on purpose — the recovery hold above (glossyAutoBlocked) exists
     // only to stop an AUTOMATIC restore onto a step they never asked to see this load.
     setGlossyAutoBlocked(false);
@@ -3006,7 +3007,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       withSelfSaveFlag(() => saveCanvasNavigation(next));
       return next;
     });
-  }, []);
+  }, [handleSetTool]);
 
   // Step-by-step guide "Do this" → arm the matching palette tool for the current micro-task.
   const armSubStep = useCallback((arm: SubStepArm) => {
@@ -3123,6 +3124,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
   // Saved-place name (effect-resolved) with coordinates as the fallback.
   const siteName = placeName ?? `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
   const stepName = (step: WizardStep) => isZulu ? translatedDesignStepLabel(t, step) : step === 'glossy' ? 'Preview & Export' : STEP_LABELS[step];
+  const phoneRivierOverview = rivierPractice && isPhone && canvasState?.step === 'review';
 
   return (
     <div
@@ -3429,7 +3431,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
 
       {/* The complete, clickable step rail below replaces the old desktop wizard card. On a
           phone the familiar compact wizard remains available above the sheet. */}
-      {canvasState && canvasState.step !== 'glossy' && (
+      {canvasState && canvasState.step !== 'glossy' && !phoneRivierOverview && (
         <div style={isPhone ? undefined : { display: 'none' }}>
           <DesignWizard
             step={canvasState.step}
@@ -3482,6 +3484,9 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               </select>
             </label>
           )}
+          {phoneRivierOverview && <button type="button" lang="en"
+            className="inline-flex min-h-11 shrink-0 items-center rounded-lg border border-[var(--border)] px-2 text-sm font-semibold"
+            onClick={() => setStep('planting')}>Edit beds</button>}
           {!cardsUi && chromeCollapsed && (() => {
             const idx = STEP_ORDER.indexOf(canvasState.step);
             const navBtn = (disabled: boolean): React.CSSProperties => ({
@@ -3765,7 +3770,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
 
         {/* The phone palette is fixed to the viewport, outside the canvas flex flow.
             Reserve its measured overlap only for this advice overlay, never for plan geometry. */}
-        {bottomShow.advisor && canvasState && canvasState.step !== 'glossy' && (
+        {!rivierPractice && bottomShow.advisor && canvasState && canvasState.step !== 'glossy' && (
           <div className={isPhone ? 'phone-advisor-region' : undefined}
             style={advisorRegionPresentation(isPhone, advisorVisibleRegion)}>
           <DesignAdvisorLazy
@@ -4266,7 +4271,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           docked strip is covered by the opaque overlay anyway; only the portal escaped it.
           Unmounting is safe: floating mode and position live in localStorage, not in the
           component, so the panel comes back exactly where it was parked. */}
-      {bottomShow.tools && canvasState && canvasState.step !== 'glossy' && !previewFilter && (
+      {bottomShow.tools && canvasState && canvasState.step !== 'glossy' && !previewFilter && !phoneRivierOverview && (
         <DesignPalette
           phoneSheetRef={setPhonePaletteElement}
           bottomStop={bottomStop}
