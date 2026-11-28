@@ -45,12 +45,21 @@ test('every inventoried workspace control has a separate source-bound regional d
 });
 for(const lang of allDrafts)test(`${lang}: the actual chooser pairs role drafts and source, discloses review status and preserves all anonymous destinations`,async()=>{
  const h=await actualPracticeUi(lang);try{
-  assert.ok(h.text().includes(controlT(lang)('languageDraftNoticeText')));assert.equal(h.renderer.root.findAllByType('h1').length,1);assert.equal(h.renderer.root.findAllByType('h2').length,4);assert.equal(h.renderer.root.findByType('header').props['data-back-fallback'],'/account');
+  assert.ok(h.text().includes(controlT(lang)('languageDraftNoticeText')));
+  assert.equal(h.renderer.root.findAllByType('h1').length, 1);
+  // The four original sections and the new English Rivier practice card.
+  const headings = h.renderer.root.findAllByType('h2');
+  assert.equal(headings.length, 5);
+  assert.equal(h.renderer.root.findByType('header').props['data-back-fallback'], '/account');
   for(const[i,row]of packet.workspace.sourceRoleCards.entries()){const card=h.renderer.root.findByProps({id:'sample-'+row[0]});for(let field=1;field<4;field++){const native=local(lang,row[field],packet.workspace.existingZuluRoleCards[i][field]);assert.ok(practiceNodeText(card).includes(native));assert.ok(card.findAllByProps({lang:'en'}).some(n=>practiceNodeText(n).includes(row[field])));}assert.equal(card.findByType('button').props.disabled,false);await h.choose(row[0]);}
   assert.deepEqual(h.calls.routes,packet.workspace.sourceRoleCards.map((r:string[])=>'/'+r[0]));assert.deepEqual(h.calls.previews,packet.workspace.sourceRoleCards.map((r:string[])=>r[0]));assert.equal(h.calls.reads.length,0);assert.equal(h.calls.signOut,0);
-  const links=h.renderer.root.findAllByType('a').map(n=>n.props.href);assert.deepEqual(links,['/samples/gardens','/tour','/samples/farm','/samples/market-garden','/samples/production']);
-  const marketGarden=h.renderer.root.findAllByType('h2').find(node=>practiceNodeText(node)==='Green Horizon Market Garden');
-  assert.equal(marketGarden?.parent?.props.lang,'en','new sample copy must be identified as English');
+  const links = h.renderer.root.findAllByType('a').map(node => node.props.href);
+  assert.deepEqual(links, ['/samples/gardens', '/tour', '/samples/farm', '/samples/market-garden', '/samples/rivier-uitsig', '/samples/production']);
+  const marketGarden = headings.find(node => practiceNodeText(node) === 'Green Horizon Market Garden');
+  assert.equal(marketGarden?.parent?.props.lang, 'en', 'Green Horizon sample copy must be identified as English');
+  const rivier = headings.find(node => practiceNodeText(node) === 'Rivier Uitsig');
+  assert.equal(rivier?.parent?.props.lang, 'en', 'Rivier Uitsig sample copy must be identified as English');
+  assert.equal(rivier?.parent?.findByType('a').props.href, '/samples/rivier-uitsig');
  }finally{await h.dispose();}
 });
 for(const lang of allDrafts)test(`${lang}: language changes cannot widen confirmed account roles or execute a disabled practice action`,async()=>{

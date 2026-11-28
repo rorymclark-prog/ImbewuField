@@ -147,7 +147,10 @@ const extracted=`import React,{useCallback,useState} from '${import.meta.resolve
 import Advisor from '${new URL('../components/design/DesignAdvisor.tsx',import.meta.url).href}';
 import {ELEMENT_CATALOG} from '${new URL('../lib/design-elements.ts',import.meta.url).href}';
 import {saveCanvasNavigation} from '${new URL('../lib/design-canvas.ts',import.meta.url).href}';
+import {getSampleWorkspace} from '${new URL('../lib/sample-mode.ts',import.meta.url).href}';
 ${declarations}\n${functions}
+// The ordinary-workspace fixture should never reach Rivier's extra tool reset.
+const handleSetTool = () => { throw new Error('Unexpected practice tool reset'); };
 export function DesignStudioInner({raw,show=true}){
  const [canvasState,setCanvasState]=useState(raw);
  const [,setGlossyAutoBlocked]=useState(true),[,setAreaFeature]=useState(null),[,setZoneAdvice]=useState([]),[,setSelectedIds]=useState([]),[,setActiveLayers]=useState({}),[,setWaterInfrastructureVisibility]=useState({});

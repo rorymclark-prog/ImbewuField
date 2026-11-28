@@ -92,6 +92,8 @@ test('unreadable or hostile storage never invents a crash loop', () => {
 });
 
 const PAGE_SRC = readFileSync(new URL('../app/design/page.tsx', import.meta.url), 'utf8');
+// Rivier's calibrated drawing shares safe mode's image-free path.
+const safeModeBaseBranch = PAGE_SRC.match(/if \(safeMode\.active(?: \|\| practiceBlankBase)?\) \{([\s\S]*?)\} else if \(frameMoved\) \{/);
 
 test('safe mode keeps the farmer\'s own metres, never the satellite\'s', () => {
   // THE BUG THIS PINS. Safe mode skips the photo, and the obvious way to do that — reuse the
@@ -99,9 +101,8 @@ test('safe mode keeps the farmer\'s own metres, never the satellite\'s', () => {
   // farm the satellite's metres silently rescales every area, spacing, tank size and price on the
   // canvas and on all nine sheets. Losing the photograph for one load is the intended cost;
   // losing the measurements is not.
-  const at = PAGE_SRC.indexOf('if (safeMode.active) {');
-  assert.ok(at > 0, 'the safe-mode base branch is gone — the crash loop has nothing to break it');
-  const branch = PAGE_SRC.slice(at, at + 600);
+  const branch = safeModeBaseBranch?.[1];
+  assert.ok(branch, 'the safe-mode base branch is gone — the crash loop has nothing to break it');
   assert.ok(branch.includes('activeBaseMPerPx('),
     'safe mode stopped resolving the farmer\'s active metres — measurements would silently change');
   assert.ok(!/mPerPx: baseMPerPx\(frameNoImg\)/.test(branch),
@@ -114,9 +115,8 @@ test('safe mode still loads the design, and still charges the load before the he
   // An early return here would open safe mode on an EMPTY design — "the app lost my farm", a far
   // worse bug than the crash it survives. The branch must be part of the else-if chain so the
   // frame migration and setCanvasState below it still run.
-  const at = PAGE_SRC.indexOf('if (safeMode.active) {');
-  const branch = PAGE_SRC.slice(at, PAGE_SRC.indexOf('} else if (frameMoved) {', at));
-  assert.ok(branch.length > 0, 'the safe-mode branch is no longer part of the base-image else-if chain');
+  const branch = safeModeBaseBranch?.[1];
+  assert.ok(branch, 'the safe-mode branch is no longer part of the base-image else-if chain');
   assert.ok(!/\breturn;/.test(branch),
     'safe mode returns early — the canvas state below would never load and the design would look lost');
   // The counter is read through the memoised resolver, which records the load during the first
