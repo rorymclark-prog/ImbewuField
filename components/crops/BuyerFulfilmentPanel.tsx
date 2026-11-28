@@ -25,6 +25,7 @@ export interface BuyerFulfilmentSave {
 
 type SourceSnapshot = {
   readonly revision: number;
+  readonly checkRevision: number;
   readonly siteId: string;
   readonly harvest: GardenReportRead | null;
   readonly sales: BuyerSaleRead | null;
@@ -54,7 +55,8 @@ const heldLabels = {
 const field = 'min-h-11 min-w-0 rounded-lg border border-[var(--border)] bg-[var(--bg-0)] px-2';
 const button = 'inline-flex min-h-11 items-center rounded-lg border border-[var(--border)] px-3 disabled:opacity-50';
 
-export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, operations, harvest, save, practice, beds, cycles, onRecheckHarvest }: {
+export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, operations, harvest, save, practice, beds, cycles,
+  checkingHarvest, checkRevision, onRecheckHarvest }: {
   siteId: string;
   targetSiteId: string;
   targets: readonly HarvestTarget[];
@@ -64,10 +66,11 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
   practice: boolean;
   beds: readonly PlanBed[];
   cycles: readonly WeeklyProductionCycle[];
+  checkingHarvest: boolean;
+  checkRevision: number;
   onRecheckHarvest: () => void;
 }) {
   const [snapshot, setSnapshot] = useState<SourceSnapshot | null>(null);
-  const [refresh, setRefresh] = useState(0);
   const [selectedTarget, setSelectedTarget] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState('');
   const [kind, setKind] = useState<BuyerFulfilmentEntry['kind']>('delivery');
@@ -82,19 +85,19 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    if (operations.status !== 'ready') return;
+    if (operations.status !== 'ready' || checkingHarvest) return;
     let active = true;
     const current = () => active && operations.isCurrent();
     void Promise.all([operations.readBuyerSales(current), harvest?.readLinkedHarvestSources() ?? null]).then(([sales, linked]) => {
-      if (current()) setSnapshot({ revision: operations.gardenRevision, siteId, harvest, sales,
+      if (current()) setSnapshot({ revision: operations.gardenRevision, checkRevision, siteId, harvest, sales,
         sources: [...(sales?.sources ?? []), ...(linked ?? [])], current });
     }).catch(() => {
       if (current()) setSnapshot(null);
     });
     return () => { active = false; };
-  }, [operations, siteId, harvest, refresh]);
+  }, [operations, siteId, harvest, checkingHarvest, checkRevision]);
 
-  const current = snapshot?.revision === operations.gardenRevision && snapshot.siteId === siteId
+  const current = !checkingHarvest && snapshot?.revision === operations.gardenRevision && snapshot.checkRevision === checkRevision && snapshot.siteId === siteId
     && snapshot.harvest === harvest && snapshot.current() ? snapshot : null;
   const sources = current?.sources.filter(source => source.kind === 'sale'
     ? current.sales?.isCurrent() : current.harvest?.isCurrent()) ?? [];
@@ -120,7 +123,7 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
 
   function clearDraft() { setDraftBinding(null); setEditing(null); setSourceId(''); setSourceFingerprint(null); setQuantity(''); setOn(''); }
   function checkRecords() {
-    clearDraft(); setSnapshot(null); setRefresh(value => value + 1); onRecheckHarvest();
+    clearDraft(); onRecheckHarvest();
   }
   function chooseEntry(entry: BuyerFulfilmentEntry) {
     setDraftBinding(binding); setEditing(entryKey(entry)); setKind(entry.kind);
@@ -286,7 +289,7 @@ export default function BuyerFulfilmentPanel({ siteId, targetSiteId, targets, op
         <button type="button" className={button} disabled={busy} onClick={() => void persist(null, entryKey(line.entry))}>Remove buyer entry</button>
       </div>
     </li>)}</ul>}
-    <button type="button" className={button} disabled={busy} onClick={checkRecords}>Check harvest and sales</button>
+    <button type="button" className={button} disabled={busy || checkingHarvest} onClick={checkRecords}>Check harvest and sales</button>
     <form onSubmit={submit} onChange={() => setDraftBinding(binding)} className="grid gap-2" aria-label="Buyer entry">
       <label className="grid">Entry type<select className={field} value={kind} disabled={busy} onChange={event => {
         setKind(event.target.value as BuyerFulfilmentEntry['kind']); setSourceId(''); setSourceFingerprint(null);

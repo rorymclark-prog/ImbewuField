@@ -23,7 +23,7 @@ export default function GrowerWeeklyRecords({ siteId, operations, fulfilment }: 
   const workspace = useSampleWorkspace();
   const [checkRevision, setCheckRevision] = useState(0);
   const [snapshot, setSnapshot] = useState<{
-    siteId: string; workspace: typeof workspace; revision: number; result: GardenReportRead | null;
+    siteId: string; workspace: typeof workspace; revision: number; checkRevision: number; result: GardenReportRead | null;
   } | null>(null);
 
   useEffect(() => {
@@ -37,9 +37,9 @@ export default function GrowerWeeklyRecords({ siteId, operations, fulfilment }: 
         return;
       }
       receipt = result;
-      setSnapshot({ siteId, workspace, revision: operations.gardenRevision, result });
+      setSnapshot({ siteId, workspace, revision: operations.gardenRevision, checkRevision, result });
     }).catch(() => {
-      if (current()) setSnapshot({ siteId, workspace, revision: operations.gardenRevision, result: null });
+      if (current()) setSnapshot({ siteId, workspace, revision: operations.gardenRevision, checkRevision, result: null });
     });
     return () => {
       active = false;
@@ -48,7 +48,8 @@ export default function GrowerWeeklyRecords({ siteId, operations, fulfilment }: 
   }, [siteId, workspace, operations.gardenRevision, operations.status, checkRevision]);
 
   const matches = snapshot?.siteId === siteId && snapshot.workspace === workspace
-    && snapshot.revision === operations.gardenRevision && operations.status === 'ready';
+    && snapshot.revision === operations.gardenRevision && snapshot.checkRevision === checkRevision && operations.status === 'ready';
+  const checking = operations.status === 'loading' || operations.status === 'ready' && !matches;
   const current = matches && snapshot?.result?.isCurrent() ? snapshot.result : null;
   const practice = workspace === 'green-horizon' && getSampleWorkspace() === workspace;
   const sales = practice ? getSandboxSales() : [];
@@ -62,7 +63,7 @@ export default function GrowerWeeklyRecords({ siteId, operations, fulfilment }: 
         </li>)}</ul>
         : current && !current.records.incomplete
           ? <p>No linked harvests were found. Link a picked record to a dated cycle in the Task Planner.</p>
-          : <p>{operations.status === 'loading' ? 'Checking linked harvests…' : 'Linked harvest quantity is unknown. Saved links could not be checked for this garden.'}</p>}
+          : <p>{checking ? 'Checking linked harvests…' : 'Linked harvest quantity is unknown. Saved links could not be checked for this garden.'}</p>}
       {current?.records.incomplete && <p>Some linked records could not be checked.</p>}
       <p>Garden-wide records stay separate from the individual buyer orders.</p>
     </div>
@@ -80,6 +81,6 @@ export default function GrowerWeeklyRecords({ siteId, operations, fulfilment }: 
     </div>
   </section>
     {fulfilment && <BuyerFulfilmentPanel siteId={siteId} {...fulfilment} operations={operations} harvest={current} practice={practice}
-      onRecheckHarvest={() => { setSnapshot(null); setCheckRevision(value => value + 1); }} />}
+      checkingHarvest={checking} checkRevision={checkRevision} onRecheckHarvest={() => setCheckRevision(value => value + 1)} />}
   </>;
 }

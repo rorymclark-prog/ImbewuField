@@ -16,6 +16,8 @@ import type { GrowerPlanningProfile, GrowerInput } from '../lib/international/gr
 import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import { assembleGrowerWorkflowReview, prepareGrowerWorkflowAcceptance, type GrowerWorkflowDraft, type GrowerWorkflowReview } from '../lib/international/grower-workflow.ts';
 import type { GrowerAutoPlanPanelProps } from '../components/crops/GrowerAutoPlanPanel.tsx';
+import type { useGrowerOperations } from '../components/crops/useGrowerOperations.ts';
+import type { GardenReportRead } from '../lib/international/projects/garden-report-source.ts';
 
 const hooks = registerHooks({ resolve(specifier, context, next) {
   if (specifier === './auth' && context.parentURL?.endsWith('/lib/use-role-navigation.ts')) return {
@@ -31,7 +33,66 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
 } });
 const { default: Panel } = await import('../components/crops/GrowerAutoPlanPanel.tsx');
 const { default: ProductionPlan } = await import('../components/crops/GreenHorizonProductionPlan.tsx');
+const { default: WeeklyRecords } = await import('../components/crops/GrowerWeeklyRecords.tsx');
 after(() => hooks.deregister());
+
+test('buyer print waits for the new harvest read and admits an explicitly unavailable result', async () => {
+  const target = buildGreenHorizonLettuceTarget();
+  const reads: ((value: GardenReportRead | null) => void)[] = [];
+  let saleReads = 0;
+  let releases = 0;
+  const harvest: GardenReportRead = {
+    records: { siteId: target.siteId, siteLabel: 'Fixture garden', sample: false, harvest: [], notes: [], incomplete: false },
+    notesHeld: false, isCurrent: () => true, checkCurrent: async () => true,
+    release() { releases++; }, readLinkedHarvestSources: async () => [],
+  };
+  const operations = {
+    status: 'ready', book: { harvestTargets: [target] }, gardenRevision: 1, isCurrent: () => true,
+    readGardenReport: () => new Promise<GardenReportRead | null>(resolve => reads.push(resolve)),
+    readBuyerSales: async () => { saleReads++; return null; },
+  } as unknown as ReturnType<typeof useGrowerOperations>;
+  let screen!: ReactTestRenderer;
+  const button = (label: string) => {
+    const match = screen.root.findAllByType('button').find(node => text(node).trim() === label);
+    assert.ok(match);
+    return match;
+  };
+  const print = () => button('Download weekly work and buyer summary');
+  const previousWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  const previousSelf = Object.getOwnPropertyDescriptor(globalThis, 'self');
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: new EventTarget() });
+  Object.defineProperty(globalThis, 'self', { configurable: true, value: globalThis });
+  try {
+    await act(async () => {
+      screen = create(React.createElement(WeeklyRecords, {
+        siteId: target.siteId, operations,
+        fulfilment: { targetSiteId: target.siteId, targets: [target], save: { context: null, onSave: () => false as const }, beds: [], cycles: [] },
+      }));
+    });
+    assert.equal(reads.length, 1);
+    assert.equal(saleReads, 0);
+    assert.equal(print().props.disabled, true);
+    await act(async () => reads[0](harvest));
+    assert.equal(saleReads, 1);
+    assert.equal(print().props.disabled, false);
+    await act(async () => button('Check harvest and sales').props.onClick());
+    assert.equal(reads.length, 2);
+    assert.equal(releases, 1);
+    assert.equal(saleReads, 1);
+    assert.equal(print().props.disabled, true);
+    assert.match(text(screen.root), /Checking linked harvests/);
+    await act(async () => reads[1](null));
+    assert.equal(saleReads, 2);
+    assert.equal(print().props.disabled, false);
+    assert.match(text(screen.root), /Linked harvest quantity is unknown/);
+  } finally {
+    if (screen) act(() => screen.unmount());
+    if (previousWindow) Object.defineProperty(globalThis, 'window', previousWindow);
+    else Reflect.deleteProperty(globalThis, 'window');
+    if (previousSelf) Object.defineProperty(globalThis, 'self', previousSelf);
+    else Reflect.deleteProperty(globalThis, 'self');
+  }
+});
 
 test('the example opens with staggered worked cycles, explicit weekly gaps and unresolved sowing dates', () => {
   const { siteId } = buildGreenHorizonLettuceTarget();
