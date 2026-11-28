@@ -7,6 +7,7 @@ import ManualBlocks from '@/components/manual/ManualBlocks';
 import FieldFilmButton from '@/components/course/FieldFilmButton';
 import LanguageSwitch from '@/components/manual/LanguageSwitch';
 import ChapterLanguageLink from '@/components/manual/ChapterLanguageLink';
+import ContourPracticeButton from '@/components/manual/contour/ContourPracticeButton';
 import styles from '@/components/manual/ManualOutline.module.css';
 import {
   MANUAL_CHAPTERS, MANUAL_LANGS, chapterTitle, manualFilmPlacements, figuresBySection, isManualChapter, isManualLang, manualUi, parseManual, readingMinutes,
@@ -59,12 +60,19 @@ export default function ManualChapterPage({ params }: { params: { lang: string; 
   const next = index < MANUAL_CHAPTERS.length - 1 ? MANUAL_CHAPTERS[index + 1] : null;
   const contentLang = translated ? lang : 'en';
   const filmSlots = manualFilmPlacements(slug, body);
-  function filmAt(blockIndex: number, afterStep?: number) {
+  function lessonAt(blockIndex: number, afterStep?: number) {
     const slot = filmSlots.find((s) => s.blockIndex === blockIndex && s.afterStep === afterStep);
     return slot && (
-      <div id={slot.anchor} className="print:hidden" style={{ margin: '12px 0 16px', scrollMarginTop: 80 }}>
-        <FieldFilmButton film={slot.film} lang={lang} />
-      </div>
+      <>
+        <div id={slot.anchor} className="print:hidden" style={{ margin: '12px 0 16px', scrollMarginTop: 80 }}>
+          <FieldFilmButton film={slot.film} lang={lang} />
+        </div>
+        {slot.film === 'walk' && (
+          <div id="contour-practice" className="print:hidden" style={{ margin: '12px 0 16px', scrollMarginTop: 80 }}>
+            <ContourPracticeButton lang={lang} />
+          </div>
+        )}
+      </>
     );
   }
 
@@ -100,7 +108,7 @@ export default function ManualChapterPage({ params }: { params: { lang: string; 
               </nav>
             </details>
           )}
-          <ManualBlocks blocks={body} headingIds={headingIds} glossaryTableAt={glossaryTableAt} figures={figuresBySection(manualFigures(), slug)} lang={contentLang} insertAt={filmSlots.length ? filmAt : undefined} />
+          <ManualBlocks blocks={body} headingIds={headingIds} glossaryTableAt={glossaryTableAt} figures={figuresBySection(manualFigures(), slug)} lang={contentLang} insertAt={filmSlots.length ? lessonAt : undefined} />
         </article>
         <nav aria-label={ui.chapters} style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'space-between', marginTop: 40 }}>
           {prev ? <Link href={`/manual/${lang}/${prev}`} style={navLink}><ChevronLeft size={18} aria-hidden />{ui.previous}</Link> : <span />}
