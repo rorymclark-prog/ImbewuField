@@ -148,7 +148,12 @@ export function buildGreenHorizonCropPlan(): CropPlanState {
   const chardEstimate = { ...lettuceEstimate, profileId: CHARD_PROFILE_ID, cropKey: chard.cropKey };
   return {
     version: 1, updatedAt: RECORD_TIME,
-    harvestTargets: [target, chard],
+    // Synthetic partial handover linked to the existing 4 kg practice sale.
+    harvestTargets: [{ ...target, fulfilment: [{
+      kind: 'delivery', sourceId: 'green-horizon-example-sale',
+      sourceFingerprint: '013929bf6ff43d6e949a3b1605d7e20d8a6c13ea75d636b4b214eb6820bb420b',
+      start: target.window.start, endExclusive: target.window.endExclusive, on: DATE, unit: 'kg', quantity: 3,
+    }] }, chard],
     growerPlanningProfiles: [lettuceEstimate, chardEstimate],
     // A1 and B1 are available for practice review. Only A2 starts with a
     // saved month-only entry, so its picking and clearing dates stay unknown.

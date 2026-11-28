@@ -2611,7 +2611,8 @@ function FacilitatorCropsPageInner() {
   const loading = design === undefined || plan === null || !mounted;
   const greenHorizonProduction = getSampleWorkspace() === 'green-horizon'
     && productionSiteId === buildGreenHorizonLettuceTarget().siteId
-    ? <GreenHorizonProductionPlan siteId={productionSiteId} beds={beds} plan={plan} source={selectedGrowerSource} /> : null;
+    ? <GreenHorizonProductionPlan siteId={productionSiteId} beds={beds} plan={plan} source={selectedGrowerSource}
+      fulfilmentSave={{ context: harvestSaveContext, onSave: saveHarvestTargets }} /> : null;
   const checkedGrowerCycleContext: GrowerCycleContext | null = selectedGrowerSource ? {
     scope: growerScope,
     beds: selectedGrowerSource.beds,
@@ -2624,7 +2625,8 @@ function FacilitatorCropsPageInner() {
     ? <GrowerWeeklyProduction siteId={growerScope.siteId} targetSiteId={productionSiteId} beds={beds} targets={weeklyTargets} plantings={plan.plantings}
       availability={reviewedAvailability?.source === selectedGrowerSource
         && reviewedAvailability.revision === growerWorkflow.contextRevision ? reviewedAvailability.periods : undefined}
-      cycles={weeklyAcceptedCycles(growerScope.siteId, plan.plantings, checkedGrowerCycleContext, productionSiteId)} /> : null;
+      cycles={weeklyAcceptedCycles(growerScope.siteId, plan.plantings, checkedGrowerCycleContext, productionSiteId)}
+      fulfilmentSave={{ context: harvestSaveContext, onSave: saveHarvestTargets }} /> : null;
   const growerPlanningPanel = <>
     {weeklyProduction}
     <SavedGrowerRows rows={markedPlantings} wholeBookRows={plan?.plantings ?? []} context={checkedGrowerCycleContext} onExport={exportSavedGrowerRecord} />

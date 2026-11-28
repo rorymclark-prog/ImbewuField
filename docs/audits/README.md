@@ -307,6 +307,8 @@ is historical; it does not describe the current release status.
 
 [Weekly market-garden production — 27 November 2026](2026-11-27/weekly-market-garden-production.md) records weekly buyer quantities, checked bed dates and link-based harvest readback.
 
+[Weekly buyer fulfilment — 28 November 2026](2026-11-28/buyer-week-fulfilment.md) covers checked order allocations and the printable weekly summary.
+
 Station history continuation — [Berlin-Tempelhof station evidence — 24 November 2026](2026-11-24/dwd-kl-station-evidence-codex.md). A bounded DWD archive and read-only planner panel keep sensor heights, missing values, intervals and preliminary quality visible.
 
 Latest source and planner continuation: [Wisconsin tomato first harvest — 19 November 2026](2026-11-19/wisconsin-tomato-first-harvest-codex.md). An explicit historical reference supplies one conditional date and leaves the other crop estimates unknown. Candidate release checks remain separate.

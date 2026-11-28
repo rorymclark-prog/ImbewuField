@@ -15,6 +15,7 @@ import {
 } from '../lib/international/grower-workflow.ts';
 import { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } from '../lib/international/grower-workflow-source.ts';
 import { growerDemandFromEnteredEntry } from '../lib/international/grower-entered-demand.ts';
+import { buildBuyerWeekPrint } from '../lib/international/buyer-week-print.ts';
 import { normaliseBuyerFulfilment, projectBuyerFulfilment, type BuyerFulfilmentEntry, type CheckedFulfilmentSource } from '../lib/international/buyer-fulfilment.ts';
 import {
   projectGrowerBuyerPickingPeriods, growerDemandFromHarvestTarget,
@@ -496,4 +497,18 @@ test('observed harvest, actual handover and ledger dates remain distinct', () =>
   const accepted = projectBuyerFulfilment([actual], [harvest, evidence({ quantity: 0 })], checkedOn);
   assert.deepEqual(accepted.map(line => [line.status, line.entry.kind, line.entry.quantity]),
     [['checked', 'harvest-allocation', 1], ['checked', 'delivery', 0]]);
+});
+
+test('the printable week labels source limitations and escapes private buyer and bed names', () => {
+  const html = buildBuyerWeekPrint({ site: 'Green Horizon', buyer: 'Private <shop>', crop: 'Lettuce',
+    start: '2028-02-01', through: '2028-02-07', practice: true,
+    totals: [{ label: 'Ordered', value: '8 kg' }, { label: 'Recorded delivery', value: '0 kg' }],
+    work: [{ date: '2028-02-05', bed: 'A&B', task: 'First pick', basis: 'Worked example' }],
+    entries: [{ date: '2028-02-07', kind: 'Delivery', quantity: '0 kg', status: 'Checked' }],
+  });
+  assert.match(html, /Private &lt;shop&gt;.*Fictional practice records/);
+  assert.match(html, /A&amp;B/);
+  assert.match(html, /Delivery completeness is unknown/);
+  assert.match(html, /<dt>Recorded delivery<\/dt><dd>0 kg<\/dd>/);
+  assert.doesNotMatch(html, /<shop>/);
 });

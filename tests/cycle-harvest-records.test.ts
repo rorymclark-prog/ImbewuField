@@ -4,7 +4,7 @@ import test, { after, beforeEach } from 'node:test';
 import { bindMountedAccountLocalStorageUid } from '../lib/account-local-storage.ts';
 import { cycleHarvestDocumentId, makeCycleHarvestLink } from '../lib/cycle-harvest.ts';
 import type { GrowerJournalLink } from '../lib/field-journal.ts';
-import { buildGreenHorizonLettuceTarget } from '../lib/green-horizon-demo.ts';
+import { buildGreenHorizonCropPlan, buildGreenHorizonLettuceTarget } from '../lib/green-horizon-demo.ts';
 import {
   addSandboxProduction, deleteSandboxProduction, enterSampleMode, exitSampleMode, getSandboxProduction, updateSandboxSale,
 } from '../lib/sample-mode.ts';
@@ -331,6 +331,9 @@ test('sample sale evidence is withdrawn after an edit and cannot cross a reset',
   const before = await captureBuyerSaleEvidence(current);
   assert.ok(before);
   assert.equal(before.sources[0]?.quantity, 4);
+  const partial = buildGreenHorizonCropPlan().harvestTargets?.[0]?.fulfilment?.[0];
+  assert.equal(partial?.quantity, 3);
+  assert.equal(before.sources[0].fingerprint, partial?.sourceFingerprint);
   updateSandboxSale(before.sources[0].id, { kg: 5 });
   assert.equal(before.isCurrent(), false);
   const edited = await captureBuyerSaleEvidence(current);

@@ -6,15 +6,19 @@ import { recordQuantity, recordUnit } from '@/lib/farm-records';
 import type { GardenReportRead } from '@/lib/international/projects/garden-report-source';
 import { getSampleWorkspace, getSandboxSales } from '@/lib/sample-mode';
 import { useSampleWorkspace } from '@/lib/use-role-navigation';
+import type { WeeklyProductionCycle } from '@/lib/international/grower-weekly-production';
+import type { HarvestTarget, PlanBed } from '@/lib/crop-plan';
+import BuyerFulfilmentPanel, { type BuyerFulfilmentSave } from './BuyerFulfilmentPanel';
 import type { useGrowerOperations } from './useGrowerOperations';
 
 function quantityText(quantity: number, unit: string) {
   return `${quantity.toLocaleString('en-GB', { maximumSignificantDigits: 15 })} ${unit === 'each' ? 'items' : unit}`;
 }
 
-export default function GrowerWeeklyRecords({ siteId, operations }: {
+export default function GrowerWeeklyRecords({ siteId, operations, fulfilment }: {
   siteId: string;
   operations: ReturnType<typeof useGrowerOperations>;
+  fulfilment?: { targetSiteId: string; targets: readonly HarvestTarget[]; save: BuyerFulfilmentSave; beds: readonly PlanBed[]; cycles: readonly WeeklyProductionCycle[] };
 }) {
   const workspace = useSampleWorkspace();
   const [snapshot, setSnapshot] = useState<{
@@ -47,7 +51,7 @@ export default function GrowerWeeklyRecords({ siteId, operations }: {
   const current = matches && snapshot?.result?.isCurrent() ? snapshot.result : null;
   const practice = workspace === 'green-horizon' && getSampleWorkspace() === workspace;
   const sales = practice ? getSandboxSales() : [];
-  return <section aria-label="Recorded production and sales" className="grid gap-3 rounded-lg border border-[var(--border)] p-3 text-sm md:grid-cols-2">
+  return <><section aria-label="Recorded production and sales" className="grid gap-3 rounded-lg border border-[var(--border)] p-3 text-sm md:grid-cols-2">
     <div>
       <h3 className="font-semibold">Linked harvests</h3>
       {current?.records.harvest.length
@@ -70,8 +74,10 @@ export default function GrowerWeeklyRecords({ siteId, operations }: {
           {row.buyer && <span> · {row.buyer}</span>}
         </li>;
       })}</ul>}
-      <p className="mt-1">Buyer delivery remains unknown. Sales stay in their own records.</p>
+      <p className="mt-1">{fulfilment ? 'Review buyer deliveries in the fulfilment panel.' : 'Buyer delivery remains unknown. Sales stay in their own records.'}</p>
       <Link href="/records" prefetch={false} className="inline-flex min-h-11 items-center underline">View sales in Records</Link>
     </div>
-  </section>;
+  </section>
+    {fulfilment && <BuyerFulfilmentPanel siteId={siteId} {...fulfilment} operations={operations} harvest={current} practice={practice} />}
+  </>;
 }

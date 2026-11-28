@@ -6,6 +6,7 @@ import { hasGrowerCycleMarker, normaliseGrowerCycleAttachment } from '@/lib/inte
 import { assessGrowerPlanning, type GrowerDateEstimate } from '@/lib/international/grower-planning';
 import { weeklyAcceptedCycles, type WeeklyProductionCycle } from '@/lib/international/grower-weekly-production';
 import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
+import type { BuyerFulfilmentSave } from './BuyerFulfilmentPanel';
 import GrowerWeeklyProduction, { showQuantity } from './GrowerWeeklyProduction';
 
 const day = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
@@ -28,11 +29,12 @@ function savedSchedule(row: Planting, siteId: string) {
   return assessment.status === 'ready' ? assessment.schedule : null;
 }
 
-export default function GreenHorizonProductionPlan({ siteId, beds, plan, source }: {
+export default function GreenHorizonProductionPlan({ siteId, beds, plan, source, fulfilmentSave }: {
   siteId: string;
   beds: readonly PlanBed[];
   plan: CropPlanState | null;
   source: GrowerWorkflowSource | null;
+  fulfilmentSave?: BuyerFulfilmentSave;
 }) {
   const practice = buildGreenHorizonWeeklyPracticeDraft();
   const [reference] = practice.targetProfiles;
@@ -68,7 +70,7 @@ export default function GreenHorizonProductionPlan({ siteId, beds, plan, source 
       {target && targetWindow && (
         <p className="mt-2"><strong>Buyer target</strong> · {target.weeklyKg !== undefined
           ? `${target.weeklyKg} kg`
-          : `${target.weeklyQuantity} ${target.unit === 'each' ? 'items' : target.unit}`}/week of {cropByKey(target.cropKey)?.name ?? 'the selected crop'} from {formatDate(targetWindow.start)} to before {formatDate(targetWindow.endExclusive)}. Delivery quantity is unknown.</p>
+          : `${target.weeklyQuantity} ${target.unit === 'each' ? 'items' : target.unit}`}/week of {cropByKey(target.cropKey)?.name ?? 'the selected crop'} from {formatDate(targetWindow.start)} to before {formatDate(targetWindow.endExclusive)}. {fulfilmentSave ? 'Review confirmed deliveries by week below.' : 'Delivery quantity is unknown.'}</p>
       )}
       <ul className="my-3 grid gap-2 md:grid-cols-3">
         {beds.map(bed => {
@@ -105,7 +107,7 @@ export default function GreenHorizonProductionPlan({ siteId, beds, plan, source 
       </ul>
       {beds.length === 0 && <p className="mb-3">No mapped beds are available for this example.</p>}
       <GrowerWeeklyProduction siteId={siteId} beds={beds} targets={targets} plantings={plantings} cycles={cycles}
-        practice availability={practice.available} />
+        practice availability={practice.available} fulfilmentSave={fulfilmentSave} />
       <button type="button" className="inline-flex min-h-11 items-center underline" onClick={() => {
         const panel = document.querySelector<HTMLDetailsElement>('details#practice-crop-cycle');
         if (!panel) return;

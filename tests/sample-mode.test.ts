@@ -228,20 +228,27 @@ test('Green Horizon’s dated lettuce target survives the normal sample save and
   const plan = loadCropPlan();
   const target = buildGreenHorizonLettuceTarget();
   const chard = buildGreenHorizonChardTarget();
-  assert.deepEqual(plan.harvestTargets, [target, chard]);
+  const seeded = plan.harvestTargets?.[0];
+  assert.ok(seeded);
+  const { fulfilment, ...order } = seeded;
+  assert.deepEqual(order, target);
+  assert.deepEqual(plan.harvestTargets?.[1], chard);
+  assert.equal(fulfilment?.length, 1);
+  assert.equal(fulfilment[0].quantity, 3);
   assert.equal(target.siteId, designSiteIdFromLocation(GREEN_HORIZON_SITE));
   assert.equal(saveCropPlanWithReceipt({
     ...plan,
-    harvestTargets: [{ ...target, weeklyKg: 9 }, chard],
+    harvestTargets: [{ ...target, fulfilment, weeklyKg: 9 }, chard],
   }).saved, true);
   assert.equal(loadCropPlan().harvestTargets?.[0]?.weeklyKg, 9);
+  assert.deepEqual(loadCropPlan().harvestTargets?.[0]?.fulfilment, fulfilment);
   assert.deepEqual(loadCropPlan().harvestTargets?.[1], chard);
   assert.equal(sample.getSandboxProduction()[0]?.kg, 6);
   assert.equal(sample.getSandboxSales()[0]?.kg, 4);
   assert.equal(sample.enterSampleMode('ubhejane'), true);
   assert.ok(!loadCropPlan().harvestTargets?.some(row => row.id === target.id));
   assert.equal(sample.enterSampleMode('green-horizon'), true);
-  assert.deepEqual(loadCropPlan().harvestTargets, [target, chard]);
+  assert.deepEqual(loadCropPlan().harvestTargets, [seeded, chard]);
 });
 
 test('the staggered market-garden review keeps dated picking, an entered zero and an unknown quantity distinct', async () => {

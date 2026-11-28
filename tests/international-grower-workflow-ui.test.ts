@@ -23,7 +23,7 @@ const hooks = registerHooks({ resolve(specifier, context, next) {
   };
   return next(specifier, context);
 }, load(url, context, next) {
-  if (/\/components\/crops\/(GrowerAutoPlanPanel|GreenHorizonProductionPlan|GrowerWeeklyProduction|GrowerWeeklyRecords)\.tsx$/.test(url)) return { format: 'module', shortCircuit: true,
+  if (/\/components\/crops\/(GrowerAutoPlanPanel|GreenHorizonProductionPlan|GrowerWeeklyProduction|GrowerWeeklyRecords|BuyerFulfilmentPanel)\.tsx$/.test(url)) return { format: 'module', shortCircuit: true,
     source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), { compilerOptions: {
       target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, jsx: ts.JsxEmit.ReactJSX,
     } }).outputText };

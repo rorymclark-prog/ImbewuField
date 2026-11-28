@@ -264,11 +264,13 @@ test('the weekly saved-design view keeps a current provisional cycle and holds a
   const args = { growerSample: false, growerScope: source.scope, productionSiteId,
     selectedGrowerSource: { ...source, resourceSiteId: productionSiteId },
     growerConditions, createProvisionalCycleContext, weeklyAcceptedCycles, reviewedAvailability: null,
-    beds: source.beds, plan: { plantings: [row], harvestTargets: [{ siteId: productionSiteId }] } };
+    beds: source.beds, plan: { plantings: [row], harvestTargets: [{ siteId: productionSiteId }] },
+    harvestSaveContext: { current: 'fixture' }, saveHarvestTargets: () => false };
   const current = elements(route(args))[0];
   assert.ok(current);
   assert.equal(current.props.siteId, context.scope.siteId);
   assert.equal(current.props.targetSiteId, productionSiteId);
+  assert.deepEqual(current.props.fulfilmentSave, { context: args.harvestSaveContext, onSave: args.saveHarvestTargets });
   assert.deepEqual((current.props.cycles as ReturnType<typeof weeklyAcceptedCycles>).map(cycle => ({
     siteId: cycle.siteId, plantingId: cycle.plantingId, firstHarvestDate: cycle.schedule.firstHarvestDate,
   })), [{ siteId: productionSiteId, plantingId: row.id, firstHarvestDate: '2028-02-09' }]);

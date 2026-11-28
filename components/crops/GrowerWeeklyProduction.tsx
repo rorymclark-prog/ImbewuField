@@ -5,6 +5,7 @@ import type { HarvestTarget, PlanBed, Planting } from '@/lib/crop-plan';
 import { addGrowerUtcDays } from '@/lib/international/grower-planning';
 import { weeklyAcceptedCycles, weeklyProductionOrders, type WeeklyProductionCycle, type WeeklyProductionWindow } from '@/lib/international/grower-weekly-production';
 import Link from 'next/link';
+import type { BuyerFulfilmentSave } from './BuyerFulfilmentPanel';
 import GrowerWeeklyRecords from './GrowerWeeklyRecords';
 import { useGrowerOperations } from './useGrowerOperations';
 
@@ -22,7 +23,7 @@ export function showQuantity(quantity: number, unit: string, estimated = false):
 }
 
 export default function GrowerWeeklyProduction({ siteId, targetSiteId = siteId, beds, targets, plantings, cycles: proposed,
-  practice = false, availability = [] }: {
+  practice = false, availability = [], fulfilmentSave }: {
   siteId: string;
   targetSiteId?: string;
   beds: readonly PlanBed[];
@@ -30,6 +31,7 @@ export default function GrowerWeeklyProduction({ siteId, targetSiteId = siteId, 
   plantings: readonly Planting[];
   cycles: readonly WeeklyProductionCycle[];
   practice?: boolean;
+  fulfilmentSave?: BuyerFulfilmentSave;
   availability?: readonly (WeeklyProductionWindow & { bedId: string })[];
 }) {
   const operations = useGrowerOperations();
@@ -97,7 +99,8 @@ export default function GrowerWeeklyProduction({ siteId, targetSiteId = siteId, 
     })}
     {targets.length === 0 && <p>No buyer targets are saved for these beds.</p>}
     <Link className="inline-flex min-h-11 items-center underline" href="/cropplan" prefetch={false}>See sowing and picking tasks</Link>
-      <GrowerWeeklyRecords siteId={siteId} operations={operations} />
+      <GrowerWeeklyRecords siteId={siteId} operations={operations}
+        fulfilment={fulfilmentSave ? { targetSiteId, targets, save: fulfilmentSave, beds, cycles } : undefined} />
   </section>
   );
 }
