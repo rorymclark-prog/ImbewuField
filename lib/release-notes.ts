@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '28 November 2026', sha: '78c7dd713', changes: [
+  { when: '28 November 2026', sha: '17321815b', changes: [
     'Explore four traced field outlines and 16 practice beds in Rivier Uitsig.',
     'Open its filled-in production plan and try saving sowing and picking work.',
   ] },
