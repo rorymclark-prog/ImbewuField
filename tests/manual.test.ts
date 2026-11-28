@@ -25,6 +25,21 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const file = (lang: string, slug: string) => path.join(ROOT, 'content', 'manual', lang, `${slug}.md`);
 const read = (lang: string, slug: string) => readFileSync(file(lang, slug), 'utf8');
 
+const farmFilmLocations = [
+  { film: 'zones', chapter: '02-planning-your-farm', anchor: 'farm-zones-film', block: 'p', step: undefined,
+    headings: ['Step 2: Zone planning', 'Isinyathelo 2: Ukuhlela ama-zone', 'Mohato wa 2: Moralo wa di-zone', 'Lwendo lwa 2: U pulana nga dzi-zone', 'Goza 2: Ku hlela ti-zone'] },
+  { film: 'windbreak', chapter: '06-tree-systems', anchor: 'windbreak-film', block: 'ol', step: 4,
+    headings: ['How to plan a windbreak', 'Indlela yokuhlela i-windbreak', 'Mokgwa wa ho rala windbreak', 'Nḓila ya u pulana windbreak', 'Ndlela yo hlela windbreak'] },
+  { film: 'tree', chapter: '06-tree-systems', anchor: 'planting-a-tree-film', block: 'p', step: undefined,
+    headings: ['Planting a tree', 'Ukutshala isihlahla', 'Ho lema sefate', 'U ṱavha muri', 'Ku byala murhi'] },
+  { film: 'mulch', chapter: '08-soil', anchor: 'mulching-a-bed-film', block: 'ol', step: 3,
+    headings: ['How to mulch', 'Indlela yokufaka i-mulch', 'Mokgwa wa ho kwahela ka mulch', 'Nḓila ya u fukedza nga mulch', 'Ndlela yo veka mulch'] },
+  { film: 'succession', chapter: '09-balanced-ecology', anchor: 'succession-film', block: 'p', step: undefined,
+    headings: ['Succession', 'I-succession', 'Succession', 'Succession', 'Succession'] },
+  { film: 'rotation', chapter: '10-natural-pest-control', anchor: 'crop-rotation-film', block: 'ol', step: undefined,
+    headings: ['Rotation by plant family', 'Ukushintshanisa ngomndeni wezitshalo', 'Rotation ho ya ka lelapa la dimela', 'Rotation nga lushaka lwa zwimela', 'Crop rotation hi ku ya hi ndyangu wa swimilana'] },
+] as const;
+
 test('each manual search entry opens a chapter, heading, glossary word or field film in its own edition', () => {
   for (const lang of MANUAL_LANGS) {
     const index = manualSearchIndex(lang);
@@ -57,6 +72,14 @@ test('each manual search entry opens a chapter, heading, glossary word or field 
         const entry = index.find(item => item.slug === slug && item.kind === 'film');
         assert.ok(entry);
         assert.equal(entry.anchor, anchor);
+        assert.equal(entry.titleLang, lang);
+        assert.equal(entry.title, fieldFilmTitle(film, lang));
+        assert.equal(searchManual(prepareManualSearch(index), entry.title)[0].section, entry);
+        anchors.push(anchor);
+      }
+      for (const { film, anchor } of farmFilmLocations.filter(location => location.chapter === slug)) {
+        const entry = index.find(item => item.slug === slug && item.anchor === anchor && item.kind === 'film');
+        assert.ok(entry);
         assert.equal(entry.titleLang, lang);
         assert.equal(entry.title, fieldFilmTitle(film, lang));
         assert.equal(searchManual(prepareManualSearch(index), entry.title)[0].section, entry);
@@ -268,14 +291,31 @@ test('the shadow film appears with Sun angles and the jar film follows setting d
     ] as const) {
       const body = parseManual(read(lang, chapter)).filter(b => b.type !== 'h1');
       const slots = manualFilmPlacements(chapter, body);
-      assert.equal(slots.length, 1);
-      const [slot] = slots;
-      assert.equal(slot.film, film);
+      const slot = slots.find(entry => entry.film === film);
+      assert.ok(slot);
       assert.equal(slot.afterStep, step);
       assert.equal(body[slot.blockIndex].type, block);
       const preceding = body[slot.blockIndex - 1];
       assert.ok(preceding?.type === 'h3');
       assert.equal(inlineText(preceding.content), heading);
+    }
+  }
+});
+
+test('each new farm film appears under its own instruction in the five manual editions', () => {
+  for (const [languageIndex, lang] of MANUAL_LANGS.entries()) {
+    for (const { film, chapter, anchor, block, step, headings } of farmFilmLocations) {
+      const body = parseManual(read(lang, chapter)).filter(entry => entry.type !== 'h1');
+      const slot = manualFilmPlacements(chapter, body).find(entry => entry.film === film);
+      assert.ok(slot, lang + '/' + film);
+      assert.equal(slot.anchor, anchor);
+      assert.equal(slot.afterStep, step);
+      const target = body[slot.blockIndex];
+      assert.equal(target.type, block);
+      if (step !== undefined) assert.ok(target.type === 'ol' && target.items[step - 1]?.length);
+      const heading = body.slice(0, slot.blockIndex).reverse().find(entry => entry.type === 'h2' || entry.type === 'h3');
+      assert.ok(heading && 'content' in heading);
+      assert.equal(inlineText(heading.content), headings[languageIndex]);
     }
   }
 });
@@ -450,6 +490,12 @@ for (const [film, version, cueEnds] of [
   ['bottle', 3, [5, 11, 17, 23, 29, 36]],
   ['jar', 1, [9, 17, 24, 32, 43, 50]],
   ['shadow', 1, [6, 13, 21, 29, 36, 42]],
+  ['zones', 1, [7, 14, 21, 28, 35, 43]],
+  ['windbreak', 1, [7, 14, 21, 29, 37, 45]],
+  ['tree', 1, [8, 16, 24, 33, 42, 51]],
+  ['mulch', 1, [6, 13, 21, 29, 36, 43]],
+  ['succession', 1, [7, 14, 22, 30, 38, 46]],
+  ['rotation', 1, [7, 14, 21, 28, 35, 45]],
 ] as const) {
   test(`all five ${film} editions carry six timed stages and report the delivered media size`, () => {
     const english = filmEdition(film, 'en');
