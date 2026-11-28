@@ -128,6 +128,8 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/crops/DwdKlObservationPanel.tsx': 'growers read DWD station intervals and source quality on phones; zero-debt 12px floor',
   'components/crops/GrowerAutoPlanPanel.tsx': 'growers review buyer priorities and dated whole-bed proposals before acting; no small-print exemption',
   'components/crops/GreenHorizonProductionPlan.tsx': 'growers read mapped crops, buyer quantities, picking dates and planning gaps on phones; zero-debt 12px floor',
+  'components/crops/GrowerWeeklyRecords.tsx': 'growers read dated linked harvests and separate sales on phones; zero-debt 12px floor',
+  'components/crops/GrowerWeeklyProduction.tsx': 'growers compare weekly order quantities and bed dates on phones; zero-debt 12px floor',
   'components/crops/GrowerNurseryReviewPanel.tsx': 'growers review seed, tray and surface requirements and incomplete budgets; no small-print exemption',
   'components/crops/GrowerFieldSeedSourcingSection.tsx': 'growers enter gross field seed counts and review held requirements on phones; zero-debt 12px floor',
   'components/crops/GrowerSeedPackBudget.tsx': 'growers enter prices and read unknown costs and incomplete budgets on phones; zero-debt 12px floor',

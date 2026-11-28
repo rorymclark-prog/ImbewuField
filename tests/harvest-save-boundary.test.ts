@@ -87,6 +87,32 @@ test('fresh foreign target and nursery changes are retained while the original a
   }finally{c.dispose();}
 });
 
+test('weekly zero survives the normal target save, and a concurrent change to this period holds an earlier request', () => {
+  const saved = parent();
+  const weeklyPlan = [{ start: '2028-12-01', endExclusive: '2028-12-08', unit: 'kg' as const, quantity: 0 }];
+  try {
+    const next = nextTargets(saved).map(row => row.siteId === siteId ? { ...row, weeklyPlan } : row);
+    const bound = request(saved, next);
+    const result = saved.submit(next, bound);
+    assert.equal(api.harvestSaveResultMatches(result, bound), 'device');
+    assert.deepEqual(readBook().harvestTargets?.find(row => row.siteId === siteId)?.weeklyPlan, weeklyPlan);
+    assert.equal(readBook().harvestTargets?.find(row => row.siteId === otherSite)?.weeklyPlan, undefined);
+  } finally { saved.dispose(); }
+
+  const competing = parent();
+  try {
+    const next = nextTargets(competing).map(row => row.siteId === siteId ? { ...row, weeklyPlan } : row);
+    const bound = request(competing, next);
+    const fresh = book();
+    fresh.harvestTargets![0].weeklyPlan = [{ ...weeklyPlan[0], quantity: 3 }];
+    fresh.updatedAt = Date.now();
+    assert.ok(crop.saveCropPlan(fresh));
+    const result = competing.submit(next, bound);
+    assert.equal(api.harvestSaveResultMatches(result, bound), null);
+    assert.equal(readBook().harvestTargets?.find(row => row.siteId === siteId)?.weeklyPlan?.[0].quantity, 3);
+  } finally { competing.dispose(); }
+});
+
 test('one actual authority creates two closed contexts without letting create, begin, commit, read, result or source proofs cross purposes', () => {
   const observers=probe.auth.size,c=parent();try{
     assert.equal(probe.auth.size,observers+1);const h=c.context(),n=c.nurseryContext(),next=nextTargets(c),settings=nursery();

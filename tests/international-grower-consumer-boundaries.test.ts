@@ -83,7 +83,7 @@ function handlers(book:CropPlanState,beds:any[],binding?:{owner:string|null;samp
   return{...result,state,get book(){return current;},replaceBook(book:CropPlanState){current=book;}};
 }
 const text=(node:ReactTestInstance|string):string=>typeof node==='string'?node:node.children.map(c=>text(c as ReactTestInstance|string)).join('');
-const SavedRows=Function('React','useState','projectGrowerCycles','cropByKey','Link','GrowerCycleIntent','createProvisionalCycleContext','normaliseGrowerCycleAttachment','buildProvisionalCycleEvidence',transpile(functionText('SavedGrowerRows'),true)+'\nreturn SavedGrowerRows;')(React,React.useState,projectGrowerCycles,cropByKey,(props:any)=>React.createElement('a',props,props.children),GrowerCycleIntent,createProvisionalCycleContext,normaliseGrowerCycleAttachment,buildProvisionalCycleEvidence);
+const SavedRows=Function('React','useState','projectGrowerCycles','cropByKey','Link','GrowerCycleIntent','normaliseGrowerCycleAttachment','buildProvisionalCycleEvidence',transpile(functionText('SavedGrowerRows'),true)+'\nreturn SavedGrowerRows;')(React,React.useState,projectGrowerCycles,cropByKey,(props:any)=>React.createElement('a',props,props.children),GrowerCycleIntent,normaliseGrowerCycleAttachment,buildProvisionalCycleEvidence);
 Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});
 
 test('the actual saved-record view retains accepted evidence when current country use is held and offers a separate historical download', async () => {
@@ -102,14 +102,17 @@ test('the actual saved-record view retains accepted evidence when current countr
   const row = createGrowerCyclePlanting(review.proposal.cycles[0], { plantingId: 'private-historical-row',
     acceptedAt: '2026-11-06T12:01:00.000Z', geometryFingerprint: f.source.geometryFingerprint }); assert.ok(row);
   let renderer!: ReturnType<typeof create>, exports = 0;
-  const props = { rows: [row], wholeBookRows: [row], source: f.source, scope: f.scope, conditions,
+  const currentContext = { scope: f.scope, beds: f.source.beds, geometryFingerprint: f.source.geometryFingerprint,
+    provisionalContext: createProvisionalCycleContext(f.source, conditions, new Date().toISOString()) };
+  const props = { rows: [row], wholeBookRows: [row], context: currentContext,
     onExport: async (candidate: Planting) => { assert.equal(candidate, row); exports++; return true; } };
   try {
     await act(async () => { renderer = create(React.createElement(SavedRows, props)); });
     assert.match(text(renderer.root), /Own estimates: field entry/);
     assert.match(text(renderer.root), /Original evidence as of \(UTC\): 2026-11-05/);
     assert.match(text(renderer.root), /New evidence review as of \(UTC\): 2026-11-06/);
-    await act(async () => renderer.update(React.createElement(SavedRows, { ...props, conditions: { ...conditions, countryCode: 'GB' } })));
+    await act(async () => renderer.update(React.createElement(SavedRows, { ...props, context: { ...currentContext, provisionalContext:
+      createProvisionalCycleContext(f.source, { ...conditions, countryCode: 'GB' }, new Date().toISOString()) } })));
     assert.match(text(renderer.root), /Held:/); assert.doesNotMatch(text(renderer.root), /Own estimates: field entry/);
     assert.match(text(renderer.root), /Country: DE/); assert.doesNotMatch(text(renderer.root), /Country: GB/);
     assert.doesNotMatch(text(renderer.root), /private-historical|[a-f0-9]{64}/);
@@ -129,7 +132,7 @@ test('the actual saved-row screen reads back requested weight and window after J
  assert.equal(prepared.status,'prepared');if(prepared.status!=='prepared')return;
  const rows=JSON.parse(JSON.stringify(prepared.rows));let renderer:any;
  try{
-  await act(async()=>{renderer=create(React.createElement(SavedRows,{rows,wholeBookRows:rows,source:f.source,scope:f.scope}));});
+  await act(async()=>{renderer=create(React.createElement(SavedRows,{rows,wholeBookRows:rows,context:{...f.source,scope:f.scope}}));});
   assert.match(text(renderer.root),/Planning purpose: household food/);
   // Original entered input is now lossless across the common public presenter.
   // Keep this actual screen assertion stricter than the former rounded readback.
@@ -137,7 +140,7 @@ test('the actual saved-row screen reads back requested weight and window after J
   assert.doesNotMatch(text(renderer.root),/≈12\.346 kg gross/);
   assert.match(text(renderer.root),/2028-02-01 to before 2028-03-01 \(UTC\)/);
   assert.doesNotMatch(text(renderer.root),/private-ui-entry|profile-a|synthetic-private-source-receipt/);
-  await act(async()=>renderer.update(React.createElement(SavedRows,{rows,wholeBookRows:rows,source:{...f.source,geometryFingerprint:'moved'},scope:f.scope})));
+  await act(async()=>renderer.update(React.createElement(SavedRows,{rows,wholeBookRows:rows,context:{...f.source,geometryFingerprint:'moved',scope:f.scope}})));
   assert.match(text(renderer.root),/Held:/);assert.doesNotMatch(text(renderer.root),/Original request for all cycles/);
  }finally{if(renderer)await act(async()=>renderer.unmount());}
 });
@@ -207,14 +210,14 @@ test('own occupied ground prevents the actual gap-fill producer from running rat
 test('actual saved-row rendering is explicit when source context is absent, foreign or stale, and dated only when checked',async()=>{
  const f=await ownFixture();let renderer:any;
  try{
-  await act(async()=>{renderer=create(React.createElement(SavedRows,{rows:[f.row],wholeBookRows:[f.row],source:null,scope:f.scope}));});
+  await act(async()=>{renderer=create(React.createElement(SavedRows,{rows:[f.row],wholeBookRows:[f.row],context:null}));});
   assert.match(text(renderer.root),/Current saved source not checked/);assert.match(text(renderer.root),/Held:/);assert.equal(renderer.root.findByType('a').props.href,'/cropplan');
   assert.ok(!text(renderer.root).includes(f.source.sourceRevision));
-  await act(async()=>renderer.update(React.createElement(SavedRows,{rows:[f.row],wholeBookRows:[f.row],source:f.source,scope:f.scope})));
+  await act(async()=>renderer.update(React.createElement(SavedRows,{rows:[f.row],wholeBookRows:[f.row],context:{...f.source,scope:f.scope}})));
   assert.match(text(renderer.root),new RegExp('field entry '+projectGrowerCycles([f.row],{scope:f.scope,beds:f.beds,geometryFingerprint:f.source.geometryFingerprint}).ownCycles[0].assessment.schedule.fieldEntryDate));
-  await act(async()=>renderer.update(React.createElement(SavedRows,{rows:[f.row],wholeBookRows:[f.row],source:{...f.source,geometryFingerprint:'changed'},scope:f.scope})));
+  await act(async()=>renderer.update(React.createElement(SavedRows,{rows:[f.row],wholeBookRows:[f.row],context:{...f.source,geometryFingerprint:'changed',scope:f.scope}})));
   assert.match(text(renderer.root),/Held:/);assert.ok(!text(renderer.root).includes('Own estimates: field entry'));
-  await act(async()=>renderer.update(React.createElement(SavedRows,{rows:[f.row],wholeBookRows:[f.row],source:f.source,scope:{kind:'mapped-site',siteId:'site:2.00000,2.00000'}})));
+  await act(async()=>renderer.update(React.createElement(SavedRows,{rows:[f.row],wholeBookRows:[f.row],context:{...f.source,scope:{kind:'mapped-site',siteId:'site:2.00000,2.00000'}}})));
   assert.match(text(renderer.root),/Held:/);
  }finally{if(renderer)await act(async()=>renderer.unmount());}
 });

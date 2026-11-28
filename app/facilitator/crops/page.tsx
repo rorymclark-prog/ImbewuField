@@ -30,25 +30,26 @@ import NurseryPlanPanel from '@/components/crops/NurseryPlanPanel';
 import { createNurserySaveAuthority, revokeNurserySaveAuthority, createNurserySaveContext, beginNurserySaveRequest, commitNurserySaveRequest, readNurserySaveConfirmation, createHarvestSaveContext, beginHarvestSaveRequest, commitHarvestSaveRequest, readHarvestSaveConfirmation, harvestTargetsSourceKey, type HarvestSaveContext, type HarvestSaveRequest, type HarvestSaveResult, type NurserySaveAuthority, type NurserySaveContext, type NurserySaveRequest, type NurserySaveResult } from '@/lib/nursery-save-receipt';
 import GrowerPlanningPanel from '@/components/crops/GrowerPlanningPanel';
 import ProvisionalCropPreview from '@/components/crops/ProvisionalCropPreview';
-import { provisionalSiteConditions, createProvisionalCycleContext, type ProvisionalSiteConditions, type ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
-import GrowerAutoPlanPanel from '@/components/crops/GrowerAutoPlanPanel';
+import { provisionalSiteConditions, createProvisionalCycleContext, type ProvisionalProfileSaveResult } from '@/lib/international/provisional-profile';
+import GrowerAutoPlanPanel, { type ReviewedBedAvailability } from '@/components/crops/GrowerAutoPlanPanel';
 import GreenHorizonProductionPlan from '@/components/crops/GreenHorizonProductionPlan';
+import GrowerWeeklyProduction from '@/components/crops/GrowerWeeklyProduction';
+import { weeklyAcceptedCycles } from '@/lib/international/grower-weekly-production';
 import GrowerNurseryReviewPanel from '@/components/crops/GrowerNurseryReviewPanel';
 import SavedGrowerNurseryReviewPanel from '@/components/crops/SavedGrowerNurseryReviewPanel';
 import { useGrowerWorkflow, type GrowerWorkflowBookReceipt, type GrowerWorkflowAcceptanceCommit, type GrowerWorkflowAcceptanceResult,
   type GrowerNurseryReferenceCommit, type GrowerNurseryReferenceCommitResult } from '@/components/crops/useGrowerWorkflow';
 import { prepareGrowerNurseryBatchReferenceChanges } from '@/lib/international/grower-nursery';
-import { hasGrowerCycleMarker, isProvenForeignGrowerCycle, normaliseGrowerCycleAttachment } from '@/lib/international/grower-cycle';
+import { hasGrowerCycleMarker, isProvenForeignGrowerCycle, normaliseGrowerCycleAttachment, type GrowerCycleContext } from '@/lib/international/grower-cycle';
 import { projectGrowerCycles } from '@/lib/international/grower-cycle-projection';
 import { buildProvisionalCycleEvidence, buildAdoptedProvisionalCycleHtml } from '@/lib/international/provisional-crop-export';
 import { downloadFile } from '@/lib/crop-export-deliver';
 import GrowerCycleIntent from '@/components/crops/GrowerCycleIntent';
-import type { GrowerWorkflowSource } from '@/lib/international/grower-workflow-source';
 import { prepareGrowerWorkflowAcceptance } from '@/lib/international/grower-workflow';
 import { activeAccountLocalStorageKey, activeAccountUid } from '@/lib/account-local-storage';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 import { getSampleWorkspace, isFictionalSampleLocation, isSampleMode } from '@/lib/sample-mode';
-import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft } from '@/lib/green-horizon-demo';
+import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonWeeklyPracticeDraft } from '@/lib/green-horizon-demo';
 import { sampleSowingCalendarFor } from '@/lib/sample-sowing-calendar';
 import { growerPlanningScopeKey, normaliseGrowerPlanningProfiles, normaliseGrowerPlanningScope, type GrowerPlanningProfile, type GrowerPlanningScope } from '@/lib/international/grower-planning';
 import NurseryForecastSummary from '@/components/crops/NurseryForecastSummary';
@@ -1527,6 +1528,7 @@ function FacilitatorCropsPageInner() {
         : { kind: 'facilitator-local', sourceId: 'local' } : null,
     actorIsCurrent: growerActorIsCurrent, readCurrentBook: readCurrentGrowerBook,
     commitAcceptance: commitGrowerAcceptance, commitNurseryReferences: commitNurseryBatchReferences, createPlantingId: () => genId('grower') });
+  const [reviewedAvailability, setReviewedAvailability] = useState<ReviewedBedAvailability | null>(null);
   const selectedGrowerSource = growerWorkflow.source && growerWorkflow.source.resourceSiteId === productionSiteId
     && growerPlanningScopeKey(growerWorkflow.source.scope) === growerScopeKey
     && (canvasSite ? growerWorkflow.source.kind === 'studio-canvas' && growerWorkflow.source.sourceId === canvasSite
@@ -2609,9 +2611,23 @@ function FacilitatorCropsPageInner() {
   const loading = design === undefined || plan === null || !mounted;
   const greenHorizonProduction = getSampleWorkspace() === 'green-horizon'
     && productionSiteId === buildGreenHorizonLettuceTarget().siteId
-    ? <GreenHorizonProductionPlan siteId={productionSiteId} beds={beds} plan={plan} /> : null;
+    ? <GreenHorizonProductionPlan siteId={productionSiteId} beds={beds} plan={plan} source={selectedGrowerSource} /> : null;
+  const checkedGrowerCycleContext: GrowerCycleContext | null = selectedGrowerSource ? {
+    scope: growerScope,
+    beds: selectedGrowerSource.beds,
+    geometryFingerprint: selectedGrowerSource.geometryFingerprint,
+    provisionalContext: createProvisionalCycleContext(selectedGrowerSource, growerConditions, new Date().toISOString()),
+  } : null;
+  const weeklyTargets = !growerSample && growerScope?.kind === 'mapped-site'
+    ? plan?.harvestTargets?.filter(target => target.siteId === productionSiteId) ?? [] : [];
+  const weeklyProduction = productionSiteId && growerScope?.kind === 'mapped-site' && weeklyTargets.length > 0 && plan
+    ? <GrowerWeeklyProduction siteId={growerScope.siteId} targetSiteId={productionSiteId} beds={beds} targets={weeklyTargets} plantings={plan.plantings}
+      availability={reviewedAvailability?.source === selectedGrowerSource
+        && reviewedAvailability.revision === growerWorkflow.contextRevision ? reviewedAvailability.periods : undefined}
+      cycles={weeklyAcceptedCycles(growerScope.siteId, plan.plantings, checkedGrowerCycleContext, productionSiteId)} /> : null;
   const growerPlanningPanel = <>
-    <SavedGrowerRows rows={markedPlantings} wholeBookRows={plan?.plantings ?? []} source={selectedGrowerSource} scope={growerScope} conditions={growerConditions} onExport={exportSavedGrowerRecord} />
+    {weeklyProduction}
+    <SavedGrowerRows rows={markedPlantings} wholeBookRows={plan?.plantings ?? []} context={checkedGrowerCycleContext} onExport={exportSavedGrowerRecord} />
     {productionSiteId && growerScope?.kind === 'mapped-site' && <HarvestTargetsPanel
       key={`own-targets:${productionSiteId}:${growerScopeKey}`} basis="own-records" siteId={productionSiteId}
       targets={plan?.harvestTargets ?? []} beds={beds} plantings={plantings} pattern={pattern} climate={{}}
@@ -2641,7 +2657,10 @@ function FacilitatorCropsPageInner() {
       targets={plan?.harvestTargets ?? []} targetSiteId={productionSiteId} profiles={plan?.growerPlanningProfiles ?? []}
       practiceDraft={getSampleWorkspace() === 'green-horizon' && productionSiteId === buildGreenHorizonLettuceTarget().siteId
         ? buildGreenHorizonPlanningDraft() : undefined}
+      weeklyPracticeDraft={getSampleWorkspace() === 'green-horizon' && productionSiteId === buildGreenHorizonLettuceTarget().siteId
+        ? buildGreenHorizonWeeklyPracticeDraft() : undefined}
       onRefresh={growerWorkflow.onRefresh} onReview={growerWorkflow.onReview}
+      onReviewAvailability={setReviewedAvailability}
       onAccept={growerWorkflow.onAccept} acceptance={growerWorkflow.acceptance}
       nurseryReview={review => growerWorkflow.source && <GrowerNurseryReviewPanel review={review}
         source={growerWorkflow.source} settings={plan?.nursery} contextRevision={growerWorkflow.contextRevision}
@@ -5367,20 +5386,17 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
   );
 }
 
-function SavedGrowerRows({ rows, wholeBookRows, source, scope, conditions, onExport }: {
+function SavedGrowerRows({ rows, wholeBookRows, context, onExport }: {
   rows: readonly Planting[]; wholeBookRows: readonly Planting[];
-  source: GrowerWorkflowSource | null; scope: GrowerPlanningScope | null;
-  conditions: ProvisionalSiteConditions; onExport: (row: Planting) => Promise<boolean>;
+  context: GrowerCycleContext | null; onExport: (row: Planting) => Promise<boolean>;
 }) {
   const [exportMessage, setExportMessage] = useState('');
   if (!rows.length) return null;
-  const provisionalContext = source ? createProvisionalCycleContext(source, conditions, new Date().toISOString()) : null;
-  const projection = source ? projectGrowerCycles(wholeBookRows, { scope, beds: source.beds, geometryFingerprint: source.geometryFingerprint,
-    ...(provisionalContext ? { provisionalContext } : {}) }) : null;
+  const projection = context ? projectGrowerCycles(wholeBookRows, context) : null;
   return <section aria-label="Saved own dated records" className="my-4 rounded-xl border p-4 text-sm" style={{ borderColor: 'var(--border)' }}>
     <h2 className="font-display text-lg font-semibold">Saved own dated records</h2>
     <p>These records remain saved. Catalogue dates, quantities and complete food or free-land coverage are withheld for them. Legacy controls cannot edit or clear them.</p>
-    {!source && <p role="status">Current saved source not checked. These records are held until their site, geometry and measured space are checked again.</p>}
+    {!context && <p role="status">Current saved source not checked. These records are held until their site, geometry and measured space are checked again.</p>}
     <ul className="my-2 space-y-2">{rows.map((row, i) => {
       const cycle = projection?.ownCycles.find(cycle => cycle.plantingId === row.id);
       const history = normaliseGrowerCycleAttachment(row.growerCycle);

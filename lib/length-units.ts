@@ -63,6 +63,11 @@ function plainDecimal(raw: string): string {
   return match[1] + (point <= 0 ? `0.${'0'.repeat(-point)}${digits}`
     : point >= digits.length ? digits + '0'.repeat(point - digits.length) : `${digits.slice(0, point)}.${digits.slice(point)}`);
 }
+/** Reopen saved values in the plain-decimal grammar without rounding. */
+export function formatExactUnitDecimal(value: number): string {
+  return plainDecimal(String(value));
+}
+
 /** Six decimal places are presentation precision, never saved precision. Very
  * small nonzero values use a plain decimal rather than a misleading zero. */
 export function formatLengthMetres(metres: number, unit: LengthUnit): string | null {

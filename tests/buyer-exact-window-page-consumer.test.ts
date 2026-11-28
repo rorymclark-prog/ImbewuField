@@ -5,7 +5,11 @@ import React from 'react';
 import ts from 'typescript';
 import { bindSiteContext, createSiteCountryContext } from '../lib/international/site-context.ts';
 import { resolvePlanningSupport } from '../lib/international/planning-policy.ts';
-import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft } from '../lib/green-horizon-demo.ts';
+import { buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonWeeklyPracticeDraft } from '../lib/green-horizon-demo.ts';
+
+import { createProvisionalCycleContext } from '../lib/international/provisional-profile.ts';
+import { weeklyAcceptedCycles } from '../lib/international/grower-weekly-production.ts';
+import { provisionalCalendarFixture } from './provisional-calendar-fixture.ts';
 
 // Execute actual route JSX availability and prop expressions without importing
 // the page's hooks/browser. Boundary components are markers, not mounted editors
@@ -14,11 +18,18 @@ const source = readFileSync(new URL('../app/facilitator/crops/page.tsx', import.
 const page = ts.createSourceFile('page.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 let ownSection: ts.Expression | undefined;
 let productionOverview: ts.Expression | undefined;
+const weeklyDeclarations = new Map<string, ts.VariableStatement>();
 const targetNodes: ts.JsxSelfClosingElement[] = [];
 const ownReferences: ts.JsxExpression[] = [];
 function visit(node: ts.Node) {
   if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === 'growerPlanningPanel') ownSection = node.initializer;
   if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === 'greenHorizonProduction') productionOverview = node.initializer;
+  if (ts.isVariableStatement(node)) {
+    const name = node.declarationList.declarations[0]?.name;
+    if (name && ts.isIdentifier(name) && ['checkedGrowerCycleContext', 'weeklyTargets', 'weeklyProduction'].includes(name.text)) {
+      weeklyDeclarations.set(name.text, node);
+    }
+  }
   if (ts.isJsxSelfClosingElement(node) && node.tagName.getText(page) === 'HarvestTargetsPanel') targetNodes.push(node);
   if (ts.isJsxExpression(node) && node.expression && ts.isIdentifier(node.expression) && node.expression.text === 'growerPlanningPanel') ownReferences.push(node);
   ts.forEachChild(node, visit);
@@ -48,7 +59,7 @@ const legacyExpression = `(${legacyCountry.condition.getText(page)}) ? (${contai
   : (${contains(legacyCountry.whenFalse, legacyNode) ? legacyAvailability.getText(page) : 'null'})`;
 // The shared section now also mounts the provisional preview. Keep it as a
 // boundary here; its actual UI/source lifecycle has its own mounted tests.
-const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel', 'GreenHorizonProductionPlan'];
+const names = ['SavedGrowerRows', 'HarvestTargetsPanel', 'ProvisionalCropPreview', 'GrowerPlanningPanel', 'GrowerAutoPlanPanel', 'GrowerNurseryReviewPanel', 'SavedGrowerNurseryReviewPanel', 'GreenHorizonProductionPlan', 'GrowerWeeklyProduction'];
 const boundaries = Object.fromEntries(names.map(name => [name, function Boundary() { return null; }]));
 function compile(expression: string): (input: Record<string, unknown>) => unknown {
   const compiled = ts.transpileModule(`function view(){return (${expression});}`, { compilerOptions: {
@@ -78,10 +89,8 @@ function input(allowCataloguePlanning: boolean) {
   const saveHarvestTargets = (...args: unknown[]) => { saved.push(args); };
   const source = Object.freeze({ marker: 'current-checked-source' });
   const onReview = () => { throw Error('Consumer mount must not review automatically'); };
-  // The actual section also passes current conditions and a guarded historical
-  // export callback to SavedGrowerRows. Keep those boundaries explicit: copying
-  // its JSX without these bindings throws before the buyer-editor assertions run.
-  const growerConditions = Object.freeze({ marker: 'current-provisional-conditions' });
+  // The saved records and weekly view receive the checked source context.
+  const checkedGrowerCycleContext = Object.freeze({ marker: 'current-cycle-context' });
   const exportSavedGrowerRecord = () => { throw Error('Consumer mount must not export automatically'); };
   // The actual page's preview revision now includes climate changes. Supply
   // that state boundary too, so extracting its JSX still exercises the buyer
@@ -90,16 +99,17 @@ function input(allowCataloguePlanning: boolean) {
   return { allowCataloguePlanning, productionSiteId: siteId, growerScope: { kind: 'mapped-site', siteId }, growerScopeKey: 'current-scope-key',
     planningScopeKey: 'current-catalogue-key', markedPlantings: [], plan: { harvestTargets: targets, growerPlanningProfiles: [], plantings },
     selectedGrowerSource: null, beds, plantings, pattern: 'mild-frost', harvestSaveContext: saveContext, saveHarvestTargets,
+    checkedGrowerCycleContext, weeklyProduction: null, setReviewedAvailability() {},
     canvasSite: null, design: null, designBeds: [], saveGrowerProfiles() {},
     growerActorIsCurrent: () => true, siteCountry: { status: 'unknown', context: null, siteId, placeIds: ['fictional-place'] }, planningSupport: { fingerprint: 'fixture-policy' },
     saveProvisionalProfile() { throw Error('Consumer mount must not save automatically'); },
     growerWorkflow: { source, sourceIssue: null, checking: false, contextRevision: 4, onReview, onRefresh() {}, onAccept() {},
       onCheckPreviewSource() { throw Error('Consumer mount must not read preview source automatically'); }, acceptance: { status: 'idle' }, savedNurseryReview: null },
     placeName: 'Engineering source', designTitle: 'Engineering design', growerSample: false, growerOwner: 'fixture-owner',
-    getSampleWorkspace: () => null, buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft,
+    getSampleWorkspace: () => null, buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonWeeklyPracticeDraft,
     countryPlaces: [{ id: 'fictional-place', name: 'Engineering fixture' }],
     siteClimate: null, hasSiteCoords: false, siteLat: 0, siteSurvey: null, saved,
-    growerConditions, exportSavedGrowerRecord,
+    exportSavedGrowerRecord,
     get provisionalClimateRevision() { return climateState.revision; },
     setProvisionalClimateRevision(update: (value: number) => number) { climateState.revision = update(climateState.revision); } };
 }
@@ -169,7 +179,7 @@ test('the actual own-records mount retains its exact key, full rows, save contex
   assert.equal(auto.props.source, fixture.growerWorkflow.source); assert.equal(auto.props.onReview, fixture.growerWorkflow.onReview);
   const history = elements(tree).find(element => element.type === boundaries.SavedGrowerRows); assert.ok(history);
   assert.equal(history.props.wholeBookRows, fixture.plan.plantings);
-  assert.equal(history.props.conditions, fixture.growerConditions);
+  assert.equal(history.props.context, fixture.checkedGrowerCycleContext);
   assert.equal(history.props.onExport, fixture.exportSavedGrowerRecord);
 });
 
@@ -177,11 +187,13 @@ test('only the active Green Horizon workspace at its mapped site receives the pr
   const practiceSiteId = buildGreenHorizonLettuceTarget().siteId;
   const draftFor = (workspace: string | null, productionSiteId: string) => elements(renderOwn({
     ...input(false), getSampleWorkspace: () => workspace, productionSiteId,
-  })).find(element => element.type === boundaries.GrowerAutoPlanPanel)?.props.practiceDraft;
-  assert.deepEqual(draftFor('green-horizon', practiceSiteId), buildGreenHorizonPlanningDraft());
-  assert.equal(draftFor('green-horizon', siteId), undefined);
-  assert.equal(draftFor('ubhejane', practiceSiteId), undefined);
-  assert.equal(draftFor(null, practiceSiteId), undefined);
+  })).find(element => element.type === boundaries.GrowerAutoPlanPanel)?.props;
+  assert.deepEqual(draftFor('green-horizon', practiceSiteId)?.practiceDraft, buildGreenHorizonPlanningDraft());
+  assert.deepEqual(draftFor('green-horizon', practiceSiteId)?.weeklyPracticeDraft, buildGreenHorizonWeeklyPracticeDraft());
+  for (const props of [draftFor('green-horizon', siteId), draftFor('ubhejane', practiceSiteId), draftFor(null, practiceSiteId)]) {
+    assert.equal(props?.practiceDraft, undefined);
+    assert.equal(props?.weeklyPracticeDraft, undefined);
+  }
 });
 
 test('the filled production overview uses the active Green Horizon mapped plan only', () => {
@@ -193,6 +205,7 @@ test('the filled production overview uses the active Green Horizon mapped plan o
   assert.ok(overview);
   assert.equal(overview.props.plan, fixture.plan);
   assert.equal(overview.props.beds, fixture.beds);
+  assert.equal(overview.props.siteId, selected.productionSiteId);
   assert.equal(render({ ...selected, getSampleWorkspace: () => null }), null);
   assert.equal(render({ ...selected, getSampleWorkspace: () => 'ubhejane' }), null);
   assert.equal(render({ ...selected, productionSiteId: siteId }), null);
@@ -233,4 +246,32 @@ test('the shared own-planning section remains referenced on both actual country-
     const allowed = support(country).allowCataloguePlanning;
     assert.ok(paths.some(path => path(allowed)), 'Both catalogue-supported and held-country routes retain the own-estimate section');
   }
+});
+
+test('the weekly saved-design view keeps a current provisional cycle and holds a stale one', async () => {
+  const { row, source, context } = await provisionalCalendarFixture();
+  const productionSiteId = 'design:private-calendar-fixture';
+  const route = compile(`(() => {
+    ${['checkedGrowerCycleContext', 'weeklyTargets', 'weeklyProduction'].map(name => {
+      const declaration = weeklyDeclarations.get(name);
+      assert.ok(declaration, `Actual weekly route declaration missing: ${name}`);
+      return declaration.getText(page);
+    }).join('\n')}
+    return weeklyProduction;
+  })()`);
+  const growerConditions = { countryCode: 'US', agriculturalRegionReference: 'Great Lakes States',
+    policyFingerprint: 'private-calendar-policy', knownPlantingRestriction: null };
+  const args = { growerSample: false, growerScope: source.scope, productionSiteId,
+    selectedGrowerSource: { ...source, resourceSiteId: productionSiteId },
+    growerConditions, createProvisionalCycleContext, weeklyAcceptedCycles, reviewedAvailability: null,
+    beds: source.beds, plan: { plantings: [row], harvestTargets: [{ siteId: productionSiteId }] } };
+  const current = elements(route(args))[0];
+  assert.ok(current);
+  assert.equal(current.props.siteId, context.scope.siteId);
+  assert.equal(current.props.targetSiteId, productionSiteId);
+  assert.deepEqual((current.props.cycles as ReturnType<typeof weeklyAcceptedCycles>).map(cycle => ({
+    siteId: cycle.siteId, plantingId: cycle.plantingId, firstHarvestDate: cycle.schedule.firstHarvestDate,
+  })), [{ siteId: productionSiteId, plantingId: row.id, firstHarvestDate: '2028-02-09' }]);
+  assert.deepEqual(elements(route({ ...args, growerConditions: { ...growerConditions,
+    policyFingerprint: 'changed-policy' } }))[0]?.props.cycles, []);
 });

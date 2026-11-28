@@ -12,8 +12,15 @@ import type { GrowerWorkflowDemandDraft, GrowerWorkflowDraft, GrowerWorkflowRevi
 import { GROWER_DEMAND_SELECTION_MAX_ROWS, type GrowerEnteredDemandEntry, type GrowerEnteredDemandPurpose } from '@/lib/international/grower-entered-demand';
 import { GROWER_BUYER_PICKING_PERIOD_DAYS, projectGrowerBuyerPickingPeriods } from '@/lib/international/grower-harvest-demand';
 import type { MassQuantityEntry } from '@/lib/mass-units';
+import type { WeeklyProductionWindow } from '@/lib/international/grower-weekly-production';
 import GrowerEnteredMassField from './GrowerEnteredMassField';
 import type { GrowerWorkflowAcceptanceResult, GrowerWorkflowAcceptanceState } from './useGrowerWorkflow';
+
+export interface ReviewedBedAvailability {
+  readonly source: GrowerWorkflowSource;
+  readonly revision: number;
+  readonly periods: readonly (WeeklyProductionWindow & { bedId: string })[];
+}
 
 export interface GrowerAutoPlanPanelProps {
   scope: GrowerPlanningScope | null;
@@ -27,8 +34,10 @@ export interface GrowerAutoPlanPanelProps {
   targets: readonly HarvestTarget[];
   targetSiteId: string | null;
   practiceDraft?: GrowerWorkflowDraft;
+  weeklyPracticeDraft?: GrowerWorkflowDraft;
   onRefresh: () => Promise<void>;
   onReview: (draft: GrowerWorkflowDraft) => Promise<GrowerWorkflowReview>;
+  onReviewAvailability?: (value: ReviewedBedAvailability | null) => void;
   onAccept?: (review: Extract<GrowerWorkflowReview, { status: 'review' }>, displayedReviewIsCurrent: () => boolean) => Promise<GrowerWorkflowAcceptanceResult>;
   acceptance?: GrowerWorkflowAcceptanceState;
   nurseryReview?: (review: Extract<GrowerWorkflowReview, { status: 'review' }>) => ReactNode;
@@ -280,6 +289,18 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
   const saving = props.acceptance?.status === 'saving';
   const saved = props.acceptance?.status === 'confirmed';
   const usable = review?.status === 'review' && (review.proposal.status === 'ready' || review.proposal.status === 'with-gaps');
+  useEffect(() => {
+    const report = props.onReviewAvailability;
+    if (!report) return;
+    if (!usable || !reviewMatchesContext || review?.status !== 'review' || !props.source) {
+      report(null);
+      return;
+    }
+    const periods = review.request.availability.flatMap(({ bedId, window }) =>
+      window.state === 'provided' ? [{ bedId, ...window.value }] : []);
+    report({ source: props.source, revision: props.contextRevision, periods });
+    return () => report(null);
+  }, [props.onReviewAvailability, props.source, props.contextRevision, review, usable, reviewMatchesContext]);
   const needsProvisionalReview = review?.status === 'review' && review.proposal.cycles.some(cycle => !!cycle.assessment.snapshot.profile.provisionalOrigin);
   const provisionalEvidence = useMemo(() => usable && review?.status === 'review'
     ? review.proposal.cycles.filter(cycle => cycle.assessment.snapshot.profile.provisionalOrigin).map(cycle => ({
@@ -300,10 +321,20 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
     : `${purposeLabel(row.purpose)} · ${cropByKey(row.cropKey)?.name ?? 'crop not chosen'}`;
   const enteredMeta = (demandId: string) => review?.status === 'review' ? review.enteredDemandMetadata?.find(row => row.demandId === demandId) : undefined;
   const practice = props.practiceDraft;
-  const practiceReady = practice && practice.targetProfiles.every(({ targetId, profileId }) => {
+  const weeklyPractice = props.weeklyPracticeDraft;
+  const practiceIsReady = (input: GrowerWorkflowDraft) => input.targetProfiles.every(({ targetId, profileId }) => {
     const target = targets.find(row => row.id === targetId);
     return target && profiles.some(profile => profile.profileId === profileId && profile.cropKey === target.cropKey);
-  }) && practice.available.every(row => beds.some(bed => bed.id === row.bedId));
+  }) && input.available.every(row => beds.some(bed => bed.id === row.bedId));
+  const practiceReady = practice && practiceIsReady(practice);
+  function loadPractice(input: GrowerWorkflowDraft) {
+    if (!practiceIsReady(input)) return;
+    change({
+      ...input,
+      demands: input.targetProfiles.map(({ targetId, profileId }) => ({ kind: 'buyer-target', targetId, profileId })),
+      available: input.available.map(row => ({ ...row, rowKey: newRowKey() })),
+    });
+  }
   return <details id={practice ? 'practice-crop-cycle' : undefined} open={practice ? true : undefined}
     className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] text-[var(--text-primary)]">
     <summary className="min-h-12 cursor-pointer px-4 py-3 font-display font-semibold">Automatic plan from your estimates</summary>
@@ -320,11 +351,9 @@ export default function GrowerAutoPlanPanel(props: GrowerAutoPlanPanelProps) {
         <p>Check the saved design, then load the fictional lettuce estimate and proposed dates for bed A1. Confirm its availability and the planning assumptions before reviewing the cycle.</p>
         {props.source && !practiceReady && <p>The original target, estimate or bed has changed. Choose current inputs below or <Link className="underline" href="/samples/market-garden">return to the example to reset it</Link>.</p>}
         <button type="button" className={button} disabled={!practiceReady || props.checking || busy || saving}
-          onClick={() => practiceReady && change({
-            ...practice,
-            demands: practice.targetProfiles.map(({ targetId, profileId }) => ({ kind: 'buyer-target', targetId, profileId })),
-            available: practice.available.map(row => ({ ...row, rowKey: newRowKey() })),
-          })}>Load practice inputs</button>
+          onClick={() => loadPractice(practice)}>Load practice inputs</button>
+        {weeklyPractice && <button type="button" className={button} disabled={!practiceIsReady(weeklyPractice) || props.checking || busy || saving}
+          onClick={() => loadPractice(weeklyPractice)}>Load staggered practice inputs</button>}
       </>}
       <fieldset className="space-y-3 rounded-xl border border-[var(--border)] p-3">
         <legend className="px-1 font-semibold">Buyer targets and priority</legend>

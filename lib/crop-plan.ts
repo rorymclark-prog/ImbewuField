@@ -189,10 +189,20 @@ interface HarvestTargetShared {
   outlet?: string;
   /** Grower's own expected saleable fraction; absence applies no allowance. */
   marketablePercent?: number;
+  /** Explicit planned quantity in the target unit for this exact period. */
+  weeklyPlan?: readonly HarvestTargetWeekQuantity[];
 }
 
 export const HARVEST_TARGET_UNITS = ['kg', 'bunches', 'bags', 'crates', 'trays', 'each'] as const satisfies readonly RecordUnit[];
+export type HarvestTargetUnit = typeof HARVEST_TARGET_UNITS[number];
 export type HarvestPackUnit = Exclude<typeof HARVEST_TARGET_UNITS[number], 'kg'>;
+
+export interface HarvestTargetWeekQuantity {
+  readonly start: string;
+  readonly endExclusive: string;
+  readonly unit: HarvestTargetUnit;
+  readonly quantity: number;
+}
 
 interface KgHarvestDemand {
   weeklyKg: number;
@@ -341,6 +351,47 @@ export function isMonthlyHarvestTarget(value: HarvestTarget): value is MonthlyHa
   return window !== null && window.timing === 'monthly';
 }
 
+export const HARVEST_TARGET_WEEK_DAYS = 7;
+
+export function harvestTargetWeekWindows(target: unknown): { start: string; endExclusive: string; fullWeek: boolean }[] {
+  const window = resolveHarvestTargetDateWindow(target);
+  if (!window) return [];
+  const periods = [];
+  for (let start = window.start; start < window.endExclusive;) {
+    const nextWeek = addGrowerUtcDays(start, HARVEST_TARGET_WEEK_DAYS);
+    if (!nextWeek) return [];
+    const fullWeek = nextWeek <= window.endExclusive;
+    const endExclusive = fullWeek ? nextWeek : window.endExclusive;
+    periods.push({ start, endExclusive, fullWeek });
+    start = endExclusive;
+  }
+  return periods;
+}
+
+export function harvestTargetUnit(target: HarvestTarget): HarvestTargetUnit {
+  return target.unit ?? 'kg';
+}
+
+export function validHarvestTargetWeekQuantity(quantity: unknown, unit: HarvestTargetUnit): quantity is number {
+  return quantity === 0 || validRecordQuantity(quantity, unit);
+}
+
+function normaliseHarvestTargetWeeklyPlan(target: HarvestTarget, value: unknown): HarvestTargetWeekQuantity[] | null {
+  const windows = new Map(harvestTargetWeekWindows(target).map(week => [week.start, week.endExclusive]));
+  const unit = harvestTargetUnit(target);
+  if (!Array.isArray(value) || value.length > windows.size) return null;
+  const seen = new Set<string>();
+  const rows: HarvestTargetWeekQuantity[] = [];
+  for (const row of value) {
+    if (!row || typeof row !== 'object' || row.unit !== unit || typeof row.start !== 'string'
+      || typeof row.endExclusive !== 'string' || windows.get(row.start) !== row.endExclusive
+      || seen.has(row.start) || !validHarvestTargetWeekQuantity(row.quantity, unit)) return null;
+    seen.add(row.start);
+    rows.push({ start: row.start, endExclusive: row.endExclusive, unit, quantity: row.quantity });
+  }
+  return rows;
+}
+
 export function sanitiseHarvestTargets(value: unknown): HarvestTarget[] {
   if (!Array.isArray(value)) return [];
   const seen = new Set<string>();
@@ -393,6 +444,11 @@ export function sanitiseHarvestTargets(value: unknown): HarvestTarget[] {
       if (t.unit !== undefined || t.kgPerUnit !== undefined || typeof t.weeklyKg !== 'number'
         || !Number.isFinite(t.weeklyKg) || t.weeklyKg <= 0 || !Number.isFinite(t.weeklyKg * 366 / 7)) return [];
       target = { ...base, weeklyKg: t.weeklyKg };
+    }
+    if (Object.hasOwn(raw, 'weeklyPlan')) {
+      const weeklyPlan = normaliseHarvestTargetWeeklyPlan(target, t.weeklyPlan);
+      if (weeklyPlan === null) return [];
+      target = { ...target, weeklyPlan };
     }
     seen.add(t.id);
     return [target];
