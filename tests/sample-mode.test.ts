@@ -39,7 +39,9 @@ Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, value:
 
 const sample = await import('../lib/sample-mode.ts');
 const { DEMO_SITE, buildDemoStorageSeeds } = await import('../lib/demo-farm.ts');
-const { GREEN_HORIZON_SITE, buildGreenHorizonLettuceTarget, buildGreenHorizonPlanningDraft, buildGreenHorizonStorageSeeds } = await import('../lib/green-horizon-demo.ts');
+const { GREEN_HORIZON_SITE, buildGreenHorizonLettuceTarget, buildGreenHorizonChardTarget, buildGreenHorizonPlanningDraft,
+  buildGreenHorizonWeeklyPracticeDraft, buildGreenHorizonStorageSeeds } = await import('../lib/green-horizon-demo.ts');
+const { weeklyProductionOrders } = await import('../lib/international/grower-weekly-production.ts');
 const { loadCropPlan, saveCropPlanWithReceipt } = await import('../lib/crop-plan.ts');
 const { readCanvasSourceReceipt } = await import('../lib/design-canvas.ts');
 const { inspectGrowerWorkflowSource, fingerprintGrowerWorkflowSource } = await import('../lib/international/grower-workflow-source.ts');
@@ -170,8 +172,10 @@ test('Green Horizon keeps its typed and raw edits apart from Ubhejane and real r
   assert.equal(rawCanvas.baseMode, 'blank');
   assert.equal(rawCanvas.siteId, designSiteIdFromLocation(GREEN_HORIZON_SITE));
   assert.deepEqual(rawCanvas.items.map((bed: { id: string }) => bed.id), [
-    'green-horizon-bed-a1', ...sample.getSandboxCropPlan().plantings.map(planting => planting.bedId),
+    'green-horizon-bed-a1', 'green-horizon-bed-a2', 'green-horizon-bed-b1',
   ]);
+  assert.deepEqual(sample.getSandboxCropPlan().plantings.map(planting => planting.bedId), ['green-horizon-bed-a2'],
+    'the example leaves A1 and B1 open for dated practice while A2 keeps its month-only record');
   assert.equal(realLocal.getItem('imbewu_field_journal_v1'), seeds.imbewu_field_journal_v1);
   assert.equal(realLocal.getItem('fp-theme'), 'slate');
   assert.equal(realLocal.getItem(ubhejaneCanvasKey), null);
@@ -223,19 +227,74 @@ test('Green Horizon’s dated lettuce target survives the normal sample save and
   assert.equal(sample.enterSampleMode('green-horizon'), true);
   const plan = loadCropPlan();
   const target = buildGreenHorizonLettuceTarget();
-  assert.deepEqual(plan.harvestTargets, [target]);
+  const chard = buildGreenHorizonChardTarget();
+  assert.deepEqual(plan.harvestTargets, [target, chard]);
   assert.equal(target.siteId, designSiteIdFromLocation(GREEN_HORIZON_SITE));
   assert.equal(saveCropPlanWithReceipt({
     ...plan,
-    harvestTargets: [{ ...target, weeklyKg: 9 }],
+    harvestTargets: [{ ...target, weeklyKg: 9 }, chard],
   }).saved, true);
   assert.equal(loadCropPlan().harvestTargets?.[0]?.weeklyKg, 9);
+  assert.deepEqual(loadCropPlan().harvestTargets?.[1], chard);
   assert.equal(sample.getSandboxProduction()[0]?.kg, 6);
   assert.equal(sample.getSandboxSales()[0]?.kg, 4);
   assert.equal(sample.enterSampleMode('ubhejane'), true);
   assert.ok(!loadCropPlan().harvestTargets?.some(row => row.id === target.id));
   assert.equal(sample.enterSampleMode('green-horizon'), true);
-  assert.deepEqual(loadCropPlan().harvestTargets, [target]);
+  assert.deepEqual(loadCropPlan().harvestTargets, [target, chard]);
+});
+
+test('the staggered market-garden review keeps dated picking, an entered zero and an unknown quantity distinct', async () => {
+  reset();
+  assert.ok(sample.enterSampleMode('green-horizon'));
+  const target = buildGreenHorizonChardTarget();
+  const receipt = readCanvasSourceReceipt(target.siteId);
+  assert.equal(receipt.status, 'ready');
+  const source = await fingerprintGrowerWorkflowSource(inspectGrowerWorkflowSource({
+    kind: 'studio-canvas', sourceId: target.siteId, raw: receipt.raw, sourceRevision: receipt.revision,
+  }));
+  assert.equal(source.status, 'ready');
+  const practice = buildGreenHorizonWeeklyPracticeDraft();
+  const draft = { ...practice, assumptionsConfirmed: true, available: practice.available.map(row => ({ ...row, confirmed: true })) };
+  const inputs = { scope: source.scope, source, book: loadCropPlan(), draft, recordedAt: '2026-11-27T09:00:00.000Z' };
+  const review = assembleGrowerWorkflowReview(inputs);
+  assert.equal(review.status, 'review', review.issues.join(', '));
+  assert.equal(review.proposal.status, 'ready', 'the opening practice draft can save both cycles despite its separate weekly gap');
+  const chardDemand = review.proposal.demandResults.find(row => row.demandId === target.id);
+  assert.ok(chardDemand);
+  assert.equal(chardDemand.unmetKg, 0);
+  const heavierPacks = assembleGrowerWorkflowReview({ ...inputs, book: { ...inputs.book,
+    harvestTargets: inputs.book.harvestTargets?.map(row => row.id === target.id ? { ...target, kgPerUnit: 0.35 } : row),
+  } });
+  assert.equal(heavierPacks.status, 'review');
+  assert.equal(heavierPacks.proposal.status, 'with-gaps', 'whole-cycle limits still hold with the heavier practice packs');
+  const cycles = review.proposal.cycles.map(cycle => ({
+    siteId: target.siteId, plantingId: null, targetId: cycle.demandId, bedId: cycle.bedId,
+    cropKey: cycle.assessment.snapshot.profile.cropKey, schedule: cycle.assessment.schedule,
+    basis: 'worked-example' as const, wholeCycleKg: cycle.assessment.capacity.estimatedYieldKg,
+  }));
+  assert.deepEqual(cycles.map(({ bedId, schedule }) => [bedId, schedule.firstHarvestDate]), [
+    ['green-horizon-bed-a1', '2026-11-02'], ['green-horizon-bed-b1', '2026-11-09'],
+  ]);
+  const [first, second] = target.weeklyPlan!;
+  const periods = weeklyProductionOrders(target, cycles);
+  assert.deepEqual(periods.map(row => [row.start, row.requested, row.planned, row.planningGap, row.daysWithoutPicking]), [
+    ['2026-11-09', 12, 12, 0, 4],
+    ['2026-11-16', 12, 0, 12, 7],
+    ['2026-11-23', 12, null, null, 7],
+  ]);
+  assert.equal(weeklyProductionOrders({ ...target, weeklyPlan: [first, first] }, cycles)[0].planned, null);
+  assert.equal(weeklyProductionOrders({ ...target, weeklyPlan: [{ ...first, unit: 'kg' }] }, cycles)[0].planned, null);
+  const shorter = { ...target, window: { ...target.window, endExclusive: '2026-11-25' } };
+  assert.equal(weeklyProductionOrders(shorter, cycles).at(-1)?.requested, null);
+  const book = loadCropPlan();
+  assert.ok(saveCropPlanWithReceipt({ ...book, harvestTargets: book.harvestTargets?.map(row => row.id === target.id
+    ? { ...target, weeklyPlan: [first, { ...second, quantity: 7 }] } : row) }).saved);
+  const saved = loadCropPlan().harvestTargets?.find(row => row.id === target.id);
+  assert.ok(saved);
+  assert.equal(weeklyProductionOrders(saved, cycles)[1].planningGap, 5);
+  assert.ok(sample.enterSampleMode('green-horizon'));
+  assert.equal(loadCropPlan().harvestTargets?.find(row => row.id === target.id)?.weeklyPlan?.[1].quantity, 0);
 });
 
 test('the Green Horizon practice inputs produce a saved cycle with an explicitly partial picking window', async () => {
